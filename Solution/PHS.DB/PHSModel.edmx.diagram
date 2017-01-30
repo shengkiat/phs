@@ -6,6 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1">
         <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="phsModel.form" Width="1.5" PointX="5.625" PointY="1.25" />
+        <EntityTypeShape EntityType="phsModel.form_field_values" Width="1.5" PointX="5.625" PointY="4.75" />
+        <EntityTypeShape EntityType="phsModel.form_fields" Width="1.5" PointX="3.375" PointY="1.125" />
+        <AssociationConnector Association="phsModel.FK_form_field_values_form_fields" />
+        <AssociationConnector Association="phsModel.form_form_fields" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

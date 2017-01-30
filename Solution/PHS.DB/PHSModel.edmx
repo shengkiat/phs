@@ -4,7 +4,67 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="phsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="phsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="form">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConfirmationMessage" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="Theme" Type="nvarchar" MaxLength="50" />
+          <Property Name="NotificationEmail" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="form_field_values">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FieldId" Type="int" Nullable="false" />
+          <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="form_fields">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="50" />
+          <Property Name="Text" Type="nvarchar" MaxLength="100" />
+          <Property Name="FieldType" Type="varchar" MaxLength="20" />
+          <Property Name="IsRequired" Type="bit" />
+          <Property Name="MaxChars" Type="int" />
+          <Property Name="HoverText" Type="nvarchar" MaxLength="150" />
+          <Property Name="Hint" Type="nvarchar" MaxLength="150" />
+          <Property Name="SubLabel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Size" Type="varchar" MaxLength="10" />
+          <Property Name="SelectedOption" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Columns" Type="int" />
+          <Property Name="Rows" Type="int" />
+          <Property Name="Options" Type="nvarchar" MaxLength="300" />
+          <Property Name="Validation" Type="varchar" MaxLength="50" />
+          <Property Name="DomId" Type="int" />
+          <Property Name="Order" Type="int" />
+          <Property Name="MinimumAge" Type="int" />
+          <Property Name="MaximumAge" Type="int" />
+          <Property Name="HelpText" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="MaxFilesizeInKb" Type="int" />
+          <Property Name="ValidFileExtensions" Type="nvarchar" MaxLength="50" />
+          <Property Name="MinFilesizeInKb" Type="int" />
+        </EntityType>
+        <EntityType Name="form_form_fields">
+          <Key>
+            <PropertyRef Name="formId" />
+            <PropertyRef Name="fieldId" />
+          </Key>
+          <Property Name="formId" Type="int" Nullable="false" />
+          <Property Name="fieldId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Sid" />
@@ -20,11 +80,66 @@
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
+        <Association Name="FK form_fields_form_form_fields">
+          <End Role="form_fields" Type="Self.form_fields" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="form_form_fields" Type="Self.form_form_fields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form_fields">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="form_form_fields">
+              <PropertyRef Name="fieldId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_form_field_values_form_fields">
+          <End Role="form_fields" Type="Self.form_fields" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="form_field_values" Type="Self.form_field_values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form_fields">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="form_field_values">
+              <PropertyRef Name="FieldId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_form_fields">
+          <End Role="form" Type="Self.form" Multiplicity="1" />
+          <End Role="form_form_fields" Type="Self.form_form_fields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="form_form_fields">
+              <PropertyRef Name="formId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="phsModelStoreContainer">
+          <EntitySet Name="form" EntityType="Self.form" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="form_field_values" EntityType="Self.form_field_values" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="form_fields" EntityType="Self.form_fields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="form_form_fields" EntityType="Self.form_form_fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK form_fields_form_form_fields" Association="Self.FK form_fields_form_form_fields">
+            <End Role="form_fields" EntitySet="form_fields" />
+            <End Role="form_form_fields" EntitySet="form_form_fields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_form_field_values_form_fields" Association="Self.FK_form_field_values_form_fields">
+            <End Role="form_fields" EntitySet="form_fields" />
+            <End Role="form_field_values" EntitySet="form_field_values" />
+          </AssociationSet>
+          <AssociationSet Name="FK_form_fields" Association="Self.FK_form_fields">
+            <End Role="form" EntitySet="form" />
+            <End Role="form_form_fields" EntitySet="form_form_fields" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="phsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -45,7 +160,92 @@
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="forms" EntityType="phsModel.form" />
+          <EntitySet Name="form_field_values" EntityType="phsModel.form_field_values" />
+          <EntitySet Name="form_fields" EntityType="phsModel.form_fields" />
+          <AssociationSet Name="FK_form_field_values_form_fields" Association="phsModel.FK_form_field_values_form_fields">
+            <End Role="form_fields" EntitySet="form_fields" />
+            <End Role="form_field_values" EntitySet="form_field_values" />
+          </AssociationSet>
+          <AssociationSet Name="form_form_fields" Association="phsModel.form_form_fields">
+            <End Role="form_fields" EntitySet="form_fields" />
+            <End Role="form" EntitySet="forms" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="form">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConfirmationMessage" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="Theme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="form_fields" Relationship="phsModel.form_form_fields" FromRole="form" ToRole="form_fields" />
+        </EntityType>
+        <EntityType Name="form_field_values">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldId" Type="Int32" Nullable="false" />
+          <Property Name="EntryId" Type="Guid" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="form_fields" Relationship="phsModel.FK_form_field_values_form_fields" FromRole="form_field_values" ToRole="form_fields" />
+        </EntityType>
+        <EntityType Name="form_fields">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FieldType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsRequired" Type="Boolean" />
+          <Property Name="MaxChars" Type="Int32" />
+          <Property Name="HoverText" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Hint" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SubLabel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SelectedOption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Columns" Type="Int32" />
+          <Property Name="Rows" Type="Int32" />
+          <Property Name="Options" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Validation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DomId" Type="Int32" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="MinimumAge" Type="Int32" />
+          <Property Name="MaximumAge" Type="Int32" />
+          <Property Name="HelpText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MaxFilesizeInKb" Type="Int32" />
+          <Property Name="ValidFileExtensions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinFilesizeInKb" Type="Int32" />
+          <NavigationProperty Name="form_field_values" Relationship="phsModel.FK_form_field_values_form_fields" FromRole="form_fields" ToRole="form_field_values" />
+          <NavigationProperty Name="forms" Relationship="phsModel.form_form_fields" FromRole="form_fields" ToRole="form" />
+        </EntityType>
+        <Association Name="FK_form_field_values_form_fields">
+          <End Type="phsModel.form_fields" Role="form_fields" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="phsModel.form_field_values" Role="form_field_values" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form_fields">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="form_field_values">
+              <PropertyRef Name="FieldId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="form_form_fields">
+          <End Type="phsModel.form_fields" Role="form_fields" Multiplicity="*" />
+          <End Type="phsModel.form" Role="form" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -68,6 +268,69 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="forms">
+            <EntityTypeMapping TypeName="phsModel.form">
+              <MappingFragment StoreEntitySet="form">
+                <ScalarProperty Name="NotificationEmail" ColumnName="NotificationEmail" />
+                <ScalarProperty Name="Theme" ColumnName="Theme" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="ConfirmationMessage" ColumnName="ConfirmationMessage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="form_field_values">
+            <EntityTypeMapping TypeName="phsModel.form_field_values">
+              <MappingFragment StoreEntitySet="form_field_values">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="form_fields">
+            <EntityTypeMapping TypeName="phsModel.form_fields">
+              <MappingFragment StoreEntitySet="form_fields">
+                <ScalarProperty Name="MinFilesizeInKb" ColumnName="MinFilesizeInKb" />
+                <ScalarProperty Name="ValidFileExtensions" ColumnName="ValidFileExtensions" />
+                <ScalarProperty Name="MaxFilesizeInKb" ColumnName="MaxFilesizeInKb" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="HelpText" ColumnName="HelpText" />
+                <ScalarProperty Name="MaximumAge" ColumnName="MaximumAge" />
+                <ScalarProperty Name="MinimumAge" ColumnName="MinimumAge" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="DomId" ColumnName="DomId" />
+                <ScalarProperty Name="Validation" ColumnName="Validation" />
+                <ScalarProperty Name="Options" ColumnName="Options" />
+                <ScalarProperty Name="Rows" ColumnName="Rows" />
+                <ScalarProperty Name="Columns" ColumnName="Columns" />
+                <ScalarProperty Name="SelectedOption" ColumnName="SelectedOption" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="SubLabel" ColumnName="SubLabel" />
+                <ScalarProperty Name="Hint" ColumnName="Hint" />
+                <ScalarProperty Name="HoverText" ColumnName="HoverText" />
+                <ScalarProperty Name="MaxChars" ColumnName="MaxChars" />
+                <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="form_form_fields" TypeName="phsModel.form_form_fields" StoreEntitySet="form_form_fields">
+            <EndProperty Name="form">
+              <ScalarProperty Name="ID" ColumnName="formId" />
+            </EndProperty>
+            <EndProperty Name="form_fields">
+              <ScalarProperty Name="ID" ColumnName="fieldId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

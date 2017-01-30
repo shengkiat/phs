@@ -1,0 +1,20 @@
+﻿@model FormBuilder.ViewModels.NotificationEmailViewModel
+@using PHS.Business.Helpers
+@using PHS.Common
+@using PHS.Business.Extensions
+
+<table style="width:800px;">
+  <tr>
+    <td colspan="2">
+      You received a new submission @DateTime.Now.Humanize() for the form @Model.FormName
+    </td>
+  </tr>
+
+  @foreach (var entry in Model.Entries)
+  {
+     <tr>
+        <td style="width:200px;Font-weight:bold;vertical-align:top;">@entry.Key</td>
+        <td>@entry.Value.Format(true)</td>
+     </tr>
+  }
+</table>

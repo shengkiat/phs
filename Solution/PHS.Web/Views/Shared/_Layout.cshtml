@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using PHS.Business.Helpers
+@using PHS.Common
+@using PHS.Business.Extensions
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,8 +13,51 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    
+    @RenderSection("Styles", false)
+
+
+
+    <!--javascripts-->
+    <script type="text/javascript" src="/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-ui-1.8.20.js"></script>
+    <script type="text/javascript" src="/Scripts/modernizr-2.5.3.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.simplemodal.1.4.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.maxlength-min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.watermark.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.maxlength-min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.numeric.js"></script>
+    <script type="text/javascript" src="/Scripts/form-builder/fbuilder.utils.js"></script>
+    <script type="text/javascript" src="/Scripts/form-builder/fbuilder.global.js"></script>
+    <script type="text/javascript" src="/scripts/css_browser_selector.js"></script>
+
+    <!--Css-->
+    <link type="text/css" href="/Content/css/reset.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/css/blueprint/screen.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/css/plugins/tipsy.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/css/form-builder/forms-global.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/css/plugins/jquery.jcrop.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/css/form-builder/forms-sprites.css" rel="stylesheet" />
+    @RenderSection("headerScripts", false)
+
+
+
+    <link type="text/css" href="/Content/Site.css" rel="stylesheet" />
+
+    @RenderSection("FormCSS", required: false)
+
+
+
 </head>
-<body>
+<body class="@Html.GetContextCssClass()"   >
     <div class="navbar navbar-inverse navbar-fixed-top ">
         <div class="container">
             <div class="navbar-header">
@@ -23,7 +70,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "./")</li>*@
+                  
                 </ul>
                 @{
 
@@ -47,17 +94,12 @@
             </div>
         </div>
     </div>
-    <div class="container body-content panel-body glyphicon-align-center" style="min-height:800px;">
-        <div class="row">
-            @*<div class="">Welcome !</div>*@
-        </div>
+    <div id="page-body" class="container body-content panel-body glyphicon-align-center" style="min-height:800px;">
         @RenderBody()
         <hr />
 
     </div>
-    @*<div class="container">
-            <a href="#" class="navbar-nav"  style="font-size:medium;">Back To List</a>
-        </div>*@
+ 
     @if (!String.IsNullOrEmpty(ViewBag.BackURL))
     {
         <div class="container">
@@ -65,8 +107,23 @@
         </div>
     }
     <br />
+    
     <footer class="panel-footer" style="text-align:center">
         <p>&copy; @DateTime.Now.Year - PT4 Active Learning Application</p>
     </footer>
+
+
+
+    @RenderSection("footerScripts", false)
+    <script type="text/javascript">
+            $(document).ready(function () {
+                global.init();
+                @RenderSection("initializers", false)
+            });
+
+
+    </script>
+
+
 </body>
 </html>

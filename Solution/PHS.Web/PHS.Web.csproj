@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -177,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,6 +195,111 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\blueprint\ie.css" />
+    <Content Include="Content\css\blueprint\plugins\buttons\icons\cross.png" />
+    <Content Include="Content\css\blueprint\plugins\buttons\icons\key.png" />
+    <Content Include="Content\css\blueprint\plugins\buttons\icons\tick.png" />
+    <Content Include="Content\css\blueprint\plugins\buttons\readme.txt" />
+    <Content Include="Content\css\blueprint\plugins\buttons\screen.css" />
+    <Content Include="Content\css\blueprint\plugins\fancy-type\readme.txt" />
+    <Content Include="Content\css\blueprint\plugins\fancy-type\screen.css" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\doc.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\email.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\external.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\feed.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\im.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\pdf.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\visited.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\icons\xls.png" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\readme.txt" />
+    <Content Include="Content\css\blueprint\plugins\link-icons\screen.css" />
+    <Content Include="Content\css\blueprint\plugins\rtl\readme.txt" />
+    <Content Include="Content\css\blueprint\plugins\rtl\screen.css" />
+    <Content Include="Content\css\blueprint\print.css" />
+    <Content Include="Content\css\blueprint\screen.css" />
+    <Content Include="Content\css\blueprint\src\forms.css" />
+    <Content Include="Content\css\blueprint\src\grid.css" />
+    <Content Include="Content\css\blueprint\src\grid.png" />
+    <Content Include="Content\css\blueprint\src\ie.css" />
+    <Content Include="Content\css\blueprint\src\print.css" />
+    <Content Include="Content\css\blueprint\src\reset.css" />
+    <Content Include="Content\css\blueprint\src\typography.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\form-builder\forms-common.css" />
+    <Content Include="Content\css\form-builder\forms-embed.css" />
+    <Content Include="Content\css\form-builder\forms-global.css" />
+    <Content Include="Content\css\form-builder\forms-interface.css" />
+    <Content Include="Content\css\form-builder\forms-modal.css" />
+    <Content Include="Content\css\form-builder\forms-sprites.css" />
+    <Content Include="Content\css\form-builder\themes\Black\styles.css" />
+    <Content Include="Content\css\form-builder\themes\Dark Red\styles.css" />
+    <Content Include="Content\css\plugins\jquery.Jcrop.css" />
+    <Content Include="Content\css\plugins\tipsy.css" />
+    <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\site.css" />
+    <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\field_gradient_bg.gif" />
+    <Content Include="Content\images\forms-sprite.png" />
+    <Content Include="Content\images\lightbulb.png" />
+    <Content Include="Content\images\properties-bg.png" />
+    <Content Include="Content\images\slide-img-form.png" />
+    <Content Include="Content\images\spacer.gif" />
+    <Content Include="Content\images\spinner.gif" />
+    <Content Include="Content\images\sprite0.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -208,15 +318,36 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\css_browser_selector.js" />
+    <Content Include="Scripts\form-builder\fbuilder.entries.js" />
+    <Content Include="Scripts\form-builder\fbuilder.forms.js" />
+    <Content Include="Scripts\form-builder\fbuilder.global.js" />
+    <Content Include="Scripts\form-builder\fbuilder.layout.js" />
+    <Content Include="Scripts\form-builder\fbuilder.utils.js" />
+    <None Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.jeditable.min.js" />
+    <Content Include="Scripts\jquery.maxlength-min.js" />
+    <Content Include="Scripts\jquery.numeric.js" />
+    <Content Include="Scripts\jquery.simplemodal.1.4.min.js" />
+    <Content Include="Scripts\jquery.tipsy.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.watermark.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -240,6 +371,51 @@
     <Content Include="Views\Shared\_LoginStudentPartial.cshtml" />
     <Content Include="Views\Shared\_MessageBoxPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Forms\Edit.cshtml" />
+    <Content Include="Views\Forms\FormConfirmation.cshtml" />
+    <Content Include="Views\Forms\Index.cshtml" />
+    <Content Include="Views\Forms\Preview.cshtml" />
+    <Content Include="Views\Forms\Register.cshtml" />
+    <Content Include="Views\Forms\RegisterPartial.cshtml" />
+    <Content Include="Views\Forms\ViewEntries.cshtml" />
+    <Content Include="Views\Forms\_form-field-address-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-address-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-birthdaypicker-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-birthdaypicker-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-captcha-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-captcha-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-checkbox-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-checkbox-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-dropdownlist-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-dropdownlist-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-email-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-email-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-filepicker-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-filepicker-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-fullname-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-fullname-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-header-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-header-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-phone-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-phone-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-prompt-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-properties-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-properties.cshtml" />
+    <Content Include="Views\Forms\_form-field-property-editor-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-radiobutton-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-radiobutton-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-settings-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-textarea-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-textarea-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-textbox-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-textbox-template.cshtml" />
+    <Content Include="Views\Forms\_form-property-editor-partial.cshtml" />
+    <Content Include="Views\Forms\_FormEmbedPartial.cshtml" />
+    <Content Include="Views\Forms\_FormsDemoSubMenuPartial.cshtml" />
+    <Content Include="Views\Forms\_FormsSubMenuPartial.cshtml" />
+    <Content Include="Views\Forms\_FormToolsMenuPartial.cshtml" />
+    <Content Include="Views\Forms\_SubmissionEmailPartial.cshtml" />
+    <Content Include="Views\Shared\_EmbedLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -255,6 +431,10 @@
     <ProjectReference Include="..\PHS.Business\PHS.Business.csproj">
       <Project>{12d719fa-52af-4e43-a31a-5cef1f0ac537}</Project>
       <Name>PHS.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PHS.Common\PHS.Common.csproj">
+      <Project>{3b912b08-7700-44ec-be17-b649711ddebf}</Project>
+      <Name>PHS.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PHS.DB\PHS.DB.csproj">
       <Project>{9f19487d-f572-41c3-910c-aedb45b511d1}</Project>

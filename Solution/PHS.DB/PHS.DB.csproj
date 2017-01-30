@@ -51,6 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="form.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="form_fields.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="form_field_values.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
@@ -100,7 +109,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PHS.Common\PHS.Common.csproj">
+      <Project>{3b912b08-7700-44ec-be17-b649711ddebf}</Project>
+      <Name>PHS.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
