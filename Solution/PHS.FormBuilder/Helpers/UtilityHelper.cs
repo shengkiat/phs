@@ -4,11 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using Amazon.S3;
-using Amazon.S3.Model;
 using PHS.Common;
 
-namespace PHS.Business.Helpers
+namespace PHS.FormBuilder.Helpers
 {
     public class UtilityHelper
     {
@@ -61,18 +59,9 @@ namespace PHS.Business.Helpers
             }
         }
 
-        public static IAmazonS3 InitS3Client()
-        {
-            string accessKeyID = WebConfig.Get("awsaccesskey");
-            string secretAccessKeyID = WebConfig.Get("awssecretkey");
-            AmazonS3Config config = new AmazonS3Config();
-            //config.CommunicationProtocol = Protocol.HTTP;
-            return Amazon.AWSClientFactory.CreateAmazonS3Client(accessKeyID.Trim(), secretAccessKeyID.Trim(), config);
-        }
-
         public static bool UseCloudStorage()
         {
-            return WebConfig.Get<bool>("usecloudstorage", true);
+            return WebConfig.Get<bool>("usecloudstorage", false);
         }
 
         public static FileStream ReadFile(string filePath)
@@ -81,15 +70,5 @@ namespace PHS.Business.Helpers
             return fileStream;
         }
 
-        public static void RemoveFileFromBucket(string fileName)
-        {
-            // remove file from S3
-            var client = InitS3Client();
-            DeleteObjectRequest request = new DeleteObjectRequest();
-           // request.WithBucketName(WebConfig.Get("awsbucket"));
-           // request.Key = fileName;
-          //  S3Response response = client.DeleteObject(request);
-          //  response.Dispose();
-        }
     }
 }

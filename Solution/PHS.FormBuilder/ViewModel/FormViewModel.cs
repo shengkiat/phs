@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using FormBuilder;
 using PHS.Common;
 using PHS.DB;
-using PHS.Business.Extensions;
+using PHS.FormBuilder.Extensions;
 
-namespace FormBuilder.ViewModels
+namespace PHS.FormBuilder.ViewModels
 {
     public class FormViewModel
     {
@@ -124,12 +123,5 @@ namespace FormBuilder.ViewModels
         #region Private Members
         #endregion
 
-
-
-
-
-
-
-        
     }
 }

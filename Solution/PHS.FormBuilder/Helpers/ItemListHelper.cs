@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace PHS.Business.Helpers
+namespace PHS.FormBuilder.Helpers
 {
     public class ItemListHelper
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PHS.Business.Models
+namespace PHS.FormBuilder.Models
 {
     public class FileValueObject
     {

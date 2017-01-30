@@ -1,5 +1,5 @@
 ﻿
-using FormBuilder.ViewModels;
+using PHS.FormBuilder.ViewModels;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 
 
-namespace PHS.Business.Extensions
+namespace PHS.FormBuilder.Extensions
 {
     public static class HtmlExtensions
     {

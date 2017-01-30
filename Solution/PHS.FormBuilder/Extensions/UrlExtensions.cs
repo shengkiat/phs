@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
-using FormBuilder.ViewModels;
+using PHS.FormBuilder.ViewModels;
 
 
-namespace PHS.Business.Extensions
+namespace PHS.FormBuilder.Extensions
 {
     public static class UrlExtensions
     {

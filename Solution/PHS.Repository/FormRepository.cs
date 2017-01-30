@@ -8,34 +8,22 @@ using PHS.Repository.Repository.Core;
 using PHS.Repository.Context;
 using System.Data.Entity.Core.Objects;
 using PHS.DB;
-using FormBuilder.ViewModels;
-using PHS.Business.Extensions;
+using PHS.FormBuilder.ViewModels;
+using PHS.FormBuilder.Extensions;
 using PHS.Common;
-using PHS.Business.Helpers;
-using PHS.Business.Models;
+using PHS.FormBuilder.Helpers;
+using PHS.FormBuilder.Models;
 using System.Data.Entity;
 
 namespace PHS.Repository.Repository
 {
     public class FormRepository : BaseRespository<form, int>
-    {
-
-        
-        public form getAll(int key)
+    {    
+        public form GelForm(int key)
         {
             this.DataContext = new PHSContext();
             return this.DataContext.forms.Where(u => u.ID == key).Include(x => x.form_fields).FirstOrDefault();
         }
-
-
-        public  void SaveChanges(form form1)
-        {
-            DataContext.Entry(form1).State = EntityState.Modified;
-            this.DataContext.SaveChanges();
-        }
-
-
-
 
         public FormRepository(PHSContext datacontext)
             : base(datacontext)
@@ -106,7 +94,6 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow
                 };
 
-               // form1.form_fields.LoadOnce();
                 form1.form_fields.Add(fField);
                 this.SaveChanges();
             }
@@ -159,16 +146,6 @@ namespace PHS.Repository.Repository
             this.DataContext.forms.Add(form);
             this.SaveChanges();
             return form;
-        }
-
-        public void Update(FormViewModel model)
-        {
-            if (!model.Id.HasValue)
-            {
-                throw new Exception("Invalid update operation. Form Id required.");
-            }
-            var form = GetByPrimaryKey(model.Id.Value);
-            this.Update(model, form);
         }
 
         public void Update(FormViewModel model, form form1)
@@ -260,14 +237,13 @@ namespace PHS.Repository.Repository
 
         public void DeleteFileEntry(form_field_values entry)
         {
-            //entry.FormFieldReference.LoadOnce();
             if (entry.form_fields.FieldType.ToUpper().IsTheSameAs(Constants.FieldType.FILEPICKER.ToString()))
             {
                 var fileObj = entry.Value.FromJson<FileValueObject>();
 
                 if (fileObj.IsSavedInCloud)
                 {
-                    UtilityHelper.RemoveFileFromBucket(fileObj.SaveName);
+                    
                 }
                 else
                 {

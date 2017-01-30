@@ -42,6 +42,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRespository.cs" />
     <Compile Include="Context\PHSContext.cs" />
+    <Compile Include="FormRepository.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
     <Compile Include="Interface\Core\IRepositoryAsync.cs" />
     <Compile Include="Interface\Core\IUnitOfWork.cs" />
@@ -62,9 +65,17 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PHS.Common\PHS.Common.csproj">
+      <Project>{3b912b08-7700-44ec-be17-b649711ddebf}</Project>
+      <Name>PHS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PHS.DB\PHS.DB.csproj">
       <Project>{9f19487d-f572-41c3-910c-aedb45b511d1}</Project>
       <Name>PHS.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PHS.FormBuilder\PHS.FormBuilder.csproj">
+      <Project>{df7f3f6e-e407-4115-a96d-579aa24ab27b}</Project>
+      <Name>PHS.FormBuilder</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

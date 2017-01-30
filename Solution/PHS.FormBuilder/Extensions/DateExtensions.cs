@@ -3,7 +3,7 @@
 using System.Text;
 
 
-namespace PHS.Business.Extensions
+namespace PHS.FormBuilder.Extensions
 {
     public static class DateExtensions
     {

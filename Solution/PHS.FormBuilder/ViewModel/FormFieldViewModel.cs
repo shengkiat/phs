@@ -6,9 +6,9 @@ using System.Web;
 using System.Collections;
 using PHS.Common;
 using PHS.DB;
-using PHS.Business.Extensions;
+using PHS.FormBuilder.Extensions;
 
-namespace FormBuilder.ViewModels
+namespace PHS.FormBuilder.ViewModels
 {
     public class FormFieldViewModel
     {

@@ -1,7 +1,7 @@
-﻿@model FormBuilder.ViewModels.FormFieldViewModel
-@using PHS.Business.Helpers
+﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
+@using PHS.FormBuilder.Helpers
 @using PHS.Common
-@using PHS.Business.Extensions
+@using PHS.FormBuilder.Extensions
 
 @* Hidden field values for all properties that get posted to the server *@
 <input id="fieldid-prop-@Model.DomId" type="hidden" value="@Model.Id" data-sub-channel="sub-order-@Model.DomId" name="Fields[@Model.DomId].Id" />

@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using FormBuilder.ViewModels;
+using PHS.FormBuilder.ViewModels;
 
 using System.Globalization;
 using System.Text;
-using PHS.Business.Helpers;
+using PHS.FormBuilder.Helpers;
 using System.Drawing;
 using System.Configuration;
 using System.IO;
-using Amazon.S3;
-using Amazon.S3.Model;
 
 using PHS.Business.Common;
-using PHS.Business.Models;
+using PHS.FormBuilder.Models;
 using PHS.Common;
 using System.Data.Entity.Core.Objects.DataClasses;
 
-namespace PHS.Business.Extensions
+namespace PHS.FormBuilder.Extensions
 {
     public static class UtilityExtensions
     {
@@ -334,12 +332,7 @@ namespace PHS.Business.Extensions
             {
                 if (obj.IsSavedInCloud)
                 {
-                    IAmazonS3 client = UtilityHelper.InitS3Client();
-                    GetObjectRequest request = new GetObjectRequest();
-                    request.BucketName = WebConfig.Get("awsbucket");
-                    request.Key = obj.SaveName;
-                    GetObjectResponse response = client.GetObject(request);
-                    Image.FromStream(response.ResponseStream);
+                   // To Retrieve from cloud
                 }
                 else
                 {

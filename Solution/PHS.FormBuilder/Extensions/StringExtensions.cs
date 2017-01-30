@@ -6,10 +6,10 @@ using System.Globalization;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
-using PHS.Business.Helpers;
+using PHS.FormBuilder.Helpers;
 using System.Text;
 
-namespace PHS.Business.Extensions
+namespace PHS.FormBuilder.Extensions
 {
     public static class StringExtensions
     {

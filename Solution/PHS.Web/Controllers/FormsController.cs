@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-using FormBuilder.ViewModels;
-
+using PHS.FormBuilder.ViewModels;
 using System.Data;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
 using System.Configuration;
 using System.Web.Hosting;
-using Amazon.S3.Model;
-
-using Amazon.S3;
 using PHS.Repository.Repository;
-using PHS.Business.Extensions;
+using PHS.FormBuilder.Extensions;
 using PHS.Common;
-using PHS.Business.Models;
-using PHS.Business.Helpers;
+using PHS.FormBuilder.Models;
+using PHS.FormBuilder.Helpers;
 using PHS.Business.Common;
 
 namespace PHS.Web.Controllers
@@ -55,7 +50,7 @@ namespace PHS.Web.Controllers
            
        
 
-            var sad1 = this._formRepo.getAll(id);
+            var sad1 = this._formRepo.GelForm(id);
             FormViewModel model1 = FormViewModel.CreateFromObject(sad1);
 
 
@@ -217,7 +212,7 @@ namespace PHS.Web.Controllers
         public ActionResult TogglePublish(bool toOn, int id)
         {
            // var form = this._formRepo.GetByPrimaryKey(id);
-            var form = this._formRepo.getAll(id);
+            var form = this._formRepo.GelForm(id);
 
             if (form.form_fields.Count() > 0)
             {
@@ -260,7 +255,7 @@ namespace PHS.Web.Controllers
             FormViewModel model = null;
            // var form = this._formRepo.GetByPrimaryKey(id);
 
-            var form = this._formRepo.getAll(id);
+            var form = this._formRepo.GelForm(id);
 
             if (form != null)
             {
@@ -281,7 +276,7 @@ namespace PHS.Web.Controllers
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-            var formObj = this._formRepo.getAll(model.Id.Value);
+            var formObj = this._formRepo.GelForm(model.Id.Value);
 
 
             var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
@@ -384,7 +379,7 @@ namespace PHS.Web.Controllers
         {
            // var form = this._formRepo.GetByPrimaryKey(formId);
 
-            var form = this._formRepo.getAll(formId);
+            var form = this._formRepo.GelForm(formId);
 
 
             var formView = FormViewModel.CreateFromObject(form);
@@ -426,15 +421,7 @@ namespace PHS.Web.Controllers
 
         private void SaveImageToCloud(HttpPostedFileBase file, string fileName)
         {
-            IAmazonS3 client = UtilityHelper.InitS3Client();
-            PutObjectRequest request = new PutObjectRequest();
-           // request.WithBucketName(WebConfig.Get("awsbucket"));
-            request.CannedACL = S3CannedACL.PublicReadWrite;
-            request.ContentType = file.ContentType;
-            request.Key = fileName;
-            request.InputStream = file.InputStream;
-          //  S3Response response = client.PutObject(request);
-          //  response.Dispose();
+
         }
 
         public FileStreamResult GetFileFromDisk(int valueId)
@@ -444,13 +431,7 @@ namespace PHS.Web.Controllers
             {
                 if (obj.IsSavedInCloud)
                 {
-                    IAmazonS3 client = UtilityHelper.InitS3Client();
-                    GetObjectRequest request = new GetObjectRequest();
-                    request.BucketName = WebConfig.Get("awsbucket");
-                    request.Key = obj.SaveName;
-                    GetObjectResponse response = client.GetObject(request);
-                    return File(response.ResponseStream, System.Net.Mime.MediaTypeNames.Application.Octet, obj.FileName);
-
+                    
                 }
                 else
                 {
@@ -466,7 +447,7 @@ namespace PHS.Web.Controllers
         public ActionResult ExportToExcel(int formId)
         {
            // var form = this._formRepo.GetByPrimaryKey(formId);
-            var form = this._formRepo.getAll(formId);
+            var form = this._formRepo.GelForm(formId);
             var formView = FormViewModel.CreateFromObject(form);
 
             formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
@@ -546,7 +527,7 @@ namespace PHS.Web.Controllers
         {
 
            // var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
-            var form = this._formRepo.getAll(model.Id.Value);
+            var form = this._formRepo.GelForm(model.Id.Value);
             var formView = FormViewModel.CreateFromObject(form);
 
             try
@@ -570,7 +551,7 @@ namespace PHS.Web.Controllers
         {
             FormViewModel model = null;
            // var form = this._formRepo.GetByPrimaryKey(id);
-            var form = this._formRepo.getAll(id);
+            var form = this._formRepo.GelForm(id);
 
             if (form != null)
             {

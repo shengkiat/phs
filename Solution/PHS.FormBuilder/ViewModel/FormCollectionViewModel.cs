@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FormBuilder.ViewModels
+namespace PHS.FormBuilder.ViewModels
 {
     public class FormCollectionViewModel
     {

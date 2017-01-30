@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
-using FormBuilder;
-
 using PHS.DB;
 using PHS.Common;
 
-namespace FormBuilder.ViewModels
+namespace PHS.FormBuilder.ViewModels
 {
     public class FormFieldValueViewModel
     {

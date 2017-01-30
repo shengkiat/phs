@@ -79,7 +79,7 @@
       <DependentUpon>PHSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Person.cs" />
+    <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="PHSModel.edmx">

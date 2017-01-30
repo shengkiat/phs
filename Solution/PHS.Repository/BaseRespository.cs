@@ -13,6 +13,16 @@ namespace PHS.Repository.Repository.Core
     public abstract class BaseRespository<T, PrimaryKeyT>
          where T : class
     {
+        public BaseRespository(PHSContext dc)
+        {
+            this.DataContext = dc;
+        }
+
+        public BaseRespository()
+        {
+
+        }
+
         public PHSContext DataContext;
 
         public abstract DbSet<T> EntitySet { get; }
@@ -49,11 +59,8 @@ namespace PHS.Repository.Repository.Core
 
         public virtual void SaveChanges()
         {
-            
-
             this.DataContext.SaveChanges();
         }
-
 
         public virtual void Close()
         {
@@ -62,14 +69,6 @@ namespace PHS.Repository.Repository.Core
 
         public abstract T GetByPrimaryKey(PrimaryKeyT key);
 
-        public BaseRespository(PHSContext dc)
-        {
-            this.DataContext = dc;
-        }
-
-        public BaseRespository()
-        {
-
-        }
+       
     }
 }
