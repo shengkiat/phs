@@ -61,18 +61,12 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult About()
+        public ActionResult LogOff()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            LogUserOut();
+            return RedirectToLogin();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
     }
 }

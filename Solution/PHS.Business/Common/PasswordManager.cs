@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Reflection;
 using System.Security.Cryptography;
-
+using System.Text.RegularExpressions;
 
 namespace PHS.Business.Common
 {
     public class PasswordManager
     {
-
         public const int SALT_BYTE_SIZE = 24;
         public const int HASH_BYTE_SIZE = 24;
         public const int PBKDF2_ITERATIONS = 1000;
-
-        //public const int ITERATION_INDEX = 0;
-        //public const int SALT_INDEX = 1;
-        //public const int PBKDF2_INDEX = 2;
 
         public static string GenerateSalt()
         {
@@ -57,6 +52,13 @@ namespace PHS.Business.Common
             Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
+        }
+
+        public static bool IsPasswordComplex(string plainPassword)
+        {
+            string regexPattern = @"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+
+            return Regex.IsMatch(plainPassword, regexPattern);
         }
     }
 }

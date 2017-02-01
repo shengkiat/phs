@@ -416,6 +416,7 @@
     <Content Include="Views\Forms\_FormToolsMenuPartial.cshtml" />
     <Content Include="Views\Forms\_SubmissionEmailPartial.cshtml" />
     <Content Include="Views\Shared\_EmbedLayout.cshtml" />
+    <Content Include="Views\Shared\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

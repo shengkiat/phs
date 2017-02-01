@@ -16,7 +16,60 @@ namespace PHS.Business.Implementation
     {
         public bool ChangePassword(Person user, string oldPass, string newPass, string newPassConfirm, out string message)
         {
-            throw new NotImplementedException();
+            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Username))
+            {
+                message = "Cannot find user";
+                return false;
+            }
+            if (string.IsNullOrEmpty(oldPass))
+            {
+                message = "Please Enter Old Password";
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(newPass.Trim()))
+            {
+                message = "Please Enter New Password";
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPassConfirm) || string.IsNullOrEmpty(newPassConfirm.Trim()))
+            {
+                message = "Please Enter Confirmed New Password";
+                return false;
+            }
+            if (!newPass.Trim().Equals(newPassConfirm, StringComparison.CurrentCultureIgnoreCase))
+            {
+                message = "Please confirm new password";
+                return false;
+            }
+            if (!PasswordManager.IsPasswordComplex(newPass))
+            {
+                message = "Password must be a combination of at least 1 digit, 1 upper case letter, 1 lower case letter, 1 symbol and length of at least 8";
+                return false;
+            }
+            var existingUser = IsAuthenticated(user.Username, oldPass, out message);
+            if (existingUser == null)
+            {
+                message = "Invalid Password";
+                return false;
+            }
+            string newPassHash = PasswordManager.CreateHash(newPass, user.PasswordSalt);
+
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                try
+                {
+                    unitOfWork.Persons.Get(user.Sid).Password = newPassHash;
+                    unitOfWork.Persons.Get(user.Sid).UpdateDT = DateTime.Now;
+                    unitOfWork.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = "Operation failed during saving Password. Please contact system admin";
+                    return false;
+                }
+            }
         }
 
         public IPersonManager Create()
