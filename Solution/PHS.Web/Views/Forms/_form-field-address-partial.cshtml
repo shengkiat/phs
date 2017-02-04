@@ -1,4 +1,8 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+
 <label data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
 <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 <div class="input">

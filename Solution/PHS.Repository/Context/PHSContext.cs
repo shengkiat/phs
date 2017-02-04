@@ -1,6 +1,7 @@
 ﻿
 using System.Data.Entity;
 using PHS.DB;
+using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
 
 namespace PHS.Repository.Context
 {
