@@ -19,7 +19,7 @@ namespace PHS.Repository.Repository
 {
     public class FormRepository : BaseRespository<form, int>
     {    
-        public form GelForm(int key)
+        public form GetForm(int key)
         {
             this.DataContext = new PHSContext();
             return this.DataContext.forms.Where(u => u.ID == key).Include(x => x.form_fields).FirstOrDefault();
@@ -140,7 +140,8 @@ namespace PHS.Repository.Repository
                 Slug = formName.ToSlug(),
                 Status = Constants.FormStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
-                ConfirmationMessage = "Thank you for signing up"
+                ConfirmationMessage = "Thank you for signing up",
+                IsActive = true
             };
 
             this.DataContext.forms.Add(form);
@@ -258,14 +259,16 @@ namespace PHS.Repository.Repository
             }
         }
 
-
         public List<FormViewModel> GetForms()
         {
             var formViews = new List<FormViewModel>();
             var formSet = this.DataContext.forms.ToList();
             foreach (var form in formSet)
             {
-                formViews.Add(FormViewModel.CreateBasicFromObject(form));
+                if (form.IsActive)
+                {
+                    formViews.Add(FormViewModel.CreateBasicFromObject(form));
+                }
             }
 
             return formViews;
@@ -279,14 +282,15 @@ namespace PHS.Repository.Repository
 
         public void DeleteForm(form form1)
         {
-           // form1.FormFields.LoadOnce();
-            this.DataContext.forms.Remove(form1);
-            var fields = form1.form_fields.ToList();
+            form1.IsActive = false;
 
-            foreach (var f in fields)
-            {
-                this.DataContext.form_fields.Remove(f);
-            }
+            //this.DataContext.forms.Remove(form1);
+            //var fields = form1.form_fields.ToList();
+
+            //foreach (var f in fields)
+            //{
+            //    this.DataContext.form_fields.Remove(f);
+            //}
 
             this.SaveChanges();
         }

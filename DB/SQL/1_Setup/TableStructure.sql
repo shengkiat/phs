@@ -40,6 +40,7 @@ CREATE TABLE [dbo].[form](
 	[DateAdded] [datetime] NULL,
 	[Theme] [nvarchar](50) NULL,
 	[NotificationEmail] [nvarchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

@@ -28,6 +28,7 @@ namespace PHS.DB
         public Nullable<System.DateTime> DateAdded { get; set; }
         public string Theme { get; set; }
         public string NotificationEmail { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<form_fields> form_fields { get; set; }

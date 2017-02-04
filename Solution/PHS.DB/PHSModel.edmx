@@ -17,6 +17,7 @@
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="Theme" Type="nvarchar" MaxLength="50" />
           <Property Name="NotificationEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -185,6 +186,7 @@
           <Property Name="Theme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NotificationEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="form_fields" Relationship="phsModel.form_form_fields" FromRole="form" ToRole="form_fields" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -271,6 +273,7 @@
           <EntitySetMapping Name="forms">
             <EntityTypeMapping TypeName="phsModel.form">
               <MappingFragment StoreEntitySet="form">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NotificationEmail" ColumnName="NotificationEmail" />
                 <ScalarProperty Name="Theme" ColumnName="Theme" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />

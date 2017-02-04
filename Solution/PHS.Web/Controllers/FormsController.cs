@@ -19,7 +19,7 @@ using PHS.Business.Common;
 
 namespace PHS.Web.Controllers
 {
-    public class FormsController : Controller
+    public class FormsController : BaseController
     {
         //
         // GET: /Forms/
@@ -50,7 +50,7 @@ namespace PHS.Web.Controllers
            
        
 
-            var sad1 = this._formRepo.GelForm(id);
+            var sad1 = this._formRepo.GetForm(id);
             FormViewModel model1 = FormViewModel.CreateFromObject(sad1);
 
 
@@ -212,7 +212,7 @@ namespace PHS.Web.Controllers
         public ActionResult TogglePublish(bool toOn, int id)
         {
            // var form = this._formRepo.GetByPrimaryKey(id);
-            var form = this._formRepo.GelForm(id);
+            var form = this._formRepo.GetForm(id);
 
             if (form.form_fields.Count() > 0)
             {
@@ -255,7 +255,7 @@ namespace PHS.Web.Controllers
             FormViewModel model = null;
            // var form = this._formRepo.GetByPrimaryKey(id);
 
-            var form = this._formRepo.GelForm(id);
+            var form = this._formRepo.GetForm(id);
 
             if (form != null)
             {
@@ -276,7 +276,7 @@ namespace PHS.Web.Controllers
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-            var formObj = this._formRepo.GelForm(model.Id.Value);
+            var formObj = this._formRepo.GetForm(model.Id.Value);
 
 
             var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
@@ -379,7 +379,7 @@ namespace PHS.Web.Controllers
         {
            // var form = this._formRepo.GetByPrimaryKey(formId);
 
-            var form = this._formRepo.GelForm(formId);
+            var form = this._formRepo.GetForm(formId);
 
 
             var formView = FormViewModel.CreateFromObject(form);
@@ -447,7 +447,7 @@ namespace PHS.Web.Controllers
         public ActionResult ExportToExcel(int formId)
         {
            // var form = this._formRepo.GetByPrimaryKey(formId);
-            var form = this._formRepo.GelForm(formId);
+            var form = this._formRepo.GetForm(formId);
             var formView = FormViewModel.CreateFromObject(form);
 
             formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
@@ -527,7 +527,7 @@ namespace PHS.Web.Controllers
         {
 
            // var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
-            var form = this._formRepo.GelForm(model.Id.Value);
+            var form = this._formRepo.GetForm(model.Id.Value);
             var formView = FormViewModel.CreateFromObject(form);
 
             try
@@ -549,9 +549,15 @@ namespace PHS.Web.Controllers
 
         public ActionResult Preview(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                // TODO
+               // return RedirectToLogin();
+            }
+
             FormViewModel model = null;
            // var form = this._formRepo.GetByPrimaryKey(id);
-            var form = this._formRepo.GelForm(id);
+            var form = this._formRepo.GetForm(id);
 
             if (form != null)
             {
