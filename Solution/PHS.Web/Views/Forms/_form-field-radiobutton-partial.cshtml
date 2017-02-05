@@ -1,62 +1,66 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<label data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
-<span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
-<div class="input">
-<ul class="option-list vertical-list">
-   @{var checkedAttribute = "";
-     bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o)); 
-     bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
-     int counter = 0;
-    }  
+<label style="width: 30%; word-wrap: break-word"
+       data-sub-channel="sub-label-@Model.DomId"
+       class="label editable">@Model.Label</label>
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-   @foreach (var option in Model.Options.Split(","))
-   {   
-       <li>
-        @if (Html.IsTempFormValueSelected(Model, option))
+    <div class="input" style="width: 60%;">
+        <ul class="option-list vertical-list">
+            @{var checkedAttribute = "";
+            bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+            bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+            int counter = 0;
+            }
+
+            @foreach (var option in Model.Options.Split(","))
+            {
+                <li>
+                    @if (Html.IsTempFormValueSelected(Model, option))
+                {
+                    checkedAttribute = "checked=\"checked\"";
+                }
+                else
+                {
+                    checkedAttribute = "";
+                }
+
+                    @if (checkDefault && Model.SelectedOption.IsTheSameAs(option))
+                {
+                    checkedAttribute = "checked=\"checked\"";
+                }
+
+                    @if (checkFirst && counter == 0)
+                {
+                    checkedAttribute = "checked=\"checked\"";
+                }
+
+                    @{counter = counter + 1;}
+
+                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id" />
+                    <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
+                </li>
+                        }
+        </ul>
+        @if (Model.IsEditMode())
         {
-            checkedAttribute = "checked=\"checked\"";
+            @Html.Partial("_form-field-properties-partial", Model)
         }
-        else
+
+        @if (!Model.Errors.IsNullOrEmpty())
         {
-            checkedAttribute = "";
+            <span class="field-validation-error">@Model.Errors</span>
         }
+    </div>
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
 
-        @if (checkDefault && Model.SelectedOption.IsTheSameAs(option))
-        {
-            checkedAttribute = "checked=\"checked\"";
-        }
-        
-        @if (checkFirst && counter == 0)
-        {
-            checkedAttribute = "checked=\"checked\"";
-        }
-        
-        @{counter = counter + 1;}
-
-  <input  name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id"/><label>@option</label>
-  </li>
-   }
-</ul>
-@if (Model.IsEditMode())
-{
-@Html.Partial("_form-field-properties-partial", Model)
-}
-
-@if (!Model.Errors.IsNullOrEmpty())
-{
-  <span class="field-validation-error">@Model.Errors</span>
-}
-</div>
-<a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
-  <img src="@Html.SpacerImage()" alt="help" />
-</a>
-
-@if (Model.IsEditMode())
-{
-@Html.Partial("_form-field-settings-template")
-}
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-settings-template")
+    }
 
 
 
