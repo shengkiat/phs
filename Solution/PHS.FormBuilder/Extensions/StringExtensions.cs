@@ -79,6 +79,8 @@ namespace PHS.FormBuilder.Extensions
         /// </summary>
         public static string LimitWithElipses(this string str, int characterCount)
         {
+            return str;
+
             if (!string.IsNullOrEmpty(str))
             {
                 if (characterCount < 5) return str.Limit(characterCount);       // Can’t do much with such a short limit

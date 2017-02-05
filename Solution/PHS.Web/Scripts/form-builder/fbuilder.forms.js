@@ -433,7 +433,7 @@
                     var optionList = targetContainer.find('.option-list');
                     optionList.find('li').remove();
                     $.each(optionsArray, function (index, item) {
-                        optionList.append('<li><input type="checkbox" value="' + item + '" /><label>' + item + '</label></li>')
+                        optionList.append('<li><input type="checkbox" value="' + item + '" /><label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">' + item + '</label></li>')
                     });
                 }
                 break;

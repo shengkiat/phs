@@ -1,6 +1,6 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormViewModel
-@{    
-    
+@{
+
     ViewBag.Title = Model.Title;
     Layout = null;
 }
@@ -13,40 +13,89 @@
     <script type="text/javascript" src="/Scripts/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.simplemodal.1.4.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.tmpl.min.js"></script>
-    <link type="text/css" href="/Content/css/form-builder/forms-modal.css" rel="stylesheet"  />          
+    <link type="text/css" href="/Content/css/form-builder/forms-modal.css" rel="stylesheet" />
     <style type="text/css">
-      .menu-links-container{position:absolute;top:0;left:90px;height:45px;width:280px;}
-      .menu-links-container ul{width:100%;list-style-type:none;margin:0;padding:0;}
-      .menu-links-container li{float:left;width:127px;margin:0;padding:0;}
-      .embed-link:link,.embed-link:visited{width:127px;height:45px;display:inline-block;background-image:url(/content/images/forms-sprite.png);background-position:-1px -1808px;}
-      .embed-link:hover{background-position:-1px -1866px;}
-      .home-link:link,.home-link:visited{width:127px;height:45px;display:inline-block;top:0;left:90px;background-image:url(/content/images/forms-sprite.png);background-position:-1px -1923px;}      
-      .script-container{margin:0 auto;width:580px;}
-      .script-text-area{width:565px;height:85px;}
+        .menu-links-container {
+            position: absolute;
+            top: 0;
+            left: 90px;
+            height: 45px;
+            width: 280px;
+        }
+
+            .menu-links-container ul {
+                width: 100%;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .menu-links-container li {
+                float: left;
+                width: 127px;
+                margin: 0;
+                padding: 0;
+            }
+
+        .embed-link:link, .embed-link:visited {
+            width: 127px;
+            height: 45px;
+            display: inline-block;
+            background-image: url(/content/images/forms-sprite.png);
+            background-position: -1px -1808px;
+        }
+
+        .embed-link:hover {
+            background-position: -1px -1866px;
+        }
+
+        .home-link:link, .home-link:visited {
+            width: 127px;
+            height: 45px;
+            display: inline-block;
+            top: 0;
+            left: 90px;
+            background-image: url(/content/images/forms-sprite.png);
+            background-position: -1px -1923px;
+        }
+
+        .script-container {
+            margin: 0 auto;
+            width: 580px;
+        }
+
+        .script-text-area {
+            width: 565px;
+            height: 85px;
+        }
     </style>
+
+    <script>
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        }
+    </script>
+
 </head>
 <body>
-    <div style="margin:0 auto;width:550px;">
-        <iframe id="form-builder-frame"
-                src="@Url.HttpRouteUrl("form-register", new { embed=true, Id=Model.Id })" 
-                frameborder="0"                 
-                width="550px"                 
-                marginheight="0" 
+    <div style="margin:0 auto; width:80%;">
+        <iframe id="form-builder-frame" onload="resizeIframe(this)"
+                src="@Url.HttpRouteUrl("form-register", new { embed=true, Id=Model.Id })"
+                frameborder="0"
+                width="100%"
+                marginheight="0"
                 marginwidth="0"
                 scrolling="no"></iframe>
     </div>
     <div class="menu-links-container">
-    <ul>
-       <li><a href="@Url.RouteUrl("form-home")" id="home-link" class="home-link"></a></li>
-       <li><a href="javascript:void(0);" id="embed-link" class="embed-link"></a></li>
-    </ul>
-    
-    
+        <ul>
+            <li><a href="@Url.RouteUrl("form-home")" id="home-link" class="home-link"></a></li>
+            <li><a href="javascript:void(0);" id="embed-link" class="embed-link"></a></li>
+        </ul>
+
     </div>
-   @Html.Partial("_formEmbedPartial");
-    
+    @Html.Partial("_formEmbedPartial");
+
 </body>
 
 </html>
-
-

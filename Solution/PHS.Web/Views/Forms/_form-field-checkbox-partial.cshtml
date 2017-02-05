@@ -1,44 +1,50 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<label data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
+<label style="width: 30%; word-wrap: break-word" 
+       data-sub-channel="sub-label-@Model.DomId" 
+       class="label editable">@Model.Label</label>
 <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
-<div class="input">
-<ul class="option-list vertical-list">
-   @{var checkedAttribute = "";}  
-   @foreach (var option in Model.Options.Split(","))
-   {
-       
-       <li>       
-           @if (Html.IsTempFormValueSelected(Model, option))
-           {
-               checkedAttribute = "checked=\"checked\"";
-           }
-           else {
-               checkedAttribute = "";
-           }
-           
-           <input id="SubmitFields[@Model.DomId].Checkbox" name="SubmitFields[@Model.DomId].Checkbox" @checkedAttribute type="checkbox" value="@option" /><label>@option</label>
-       </li>
-   }
-</ul>
-@if (Model.IsEditMode())
-{
-@Html.Partial("_form-field-properties-partial", Model)
-}
+<div class="input" style="width: 50%;">
+    <ul class="option-list vertical-list">
+        @{var checkedAttribute = "";}
+        @foreach (var option in Model.Options.Split(","))
+        {
+            <li>
+                @if (Html.IsTempFormValueSelected(Model, option))
+                {
+                    checkedAttribute = "checked=\"checked\"";
+                }
+                else
+                {
+                    checkedAttribute = "";
+                }
 
-@if (!Model.Errors.IsNullOrEmpty())
-{
-  <span class="field-validation-error">@Model.Errors</span>
-}
+                <input id="SubmitFields[@Model.DomId].Checkbox" 
+                       name="SubmitFields[@Model.DomId].Checkbox" 
+                       @checkedAttribute type="checkbox" value="@option"
+                        />
+                <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word" >@option</label>
+            </li>
+        }
+    </ul>
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-properties-partial", Model)
+    }
+
+    @if (!Model.Errors.IsNullOrEmpty())
+    {
+        <span class="field-validation-error">@Model.Errors</span>
+    }
 </div>
 <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
-  <img src="@Html.SpacerImage()" alt="help" />
+    <img src="@Html.SpacerImage()" alt="help" />
 </a>
 
 @if (Model.IsEditMode())
 {
-@Html.Partial("_form-field-settings-template")
+    @Html.Partial("_form-field-settings-template")
 }
 
 

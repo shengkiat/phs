@@ -34,8 +34,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Label" Type="nvarchar" MaxLength="50" />
-          <Property Name="Text" Type="nvarchar" MaxLength="100" />
+          <Property Name="Label" Type="nvarchar(max)" />
+          <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="FieldType" Type="varchar" MaxLength="20" />
           <Property Name="IsRequired" Type="bit" />
           <Property Name="MaxChars" Type="int" />
@@ -204,8 +204,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Label" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FieldType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IsRequired" Type="Boolean" />
           <Property Name="MaxChars" Type="Int32" />

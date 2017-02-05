@@ -63,8 +63,8 @@ CREATE TABLE [dbo].[form_field_values](
 
 CREATE TABLE [dbo].[form_fields](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Label] [nvarchar](50) NULL,
-	[Text] [nvarchar](100) NULL,
+	[Label] [nvarchar](MAX) NULL,
+	[Text] [nvarchar](MAX) NULL,
 	[FieldType] [varchar](20) NULL CONSTRAINT [DF_form_fields_FieldType]  DEFAULT ('TEXTBOX'),
 	[IsRequired] [bit] NULL CONSTRAINT [DF_form_fields_IsRequired]  DEFAULT ((0)),
 	[MaxChars] [int] NULL CONSTRAINT [DF_form_fields_MaxCharacters]  DEFAULT ((50)),

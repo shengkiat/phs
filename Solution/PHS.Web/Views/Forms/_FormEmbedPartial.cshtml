@@ -3,13 +3,12 @@
 @using PHS.FormBuilder.Extensions
 
 
-
  <script id="embed-script-template" type="text/x-jquery-tmpl">
         <iframe id="form-builder-frame"
                 src='@Url.AbsoluteRouteUrl("form-register", new { embed=true, Id=Model.Id })'
-                height="${height}"
+                
                 frameborder="0"
-                width="550px"                 
+                width="100%"                 
                 marginheight="0" 
                 marginwidth="0"
                 scrolling="no"></iframe>       
@@ -50,24 +49,15 @@
                 $(this).select();
             });
 
-            $('#form-builder-frame').load(function () {
-                if ($('#form-builder-frame').length > 0) {
-                    var frame = $('#form-builder-frame');
-                    var formHeight = frame.contents().find('.form-page-container').height();
-                    frame.attr('height', formHeight);
-                }
-            });
-
-
             function loadScript() {
                 var formHeight;
 
                 if ($('.form-page-container').length > 0) {
-                    formHeight = $('.form-page-container').height();
+                    formHeight = $('.form-page-container').height() + 'px';
                 } else {
                     var frame = $('#form-builder-frame');
                     frame.src = frame.src;
-                    formHeight = frame.contents().find('.form-page-container').height();
+                    formHeight = frame.contents().find('.form-page-container').height() + 'px';
                 }
 
                 var data = [{ height: formHeight}];
