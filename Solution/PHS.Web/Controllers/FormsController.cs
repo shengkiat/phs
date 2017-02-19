@@ -66,6 +66,21 @@ namespace PHS.Web.Controllers
             return RedirectToAction("edit", new { id = form.ID });
         }
 
+        public ActionResult GetAddressByZipCode(string zipcode)
+        {
+
+           // return Json("'Blk':'123', Street: 'ISS'");
+            return Json(new { Blk = "123", Street = "ISS" });
+            //   return Json("Success");
+
+        }
+
+
+
+
+
+
+
 
 
         [HttpPost]

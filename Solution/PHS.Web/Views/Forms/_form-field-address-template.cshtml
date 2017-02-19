@@ -2,13 +2,54 @@
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
 
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#btnSubmit1").click(function () {
+
+            var zip = document.getElementById('zipcode').value
+            alert(zip);
+
+
+            var jsonObject = {
+                "Name": "Rami",
+                "Roles": [{ "RoleName": "Admin", "Description": "Admin Role" }, { "RoleName": "User", "Description": "User Role" }]
+            };
+
+            $.ajax({
+                url: "@Url.Action("AddUser")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.responseText);
+
+                },
+                success: function (response) {
+
+                    document.getElementById("StreetAddress").value = response.Blk;
+
+                }
+            });
+
+        });
+    });
+
+</script>
+
+
+
 <script id="form-field-address-template" type="text/x-jquery-tmpl">
     <label data-sub-channel="sub-label-${id}" class="label editable">Click to edit</label>
     <span class="required hidden">*</span>
     <div class="input">
         <ul class="vertical-list">
             <li>
-                <input type="text" class="title" /><br />
+                <input type="text" class="title" id="StreetAddress" /><br />
                 <span class="sub-label">Street address</span>
             </li>
             <li>
@@ -30,11 +71,13 @@
             <li>
                 <ul class="two-field-row horizontal-list entry-form-list">
                     <li>
-                        <input type="text" class="shorter-field title" maxlength="5" /><br />
+                        <input type="text" class="shorter-field title" maxlength="6" id="zipcode" /><br />
                         <span class="sub-label">zip code</span>
                     </li>
                     <li>
-                        @Html.DropDownList("Countries", ItemListHelper.Countries.AsEnumerable().InsertAtStart("Select Country"), new { @class = "shorter-field" })<br />
+                        <button type="button" id="btnSubmit1">Search</button>
+
+                        <br />
                         <span class="sub-label">Country</span>
                     </li>
                 </ul>
