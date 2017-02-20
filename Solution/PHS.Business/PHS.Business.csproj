@@ -89,8 +89,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\PasswordManager.cs" />
+    <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
     <Compile Include="Implementation\PersonManager.cs" />
+    <Compile Include="Interface\IAddressManager.cs" />
     <Compile Include="Interface\IManagerFactoryBase.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

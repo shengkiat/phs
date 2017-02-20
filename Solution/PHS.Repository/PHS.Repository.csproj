@@ -58,9 +58,11 @@
     <Compile Include="Interface\Core\IRepositoryAsync.cs" />
     <Compile Include="Interface\Core\IUnitOfWork.cs" />
     <Compile Include="Interface\Core\IUnitOfWorkAsync.cs" />
+    <Compile Include="Interface\IMasterAddressRepository.cs" />
     <Compile Include="Interface\IPersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Core\Repository.cs" />
+    <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\PersonRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

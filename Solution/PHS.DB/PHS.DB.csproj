@@ -60,6 +60,9 @@
     <Compile Include="form_field_values.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MasterAddress.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

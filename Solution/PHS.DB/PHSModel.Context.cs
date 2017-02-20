@@ -29,5 +29,6 @@ namespace PHS.DB
         public virtual DbSet<form> forms { get; set; }
         public virtual DbSet<form_field_values> form_field_values { get; set; }
         public virtual DbSet<form_fields> form_fields { get; set; }
+        public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
     }
 }

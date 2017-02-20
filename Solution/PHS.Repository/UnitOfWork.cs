@@ -23,10 +23,11 @@ namespace PHS.Repository
             _context = context;
 
             Persons = new PersonRepository(_context);
+            MasterAddress = new MasterAddressRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
-
+        public IMasterAddressRepository MasterAddress { get; private set; }
 
         public int Complete()
         {

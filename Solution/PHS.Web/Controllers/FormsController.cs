@@ -16,6 +16,8 @@ using PHS.Common;
 using PHS.FormBuilder.Models;
 using PHS.FormBuilder.Helpers;
 using PHS.Business.Common;
+using PHS.Business.Implementation;
+using System.Net;
 
 namespace PHS.Web.Controllers
 {
@@ -68,9 +70,31 @@ namespace PHS.Web.Controllers
 
         public ActionResult GetAddressByZipCode(string zipcode)
         {
+            int postalCode = 0;
 
-           // return Json("'Blk':'123', Street: 'ISS'");
-            return Json(new { Blk = "123", Street = "ISS" });
+            if (!Int32.TryParse(zipcode, out postalCode))
+            {
+                // not int
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Error = "Invalid" });
+            }
+
+            using (var addressManager = new AddressManager())
+            {
+                var address = addressManager.FindAddress(zipcode);
+
+                if (address == null)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = "Invalid" });
+                }
+
+                return Json(new { Blk = address.STREET_NUMBER, Street = address.STREET_NAME });
+
+
+            }
+                // return Json("'Blk':'123', Street: 'ISS'");
+                return Json(new { Blk = "123", Street = "ISS" });
             //   return Json("Success");
 
         }

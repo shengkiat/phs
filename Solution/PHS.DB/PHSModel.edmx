@@ -66,6 +66,15 @@
           <Property Name="formId" Type="int" Nullable="false" />
           <Property Name="fieldId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="MasterAddress">
+          <Key>
+            <PropertyRef Name="POSTAL_CODE" />
+          </Key>
+          <Property Name="POSTAL_CODE" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="BUILDING_NAME" Type="varchar" MaxLength="150" />
+          <Property Name="STREET_NUMBER" Type="varchar" MaxLength="10" />
+          <Property Name="STREET_NAME" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Sid" />
@@ -126,6 +135,7 @@
           <EntitySet Name="form_field_values" EntityType="Self.form_field_values" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_fields" EntityType="Self.form_fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_form_fields" EntityType="Self.form_form_fields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterAddress" EntityType="Self.MasterAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK form_fields_form_form_fields" Association="Self.FK form_fields_form_form_fields">
             <End Role="form_fields" EntitySet="form_fields" />
@@ -172,6 +182,7 @@
             <End Role="form_fields" EntitySet="form_fields" />
             <End Role="form" EntitySet="forms" />
           </AssociationSet>
+          <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
         </EntityContainer>
         <EntityType Name="form">
           <Key>
@@ -248,6 +259,15 @@
           <End Type="phsModel.form_fields" Role="form_fields" Multiplicity="*" />
           <End Type="phsModel.form" Role="form" Multiplicity="*" />
         </Association>
+        <EntityType Name="MasterAddress">
+          <Key>
+            <PropertyRef Name="POSTAL_CODE" />
+          </Key>
+          <Property Name="POSTAL_CODE" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="BUILDING_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="STREET_NUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="STREET_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -334,6 +354,16 @@
               <ScalarProperty Name="ID" ColumnName="fieldId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="MasterAddresses">
+            <EntityTypeMapping TypeName="phsModel.MasterAddress">
+              <MappingFragment StoreEntitySet="MasterAddress">
+                <ScalarProperty Name="STREET_NAME" ColumnName="STREET_NAME" />
+                <ScalarProperty Name="STREET_NUMBER" ColumnName="STREET_NUMBER" />
+                <ScalarProperty Name="BUILDING_NAME" ColumnName="BUILDING_NAME" />
+                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
