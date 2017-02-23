@@ -418,6 +418,8 @@
     <Content Include="Views\Shared\_EmbedLayout.cshtml" />
     <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_LayoutForm.cshtml" />
+    <Content Include="Views\Forms\_form-field-bmi-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-bmi-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

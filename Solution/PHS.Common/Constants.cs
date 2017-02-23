@@ -47,7 +47,8 @@ namespace PHS.Common
             ADDRESS,
             PHONE,
             BIRTHDAYPICKER,
-            FILEPICKER
+            FILEPICKER,
+            BMI
         }
     }
 }
