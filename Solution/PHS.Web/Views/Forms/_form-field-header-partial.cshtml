@@ -1,7 +1,7 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<h2 data-sub-channel="sub-text-@Model.DomId" class="default editable">@Model.Text</h2>
+<h2 data-sub-channel="sub-text-@Model.DomId" class="default editable" style="word-wrap:break-word;">@Model.Text</h2>
 @if (Model.IsEditMode())
 {
 @Html.Partial("_form-field-properties-partial")

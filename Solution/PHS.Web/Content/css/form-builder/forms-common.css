@@ -28,7 +28,7 @@ ul.entry-form-list{list-style-type:none;border:0px solid red;overflow:hidden;}
 ul.entry-form-list a{text-decoration:none;font-size:0.9em;}
 ul.entry-form-list li textarea{width:300px;height:90px;}
 ul.entry-form-list li select.default{width:160px;}
-ul.entry-form-list li h2.default{margin-left:17px;width:61%;float:left;}
+ul.entry-form-list li h2.default{margin-left:17px;width:81%;float:left;}
 .entry-form-list li{overflow:hidden;margin-bottom:3px;}
 .entry-form-list li label{font-weight:normal}
 .entry-form-list li .label{color:#3C3C3C;float:left;text-align:right;width:130px;padding-right:20px;padding-top:2px;display:inline-block;}

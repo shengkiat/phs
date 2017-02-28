@@ -327,9 +327,10 @@
     function bindEditables() {
         // bind editable-labels
         $('.editable').editable(updateEditableField, {
+            type: 'textarea',
             onblur: 'submit',
-            cssclass: 'ignore',
-            maxlength: 40
+            cssclass: 'ignore'
+          //  maxlength: 5
         });
 
         $('.form-editable').editable(updateFormEditableField, {
