@@ -3,14 +3,18 @@
 @using PHS.FormBuilder.Extensions
 
 <script id="form-field-textbox-template" type="text/x-jquery-tmpl">
-<label data-sub-channel="sub-label-${id}" class="label editable">Click to edit</label>
-<span class="required hidden">*</span>
-<div class="input">
-<input id="field-${id}" type="text" class="title watermarked"  />
-@Html.Partial("_form-field-properties")
-</div>
-<a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
-  <img src="@Html.SpacerImage()" alt="help" />
-</a>
-@Html.Partial("_form-field-settings-template")
+    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-${id}"
+           class="label editable">Click to edit</label>
+
+    <span class="required hidden">*</span>
+
+    <div class="input" style="width: 70%;  margin-left: 1cm;">
+        <input id="field-${id}" type="text" class="title watermarked" />
+        @Html.Partial("_form-field-properties")
+    </div>
+    <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+    @Html.Partial("_form-field-settings-template")
 </script>
