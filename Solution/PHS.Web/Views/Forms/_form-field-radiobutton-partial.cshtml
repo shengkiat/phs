@@ -18,30 +18,30 @@
             {
                 <li>
                     @if (Html.IsTempFormValueSelected(Model, option))
-                {
-                    checkedAttribute = "checked=\"checked\"";
-                }
-                else
-                {
-                    checkedAttribute = "";
-                }
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
 
                     @if (checkDefault && Model.SelectedOption.IsTheSameAs(option))
-                {
-                    checkedAttribute = "checked=\"checked\"";
-                }
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
 
                     @if (checkFirst && counter == 0)
-                {
-                    checkedAttribute = "checked=\"checked\"";
-                }
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
 
                     @{counter = counter + 1;}
 
                     <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
-                        }
+            }
         </ul>
         @if (Model.IsEditMode())
         {
