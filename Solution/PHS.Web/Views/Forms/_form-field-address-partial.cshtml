@@ -8,7 +8,7 @@
 
 
     $(document).ready(function () {
-        $("#btnSubmit").click(function () {
+        $("#btnAddressSubmit").click(function () {
 
             var zip = document.getElementById('SubmitFields[@Model.DomId].ZipCode').value
             //alert(zip);
@@ -78,7 +78,7 @@
                         <span class="sub-label">zip code</span>
                     </li>
                     <li>
-                        <button type="button" id="btnSubmit">Search</button>
+                        <button type="button" id="btnAddressSubmit">Search</button>
                         <label id="SubmitFields[@Model.DomId].Error"  style="color: red;"></label>
 
                     </li>
