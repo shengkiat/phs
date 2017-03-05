@@ -44,6 +44,8 @@
           <Property Name="SubLabel" Type="nvarchar" MaxLength="50" />
           <Property Name="Size" Type="varchar" MaxLength="10" />
           <Property Name="SelectedOption" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddOthersOption" Type="bit" />
+          <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
           <Property Name="Columns" Type="int" />
           <Property Name="Rows" Type="int" />
           <Property Name="Options" Type="nvarchar" MaxLength="300" />
@@ -225,6 +227,8 @@
           <Property Name="SubLabel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SelectedOption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddOthersOption" Type="Boolean" />
+          <Property Name="OthersOption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Columns" Type="Int32" />
           <Property Name="Rows" Type="Int32" />
           <Property Name="Options" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
@@ -333,6 +337,8 @@
                 <ScalarProperty Name="Rows" ColumnName="Rows" />
                 <ScalarProperty Name="Columns" ColumnName="Columns" />
                 <ScalarProperty Name="SelectedOption" ColumnName="SelectedOption" />
+                <ScalarProperty Name="AddOthersOption" ColumnName="AddOthersOption" />
+                <ScalarProperty Name="OthersOption" ColumnName="OthersOption" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="SubLabel" ColumnName="SubLabel" />
                 <ScalarProperty Name="Hint" ColumnName="Hint" />

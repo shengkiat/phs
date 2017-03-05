@@ -83,6 +83,8 @@ namespace PHS.Repository.Repository
                     Rows = fieldView.Rows,
                     Options = fieldView.Options,
                     SelectedOption = fieldView.SelectedOption,
+                    AddOthersOption = fieldView.AddOthersOption,
+                    OthersOption = fieldView.OthersOption,
                     HelpText = fieldView.HelpText.Trim(),
                     Validation = fieldView.Validation,
                     Order = fieldView.Order,
@@ -116,6 +118,8 @@ namespace PHS.Repository.Repository
                     fField.Rows = fieldView.Rows;
                     fField.Options = fieldView.Options;
                     fField.SelectedOption = fieldView.SelectedOption;
+                    fField.AddOthersOption = fieldView.AddOthersOption;
+                    fField.OthersOption = fieldView.OthersOption;
                     fField.HelpText = fieldView.HelpText.Trim();
                     fField.Validation = fieldView.Validation;
                     fField.Order = fieldView.Order;
