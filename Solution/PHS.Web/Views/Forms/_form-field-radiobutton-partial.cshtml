@@ -2,12 +2,18 @@
 @using PHS.FormBuilder.Extensions
 
 <DIV style="width: 90%; word-wrap: break-word; text-align: left; white-space: pre-wrap;"
-       data-sub-channel="sub-label-@Model.DomId"
-       class="label editablewysiwyg">@Html.Raw(@Model.Label)</DIV>
-    
-<span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+     data-sub-channel="sub-label-@Model.DomId"
+     class="label editablewysiwyg">@Html.Raw(@Model.Label)</DIV>
 
-    <div class="input" style="width: 90%; margin-left: 1cm;">
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+    <div class="date-time">
+        @{
+            @Html.Label(string.Format("{0:F}", System.DateTime.Now))
+        }
+    </div>
+
+    <div id="radiobuttondiv-@Model.DomId" class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
             @{var checkedAttribute = "";
             bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
@@ -42,7 +48,17 @@
                     <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
+                        }
+
+            @if (Model.AddOthersOption)
+            {
+                <li>
+
+                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" value="Others" name="radiogroup-@Model.Id" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" />
+                </li>
             }
+
         </ul>
         @if (Model.IsEditMode())
         {
@@ -62,6 +78,3 @@
     {
         @Html.Partial("_form-field-settings-template")
     }
-
-
-

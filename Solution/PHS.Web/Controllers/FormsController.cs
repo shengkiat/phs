@@ -167,6 +167,8 @@ namespace PHS.Web.Controllers
                                 IsRequired = collection.FormFieldValue(domId, "IsRequired").IsBool(),
                                 Options = collection.FormFieldValue(domId, "Options"),
                                 SelectedOption = collection.FormFieldValue(domId, "SelectedOption"),
+                                AddOthersOption = collection.FormFieldValue(domId, "AddOthersOption").IsBool(),
+                                OthersOption = collection.FormFieldValue(domId, "OthersOption"),
                                 HoverText = collection.FormFieldValue(domId, "HoverText"),
                                 Hint = collection.FormFieldValue(domId, "Hint"),
                                 MinimumAge = minAge,

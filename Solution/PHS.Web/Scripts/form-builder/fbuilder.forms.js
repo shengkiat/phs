@@ -469,6 +469,11 @@
                 }
 
                 break;
+            case "addothersoption":
+                if (_controlType == "radiobutton") {
+                    $('drop-item-1').load(document.URL + 'drop-item-1');
+                }
+                break;
             case "minimumage":
                 var d = new Date();
                 var thisYear = d.getFullYear();
@@ -545,6 +550,7 @@
                     "Is Reqd: " + $('#isrequired-prop-' + domid).val() + "\n" +
                     "Options: " + $('#options-prop-' + domid).val() + "\n" +
                     "Selected: " + $('#selected-prop-' + domid).val() + "\n" +
+                    "Add Others: " + $('#addothersoption-prop-' + domid).val() + "\n" +
                     "Hover Txt: " + $('#hovertext-prop-' + domid).val() + "\n" +
                     "Hint: " + $('#hint-prop-' + domid).val() + "\n" +
                     "Min Age: " + $('#minimumage-prop-' + domid).val() + "\n" +
