@@ -233,6 +233,7 @@
     <Content Include="Content\css\form-builder\forms-sprites.css" />
     <Content Include="Content\css\form-builder\themes\Black\styles.css" />
     <Content Include="Content\css\form-builder\themes\Dark Red\styles.css" />
+    <Content Include="Content\css\jquery.wysiwyg.css" />
     <Content Include="Content\css\plugins\jquery.Jcrop.css" />
     <Content Include="Content\css\plugins\tipsy.css" />
     <Content Include="Content\css\reset.css" />
@@ -335,6 +336,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.jeditable.min.js" />
+    <Content Include="Scripts\jquery.jeditable.wysiwyg.js" />
     <Content Include="Scripts\jquery.maxlength-min.js" />
     <Content Include="Scripts\jquery.numeric.js" />
     <Content Include="Scripts\jquery.simplemodal.1.4.min.js" />
@@ -347,6 +349,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.watermark.js" />
+    <Content Include="Scripts\jquery.wysiwyg.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />

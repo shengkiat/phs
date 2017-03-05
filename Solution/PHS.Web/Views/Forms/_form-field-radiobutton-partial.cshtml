@@ -1,12 +1,13 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<label style="width: 70%; word-wrap: break-word; text-align: left;"
+<DIV style="width: 90%; word-wrap: break-word; text-align: left; white-space: pre-wrap;"
        data-sub-channel="sub-label-@Model.DomId"
-       class="label editable">@Model.Label</label>
-    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+       class="label editablewysiwyg">@Html.Raw(@Model.Label)</DIV>
+    
+<span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-    <div class="input" style="width: 70%; margin-left: 1cm;">
+    <div class="input" style="width: 90%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
             @{var checkedAttribute = "";
             bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));

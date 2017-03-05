@@ -21,6 +21,7 @@ using System.Net;
 
 namespace PHS.Web.Controllers
 {
+    [ValidateInput(false)]
     public class FormsController : BaseController
     {
         //
