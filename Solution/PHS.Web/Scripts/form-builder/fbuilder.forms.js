@@ -532,7 +532,8 @@
                     "Min filesize: " + $('#maxfilesize-prop-' + domid).val() + "\n" +
                     "valid extensions: " + $('#validextensions-prop-' + domid).val() + "\n" +
                     "Help Txt: " + $('#helptext-prop-' + domid).val() + "\n" +
-                    "Order: " + $('#order-prop-' + domid).val() + "\n";
+                    "Order: " + $('#order-prop-' + domid).val() + "\n" + 
+                    "ImageBase64: " + $('#image-prop-' + domid).val() + "\n";
 
         return props;
 
@@ -635,7 +636,45 @@
         bindAutoSave();
         toggleSaveButton();
         bindNavigateAway();
+
+        lame();
     }
+
+
+    function lame() {
+        window.onload = function () {
+
+
+            document.getElementById("SelectImage").addEventListener('change', function () {
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function (e) {
+
+                    console.log(e.target.result);
+                    document.getElementById("ImageView -" + activeItemId).src = e.target.result;
+
+                    document.getElementById("image-prop-" + activeItemId).value = e.target.result;
+
+
+
+
+                });
+
+
+
+                reader.readAsDataURL(this.files[0]);
+
+            }, false);
+        }
+    }
+
+
+
+
+
+
+
 
     return {
         init: init,

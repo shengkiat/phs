@@ -155,6 +155,7 @@ namespace PHS.Web.Controllers
                             }
 
                             var fieldTypeEnum = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), fieldType.ToUpper());
+
                             var fieldView = new FormFieldViewModel
                             {
                                 DomId = Convert.ToInt32(domId),
@@ -179,6 +180,7 @@ namespace PHS.Web.Controllers
                                 MaxFileSize = collection.FormFieldValue(domId, "MaxFileSize").IsInt(5000),
                                 MinFileSize = collection.FormFieldValue(domId, "MinFileSize").IsInt(5),
                                 ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
+                                ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
 
                             };
 

@@ -420,6 +420,8 @@
     <Content Include="Views\Shared\_LayoutForm.cshtml" />
     <Content Include="Views\Forms\_form-field-bmi-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-bmi-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-image-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-image-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

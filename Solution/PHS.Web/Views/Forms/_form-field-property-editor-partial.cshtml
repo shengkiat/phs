@@ -2,6 +2,14 @@
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
 
+<script type="text/javascript">
+
+
+
+</script>
+
+
+
 
 <ul class="vertical-list">
     <li class="header static-assets/sidebar-header-full.png">
@@ -161,6 +169,23 @@
               </td>
             </tr> 
             <!--// end min. filesize-->
+
+
+            <!--Select Image-->
+            <tr class="image">
+                <td class="label">
+                    <label class="label">
+                        Select Image
+                    </label>
+                </td>
+                <td class="input">
+                    <input type="file" id="SelectImage" 
+                           data-field-property="ImageBase64"
+                           style="height:25px" accept="image/*" />
+                </td>
+            </tr>
+            <!--// end select image-->
+
 
             <!-- Help text -->
             <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker filepicker">

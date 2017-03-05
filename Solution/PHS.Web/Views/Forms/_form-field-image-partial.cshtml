@@ -1,0 +1,37 @@
+﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+
+@{
+   // var base64 = Convert.ToBase64String(Model.ByteArray);
+   // var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+
+    <div class="input">
+        <img id="ImageView -@Model.DomId" src=@Model.ImageBase64 width="42" height="42">
+
+        @if (Model.IsEditMode())
+        {
+            @Html.Partial("_form-field-properties-partial", Model)
+        }
+
+        @if (!Model.Errors.IsNullOrEmpty())
+        {
+            <span class="field-validation-error">@Model.Errors</span>
+        }
+    </div>
+
+
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-settings-template")
+    }

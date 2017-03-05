@@ -116,6 +116,8 @@ namespace PHS.FormBuilder.Extensions
 
         public static string FormFieldValue(this FormCollection form, int domId, string field)
         {
+            string a = form["Fields[{0}].{1}".FormatWith(domId, field)];
+
             return form["Fields[{0}].{1}".FormatWith(domId, field)];
         }
 

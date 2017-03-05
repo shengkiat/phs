@@ -89,6 +89,7 @@ CREATE TABLE [dbo].[form_fields](
 	[MaxFilesizeInKb] [int] NULL CONSTRAINT [DF_form_fields_MaxFilesizeInKb]  DEFAULT ((5000)),
 	[ValidFileExtensions] [nvarchar](50) NULL,
 	[MinFilesizeInKb] [int] NULL CONSTRAINT [DF_form_fields_MinFilesizeInKb]  DEFAULT ((50)),
+	[ImageBase64] [varchar](max) NULL,
  CONSTRAINT [PK_form_fields] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
