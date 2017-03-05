@@ -48,7 +48,8 @@ namespace PHS.Common
             PHONE,
             BIRTHDAYPICKER,
             FILEPICKER,
-            BMI
+            BMI,
+            IMAGE
         }
     }
 }

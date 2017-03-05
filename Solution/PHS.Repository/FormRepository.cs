@@ -93,7 +93,8 @@ namespace PHS.Repository.Repository
                     MaxFilesizeInKb = fieldView.MaxFileSize,
                     MinFilesizeInKb = fieldView.MinFileSize,
                     ValidFileExtensions = fieldView.ValidFileExtensions,
-                    DateAdded = DateTime.UtcNow
+                    DateAdded = DateTime.UtcNow,
+                    ImageBase64 = fieldView.ImageBase64
                 };
 
                 form1.form_fields.Add(fField);
@@ -128,6 +129,7 @@ namespace PHS.Repository.Repository
                     fField.MaxFilesizeInKb = fieldView.MaxFileSize;
                     fField.MinFilesizeInKb = fieldView.MinFileSize;
                     fField.ValidFileExtensions = fieldView.ValidFileExtensions;
+                    fField.ImageBase64 = fieldView.ImageBase64;
                 }
 
                 this.SaveChanges();

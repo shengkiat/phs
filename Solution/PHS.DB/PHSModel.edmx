@@ -59,6 +59,7 @@
           <Property Name="MaxFilesizeInKb" Type="int" />
           <Property Name="ValidFileExtensions" Type="nvarchar" MaxLength="50" />
           <Property Name="MinFilesizeInKb" Type="int" />
+          <Property Name="ImageBase64" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="form_form_fields">
           <Key>
@@ -244,6 +245,7 @@
           <Property Name="MinFilesizeInKb" Type="Int32" />
           <NavigationProperty Name="form_field_values" Relationship="phsModel.FK_form_field_values_form_fields" FromRole="form_fields" ToRole="form_field_values" />
           <NavigationProperty Name="forms" Relationship="phsModel.form_form_fields" FromRole="form_fields" ToRole="form" />
+          <Property Name="ImageBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_form_field_values_form_fields">
           <End Type="phsModel.form_fields" Role="form_fields" Multiplicity="1">
@@ -323,6 +325,7 @@
           <EntitySetMapping Name="form_fields">
             <EntityTypeMapping TypeName="phsModel.form_fields">
               <MappingFragment StoreEntitySet="form_fields">
+                <ScalarProperty Name="ImageBase64" ColumnName="ImageBase64" />
                 <ScalarProperty Name="MinFilesizeInKb" ColumnName="MinFilesizeInKb" />
                 <ScalarProperty Name="ValidFileExtensions" ColumnName="ValidFileExtensions" />
                 <ScalarProperty Name="MaxFilesizeInKb" ColumnName="MaxFilesizeInKb" />

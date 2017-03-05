@@ -43,8 +43,7 @@ namespace PHS.FormBuilder.ViewModels
         public int MaxFileSize { get; set; }
         public int MinFileSize { get; set; }
         public string ValidFileExtensions { get; set; }
-        
-
+        public string ImageBase64 { get; set; }
 
         #endregion
 
@@ -93,7 +92,11 @@ namespace PHS.FormBuilder.ViewModels
                     MaxFileSize = field.MaxFilesizeInKb ?? field.MaxFilesizeInKb.Value,
                     MinFileSize = field.MinFilesizeInKb ?? field.MinFilesizeInKb.Value,
                     ValidFileExtensions=field.ValidFileExtensions,
-                    DateAdded = field.DateAdded
+                    DateAdded = field.DateAdded,
+
+                    ImageBase64 = field.ImageBase64
+
+
                 };
             }
 

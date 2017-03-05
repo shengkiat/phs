@@ -1,0 +1,26 @@
+﻿@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+
+@{
+// var base64 = Convert.ToBase64String(Model.ByteArray);
+// var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+<script id="form-field-image-template" type="text/x-jquery-tmpl">
+
+    <span class="required hidden">*</span>
+    <div class="input">
+
+        <img id="ImageView -${id}" src="" width="42" height="42">
+
+        @Html.Partial("_form-field-properties")
+    </div>
+
+
+
+    <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+    @Html.Partial("_form-field-settings-template")
+</script>
