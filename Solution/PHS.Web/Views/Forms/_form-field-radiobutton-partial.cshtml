@@ -7,7 +7,7 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-    <div id="radiobuttondiv-@Model.DomId" class="input" style="width: 70%; margin-left: 1cm;">
+    <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
             @{var checkedAttribute = "";
             bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
@@ -48,14 +48,14 @@
             {
                 <li>
                     <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" placeholder="Others" />
                 </li>
             }
             else 
             {
                 <li>
                     <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id"  style="display:none" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption"  style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption"  style="display:none" placeholder="Others" />
                 </li>
             }
             

@@ -17,6 +17,12 @@
             <li>
                 <input type="radio" value="Option 1" name="radiogroup-${id}" /><label>Option 2</label>
             </li>
+
+            <li>
+                <input name="SubmitFields[${id}].RadioButton" id="SubmitFields[${id}].RadioOthersOption" type="radio" value="Others" name="radiogroup-${id}" style="display:none" />
+                <input name="SubmitFields[${id}].OthersOption" id="SubmitFields[${id}].OthersOption" type="text"  style="display:none" placeholder="Others" />
+            </li>
+
         </ul>
         @Html.Partial("_form-field-properties")
     </div>
