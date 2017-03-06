@@ -387,7 +387,7 @@
     function doFieldSettingUpdates(publisherId, publisherType, valueToPublish) {
         var subIdentifier = 'sub-' + publisherType + '-' + publisherId;
         var inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
-       // inputSubscribers.val(valueToPublish);
+        inputSubscribers.val(valueToPublish);
 
         document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
 
