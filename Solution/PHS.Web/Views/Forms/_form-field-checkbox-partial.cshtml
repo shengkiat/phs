@@ -28,6 +28,21 @@
                 <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word" >@option</label>
             </li>
         }
+        @if (Model.AddOthersOption)
+        {
+            <li>
+                <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" type="checkbox" name="checkbox-@Model.DomId" />
+                <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields@Model.DomId].OthersOption" type="text" placeholder="Others" />
+            </li>
+        }
+        else
+        {
+            <li>
+                <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" type="checkbox" name="checkbox-@Model.DomId" style="display:none" />
+                <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" style="display:none" placeholder="Others" />
+            </li>
+        }
+
     </ul>
     @if (Model.IsEditMode())
     {

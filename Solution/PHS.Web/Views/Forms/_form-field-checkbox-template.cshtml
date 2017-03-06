@@ -18,6 +18,11 @@
             <li>
                 <input type="checkbox" value="Option 2" /><label>Option 2</label>
             </li>
+
+            <li>
+                <input name="SubmitFields[${id}].Checkbox" id="SubmitFields[${id}].CheckboxOthersOption" type="checkbox" name="checkbox-${id}" style="display:none" />
+                <input name="SubmitFields[${id}].OthersOption" id="SubmitFields[${id}].OthersOption" type="text" style="display:none" placeholder="Others" />
+            </li>
         </ul>
         @Html.Partial("_form-field-properties")
     </div>

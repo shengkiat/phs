@@ -485,6 +485,22 @@
                         radioOption.style.display = 'none';
                     }
                 }
+
+                else if (_controlType == "checkbox") {
+                    var tfOthersOption = document.getElementById("SubmitFields[" + domId + "].OthersOption");
+                    if (tfOthersOption.style.display === 'none') {
+                        tfOthersOption.style.display = '';
+                    } else {
+                        tfOthersOption.style.display = 'none';
+                    }
+
+                    var radioOption = document.getElementById("SubmitFields[" + domId + "].CheckboxOthersOption");
+                    if (radioOption.style.display === 'none') {
+                        radioOption.style.display = '';
+                    } else {
+                        radioOption.style.display = 'none';
+                    }
+                }
                 break;
             case "minimumage":
                 var d = new Date();
