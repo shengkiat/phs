@@ -1,9 +1,10 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<label style="width: 70%; word-wrap: break-word; text-align: left;"
-       data-sub-channel="sub-label-@Model.DomId"
-       class="label editable">@Model.Label</label>
+<DIV style="width: 90%; word-wrap: break-word; text-align: left; white-space: pre-wrap;"
+     data-sub-channel="sub-label-@Model.DomId"
+     class="label editablewysiwyg">@Html.Raw(@Model.Label)</DIV>
+
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
     <div id="radiobuttondiv-@Model.DomId" class="input" style="width: 70%; margin-left: 1cm;">
@@ -41,7 +42,7 @@
                     <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
-            }
+                        }
 
             @if (Model.AddOthersOption)
             {
@@ -77,6 +78,3 @@
     {
         @Html.Partial("_form-field-settings-template")
     }
-
-
-

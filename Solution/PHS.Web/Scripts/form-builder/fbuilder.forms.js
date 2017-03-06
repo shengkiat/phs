@@ -333,6 +333,24 @@
           //  maxlength: 5
         });
 
+        $('.editablewysiwyg').editable(updateEditableField, {
+            type: 'wysiwyg',
+            onblur: 'ignore',
+            cssclass: 'ignore',
+            submit: 'OK',
+            cancel: 'Cancel',
+            wysiwyg: {
+                controls: {
+                    separator04: { visible: true },
+                    insertOrderedList: { visible: true },
+                    insertUnorderedList: { visible: true }
+                }
+            }
+            //  maxlength: 5
+        });
+
+
+
         $('.form-editable').editable(updateFormEditableField, {
             onblur: 'submit',
             cssclass: 'ignore',
@@ -369,7 +387,10 @@
     function doFieldSettingUpdates(publisherId, publisherType, valueToPublish) {
         var subIdentifier = 'sub-' + publisherType + '-' + publisherId;
         var inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
-        inputSubscribers.val(valueToPublish);
+       // inputSubscribers.val(valueToPublish);
+
+        document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
+
 
         var labelSubscribers = $('label[data-sub-channel=' + subIdentifier + ']');
         labelSubscribers.text(valueToPublish);
@@ -559,6 +580,9 @@
 
     function handleSaveCallback(content) {
         $('#IsAutoSave').val('false');
+
+        console.log(content.responseText);
+
         var response = $.parseJSON(content.responseText);
         if (response.success) {
             if (!response.isautosave) {
@@ -669,7 +693,7 @@
 
                 reader.addEventListener("load", function (e) {
 
-                    console.log(e.target.result);
+                    
                     document.getElementById("ImageView -" + activeItemId).src = e.target.result;
 
                     document.getElementById("image-prop-" + activeItemId).value = e.target.result;
