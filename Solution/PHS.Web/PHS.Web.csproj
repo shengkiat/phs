@@ -233,7 +233,9 @@
     <Content Include="Content\css\form-builder\forms-sprites.css" />
     <Content Include="Content\css\form-builder\themes\Black\styles.css" />
     <Content Include="Content\css\form-builder\themes\Dark Red\styles.css" />
+    <Content Include="Content\css\jquery.wysiwyg.bg.png" />
     <Content Include="Content\css\jquery.wysiwyg.css" />
+    <Content Include="Content\css\jquery.wysiwyg.gif" />
     <Content Include="Content\css\plugins\jquery.Jcrop.css" />
     <Content Include="Content\css\plugins\tipsy.css" />
     <Content Include="Content\css\reset.css" />
