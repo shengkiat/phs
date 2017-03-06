@@ -6,12 +6,6 @@
        class="label editable">@Model.Label</label>
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-    <div class="date-time">
-        @{
-            @Html.Label(string.Format("{0:F}", System.DateTime.Now))
-        }
-    </div>
-
     <div id="radiobuttondiv-@Model.DomId" class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
             @{var checkedAttribute = "";
@@ -52,12 +46,18 @@
             @if (Model.AddOthersOption)
             {
                 <li>
-                    
-                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" value="Others" name="radiogroup-@Model.Id" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" />
                 </li>
             }
-           
+            else 
+            {
+                <li>
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id"  style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption"  style="display:none" />
+                </li>
+            }
+            
         </ul>
         @if (Model.IsEditMode())
         {

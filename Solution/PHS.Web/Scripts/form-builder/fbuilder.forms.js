@@ -450,7 +450,19 @@
                 break;
             case "addothersoption":
                 if (_controlType == "radiobutton") {
-                    $('drop-item-1').load(document.URL + 'drop-item-1');
+                    var tfOthersOption = document.getElementById("SubmitFields[" + domId + "].OthersOption");
+                    if (tfOthersOption.style.display === 'none') {
+                        tfOthersOption.style.display = '';
+                    } else {
+                        tfOthersOption.style.display = 'none';
+                    }
+
+                    var radioOption = document.getElementById("SubmitFields[" + domId + "].RadioOthersOption");
+                    if (radioOption.style.display === 'none') {
+                        radioOption.style.display = '';
+                    } else {
+                        radioOption.style.display = 'none';
+                    }
                 }
                 break;
             case "minimumage":
