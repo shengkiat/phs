@@ -1,0 +1,32 @@
+﻿@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+
+<script id="form-field-matrix-template" type="text/x-jquery-tmpl">
+    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-${id}" class="label editable">
+        Click to edit
+    </label>
+
+    <span class="required hidden">*</span>
+
+    <div class="input">
+
+        <table class="matrix-list">
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Age</th>
+            </tr>
+        </table>
+
+        <ul class="option-list vertical-list">
+
+        </ul>
+        @Html.Partial("_form-field-properties")
+    </div>
+    <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+    @Html.Partial("_form-field-settings-template")
+</script>

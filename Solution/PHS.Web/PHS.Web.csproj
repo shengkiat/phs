@@ -427,6 +427,8 @@
     <Content Include="Views\Forms\_form-field-bmi-template.cshtml" />
     <Content Include="Views\Forms\_form-field-image-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-image-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-matrix-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-matrix-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

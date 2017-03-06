@@ -49,7 +49,8 @@ namespace PHS.Common
             BIRTHDAYPICKER,
             FILEPICKER,
             BMI,
-            IMAGE
+            IMAGE,
+            MATRIX
         }
     }
 }

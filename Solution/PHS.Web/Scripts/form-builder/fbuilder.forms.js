@@ -389,8 +389,11 @@
         var inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
         inputSubscribers.val(valueToPublish);
 
-        document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
-
+        try{
+            document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
+        }catch(err) {
+            
+        } 
 
         var labelSubscribers = $('label[data-sub-channel=' + subIdentifier + ']');
         labelSubscribers.text(valueToPublish);
@@ -543,7 +546,90 @@
                 $('#maxAge').val(maxAge);
                 $('#minAge').val(minAge);
                 break;
+            case "matrixrow":
+                // value is row
+                // set value to column
+                var value = document.getElementById('matrixcolumninput').value
 
+                var columnArray = (value.length > 0) ? value.split(',') : "Option 1, Option 2".split(',');
+
+                if (_controlType == "matrix") {
+                    // bind options to rows  
+                    var optionList = targetContainer.find('.matrix-list');
+                    optionList.find('tr').remove();
+
+                    var person = "<tr><th></th>";
+
+                    $.each(columnArray, function (index, item) {
+
+                        person += "<th> " + item + "</th>";
+
+                    });
+                    person += "</tr>";
+
+                    var rowValue = document.getElementById('matrixrowinput').value
+                    var rowArray = (rowValue.length > 0) ? rowValue.split(',') : "Option 1, Option 2".split(',');
+                    var columnLength = columnArray.length;
+
+                    $.each(rowArray, function (index, item) {
+
+                        person += "<tr>";
+
+                        person += "<td> " + item + "</td>";
+
+
+                        for (var i = 0; i < columnLength; i++) {
+                            person += "<td> " + '<input type="radio" name="row-1" data-col="' + i + '" >' + "</td>";
+                        }
+
+                        person += "</tr>";
+
+                    });
+
+                    optionList.prepend(person)
+                }
+                break;
+            case "matrixcolumn":
+                // value is column
+                var columnArray = (value.length > 0) ? value.split(',') : "Option 1, Option 2".split(',');
+
+                if (_controlType == "matrix") {
+                    // bind options to rows  
+                    var optionList = targetContainer.find('.matrix-list');
+                    optionList.find('tr').remove();
+
+                    var person = "<tr><th></th>";
+
+                    $.each(columnArray, function (index, item) {
+
+                        person += "<th> " + item + "</th>";
+
+                    });
+                    person += "</tr>";
+
+                    var rowValue = document.getElementById('matrixrowinput').value
+                    var rowArray = (rowValue.length > 0) ? rowValue.split(',') : "Option 1, Option 2".split(',');
+                    var columnLength = columnArray.length;
+
+                    $.each(rowArray, function (index, item) {
+
+                        person += "<tr>";
+
+                        person += "<td> " + item + "</td>";
+
+
+                        for (var i = 0; i < columnLength; i++) {
+                            person += "<td> " + '<input type="radio" name="row-1" data-col="' + i + '" >' + "</td>";
+                        }
+
+                        person += "</tr>";
+
+                    });
+
+                    optionList.prepend(person)
+
+                }
+                break;
         }
     }
 
