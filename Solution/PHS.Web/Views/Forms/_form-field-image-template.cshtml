@@ -2,15 +2,21 @@
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
 
-@{
-// var base64 = Convert.ToBase64String(Model.ByteArray);
-// var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-}
+<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $("ImageView -${id}").resizable();
+    });
+
+</script>
 
 <script id="form-field-image-template" type="text/x-jquery-tmpl">
 
     <span class="required hidden">*</span>
-    <div class="input">
+    <div class="input" style="width: 90%; margin-left: 1cm;">
 
         <img id="ImageView -${id}" src="" width="42" height="42">
 
