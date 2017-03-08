@@ -148,6 +148,22 @@ namespace PHS.FormBuilder.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.CHECKBOX:
+                    value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    {
+                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                        if (value.IsNullOrEmpty()) { return false; }
+                    }
+                    return true;
+                case Constants.FieldType.RADIOBUTTON:
+                    value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    {
+                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                        if (value.IsNullOrEmpty()) { return false; }
+                    }
+                    return true;
                 case Constants.FieldType.EMAIL:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (value.IsNullOrEmpty()) { return true; }
@@ -435,6 +451,10 @@ namespace PHS.FormBuilder.Extensions
                     break;
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    {
+                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                    }
                     break;
                 case Constants.FieldType.PHONE:
                     var area = form.SubmittedFieldValue(field.DomId, "AreaCode");
@@ -453,6 +473,10 @@ namespace PHS.FormBuilder.Extensions
                     break;
                 case Constants.FieldType.RADIOBUTTON:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    {
+                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                    }
                     break;
                 case Constants.FieldType.FULLNAME:
                     var fName = form.SubmittedFieldValue(field.DomId, "FirstName");

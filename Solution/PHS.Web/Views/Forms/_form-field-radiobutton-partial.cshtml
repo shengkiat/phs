@@ -47,14 +47,14 @@
             @if (Model.AddOthersOption)
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" placeholder="Others" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.Id" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
                 </li>
             }
             else 
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="Others" name="radiogroup-@Model.Id"  style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.Id"  style="display:none" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption"  style="display:none" placeholder="Others" />
                 </li>
             }
