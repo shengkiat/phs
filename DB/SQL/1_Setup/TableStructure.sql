@@ -15,10 +15,7 @@ IF OBJECT_ID('dbo.form_fields', 'U') IS NOT NULL
   
 IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
   DROP TABLE [dbo].[form]; 
-  
- IF OBJECT_ID('dbo.MasterAddress', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[MasterAddress]; 
-  
+
   
 CREATE TABLE [dbo].[Person](
 	[Sid] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -128,16 +125,6 @@ GO
 ALTER TABLE [dbo].[form_form_fields] CHECK CONSTRAINT [FK_form_fields]
 GO
 
-CREATE TABLE [dbo].[MasterAddress](
-	[POSTAL_CODE] [varchar](6) NOT NULL,
-	[BUILDING_NAME] [varchar](150) NULL,
-	[STREET_NUMBER] [varchar](10) NULL,
-	[STREET_NAME] [varchar](100) NULL,
- CONSTRAINT [PK_TBLMDM_ADDRESS] PRIMARY KEY CLUSTERED 
-(
-	[POSTAL_CODE] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) 
 
 
 
