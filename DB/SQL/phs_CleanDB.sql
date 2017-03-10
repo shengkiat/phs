@@ -74,6 +74,8 @@ CREATE TABLE [dbo].[form_fields](
 	[SubLabel] [nvarchar](50) NULL,
 	[Size] [varchar](10) NULL,
 	[SelectedOption] [nvarchar](50) NOT NULL,
+	[AddOthersOption] [bit] NULL DEFAULT ((0)),
+	[OthersOption] [nvarchar](50) NULL,
 	[Columns] [int] NULL,
 	[Rows] [int] NULL,
 	[Options] [nvarchar](300) NULL,
