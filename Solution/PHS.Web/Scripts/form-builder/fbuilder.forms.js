@@ -82,6 +82,11 @@
                 fieldId = $(this).find('#fieldid-prop-' + domId).val();
 
             $(this).remove();
+
+            $('.dynamic').each(function (idx, elem) {
+                $(elem).text(idx + 1);
+            });
+
             if (fieldId) {
                 $.post('/forms/deletefield', { eventid: evtId, fieldid: fieldId }, function () {
                     refreshForm();

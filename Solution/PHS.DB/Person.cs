@@ -24,5 +24,6 @@ namespace PHS.DB
         public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
+        public string ContactNumber { get; set; }
     }
 }

@@ -32,11 +32,11 @@ namespace PHS.DB
         public string SubLabel { get; set; }
         public string Size { get; set; }
         public string SelectedOption { get; set; }
+        public Nullable<bool> AddOthersOption { get; set; }
+        public string OthersOption { get; set; }
         public Nullable<int> Columns { get; set; }
         public Nullable<int> Rows { get; set; }
         public string Options { get; set; }
-        public Nullable<bool> AddOthersOption { get; set; }
-        public string OthersOption { get; set; }
         public string Validation { get; set; }
         public Nullable<int> DomId { get; set; }
         public Nullable<int> Order { get; set; }

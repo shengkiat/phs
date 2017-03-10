@@ -88,6 +88,7 @@
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
@@ -171,6 +172,7 @@
           <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="People" EntityType="Self.Person" />
@@ -283,6 +285,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="phsModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
