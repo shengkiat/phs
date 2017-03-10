@@ -24,6 +24,9 @@ namespace PHS.DB
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            [Display(Name = "Contact Number")]
+            public string ContactNumber { get; set; }
+
             [Display(Name = "Created Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             public DateTime CreateDT { get; set; }

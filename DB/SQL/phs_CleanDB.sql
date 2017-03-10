@@ -25,6 +25,7 @@ CREATE TABLE [dbo].[Person](
 	[FullName] [nvarchar](max) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[Role] [char](1) NOT NULL,
+	[ContactNumber] [nvarchar](max) NULL,
 	[PasswordSalt] [nvarchar](max) NOT NULL,
 	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
