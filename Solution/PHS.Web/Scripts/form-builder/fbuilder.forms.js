@@ -82,6 +82,11 @@
                 fieldId = $(this).find('#fieldid-prop-' + domId).val();
 
             $(this).remove();
+
+            $('.dynamic').each(function (idx, elem) {
+                    $(elem).text(idx + 1);
+            });
+
             if (fieldId) {
                 $.post('/forms/deletefield', { eventid: evtId, fieldid: fieldId }, function () {
                     refreshForm();
@@ -451,14 +456,14 @@
                     var optionList = targetContainer.find('.option-list');
                     optionList.find('li').remove();
                     $.each(optionsArray, function (index, item) {
-                        optionList.append('<li><input type="radio" value="' + item + '" name="radiogroup-' + domId + '" /><label>' + item + '</label></li>')
+                        optionList.append('<li><input name="SubmitFields[' + domId + '].RadioButton" type="radio" value="' + item + '" name="radiogroup-' + domId + '" /><label>' + item + '</label></li>')
                     });
                 } else if (_controlType == "checkbox") {
                     // bind options to checkbox list
                     var optionList = targetContainer.find('.option-list');
                     optionList.find('li').remove();
                     $.each(optionsArray, function (index, item) {
-                        optionList.append('<li><input type="checkbox" value="' + item + '" /><label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">' + item + '</label></li>')
+                        optionList.append('<li><input name="SubmitFields[' + domId + '].Checkbox" type="checkbox" value="' + item + '" /><label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">' + item + '</label></li>')
                     });
                 }
                 break;
@@ -475,14 +480,14 @@
             case "addothersoption":
                 if (_controlType == "radiobutton") {
                     var tfOthersOption = document.getElementById("SubmitFields[" + domId + "].OthersOption");
-                    if (tfOthersOption.style.display === 'none') {
+                    if (value == "True") {
                         tfOthersOption.style.display = '';
                     } else {
                         tfOthersOption.style.display = 'none';
                     }
 
                     var radioOption = document.getElementById("SubmitFields[" + domId + "].RadioOthersOption");
-                    if (radioOption.style.display === 'none') {
+                    if (value == "True") {
                         radioOption.style.display = '';
                     } else {
                         radioOption.style.display = 'none';

@@ -28,6 +28,8 @@
                 <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word" >@option</label>
             </li>
         }
+    </ul>
+    <ul class="othersoption-list vertical-list">
         @if (Model.AddOthersOption)
         {
             <li>
@@ -42,7 +44,6 @@
                 <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" style="display:none" placeholder="Others" />
             </li>
         }
-
     </ul>
     @if (Model.IsEditMode())
     {

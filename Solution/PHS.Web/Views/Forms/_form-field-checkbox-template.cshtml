@@ -12,15 +12,16 @@
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
             <li>
-                <input type="checkbox" value="Option 1" />
+                <input id="SubmitFields[${id}].Checkbox" name="SubmitFields[${id}].Checkbox" type="checkbox" value="Option 1" />
                 <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">Option 1</label>
             </li>
             <li>
                 <input type="checkbox" value="Option 2" /><label>Option 2</label>
             </li>
-
+        </ul>
+        <ul class="othersoption-list vertical-list">
             <li>
-                <input name="SubmitFields[${id}].Checkbox" id="SubmitFields[${id}].CheckboxOthersOption" type="checkbox" name="checkbox-${id}" style="display:none" />
+                <input name="SubmitFields[${id}].Checkbox" id="SubmitFields[${id}].CheckboxOthersOption" type="checkbox" name="checkbox-${id}" style="display:none" value="OthersOption" />
                 <input name="SubmitFields[${id}].OthersOption" id="SubmitFields[${id}].OthersOption" type="text" style="display:none" placeholder="Others" />
             </li>
         </ul>
