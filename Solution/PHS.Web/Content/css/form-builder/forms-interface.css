@@ -40,7 +40,7 @@ ul#submit-button-list{padding-bottom:40px;}
 
 
 /*draggable element*/
-ul.admin-links div a span{background-image:url(../../Content/images/forms-sprite.png);background-repeat:no-repeat;}
+ul.admin-links div a span{background-image:url(../../images/forms-sprite.png);background-repeat:no-repeat;}
 ul.admin-links div{margin-bottom:3px;width:500px;background-color:#E1E1E1;border:1px solid gray;}
 ul.admin-links div a{text-decoration:none;margin:0 auto 0 5px;color:Black;border:1px solid transparent;width:92%;display:block;}
 ul.admin-links div a:hover{}
@@ -88,7 +88,7 @@ ul.drop-form-list{padding-bottom:20px;padding-top:20px;}
 
 /*field properties*/
 ul.vertical-list{list-style-type:none;}
-.field-property-table{width:252px;list-style-type:none;border:1px solid #c0c0c0;background: url(/content/images/properties-bg.png) repeat-x;background-position:bottom left;}
+.field-property-table{width:252px;list-style-type:none;border:1px solid #c0c0c0;background: url(../../images/properties-bg.png) repeat-x;background-position:bottom left;}
 .field-property-table td{padding:0;margin:0;height:27px;border-top:0px solid #c0c0c0;border-right:0px solid #c0c0c0;border-left:0px solid #c0c0c0;margin:0;}
 .field-property-table td select, .field-property-table td input{padding:0 !important;margin:0 !important;}
 .field-property-table td select{width:148px;border:0 !important;background-image:none !important;font-size:12px;}
