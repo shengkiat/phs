@@ -150,10 +150,10 @@ namespace PHS.FormBuilder.Extensions
             {
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
                     {
-                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
-                        if (value.IsNullOrEmpty()) { return false; }
+                        string othersOptionValue = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                        if (othersOptionValue.IsNullOrEmpty()) { return false; }
                     }
                     return true;
                 case Constants.FieldType.RADIOBUTTON:
@@ -451,9 +451,10 @@ namespace PHS.FormBuilder.Extensions
                     break;
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                    if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
+                    if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
                     {
-                        value = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                        string othersOptionValue = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                        value = value.Replace("OthersOption", othersOptionValue);
                     }
                     break;
                 case Constants.FieldType.PHONE:
