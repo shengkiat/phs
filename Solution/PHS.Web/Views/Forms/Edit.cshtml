@@ -10,14 +10,14 @@
 }
 
 @section headerScripts{    
-  <script type="text/javascript" src="/scripts/form-builder/fbuilder.utils.js"></script>
-  <script type="text/javascript" src="/scripts/form-builder/fbuilder.global.js"></script>
-  <script type="text/javascript" src="/scripts/form-builder/fbuilder.layout.js"></script>
-  <script type="text/javascript" src="/scripts/css_browser_selector.js"></script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.utils.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>
 
-  <link type="text/css" href="/Content/css/form-builder/forms-common.css" rel="stylesheet"  />
-  <link type="text/css" href="/Content/css/form-builder/forms-interface.css" rel="stylesheet"  />
-  <link type="text/css" href="/Content/css/form-builder/forms-modal.css" rel="stylesheet"  />      
+  <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-common.css")" rel="stylesheet"  />
+  <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-interface.css")" rel="stylesheet"  />
+  <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-modal.css")" rel="stylesheet"  />      
   
 }
 <div class="form-page-container prepend-top span-26">
@@ -112,13 +112,13 @@
 @Html.Partial("_form-field-matrix-template")
 
 @section footerScripts{ 
-    <script type="text/javascript" src="/Scripts/form-builder/fbuilder.forms.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.tmpl.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.jeditable.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.jeditable.wysiwyg.js" ></script>
-    <script type="text/javascript" src="/Scripts/jquery.wysiwyg.js" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/form-builder/fbuilder.forms.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jeditable.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jeditable.wysiwyg.js")" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.wysiwyg.js")" ></script>
 
-    <link type="text/css" href="/Content/css/jquery.wysiwyg.css" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Content/css/jquery.wysiwyg.css")" rel="stylesheet" />
 }
 
 @section initializers{

@@ -40,7 +40,7 @@ ul#submit-button-list{padding-bottom:40px;}
 
 
 /*draggable element*/
-ul.admin-links div a span{background-image:url(/Content/images/forms-sprite.png);background-repeat:no-repeat;}
+ul.admin-links div a span{background-image:url(../../Content/images/forms-sprite.png);background-repeat:no-repeat;}
 ul.admin-links div{margin-bottom:3px;width:500px;background-color:#E1E1E1;border:1px solid gray;}
 ul.admin-links div a{text-decoration:none;margin:0 auto 0 5px;color:Black;border:1px solid transparent;width:92%;display:block;}
 ul.admin-links div a:hover{}
