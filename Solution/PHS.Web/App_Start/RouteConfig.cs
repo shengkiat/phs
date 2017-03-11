@@ -15,6 +15,15 @@ namespace PHS.Web
 
             //** BEGIN FORM BUILDER ROUTES **//
 
+            // register
+            routes.MapRoute(
+               "form-preregistration",
+               "registration/{id}",
+               defaults: new { controller = "forms", action = "PreRegistration", id = UrlParameter.Optional }
+               
+            );
+
+
             // download file
             routes.MapRoute(
                "form-download-file",

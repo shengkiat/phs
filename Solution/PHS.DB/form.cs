@@ -30,6 +30,8 @@ namespace PHS.DB
         public string NotificationEmail { get; set; }
         public bool IsActive { get; set; }
         public Nullable<int> EventID { get; set; }
+        public bool IsPublic { get; set; }
+        public string PublicFormType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<form_fields> form_fields { get; set; }

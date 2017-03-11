@@ -2,12 +2,31 @@
 
 @using PHS.FormBuilder.Helpers
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#IsPublic").on("change", function () {
+
+            if ($(this).val() == 'true') {
+                $("#PublicType").show();
+            } else {
+                $("#PublicType").hide();
+            }
+
+        });
+    });
+
+</script>
+
+
 
 
 <ul class="vertical-list">
     <li class="header static-assets/sidebar-header-full.png">
         <h3 class="sponsors">
-            Form Properties</h3>
+            Form Properties
+        </h3>
     </li>
     <li>
         <table class="form-field-properties field-property-table " cellpadding="0" cellspacing="0">
@@ -15,56 +34,122 @@
             <tr>
                 <td class="label">
                     <label class="label">
-                        Title</label>
+                        Title
+                    </label>
                 </td>
                 <td class="input">
                     @Html.TextBoxFor(m => m.Title,
                                         new Dictionary<string, object>
-                                        { 
+                                        {
                                             { "data-field-property", "title"},
                                             { "class","is-publisher"}  ,
                                             {"data-sub-channel", "sub-title-0"},
                                             {"maxlength", "20"}
-                                                                                      
-                                            
+
+
                                          })
-                   @Html.HiddenFor(m => m.Status)
+                    @Html.HiddenFor(m => m.Status)
                 </td>
-            </tr>                    
+            </tr>
             <tr>
                 <td class="label">
                     <label class="label">
-                        Theme</label>
+                        Theme
+                    </label>
                 </td>
                 <td class="input">
-                    @Html.DropDownListFor(m => m.Theme, new SelectList(UtilityHelper.ThemeFolderList(), "Value", "Text",""),
+                    @Html.DropDownListFor(m => m.Theme, new SelectList(UtilityHelper.ThemeFolderList(), "Value", "Text", ""),
                                         new Dictionary<string, object>
-                                        { 
+                                        {
                                             { "data-field-property", "Theme"},
-                                            { "class","is-publisher"}                                            
-                                            
+                                            { "class","is-publisher"}
+
                                          })
                 </td>
-            </tr>  
+            </tr>
             <tr>
                 <td class="label">
                     <label class="label">
-                        Notification Email</label>
+                        Notification Email
+                    </label>
                 </td>
                 <td class="input">
                     @Html.TextBoxFor(m => m.NotificationEmail)
                 </td>
-            </tr>            
+            </tr>
+
+            <tr>
+                <td class="label">
+                    <label class="label">
+                        Public
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        var listItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "True", Value = "true"},
+                            new SelectListItem {Text = "False", Value = "false"}
+                        };
+
+                        @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty)
+                    }
+
+                </td>
+            </tr>
+
+            <tr id="PublicType">
+                <td class="label">
+                    <label class="label">
+                        Public Form Type
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        var listItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Pre Registration", Value = "PRE-REGISTRATION"},
+                            new SelectListItem {Text = "Out Reach", Value = "OUTREACH"}
+                        };
+
+                        @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty)
+                    }
+
+                </td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- Confirmation message -->
             <tr class="last-row">
                 <td class="label">
                     <label class="label">
-                        Confirmation Msg</label>
+                        Confirmation Msg
+                    </label>
                 </td>
                 <td class="input">
                     @Html.TextAreaFor(m => m.ConfirmationMessage, new { @class = "elastic", maxlength = "200" })
                 </td>
-            </tr>                 
+            </tr>
         </table>
     </li>
 </ul>

@@ -15,6 +15,7 @@ using PHS.FormBuilder.Helpers;
 using PHS.FormBuilder.Models;
 using System.Data.Entity;
 
+
 namespace PHS.Repository.Repository
 {
     public class FormRepository : BaseRespository<form, int>
@@ -172,6 +173,8 @@ namespace PHS.Repository.Repository
             // form.TabOrder = model.TabOrder; // excluding tab order for first launch
             form1.ConfirmationMessage = model.ConfirmationMessage;
             form1.Theme = model.Theme;
+            form1.IsPublic = model.IsPublic;
+            form1.PublicFormType = model.PublicFormType;
             form1.NotificationEmail = model.NotificationEmail;
             this.SaveChanges();
         }
@@ -278,6 +281,14 @@ namespace PHS.Repository.Repository
             }
 
             return formViews;
+        }
+
+        public form GetPreRegistrationForm(int year = -1)
+        {
+            
+            var form = this.DataContext.forms.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
+
+            return form;
         }
 
         public void DeleteForm(int formId)

@@ -31,6 +31,8 @@
           <Property Name="NotificationEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="EventID" Type="int" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -57,8 +59,6 @@
           <Property Name="SubLabel" Type="nvarchar" MaxLength="50" />
           <Property Name="Size" Type="varchar" MaxLength="10" />
           <Property Name="SelectedOption" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AddOthersOption" Type="bit" />
-          <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
           <Property Name="Columns" Type="int" />
           <Property Name="Rows" Type="int" />
           <Property Name="Options" Type="nvarchar" MaxLength="300" />
@@ -73,6 +73,8 @@
           <Property Name="ValidFileExtensions" Type="nvarchar" MaxLength="50" />
           <Property Name="MinFilesizeInKb" Type="int" />
           <Property Name="ImageBase64" Type="varchar(max)" />
+          <Property Name="AddOthersOption" Type="bit" />
+          <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="form_form_fields">
           <Key>
@@ -101,7 +103,6 @@
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
@@ -172,24 +173,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="phsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="Sid" />
-          </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="PasswordSalt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDT" Type="DateTime" Precision="3" />
-          <Property Name="DeleteDT" Type="DateTime" Precision="3" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="forms" EntityType="phsModel.form" />
           <EntitySet Name="form_field_values" EntityType="phsModel.form_field_values" />
           <EntitySet Name="form_fields" EntityType="phsModel.form_fields" />
@@ -203,6 +187,7 @@
           </AssociationSet>
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="events" EntityType="phsModel.event" />
+          <EntitySet Name="People" EntityType="phsModel.Person" />
         </EntityContainer>
         <EntityType Name="form">
           <Key>
@@ -219,6 +204,8 @@
           <NavigationProperty Name="form_fields" Relationship="phsModel.form_form_fields" FromRole="form" ToRole="form_fields" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="EventID" Type="Int32" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -304,32 +291,32 @@
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDT" Type="DateTime" Precision="3" />
+          <Property Name="DeleteDT" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="phsModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="People">
-            <EntityTypeMapping TypeName="phsModel.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="Sid" ColumnName="Sid" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="CreateDT" ColumnName="CreateDT" />
-                <ScalarProperty Name="UpdateDT" ColumnName="UpdateDT" />
-                <ScalarProperty Name="DeleteDT" ColumnName="DeleteDT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="forms">
             <EntityTypeMapping TypeName="phsModel.form">
               <MappingFragment StoreEntitySet="form">
+                <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NotificationEmail" ColumnName="NotificationEmail" />
@@ -415,6 +402,22 @@
                 <ScalarProperty Name="StartDT" ColumnName="StartDT" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="phsModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="DeleteDT" ColumnName="DeleteDT" />
+                <ScalarProperty Name="UpdateDT" ColumnName="UpdateDT" />
+                <ScalarProperty Name="CreateDT" ColumnName="CreateDT" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

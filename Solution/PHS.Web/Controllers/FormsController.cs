@@ -591,6 +591,26 @@ namespace PHS.Web.Controllers
 
         }
 
+        public ActionResult PreRegistration(int id = -1)
+        {
+
+            FormViewModel model = null;
+ 
+            var form = this._formRepo.GetPreRegistrationForm();
+
+            if (form != null)
+            {
+                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+
+            }
+            else
+            {
+                throw new HttpException(404, "Some description");
+            }
+
+            return View("Preview", model);
+        }
+
         public ActionResult Preview(int id)
         {
             if (!IsUserAuthenticated())

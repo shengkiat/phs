@@ -24,8 +24,10 @@ namespace PHS.FormBuilder.ViewModels
         public IList<FormFieldValueViewModel> Entries { get; set; }
         public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
         public string Theme { get; set; }
-        public bool Embed { get; set; }
-        
+        public bool Embed { get; set; }   
+        public bool IsPublic { get; set; }
+        public string PublicFormType { get; set; }
+
         public bool HasTheme
         {
             get { 
@@ -39,15 +41,16 @@ namespace PHS.FormBuilder.ViewModels
         #region Public Members
 
         public static FormViewModel Initialize()
-        {   
+        {
 
             var formView = new FormViewModel
-            {                
+            {
                 Title = "Registration",
                 Status = Constants.FormStatus.DRAFT,
                 TabOrder = 0,
-                Theme="",
-                NotificationEmail="",
+                Theme = "",
+                NotificationEmail = "",
+                IsPublic = false,
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList()
                 
             };
@@ -95,6 +98,8 @@ namespace PHS.FormBuilder.ViewModels
                 Slug = form1.Slug,
                 Theme= form1.Theme,
                 NotificationEmail = form1.NotificationEmail,
+                IsPublic = form1.IsPublic,
+                PublicFormType = form1.PublicFormType,
                 Status = (Constants.FormStatus)Enum.Parse(typeof(Constants.FormStatus), form1.Status)
             };
 
@@ -111,6 +116,7 @@ namespace PHS.FormBuilder.ViewModels
                 ConfirmationMessage = "Thank you for filling this form",
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
                 Slug = "test-form",
+                IsPublic = false,
                 NotificationEmail= ""
 
             };
