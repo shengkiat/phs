@@ -12,6 +12,7 @@
         <AssociationConnector Association="phsModel.FK_form_field_values_form_fields" />
         <AssociationConnector Association="phsModel.form_form_fields" />
         <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="phsModel.event" Width="1.5" PointX="7.5" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

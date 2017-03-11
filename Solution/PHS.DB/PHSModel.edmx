@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="phsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDT" Type="datetime" Nullable="false" />
+          <Property Name="EndDT" Type="datetime" Nullable="false" />
+          <Property Name="Venue" Type="nvarchar(max)" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="form">
           <Key>
             <PropertyRef Name="ID" />
@@ -18,6 +30,7 @@
           <Property Name="Theme" Type="nvarchar" MaxLength="50" />
           <Property Name="NotificationEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="EventID" Type="int" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -135,6 +148,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="phsModelStoreContainer">
+          <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form" EntityType="Self.form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_field_values" EntityType="Self.form_field_values" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_fields" EntityType="Self.form_fields" Schema="dbo" store:Type="Tables" />
@@ -188,6 +202,7 @@
             <End Role="form" EntitySet="forms" />
           </AssociationSet>
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
+          <EntitySet Name="events" EntityType="phsModel.event" />
         </EntityContainer>
         <EntityType Name="form">
           <Key>
@@ -203,6 +218,7 @@
           <Property Name="NotificationEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="form_fields" Relationship="phsModel.form_form_fields" FromRole="form" ToRole="form_fields" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EventID" Type="Int32" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -276,6 +292,18 @@
           <Property Name="STREET_NUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="STREET_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Venue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -302,6 +330,7 @@
           <EntitySetMapping Name="forms">
             <EntityTypeMapping TypeName="phsModel.form">
               <MappingFragment StoreEntitySet="form">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NotificationEmail" ColumnName="NotificationEmail" />
                 <ScalarProperty Name="Theme" ColumnName="Theme" />
@@ -373,6 +402,19 @@
                 <ScalarProperty Name="STREET_NUMBER" ColumnName="STREET_NUMBER" />
                 <ScalarProperty Name="BUILDING_NAME" ColumnName="BUILDING_NAME" />
                 <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="phsModel.event">
+              <MappingFragment StoreEntitySet="event">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="Venue" ColumnName="Venue" />
+                <ScalarProperty Name="EndDT" ColumnName="EndDT" />
+                <ScalarProperty Name="StartDT" ColumnName="StartDT" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
