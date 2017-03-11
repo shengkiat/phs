@@ -16,10 +16,10 @@ IF OBJECT_ID('dbo.form_fields', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
   DROP TABLE [dbo].[form]; 
   
- IF OBJECT_ID('dbo.MasterAddress', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[MasterAddress]; 
+IF OBJECT_ID('dbo.event', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[event]; 
   
-  
+
 CREATE TABLE [dbo].[Person](
 	[Sid] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[Username] [nvarchar](max) NOT NULL,
@@ -27,11 +27,26 @@ CREATE TABLE [dbo].[Person](
 	[FullName] [nvarchar](max) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[Role] [char](1) NOT NULL,
+	[ContactNumber] [nvarchar](max) NULL,
 	[PasswordSalt] [nvarchar](max) NOT NULL,
 	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
 )
+
+CREATE TABLE [dbo].[event](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[StartDT] [datetime] NOT NULL,
+	[EndDT] [datetime] NOT NULL,
+	[Venue] [nvarchar](max) NULL,
+	[CreateBy] [nvarchar] NOT NULL,
+	[CreateDate] [datetime] NOT NULL
+ CONSTRAINT [PK_event] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 
 CREATE TABLE [dbo].[form](
@@ -44,6 +59,9 @@ CREATE TABLE [dbo].[form](
 	[Theme] [nvarchar](50) NULL,
 	[NotificationEmail] [nvarchar](50) NULL,
 	[IsActive] [bit] NOT NULL,
+	[EventID] [int] NULL,
+	[IsPublic] [bit] NULL,
+	[PublicFormType] [nvarchar(50)] NULL
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -127,21 +145,6 @@ REFERENCES [dbo].[form] ([ID])
 GO
 ALTER TABLE [dbo].[form_form_fields] CHECK CONSTRAINT [FK_form_fields]
 GO
-
-CREATE TABLE [dbo].[MasterAddress](
-	[POSTAL_CODE] [varchar](6) NOT NULL,
-	[BUILDING_NAME] [varchar](150) NULL,
-	[STREET_NUMBER] [varchar](10) NULL,
-	[STREET_NAME] [varchar](100) NULL,
- CONSTRAINT [PK_TBLMDM_ADDRESS] PRIMARY KEY CLUSTERED 
-(
-	[POSTAL_CODE] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) 
-
-
-
-
 
 
 
