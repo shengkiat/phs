@@ -27,14 +27,14 @@
     </div>        
         <div class="inner-container clear-both">
             @Html.WriteMessages()<br />
-            @using (Html.BeginForm("DeleteEntries", "Forms", FormMethod.Post))
+            @using (Html.BeginForm("ViewEntriesSubmit", "Forms", FormMethod.Post))
             {
                 if (Model.GroupedEntries.Count() > 0)
                 {
                     <ul class="horizontal-list form-actions-list">
                         <li>
-                            <input type="submit" class="red" value="Delete Selected" />                        
-                            @Html.ActionLink("Export to Excel", "ExportToExcel","Forms", new{formid=Model.Id.Value}, new { @class="hyperlink-button green-button"})  
+                            <input type="submit" name="submitButton" class="red" value="Delete Selected" />
+                            <input type="submit" name="submitButton" class="hyperlink-button green-button" value="Export to Excel" />
                         </li>
                     
                     </ul>
@@ -63,8 +63,8 @@
                                 <td width="20%">
                                     <select id="sortOrder">
                                         <option value="Select a value"></option>
-                                        <option value="ASC">ASC</option>
-                                        <option value="DESC">DESC</option>
+                                        <option value="ASC">Ascending</option>
+                                        <option value="DESC">Descending</option>
                                     </select>
                                 </td>
                                 <td width="50%">

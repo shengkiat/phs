@@ -525,8 +525,29 @@ namespace PHS.Web.Controllers
             throw new Exception("File Not Found");
         }
 
-        public ActionResult ExportToExcel(int formId)
+        [HttpPost]
+        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormViewModel model)
         {
+            Console.Write(submitButton);
+
+            switch (submitButton)
+            {
+                case "Delete Selected":
+                    // delegate sending to another controller action
+                    return DeleteEntries(selectedEntries, model);
+                case "Export to Excel":
+                    // call another action to perform the cancellation
+                    return ExportToExcel(selectedEntries, model);
+                default:
+                    // If they've submitted the form without a submitButton, 
+                    // just return the view again.
+                    return View();
+            }
+        }
+
+        public ActionResult ExportToExcel(IEnumerable<string> selectedEntries, FormViewModel model)
+        {
+            int formId = model.Id.Value;
            // var form = this._formRepo.GetByPrimaryKey(formId);
             var form = this._formRepo.GetForm(formId);
             var formView = FormViewModel.CreateFromObject(form);
