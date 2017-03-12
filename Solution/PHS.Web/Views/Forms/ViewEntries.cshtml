@@ -31,94 +31,94 @@
             {
                 if (Model.GroupedEntries.Count() > 0)
                 {
-                <ul class="horizontal-list form-actions-list">
-                    <li>
-                        <input type="submit" class="red" value="Delete Selected" />                        
-                        @Html.ActionLink("Export all to Excel", "ExportToExcel","Forms", new{formid=Model.Id.Value}, new { @class="hyperlink-button green-button"})  
-                    </li>
+                    <ul class="horizontal-list form-actions-list">
+                        <li>
+                            <input type="submit" class="red" value="Delete Selected" />                        
+                            @Html.ActionLink("Export all to Excel", "ExportToExcel","Forms", new{formid=Model.Id.Value}, new { @class="hyperlink-button green-button"})  
+                        </li>
                     
-                </ul>            
-                <div class="entries-container">
-                    <table class="entries-table" cellpadding="0" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="select-field">
-                                    <input id="select-all" class="select-all" type="checkbox" />
-                                </th>
-                                @{var cellCount = 0;}   
-                                @{int colCount = Model.Fields.Count() + 1;}
-                                @{int colWidth = 70;}
-                                @if(colCount > 0){
-                                    colWidth = (768/colCount) - 15;
-                                }  
-                                <!--@colCount-->                           
-                                @foreach (var field in Model.GroupedEntries.First())
-                                {
-                                    if (field.FieldType != Constants.FieldType.HEADER)
+                    </ul>            
+                    <div class="entries-container">
+                        <table class="entries-table" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="select-field">
+                                        <input id="select-all" class="select-all" type="checkbox" />
+                                    </th>
+                                    @{var cellCount = 0;}   
+                                    @{int colCount = Model.Fields.Count() + 1;}
+                                    @{int colWidth = 70;}
+                                    @if(colCount > 0){
+                                        colWidth = (768/colCount) - 15;
+                                    }  
+                                    <!--@colCount-->                           
+                                    @foreach (var field in Model.GroupedEntries.First())
                                     {
-                                    <th style="width:@(colWidth)px;">
-                                        @field.FieldLabel
-                                        @{cellCount = cellCount + 1;}
-                                    </th>                        
+                                        if (field.FieldType != Constants.FieldType.HEADER)
+                                        {
+                                        <th style="width:@(colWidth)px;">
+                                            @field.FieldLabel
+                                            @{cellCount = cellCount + 1;}
+                                        </th>                        
+                                        }
                                     }
-                                }
                                 
-                                <th>
-                                    Submitted
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="@(cellCount + 2)" class="no-padding">
-                                    <div class="inner-table-container">
-                                        <table class="entries-table entries-inner-table">
-                                            <tbody>
-                                                @foreach (var group in Model.GroupedEntries)
-                                                {
-                                                    <tr>
-                                                        <td class="select-field">
-                                                            <input class="select-item" value="@group.Key" name="selectedEntries" type="checkbox" />
-                                                        </td>
-                                                        @{var fieldAddedOn = group.First().DateAdded;}
-                                                        @for (int ctr = 0; ctr < cellCount; ctr++)
-                                                        {
-                                                            FormFieldValueViewModel field = null;
+                                    <th>
+                                        Submitted
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="@(cellCount + 2)" class="no-padding">
+                                        <div class="inner-table-container">
+                                            <table class="entries-table entries-inner-table">
+                                                <tbody>
+                                                    @foreach (var group in Model.GroupedEntries)
+                                                    {
+                                                        <tr>
+                                                            <td class="select-field">
+                                                                <input class="select-item" value="@group.Key" name="selectedEntries" type="checkbox" />
+                                                            </td>
+                                                            @{var fieldAddedOn = group.First().DateAdded;}
+                                                            @for (int ctr = 0; ctr < cellCount; ctr++)
+                                                            {
+                                                                FormFieldValueViewModel field = null;
 
-                                                            if (ctr < group.Count())
-                                                            {
-                                                                field = group.ElementAt(ctr);
-                                                            <td style="width:@(colWidth)px">
-                                                            @Html.Raw(field.Format())
-                                                            </td>   
+                                                                if (ctr < group.Count())
+                                                                {
+                                                                    field = group.ElementAt(ctr);
+                                                                <td style="width:@(colWidth)px">
+                                                                @Html.Raw(field.Format())
+                                                                </td>   
+                                                                }
+                                                                else
+                                                                {
+                                                                <td>
+                                                                    &nbsp;
+                                                                </td>   
+                                                                }
+
                                                             }
-                                                            else
-                                                            {
                                                             <td>
-                                                                &nbsp;
-                                                            </td>   
-                                                            }
-
-                                                        }
-                                                        <td>
-                                                            @fieldAddedOn.Humanize()
-                                                        </td>
-                                                    </tr>
+                                                                @fieldAddedOn.Humanize()
+                                                            </td>
+                                                        </tr>
                                                 
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 { 
-                <div class="notice">
-                    No entries have been submitted</div>
+                    <div class="notice">
+                        No entries have been submitted</div>
                 }
                 @Html.HiddenFor(m => m.Id);
             }            
