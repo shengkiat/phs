@@ -18,6 +18,10 @@
                 $('.select-all').removeAttr('checked')
             }
         });
+
+        $('#sortButton').live('click', function () {
+            alert('clicking...')
+        });
     }
 
     function bindTableRows() {
