@@ -526,9 +526,9 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormViewModel model)
+        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormViewModel model, FormCollection collection)
         {
-            Console.Write(submitButton);
+            //Console.Write(submitButton);
 
             switch (submitButton)
             {
@@ -537,7 +537,7 @@ namespace PHS.Web.Controllers
                     return DeleteEntries(selectedEntries, model);
                 case "Export to Excel":
                     // call another action to perform the cancellation
-                    return ExportToExcel(selectedEntries, model);
+                    return ExportToExcel(model, collection);
                 default:
                     // If they've submitted the form without a submitButton, 
                     // just return the view again.
@@ -545,8 +545,9 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult ExportToExcel(IEnumerable<string> selectedEntries, FormViewModel model)
+        public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
         {
+            Console.Write(collection["sortField"]);
             int formId = model.Id.Value;
            // var form = this._formRepo.GetByPrimaryKey(formId);
             var form = this._formRepo.GetForm(formId);
