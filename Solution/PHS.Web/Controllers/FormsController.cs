@@ -18,6 +18,7 @@ using PHS.FormBuilder.Helpers;
 using PHS.Business.Common;
 using PHS.Business.Implementation;
 using System.Net;
+using Novacode;
 
 namespace PHS.Web.Controllers
 {
@@ -44,6 +45,48 @@ namespace PHS.Web.Controllers
             var formCollectionView = new FormCollectionViewModel();
             formCollectionView.Forms = this._formRepo.GetForms().OrderByDescending(f => f.DateAdded).ToList();
             return View(formCollectionView);
+        }
+
+        public ActionResult GenerateDoctorMemo(string text)
+        {
+            String guid = Guid.NewGuid().ToString();
+            string templatePath = Server.MapPath("~/App_Data/Doctor's Memo Template.docx");
+
+            // Load template into memory
+            var doc = DocX.Load(templatePath);
+
+            doc.ReplaceText("Replaced", text);
+
+            string savePath = Server.MapPath("~/App_Data/" + guid + ".docx");
+            doc.SaveAs(savePath);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(savePath);
+
+            // return File(fileBytes, "application/octet-stream", "Doctor's Memo.docx");
+
+            TempData[guid] = fileBytes;
+
+            return new JsonResult()
+            {
+                Data = new { FileGuid = guid, FileName = "Doctor's Memo.docx" }
+            };
+
+        }
+
+        [HttpGet]
+        public ActionResult DownloadDoctorMemo(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
+            }
         }
 
 
@@ -99,13 +142,6 @@ namespace PHS.Web.Controllers
             //   return Json("Success");
 
         }
-
-
-
-
-
-
-
 
 
         [HttpPost]

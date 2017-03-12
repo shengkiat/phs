@@ -51,7 +51,8 @@ namespace PHS.Common
             BMI,
             IMAGE,
             MATRIX,
-            NRICPICKER
+            NRICPICKER,
+            DOCTORMEMO
         }
     }
 }
