@@ -22,7 +22,7 @@
     <div class="inner-container">
         @Html.RouteLink("Home", "form-home",null, new{@class="image-icon-link home-icon-link"})<br />
         <h2 class="form-title">
-            Registration</h2>
+            @Model.Title</h2>
         <small>(@Model.GroupedEntries.Count() Entries Submitted)</small>        
     </div>        
         <div class="inner-container clear-both">
@@ -113,6 +113,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="flitering-container">
+
                     </div>
                 }
                 else
