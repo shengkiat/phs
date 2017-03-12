@@ -61,7 +61,7 @@ CREATE TABLE [dbo].[form](
 	[IsActive] [bit] NOT NULL,
 	[EventID] [int] NULL,
 	[IsPublic] [bit] NULL,
-	[PublicFormType] [nvarchar(50)] NULL
+	[PublicFormType] [nvarchar](50) NULL
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -94,6 +94,8 @@ CREATE TABLE [dbo].[form_fields](
 	[SubLabel] [nvarchar](50) NULL,
 	[Size] [varchar](10) NULL,
 	[SelectedOption] [nvarchar](50) NOT NULL,
+	[AddOthersOption] [bit] NULL DEFAULT ((0)),
+	[OthersOption] [nvarchar](50) NULL,
 	[Columns] [int] NULL,
 	[Rows] [int] NULL,
 	[Options] [nvarchar](300) NULL,
