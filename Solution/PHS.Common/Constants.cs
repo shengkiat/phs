@@ -50,7 +50,8 @@ namespace PHS.Common
             FILEPICKER,
             BMI,
             IMAGE,
-            MATRIX
+            MATRIX,
+            NRICPICKER
         }
     }
 }

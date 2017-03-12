@@ -106,6 +106,36 @@ namespace PHS.FormBuilder.Helpers
             return Enumerable.Range(minimum, (maximum - minimum) + 1).Reverse().Select(v => new SelectListItem { Value = v.ToString(), Text = v.ToString() });
         }
 
+        public static IEnumerable<SelectListItem> NricLastDigit()
+        {
+            var aItem = new SelectListItem { Text = "A", Value = "A" };
+            var bItem = new SelectListItem { Text = "B", Value = "B" };
+            var cItem = new SelectListItem { Text = "C", Value = "C" };
+            var dItem = new SelectListItem { Text = "D", Value = "D" };
+            var eItem = new SelectListItem { Text = "E", Value = "E" };
+            var fItem = new SelectListItem { Text = "F", Value = "F" };
+            var gItem = new SelectListItem { Text = "G", Value = "G" };
+            var hItem = new SelectListItem { Text = "H", Value = "H" };
+            var iItem = new SelectListItem { Text = "I", Value = "I" };
+            var jItem = new SelectListItem { Text = "J", Value = "J" };
+            var zItem = new SelectListItem { Text = "Z", Value = "Z" };
+
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(aItem);
+            list.Add(bItem);
+            list.Add(cItem);
+            list.Add(dItem);
+            list.Add(eItem);
+            list.Add(fItem);
+            list.Add(gItem);
+            list.Add(hItem);
+            list.Add(iItem);
+            list.Add(jItem);
+            list.Add(zItem);
+
+            return list;
+        }
+
         public static List<SelectListItem> Countries
         {
             get

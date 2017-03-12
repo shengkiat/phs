@@ -148,6 +148,18 @@ namespace PHS.FormBuilder.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.NRICPICKER:
+                    string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
+                    string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+
+                    if (icNumber.IsNullOrEmpty() || icFirstDigit.IsNullOrEmpty() || icLastDigit.IsNullOrEmpty())
+                    {
+                        return false;
+                    }
+
+                    return NricChecker.IsNRICValid(icFirstDigit + icNumber + icLastDigit);
+
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
@@ -400,22 +412,30 @@ namespace PHS.FormBuilder.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.NRICPICKER:
+                    string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
+                    string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+
+                    value = icFirstDigit + icNumber + icLastDigit;
+                    break;
+
                 case Constants.FieldType.EMAIL:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
                 case Constants.FieldType.ADDRESS:
                     var address = new AddressViewModel
                     {
-                        Address1 = form.SubmittedFieldValue(field.DomId, "StreetAddress"),
-                        Address2 = form.SubmittedFieldValue(field.DomId, "StreetAddress2"),
-                        City = form.SubmittedFieldValue(field.DomId, "City"),
+                        Blk = form.SubmittedFieldValue(field.DomId, "Blk"),
+                        Unit = form.SubmittedFieldValue(field.DomId, "Unit"),
+                        StreetAddress = form.SubmittedFieldValue(field.DomId, "StreetAddress"),
                         State = form.SubmittedFieldValue(field.DomId, "State"),
                         ZipCode = form.SubmittedFieldValue(field.DomId, "ZipCode"),
                         Country = form.SubmittedFieldValue(field.DomId, "Country")
 
                     };
 
-                    if (address.Address1.IsEmptyOrWhiteSpace() && address.City.IsEmptyOrWhiteSpace() && address.Country.IsEmptyOrWhiteSpace())
+                    if (address.Blk.IsEmptyOrWhiteSpace() && address.StreetAddress.IsEmptyOrWhiteSpace())
                     {
                         value = "";
                     }
@@ -569,14 +589,14 @@ namespace PHS.FormBuilder.Extensions
         public static string Format(this AddressViewModel addr)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("{0},", addr.Address1);
+            sb.AppendFormat("{0},", addr.Blk);
 
-            if (!addr.Address2.IsNullOrEmpty())
+            if (!addr.Unit.IsNullOrEmpty())
             {
-                sb.AppendFormat(" {0},", addr.Address2);
+                sb.AppendFormat(" {0},", addr.Unit);
             }
 
-            sb.AppendFormat(" {0}, ", addr.City);
+            sb.AppendFormat(" {0}, ", addr.StreetAddress);
             sb.AppendFormat(" {0}", addr.Country);
 
             return sb.ToString();
