@@ -547,7 +547,10 @@ namespace PHS.Web.Controllers
 
         public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
         {
-            Console.Write(collection["sortField"]);
+            string sortField = collection["sortField"];
+            string sortOrder = collection["sortOrder"];
+
+
             int formId = model.Id.Value;
            // var form = this._formRepo.GetByPrimaryKey(formId);
             var form = this._formRepo.GetForm(formId);

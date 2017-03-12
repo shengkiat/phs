@@ -44,6 +44,9 @@ a.orange-button:hover{color:White;background-color:#8A3A04;}
 input[type="submit"].red, a.red-button{color:White;background-color:#ab0202;}
 input[type="submit"].red:hover, a.red-button:hover{background-color:#6e0303;}
 
+input[type="submit"].green, a.green-button{color:White;background-color:#047D45;}
+input[type="submit"].green:hover, a.green-button:hover{background-color:#25B02C;}
+
 
 .shadow-5{-moz-box-shadow: 0 0 0.5em gray;-webkit-box-shadow: 0 0 .5em gray;box-shadow: 0 0 .5em gray;}
 .shadow-2{-moz-box-shadow: 1px 1px 2px 1px #c0c0c0;-webkit-box-shadow: 1px 1px 2px 1px #c0c0c0;box-shadow:1px 1px 2px 1px #c0c0c0;}

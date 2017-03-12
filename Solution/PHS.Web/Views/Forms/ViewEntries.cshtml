@@ -50,7 +50,7 @@
                             <tr id="tRow0" style="display:none;">
                                 <td width="30%">
                                     <select id="sortField" name="sortField">
-                                        <option value="Select a value"></option>
+                                        <option value="empty"></option>
                                         @foreach (var field in Model.GroupedEntries.First())
                                         {
                                             if (field.FieldType != Constants.FieldType.HEADER)
@@ -61,8 +61,8 @@
                                     </select>
                                 </td>
                                 <td width="20%">
-                                    <select id="sortOrder">
-                                        <option value="Select a value"></option>
+                                    <select id="sortOrder" name="sortOrder">
+                                        <option value="empty"></option>
                                         <option value="ASC">Ascending</option>
                                         <option value="DESC">Descending</option>
                                     </select>
