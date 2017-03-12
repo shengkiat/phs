@@ -44,6 +44,8 @@ namespace PHS.FormBuilder.ViewModels
         public int MinFileSize { get; set; }
         public string ValidFileExtensions { get; set; }
         public string ImageBase64 { get; set; }
+        public string MatrixRow { get; set; }
+        public string MatrixColumn { get; set; }
 
         #endregion
 
@@ -93,8 +95,9 @@ namespace PHS.FormBuilder.ViewModels
                     MinFileSize = field.MinFilesizeInKb ?? field.MinFilesizeInKb.Value,
                     ValidFileExtensions=field.ValidFileExtensions,
                     DateAdded = field.DateAdded,
-
-                    ImageBase64 = field.ImageBase64
+                    ImageBase64 = field.ImageBase64,
+                    MatrixRow = field.MatrixRow,
+                    MatrixColumn = field.MatrixColumn
 
 
                 };

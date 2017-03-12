@@ -394,8 +394,9 @@
         var inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
         inputSubscribers.val(valueToPublish);
 
-        try{
-            document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
+        try {
+            // Forget what is for
+            // document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
         }catch(err) {
             
         } 

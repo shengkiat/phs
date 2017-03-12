@@ -1,11 +1,13 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<label style="width: 30%; word-wrap: break-word" data-sub-channel="sub-label-@Model.DomId" 
+<label style="width: 90%; word-wrap: break-word; text-align: left;"
+       data-sub-channel="sub-label-@Model.DomId" 
        class="label editable">@Model.Label</label>
+
 <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-<div class="input" style="width: 60%;">
+<div class="input" style="width: 70%; margin-left: 1cm;">
     <select id="SubmitFields[@Model.DomId].DropDownList" 
             name="SubmitFields[@Model.DomId].DropDownList" 
             class="default"
