@@ -47,9 +47,9 @@
                         </ul>
 
                         <table class="sort-table" cellpadding="0" cellspacing="0" id="sortTable">
-                            <tr>
+                            <tr id="tRow0" style="display:none;">
                                 <td width="30%">
-                                    <select id="test">
+                                    <select id="sortField">
                                         <option value="Select a value"></option>
                                         @foreach (var field in Model.GroupedEntries.First())
                                         {
@@ -61,7 +61,7 @@
                                     </select>
                                 </td>
                                 <td width="20%">
-                                    <select id="test">
+                                    <select id="sortOrder">
                                         <option value="Select a value"></option>
                                         <option value="ASC">ASC</option>
                                         <option value="DESC">DESC</option>
