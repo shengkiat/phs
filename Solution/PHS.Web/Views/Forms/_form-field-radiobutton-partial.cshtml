@@ -1,9 +1,9 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<DIV style="width: 90%; word-wrap: break-word; text-align: left; white-space: pre-wrap;"
+<div style="width: 90%; word-wrap: break-word; text-align: left;"
      data-sub-channel="sub-label-@Model.DomId"
-     class="label editablewysiwyg">@Html.Raw(@Model.Label)</DIV>
+     class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 

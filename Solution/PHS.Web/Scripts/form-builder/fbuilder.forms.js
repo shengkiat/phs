@@ -395,8 +395,11 @@
         inputSubscribers.val(valueToPublish);
 
         try {
-            // Forget what is for
-            // document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
+            // Required for saving WYSIWYG
+            if (publisherType == "div" || publisherType == "p") {
+                document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
+            }
+
         }catch(err) {
             
         } 

@@ -3,9 +3,7 @@
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
 
-
 <script type="text/javascript">
-
 
     $(document).ready(function () {
         $("#btnBmiSubmit").click(function () {
@@ -43,14 +41,13 @@
 
 </script>
 
-
-<label style="width: 30%; word-wrap: break-word"
+<label style="width: 90%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
        class="label editable">@Model.Label</label>
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
 
-    <div class="input">
+    <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="vertical-list">
  
 

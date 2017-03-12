@@ -4,14 +4,14 @@
 
 <script id="form-field-textarea-template" type="text/x-jquery-tmpl">
 
-    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+    <p style="width: 90%; word-wrap: break-word; text-align: left;"
            data-sub-channel="sub-label-${id}"
-           class="label editable">Click to edit</label>
+           class="label editablewysiwyg">Click to edit</p>
 
     <span class="required hidden">*</span>
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
-        <textarea id="field-${id}" type="text" cols="20" rows="2"></textarea>
+        <textarea id="field-${id}" type="text" ></textarea>
         @Html.Partial("_form-field-properties")
     </div>
     <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">

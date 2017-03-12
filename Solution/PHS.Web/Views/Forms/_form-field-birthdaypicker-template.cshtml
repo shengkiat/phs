@@ -3,11 +3,13 @@
 @using PHS.FormBuilder.Extensions
 
 <script id="form-field-birthdaypicker-template" type="text/x-jquery-tmpl">
-    <label data-sub-channel="sub-label-${id}" class="label editable">
+    <label style="width: 90%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-${id}"
+           class="label editable">
         Click to edit
     </label>
     <span class="required hidden">*</span>
-    <div class="input">
+    <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="horizontal-list three-field-row">
             <li>
                 @Html.DropDownList("birthmonth-${id}", ItemListHelper.Months().InsertAtStart(""), new { @class = "shorter-field" })<br />
@@ -21,6 +23,14 @@
                 @Html.DropDownList("birthyear-${id}", ItemListHelper.BirthYears().InsertAtStart(""), new { @class = "shorter-field birth-year" })<br />
                 <span class="sub-label">Year</span>
             </li>
+
+            <li>
+                   <label>Age: </label>
+                    <label >43</label>
+            </li>
+
+
+
         </ul>
         @Html.Partial("_form-field-properties")
     </div>
