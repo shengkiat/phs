@@ -1,51 +1,68 @@
 ﻿@model PHS.FormBuilder.ViewModels.FormFieldViewModel
 @using PHS.FormBuilder.Extensions
 
-<div style="width: 70%; word-wrap: break-word; text-align: left;" 
-     data-sub-channel="sub-label-@Model.DomId" 
+@{
+    int columnCounter = 0;
+
+} 
+
+
+<div style="width: 70%; word-wrap: break-word; text-align: left;"
+     data-sub-channel="sub-label-@Model.DomId"
      class="label editable">@Model.Label</div>
 
-<span class="required @Model.IsRequired.OutputIfTrue(" visible","hidden")">*</span>
+    <span class="required @Model.IsRequired.OutputIfTrue(" visible","hidden")">*</span>
 
-<div class="input" style="width: 50%;">
-    <ul class="option-list vertical-list">
-        @{var checkedAttribute = "";}
-        @foreach (var option in Model.Options.Split(","))
+    <div class="input" style="width: 80%;">
+
+        <table class="matrix-list">
+            <tr>
+                <th></th>
+
+                @foreach (var column in Model.MatrixColumn.Split(","))
+                {
+                    columnCounter++;
+                   <th style="padding: 0px 0px 0px 12px;">@column</th>
+                }
+            </tr>
+
+            @foreach (var row in Model.MatrixRow.Split(","))
+            {
+                <tr>
+                    <td>
+                        @row
+                    </td>
+
+                   @for (var i = 0; i < columnCounter; i++)
+                   {
+                        <td>
+                            <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" />
+                        </td>
+                    }
+
+
+                </tr>
+
+            }
+        </table>
+
+        @if (Model.IsEditMode())
         {
-            <li>
-                @if (Html.IsTempFormValueSelected(Model, option))
-                {
-                    checkedAttribute = "checked=\"checked\"";
-                }
-                else
-                {
-                    checkedAttribute = "";
-                }
-
-                <input id="SubmitFields[@Model.DomId].Checkbox"
-                       name="SubmitFields[@Model.DomId].Checkbox"
-                       @checkedAttribute type="checkbox" value="@option" />
-                <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
-            </li>
+            @Html.Partial("_form-field-properties-partial", Model)
         }
-    </ul>
+
+        @if (!Model.Errors.IsNullOrEmpty())
+        {
+            <span class="field-validation-error">@Model.Errors</span>
+        }
+    </div>
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs(" ", " hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+
     @if (Model.IsEditMode())
     {
-        @Html.Partial("_form-field-properties-partial", Model)
+        @Html.Partial("_form-field-settings-template")
     }
-
-    @if (!Model.Errors.IsNullOrEmpty())
-    {
-        <span class="field-validation-error">@Model.Errors</span>
-    }
-</div>
-<a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs(" ", " hide") w-tip">
-    <img src="@Html.SpacerImage()" alt="help" />
-</a>
-
-@if (Model.IsEditMode())
-{
-    @Html.Partial("_form-field-settings-template")
-}
 
 

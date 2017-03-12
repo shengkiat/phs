@@ -184,7 +184,8 @@ namespace PHS.Web.Controllers
                                 MinFileSize = collection.FormFieldValue(domId, "MinFileSize").IsInt(5),
                                 ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
                                 ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
-
+                                MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
+                                MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
                             };
 
                             if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())

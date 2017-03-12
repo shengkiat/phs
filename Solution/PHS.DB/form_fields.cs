@@ -48,6 +48,8 @@ namespace PHS.DB
         public string ValidFileExtensions { get; set; }
         public Nullable<int> MinFilesizeInKb { get; set; }
         public string ImageBase64 { get; set; }
+        public string MatrixRow { get; set; }
+        public string MatrixColumn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<form_field_values> form_field_values { get; set; }

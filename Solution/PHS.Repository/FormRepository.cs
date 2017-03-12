@@ -95,7 +95,9 @@ namespace PHS.Repository.Repository
                     MinFilesizeInKb = fieldView.MinFileSize,
                     ValidFileExtensions = fieldView.ValidFileExtensions,
                     DateAdded = DateTime.UtcNow,
-                    ImageBase64 = fieldView.ImageBase64
+                    ImageBase64 = fieldView.ImageBase64,
+                    MatrixRow = fieldView.MatrixRow,
+                    MatrixColumn = fieldView.MatrixColumn
                 };
 
                 form1.form_fields.Add(fField);
@@ -131,6 +133,8 @@ namespace PHS.Repository.Repository
                     fField.MinFilesizeInKb = fieldView.MinFileSize;
                     fField.ValidFileExtensions = fieldView.ValidFileExtensions;
                     fField.ImageBase64 = fieldView.ImageBase64;
+                    fField.MatrixColumn = fieldView.MatrixColumn;
+                    fField.MatrixRow = fieldView.MatrixRow;
                 }
 
                 this.SaveChanges();
