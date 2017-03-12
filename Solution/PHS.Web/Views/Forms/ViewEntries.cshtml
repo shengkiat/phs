@@ -34,10 +34,45 @@
                     <ul class="horizontal-list form-actions-list">
                         <li>
                             <input type="submit" class="red" value="Delete Selected" />                        
-                            @Html.ActionLink("Export all to Excel", "ExportToExcel","Forms", new{formid=Model.Id.Value}, new { @class="hyperlink-button green-button"})  
+                            @Html.ActionLink("Export to Excel", "ExportToExcel","Forms", new{formid=Model.Id.Value}, new { @class="hyperlink-button green-button"})  
                         </li>
                     
-                    </ul>            
+                    </ul>
+                    <div class="flitering-container">
+                        <ul class="horizontal-list form-actions-list">
+                            <li>
+                                <label style="font-size: 16px;">Sort</label>
+                                <a href="javascript:void(0);" class="hyperlink-button light-blue-button">+</a>
+                            </li>
+                        </ul>
+
+                        <table class="sort-table" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td width="30%">
+                                        <select id="test">
+                                            <option value="Select a value"></option>
+                                            @foreach (var field in Model.GroupedEntries.First())
+                                            {
+                                                if (field.FieldType != Constants.FieldType.HEADER)
+                                                {
+                                                    <option value="@field.FieldLabel">@field.FieldLabel</option>                    
+                                                }
+                                            }
+                                        </select>
+                                    </td>
+                                    <td width="70%">
+                                        <select id="test">
+                                            <option value="Select a value"></option>
+                                            <option value="ASC">ASC</option>
+                                            <option value="DESC">DESC</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                     <div class="entries-container">
                         <table class="entries-table" cellpadding="0" cellspacing="0">
                             <thead>
@@ -114,9 +149,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="flitering-container">
-
-                    </div>
+                    
                 }
                 else
                 { 
