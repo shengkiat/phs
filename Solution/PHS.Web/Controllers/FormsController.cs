@@ -560,7 +560,7 @@ namespace PHS.Web.Controllers
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
 
             var gridView = new GridView();
-            gridView.DataSource = this.CreateFormEntriesDataTable(formView);
+            gridView.DataSource = this.CreateFormEntriesDataTable(formView, sortField, sortOrder);
             gridView.DataBind();
 
             Response.ClearContent();
@@ -576,7 +576,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        private DataTable CreateFormEntriesDataTable(FormViewModel form)
+        private DataTable CreateFormEntriesDataTable(FormViewModel form, string sortField, string sortOrder)
         {
             var dt = new DataTable(form.Title);
             List<string> columnNames = new List<string>();
@@ -625,7 +625,32 @@ namespace PHS.Web.Controllers
                 dt.Rows.Add(row);
             }
 
-            return dt;
+
+
+            DataView dv = new DataView(dt);
+            dv.Sort = generateSorting(sortField, sortOrder);
+
+            return dv.ToTable();
+        }
+
+        private string generateSorting(string sortField, string sortOrder)
+        {
+            string result = ",";
+
+            string[] sortFields = sortField.Split(",");
+            string[] sortOrders = sortOrder.Split(",");
+
+            for (int i = 0; i < sortFields.Length; i++)
+            {
+                string sortF = sortFields[i];
+                string sortO = sortOrders[i];
+                if (!sortF.Equals("empty") && !sortO.Equals("empty"))
+                {
+                    result += string.Format("{0} {1}", sortF, sortO);
+                }
+            }
+
+            return result.Remove(0, 1);
         }
 
         [HttpPost]
