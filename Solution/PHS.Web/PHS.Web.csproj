@@ -229,6 +229,7 @@
     <Content Include="Content\css\blueprint\src\reset.css" />
     <Content Include="Content\css\blueprint\src\typography.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\farbtastic.css" />
     <Content Include="Content\css\form-builder\forms-common.css" />
     <Content Include="Content\css\form-builder\forms-embed.css" />
     <Content Include="Content\css\form-builder\forms-global.css" />
@@ -240,10 +241,14 @@
     <Content Include="Content\css\jquery.wysiwyg.bg.png" />
     <Content Include="Content\css\jquery.wysiwyg.css" />
     <Content Include="Content\css\jquery.wysiwyg.gif" />
+    <Content Include="Content\css\jquery.wysiwyg.modal.css" />
+    <Content Include="Content\css\marker.png" />
+    <Content Include="Content\css\mask.png" />
     <Content Include="Content\css\plugins\jquery.Jcrop.css" />
     <Content Include="Content\css\plugins\tipsy.css" />
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\site.css" />
+    <Content Include="Content\css\wheel.png" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
@@ -330,6 +335,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\css_browser_selector.js" />
+    <Content Include="Scripts\farbtastic.js" />
     <Content Include="Scripts\form-builder\fbuilder.entries.js" />
     <Content Include="Scripts\form-builder\fbuilder.forms.js" />
     <Content Include="Scripts\form-builder\fbuilder.global.js" />
@@ -367,6 +373,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\wysiwyg.colorpicker.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

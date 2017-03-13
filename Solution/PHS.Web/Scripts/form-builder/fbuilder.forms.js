@@ -346,9 +346,28 @@
             cancel: 'Cancel',
             wysiwyg: {
                 controls: {
-                    separator04: { visible: true },
                     insertOrderedList: { visible: true },
-                    insertUnorderedList: { visible: true }
+                    insertUnorderedList: { visible: true },
+                    colorpicker: {
+                        groupIndex: 11,
+                        visible: true,
+                        css: {
+                            "color": function (cssValue, Wysiwyg) {
+                                var document = Wysiwyg.innerDocument(),
+									defaultTextareaColor = $(document.body).css("color");
+                                if (cssValue !== defaultTextareaColor) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        },
+                        exec: function () {
+                            if ($.wysiwyg.controls.colorpicker) {
+                                $.wysiwyg.controls.colorpicker.init(this);
+                            }
+                        },
+                        tooltip: "Colorpicker"
+                    }
                 }
             }
             //  maxlength: 5
