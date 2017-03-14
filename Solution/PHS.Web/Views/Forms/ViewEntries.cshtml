@@ -18,6 +18,14 @@
   <link type="text/css" href="/Content/css/form-builder/forms-common.css" rel="stylesheet"  />
   <link type="text/css" href="/Content/css/form-builder/forms-interface.css" rel="stylesheet"  />    
 }
+
+<script>
+    function myFunction(selectedobject) {
+        var x = selectedobject.value;
+        alert(x);
+    }
+</script>
+
 <div class="form-page-container prepend-top span-26">        
     <div class="inner-container">
         @Html.RouteLink("Home", "form-home",null, new{@class="image-icon-link home-icon-link"})<br />
@@ -85,7 +93,7 @@
                         <table class="criteria-table" cellpadding="0" cellspacing="0" id="sortTable">
                             <tr id="trCriteriaRow0">
                                 <td width="30%">
-                                    <select id="criteriaField" name="criteriaField">
+                                    <select id="criteriaField" name="criteriaField" onchange="myFunction(this)">
                                         <option value="empty"></option>
                                         @foreach (var field in Model.GroupedEntries.First())
                                         {
