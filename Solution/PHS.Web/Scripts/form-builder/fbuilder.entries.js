@@ -20,11 +20,10 @@
         });
 
         $('#sortButton').live('click', function () {
-            $('#tRow0').clone().show().appendTo($('#tRow0').parent());
-            //$("#sortTable").append('<tr><td width="30%"></td><td width="20%"><select id="sortOrder"><option value="Select a value"></option><option value="ASC">ASC</option><option value="DESC">DESC</option></select></td><td width="50%"><a id="removeButton" name="removeButton" class="hyperlink-button light-blue-button">-</a></td></tr>');
+            $('#trSortRow0').clone().show().appendTo($('#trSortRow0').parent());
         });
 
-        $('#removeButton').live('click', function () {
+        $('#removeSortButton').live('click', function () {
             $(this).parent().parent().remove();
         });
     }
