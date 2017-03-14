@@ -26,6 +26,14 @@
         $('#removeSortButton').live('click', function () {
             $(this).parent().parent().remove();
         });
+
+        $('#criteriaButton').live('click', function () {
+            $('#trCriteriaRow0').clone().show().appendTo($('#trCriteriaRow0').parent());
+        });
+
+        $('#removeCriteriaButton').live('click', function () {
+            $(this).parent().parent().remove();
+        });
     }
 
     function bindTableRows() {

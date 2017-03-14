@@ -72,10 +72,38 @@
                                 </td>
                             </tr>
                         </table>
-
-                    
-
                     </div>
+
+                    <div class="criteria-container">
+                        <ul class="horizontal-list form-actions-list">
+                            <li>
+                                <label style="font-size: 16px;">Criteria</label>
+                                <a id="criteriaButton" name="criteriaButton" class="hyperlink-button light-blue-button">+</a>
+                            </li>
+                        </ul>
+
+                        <table class="criteria-table" cellpadding="0" cellspacing="0" id="sortTable">
+                            <tr id="trCriteriaRow0" style="display:none;">
+                                <td width="30%">
+                                    <select id="criteriaField" name="criteriaField">
+                                        <option value="empty"></option>
+                                        @foreach (var field in Model.GroupedEntries.First())
+                                        {
+                                            if (field.FieldType != Constants.FieldType.HEADER)
+                                            {
+                                                <option value="@field.FieldLabel">@field.FieldLabel</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                
+                                <td width="50%">
+                                    <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                     <div class="entries-container">
                         <table class="entries-table" cellpadding="0" cellspacing="0">
                             <thead>
