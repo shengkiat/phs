@@ -23,12 +23,19 @@
     function myFunction(selectedobject) {
         var label = selectedobject.value;
 
+        var selectField = "criteria[" + label + "]";
+
         $(selectedobject).parent().parent().find("#tdCriteriaFields").each(function () {
-            $(this).find('input, select, textarea').each(function () {
-                alert($(this).attr('id'));
+            $(this).find('input, select').each(function () {
+                if ($(this).attr("id") == selectField) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+
             });
         });
-        
+
         /*if (selectField == null) {
             var textField = document.getElementById("criteriaTextbox");
             textField.style.display = '';
@@ -41,8 +48,8 @@
                 selectField.style.display = 'none';
             }
         }*/
- 
-        
+
+
     }
 </script>
 
@@ -141,16 +148,21 @@
                                     </select>
                                 </td>
                                 <td id="tdCriteriaFields" width="20%">
-                                    <input id="criteriaTextbox" name="criteriaTextbox" type="text" style="display:none;" />
+                                    
                                     @foreach (var field in Model.GroupedEntries.First())
                                     {
                                         if (field.FieldType == Constants.FieldType.CHECKBOX
                                             || field.FieldType == Constants.FieldType.RADIOBUTTON
                                             || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                                         {
-                                            <select id="select[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
+                                            <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
                                                 <option value="@field.FieldType">@field.FieldType</option>
                                             </select>
+                                        }
+
+                                        else
+                                        {
+                                            <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
                                         }
                                     }
                                     
