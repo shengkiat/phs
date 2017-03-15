@@ -21,8 +21,28 @@
 
 <script>
     function myFunction(selectedobject) {
-        var x = selectedobject.value;
-        alert(x);
+        var label = selectedobject.value;
+
+        $(selectedobject).parent().parent().find("#tdCriteriaFields").each(function () {
+            $(this).find('input, select, textarea').each(function () {
+                alert($(this).attr('id'));
+            });
+        });
+        
+        /*if (selectField == null) {
+            var textField = document.getElementById("criteriaTextbox");
+            textField.style.display = '';
+        }
+
+        else {
+            if (selectField.style.display == "none") {
+                selectField.style.display = '';
+            } else {
+                selectField.style.display = 'none';
+            }
+        }*/
+ 
+        
     }
 </script>
 
@@ -120,15 +140,15 @@
                                         <option value="in">in</option>
                                     </select>
                                 </td>
-                                <td width="20%">
-                                    <input id="criteriaTextbox" name="criteriaTextbox" type="text"/>
+                                <td id="tdCriteriaFields" width="20%">
+                                    <input id="criteriaTextbox" name="criteriaTextbox" type="text" style="display:none;" />
                                     @foreach (var field in Model.GroupedEntries.First())
                                     {
                                         if (field.FieldType == Constants.FieldType.CHECKBOX
                                             || field.FieldType == Constants.FieldType.RADIOBUTTON
                                             || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                                         {
-                                            <select id="test" name="test">
+                                            <select id="select[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
                                                 <option value="@field.FieldType">@field.FieldType</option>
                                             </select>
                                         }
