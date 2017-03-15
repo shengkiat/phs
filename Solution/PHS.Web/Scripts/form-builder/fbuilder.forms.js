@@ -84,7 +84,7 @@
             $(this).remove();
 
             $('.dynamic').each(function (idx, elem) {
-                    $(elem).text(idx + 1);
+                $(elem).text(idx + 1);
             });
 
             if (fieldId) {
@@ -292,6 +292,46 @@
         settingFields.each(function (index, item) {
             var fieldPropertyType = $(item).attr('data-field-property');
             if (fieldPropertyType) {
+
+
+                if (fieldPropertyType === "optionsRadio") {
+
+                    var newSubChannel = 'sub-' + "options" + '-' + activeItemId;
+                    var currHiddenValId = "options" + '-prop-' + activeItemId;
+                    var currHiddenElem = $('#' + currHiddenValId);
+
+
+                    $("input[name='radiotext[]']").parent('div').remove();
+
+                    var wrapper1 = $(".radio_fields_wrap"); //Fields wrapper
+
+                    var valueArray = currHiddenElem.val().split(',');
+
+                    $.each(valueArray, function (key, value) {
+                        $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsRadio" class="is-publisher" type="text" style="border:1px solid #bbb" name="radiotext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+
+                    });
+
+                } else if (fieldPropertyType === "optionsCheckbox") {
+
+                    var newSubChannel = 'sub-' + "options" + '-' + activeItemId;
+                    var currHiddenValId = "options" + '-prop-' + activeItemId;
+                    var currHiddenElem = $('#' + currHiddenValId);
+
+
+                    $("input[name='mytext[]']").parent('div').remove();
+
+                    var wrapper1 = $(".check_fields_wrap"); //Fields wrapper
+
+                    var valueArray = currHiddenElem.val().split(',');
+
+                    $.each(valueArray, function (key, value) {
+                        $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsCheckbox" class="is-publisher" type="text" style="border:1px solid #bbb" name="mytext[]"/><a href="#" class="remove_field_Checkbox">Remove</a></div>'); //add input box
+
+                    });
+
+                }
+
                 var newSubChannel = 'sub-' + fieldPropertyType + '-' + activeItemId;
                 var currHiddenValId = fieldPropertyType + '-prop-' + activeItemId;
                 var currHiddenElem = $('#' + currHiddenValId);
@@ -335,7 +375,7 @@
             type: 'textarea',
             onblur: 'submit',
             cssclass: 'ignore'
-          //  maxlength: 5
+            //  maxlength: 5
         });
 
         $('.editablewysiwyg').editable(updateEditableField, {
@@ -411,7 +451,36 @@
     function doFieldSettingUpdates(publisherId, publisherType, valueToPublish) {
         var subIdentifier = 'sub-' + publisherType + '-' + publisherId;
         var inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
-        inputSubscribers.val(valueToPublish);
+
+        if (publisherType === "optionsCheckbox") {
+            subIdentifier = 'sub-' + "options" + '-' + publisherId;
+            inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
+
+            var values = [];
+            var str1 = "";
+            $("input[name='mytext[]']").each(function () {
+                values.push($(this).val());
+                str1 = str1 + $(this).val() + ",";
+            });
+
+            str1 = str1.substring(0, str1.length - 1);
+            inputSubscribers.val(str1);
+        } else if (publisherType === "optionsRadio") {
+            subIdentifier = 'sub-' + "options" + '-' + publisherId;
+            inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
+
+            var values = [];
+            var str1 = "";
+            $("input[name='radiotext[]']").each(function () {
+                values.push($(this).val());
+                str1 = str1 + $(this).val() + ",";
+            });
+
+            str1 = str1.substring(0, str1.length - 1);
+            inputSubscribers.val(str1);
+        } else {
+            inputSubscribers.val(valueToPublish);
+        }
 
         try {
             // Required for saving WYSIWYG
@@ -419,9 +488,9 @@
                 document.getElementById("label-prop-" + activeItemId).value = valueToPublish;
             }
 
-        }catch(err) {
-            
-        } 
+        } catch (err) {
+
+        }
 
         var labelSubscribers = $('label[data-sub-channel=' + subIdentifier + ']');
         labelSubscribers.text(valueToPublish);
@@ -438,6 +507,42 @@
         var targetContainer = $('#drop-item-' + domId);
         var _controlType = targetContainer.attr('data-control-type');
         switch (changeType) {
+            case "optionsCheckbox":
+                //bind options to radio button list
+                var optionList = targetContainer.find('.option-list');
+                optionList.find('li').remove();
+
+                var values = [];
+                $("input[name='mytext[]']").each(function () {
+                    values.push($(this).val());
+
+                    var p = $(this).val();
+                    optionList.append('<li><input name="SubmitFields[' + domId + '].Checkbox" type="checkbox" value="' + $(this).val() + '" /><label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">' + $(this).val() + '</label></li>')
+
+                });
+                break;
+
+
+
+            case "optionsRadio":
+
+                //bind options to radio button list
+                var optionList = targetContainer.find('.option-list');
+                optionList.find('li').remove();
+
+                var values = [];
+                $("input[name='radiotext[]']").each(function () {
+                    values.push($(this).val());
+
+                    var p = $(this).val();
+
+                    optionList.append('<li><input name="SubmitFields[' + domId + '].RadioButton" type="radio" value="' + $(this).val() + '" name="radiogroup-' + domId + '" /><label>' + $(this).val() + '</label></li>')
+                });
+
+
+                break;
+
+
             case "isrequired":
                 if (value == "True") {
                     targetContainer.find(".required").removeClass('hidden').addClass('visible');
@@ -701,7 +806,7 @@
                     "Min filesize: " + $('#maxfilesize-prop-' + domid).val() + "\n" +
                     "valid extensions: " + $('#validextensions-prop-' + domid).val() + "\n" +
                     "Help Txt: " + $('#helptext-prop-' + domid).val() + "\n" +
-                    "Order: " + $('#order-prop-' + domid).val() + "\n" + 
+                    "Order: " + $('#order-prop-' + domid).val() + "\n" +
                     "ImageBase64: " + $('#image-prop-' + domid).val() + "\n";
 
         return props;
@@ -823,7 +928,7 @@
 
                 reader.addEventListener("load", function (e) {
 
-                    
+
                     document.getElementById("ImageView -" + activeItemId).src = e.target.result;
 
                     document.getElementById("image-prop-" + activeItemId).value = e.target.result;
@@ -853,4 +958,4 @@
         handleSaveCallback: handleSaveCallback,
         handleBeginSave: handleBeginSave
     }
-} ();
+}();

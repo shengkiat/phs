@@ -4,6 +4,59 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        radioFunction();
+        checkFunction();
+    });
+
+
+    function radioFunction() {
+        var max_fields = 10; //maximum input boxes allowed
+        var wrapper = $(".radio_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_radio_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button).click(function (e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('<div><input data-field-property="optionsRadio" class="is-publisher" type="text" style="border:1px solid #bbb" name="radiotext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            }
+        });
+
+        $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+
+            $("input[name='radiotext[]']").each(function () {
+                $(this).trigger("change");
+            });
+        })
+    }
+
+    function checkFunction() {
+        var max_fields = 10; //maximum input boxes allowed
+        var wrapper = $(".check_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_check_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button).click(function (e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('<div><input data-field-property="optionsCheckbox" class="is-publisher" type="text" style="border:1px solid #bbb" name="mytext[]"/><a href="#" class="remove_field_Checkbox">Remove</a></div>'); //add input box
+            }
+        });
+
+        $(wrapper).on("click", ".remove_field_Checkbox", function (e) { //user click on remove text
+
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+
+            $("input[name='mytext[]']").each(function () {
+                $(this).trigger("change");
+            });
+        })
+    }
 
 
 </script>
@@ -76,6 +129,54 @@
                 </td>
             </tr>
             <!--//end options -->
+
+
+
+
+
+            <!-- Options Radio -->
+            <tr class="radiobutton">
+                <td class="label">
+                    <label class="label">
+                        Options
+                    </label>
+                </td>
+                <td class="input">
+                    <div class="radio_fields_wrap">
+                        <button class="add_radio_button">Add More Fields</button>
+                        <div><input data-field-property="optionsRadio" class="is-publisher"
+                                    style="border:1px solid #bbb" type="text" name="radiotext[]">
+                        </div>
+
+                    </div>
+                </td>
+
+            </tr>
+            <!--//end Options Radio -->
+
+
+            <!-- Options Checkbox -->
+            <tr class="checkbox">
+                <td class="label">
+                    <label class="label">
+                        Options
+                    </label>
+                </td>
+                <td class="input">
+                    <div class="check_fields_wrap">
+                        <button class="add_check_button">Add More Fields</button>
+                        <div>
+                            <input data-field-property="optionsCheckbox" class="is-publisher"
+                                   style="border:1px solid #bbb" type="text" name="mytext[]">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <!--//end Options Checkbox -->
+
+
+
+
 
             <!-- selected option -->
               <tr class="dropdownlist radiobutton">
