@@ -7,6 +7,7 @@
     $(document).ready(function () {
         radioFunction();
         checkFunction();
+        dropdownFunction();
     });
 
 
@@ -53,6 +54,30 @@
             e.preventDefault(); $(this).parent('div').remove(); x--;
 
             $("input[name='mytext[]']").each(function () {
+                $(this).trigger("change");
+            });
+        })
+    }
+
+    function dropdownFunction() {
+        var max_fields = 10; //maximum input boxes allowed
+        var wrapper = $(".dropdown_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_dropdown_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button).click(function (e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('<div><input data-field-property="optionsdropdown" class="is-publisher" type="text" style="border:1px solid #bbb" name="dropdownText[]"/><a href="#" class="remove_field_dropdown">Remove</a></div>'); //add input box
+            }
+        });
+
+        $(wrapper).on("click", ".remove_field_dropdown", function (e) { //user click on remove text
+
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+
+            $("input[name='dropdownText[]']").each(function () {
                 $(this).trigger("change");
             });
         })
@@ -175,7 +200,24 @@
             <!--//end Options Checkbox -->
 
 
-
+            <!-- dropdown Checkbox -->
+            <tr class="dropdownlist">
+                <td class="label">
+                    <label class="label">
+                        Options
+                    </label>
+                </td>
+                <td class="input">
+                    <div class="dropdown_fields_wrap">
+                        <button class="add_dropdown_button">Add More Fields</button>
+                        <div>
+                            <input data-field-property="optionsdropdown" class="is-publisher"
+                                   style="border:1px solid #bbb" type="text" name="dropdownText[]">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <!--//end dropdown Checkbox -->
 
 
             <!-- selected option -->

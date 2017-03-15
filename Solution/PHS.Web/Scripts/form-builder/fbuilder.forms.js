@@ -330,6 +330,22 @@
 
                     });
 
+                } else if (fieldPropertyType === "optionsdropdown") {
+
+                    var newSubChannel = 'sub-' + "options" + '-' + activeItemId;
+                    var currHiddenValId = "options" + '-prop-' + activeItemId;
+                    var currHiddenElem = $('#' + currHiddenValId);
+
+                    $("input[name='dropdownText[]']").parent('div').remove();
+
+                    var wrapper1 = $(".dropdown_fields_wrap"); //Fields wrapper
+
+                    var valueArray = currHiddenElem.val().split(',');
+
+                    $.each(valueArray, function (key, value) {
+                        $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsdropdown" class="is-publisher" type="text" style="border:1px solid #bbb" name="dropdownText[]"/><a href="#" class="remove_field_dropdown">Remove</a></div>'); //add input box
+
+                    });
                 }
 
                 var newSubChannel = 'sub-' + fieldPropertyType + '-' + activeItemId;
@@ -478,7 +494,20 @@
 
             str1 = str1.substring(0, str1.length - 1);
             inputSubscribers.val(str1);
-        } else {
+        } else if (publisherType === "optionsdropdown") {
+            subIdentifier = 'sub-' + "options" + '-' + publisherId;
+            inputSubscribers = $('input[data-sub-channel=' + subIdentifier + ']');
+
+            var values = [];
+            var str1 = "";
+            $("input[name='dropdownText[]']").each(function () {
+                values.push($(this).val());
+                str1 = str1 + $(this).val() + ",";
+            });
+
+            str1 = str1.substring(0, str1.length - 1);
+            inputSubscribers.val(str1);
+        }else {
             inputSubscribers.val(valueToPublish);
         }
 
@@ -507,6 +536,15 @@
         var targetContainer = $('#drop-item-' + domId);
         var _controlType = targetContainer.attr('data-control-type');
         switch (changeType) {
+            case "optionsdropdown":
+                //bind options to radio button list
+                var selectList = targetContainer.find('select');
+                selectList.find('option').remove();
+                $("input[name='dropdownText[]']").each(function () {
+
+                    selectList.append('<option>' + $(this).val() + '</option');
+                });
+                break;
             case "optionsCheckbox":
                 //bind options to radio button list
                 var optionList = targetContainer.find('.option-list');
@@ -518,14 +556,9 @@
 
                     var p = $(this).val();
                     optionList.append('<li><input name="SubmitFields[' + domId + '].Checkbox" type="checkbox" value="' + $(this).val() + '" /><label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">' + $(this).val() + '</label></li>')
-
                 });
                 break;
-
-
-
             case "optionsRadio":
-
                 //bind options to radio button list
                 var optionList = targetContainer.find('.option-list');
                 optionList.find('li').remove();
@@ -538,11 +571,7 @@
 
                     optionList.append('<li><input name="SubmitFields[' + domId + '].RadioButton" type="radio" value="' + $(this).val() + '" name="radiogroup-' + domId + '" /><label>' + $(this).val() + '</label></li>')
                 });
-
-
                 break;
-
-
             case "isrequired":
                 if (value == "True") {
                     targetContainer.find(".required").removeClass('hidden').addClass('visible');
