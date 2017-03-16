@@ -37,7 +37,7 @@
                 return false;
             });
 
-            selectedobject($(this));
+            toggleCriteriaFields($(this));
 
         });
 
@@ -71,7 +71,6 @@
         $(selectedobject).parent().parent().parent().find("#criteriaField").each(function () {
 
             var label = $(this).text;
-            alert(label);
             var selectField = "criteria[" + label + "]";
 
             $(selectedobject).parent().parent().parent().find("#tdCriteriaFields").each(function () {
