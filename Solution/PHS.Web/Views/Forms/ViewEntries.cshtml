@@ -25,7 +25,7 @@
 
         var selectField = "criteria[" + label + "]";
 
-        $(selectedobject).parent().parent().find("#tdCriteriaFields").each(function () {
+        $(selectedobject).parent().parent().parent().find("#tdCriteriaFields").each(function () {
             $(this).find('input, select').each(function () {
                 if ($(this).attr("id") == selectField) {
                     $(this).show();

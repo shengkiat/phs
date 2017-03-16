@@ -34,7 +34,9 @@
         $('#addCriteriaConditionButton').live('click', function () {
             $(this).parent().parent().parent().find("#trCriteriaRow1").each(function () {
                 $(this).clone().show().appendTo($(this).parent());
+                return false;
             });
+
         });
 
         $('#addNextCriteriaConditionButton').live('click', function () {
