@@ -32,6 +32,10 @@
         });
 
         $('#removeCriteriaButton').live('click', function () {
+            $(this).parent().parent().parent().remove();
+        });
+
+        $('#removeCriteriaConditionButton').live('click', function () {
             $(this).parent().parent().remove();
         });
     }
