@@ -36,20 +36,6 @@
             });
         });
 
-        /*if (selectField == null) {
-            var textField = document.getElementById("criteriaTextbox");
-            textField.style.display = '';
-        }
-
-        else {
-            if (selectField.style.display == "none") {
-                selectField.style.display = '';
-            } else {
-                selectField.style.display = 'none';
-            }
-        }*/
-
-
     }
 </script>
 
@@ -118,60 +104,111 @@
                         </ul>
 
                         <table class="criteria-table" cellpadding="0" cellspacing="0" id="sortTable">
-                            <tr id="trCriteriaRow0">
-                                <td width="20%">
-                                    <select id="criteriaField" name="criteriaField" onchange="myFunction(this)">
-                                        <option value="empty"></option>
+                            <tbody id="trCriteriaRow0">
+                                <tr>
+                                    <td width="20%">
+                                        <select id="criteriaField" name="criteriaField" onchange="myFunction(this)">
+                                            <option value="empty"></option>
+                                            @foreach (var field in Model.GroupedEntries.First())
+                                            {
+                                                if (field.FieldType != Constants.FieldType.HEADER)
+                                                {
+                                                    <option value="@field.FieldLabel">@field.FieldLabel</option>
+                                                }
+                                            }
+                                        </select>
+                                    </td>
+                                    <td width="20%">
+                                        <select id="criteriaCondition" name="criteriaCondition">
+                                            <option value="empty"></option>
+                                            <option value="eq">eq</option>
+                                            <option value="neq">neq</option>
+                                            <option value="gt">gt</option>
+                                            <option value="gte">gte</option>
+                                            <option value="lt">lt</option>
+                                            <option value="lte">lte</option>
+                                            <option value="startswith">startswith</option>
+                                            <option value="endswith">endswith</option>
+                                            <option value="contains">contains</option>
+                                            <option value="doesnotcontain">doesnotcontain</option>
+                                            <option value="in">in</option>
+                                        </select>
+                                    </td>
+                                    <td id="tdCriteriaFields" width="20%">
+                                    
                                         @foreach (var field in Model.GroupedEntries.First())
                                         {
-                                            if (field.FieldType != Constants.FieldType.HEADER)
+                                            if (field.FieldType == Constants.FieldType.CHECKBOX
+                                                || field.FieldType == Constants.FieldType.RADIOBUTTON
+                                                || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                                             {
-                                                <option value="@field.FieldLabel">@field.FieldLabel</option>
+                                                <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
+                                                    <option value="@field.FieldType">@field.FieldType</option>
+                                                </select>
+                                            }
+
+                                            else
+                                            {
+                                                <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
                                             }
                                         }
-                                    </select>
-                                </td>
-                                <td width="20%">
-                                    <select id="criteriaCondition" name="criteriaCondition">
-                                        <option value="empty"></option>
-                                        <option value="eq">eq</option>
-                                        <option value="neq">neq</option>
-                                        <option value="gt">gt</option>
-                                        <option value="gte">gte</option>
-                                        <option value="lt">lt</option>
-                                        <option value="lte">lte</option>
-                                        <option value="startswith">startswith</option>
-                                        <option value="endswith">endswith</option>
-                                        <option value="contains">contains</option>
-                                        <option value="doesnotcontain">doesnotcontain</option>
-                                        <option value="in">in</option>
-                                    </select>
-                                </td>
-                                <td id="tdCriteriaFields" width="20%">
                                     
-                                    @foreach (var field in Model.GroupedEntries.First())
-                                    {
-                                        if (field.FieldType == Constants.FieldType.CHECKBOX
-                                            || field.FieldType == Constants.FieldType.RADIOBUTTON
-                                            || field.FieldType == Constants.FieldType.DROPDOWNLIST)
+                                    </td>
+                                    <td width="40%">
+                                        <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
+                                        <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
+                                    </td>
+                                </tr>
+                                <tr id="trCriteriaRow1">
+                                    <td width="20%">
+                                        <select id="criteriaCondition" name="criteriaCondition">
+                                            <option value="empty"></option>
+                                            <option value="and">and</option>
+                                            <option value="or">or</option>
+                                        </select>
+                                    </td>
+                                    <td width="20%">
+                                        <select id="criteriaCondition" name="criteriaCondition">
+                                            <option value="empty"></option>
+                                            <option value="eq">eq</option>
+                                            <option value="neq">neq</option>
+                                            <option value="gt">gt</option>
+                                            <option value="gte">gte</option>
+                                            <option value="lt">lt</option>
+                                            <option value="lte">lte</option>
+                                            <option value="startswith">startswith</option>
+                                            <option value="endswith">endswith</option>
+                                            <option value="contains">contains</option>
+                                            <option value="doesnotcontain">doesnotcontain</option>
+                                            <option value="in">in</option>
+                                        </select>
+                                    </td>
+                                    <td id="tdCriteriaFields" width="20%">
+                                    
+                                        @foreach (var field in Model.GroupedEntries.First())
                                         {
-                                            <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                                                <option value="@field.FieldType">@field.FieldType</option>
-                                            </select>
-                                        }
+                                            if (field.FieldType == Constants.FieldType.CHECKBOX
+                                                || field.FieldType == Constants.FieldType.RADIOBUTTON
+                                                || field.FieldType == Constants.FieldType.DROPDOWNLIST)
+                                            {
+                                                <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
+                                                    <option value="@field.FieldType">@field.FieldType</option>
+                                                </select>
+                                            }
 
-                                        else
-                                        {
-                                            <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
+                                            else
+                                            {
+                                                <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
+                                            }
                                         }
-                                    }
                                     
-                                </td>
-                                <td width="40%">
-                                    <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
-                                    <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td width="40%">
+                                        <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
+                                        <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
 
