@@ -37,6 +37,8 @@
                 return false;
             });
 
+            selectedobject($(this));
+
         });
 
         $('#addNextCriteriaConditionButton').live('click', function () {
@@ -62,6 +64,27 @@
     function init() {
         bindBasicActions();
         bindTableRows();
+    }
+
+    function toggleCriteriaFields(selectedobject) {
+        
+        $(selectedobject).parent().parent().parent().find("#criteriaField").each(function () {
+
+            var label = $(this).text;
+            alert(label);
+            var selectField = "criteria[" + label + "]";
+
+            $(selectedobject).parent().parent().parent().find("#tdCriteriaFields").each(function () {
+                $(this).find('input, select').each(function () {
+                    if ($(this).attr("id") == selectField) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+
+                });
+            });
+        });
     }
 
     return {
