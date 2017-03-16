@@ -70,7 +70,7 @@
         
         $(selectedobject).parent().parent().parent().find("#criteriaField").each(function () {
 
-            var label = $(this).text;
+            var label = $(this).attr('value');
             var selectField = "criteria[" + label + "]";
 
             $(selectedobject).parent().parent().parent().find("#tdCriteriaFields").each(function () {
