@@ -1,32 +1,29 @@
-﻿
+﻿@model PHS.DB.Person
+
 @{
     ViewBag.Title = "Admin Home Page";
 }
 
-<div id="myCarousel" class="carousel slide" style="margin-top:10%">
-<div class="carousel-inner">
-    <div class="item active">
-        <img src="~/Images/slide_1.jpg">
-        <div class="container">
-            <div class="carousel-caption">
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal ">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+            </div>
+        </div>
+        <div class="form-group col-lg-offset-10">
+            <div class="text-center">
+                <button type="submit" value="Search" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnLogin">
+                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                    Search
+                </button>
             </div>
         </div>
     </div>
-    <div class="item">
-        <img src="~/Images/slide_2.jpg" alt="">
-        <div class="container">
-            <div class="carousel-caption">
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <img src="~/Images/slide_3.jpg" alt="">
-        <div class="container">
-            <div class="carousel-caption">
-            </div>
-        </div>
-    </div>
-</div>
+}
 <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
 <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
 </div>
