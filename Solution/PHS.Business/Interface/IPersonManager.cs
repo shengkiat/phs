@@ -15,8 +15,8 @@ namespace PHS.Business.Interface
 
         bool ChangePassword(Person user, string oldPass, string newPass, string newPassConfirm, out string message);
 
+        Person GetPersonByPersonSid(int personSid, out string message);
 
-
-
+        Person GetPersonByUserName(string userName, out string message);
     }
 }

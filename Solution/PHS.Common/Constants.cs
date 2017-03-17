@@ -54,5 +54,10 @@ namespace PHS.Common
             NRICPICKER,
             DOCTORMEMO
         }
+
+        public static string OperationFailedDuringRetrievingValue(string value)
+        {
+            return "Operation failed during retrieving " + value + ". Please contact system admin";
+        }
     }
 }

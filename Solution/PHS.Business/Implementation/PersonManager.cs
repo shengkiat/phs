@@ -147,5 +147,69 @@ namespace PHS.Business.Implementation
                 return authenticatedUser;
             }
         }
+
+        public Person GetPersonByPersonSid(int personSid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var person = unitOfWork.Persons.Get(personSid);
+
+                    if (person == null)
+                    {
+                        message = "Invalid UserName";
+                        return null;
+                    }
+
+                    message = string.Empty;
+                    return person;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Person by personSid");
+                return null;
+            }
+        }
+
+        public Person GetPersonByUserName(string userName, out string message)
+        {
+            Person person = null;
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()) )
+            {
+                message = "Username is empty!";
+                return null;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue).FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        message = string.Empty;
+                        person = user;
+
+                        return person;
+                    }
+                    else
+                    {
+                        message = "Username is not found!";
+                        return person;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Person by User Name");
+                return person;
+            }
+        }
     }
+    
 }
