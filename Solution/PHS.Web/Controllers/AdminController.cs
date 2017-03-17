@@ -28,7 +28,26 @@ namespace PHS.Web.Controllers
             return View();
         }
 
+        public ActionResult PersonDetails(int personSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
 
+            string message = string.Empty;
+            using (var getPerson = new PersonManager())
+            {
+                Person person = getPerson.GetPersonByPersonSid(personSid, out message);
+                if (person == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                //SetBackURL("UserDetail");
+                return View(person);
+            };
+        }
 
 
 
