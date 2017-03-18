@@ -247,6 +247,7 @@
     <Content Include="Content\css\plugins\jquery.Jcrop.css" />
     <Content Include="Content\css\plugins\tipsy.css" />
     <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\simple-sidebar.css" />
     <Content Include="Content\css\site.css" />
     <Content Include="Content\css\wheel.png" />
     <Content Include="Content\images\bg.png" />
@@ -375,7 +376,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\wysiwyg.colorpicker.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -449,6 +452,7 @@
     <Content Include="Views\Forms\_form-field-nricpicker-template.cshtml" />
     <Content Include="Views\Forms\_form-field-doctormemo-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-doctormemo-template.cshtml" />
+    <Content Include="Views\Admin\SearchUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

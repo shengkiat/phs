@@ -175,9 +175,9 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Person GetPersonByUserName(string userName, out string message)
+        public IList<Person> GetPersonsByUserName(string userName, out string message)
         {
-            Person person = null;
+            IList<Person> persons = null;
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()) )
             {
                 message = "Username is empty!";
@@ -187,19 +187,19 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue).FirstOrDefault();
+                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue);
 
-                    if (user != null)
+                    if (users != null && users.Any())
                     {
                         message = string.Empty;
-                        person = user;
+                        persons = users.ToList();
 
-                        return person;
+                        return persons;
                     }
                     else
                     {
-                        message = "Username is not found!";
-                        return person;
+                        message = "User not found!";
+                        return persons;
                     }
                 }
             }
@@ -207,7 +207,7 @@ namespace PHS.Business.Implementation
             {
                 ExceptionLog(ex);
                 message = Constants.OperationFailedDuringRetrievingValue("Person by User Name");
-                return person;
+                return persons;
             }
         }
     }

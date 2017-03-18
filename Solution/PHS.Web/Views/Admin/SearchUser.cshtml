@@ -1,0 +1,47 @@
+﻿@model PHS.Business.ViewModel.UserSearchModel
+
+@{
+    ViewBag.Title = "User Management Page";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal ">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+            </div>
+        </div>
+        <div class="form-group col-lg-offset-10">
+            <div class="text-center">
+                <button type="submit" value="SearchUser" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnSearchUser">
+                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    if (Model.persons != null && Model.persons.Count > 0)
+    {
+        <table class="table" style=" width:500px;">
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Contact Number</th>
+            </tr>
+            @foreach (var user in Model.persons)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.FullName</td>
+                    <td>@user.Role</td>
+                    <td>@user.ContactNumber</td>
+                </tr>
+            }
+        </table>
+    }
+}
