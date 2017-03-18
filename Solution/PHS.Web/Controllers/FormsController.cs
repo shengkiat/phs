@@ -471,6 +471,71 @@ namespace PHS.Web.Controllers
             return View(formView);
         }
 
+        public ActionResult AddNewSortEntries(string formId)
+        {
+            var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+            var formView = FormViewModel.CreateFromObject(form);
+
+            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+            var sortFieldViewModel = new SortFieldViewModel();
+
+            sortFieldViewModel.SortFields = 
+                from s in formView.GroupedEntries.First()
+                select new SelectListItem
+                {
+                    Text = s.FieldLabel,
+                    Value = s.FieldLabel
+                };
+
+
+            return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
+        }
+
+        public ActionResult AddNewCriteriaEntries(string formId)
+        {
+            var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+            var formView = FormViewModel.CreateFromObject(form);
+
+            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+            var criteriaFieldViewModel = new CriteriaFieldViewModel();
+            criteriaFieldViewModel.Fields = formView.Fields;
+            criteriaFieldViewModel.GroupedEntries = formView.GroupedEntries;
+            criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
+
+            criteriaFieldViewModel.FieldLabels =
+                from s in formView.GroupedEntries.First()
+                select new SelectListItem
+                {
+                    Text = s.FieldLabel,
+                    Value = s.FieldLabel
+                };
+
+
+            return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
+        }
+
+        public ActionResult AddNewCriteriaSubEntries(string formId)
+        {
+            var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+            var formView = FormViewModel.CreateFromObject(form);
+
+            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+            var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
+            criteriaSubFieldViewModel.Fields = formView.Fields;
+            criteriaSubFieldViewModel.GroupedEntries = formView.GroupedEntries;
+
+            return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
+        }
+
         private void NotifyViaEmail(NotificationEmailViewModel model)
         {
             EmailSender emailSender = new EmailSender("MailTemplates", false);
@@ -547,10 +612,6 @@ namespace PHS.Web.Controllers
 
         public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
         {
-            string sortField = collection["sortField"];
-            string sortOrder = collection["sortOrder"];
-
-
             int formId = model.Id.Value;
            // var form = this._formRepo.GetByPrimaryKey(formId);
             var form = this._formRepo.GetForm(formId);
@@ -560,7 +621,7 @@ namespace PHS.Web.Controllers
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
 
             var gridView = new GridView();
-            gridView.DataSource = this.CreateFormEntriesDataTable(formView, sortField, sortOrder);
+            gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields);
             gridView.DataBind();
 
             Response.ClearContent();
@@ -576,7 +637,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        private DataTable CreateFormEntriesDataTable(FormViewModel form, string sortField, string sortOrder)
+        private DataTable CreateFormEntriesDataTable(FormViewModel form, List<SortFieldViewModel> sortFields)
         {
             var dt = new DataTable(form.Title);
             List<string> columnNames = new List<string>();
@@ -628,25 +689,25 @@ namespace PHS.Web.Controllers
 
 
             DataView dv = new DataView(dt);
-            dv.Sort = generateSorting(sortField, sortOrder);
+            dv.Sort = GenerateSorting(sortFields);
 
             return dv.ToTable();
         }
 
-        private string generateSorting(string sortField, string sortOrder)
+        private string GenerateSorting(List<SortFieldViewModel> sortFields)
         {
             string result = ",";
 
-            string[] sortFields = sortField.Split(",");
-            string[] sortOrders = sortOrder.Split(",");
-
-            for (int i = 0; i < sortFields.Length; i++)
+            if (sortFields != null)
             {
-                string sortF = sortFields[i];
-                string sortO = sortOrders[i];
-                if (!sortF.Equals("empty") && !sortO.Equals("empty"))
+                foreach (var sortFieldViewModel in sortFields)
                 {
-                    result += string.Format("{0} {1}", sortF, sortO);
+                    var sortF = sortFieldViewModel.FieldLabel;
+                    var sortO = sortFieldViewModel.SortOrder;
+                    if (!String.IsNullOrEmpty(sortF) && !String.IsNullOrEmpty(sortO))
+                    {
+                        result += string.Format("{0} {1}", sortF, sortO);
+                    }
                 }
             }
 
