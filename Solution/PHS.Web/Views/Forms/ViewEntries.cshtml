@@ -90,7 +90,7 @@
                             </li>
                         </ul>
 
-                        <table class="criteria-table" cellpadding="0" cellspacing="0" id="criteriTable">
+                        <table class="criteria-table" cellpadding="0" cellspacing="0" id="criteriaTable">
                             <tbody id="trCriteriaRow0" style="display:none;">
 
                                 @foreach (var crtieriaField in Model.CriteriaFields)
@@ -98,101 +98,6 @@
                                     Html.RenderPartial("_ViewEntriesCriteriaPartial", crtieriaField);
                                 }
                                 
-                                <tr> 
-                                    <td id="tdCriteriaFields" width="20%">
-                                    
-                                        @foreach (var field in Model.GroupedEntries.First())
-                                        {
-                                            if (field.FieldType == Constants.FieldType.CHECKBOX
-                                                || field.FieldType == Constants.FieldType.RADIOBUTTON
-                                                || field.FieldType == Constants.FieldType.DROPDOWNLIST)
-                                            {
-                                                <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                                                    @foreach (var formField in Model.Fields)
-                                                    {
-                                                        if (formField.Label.Equals(field.FieldLabel))
-                                                        {
-                                                            foreach (var option in formField.Options.Split(","))
-                                                            {
-                                                                <option value="@option">@option</option>
-                                                            }
-                                                        }
-                                                    }
-                                                </select>
-                                            }
-
-                                            else
-                                            {
-                                                <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
-                                            }
-                                        }
-                                    
-                                    </td>
-                                    <td width="40%">
-                                        <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
-                                        <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
-                                    </td>
-                                </tr>
-                                <tr id="trCriteriaRow1" style="display:none;">
-                                    <td width="20%">
-                                        <div style="float:right;display:inline;">
-                                            <select id="criteriaCondition" name="criteriaCondition">
-                                                <option value="empty"></option>
-                                                <option value="and">and</option>
-                                                <option value="or">or</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td width="20%">
-                                        <select id="criteriaCondition" name="criteriaCondition">
-                                            <option value="empty"></option>
-                                            <option value="eq">eq</option>
-                                            <option value="neq">neq</option>
-                                            <option value="gt">gt</option>
-                                            <option value="gte">gte</option>
-                                            <option value="lt">lt</option>
-                                            <option value="lte">lte</option>
-                                            <option value="startswith">startswith</option>
-                                            <option value="endswith">endswith</option>
-                                            <option value="contains">contains</option>
-                                            <option value="doesnotcontain">doesnotcontain</option>
-                                            <option value="in">in</option>
-                                        </select>
-                                    </td>
-                                    <td id="tdCriteriaFields" width="20%">
-                                    
-                                        @foreach (var field in Model.GroupedEntries.First())
-                                        {
-                                            if (field.FieldType == Constants.FieldType.CHECKBOX
-                                                || field.FieldType == Constants.FieldType.RADIOBUTTON
-                                                || field.FieldType == Constants.FieldType.DROPDOWNLIST)
-                                            {
-                                                <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                                                    @foreach (var formField in Model.Fields)
-                                                    {
-                                                        if (formField.Label.Equals(field.FieldLabel))
-                                                        {
-                                                            foreach (var option in formField.Options.Split(","))
-                                                            {
-                                                                <option value="@option">@option</option>
-                                                            }
-                                                        }
-                                                    }
-                                                </select>
-                                            }
-
-                                            else
-                                            {
-                                                <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
-                                            }
-                                        }
-                                    
-                                    </td>
-                                    <td width="40%">
-                                        <a id="addNextCriteriaConditionButton" name="addNextCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
-                                        <a id="removeCriteriaConditionButton" name="removeCriteriaConditionButton" class="hyperlink-button light-blue-button">-</a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

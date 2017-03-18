@@ -504,6 +504,8 @@ namespace PHS.Web.Controllers
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
 
             var criteriaFieldViewModel = new CriteriaFieldViewModel();
+            criteriaFieldViewModel.Fields = formView.Fields;
+            criteriaFieldViewModel.GroupedEntries = formView.GroupedEntries;
 
             criteriaFieldViewModel.FieldLabels =
                 from s in formView.GroupedEntries.First()
