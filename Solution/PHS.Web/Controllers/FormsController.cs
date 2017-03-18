@@ -628,12 +628,12 @@ namespace PHS.Web.Controllers
 
 
             DataView dv = new DataView(dt);
-            dv.Sort = generateSorting(sortField, sortOrder);
+            dv.Sort = GenerateSorting(sortField, sortOrder);
 
             return dv.ToTable();
         }
 
-        private string generateSorting(string sortField, string sortOrder)
+        private string GenerateSorting(string sortField, string sortOrder)
         {
             string result = ",";
 
