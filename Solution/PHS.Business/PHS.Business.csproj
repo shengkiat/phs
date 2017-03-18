@@ -96,6 +96,7 @@
     <Compile Include="Interface\IManagerFactoryBase.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PHS.Common\PHS.Common.csproj">
