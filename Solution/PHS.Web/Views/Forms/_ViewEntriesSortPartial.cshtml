@@ -1,0 +1,25 @@
+﻿@model PHS.FormBuilder.ViewModels.SortFieldViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+@using PHS.FormBuilder.ViewModels
+
+@using (Html.BeginCollectionItem("SortFields"))
+{
+     <div id="trSortRow0" class="trSortRow0">
+
+        @{
+            @Html.DropDownListFor(m => m.FieldLabel, Model.SortFields, String.Empty);
+
+            var sortOrders = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Ascending", Value = "ASC"},
+                            new SelectListItem {Text = "Descending", Value = "DESC"}
+                        };
+
+            @Html.DropDownListFor(m => m.SortOrder, sortOrders, String.Empty);
+        }
+        
+        <a id="removeSortButton" name="removeSortButton" class="hyperlink-button light-blue-button">-</a>
+    </div>
+}

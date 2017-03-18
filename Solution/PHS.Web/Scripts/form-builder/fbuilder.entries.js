@@ -20,11 +20,30 @@
         });
 
         $('#sortButton').live('click', function () {
-            $('#trSortRow0').clone().show().appendTo($('#trSortRow0').parent());
+
+            var formId = document.getElementById('formId').value
+
+            var data = {
+                "formId": formId
+            };
+
+            $.ajax({
+                type: "GET",
+                data: data,
+                url: '/forms/AddNewSortEntries',
+                error: function (response) {
+                    //alert(response);
+                },
+                success: function (response) {
+                    $('#sortTable').append(response);
+                }
+            })
+            //$('#trSortRow0').clone().show().appendTo($('#trSortRow0').parent());
         });
 
         $('#removeSortButton').live('click', function () {
-            $(this).parent().parent().remove();
+            $(this).parent().remove();
+            //$(this).parent().parent().remove();
         });
 
         $('#criteriaButton').live('click', function () {

@@ -27,6 +27,7 @@ namespace PHS.FormBuilder.ViewModels
         public bool Embed { get; set; }   
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public List<SortFieldViewModel> SortFields { get; set; }
 
         public bool HasTheme
         {
@@ -51,8 +52,8 @@ namespace PHS.FormBuilder.ViewModels
                 Theme = "",
                 NotificationEmail = "",
                 IsPublic = false,
-                Fields = Enumerable.Empty<FormFieldViewModel>().ToList()
-                
+                Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
+                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList()
             };
 
             return formView;
@@ -100,7 +101,8 @@ namespace PHS.FormBuilder.ViewModels
                 NotificationEmail = form1.NotificationEmail,
                 IsPublic = form1.IsPublic,
                 PublicFormType = form1.PublicFormType,
-                Status = (Constants.FormStatus)Enum.Parse(typeof(Constants.FormStatus), form1.Status)
+                Status = (Constants.FormStatus)Enum.Parse(typeof(Constants.FormStatus), form1.Status),
+                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
             };
 
             return formView;
@@ -117,7 +119,8 @@ namespace PHS.FormBuilder.ViewModels
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
                 Slug = "test-form",
                 IsPublic = false,
-                NotificationEmail= ""
+                NotificationEmail= "",
+                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
 
             };
 

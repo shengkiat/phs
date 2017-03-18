@@ -53,6 +53,9 @@
             {
                 if (Model.GroupedEntries.Count() > 0)
                 {
+
+                    <input id="formId" type="hidden" value="@Model.Id" />
+
                     <ul class="horizontal-list form-actions-list">
                         <li>
                             <input type="submit" name="submitButton" class="red" value="Delete Selected" />
@@ -69,30 +72,11 @@
                         </ul>
 
                         <table class="sort-table" cellpadding="0" cellspacing="0" id="sortTable">
-                            <tr id="trSortRow0" style="display:none;">
-                                <td width="30%">
-                                    <select id="sortField" name="sortField">
-                                        <option value="empty"></option>
-                                        @foreach (var field in Model.GroupedEntries.First())
-                                        {
-                                            if (field.FieldType != Constants.FieldType.HEADER)
-                                            {
-                                                <option value="@field.FieldLabel">@field.FieldLabel</option>                    
-                                            }
-                                        }
-                                    </select>
-                                </td>
-                                <td width="20%">
-                                    <select id="sortOrder" name="sortOrder">
-                                        <option value="empty"></option>
-                                        <option value="ASC">Ascending</option>
-                                        <option value="DESC">Descending</option>
-                                    </select>
-                                </td>
-                                <td width="50%">
-                                    <a id="removeSortButton" name="removeSortButton" class="hyperlink-button light-blue-button">-</a>
-                                </td>
-                            </tr>
+
+                            @foreach (var sortField in Model.SortFields)
+                            {
+                                Html.RenderPartial("_ViewEntriesSortPartial", sortField);
+                            }
                         </table>
                     </div>
 
