@@ -60,7 +60,7 @@
                     //alert(response);
                 },
                 success: function (response) {
-                    $('#criteriaTable').append("<div>" + response + "</div>");
+                    $('#criteriaTable').append("<div>" + response + " <br style=\"clear:both\" /> </div>");
                 }
             })
         

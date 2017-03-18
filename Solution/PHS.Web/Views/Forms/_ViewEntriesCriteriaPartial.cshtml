@@ -9,7 +9,9 @@
     <div id="trCriteriaRow0" class="trCriteriaRow0">
 
         @{
-            @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new { @onchange = "myFunction(this)" });
+            <div style="float:left;">
+                @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new { @onchange = "myFunction(this)" })
+            </div>
 
             var criteriaLogFields = new List<SelectListItem>()
                         {
@@ -26,54 +28,59 @@
                             new SelectListItem {Text = "in", Value = "in"}
                         };
 
-            @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty);
-
-            
-            foreach (var field in Model.GroupedEntries.First())
-            {
-                if (field.FieldType == Constants.FieldType.CHECKBOX
-                || field.FieldType == Constants.FieldType.RADIOBUTTON
-                || field.FieldType == Constants.FieldType.DROPDOWNLIST)
+            <div style="float:left;">
+                @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty)
+            </div>
+            <div id="tdCriteriaFields" style="float:left;">
+                @foreach (var field in Model.GroupedEntries.First())
                 {
-                <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                    @foreach (var formField in Model.Fields)
+                    if (field.FieldType == Constants.FieldType.CHECKBOX
+                        || field.FieldType == Constants.FieldType.RADIOBUTTON
+                        || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                     {
-                        if (formField.Label.Equals(field.FieldLabel))
-                        {
-                            foreach (var option in formField.Options.Split(","))
+                        <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
+                            @foreach (var formField in Model.Fields)
                             {
-                                <option value="@option">@option</option>
+                                if (formField.Label.Equals(field.FieldLabel))
+                                {
+                                    foreach (var option in formField.Options.Split(","))
+                                    {
+                                        <option value="@option">@option</option>
+                                    }
+                                }
                             }
-                        }
+                        </select>
                     }
-                </select>
-                }
 
-                else
-                {
-                    @Html.TextBoxFor(model => model.CriteriaValue, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" });
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.CriteriaValue, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                    }
                 }
-            }
-           
+            </div>
         }
 
-        <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
-        <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
-
+        <div style="float:left;">
+            <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
+            <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
+        </div>
 
         <div id="trCriteriaRow1" style="display:none;">
-            <div width="20%">
+
+            <br style="clear:both" />
+
+            <div style="float:left;">
                 <select id="criteriaCondition" name="criteriaCondition">
                     <option value="empty"></option>
                     <option value="and">and</option>
                     <option value="or">or</option>
                 </select>
             </div>
-            <div>
-                @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty);
+            <div style="float:left;">
+                @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty)
 
             </div>
-            <div id="tdCriteriaFields" width="20%">
+            <div id="tdCriteriaFields" style="float:left;">
 
                 @foreach (var field in Model.GroupedEntries.First())
                 {
@@ -102,7 +109,7 @@
                 }
 
             </div>
-            <div>
+            <div style="float:left;">
                 <a id="addNextCriteriaConditionButton" name="addNextCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
                 <a id="removeCriteriaConditionButton" name="removeCriteriaConditionButton" class="hyperlink-button light-blue-button">-</a>
             </div>
