@@ -11,7 +11,8 @@ namespace PHS.FormBuilder.ViewModels
     {
         public string FieldLabel { get; set; }
         public string CriteriaLogic { get; set; }
-        public string CriteriaValue { get; set; }
+        public Dictionary<string, string> CriteriaValue { get; set; }
+        public List<CriteriaSubFieldViewModel> CriteriaSubFieldViewModels { get; set; }
 
         public IEnumerable<SelectListItem> FieldLabels { get; set; } // dropdown
         public List<FormFieldViewModel> Fields { get; set; }

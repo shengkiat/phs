@@ -31,6 +31,8 @@
             <div style="float:left;">
                 @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty)
             </div>
+
+
             <div id="tdCriteriaFields" style="float:left;">
                 @foreach (var field in Model.GroupedEntries.First())
                 {
@@ -38,23 +40,27 @@
                         || field.FieldType == Constants.FieldType.RADIOBUTTON
                         || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                     {
-                        <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                            @foreach (var formField in Model.Fields)
+
+                        var optionFields = new List<SelectListItem>();
+
+                        foreach (var formField in Model.Fields)
+                        {
+                            if (formField.Label.Equals(field.FieldLabel))
                             {
-                                if (formField.Label.Equals(field.FieldLabel))
+                                foreach (var option in formField.Options.Split(","))
                                 {
-                                    foreach (var option in formField.Options.Split(","))
-                                    {
-                                        <option value="@option">@option</option>
-                                    }
+                                    optionFields.Add(new SelectListItem { Text = @option, Value = @option });
                                 }
                             }
-                        </select>
+                        }
+
+                        @Html.DropDownListFor(m => m.CriteriaValue[@field.FieldLabel], optionFields, String.Empty, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+
                     }
 
                     else
                     {
-                        @Html.TextBoxFor(model => model.CriteriaValue, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                        @Html.TextBoxFor(m => m.CriteriaValue[@field.FieldLabel], new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
                     }
                 }
             </div>
