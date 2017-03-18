@@ -494,6 +494,29 @@ namespace PHS.Web.Controllers
             return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
         }
 
+        public ActionResult AddNewCriteriaEntries(string formId)
+        {
+            var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+            var formView = FormViewModel.CreateFromObject(form);
+
+            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+            var criteriaFieldViewModel = new CriteriaFieldViewModel();
+
+            criteriaFieldViewModel.FieldLabels =
+                from s in formView.GroupedEntries.First()
+                select new SelectListItem
+                {
+                    Text = s.FieldLabel,
+                    Value = s.FieldLabel
+                };
+
+
+            return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
+        }
+
         private void NotifyViaEmail(NotificationEmailViewModel model)
         {
             EmailSender emailSender = new EmailSender("MailTemplates", false);

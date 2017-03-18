@@ -38,6 +38,8 @@
         });
 
     }
+
+
 </script>
 
 <div class="form-page-container prepend-top span-26">        
@@ -88,37 +90,15 @@
                             </li>
                         </ul>
 
-                        <table class="criteria-table" cellpadding="0" cellspacing="0" id="sortTable">
+                        <table class="criteria-table" cellpadding="0" cellspacing="0" id="criteriTable">
                             <tbody id="trCriteriaRow0" style="display:none;">
-                                <tr>
-                                    <td width="20%">
-                                        <select id="criteriaField" name="criteriaField" onchange="myFunction(this)">
-                                            <option value="empty"></option>
-                                            @foreach (var field in Model.GroupedEntries.First())
-                                            {
-                                                if (field.FieldType != Constants.FieldType.HEADER)
-                                                {
-                                                    <option value="@field.FieldLabel">@field.FieldLabel</option>
-                                                }
-                                            }
-                                        </select>
-                                    </td>
-                                    <td width="20%">
-                                        <select id="criteriaCondition" name="criteriaCondition">
-                                            <option value="empty"></option>
-                                            <option value="eq">eq</option>
-                                            <option value="neq">neq</option>
-                                            <option value="gt">gt</option>
-                                            <option value="gte">gte</option>
-                                            <option value="lt">lt</option>
-                                            <option value="lte">lte</option>
-                                            <option value="startswith">startswith</option>
-                                            <option value="endswith">endswith</option>
-                                            <option value="contains">contains</option>
-                                            <option value="doesnotcontain">doesnotcontain</option>
-                                            <option value="in">in</option>
-                                        </select>
-                                    </td>
+
+                                @foreach (var crtieriaField in Model.CriteriaFields)
+                                {
+                                    Html.RenderPartial("_ViewEntriesCriteriaPartial", crtieriaField);
+                                }
+                                
+                                <tr> 
                                     <td id="tdCriteriaFields" width="20%">
                                     
                                         @foreach (var field in Model.GroupedEntries.First())

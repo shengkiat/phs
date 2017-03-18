@@ -1,0 +1,37 @@
+﻿@model PHS.FormBuilder.ViewModels.CriteriaFieldViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+@using PHS.FormBuilder.ViewModels
+
+@using (Html.BeginCollectionItem("CriteriaFields"))
+{
+    <div id="trCriteriaRow0" class="trCriteriaRow0">
+
+        @{
+            @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new { @onchange = "myFunction(this)" });
+
+            var criteriaLogFields = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "eq", Value = "eq"},
+                            new SelectListItem {Text = "neq", Value = "neq"},
+                            new SelectListItem {Text = "gt", Value = "gt"},
+                            new SelectListItem {Text = "gte", Value = "gte"},
+                            new SelectListItem {Text = "lt", Value = "lt"},
+                            new SelectListItem {Text = "lte", Value = "lte"},
+                            new SelectListItem {Text = "startswith", Value = "startswith"},
+                            new SelectListItem {Text = "endswith", Value = "endswith"},
+                            new SelectListItem {Text = "contains", Value = "contains"},
+                            new SelectListItem {Text = "doesnotcontain", Value = "doesnotcontain"},
+                            new SelectListItem {Text = "in", Value = "in"}
+                        };
+
+            @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty);
+
+            @Html.TextBox(String.Empty, Model.CriteriaValue);
+        }
+
+        <a id="addCriteriaConditionButton" name="addCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
+        <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
+    </div>
+}
