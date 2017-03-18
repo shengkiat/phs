@@ -24,10 +24,14 @@ namespace PHS.Repository
 
             Persons = new PersonRepository(_context);
             MasterAddress = new MasterAddressRepository(_context);
+            formRepository = new FormRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
         public IMasterAddressRepository MasterAddress { get; private set; }
+
+        public FormRepository formRepository { get; private set; }
+
 
         public int Complete()
         {

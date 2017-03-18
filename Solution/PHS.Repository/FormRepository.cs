@@ -287,6 +287,15 @@ namespace PHS.Repository.Repository
             return formViews;
         }
 
+        public List<form> GetBaseForms()
+        {
+            var formSet = this.DataContext.forms.ToList();
+           
+
+            return formSet;
+        }
+
+
         public form GetPreRegistrationForm(int year = -1)
         {
             

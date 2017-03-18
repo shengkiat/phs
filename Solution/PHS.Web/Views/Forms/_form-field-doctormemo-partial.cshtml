@@ -23,8 +23,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 error: function (response) {
-                    console.log(response);
-                    alert(response);
+  
                     document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
                 },
                 success: function (response) {
