@@ -144,7 +144,16 @@
                                                 || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                                             {
                                                 <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                                                    <option value="@field.FieldType">@field.FieldType</option>
+                                                    @foreach (var formField in Model.Fields)
+                                                    {
+                                                        if (formField.Label.Equals(field.FieldLabel))
+                                                        {
+                                                            foreach (var option in formField.Options.Split(","))
+                                                            {
+                                                                <option value="@option">@option</option>
+                                                            }
+                                                        }
+                                                    }
                                                 </select>
                                             }
 
@@ -195,7 +204,16 @@
                                                 || field.FieldType == Constants.FieldType.DROPDOWNLIST)
                                             {
                                                 <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                                                    <option value="@field.FieldType">@field.FieldType</option>
+                                                    @foreach (var formField in Model.Fields)
+                                                    {
+                                                        if (formField.Label.Equals(field.FieldLabel))
+                                                        {
+                                                            foreach (var option in formField.Options.Split(","))
+                                                            {
+                                                                <option value="@option">@option</option>
+                                                            }
+                                                        }
+                                                    }
                                                 </select>
                                             }
 
