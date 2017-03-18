@@ -458,6 +458,7 @@
     <Content Include="Views\Forms\_ViewEntriesSortPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Forms\_ViewEntriesCriteriaPartial.cshtml" />
+    <Content Include="Views\Forms\_ViewEntriesCriteriaSubPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

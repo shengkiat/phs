@@ -68,21 +68,32 @@
         });
 
         $('#addCriteriaConditionButton').live('click', function () {
-            $(this).parent().parent().parent().find("#trCriteriaRow1").each(function () {
-                $(this).clone().show().appendTo($(this).parent());
-                return false;
-            });
 
-            toggleCriteriaFields($(this));
+            var selectedobject = $(this);
 
-        });
+            var formId = document.getElementById('formId').value
 
-        $('#addNextCriteriaConditionButton').live('click', function () {
-            $(this).parent().parent().clone().show().appendTo($(this).parent().parent().parent());
+            var data = {
+                "formId": formId
+            };
+
+            $.ajax({
+                type: "GET",
+                data: data,
+                url: '/forms/AddNewCriteriaSubEntries',
+                error: function (response) {
+                    //alert(response);
+                },
+                success: function (response) {
+                    $('#criteriaSubTable').append("<div>" + response + " </div>");
+                    toggleCriteriaFields(selectedobject);
+                }
+            })
+
         });
 
         $('#removeCriteriaButton').live('click', function () {
-            $(this).parent().parent().remove();
+            $(this).parent().parent().parent().remove();
             //$(this).parent().parent().parent().remove();
         });
 

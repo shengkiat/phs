@@ -506,6 +506,7 @@ namespace PHS.Web.Controllers
             var criteriaFieldViewModel = new CriteriaFieldViewModel();
             criteriaFieldViewModel.Fields = formView.Fields;
             criteriaFieldViewModel.GroupedEntries = formView.GroupedEntries;
+            criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
 
             criteriaFieldViewModel.FieldLabels =
                 from s in formView.GroupedEntries.First()
@@ -517,6 +518,22 @@ namespace PHS.Web.Controllers
 
 
             return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
+        }
+
+        public ActionResult AddNewCriteriaSubEntries(string formId)
+        {
+            var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+            var formView = FormViewModel.CreateFromObject(form);
+
+            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+            var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
+            criteriaSubFieldViewModel.Fields = formView.Fields;
+            criteriaSubFieldViewModel.GroupedEntries = formView.GroupedEntries;
+
+            return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
 
         private void NotifyViaEmail(NotificationEmailViewModel model)

@@ -1,0 +1,81 @@
+﻿@model PHS.FormBuilder.ViewModels.CriteriaSubFieldViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+@using PHS.FormBuilder.ViewModels
+
+@using (Html.BeginCollectionItem("CriteriaSubFields"))
+{
+    <div id="trCriteriaRow1" class="trCriteriaRow1">
+
+        <br style="clear:both" />
+
+        @{
+
+            var operatorFields = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "and", Value = "and"},
+                            new SelectListItem {Text = "or", Value = "or"},
+                        };
+
+            <div style="float:left;">
+                @Html.DropDownListFor(m => m.OperatorLogic, operatorFields, String.Empty)
+            </div>
+
+            var criteriaLogFields = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "eq", Value = "eq"},
+                            new SelectListItem {Text = "neq", Value = "neq"},
+                            new SelectListItem {Text = "gt", Value = "gt"},
+                            new SelectListItem {Text = "gte", Value = "gte"},
+                            new SelectListItem {Text = "lt", Value = "lt"},
+                            new SelectListItem {Text = "lte", Value = "lte"},
+                            new SelectListItem {Text = "startswith", Value = "startswith"},
+                            new SelectListItem {Text = "endswith", Value = "endswith"},
+                            new SelectListItem {Text = "contains", Value = "contains"},
+                            new SelectListItem {Text = "doesnotcontain", Value = "doesnotcontain"},
+                            new SelectListItem {Text = "in", Value = "in"}
+                        };
+
+            <div style="float:left;">
+                @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty)
+            </div>
+        }
+
+        <div id="tdCriteriaFields" style="float:left;">
+
+            @foreach (var field in Model.GroupedEntries.First())
+            {
+                if (field.FieldType == Constants.FieldType.CHECKBOX
+                    || field.FieldType == Constants.FieldType.RADIOBUTTON
+                    || field.FieldType == Constants.FieldType.DROPDOWNLIST)
+                {
+                    var optionFields = new List<SelectListItem>();
+
+                    foreach (var formField in Model.Fields)
+                    {
+                        if (formField.Label.Equals(field.FieldLabel))
+                        {
+                            foreach (var option in formField.Options.Split(","))
+                            {
+                                optionFields.Add(new SelectListItem { Text = @option, Value = @option });
+                            }
+                        }
+                    }
+
+                    @Html.DropDownListFor(m => m.CriteriaValue[@field.FieldLabel], optionFields, String.Empty, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                }
+
+                else
+                {
+                    @Html.TextBoxFor(m => m.CriteriaValue[@field.FieldLabel], new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                }
+            }
+
+        </div>
+        <div style="float:left;">
+            <a id="removeCriteriaConditionButton" name="removeCriteriaConditionButton" class="hyperlink-button light-blue-button">-</a>
+        </div>
+    </div>
+}
+

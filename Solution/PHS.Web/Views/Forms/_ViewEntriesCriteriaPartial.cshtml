@@ -10,7 +10,7 @@
 
         @{
             <div style="float:left;">
-                @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new { @onchange = "myFunction(this)" })
+                @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new {@id ="criteriaField", @onchange = "myFunction(this)" })
             </div>
 
             var criteriaLogFields = new List<SelectListItem>()
@@ -71,55 +71,11 @@
             <a id="removeCriteriaButton" name="removeCriteriaButton" class="hyperlink-button light-blue-button">-</a>
         </div>
 
-        <div id="trCriteriaRow1" style="display:none;">
-
-            <br style="clear:both" />
-
-            <div style="float:left;">
-                <select id="criteriaCondition" name="criteriaCondition">
-                    <option value="empty"></option>
-                    <option value="and">and</option>
-                    <option value="or">or</option>
-                </select>
-            </div>
-            <div style="float:left;">
-                @Html.DropDownListFor(m => m.CriteriaLogic, criteriaLogFields, String.Empty)
-
-            </div>
-            <div id="tdCriteriaFields" style="float:left;">
-
-                @foreach (var field in Model.GroupedEntries.First())
-                {
-                    if (field.FieldType == Constants.FieldType.CHECKBOX
-                        || field.FieldType == Constants.FieldType.RADIOBUTTON
-                        || field.FieldType == Constants.FieldType.DROPDOWNLIST)
-                    {
-                        <select id="criteria[@field.FieldLabel]" name="select[@field.FieldLabel]" style="display:none;">
-                            @foreach (var formField in Model.Fields)
-                            {
-                                if (formField.Label.Equals(field.FieldLabel))
-                                {
-                                    foreach (var option in formField.Options.Split(","))
-                                    {
-                                        <option value="@option">@option</option>
-                                    }
-                                }
-                            }
-                        </select>
-                    }
-
-                    else
-                    {
-                        <input id="criteria[@field.FieldLabel]" name="criteria[@field.FieldLabel]" type="text" style="display:none;" />
-                    }
-                }
-
-            </div>
-            <div style="float:left;">
-                <a id="addNextCriteriaConditionButton" name="addNextCriteriaConditionButton" class="hyperlink-button light-blue-button">+</a>
-                <a id="removeCriteriaConditionButton" name="removeCriteriaConditionButton" class="hyperlink-button light-blue-button">-</a>
-            </div>
-        </div>
-
+        <table id="criteriaSubTable">
+            @foreach (var criteriaSubField in @Model.CriteriaSubFields)
+            {
+                Html.RenderPartial("_ViewEntriesCriteriaSubPartial", criteriaSubField);
+            }
+        </table>
    </div>
 }
