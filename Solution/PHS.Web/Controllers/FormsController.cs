@@ -728,11 +728,18 @@ namespace PHS.Web.Controllers
             {
                 foreach (var criteriaField in criteriaFields)
                 {
-                    if (!String.IsNullOrEmpty(criteriaField.FieldLabel) 
+                    if (!String.IsNullOrEmpty(criteriaField.FieldLabel)
                         && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
                         && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.FieldLabel]))
                     {
-                        result += string.Format("OR [{0}] {1}", criteriaField.FieldLabel, criteriaField.getConvertedCriteriaValue());
+                        result += string.Format("OR [{0}] {1}", criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.FieldLabel]));
+                        if (criteriaField.CriteriaSubFields != null)
+                        {
+                            foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
+                            {
+                                result += string.Format(" {0} [{1}] {2}", criteriaSubField.OperatorLogic, criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaSubField.CriteriaLogic, criteriaSubField.CriteriaValue[criteriaField.FieldLabel]));
+                            }
+                        }
                     }
                         
                 }
@@ -744,6 +751,35 @@ namespace PHS.Web.Controllers
             }
 
             return result;
+        }
+
+
+        private string getConvertedCriteriaValue(string criteriaLogic, string value)
+        {
+            Dictionary<string, string> mappedValues = new Dictionary<string, string>();
+            mappedValues.Add("eq", "=");
+            mappedValues.Add("neq", "<>");
+            mappedValues.Add("gt", ">");
+            mappedValues.Add("gte", ">=");
+            mappedValues.Add("lt", "<");
+            mappedValues.Add("lte", "<=");
+
+            switch (criteriaLogic)
+            {
+                case "startswith":
+                    return string.Format("LIKE '{0}*'", mappedValues[criteriaLogic], value);
+                case "endswith":
+                    return string.Format("LIKE '*{0}'", mappedValues[criteriaLogic], value);
+                case "contains":
+                    return string.Format("LIKE '*{0}*'", mappedValues[criteriaLogic], value);
+                case "doesnotcontain":
+                    return string.Format("NOT LIKE '*{0}*'", mappedValues[criteriaLogic], value);
+                case "in":
+                    return string.Format("IN ({0})", mappedValues[criteriaLogic], value);
+                default:
+                    return string.Format("{0} '{1}'", mappedValues[criteriaLogic], value);
+            }
+
         }
 
         [HttpPost]

@@ -86,12 +86,43 @@ namespace PHS.Web.Controllers.Tests
 
             record.FieldLabel = "TWO COL";
             record.CriteriaLogic = "eq";
-            record.CriteriaValue["TWO COL"] = "TEST";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
 
             Assert.AreEqual("[TWO COL] = 'TEST'", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordWithSubRecordUsingSimpleMapping()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+            record.CriteriaSubFields = new List<CriteriaSubFieldViewModel>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "neq";
+            record.CriteriaValue[record.FieldLabel] = "FIRSTCOL";
+
+            CriteriaSubFieldViewModel subRecord = new CriteriaSubFieldViewModel();
+            subRecord.CriteriaValue = new Dictionary<string, string>();
+
+            subRecord.OperatorLogic = "and";
+            subRecord.CriteriaLogic = "gt";
+            subRecord.CriteriaValue[record.FieldLabel] = "SECCOL";
+
+            record.CriteriaSubFields.Add(subRecord);
+
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] <> 'FIRSTCOL' and [TWO COL] > 'SECCOL'", retVal);
         }
     }
 }
