@@ -8,7 +8,7 @@ namespace PHS.Web.Controllers.Tests
     public class FormsControllerTests
     {
         [TestMethod()]
-        public void GenerateSortingTest_EmptyRecords()
+        public void GenerateSorting_EmptyRecords()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
@@ -21,7 +21,7 @@ namespace PHS.Web.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GenerateSortingTest_OneRecord()
+        public void GenerateSorting_OneRecord()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
@@ -39,7 +39,7 @@ namespace PHS.Web.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GenerateSortingTest_MultipleRecords()
+        public void GenerateSorting_MultipleRecords()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
@@ -59,6 +59,19 @@ namespace PHS.Web.Controllers.Tests
             var retVal = obj.Invoke("GenerateSorting", new object[] { sortFields });
 
             Assert.AreEqual("TEST COL ASC, TWO COL DESC", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateCriteria_EmptyRecords()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+
+            var retVal = obj.Invoke("GenerateCriteria", new object[] { fields });
+
+            Assert.AreEqual(retVal, "");
         }
     }
 }

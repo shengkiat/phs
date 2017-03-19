@@ -719,6 +719,13 @@ namespace PHS.Web.Controllers
             return result;
         }
 
+        private string GenerateCriteria(List<CriteriaFieldViewModel> criteriaFields)
+        {
+            string result = "";
+
+            return result;
+        }
+
         [HttpPost]
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, FormViewModel model)
         {
