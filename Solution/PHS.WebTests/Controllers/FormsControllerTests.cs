@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PHS.Web.Controllers;
-using System;
+using PHS.FormBuilder.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PHS.Web.Controllers.Tests
 {
@@ -12,9 +8,16 @@ namespace PHS.Web.Controllers.Tests
     public class FormsControllerTests
     {
         [TestMethod()]
-        public void ExportToExcelTest()
+        public void GenerateSortingTest()
         {
-            Assert.Fail();
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
+
+            var retVal = obj.Invoke("GenerateSorting", new object[] { sortFields });
+            
+            Assert.AreEqual(retVal, "");
         }
     }
 }
