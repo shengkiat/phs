@@ -62,14 +62,14 @@ namespace PHS.Web.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GenerateCriteria_EmptyRecords()
+        public void GenerateFlitering_EmptyRecords()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
 
-            var retVal = obj.Invoke("GenerateCriteria", new object[] { fields });
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
 
             Assert.AreEqual(retVal, "");
         }

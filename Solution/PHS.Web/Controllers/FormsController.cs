@@ -719,7 +719,7 @@ namespace PHS.Web.Controllers
             return result;
         }
 
-        private string GenerateCriteria(List<CriteriaFieldViewModel> criteriaFields)
+        private string GenerateFlitering(List<CriteriaFieldViewModel> criteriaFields)
         {
             string result = "";
 
