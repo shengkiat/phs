@@ -10,12 +10,9 @@ namespace PHS.Business.ViewModel
 {
     public class UserSearchModel
     {
-        [Display(Name = "User id")]
-        public string UserId { get; set; }
-        [Display(Name = "Name")]
-        public string Name { get; set; }
+        public string SearchBy { get; set; }
+        public string Content { get; set; }
         public IList<Person> persons { get; set; }
-        //public IPagedList<Product> SearchResults { get; set; }
         public string SearchButton { get; set; }
     }
 }

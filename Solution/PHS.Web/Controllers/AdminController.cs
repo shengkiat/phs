@@ -67,11 +67,17 @@ namespace PHS.Web.Controllers
 
             using (var getPerson = new PersonManager())
             {
-                IList<Person> persons = getPerson.GetPersonsByUserName(usm.Name, out message);
-                if (persons == null)
+                IList<Person> persons = null;
+
+                if ("FullName".Equals(usm.SearchBy))
                 {
-                    SetViewBagError(message);
-                    return View(result);
+                    persons = getPerson.GetPersonsByUserName(usm.Content, out message);
+                    if (persons == null)
+                    {
+                        SetViewBagError(message);
+                        return View(result);
+                    }
+
                 }
 
                 result.persons = persons;
