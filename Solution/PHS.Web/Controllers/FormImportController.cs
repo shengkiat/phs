@@ -1,12 +1,17 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using OfficeOpenXml.Table;
 using PHS.Business.Implementation;
 using PHS.DB;
+using PHS.Web.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -29,17 +34,64 @@ namespace PHS.Web.Controllers
             return View(forms);
         }
 
+        public string Between( string value, string a, string b)
+        {
+            int posA = value.IndexOf(a);
+            int posB = value.IndexOf(b);
+            if (posA == -1)
+            {
+                return "";
+            }
+            if (posB == -1)
+            {
+                return "";
+            }
+            int adjustedPosA = posA + a.Length;
+            if (adjustedPosA >= posB)
+            {
+                return "";
+            }
+            return value.Substring(adjustedPosA, posB - adjustedPosA);
+        }
+
         [HttpPost]
         public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
         {
-            foreach (HttpPostedFileBase file in files)
-            {
-                string filePath = Server.MapPath("~/App_Data/" + file.FileName);
+            Request.InputStream.Position = 0;
+            var input = new StreamReader(Request.InputStream).ReadToEnd();
 
-                System.IO.File.WriteAllBytes(filePath, ReadData(file.InputStream));
+            var idSearch = Between(input.Substring(10, input.Length - 10), "formid\"", "---");
+            Regex.Replace(idSearch, @"\s+", "");
+            idSearch = idSearch.Replace(System.Environment.NewLine, string.Empty);
+
+            int formid = 0;
+            if (!Int32.TryParse(idSearch, out formid))
+            {
+                return new HttpStatusCodeResult(400, "Invalid Form");
             }
 
-            return Json("All files have been successfully stored.");
+            foreach (HttpPostedFileBase file in files)
+            {
+                string filePath = Server.MapPath("~/App_Data/" + Guid.NewGuid().ToString());
+
+                System.IO.File.WriteAllBytes(filePath, ReadData(file.InputStream));
+
+                using (var manager = new FormManager())
+                {
+                    string msg  = manager.InsertUploadDataToForm(filePath, formid);
+
+                    System.IO.File.Delete(filePath);
+
+                    if (msg != "")
+                    {
+                        return new HttpStatusCodeResult(400, msg); // Bad Request
+
+                    }
+                }
+
+            }
+
+            return new HttpStatusCodeResult(200, "Results have been successfully uploaded."); // Bad Request
         }
 
         private byte[] ReadData(Stream stream)
@@ -84,7 +136,7 @@ namespace PHS.Web.Controllers
 
                 // --------- Data and styling goes here -------------- //
                 // Add some formatting to the worksheet
-               // worksheet.TabColor = Color.Blue;
+                // worksheet.TabColor = Color.Blue;
                 worksheet.DefaultRowHeight = 12;
 
                 // Start adding the header
@@ -120,7 +172,7 @@ namespace PHS.Web.Controllers
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];
-                return File(data, "application/vnd.ms-excel", fileName);             
+                return File(data, "application/vnd.ms-excel", fileName);
             }
             else
             {

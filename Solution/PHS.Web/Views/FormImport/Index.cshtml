@@ -20,37 +20,42 @@
         color: white;
     }
 </style>
+
+
+<h2>Import Data</h2>
+
+
+@Html.DropDownList("ddl", Model.Select(item => new SelectListItem
+{
+    Value = item.ID.ToString(),
+    Text = item.Title.ToString()
+
+}), "Select Form")
+
+<button type="button" id="btnTemplate">Download Form Template</button>
+
+<div>
+    <input type="file" id="FileUpload1" />
+    <input type="button" id="btnUpload" value="Upload Files" />
+</div>
+
+<div id="dropZone">Drop your files here</div>
+<br />
+Uploaded Files:
+<ul id="uploadResult"></ul>
+
 <script type="text/javascript">
-    $(function () {
-        $('#dropZone').filedrop({
-            url: '@Url.Action("UploadFiles")',
-            paramname: 'files',
-            maxFiles: 5,
-            dragOver: function () {
-                $('#dropZone').css('background', 'blue');
-            },
-            dragLeave: function () {
-                $('#dropZone').css('background', 'gray');
-            },
-            drop: function () {
-                $('#dropZone').css('background', 'gray');
-            },
-            afterAll: function () {
-                $('#dropZone').html('The file(s) have been uploaded successfully!');
-            },
-            uploadFinished: function (i, file, response, time) {
-                $('#uploadResult').append('<li>' + file.name + '</li>');
-            }
-        });
-    });
-
-
-
 
     $(document).ready(function () {
+        templateClickFunction();
+        draganddrop();
+    });
+
+    function templateClickFunction() {
         $("#btnTemplate").click(function () {
 
             var id = document.getElementById('ddl').value
+            alert(id);
 
             var jsonObject = {
                 "formid": id
@@ -73,25 +78,64 @@
             });
 
         });
-    });
+    }
 
+    function draganddrop() {
+        $('#dropZone').filedrop({
+            url: '@Url.Action("UploadFiles")',
+            paramname: 'files',
+            maxFiles: 1,
+            dataType: "json",
+            data: {
+                formid: function () {
+                    return $("#ddl option:selected").val(); 
+                },
+            },
+            error: function (err, file) {
+                switch (err) {
+                    case 'BrowserNotSupported':
+                        alert('browser does not support HTML5 drag and drop')
+                        break;
+                    case 'TooManyFiles':
+                        // user uploaded more than 'maxfiles'
+                        break;
+                    case 'FileTooLarge':
+                        // program encountered a file whose size is greater than 'maxfilesize'
+                        // FileTooLarge also has access to the file which was too large
+                        // use file.name to reference the filename of the culprit file
+                        break;
+                    case 'FileTypeNotAllowed':
+                        // The file type is not in the specified list 'allowedfiletypes'
+                        break;
+                    case 'FileExtensionNotAllowed':
+                        // The file extension is not in the specified list 'allowedfileextensions'
+                        break;
+                    default:
+                        break;
+                }
+            },
+            error: function (response) {
+                $('#uploadResult').append('<li>' + response + '</li>');
+
+            },
+            success: function (response) {
+                $('#uploadResult').append('<li>' + response + '</li>');
+            },
+            dragOver: function () {
+                $('#dropZone').css('background', 'blue');
+            },
+            dragLeave: function () {
+                $('#dropZone').css('background', 'gray');
+            },
+            drop: function () {
+                $('#dropZone').css('background', 'gray');
+            },
+            afterAll: function () {
+                $('#dropZone').html('The file(s) have been uploaded successfully!');
+            },
+            uploadFinished: function (i, file, response, time) {
+                // $('#uploadResult').append('<li>' + file.name + '</li>');
+            }
+        });
+    }
 </script>
-
-<h2>Import Data</h2>
-
-
-@Html.DropDownList("ddl", Model.Select(item => new SelectListItem
-{
-    Value = item.ID.ToString(),
-    Text = item.Title.ToString()
-
-}), "Select Form")
-
-<button type="button" id="btnTemplate">Download Form Template</button>
-
-
-
-<div id="dropZone">Drop your files here</div>
-<br />
-Uploaded Files:
-<ul id="uploadResult"></ul>
