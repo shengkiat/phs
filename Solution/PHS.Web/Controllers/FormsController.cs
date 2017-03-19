@@ -767,15 +767,15 @@ namespace PHS.Web.Controllers
             switch (criteriaLogic)
             {
                 case "startswith":
-                    return string.Format("LIKE '{0}*'", mappedValues[criteriaLogic], value);
+                    return string.Format("LIKE '{0}*'", value);
                 case "endswith":
-                    return string.Format("LIKE '*{0}'", mappedValues[criteriaLogic], value);
+                    return string.Format("LIKE '*{0}'", value);
                 case "contains":
-                    return string.Format("LIKE '*{0}*'", mappedValues[criteriaLogic], value);
+                    return string.Format("LIKE '*{0}*'", value);
                 case "doesnotcontain":
-                    return string.Format("NOT LIKE '*{0}*'", mappedValues[criteriaLogic], value);
+                    return string.Format("NOT LIKE '*{0}*'", value);
                 case "in":
-                    return string.Format("IN ({0})", mappedValues[criteriaLogic], value);
+                    return string.Format("IN ({0})", value);
                 default:
                     return string.Format("{0} '{1}'", mappedValues[criteriaLogic], value);
             }

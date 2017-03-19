@@ -163,5 +163,105 @@ namespace PHS.Web.Controllers.Tests
 
             Assert.AreEqual("[FIRST COL] >= 'FIRSTVAL' OR [SEC COL] < 'SECVAL' OR [THIRD COL] <= 'THIRDVAL'", retVal);
         }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingStartsWiths()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "startswith";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] LIKE 'TEST*'", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingEndWiths()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "endswith";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] LIKE '*TEST'", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingContains()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "contains";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] LIKE '*TEST*'", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingDoesNotContains()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "doesnotcontain";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] NOT LIKE '*TEST*'", retVal);
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingIn()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "in";
+            record.CriteriaValue[record.FieldLabel] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[TWO COL] IN (TEST)", retVal);
+        }
     }
 }
