@@ -85,8 +85,10 @@
                     //alert(response);
                 },
                 success: function (response) {
-                    $('#criteriaSubTable').append("<div>" + response + " </div>");
-                    toggleCriteriaFields(selectedobject);
+                    $(selectedobject).parent().parent().find("#criteriaSubTable").each(function () {
+                        $(this).append("<div>" + response + " </div>");
+                        toggleCriteriaFields(selectedobject);
+                    })
                 }
             })
 
