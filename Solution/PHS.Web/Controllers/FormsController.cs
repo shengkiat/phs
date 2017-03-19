@@ -696,7 +696,7 @@ namespace PHS.Web.Controllers
 
         private string GenerateSorting(List<SortFieldViewModel> sortFields)
         {
-            string result = ",";
+            string result = "";
 
             if (sortFields != null)
             {
@@ -706,12 +706,17 @@ namespace PHS.Web.Controllers
                     var sortO = sortFieldViewModel.SortOrder;
                     if (!String.IsNullOrEmpty(sortF) && !String.IsNullOrEmpty(sortO))
                     {
-                        result += string.Format("{0} {1}", sortF, sortO);
+                        result += string.Format(", {0} {1}", sortF, sortO);
                     }
                 }
             }
 
-            return result.Remove(0, 1);
+            if (result.Length > 1)
+            {
+                result = result.Remove(0, 2);
+            }
+
+            return result;
         }
 
         [HttpPost]
