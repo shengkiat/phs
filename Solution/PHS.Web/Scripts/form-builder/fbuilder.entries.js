@@ -71,6 +71,10 @@
 
             var selectedobject = $(this);
 
+            var criteriaindex = $(selectedobject).parent().parent().parent().find("input[name='CriteriaFields.index']").val();
+
+            var criteriafieldindex = "CriteriaFields[" + criteriaindex + "].";
+
             var formId = document.getElementById('formId').value
 
             var data = {
@@ -88,6 +92,7 @@
                     $(selectedobject).parent().parent().find("#criteriaSubTable").each(function () {
                         $(this).append("<div>" + response + " </div>");
                         toggleCriteriaFields(selectedobject);
+                        amendCriteriaSubFields(selectedobject, criteriafieldindex);
                     })
                 }
             })
@@ -132,6 +137,19 @@
                     }
 
                 });
+            });
+        });
+    }
+
+    function amendCriteriaSubFields(selectedobject, index) {
+
+        $(selectedobject).parent().parent().find("#criteriaSubTable").each(function () {
+
+            $(this).find('input, select').each(function () {
+                if ($(this).attr("name").startsWith("CriteriaSubFields")) {
+                    var newindex = index + $(this).attr("name");
+                    $(this).attr('name', newindex);
+                }
             });
         });
     }
