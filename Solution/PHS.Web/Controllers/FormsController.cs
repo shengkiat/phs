@@ -621,7 +621,7 @@ namespace PHS.Web.Controllers
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
 
             var gridView = new GridView();
-            gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields);
+            gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields, model.CriteriaFields);
             gridView.DataBind();
 
             Response.ClearContent();
@@ -637,7 +637,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        private DataTable CreateFormEntriesDataTable(FormViewModel form, List<SortFieldViewModel> sortFields)
+        private DataTable CreateFormEntriesDataTable(FormViewModel form, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
             var dt = new DataTable(form.Title);
             List<string> columnNames = new List<string>();
