@@ -91,7 +91,7 @@ namespace PHS.Web.Controllers.Tests
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
 
-            Assert.AreEqual("TWO COL = 'TEST'", retVal);
+            Assert.AreEqual("[TWO COL] = 'TEST'", retVal);
         }
     }
 }

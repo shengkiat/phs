@@ -689,8 +689,9 @@ namespace PHS.Web.Controllers
 
 
             DataView dv = new DataView(dt);
+            dv.RowFilter = GenerateFlitering(criteriaFields);
             dv.Sort = GenerateSorting(sortFields);
-
+            
             return dv.ToTable();
         }
 
@@ -731,7 +732,7 @@ namespace PHS.Web.Controllers
                         && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
                         && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.FieldLabel]))
                     {
-                        result += string.Format("OR {0} {1}", criteriaField.FieldLabel, criteriaField.getConvertedCriteriaValue());
+                        result += string.Format("OR [{0}] {1}", criteriaField.FieldLabel, criteriaField.getConvertedCriteriaValue());
                     }
                         
                 }
