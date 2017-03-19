@@ -124,5 +124,44 @@ namespace PHS.Web.Controllers.Tests
 
             Assert.AreEqual("[TWO COL] <> 'FIRSTCOL' and [TWO COL] > 'SECCOL'", retVal);
         }
+
+        [TestMethod()]
+        public void GenerateFlitering_MultipleRecordUsingSimpleMapping()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel recordOne = new CriteriaFieldViewModel();
+            recordOne.CriteriaValue = new Dictionary<string, string>();
+
+            recordOne.FieldLabel = "FIRST COL";
+            recordOne.CriteriaLogic = "gte";
+            recordOne.CriteriaValue[recordOne.FieldLabel] = "FIRSTVAL";
+
+            fields.Add(recordOne);
+
+            CriteriaFieldViewModel recordTwo = new CriteriaFieldViewModel();
+            recordTwo.CriteriaValue = new Dictionary<string, string>();
+
+            recordTwo.FieldLabel = "SEC COL";
+            recordTwo.CriteriaLogic = "lt";
+            recordTwo.CriteriaValue[recordTwo.FieldLabel] = "SECVAL";
+
+            fields.Add(recordTwo);
+
+            CriteriaFieldViewModel recordThree = new CriteriaFieldViewModel();
+            recordThree.CriteriaValue = new Dictionary<string, string>();
+
+            recordThree.FieldLabel = "THIRD COL";
+            recordThree.CriteriaLogic = "lte";
+            recordThree.CriteriaValue[recordThree.FieldLabel] = "THIRDVAL";
+
+            fields.Add(recordThree);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("[FIRST COL] >= 'FIRSTVAL' OR [SEC COL] < 'SECVAL' OR [THIRD COL] <= 'THIRDVAL'", retVal);
+        }
     }
 }

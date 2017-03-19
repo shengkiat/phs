@@ -732,7 +732,7 @@ namespace PHS.Web.Controllers
                         && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
                         && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.FieldLabel]))
                     {
-                        result += string.Format("OR [{0}] {1}", criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.FieldLabel]));
+                        result += string.Format(" OR [{0}] {1}", criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.FieldLabel]));
                         if (criteriaField.CriteriaSubFields != null)
                         {
                             foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
@@ -747,7 +747,7 @@ namespace PHS.Web.Controllers
 
             if (result.Length > 1)
             {
-                result = result.Remove(0, 3);
+                result = result.Remove(0, 4);
             }
 
             return result;
