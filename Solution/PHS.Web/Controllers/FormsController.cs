@@ -723,6 +723,25 @@ namespace PHS.Web.Controllers
         {
             string result = "";
 
+            if (criteriaFields != null)
+            {
+                foreach (var criteriaField in criteriaFields)
+                {
+                    if (!String.IsNullOrEmpty(criteriaField.FieldLabel) 
+                        && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
+                        && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.FieldLabel]))
+                    {
+                        result += string.Format("OR {0} {1}", criteriaField.FieldLabel, criteriaField.getConvertedCriteriaValue());
+                    }
+                        
+                }
+            }
+
+            if (result.Length > 1)
+            {
+                result = result.Remove(0, 3);
+            }
+
             return result;
         }
 

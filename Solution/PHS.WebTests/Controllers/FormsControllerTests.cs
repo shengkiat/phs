@@ -8,7 +8,7 @@ namespace PHS.Web.Controllers.Tests
     public class FormsControllerTests
     {
         [TestMethod()]
-        public void GenerateSorting_EmptyRecords()
+        public void GenerateSorting_EmptyRecord()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
@@ -62,7 +62,7 @@ namespace PHS.Web.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GenerateFlitering_EmptyRecords()
+        public void GenerateFlitering_EmptyRecord()
         {
             FormsController target = new FormsController();
             PrivateObject obj = new PrivateObject(target);
@@ -72,6 +72,26 @@ namespace PHS.Web.Controllers.Tests
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
 
             Assert.AreEqual(retVal, "");
+        }
+
+        [TestMethod()]
+        public void GenerateFlitering_OneRecordUsingSimpleMapping()
+        {
+            FormsController target = new FormsController();
+            PrivateObject obj = new PrivateObject(target);
+
+            List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
+            CriteriaFieldViewModel record = new CriteriaFieldViewModel();
+            record.CriteriaValue = new Dictionary<string, string>();
+
+            record.FieldLabel = "TWO COL";
+            record.CriteriaLogic = "eq";
+            record.CriteriaValue["TWO COL"] = "TEST";
+            fields.Add(record);
+
+            var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
+
+            Assert.AreEqual("TWO COL = 'TEST'", retVal);
         }
     }
 }
