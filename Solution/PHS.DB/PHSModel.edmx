@@ -33,6 +33,7 @@
           <Property Name="EventID" Type="int" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsQuestion" Type="bit" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -208,6 +209,7 @@
           <Property Name="EventID" Type="Int32" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -319,6 +321,7 @@
           <EntitySetMapping Name="forms">
             <EntityTypeMapping TypeName="phsModel.form">
               <MappingFragment StoreEntitySet="form">
+                <ScalarProperty Name="IsQuestion" ColumnName="IsQuestion" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />

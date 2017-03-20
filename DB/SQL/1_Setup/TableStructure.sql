@@ -61,7 +61,8 @@ CREATE TABLE [dbo].[form](
 	[IsActive] [bit] NOT NULL,
 	[EventID] [int] NULL,
 	[IsPublic] [bit] NULL,
-	[PublicFormType] [nvarchar](50) NULL
+	[PublicFormType] [nvarchar](50) NULL,
+	[IsQuestion] [bit] NULL
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

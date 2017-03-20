@@ -32,6 +32,7 @@ namespace PHS.DB
         public Nullable<int> EventID { get; set; }
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public bool IsQuestion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<form_fields> form_fields { get; set; }
