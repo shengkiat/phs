@@ -179,6 +179,7 @@ namespace PHS.Repository.Repository
             form1.Theme = model.Theme;
             form1.IsPublic = model.IsPublic;
             form1.PublicFormType = model.PublicFormType;
+            form1.IsQuestion = model.IsQuestion;
             form1.NotificationEmail = model.NotificationEmail;
             this.SaveChanges();
         }

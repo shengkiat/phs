@@ -44,9 +44,13 @@
                 int counter = 1;
                 foreach (var field in Model.Fields)
                 {
-                    <li>
-                        <label class="dynamic">@counter</label>
-                    </li>
+                    if (Model.IsQuestion)
+                    {
+                        <li>
+                            <label class="dynamic">@counter</label>
+                        </li>
+                    }
+
                     <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
                         @Html.Partial("_form-field-{0}-partial".FormatWith(field.FieldType.ToString().ToLower()), field)
                     </li>

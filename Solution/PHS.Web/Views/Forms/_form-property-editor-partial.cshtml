@@ -120,6 +120,21 @@
                 </td>
             </tr>
 
+            <tr>
+                <td class="label">
+                    <label class="label">
+                        Question
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        @Html.DropDownListFor(m => m.IsQuestion, listItems, string.Empty)
+                    }
+
+                </td>
+            </tr>
+
             <!-- Confirmation message -->
             <tr class="last-row">
                 <td class="label">
