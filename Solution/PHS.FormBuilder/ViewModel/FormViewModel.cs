@@ -27,6 +27,7 @@ namespace PHS.FormBuilder.ViewModels
         public bool Embed { get; set; }   
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public bool IsQuestion { get; set; }
         public List<SortFieldViewModel> SortFields { get; set; }
         public List<CriteriaFieldViewModel> CriteriaFields { get; set; }
 
@@ -53,6 +54,7 @@ namespace PHS.FormBuilder.ViewModels
                 Theme = "",
                 NotificationEmail = "",
                 IsPublic = false,
+                IsQuestion = false,
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
@@ -102,6 +104,7 @@ namespace PHS.FormBuilder.ViewModels
                 Theme= form1.Theme,
                 NotificationEmail = form1.NotificationEmail,
                 IsPublic = form1.IsPublic,
+                IsQuestion = form1.IsQuestion,
                 PublicFormType = form1.PublicFormType,
                 Status = (Constants.FormStatus)Enum.Parse(typeof(Constants.FormStatus), form1.Status),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
@@ -122,6 +125,7 @@ namespace PHS.FormBuilder.ViewModels
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
                 Slug = "test-form",
                 IsPublic = false,
+                IsQuestion = false,
                 NotificationEmail= "",
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
