@@ -42,15 +42,11 @@
                 <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
                     @if (Model.Fields.Any())
                     {
-                        int counter = 1;
                         foreach (var field in Model.Fields)
                         {
                             <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
-                                <label class="dynamic">@counter</label>
                                 @Html.Partial("_form-field-{0}-partial".FormatWith(field.FieldType.ToString().ToLower()), field)
                             </li>
-
-                            counter = counter + 1;
                         }
                     }
                     else
