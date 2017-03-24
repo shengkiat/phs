@@ -339,6 +339,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="App_Data\Doctor%27s Memo Template.docx" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -464,11 +465,10 @@
     <Content Include="Views\Forms\_ViewEntriesSortPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Forms\_ViewEntriesCriteriaPartial.cshtml" />
-	<Content Include="Views\Forms\_ViewEntriesCriteriaSubPartial.cshtml" />
+    <Content Include="Views\Forms\_ViewEntriesCriteriaSubPartial.cshtml" />
     <Content Include="Views\FormImport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

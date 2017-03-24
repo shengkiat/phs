@@ -13,7 +13,8 @@
 @if (!Model.Forms.Any())
 {
     <div class="select-form-container align-center welcome-container">
-       <img src="/content/images/spacer.gif" class="image-bg form-icon" alt="form icon" /><br />
+       <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
+
        <h3 class="welcome-text">Welcome to the E-digit form builder version 1.2. You have not yet created any forms. Click the button below to begin</h3>
        @Html.RouteLink("Create Form", "form-create", null, new { @class="hyperlink-button light-blue-button welcome-button"})
     </div>

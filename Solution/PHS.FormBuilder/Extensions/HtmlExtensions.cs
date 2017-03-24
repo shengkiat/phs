@@ -109,7 +109,7 @@ namespace PHS.FormBuilder.Extensions
         /// <returns></returns>
         public static string SpacerImage(this HtmlHelper helper)
         {
-            return "/content/images/spacer.gif";
+            return "/Content/images/spacer.gif";
         }
 
         public static string GetTempFormValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")

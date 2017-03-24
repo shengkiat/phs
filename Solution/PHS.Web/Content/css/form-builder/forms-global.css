@@ -65,7 +65,7 @@ input[type="submit"].green:hover, a.green-button:hover{background-color:#25B02C;
 
 textarea:focus, input:focus{outline: none;}
 
-select{background:url(/content/images/field_gradient_bg.gif) repeat scroll center top transparent;border:1px solid #BDBDBD;color:#333333;text-decoration:none !important;padding:1px 1px;background-color:White;}
+select{background:url(../../images/field_gradient_bg.gif) repeat scroll center top transparent;border:1px solid #BDBDBD;color:#333333;text-decoration:none !important;padding:1px 1px;background-color:White;}
 .field-validation-error {color: #FF0000;font:normal 11px verdana;}
 select.listbox{background-image:none;}
 .right{float:right;}
