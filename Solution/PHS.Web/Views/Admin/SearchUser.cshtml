@@ -10,7 +10,7 @@
         <hr />
         <div class="form-group">
             <b>Search by:</b>
-            User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName")
+            User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
             Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
 
             <div class="col-md-5">
