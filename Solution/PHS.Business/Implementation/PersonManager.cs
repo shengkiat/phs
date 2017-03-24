@@ -175,12 +175,11 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public IList<Person> GetPersonsByUserName(string userName, out string message)
+        public Person GetPersonByUserName(string userName, out string message)
         {
-            IList<Person> persons = null;
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()) )
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
-                message = "Username is empty!";
+                message = "User Id is empty!";
                 return null;
             }
             try
@@ -188,6 +187,40 @@ namespace PHS.Business.Implementation
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue);
+
+                    if (users != null && users.Any())
+                    {
+                        message = string.Empty;
+                        return users.ToList()[0];
+                    }
+                    else
+                    {
+                        message = "User not found!";
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
+                return null;
+            }
+        }
+
+        public IList<Person> GetPersonsByFullName(string fullName, out string message)
+        {
+            IList<Person> persons = null;
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(fullName.Trim()) )
+            {
+                message = "Name is empty!";
+                return null;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && u.IsActive && !u.DeleteDT.HasValue);
 
                     if (users != null && users.Any())
                     {
@@ -206,7 +239,7 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by User Name");
+                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
                 return persons;
             }
         }

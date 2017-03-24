@@ -17,6 +17,8 @@ namespace PHS.Business.Interface
 
         Person GetPersonByPersonSid(int personSid, out string message);
 
-        IList<Person> GetPersonsByUserName(string userName, out string message);
+        Person GetPersonByUserName(string userName, out string message);
+
+        IList<Person> GetPersonsByFullName(string fullName, out string message);
     }
 }

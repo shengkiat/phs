@@ -71,13 +71,21 @@ namespace PHS.Web.Controllers
 
                 if ("FullName".Equals(usm.SearchBy))
                 {
-                    persons = getPerson.GetPersonsByUserName(usm.Content, out message);
+                    persons = getPerson.GetPersonsByFullName(usm.Content, out message);
                     if (persons == null)
                     {
                         SetViewBagError(message);
                         return View(result);
                     }
 
+                }else
+                {
+                    Person person = getPerson.GetPersonByUserName(usm.Content, out message);
+                    if(person != null)
+                    {
+                        persons = new List<Person>();
+                        persons.Add(person);
+                    }
                 }
 
                 result.persons = persons;
