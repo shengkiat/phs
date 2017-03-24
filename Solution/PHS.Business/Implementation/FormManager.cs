@@ -53,7 +53,7 @@ namespace PHS.Business.Implementation
 
         }
 
-        public string InsertUploadDataToForm(string filePath, int formid)
+        public string InsertUploadDataToForm(byte[] data, int formid)
         {
             form form = new form();
 
@@ -61,8 +61,8 @@ namespace PHS.Business.Implementation
             {
                 form = unitOfWork.formRepository.GetForm(formid);
 
-                byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
-                using (MemoryStream ms = new MemoryStream(fileByte))
+               // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
+                using (MemoryStream ms = new MemoryStream(data))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
                     if (package.Workbook.Worksheets.Count == 0)

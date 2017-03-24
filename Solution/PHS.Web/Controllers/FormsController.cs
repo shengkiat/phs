@@ -49,6 +49,12 @@ namespace PHS.Web.Controllers
 
         public ActionResult GenerateDoctorMemo(string text)
         {
+
+            if (text == null)
+            {
+                text = "";
+            }
+
             String guid = Guid.NewGuid().ToString();
             string templatePath = Server.MapPath("~/App_Data/Doctor's Memo Template.docx");
 
@@ -57,12 +63,10 @@ namespace PHS.Web.Controllers
 
             doc.ReplaceText("Replaced", text);
 
-            string savePath = Server.MapPath("~/App_Data/" + guid + ".docx");
-            doc.SaveAs(savePath);
-
-            byte[] fileBytes = System.IO.File.ReadAllBytes(savePath);
-
-            // return File(fileBytes, "application/octet-stream", "Doctor's Memo.docx");
+            var ms = new MemoryStream();
+            doc.SaveAs(ms);
+            ms.Position = 0;
+            byte[] fileBytes = ms.ToArray();
 
             TempData[guid] = fileBytes;
 
@@ -70,7 +74,6 @@ namespace PHS.Web.Controllers
             {
                 Data = new { FileGuid = guid, FileName = "Doctor's Memo.docx" }
             };
-
         }
 
         [HttpGet]
@@ -93,15 +96,15 @@ namespace PHS.Web.Controllers
         public ActionResult Edit(int id)
         {
 
-           
-       
+
+
 
             var sad1 = this._formRepo.GetForm(id);
             FormViewModel model1 = FormViewModel.CreateFromObject(sad1);
 
 
 
-         
+
             return View(model1);
         }
 
@@ -137,8 +140,8 @@ namespace PHS.Web.Controllers
 
 
             }
-                // return Json("'Blk':'123', Street: 'ISS'");
-                return Json(new { Blk = "123", Street = "ISS" });
+            // return Json("'Blk':'123', Street: 'ISS'");
+            return Json(new { Blk = "123", Street = "ISS" });
             //   return Json("Success");
 
         }
@@ -235,7 +238,7 @@ namespace PHS.Web.Controllers
                 }
 
 
-              //  form.FormFields.Load();
+                //  form.FormFields.Load();
                 var fieldOrderById = form.form_fields.Select(ff => new { domid = ff.DomId, id = ff.ID });
 
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
@@ -292,7 +295,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult TogglePublish(bool toOn, int id)
         {
-           // var form = this._formRepo.GetByPrimaryKey(id);
+            // var form = this._formRepo.GetByPrimaryKey(id);
             var form = this._formRepo.GetForm(id);
 
             if (form.form_fields.Count() > 0)
@@ -300,7 +303,7 @@ namespace PHS.Web.Controllers
                 form.Status = toOn ? Constants.FormStatus.PUBLISHED.ToString() : Constants.FormStatus.DRAFT.ToString();
 
 
-               
+
                 this._formRepo.SaveChanges();
                 if (toOn)
                 {
@@ -334,7 +337,7 @@ namespace PHS.Web.Controllers
         public ActionResult Register(int id, bool embed = false)
         {
             FormViewModel model = null;
-           // var form = this._formRepo.GetByPrimaryKey(id);
+            // var form = this._formRepo.GetByPrimaryKey(id);
 
             var form = this._formRepo.GetForm(id);
 
@@ -458,7 +461,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult ViewEntries(int formId)
         {
-           // var form = this._formRepo.GetByPrimaryKey(formId);
+            // var form = this._formRepo.GetByPrimaryKey(formId);
 
             var form = this._formRepo.GetForm(formId);
 
@@ -482,7 +485,7 @@ namespace PHS.Web.Controllers
 
             var sortFieldViewModel = new SortFieldViewModel();
 
-            sortFieldViewModel.SortFields = 
+            sortFieldViewModel.SortFields =
                 from s in formView.GroupedEntries.First()
                 select new SelectListItem
                 {
@@ -577,7 +580,7 @@ namespace PHS.Web.Controllers
             {
                 if (obj.IsSavedInCloud)
                 {
-                    
+
                 }
                 else
                 {
@@ -613,7 +616,7 @@ namespace PHS.Web.Controllers
         public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
         {
             int formId = model.Id.Value;
-           // var form = this._formRepo.GetByPrimaryKey(formId);
+            // var form = this._formRepo.GetByPrimaryKey(formId);
             var form = this._formRepo.GetForm(formId);
             var formView = FormViewModel.CreateFromObject(form);
 
@@ -691,7 +694,7 @@ namespace PHS.Web.Controllers
             DataView dv = new DataView(dt);
             dv.RowFilter = GenerateFlitering(criteriaFields);
             dv.Sort = GenerateSorting(sortFields);
-            
+
             return dv.ToTable();
         }
 
@@ -741,7 +744,7 @@ namespace PHS.Web.Controllers
                             }
                         }
                     }
-                        
+
                 }
             }
 
@@ -786,7 +789,7 @@ namespace PHS.Web.Controllers
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, FormViewModel model)
         {
 
-           // var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
+            // var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
             var form = this._formRepo.GetForm(model.Id.Value);
             var formView = FormViewModel.CreateFromObject(form);
 
@@ -811,7 +814,7 @@ namespace PHS.Web.Controllers
         {
 
             FormViewModel model = null;
- 
+
             var form = this._formRepo.GetPreRegistrationForm();
 
             if (form != null)
@@ -832,11 +835,11 @@ namespace PHS.Web.Controllers
             if (!IsUserAuthenticated())
             {
                 // TODO
-               // return RedirectToLogin();
+                // return RedirectToLogin();
             }
 
             FormViewModel model = null;
-           // var form = this._formRepo.GetByPrimaryKey(id);
+            // var form = this._formRepo.GetByPrimaryKey(id);
             var form = this._formRepo.GetForm(id);
 
             if (form != null)

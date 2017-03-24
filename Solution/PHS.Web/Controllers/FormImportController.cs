@@ -74,11 +74,13 @@ namespace PHS.Web.Controllers
             {
                 string filePath = Server.MapPath("~/App_Data/" + Guid.NewGuid().ToString());
 
-                System.IO.File.WriteAllBytes(filePath, ReadData(file.InputStream));
+               // System.IO.File.WriteAllBytes(filePath, ReadData(file.InputStream));
+
+                byte[] data =  ReadData(file.InputStream);
 
                 using (var manager = new FormManager())
                 {
-                    string msg  = manager.InsertUploadDataToForm(filePath, formid);
+                    string msg  = manager.InsertUploadDataToForm(data, formid);
 
                     System.IO.File.Delete(filePath);
 
@@ -127,6 +129,7 @@ namespace PHS.Web.Controllers
                 form = manager.FindForm(formid);
             }
 
+            MemoryStream stream;
 
             // Create the package and make sure you wrap it in a using statement
             using (var package = new ExcelPackage(file))
@@ -151,10 +154,13 @@ namespace PHS.Web.Controllers
                 }
 
                 // save our new workbook and we are done!
-                package.Save();
+                //package.SaveAs();
+                 stream = new MemoryStream(package.GetAsByteArray());
             }
 
-            byte[] fileBytes = System.IO.File.ReadAllBytes(outputDir + fileName);
+            byte[] fileBytes = stream.ToArray();
+
+          //  byte[] fileBytes = System.IO.File.ReadAllBytes(outputDir + fileName);
             TempData[guid] = fileBytes;
 
             System.IO.File.Delete(Server.MapPath("~/App_Data/" + guid + ".xlsx"));
