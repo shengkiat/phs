@@ -11,3 +11,9 @@ Accounts
 Example URL  
 http://localhost:49972/forms  
 http://localhost:49972/home/login  
+
+Test URL
+https://itumed-test.stf.nus.edu.sg/phs   
+
+
+Map Folder Path: \\172.18.149.234\Website\phs   
