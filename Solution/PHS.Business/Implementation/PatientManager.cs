@@ -23,6 +23,14 @@ namespace PHS.Business.Implementation
         {
             IList<Patient> result = null;
 
+            if (string.IsNullOrEmpty(nric))
+            {
+                message = "Nric is empty!";
+                return null;
+            }
+
+
+
             message = string.Empty;
             return result;
         }
