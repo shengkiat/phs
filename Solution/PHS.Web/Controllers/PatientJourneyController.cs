@@ -53,19 +53,18 @@ namespace PHS.Web.Controllers
 
         // Both GET and POST: /PatientJourney/GoToEvent
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult GoToEvent(string selectedEvent)
+        public ActionResult GoToEvent(string nric, string eventId)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            if (selectedEvent == null)
+            if (eventId == null)
             {
                 return View();
             }
 
-            
 
             return View();
         }

@@ -14,6 +14,15 @@
 <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
 
+<script>
+    $(function () {
+        pageGrids.participantsGrid.onRowSelect(function (e) {
+            document.getElementById('eventId').value = e.row.Event
+            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/GoToEvent?eventId=" + e.row.Event + "&nric=" + e.row.Nric); //Will set it
+        });
+    });
+</script>
+
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
@@ -44,14 +53,16 @@
     if (Model.Patients != null && Model.Patients.Count > 0)
     {
        
-        @Html.Grid(Model.Patients).Columns(columns =>
+        @Html.Grid(Model.Patients).Named("participantsGrid").Columns(columns =>
         {
             columns.Add(c => c.Event).Titled("Event").Filterable(false);
             columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
 
-        <button type="submit" value="GoToEvent" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("GoToEvent", "PatientJourney", new { selectedEvent = "test" })">
+        <input id="eventId" type="hidden" />
+
+        <button type="submit" value="GoToEvent" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("GoToEvent", "PatientJourney")">
             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
             Proceed
         </button>
