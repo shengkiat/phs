@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PHS.FormBuilder.Helpers
+namespace PHS.Common
 {
     public static class NricChecker
     {

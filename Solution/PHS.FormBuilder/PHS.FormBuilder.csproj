@@ -87,7 +87,6 @@
     <Compile Include="Extensions\UtilityExtensions.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
     <Compile Include="Helpers\ItemListHelper.cs" />
-    <Compile Include="Helpers\NricChecker.cs" />
     <Compile Include="Helpers\UtilityHelper.cs" />
     <Compile Include="Models\FileValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
