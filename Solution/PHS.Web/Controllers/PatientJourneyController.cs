@@ -14,7 +14,7 @@ namespace PHS.Web.Controllers
             return View();
         }
 
-        // Both GET and POST: /PatientJourney/SearchUser
+        // Both GET and POST: /PatientJourney/SearchPatient
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult SearchPatient()
         {

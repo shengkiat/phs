@@ -6,5 +6,30 @@
 
 @using (Html.BeginForm())
 {
+    <div class="form-horizontal ">
+        <hr />
+        <div class="form-group">
+            <b>Search by:</b>
+            User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
+            Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
+
+            <div class="text-center">
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                </div>
+            </div>
+            @Html.ActionLink("New", "CreateUser")
+        </div>
+
+        <div class="form-group col-lg-offset-10">
+            <div class="text-center">
+                <button type="submit" value="SearchUser" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnSearchUser">
+                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
     
 }
