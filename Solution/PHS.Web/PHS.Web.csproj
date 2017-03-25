@@ -64,6 +64,10 @@
       <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -193,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FormImportController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -259,6 +264,7 @@
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\site.css" />
     <Content Include="Content\css\wheel.png" />
+    <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
@@ -341,6 +347,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Data\Doctor%27s Memo Template.docx" />
+    <Content Include="Grid.mvc.readme" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -353,6 +360,9 @@
     <Content Include="Scripts\form-builder\fbuilder.layout.js" />
     <Content Include="Scripts\form-builder\fbuilder.utils.js" />
     <None Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\gridmvc.js" />
+    <Content Include="Scripts\gridmvc.lang.ru.js" />
+    <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -473,6 +483,11 @@
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\PatientJourney\Index.cshtml" />
     <Content Include="Views\PatientJourney\SearchPatient.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\Edit.cshtml" />
+    <Content Include="Views\Event\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -16,6 +16,7 @@
           <Property Name="Venue" Type="nvarchar(max)" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="1" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="form">
           <Key>
@@ -33,7 +34,7 @@
           <Property Name="EventID" Type="int" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsQuestion" Type="bit" />
+          <Property Name="IsQuestion" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -60,6 +61,8 @@
           <Property Name="SubLabel" Type="nvarchar" MaxLength="50" />
           <Property Name="Size" Type="varchar" MaxLength="10" />
           <Property Name="SelectedOption" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddOthersOption" Type="bit" />
+          <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
           <Property Name="Columns" Type="int" />
           <Property Name="Rows" Type="int" />
           <Property Name="Options" Type="nvarchar" MaxLength="300" />
@@ -74,10 +77,8 @@
           <Property Name="ValidFileExtensions" Type="nvarchar" MaxLength="50" />
           <Property Name="MinFilesizeInKb" Type="int" />
           <Property Name="ImageBase64" Type="varchar(max)" />
-          <Property Name="AddOthersOption" Type="bit" />
-          <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
-          <Property Name="MatrixRow" Type="nvarchar(max)" />
-          <Property Name="MatrixColumn" Type="nvarchar(max)" />
+          <Property Name="MatrixRow" Type="varchar(max)" />
+          <Property Name="MatrixColumn" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="form_form_fields">
           <Key>
@@ -106,6 +107,7 @@
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
@@ -255,8 +257,8 @@
           <NavigationProperty Name="form_field_values" Relationship="phsModel.FK_form_field_values_form_fields" FromRole="form_fields" ToRole="form_field_values" />
           <NavigationProperty Name="forms" Relationship="phsModel.form_form_fields" FromRole="form_fields" ToRole="form" />
           <Property Name="ImageBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="MatrixRow" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MatrixRow" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_form_field_values_form_fields">
           <End Type="phsModel.form_fields" Role="form_fields" Multiplicity="1">
@@ -296,6 +298,7 @@
           <Property Name="Venue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -311,6 +314,7 @@
           <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -404,6 +408,7 @@
           <EntitySetMapping Name="events">
             <EntityTypeMapping TypeName="phsModel.event">
               <MappingFragment StoreEntitySet="event">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="Venue" ColumnName="Venue" />
@@ -417,6 +422,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="phsModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="DeleteDT" ColumnName="DeleteDT" />
                 <ScalarProperty Name="UpdateDT" ColumnName="UpdateDT" />
                 <ScalarProperty Name="CreateDT" ColumnName="CreateDT" />
