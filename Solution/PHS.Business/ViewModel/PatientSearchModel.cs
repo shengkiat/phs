@@ -9,7 +9,9 @@ namespace PHS.Business.ViewModel
 {
     public class PatientSearchModel
     {
-        public string Nric { get; set; }
+        public string IcFirstDigit { get; set; }
+        public string IcNumber { get; set; }
+        public string IcLastDigit { get; set; }
         public IList<Patient> Patients { get; set; }
     }
 }
