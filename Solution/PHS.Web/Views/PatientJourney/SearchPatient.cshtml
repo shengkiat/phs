@@ -1,4 +1,6 @@
 ﻿@model PHS.Business.ViewModel.PatientSearchModel
+@using PHS.FormBuilder.Helpers
+@using PHS.FormBuilder.Extensions
 
 @{
     ViewBag.Title = "Search Participant Page";
@@ -6,27 +8,21 @@
 
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal ">
+    <div class="form-horizontal">
         <hr />
         <div class="form-group">
-            <b>Search by:</b>
-            User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
-            Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
-
             <div class="text-center">
-                <div class="col-md-5">
-                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                <div>
+                    <select name="FirstDigit">
+                        <option>S</option>
+                    </select>
+                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @autocomplete = "off", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", maxlength = "7" } })
+                    @Html.DropDownList("LastDigit", ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })
+                    <button type="submit" value="SearchPatient" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnSearchUser">
+                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                        Search
+                    </button>
                 </div>
-            </div>
-            @Html.ActionLink("New", "CreateUser")
-        </div>
-
-        <div class="form-group col-lg-offset-10">
-            <div class="text-center">
-                <button type="submit" value="SearchUser" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnSearchUser">
-                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                    Search
-                </button>
             </div>
         </div>
     </div>
