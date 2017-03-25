@@ -51,6 +51,11 @@
                                 {
                                     optionFields.Add(new SelectListItem { Text = @option, Value = @option });
                                 }
+
+                                if (formField.AddOthersOption)
+                                {
+                                    optionFields.Add(new SelectListItem { Text = "Others", Value = "Others" });
+                                }
                             }
                         }
 
