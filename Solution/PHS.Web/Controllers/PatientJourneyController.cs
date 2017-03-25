@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Controllers
 {
-    public class PatientJourneyController : Controller
+    public class PatientJourneyController : BaseController
     {
         // GET: PatientJourney
         public ActionResult Index()
@@ -18,6 +18,11 @@ namespace PHS.Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult SearchPatient()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
             return View();
         }
     }
