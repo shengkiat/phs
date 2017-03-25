@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using PHS.DB;
 using PHS.Repository;
 using PHS.Repository.Context;
@@ -243,6 +244,127 @@ namespace PHS.Business.Implementation
                 return persons;
             }
         }
+
+        /*
+         *Will check username
+         *If username exists, will return null and username already exists message 
+        */
+        public Person AddPerson(Person person, out string message)
+        {
+            message = string.Empty;
+            if (person == null)
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return null;
+            }
+            if (string.IsNullOrEmpty(person.Username) || string.IsNullOrEmpty(person.Username.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return null;
+            }
+            if (UserNameExists(person.Username, out message))
+            {
+                return null;
+            }
+            if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.FullName);
+                return null;
+            }
+            var hasedUser = GenerateHashedUser(person, out message);
+            if (hasedUser == null)
+            {
+                return null;
+            }
+            person = hasedUser;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        person.CreateDT = DateTime.Now;
+                        person.Role = Constants.User_Role_Student_Code;
+                        unitOfWork.Persons.Add(person);
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                    message = string.Empty;
+                    return person;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringAddingValue("Person");
+                return null;
+            }
+        }
+
+        public bool UserNameExists(string userName, out string message)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                message = Constants.ValueIsEmpty("User Id");
+                return true;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
+                    if (user != null)
+                    {
+                        message = Constants.ValueAlreadyExists(userName);
+                        return true;
+                    }
+                }
+                message = string.Empty;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("User Id");
+                return true;
+            }
+        }
+
+        public Person GenerateHashedUser(Person person, out string message)
+        {
+            if (person == null)
+            {
+                message = Constants.ValueIsEmpty("User");
+                return null;
+            }
+            if (string.IsNullOrEmpty(person.Username))
+            {
+                message = Constants.ValueIsEmpty("User Id");
+                return null;
+            }
+            if (string.IsNullOrEmpty(person.Password))
+            {
+                message = Constants.ValueIsEmpty("Password");
+                return null;
+            }
+
+            try
+            {
+                string salt = PasswordManager.GenerateSalt();
+                person.Password = PasswordManager.CreateHash(person.Password, salt);
+                message = string.Empty;
+                return person;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringAddingValue("Person");
+                return null;
+            }
+
+        }
     }
+
     
 }

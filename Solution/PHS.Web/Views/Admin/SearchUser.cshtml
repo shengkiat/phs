@@ -13,9 +13,12 @@
             User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
             Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
 
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+            <div class="text-center">
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                </div>
             </div>
+            @Html.ActionLink("New", "CreateUser")
         </div>
 
         <div class="form-group col-lg-offset-10">

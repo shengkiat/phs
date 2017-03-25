@@ -53,6 +53,62 @@ namespace PHS.Web.Controllers
             };
         }
 
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult CreateUser(Person person)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            if(person == null)
+            {
+                return View();
+            }
+
+            SetBackURL("SearchUser");
+
+            string message = string.Empty;
+
+            using (var personManager = new PersonManager())
+            {
+                var newUser = personManager.AddPerson(person, out message);
+                if (newUser == null)
+                {
+                    SetViewBagError(message);
+                    SetBackURL("SearchUser");
+                    return View();
+                }
+                else
+                {
+                    SetTempDataMessage(Constants.ValueSuccessfuly("Student has been created"));
+                    return RedirectToAction("SearchUser");
+                }
+            }
+
+        }
+
+        public ActionResult EditUser(Person person)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            return View();
+        }
+
+        public ActionResult BackToSearchUser()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            return View("SearchUser");
+        }
+
+
         // Both GET and POST: /Admin/SearchUser
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult SearchUser(UserSearchModel usm)
@@ -60,6 +116,11 @@ namespace PHS.Web.Controllers
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
+            }
+
+            if(usm == null)
+            {
+                return View();
             }
 
             string message = string.Empty;

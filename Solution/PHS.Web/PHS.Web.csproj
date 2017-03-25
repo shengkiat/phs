@@ -467,6 +467,9 @@
     <Content Include="Views\Forms\_ViewEntriesCriteriaPartial.cshtml" />
     <Content Include="Views\Forms\_ViewEntriesCriteriaSubPartial.cshtml" />
     <Content Include="Views\FormImport\Index.cshtml" />
+    <Content Include="Views\Admin\SearchUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
