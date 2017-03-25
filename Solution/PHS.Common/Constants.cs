@@ -59,5 +59,30 @@ namespace PHS.Common
         {
             return "Operation failed during retrieving " + value + ". Please contact system admin";
         }
+
+        public static string PleaseFillInAllRequiredFields()
+        {
+            return "Please fill in all required fields";
+        }
+
+        public static string ValueIsEmpty(string value)
+        {
+            return value + " is empty";
+        }
+
+        public static string ValueAlreadyExists(string value)
+        {
+            return value + " already exists";
+        }
+
+        public static string OperationFailedDuringAddingValue(string value)
+        {
+            return "Operation failed during adding " + value + ". Please contact system admin";
+        }
+
+        public static string ValueSuccessfuly(string value)
+        {
+            return value + " successfully";
+        }
     }
 }
