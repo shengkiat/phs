@@ -21,5 +21,6 @@ namespace PHS.DB
         public string Venue { get; set; }
         public string CreateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }
