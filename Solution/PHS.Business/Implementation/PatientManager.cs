@@ -19,11 +19,11 @@ namespace PHS.Business.Implementation
             return new PatientManager();
         }
 
-        public IList<Patient> GetPatientsByNric(string nric, out string message)
+        public IList<Patient> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
         {
             IList<Patient> result = null;
 
-            if (string.IsNullOrEmpty(nric))
+            if (string.IsNullOrEmpty(icNumber))
             {
                 message = "Nric is empty!";
                 return null;

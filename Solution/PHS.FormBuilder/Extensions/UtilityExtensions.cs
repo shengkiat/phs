@@ -153,12 +153,7 @@ namespace PHS.FormBuilder.Extensions
                     string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
                     string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
-                    if (icNumber.IsNullOrEmpty() || icFirstDigit.IsNullOrEmpty() || icLastDigit.IsNullOrEmpty())
-                    {
-                        return false;
-                    }
-
-                    return NricChecker.IsNRICValid(icFirstDigit + icNumber + icLastDigit);
+                    return NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit);
 
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());

@@ -10,6 +10,16 @@ namespace PHS.FormBuilder.Helpers
     {
         private static readonly int[] Multiples = { 2, 7, 6, 5, 4, 3, 2 };
 
+        public static bool IsNRICValid(string icFirstDigit, string icNumber, string icLastDigit)
+        {
+            if (string.IsNullOrEmpty(icFirstDigit) || string.IsNullOrEmpty(icNumber) || string.IsNullOrEmpty(icLastDigit))
+            {
+                return false;
+            }
+
+            return IsNRICValid(icFirstDigit + icNumber + icLastDigit);
+        }
+
         public static bool IsNRICValid(string nric)
         {
             if (string.IsNullOrEmpty(nric))

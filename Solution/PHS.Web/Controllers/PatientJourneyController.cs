@@ -36,7 +36,7 @@ namespace PHS.Web.Controllers
 
             using (var getPatient = new PatientManager())
             {
-                IList<Patient> patients = getPatient.GetPatientsByNric(psm.IcNumber, out message);
+                IList<Patient> patients = getPatient.GetPatientsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
                 if (patients == null)
                 {
                     SetViewBagError(message);
