@@ -53,17 +53,25 @@ namespace PHS.Web.Controllers
             };
         }
 
+        [HttpGet, ActionName("CreateUser")]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult CreateUser(Person person)
+        public ActionResult CreateUser()
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            if(person == null || person.Username == null)
+            return View();
+        }
+
+        [HttpPost, ActionName("CreateUser")]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult SaveNewUser(Person person)
+        {
+            if (!IsUserAuthenticated())
             {
-                return View();
+                return RedirectToLogin();
             }
 
             SetBackURL("SearchUser");
@@ -92,14 +100,28 @@ namespace PHS.Web.Controllers
 
         }
 
-        public ActionResult EditUser(Person person)
+        public ActionResult EditUser(int userSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            return View();
+            string message = string.Empty;
+            using (var personManager = new PersonManager())
+            {
+                var user = personManager.GetPersonByPersonSid(userSid, out message);
+                if (user == null)
+                {
+                    SetViewBagError(message);
+                }
+                else
+                {
+                    user.Password = string.Empty;
+                }
+                SetBackURL("SearchUser");
+                return View(user);
+            };
         }
 
         public ActionResult BackToSearchUser()

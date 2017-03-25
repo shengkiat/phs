@@ -285,6 +285,7 @@ namespace PHS.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         person.CreateDT = DateTime.Now;
+                        person.IsActive = true;
                         unitOfWork.Persons.Add(person);
                         unitOfWork.Complete();
                         scope.Complete();
