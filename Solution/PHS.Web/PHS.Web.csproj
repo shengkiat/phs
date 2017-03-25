@@ -472,6 +472,7 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\PatientJourney\Index.cshtml" />
+    <Content Include="Views\PatientJourney\SearchPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
