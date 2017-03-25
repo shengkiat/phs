@@ -46,15 +46,22 @@ namespace PHS.Business.Implementation
 
             List<Patient> firstRecords = new List<Patient>();
             Patient patientOne = new Patient();
+
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
-            patientOne.Event = "2016 - Event";
+            @event eventOne = new @event();
+            eventOne.ID = 100;
+            eventOne.Title = "2016 - Event";
+            patientOne.Event = eventOne;
             firstRecords.Add(patientOne);
 
             Patient patientTwo = new Patient();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
-            patientTwo.Event = "2015 - Event";
+            @event eventTwo = new @event();
+            eventTwo.ID = 200;
+            eventTwo.Title = "2015 - Event";
+            patientTwo.Event = eventTwo;
             firstRecords.Add(patientTwo);
 
             mockData.Add("S8518538A", firstRecords);

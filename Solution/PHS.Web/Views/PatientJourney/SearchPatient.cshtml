@@ -17,8 +17,8 @@
 <script>
     $(function () {
         pageGrids.participantsGrid.onRowSelect(function (e) {
-            document.getElementById('eventId').value = e.row.Event
-            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/GoToEvent?eventId=" + e.row.Event + "&nric=" + e.row.Nric); //Will set it
+            alert(e.row.EventId);
+            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/GoToEvent?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
         });
     });
 </script>
@@ -55,12 +55,11 @@
        
         @Html.Grid(Model.Patients).Named("participantsGrid").Columns(columns =>
         {
-            columns.Add(c => c.Event).Titled("Event").Filterable(false);
+            columns.Add(c => c.Event.Title).Titled("EventTitle").Filterable(false);
+            columns.Add(c => c.EventId).Titled("EventID").Filterable(false);
             columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
-
-        <input id="eventId" type="hidden" />
 
         <button type="submit" value="GoToEvent" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("GoToEvent", "PatientJourney")">
             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>

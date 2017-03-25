@@ -8,8 +8,9 @@ namespace PHS.DB
 {
     public class Patient
     {
-        public string Event { get; set; }
+        public @event Event { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
+        public string EventId { get { return Event.ID.ToString(); } }
     }
 }
