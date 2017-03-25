@@ -33,5 +33,22 @@
         </div>
     </div>
 
-    
+    if (Model.Patients != null && Model.Patients.Count > 0)
+    {
+        <table class="table" style=" width:500px;">
+            <tr>
+                <th>Event</th>
+                <th>NRIC</th>
+                <th>Name</th>
+            </tr>
+            @foreach (var patient in Model.Patients)
+            {
+                <tr>
+                    <td>@patient.Event</td>
+                    <td>@patient.Nric</td>
+                    <td>@patient.FullName</td>
+                </tr>
+            }
+        </table>
+    }
 }

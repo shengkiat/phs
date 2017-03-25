@@ -22,17 +22,45 @@ namespace PHS.Business.Implementation
         public IList<Patient> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
         {
             IList<Patient> result = null;
+            message = string.Empty;
 
-            if (string.IsNullOrEmpty(icNumber))
+            if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
             {
-                message = "Nric is empty!";
-                return null;
+                string nric = icFirstDigit + icNumber + icLastDigit;
+               
+                result = getMockData(nric);
             }
 
 
+            else
+            {
+                message = "Invalid Nric!";
+            }
 
-            message = string.Empty;
             return result;
         }
+
+        private List<Patient> getMockData(string nric)
+        {
+            Dictionary<string, List<Patient>> mockData = new Dictionary<string, List<Patient>>();
+
+            List<Patient> firstRecords = new List<Patient>();
+            Patient patientOne = new Patient();
+            patientOne.FullName = "ABCDE";
+            patientOne.Nric = "S8518538A";
+            patientOne.Event = "2016 - Event";
+            firstRecords.Add(patientOne);
+
+            Patient patientTwo = new Patient();
+            patientTwo.FullName = "ABCDE";
+            patientTwo.Nric = "S8518538A";
+            patientTwo.Event = "2015 - Event";
+            firstRecords.Add(patientTwo);
+
+            mockData.Add("S8518538A", firstRecords);
+
+            return mockData[nric];
+        }
     }
+    
 }
