@@ -489,7 +489,7 @@ namespace PHS.Web.Controllers
                 from s in formView.GroupedEntries.First()
                 select new SelectListItem
                 {
-                    Text = s.FieldLabel,
+                    Text = s.FieldLabel.Limit(100),
                     Value = s.FieldLabel
                 };
 
@@ -515,7 +515,7 @@ namespace PHS.Web.Controllers
                 from s in formView.GroupedEntries.First()
                 select new SelectListItem
                 {
-                    Text = s.FieldLabel,
+                    Text = s.FieldLabel.Limit(100),
                     Value = s.FieldLabel
                 };
 
