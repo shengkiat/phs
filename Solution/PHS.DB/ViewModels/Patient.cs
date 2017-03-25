@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PHS.DB;
 
-namespace PHS.Business.ViewModel
+namespace PHS.DB
 {
-    public class PatientSearchModel
+    public class Patient
     {
+        public string Event { get; set; }
         public string Nric { get; set; }
-        public IList<Patient> Patients { get; set; }
+        public string FullName { get; set; }
     }
 }

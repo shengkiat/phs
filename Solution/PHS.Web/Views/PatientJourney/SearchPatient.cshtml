@@ -16,7 +16,7 @@
                     <select name="FirstDigit">
                         <option>S</option>
                     </select>
-                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @autocomplete = "off", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", maxlength = "7" } })
+                    @Html.EditorFor(model => model.Nric, new { htmlAttributes = new { @autocomplete = "off", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", maxlength = "7" } })
                     @Html.DropDownList("LastDigit", ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })
                     <button type="submit" value="SearchPatient" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnSearchUser">
                         <span class="spinner"><i class="icon-spin icon-refresh"></i></span>

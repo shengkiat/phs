@@ -97,10 +97,12 @@
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
     <Compile Include="Implementation\FormManager.cs" />
+    <Compile Include="Implementation\PatientManager.cs" />
     <Compile Include="Implementation\PersonManager.cs" />
     <Compile Include="Interface\IAddressManager.cs" />
     <Compile Include="Interface\IFormManager.cs" />
     <Compile Include="Interface\IManagerFactoryBase.cs" />
+    <Compile Include="Interface\IPatientManager.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\PatientSearchModel.cs" />
