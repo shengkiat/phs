@@ -50,5 +50,24 @@ namespace PHS.Web.Controllers
 
             return View(result);
         }
+
+        // Both GET and POST: /PatientJourney/GoToEvent
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult GoToEvent(string selectedEvent)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            if (selectedEvent == null)
+            {
+                return View();
+            }
+
+            
+
+            return View();
+        }
     }
 }

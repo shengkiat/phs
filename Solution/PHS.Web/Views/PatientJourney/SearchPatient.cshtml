@@ -1,6 +1,7 @@
 ﻿@model PHS.Business.ViewModel.PatientSearchModel
 @using PHS.FormBuilder.Helpers
 @using PHS.FormBuilder.Extensions
+@using GridMvc.Html
 
 @{
     ViewBag.Title = "Search Participant Page";
@@ -35,20 +36,17 @@
 
     if (Model.Patients != null && Model.Patients.Count > 0)
     {
-        <table class="table" style=" width:500px;">
-            <tr>
-                <th>Event</th>
-                <th>NRIC</th>
-                <th>Name</th>
-            </tr>
-            @foreach (var patient in Model.Patients)
-            {
-                <tr>
-                    <td>@patient.Event</td>
-                    <td>@patient.Nric</td>
-                    <td>@patient.FullName</td>
-                </tr>
-            }
-        </table>
+       
+        @Html.Grid(Model.Patients).Columns(columns =>
+        {
+            columns.Add(c => c.Event).Titled("Event").Filterable(false);
+            columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
+            columns.Add(c => c.FullName).Titled("Name").Filterable(false);
+        }).WithPaging(10)
+
+        <button type="submit" value="GoToEvent" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnSearchUser">
+            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+            Proceed
+        </button>
     }
 }
