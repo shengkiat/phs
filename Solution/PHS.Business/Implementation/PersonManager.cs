@@ -285,7 +285,6 @@ namespace PHS.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         person.CreateDT = DateTime.Now;
-                        person.Role = Constants.User_Role_Student_Code;
                         unitOfWork.Persons.Add(person);
                         unitOfWork.Complete();
                         scope.Complete();
@@ -351,8 +350,8 @@ namespace PHS.Business.Implementation
 
             try
             {
-                string salt = PasswordManager.GenerateSalt();
-                person.Password = PasswordManager.CreateHash(person.Password, salt);
+                person.PasswordSalt = PasswordManager.GenerateSalt();
+                person.Password = PasswordManager.CreateHash(person.Password, person.PasswordSalt);
                 message = string.Empty;
                 return person;
             }

@@ -61,7 +61,7 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            if(person == null)
+            if(person == null || person.Username == null)
             {
                 return View();
             }
@@ -72,6 +72,10 @@ namespace PHS.Web.Controllers
 
             using (var personManager = new PersonManager())
             {
+                //TODO remove hardcode
+                person.Password = "12345";
+                person.Role = Constants.User_Role_Student_Code;
+
                 var newUser = personManager.AddPerson(person, out message);
                 if (newUser == null)
                 {
