@@ -53,6 +53,9 @@ namespace PHS.Web.Controllers
                         case Constants.User_Role_Student_Code:
                             result = Redirect("~/Student");
                             break;
+                        case Constants.User_Role_Volunteer_Code:
+                            result = Redirect("~/PatientJourney");
+                            break;
                     }
                 }
                 SetViewBagError(message);

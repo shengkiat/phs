@@ -128,6 +128,9 @@ namespace PHS.Web.Controllers
                 case Common.Constants.User_Role_Admin_Code:
                     return Redirect("~/admin");
                     break;
+                case Common.Constants.User_Role_Volunteer_Code:
+                    return Redirect("~/patientjourney");
+                    break;
                 default:
                     return RedirectToLogin();
                     break;
