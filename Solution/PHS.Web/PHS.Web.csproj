@@ -269,6 +269,11 @@
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
     <Content Include="Content\images\lightbulb.png" />
+    <Content Include="Content\images\Modality\abacus.png" />
+    <Content Include="Content\images\Modality\achievement.png" />
+    <Content Include="Content\images\Modality\agenda-1.png" />
+    <Content Include="Content\images\Modality\agenda.png" />
+    <Content Include="Content\images\Modality\balance.png" />
     <Content Include="Content\images\properties-bg.png" />
     <Content Include="Content\images\slide-img-form.png" />
     <Content Include="Content\images\spacer.gif" />
@@ -489,6 +494,7 @@
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Views\PatientJourney\JourneyModality.cshtml" />
+    <Content Include="Views\PatientJourney\_JourneyModalityCirclesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
