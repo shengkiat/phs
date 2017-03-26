@@ -7,6 +7,7 @@
 <h2>Edit</h2>
 
 <script language="javascript" type="text/javascript">
+
     function addRow() {
 
         @{
@@ -18,11 +19,11 @@
         var index = $("#tbBooks").children("tr").length;
 
         var indexCell = "<td style='display:none'><input name='Books.Index' type='hidden' value='" + index + "' /></td>";
-        var titleCell = "<td><input id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='' /></td>";
-        var removeCell = "<td><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
+        var titleCell = "<td><input style='width: 100%; max-width:1000px;' id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='' /></td>";
+        var removeCell = "<td style='width:200px;'><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
 
-        var moveUpCell = "<td><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
-        var moveDownCell = "<td><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
+        var moveUpCell = "<td style='width:50px;'><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
+        var moveDownCell = "<td style='width:50px;'><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
 
 
         var newRow = "<tr id='trBook" + index + "'>" +
@@ -30,21 +31,17 @@
         $("#tbBooks").append(newRow);
     }
 
-
-
-
-
     function addExistingRow(name) {
 
 
         var index = $("#tbBooks").children("tr").length;
 
         var indexCell = "<td style='display:none'><input name='Books.Index' type='hidden' value='" + index + "' /></td>";
-        var titleCell = "<td><input id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='" + name + "' /></td>";
-        var removeCell = "<td><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
+        var titleCell = "<td><input style='width: 100%; max-width:1000px;' id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='" + name + "' /></td>";
+        var removeCell = "<td style='width:200px;'><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
 
-        var moveUpCell = "<td><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
-        var moveDownCell = "<td><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
+        var moveUpCell = "<td style='width:50px;'><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
+        var moveDownCell = "<td style='width:50px;'><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
 
 
         var newRow = "<tr id='trBook" + index + "'>" +
@@ -166,6 +163,10 @@
 
         @foreach (var item in Model.Modalities)
         {
+            if (item.Name.Equals(""))
+            {
+                continue;
+            }
             <script type="text/javascript">
 
                 var data = "@item.Name";
@@ -173,11 +174,11 @@
                 var index = $("#tbBooks").children("tr").length;
 
                 var indexCell = "<td style='display:none'><input name='Books.Index' type='hidden' value='" + index + "' /></td>";
-                var titleCell = "<td><input id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='" + data + "' /></td>";
-                var removeCell = "<td><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
+                var titleCell = "<td><input style='width: 100%; max-width:1000px;' id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='" + data + "' /></td>";
+                var removeCell = "<td style='width:200px;'><input  id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
 
-                var moveUpCell = "<td><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
-                var moveDownCell = "<td><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
+                var moveUpCell = "<td style='width:50px;'><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
+                var moveDownCell = "<td style='width:50px;'><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
 
 
                 var newRow = "<tr id='trBook" + index + "'>" +

@@ -20,18 +20,20 @@
         var index = $("#tbBooks").children("tr").length;
 
         var indexCell = "<td style='display:none'><input name='Books.Index' type='hidden' value='" + index + "' /></td>";
-        var titleCell = "<td><input id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='' /></td>";
-        var removeCell = "<td><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
+        var titleCell = "<td><input style='width: 100%; max-width:1000px;' id='Books_" + index + "__Title' name='Modalities[" + index + "].Name' type='text' value='' /></td>";
+        var removeCell = "<td style='width:200px;'><input id='btnAddBook' type='button'  value='Remove' onclick='removeRow(" + index + ");' /></td>";
 
-        var moveUpCell = "<td><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
-        var moveDownCell = "<td><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
+        var moveUpCell = "<td style='width:50px;'><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
+        var moveDownCell = "<td style='width:50px;'><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
 
        // var comboForm = "<td><select id='SelectedForm' name='Modalities[" + index + "].FormID'>' +@Html.Raw(Json.Encode(ViewData["Forms"])) + '</select></td>';
-        var comboForm = '<td>' +@Html.Raw(Json.Encode(ViewData["Forms"])) +'</td>';
+      //  var comboForm = '<td>' +@Html.Raw(Json.Encode(ViewData["Forms"])) +'</td>';
+        var comboForm = '';
+
 
 
         var newRow = "<tr id='trBook" + index + "'>" +
-        indexCell + titleCell + removeCell +comboForm + moveUpCell + moveDownCell + 
+        indexCell + titleCell + removeCell +comboForm + moveUpCell + moveDownCell +
            "</tr>";
         $("#tbBooks").append(newRow);
     }

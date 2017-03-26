@@ -52,6 +52,8 @@ namespace PHS.Web.Controllers
             {
                 forms = formManager.FindAllForms();
 
+                ViewData["ss"] = forms;
+
                 String htmlString = "<select id=\"SelectedForm\" name=\"Modalities[0].FormID\">";
                // String htmlString = "";
                 foreach (var form in forms)
