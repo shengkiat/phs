@@ -72,20 +72,38 @@ namespace PHS.Business.Implementation
             List<PatientEventViewModel> firstRecords = new List<PatientEventViewModel>();
             PatientEventViewModel patientOne = new PatientEventViewModel();
 
-            patientOne.FullName = "ABCDE";
-            patientOne.Nric = "S8518538A";
+            Modality modalityOne = new Modality();
+            modalityOne.ID = 1;
+            modalityOne.Name = "Registration";
+            modalityOne.ModalityForms = new List<ModalityForm>();
+
+            Modality modalityTwo = new Modality();
+            modalityTwo.ID = 2;
+            modalityTwo.Name = "History Taking";
+            modalityTwo.ModalityForms = new List<ModalityForm>();
+
             @event eventOne = new @event();
             eventOne.ID = 100;
             eventOne.Title = "2016 - Event";
+            eventOne.Modalities = new List<Modality>();
+            eventOne.Modalities.Add(modalityOne);
+            eventOne.Modalities.Add(modalityTwo);
+
+            @event eventTwo = new @event();
+            eventTwo.ID = 200;
+            eventTwo.Title = "2015 - Event";
+            eventTwo.Modalities = new List<Modality>();
+            eventTwo.Modalities.Add(modalityOne);
+            eventTwo.Modalities.Add(modalityTwo);
+
+            patientOne.FullName = "ABCDE";
+            patientOne.Nric = "S8518538A";
             patientOne.Event = eventOne;
             firstRecords.Add(patientOne);
 
             PatientEventViewModel patientTwo = new PatientEventViewModel();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
-            @event eventTwo = new @event();
-            eventTwo.ID = 200;
-            eventTwo.Title = "2015 - Event";
             patientTwo.Event = eventTwo;
             firstRecords.Add(patientTwo);
 
