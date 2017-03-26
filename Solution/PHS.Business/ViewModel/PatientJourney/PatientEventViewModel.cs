@@ -10,8 +10,13 @@ namespace PHS.Business.ViewModel.PatientJourney
     public class PatientEventViewModel
     {
         public @event Event { get; set; }
+        public string EventId { get { return Event.ID.ToString(); } }
+
         public string Nric { get; set; }
         public string FullName { get; set; }
-        public string EventId { get { return Event.ID.ToString(); } }
+        public int Age { get { return 40; } }
+        public string Language { get { return "English"; } }
+        public string ContactNumber { get { return "12345678"; } }
+        public string Gender { get { return "Male"; } }
     }
 }

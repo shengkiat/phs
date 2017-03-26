@@ -12,21 +12,21 @@
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
-            <table>
-                
-                <tr>
-                    <td><b>@Model.FullName</b></td>
-                    <td>Gender : Male</td>
-                    <td>Age : 40</td>
-                </tr>
+            <div>
+                <table>
+                    <tr>
+                        <td><b>@Model.FullName</b></td>
+                        <td>Gender : @Model.Gender</td>
+                        <td>Age : @Model.Age</td>
+                    </tr>
 
-                <tr>
-                    <td>Language : English</td>
-                    <td>NRIC : @Model.Nric</td>
-                    <td>Contact : 12345678</td>
-                </tr>
-                
-            </table>
+                    <tr>
+                        <td>Language : @Model.Language</td>
+                        <td>NRIC : @Model.Nric</td>
+                        <td>Contact : @Model.ContactNumber</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
