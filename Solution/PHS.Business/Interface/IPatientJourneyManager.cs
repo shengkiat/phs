@@ -1,4 +1,5 @@
-﻿using PHS.DB;
+﻿using PHS.Business.ViewModel.PatientJourney;
+using PHS.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace PHS.Business.Interface
 {
     public interface IPatientJourneyManager : IDisposable
     {
-        IList<PatientEvent> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message);
+        IList<PatientEventViewModel> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message);
+        PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message);
     }
 }

@@ -9,6 +9,7 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
+using PHS.Business.ViewModel.PatientJourney;
 
 namespace PHS.Business.Implementation
 {
@@ -19,9 +20,9 @@ namespace PHS.Business.Implementation
             return new PatientJourneyManager();
         }
 
-        public IList<PatientEvent> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
+        public IList<PatientEventViewModel> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
         {
-            IList<PatientEvent> result = null;
+            IList<PatientEventViewModel> result = null;
             message = string.Empty;
 
             if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
@@ -40,12 +41,36 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        private List<PatientEvent> getMockData(string nric)
+        public PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message)
         {
-            Dictionary<string, List<PatientEvent>> mockData = new Dictionary<string, List<PatientEvent>>();
+            PatientEventViewModel result = null;
+            message = string.Empty;
 
-            List<PatientEvent> firstRecords = new List<PatientEvent>();
-            PatientEvent patientOne = new PatientEvent();
+            if (NricChecker.IsNRICValid(nric) && !string.IsNullOrEmpty(eventId))
+            {
+                result = getMockData(nric, eventId);
+                if (result == null)
+                {
+                    message = "Unable to find using Nric and Event";
+                }
+            }
+
+
+            else
+            {
+                message = "Invalid Nric/Event!";
+            }
+
+            return result;
+        }
+
+
+        private List<PatientEventViewModel> getMockData(string nric)
+        {
+            Dictionary<string, List<PatientEventViewModel>> mockData = new Dictionary<string, List<PatientEventViewModel>>();
+
+            List<PatientEventViewModel> firstRecords = new List<PatientEventViewModel>();
+            PatientEventViewModel patientOne = new PatientEventViewModel();
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
@@ -55,7 +80,7 @@ namespace PHS.Business.Implementation
             patientOne.Event = eventOne;
             firstRecords.Add(patientOne);
 
-            PatientEvent patientTwo = new PatientEvent();
+            PatientEventViewModel patientTwo = new PatientEventViewModel();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
             @event eventTwo = new @event();
@@ -67,6 +92,21 @@ namespace PHS.Business.Implementation
             mockData.Add("S8518538A", firstRecords);
 
             return mockData[nric];
+        }
+
+        private PatientEventViewModel getMockData(string nric, string eventId)
+        {
+            List<PatientEventViewModel> patientEvents = getMockData(nric);
+
+            foreach(PatientEventViewModel patientEvent in patientEvents)
+            {
+                if (patientEvent.EventId.Equals(eventId))
+                {
+                    return patientEvent;
+                }
+            }
+
+            return null;
         }
     }
     

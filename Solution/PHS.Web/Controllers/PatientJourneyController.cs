@@ -36,7 +36,7 @@ namespace PHS.Web.Controllers
 
             using (var getPatientJourney = new PatientJourneyManager())
             {
-                IList<PatientEvent> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
+                IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
                 if (patientEvents == null)
                 {
                     SetViewBagError(message);
@@ -60,13 +60,27 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            if (string.IsNullOrEmpty(nric) && string.IsNullOrEmpty(eventId))
+            if (string.IsNullOrEmpty(nric) || string.IsNullOrEmpty(eventId))
             {
                 return Redirect("~/patientjourney");
             }
 
-            JourneyModality result = new JourneyModality();
+            string message = string.Empty;
+            PatientEventViewModel result = new PatientEventViewModel();
 
+            using (var getPatientJourney = new PatientJourneyManager())
+            {
+                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                if (patientEvent == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                else
+                {
+                    result = patientEvent;
+                }
+            }
 
             return View(result);
         }

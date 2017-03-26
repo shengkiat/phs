@@ -12,6 +12,6 @@ namespace PHS.Business.ViewModel.PatientJourney
         public string IcFirstDigit { get; set; }
         public string IcNumber { get; set; }
         public string IcLastDigit { get; set; }
-        public IList<PatientEvent> PatientEvents { get; set; }
+        public IList<PatientEventViewModel> PatientEvents { get; set; }
     }
 }

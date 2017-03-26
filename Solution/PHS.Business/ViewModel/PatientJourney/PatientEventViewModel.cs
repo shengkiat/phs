@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PHS.Business.ViewModel.PatientJourney
 {
-    public class JourneyModality
+    public class PatientEventViewModel
     {
+        public @event Event { get; set; }
         public string Nric { get; set; }
-        public @event Event { get; set; } 
-
-
+        public string FullName { get; set; }
+        public string EventId { get { return Event.ID.ToString(); } }
     }
 }
