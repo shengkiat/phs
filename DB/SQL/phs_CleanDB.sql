@@ -14,8 +14,7 @@ IF OBJECT_ID('dbo.form_form_fields', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.form_fields', 'U') IS NOT NULL 
   DROP TABLE [dbo].[form_fields]; 
   
-IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[form]; 
+
   
   IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
   DROP TABLE [dbo].[EventModality]; 
@@ -29,6 +28,8 @@ IF OBJECT_ID('dbo.form', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.event', 'U') IS NOT NULL 
   DROP TABLE [dbo].[event]; 
   
+  IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[form]; 
 
 
 CREATE TABLE [dbo].[Person](
