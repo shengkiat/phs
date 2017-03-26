@@ -19,6 +19,12 @@ IF OBJECT_ID('dbo.form', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.event', 'U') IS NOT NULL 
   DROP TABLE [dbo].[event]; 
   
+  IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[event]; 
+  
+  IF OBJECT_ID('dbo.Modality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[event]; 
+  
 
 CREATE TABLE [dbo].[Person](
 	[Sid] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -37,16 +43,37 @@ CREATE TABLE [dbo].[Person](
 CREATE TABLE [dbo].[event](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[StartDT] [datetime] NOT NULL,
-	[EndDT] [datetime] NOT NULL,
+	[StartDT] [datetime2] NOT NULL,
+	[EndDT] [datetime2] NOT NULL,
 	[Venue] [nvarchar](max) NULL,
 	[CreateBy] [nvarchar] NOT NULL,
-	[CreateDate] [datetime] NOT NULL
+	[CreateDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL,
  CONSTRAINT [PK_event] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+
+CREATE TABLE [dbo].[EventModality](
+	[EventID] [int] NOT NULL,
+	[ModalityID] [int] NOT NULL,
+ CONSTRAINT [PK_EventModality_1] PRIMARY KEY CLUSTERED 
+(
+	[EventID] ASC,
+	[ModalityID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[Modality](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 
 CREATE TABLE [dbo].[form](
@@ -151,7 +178,17 @@ GO
 ALTER TABLE [dbo].[form_form_fields] CHECK CONSTRAINT [FK_form_fields]
 GO
 
-
+GO
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[event] ([ID])
+GO
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_event]
+GO
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_Modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ID])
+GO
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
+GO
 
 
 

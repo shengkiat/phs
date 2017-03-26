@@ -12,5 +12,6 @@ namespace PHS.Business.Interface
         IEnumerable<@event> GetAllEvents();
         @event GetEventByID(int ID);
         bool NewEvent(@event eventModel);
+        bool UpdateEvent(@event eventModel);
     }
 }

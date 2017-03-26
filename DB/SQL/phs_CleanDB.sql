@@ -17,9 +17,19 @@ IF OBJECT_ID('dbo.form_fields', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
   DROP TABLE [dbo].[form]; 
   
+  IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[EventModality]; 
+  
+  IF OBJECT_ID('dbo.ModalityForm', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[ModalityForm]; 
+  
+  IF OBJECT_ID('dbo.Modality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Modality]; 
+  
 IF OBJECT_ID('dbo.event', 'U') IS NOT NULL 
   DROP TABLE [dbo].[event]; 
   
+
 
 CREATE TABLE [dbo].[Person](
 	[Sid] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -38,17 +48,46 @@ CREATE TABLE [dbo].[Person](
 CREATE TABLE [dbo].[event](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[StartDT] [datetime] NOT NULL,
-	[EndDT] [datetime] NOT NULL,
+	[StartDT] [datetime2] NOT NULL,
+	[EndDT] [datetime2] NOT NULL,
 	[Venue] [nvarchar](max) NULL,
 	[CreateBy] [nvarchar] NOT NULL,
-	[CreateDate] [datetime] NOT NULL
+	[CreateDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL,
  CONSTRAINT [PK_event] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[ModalityForm](
+	[ModalityID] [int] NOT NULL,
+	[FormID] [int] NOT NULL,
+ CONSTRAINT [PK_ModalityForm] PRIMARY KEY CLUSTERED 
+(
+	[ModalityID] ASC,
+	[FormID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[EventModality](
+	[EventID] [int] NOT NULL,
+	[ModalityID] [int] NOT NULL,
+ CONSTRAINT [PK_EventModality_1] PRIMARY KEY CLUSTERED 
+(
+	[EventID] ASC,
+	[ModalityID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[Modality](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 CREATE TABLE [dbo].[form](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
@@ -61,9 +100,9 @@ CREATE TABLE [dbo].[form](
 	[NotificationEmail] [nvarchar](50) NULL,
 	[IsActive] [bit] NOT NULL,
 	[EventID] [int] NULL,
-	[IsPublic] [bit] NULL,
+	[IsPublic] [bit] NOT NULL,
 	[PublicFormType] [nvarchar](50) NULL,
-	[IsQuestion] [bit] NULL DEFAULT 0
+	[IsQuestion] [bit] NOT NULL DEFAULT 0
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -152,8 +191,27 @@ GO
 ALTER TABLE [dbo].[form_form_fields] CHECK CONSTRAINT [FK_form_fields]
 GO
 
-
-
+GO
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[event] ([ID])
+GO
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_event]
+GO
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_Modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ID])
+GO
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
+GO
+ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_form] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[form] ([ID])
+GO
+ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_form]
+GO
+ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_Modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ID])
+GO
+ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_Modality]
+GO
 
 
 
@@ -217,16 +275,22 @@ GO
 
 ---  Forms Sample  --
 
-SET IDENTITY_INSERT form ON
 
 GO
-INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType]) VALUES (1, N'Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-02-19 09:15:43.527' AS DateTime), NULL, NULL, 1, NULL, 0, NULL)
+SET IDENTITY_INSERT [dbo].[form] ON 
+
 GO
-INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType]) VALUES (2, N'New Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:16:46.333' AS DateTime), NULL, NULL, 0, NULL, 0, NULL)
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (1, N'Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-02-19 09:15:43.527' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType]) VALUES (3, N'BMI + History Taking', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:19:35.327' AS DateTime), NULL, NULL, 1, NULL, 0, NULL)
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (2, N'New Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:16:46.333' AS DateTime), NULL, NULL, 0, NULL, 0, NULL, 0)
 GO
-INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType]) VALUES (4, N'PreRegistration Form', N'new-registration-form', N'PUBLISHED', N'Thank you for signing up', CAST(N'2017-03-10 13:08:21.207' AS DateTime), NULL, NULL, 1, NULL, 1, N'PRE-REGISTRATION')
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (3, N'BMI + History Taking', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:19:35.327' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+GO
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (4, N'PreRegistration Form', N'new-registration-form', N'PUBLISHED', N'Thank you for signing up', CAST(N'2017-03-10 13:08:21.207' AS DateTime), NULL, NULL, 1, NULL, 1, N'PRE-REGISTRATION', 0)
+GO
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (5, N'Doctor Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:46:01.207' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+GO
+INSERT [dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (6, N'Vitals', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
 SET IDENTITY_INSERT [dbo].[form] OFF
 GO
@@ -309,11 +373,47 @@ Pack Years = (Number of sticks per day / 20 ) x Number of years smoking', N'Clic
 GO
 INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (121, N'<p>Have you smoked before?</p>', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Yes,No', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-08 14:00:39.313' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', NULL, NULL)
 GO
-INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (125, N'Click to edit', N'Click to edit', N'NRICPICKER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-18 10:00:21.747' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (125, N'NRIC', N'Click to edit', N'NRICPICKER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 1, 18, 100, N'', CAST(N'2017-03-18 10:00:21.747' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
 GO
-INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (126, N'Gender', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Male,Female', N'', 3, 1, 18, 100, N'', CAST(N'2017-03-18 10:00:21.817' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (126, N'Gender', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Male,Female', N'', 3, 3, 18, 100, N'', CAST(N'2017-03-18 10:00:21.817' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
 GO
-INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (127, N'Click to edit', N'Click to edit', N'ADDRESS', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 2, 18, 100, N'', CAST(N'2017-03-18 10:00:21.820' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (127, N'Address', N'Click to edit', N'ADDRESS', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 9, 18, 100, N'', CAST(N'2017-03-18 10:00:21.820' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (128, N'Name (as in NRIC)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 4, 0, 18, 100, N'', CAST(N'2017-03-25 20:45:27.263' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (129, N'Salutation', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Mr,Ms,Mrs,Dr', N'', 5, 2, 18, 100, N'', CAST(N'2017-03-25 20:45:57.273' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (130, N'Date of Birth', N'Click to edit', N'BIRTHDAYPICKER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 6, 4, 18, 100, N'', CAST(N'2017-03-25 20:46:42.260' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (131, N'Citizenship', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Singapore Citizen,Singapore Permanent Resident (PR)', N'', 7, 5, 18, 100, N'', CAST(N'2017-03-25 20:47:27.283' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (132, N'Race', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 1, NULL, 20, 20, N'Chinese,Malay,Indian', N'', 8, 6, 18, 100, N'', CAST(N'2017-03-25 20:48:57.250' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (133, N'Language spoken by participant?', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 1, NULL, 20, 20, N'English,Mandarin,Malay,Tamil', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-25 20:49:42.263' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (134, N'Prefered Time Slot', N'Click to edit', N'DROPDOWNLIST', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Morning,Afternoon', N'', 10, 8, 18, 100, N'', CAST(N'2017-03-25 20:50:27.263' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (135, N'Does this patient require follow-up?', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Yes,No', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:46:21.917' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (136, N'<p><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Memo/Referral Letter</span></p>', N'Click to edit', N'DOCTORMEMO', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-03-26 05:46:36.860' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (138, N'1st Systolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-03-26 05:50:25.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (139, N'1st Diastolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 4, 2, 18, 100, N'', CAST(N'2017-03-26 05:50:55.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (140, N'2nd Systolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 6, 3, 18, 100, N'', CAST(N'2017-03-26 05:50:55.877' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (141, N'2nd Diastolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 5, 4, 18, 100, N'', CAST(N'2017-03-26 05:50:55.877' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (142, N'3rd Diastolic Reading (if needed)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 3, 6, 18, 100, N'', CAST(N'2017-03-26 05:50:55.880' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (143, N'3rd Systolic Reading (if needed)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 8, 5, 18, 100, N'', CAST(N'2017-03-26 05:51:40.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (144, N'Average Diastolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 7, 8, 18, 100, N'', CAST(N'2017-03-26 05:51:40.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (145, N'Average Systolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-26 05:51:55.867' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
 GO
 SET IDENTITY_INSERT [dbo].[form_fields] OFF
 GO
@@ -378,3 +478,52 @@ GO
 INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 126)
 GO
 INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 127)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 128)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 129)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 130)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 131)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 132)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 133)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (4, 134)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (5, 135)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (5, 136)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 137)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 138)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 139)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 140)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 141)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 142)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 143)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 144)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 145)
+GO
+SET IDENTITY_INSERT [dbo].[form_field_values] ON 
+
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (4, 125, N'74ce535d-af74-4db5-a745-9af7e6a41cef', N'S8939505D', CAST(N'2017-03-24 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (5, 126, N'74ce535d-af74-4db5-a745-9af7e6a41cef', N'Male', CAST(N'2017-03-24 14:30:56.520' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (6, 127, N'74ce535d-af74-4db5-a745-9af7e6a41cef', N'{"Id":null,"Blk":"BUKIT BATOK CENTRAL","Unit":"","StreetAddress":"BUKIT BATOK CENTRAL","State":null,"ZipCode":"650625","Country":null,"Longitude":null,"Latitude":null}', CAST(N'2017-03-24 14:30:56.523' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[form_field_values] OFF
+GO
+

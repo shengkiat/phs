@@ -66,6 +66,12 @@
     <Compile Include="MasterAddress.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modality.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModalityForm.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
@@ -86,7 +92,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\event.cs" />
-	<Compile Include="ViewModels\Patient.cs" />
+    <Compile Include="ViewModels\PatientEvent.cs" />
     <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>

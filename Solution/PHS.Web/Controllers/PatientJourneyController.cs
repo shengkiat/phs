@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PHS.Business.ViewModel;
+using PHS.Business.ViewModel.PatientJourney;
 using PHS.Business.Implementation;
 using PHS.DB;
 
@@ -34,39 +34,41 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientSearchModel result = new PatientSearchModel();
 
-            using (var getPatient = new PatientManager())
+            using (var getPatientJourney = new PatientJourneyManager())
             {
-                IList<Patient> patients = getPatient.GetPatientsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
-                if (patients == null)
+                IList<PatientEvent> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
+                if (patientEvents == null)
                 {
                     SetViewBagError(message);
                 }
 
                 else
                 {
-                    result.Patients = patients;
+                    result.PatientEvents = patientEvents;
                 }
             }
 
             return View(result);
         }
 
-        // Both GET and POST: /PatientJourney/GoToEvent
+        // Both GET and POST: /PatientJourney/JourneyModality
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult GoToEvent(string nric, string eventId)
+        public ActionResult JourneyModality(string nric, string eventId)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            if (eventId == null)
+            if (string.IsNullOrEmpty(nric) && string.IsNullOrEmpty(eventId))
             {
-                return View();
+                return Redirect("~/patientjourney");
             }
 
+            JourneyModality result = new JourneyModality();
 
-            return View();
+
+            return View(result);
         }
     }
 }

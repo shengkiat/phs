@@ -26,6 +26,7 @@ namespace PHS.Repository
             MasterAddress = new MasterAddressRepository(_context);
             formRepository = new FormRepository(_context);
             Events = new EventRepository(_context);
+            Modalities = new ModalityRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -34,6 +35,8 @@ namespace PHS.Repository
         public FormRepository formRepository { get; private set; }
 
         public IEventRepository Events { get; private set; }
+
+        public IModalityRepository Modalities { get; private set; }
 
         public int Complete()
         {

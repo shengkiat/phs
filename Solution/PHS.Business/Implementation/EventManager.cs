@@ -10,6 +10,7 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
+using PHS.Repository.Repository;
 
 namespace PHS.Business.Implementation
 {
@@ -30,12 +31,12 @@ namespace PHS.Business.Implementation
 
         public @event GetEventByID(int ID)
         {
+           
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                return unitOfWork.Events.Get(ID);
+                return unitOfWork.Events.Get(null,null,includeProperties: "Modalities").FirstOrDefault();
             }
         }
-
 
         public bool NewEvent(@event eventModel)
         {
@@ -49,7 +50,49 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public bool UpdateEvent(@event eventModel)
+        {
+            if (eventModel == null)
+            {
+                return false;
+            }
 
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var eventToUpdate =  unitOfWork.Events.Get(eventModel.ID);
+
+               
+
+                foreach (var newModality in eventModel.Modalities)
+                {
+
+                    Modality modality = new Modality();
+                    modality.Name = newModality.Name;
+
+                    unitOfWork.Modalities.Add(modality);
+
+                    eventToUpdate.Modalities.Add(modality);
+
+                }
+
+
+
+                eventToUpdate.Title = eventModel.Title;
+                eventToUpdate.Venue = eventModel.Venue;
+                eventToUpdate.StartDT = eventModel.StartDT;
+                eventToUpdate.EndDT = eventModel.EndDT;
+
+               // eventToUpdate.UpdateDT = DateTime.Now;
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+
+                return true;
+            }
+        }
 
 
 

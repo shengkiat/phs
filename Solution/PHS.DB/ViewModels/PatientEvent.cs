@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PHS.DB
 {
-    public class Patient
+    public class PatientEvent
     {
         public @event Event { get; set; }
         public string Nric { get; set; }

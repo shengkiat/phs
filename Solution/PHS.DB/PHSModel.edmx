@@ -11,12 +11,20 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="StartDT" Type="datetime" Nullable="false" />
-          <Property Name="EndDT" Type="datetime" Nullable="false" />
+          <Property Name="StartDT" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndDT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Venue" Type="nvarchar(max)" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="1" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventModality">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="ModalityID" />
+          </Key>
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="ModalityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="form">
           <Key>
@@ -97,6 +105,21 @@
           <Property Name="STREET_NUMBER" Type="varchar" MaxLength="10" />
           <Property Name="STREET_NAME" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Modality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ModalityForm">
+          <Key>
+            <PropertyRef Name="ModalityID" />
+            <PropertyRef Name="FormID" />
+          </Key>
+          <Property Name="ModalityID" Type="int" Nullable="false" />
+          <Property Name="FormID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Sid" />
@@ -127,6 +150,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventModality_event">
+          <End Role="event" Type="Self.event" Multiplicity="1" />
+          <End Role="EventModality" Type="Self.EventModality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventModality">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventModality_Modality">
+          <End Role="Modality" Type="Self.Modality" Multiplicity="1" />
+          <End Role="EventModality" Type="Self.EventModality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modality">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventModality">
+              <PropertyRef Name="ModalityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_form_field_values_form_fields">
           <End Role="form_fields" Type="Self.form_fields" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -153,17 +200,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ModalityForm_form">
+          <End Role="form" Type="Self.form" Multiplicity="1" />
+          <End Role="ModalityForm" Type="Self.ModalityForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModalityForm">
+              <PropertyRef Name="ModalityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModalityForm_Modality">
+          <End Role="Modality" Type="Self.Modality" Multiplicity="1" />
+          <End Role="ModalityForm" Type="Self.ModalityForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modality">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModalityForm">
+              <PropertyRef Name="ModalityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="phsModelStoreContainer">
           <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form" EntityType="Self.form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_field_values" EntityType="Self.form_field_values" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_fields" EntityType="Self.form_fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_form_fields" EntityType="Self.form_form_fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterAddress" EntityType="Self.MasterAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modality" EntityType="Self.Modality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModalityForm" EntityType="Self.ModalityForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK form_fields_form_form_fields" Association="Self.FK form_fields_form_form_fields">
             <End Role="form_fields" EntitySet="form_fields" />
             <End Role="form_form_fields" EntitySet="form_form_fields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventModality_event" Association="Self.FK_EventModality_event">
+            <End Role="event" EntitySet="event" />
+            <End Role="EventModality" EntitySet="EventModality" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventModality_Modality" Association="Self.FK_EventModality_Modality">
+            <End Role="Modality" EntitySet="Modality" />
+            <End Role="EventModality" EntitySet="EventModality" />
           </AssociationSet>
           <AssociationSet Name="FK_form_field_values_form_fields" Association="Self.FK_form_field_values_form_fields">
             <End Role="form_fields" EntitySet="form_fields" />
@@ -172,6 +254,14 @@
           <AssociationSet Name="FK_form_fields" Association="Self.FK_form_fields">
             <End Role="form" EntitySet="form" />
             <End Role="form_form_fields" EntitySet="form_form_fields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModalityForm_form" Association="Self.FK_ModalityForm_form">
+            <End Role="form" EntitySet="form" />
+            <End Role="ModalityForm" EntitySet="ModalityForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModalityForm_Modality" Association="Self.FK_ModalityForm_Modality">
+            <End Role="Modality" EntitySet="Modality" />
+            <End Role="ModalityForm" EntitySet="ModalityForm" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -193,7 +283,21 @@
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="events" EntityType="phsModel.event" />
           <EntitySet Name="People" EntityType="phsModel.Person" />
-        </EntityContainer>
+          <EntitySet Name="ModalityForms" EntityType="phsModel.ModalityForm" />
+          <AssociationSet Name="FK_ModalityForm_form" Association="phsModel.FK_ModalityForm_form">
+            <End Role="form" EntitySet="forms" />
+            <End Role="ModalityForm" EntitySet="ModalityForms" />
+          </AssociationSet>
+          <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
+          <AssociationSet Name="FK_ModalityForm_Modality" Association="phsModel.FK_ModalityForm_Modality">
+            <End Role="Modality" EntitySet="Modalities" />
+            <End Role="ModalityForm" EntitySet="ModalityForms" />
+          </AssociationSet>
+          <AssociationSet Name="EventModality" Association="phsModel.EventModality">
+            <End Role="event" EntitySet="events" />
+            <End Role="Modality" EntitySet="Modalities" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="form">
           <Key>
             <PropertyRef Name="ID" />
@@ -212,6 +316,7 @@
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_form" FromRole="form" ToRole="ModalityForm" />
         </EntityType>
         <EntityType Name="form_field_values">
           <Key>
@@ -293,12 +398,13 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StartDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartDT" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndDT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Venue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="event" ToRole="Modality" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -316,7 +422,54 @@
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        <EntityType Name="ModalityForm">
+          <Key>
+            <PropertyRef Name="ModalityID" />
+            <PropertyRef Name="FormID" />
+          </Key>
+          <Property Name="ModalityID" Type="Int32" Nullable="false" />
+          <Property Name="FormID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="form" Relationship="phsModel.FK_ModalityForm_form" FromRole="ModalityForm" ToRole="form" />
+          <NavigationProperty Name="Modality" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="ModalityForm" ToRole="Modality" />
+        </EntityType>
+        <Association Name="FK_ModalityForm_form">
+          <End Type="phsModel.form" Role="form" Multiplicity="1" />
+          <End Type="phsModel.ModalityForm" Role="ModalityForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="form">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModalityForm">
+              <PropertyRef Name="ModalityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Modality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="Modality" ToRole="ModalityForm" />
+          <NavigationProperty Name="events" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="event" />
+        </EntityType>
+        <Association Name="FK_ModalityForm_Modality">
+          <End Type="phsModel.Modality" Role="Modality" Multiplicity="1" />
+          <End Type="phsModel.ModalityForm" Role="ModalityForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modality">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ModalityForm">
+              <PropertyRef Name="ModalityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventModality">
+          <End Type="phsModel.event" Role="event" Multiplicity="*" />
+          <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -436,7 +589,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="ModalityForms">
+            <EntityTypeMapping TypeName="phsModel.ModalityForm">
+              <MappingFragment StoreEntitySet="ModalityForm">
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modalities">
+            <EntityTypeMapping TypeName="phsModel.Modality">
+              <MappingFragment StoreEntitySet="Modality">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EventModality" TypeName="phsModel.EventModality" StoreEntitySet="EventModality">
+            <EndProperty Name="Modality">
+              <ScalarProperty Name="ID" ColumnName="ModalityID" />
+            </EndProperty>
+            <EndProperty Name="event">
+              <ScalarProperty Name="ID" ColumnName="EventID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

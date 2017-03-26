@@ -12,24 +12,21 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class @event
+    public partial class Modality
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public @event()
+        public Modality()
         {
-            this.Modalities = new HashSet<Modality>();
+            this.ModalityForms = new HashSet<ModalityForm>();
+            this.events = new HashSet<@event>();
         }
     
         public int ID { get; set; }
-        public string Title { get; set; }
-        public System.DateTime StartDT { get; set; }
-        public System.DateTime EndDT { get; set; }
-        public string Venue { get; set; }
-        public string CreateBy { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public bool IsActive { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Modality> Modalities { get; set; }
+        public virtual ICollection<ModalityForm> ModalityForms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<@event> events { get; set; }
     }
 }
