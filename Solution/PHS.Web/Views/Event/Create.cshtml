@@ -8,13 +8,13 @@
     function addRow() {
 
         @{
-                PHS.DB.Modality m = new PHS.DB.Modality();
-                m.Name = "aa";
+            PHS.DB.Modality m = new PHS.DB.Modality();
+            m.Name = "aa";
 
-                if (Model != null)
-                {
-                    Model.Modalities.Add(m);
-                }
+            if (Model != null)
+            {
+                Model.Modalities.Add(m);
+            }
             }
 
         var index = $("#tbBooks").children("tr").length;
@@ -26,9 +26,13 @@
         var moveUpCell = "<td><input type='button' value='&#8679;' onClick='MoveUp.call(this);'/></td>";
         var moveDownCell = "<td><input type='button' value='&#8681;' onClick='MoveDown.call(this);'/></td>";
 
+       // var comboForm = "<td><select id='SelectedForm' name='Modalities[" + index + "].FormID'>' +@Html.Raw(Json.Encode(ViewData["Forms"])) + '</select></td>';
+        var comboForm = '<td>' +@Html.Raw(Json.Encode(ViewData["Forms"])) +'</td>';
+
 
         var newRow = "<tr id='trBook" + index + "'>" +
-        indexCell + titleCell + removeCell + moveUpCell + moveDownCell + "</tr>";
+        indexCell + titleCell + removeCell +comboForm + moveUpCell + moveDownCell + 
+           "</tr>";
         $("#tbBooks").append(newRow);
     }
 
@@ -82,12 +86,14 @@
     }
 </script>
 
+<h2>Create Event</h2>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Events</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -147,5 +153,5 @@
     </div>
 }
 
-<h2>Create</h2>
+
 

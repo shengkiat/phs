@@ -47,6 +47,22 @@ namespace PHS.Web.Controllers
 
         public ActionResult Create()
         {
+            List<form> forms;
+            using (var formManager = new FormManager())
+            {
+                forms = formManager.FindAllForms();
+
+                String htmlString = "<select id=\"SelectedForm\" name=\"Modalities[0].FormID\">";
+               // String htmlString = "";
+                foreach (var form in forms)
+                {
+                    htmlString += "<option value=\"" + form.ID + "\">" + form.Title + "</option>";
+                }
+
+                htmlString += "</select>";
+
+                ViewData["Forms"] = htmlString;
+            }
             return View();
         }
 
@@ -74,12 +90,7 @@ namespace PHS.Web.Controllers
 
 
 
-        private readonly List<PHS.DB.@event> clients = new List<PHS.DB.@event>()
-    {
-        new PHS.DB.@event { Title="asdas" , ID = 1},
-new PHS.DB.@event { Title="asdas", ID= 2 }
 
-    };
 
 
 
