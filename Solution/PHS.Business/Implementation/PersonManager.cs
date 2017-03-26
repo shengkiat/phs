@@ -302,6 +302,58 @@ namespace PHS.Business.Implementation
             }
         }
 
+        /*
+        *Will NOT check whether username exists
+        *Username is not allowed to be changed
+        */
+        public bool UpdatePerson(Person person, out string message)
+        {
+            message = string.Empty;
+            if (person == null)
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+            if (string.IsNullOrEmpty(person.Username) || string.IsNullOrEmpty(person.Username.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+            if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+            if (string.IsNullOrEmpty(person.Role) || string.IsNullOrEmpty(person.Role.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+            try
+            {
+
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var personToUpdate = unitOfWork.Persons.Get(person.Sid);
+                    Util.CopyNonNullProperty(person, personToUpdate);
+                    personToUpdate.UpdateDT = DateTime.Now;
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+                message = string.Empty;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringUpdatingValue("Person");
+                return false;
+            }
+        }
+
         public bool UserNameExists(string userName, out string message)
         {
             if (string.IsNullOrEmpty(userName))

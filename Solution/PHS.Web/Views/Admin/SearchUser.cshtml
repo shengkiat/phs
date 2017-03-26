@@ -31,9 +31,9 @@
         </div>
     </div>
 
-    if (Model.persons != null && Model.persons.Count > 0)
+    if (Model != null && Model.persons != null && Model.persons.Count > 0)
     {
-        <table class="table" style=" width:500px;">
+        <table class="table" style="width:500px;">
             <tr>
                 <th>User ID</th>
                 <th>Name</th>
@@ -43,7 +43,7 @@
             @foreach (var user in Model.persons)
             {
                 <tr>
-                    <td>@user.Username</td>
+                    <td>@Html.ActionLink(@user.Username, "EditUser", new { userSid = @user.Sid })</td>
                     <td>@user.FullName</td>
                     <td>@user.Role</td>
                     <td>@user.ContactNumber</td>

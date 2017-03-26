@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\PasswordManager.cs" />
+    <Compile Include="Common\Util.cs" />
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
     <Compile Include="Implementation\EventManager.cs" />

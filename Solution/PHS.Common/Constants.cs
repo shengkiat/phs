@@ -81,6 +81,11 @@ namespace PHS.Common
             return "Operation failed during adding " + value + ". Please contact system admin";
         }
 
+        public static string OperationFailedDuringUpdatingValue(string value)
+        {
+            return "Operation failed during updating " + value + ". Please contact system admin";
+        }
+
         public static string ValueSuccessfuly(string value)
         {
             return value + " successfully";
