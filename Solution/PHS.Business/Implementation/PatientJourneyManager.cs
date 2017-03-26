@@ -12,16 +12,16 @@ using PHS.Common;
 
 namespace PHS.Business.Implementation
 {
-    public class PatientManager : BaseManager, IPatientManager, IManagerFactoryBase<IPatientManager>
+    public class PatientJourneyManager : BaseManager, IPatientJourneyManager, IManagerFactoryBase<IPatientJourneyManager>
     {
-        public IPatientManager Create()
+        public IPatientJourneyManager Create()
         {
-            return new PatientManager();
+            return new PatientJourneyManager();
         }
 
-        public IList<Patient> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
+        public IList<PatientEvent> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
         {
-            IList<Patient> result = null;
+            IList<PatientEvent> result = null;
             message = string.Empty;
 
             if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
@@ -40,12 +40,12 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        private List<Patient> getMockData(string nric)
+        private List<PatientEvent> getMockData(string nric)
         {
-            Dictionary<string, List<Patient>> mockData = new Dictionary<string, List<Patient>>();
+            Dictionary<string, List<PatientEvent>> mockData = new Dictionary<string, List<PatientEvent>>();
 
-            List<Patient> firstRecords = new List<Patient>();
-            Patient patientOne = new Patient();
+            List<PatientEvent> firstRecords = new List<PatientEvent>();
+            PatientEvent patientOne = new PatientEvent();
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
@@ -55,7 +55,7 @@ namespace PHS.Business.Implementation
             patientOne.Event = eventOne;
             firstRecords.Add(patientOne);
 
-            Patient patientTwo = new Patient();
+            PatientEvent patientTwo = new PatientEvent();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
             @event eventTwo = new @event();

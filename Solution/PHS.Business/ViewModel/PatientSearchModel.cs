@@ -12,6 +12,6 @@ namespace PHS.Business.ViewModel
         public string IcFirstDigit { get; set; }
         public string IcNumber { get; set; }
         public string IcLastDigit { get; set; }
-        public IList<Patient> Patients { get; set; }
+        public IList<PatientEvent> PatientEvents { get; set; }
     }
 }

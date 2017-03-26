@@ -34,26 +34,26 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientSearchModel result = new PatientSearchModel();
 
-            using (var getPatient = new PatientManager())
+            using (var getPatientJourney = new PatientJourneyManager())
             {
-                IList<Patient> patients = getPatient.GetPatientsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
-                if (patients == null)
+                IList<PatientEvent> patientEvents = getPatientJourney.GetPatientsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
+                if (patientEvents == null)
                 {
                     SetViewBagError(message);
                 }
 
                 else
                 {
-                    result.Patients = patients;
+                    result.PatientEvents = patientEvents;
                 }
             }
 
             return View(result);
         }
 
-        // Both GET and POST: /PatientJourney/GoToEvent
+        // Both GET and POST: /PatientJourney/JourneyModality
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult GoToEvent(string nric, string eventId)
+        public ActionResult JourneyModality(string nric, string eventId)
         {
             if (!IsUserAuthenticated())
             {

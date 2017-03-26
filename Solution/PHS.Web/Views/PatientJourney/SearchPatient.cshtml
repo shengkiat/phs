@@ -18,7 +18,7 @@
     $(function () {
         pageGrids.participantsGrid.onRowSelect(function (e) {
             $("#BtnGoToEvent").prop('disabled', false);
-            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/GoToEvent?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
         });
     });
 </script>
@@ -50,18 +50,18 @@
         </div>
     </div>
 
-    if (Model.Patients != null && Model.Patients.Count > 0)
+    if (Model.PatientEvents != null && Model.PatientEvents.Count > 0)
     {
        
-        @Html.Grid(Model.Patients).Named("participantsGrid").Columns(columns =>
+        @Html.Grid(Model.PatientEvents).Named("participantsGrid").Columns(columns =>
         {
-            columns.Add(c => c.Event.Title).Titled("EventTitle").Filterable(false);
+            columns.Add(c => c.Event.Title).Titled("Event").Filterable(false);
             columns.Add(c => c.EventId, true).Titled("EventID").Filterable(false);
             columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
 
-        <button type="submit" disabled value="GoToEvent" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("GoToEvent", "PatientJourney")">
+        <button type="submit" disabled value="JourneyModality" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("JourneyModality", "PatientJourney")">
             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
             Proceed
         </button>
