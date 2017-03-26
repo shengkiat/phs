@@ -56,7 +56,7 @@
         @Html.Grid(Model.Patients).Named("participantsGrid").Columns(columns =>
         {
             columns.Add(c => c.Event.Title).Titled("EventTitle").Filterable(false);
-            columns.Add(c => c.EventId).Titled("EventID").Filterable(false);
+            columns.Add(c => c.EventId, true).Titled("EventID").Filterable(false);
             columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
