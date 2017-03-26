@@ -19,7 +19,7 @@ namespace PHS.Business.Implementation
             return new PatientJourneyManager();
         }
 
-        public IList<PatientEvent> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
+        public IList<PatientEvent> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
         {
             IList<PatientEvent> result = null;
             message = string.Empty;

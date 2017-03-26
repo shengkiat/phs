@@ -36,7 +36,7 @@ namespace PHS.Web.Controllers
 
             using (var getPatientJourney = new PatientJourneyManager())
             {
-                IList<PatientEvent> patientEvents = getPatientJourney.GetPatientsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
+                IList<PatientEvent> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
                 if (patientEvents == null)
                 {
                     SetViewBagError(message);

@@ -9,6 +9,6 @@ namespace PHS.Business.Interface
 {
     public interface IPatientJourneyManager : IDisposable
     {
-        IList<PatientEvent> GetPatientsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message);
+        IList<PatientEvent> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message);
     }
 }
