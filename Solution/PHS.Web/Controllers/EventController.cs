@@ -37,7 +37,10 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult Edit(@event eventModel)
         {
-            //write code to update student 
+            using (var eventManager = new EventManager())
+            {
+                eventManager.UpdateEvent(eventModel);
+            }
 
             return RedirectToAction("Index");
         }

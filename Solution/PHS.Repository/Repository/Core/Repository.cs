@@ -12,16 +12,51 @@ namespace PHS.Repository.Repository.Core
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;
+        internal DbSet<TEntity> dbSet;
 
         public Repository(DbContext context)
         {
             Context = context;
+            this.dbSet = context.Set<TEntity>();
         }
 
         public TEntity Get(int id)
         {
             return Context.Set<TEntity>().Find(id);
         }
+
+
+        public virtual IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+
+
+
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
+        }
+
         public async Task<TEntity> GetAsync(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
@@ -76,7 +111,7 @@ namespace PHS.Repository.Repository.Core
             Context.Set<TEntity>().RemoveRange(entities);
         }
 
-        public PHSContext ActiveLearningContext
+        public PHSContext GetPHSContext
         {
             get { return Context as PHSContext; }
         }
