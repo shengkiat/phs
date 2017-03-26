@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PHS.DB;
 
-namespace PHS.Business.ViewModel
+namespace PHS.Business.ViewModel.PatientJourney
 {
     public class PatientSearchModel
     {

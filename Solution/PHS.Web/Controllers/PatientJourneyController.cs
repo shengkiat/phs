@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PHS.Business.ViewModel;
+using PHS.Business.ViewModel.PatientJourney;
 using PHS.Business.Implementation;
 using PHS.DB;
 
@@ -60,10 +60,12 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            if (eventId == null)
+            if (string.IsNullOrEmpty(nric) && string.IsNullOrEmpty(eventId))
             {
-                return View();
+                return Redirect("~/patientjourney");
             }
+
+
 
 
             return View();
