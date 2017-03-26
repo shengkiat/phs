@@ -149,6 +149,47 @@ namespace PHS.Business.Implementation
             }
         }
 
+        #region Search
+        public IList<Person> GetAllPersons(out string message)
+        {
+            message = string.Empty;
+            List<Person> list = new List<Person>();
+
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var persons = unitOfWork.Persons.GetAll();
+                    if (persons == null || persons.Count() == 0)
+                    {
+                        message = Constants.ThereIsNoValueFound("User");
+                        return null;
+                    }
+
+                    foreach (var person in persons)
+                    {
+                        if (!person.DeleteDT.HasValue && person.IsActive)
+                        {
+                            list.Add(person);
+                        }
+                    }
+                    if (list.Count == 0)
+                    {
+                        message = Constants.ThereIsNoValueFound("User");
+                        return null;
+                    }
+                    message = string.Empty;
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("User");
+                return null;
+            }
+        }
+
         public Person GetPersonByPersonSid(int personSid, out string message)
         {
             message = string.Empty;
@@ -244,6 +285,7 @@ namespace PHS.Business.Implementation
                 return persons;
             }
         }
+        #endregion
 
         /*
          *Will check username

@@ -90,5 +90,10 @@ namespace PHS.Common
         {
             return value + " successfully";
         }
+
+        public static string ThereIsNoValueFound(string value)
+        {
+            return "There is no " + value + " found.";
+        }
     }
 }

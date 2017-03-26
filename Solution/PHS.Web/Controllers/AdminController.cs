@@ -157,6 +157,30 @@ namespace PHS.Web.Controllers
             return View("SearchUser");
         }
 
+        public ActionResult ManageUser()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            UserSearchModel usm = new UserSearchModel();
+
+            using (var personManager = new PersonManager())
+            {
+                var listUser = personManager.GetAllPersons(out message);
+                GetErrorAneMessage();
+                if (listUser == null)
+                {
+                    SetViewBagError(message);
+                }else
+                {
+                    usm.persons = listUser;
+                }
+                return View("SearchUser", listUser);
+            }
+        }
+
 
         // Both GET and POST: /Admin/SearchUser
         [OutputCache(NoStore = true, Duration = 0)]
