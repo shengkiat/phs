@@ -65,10 +65,10 @@ namespace PHS.Web.Controllers
                 return Redirect("~/patientjourney");
             }
 
+            JourneyModality result = new JourneyModality();
 
 
-
-            return View();
+            return View(result);
         }
     }
 }

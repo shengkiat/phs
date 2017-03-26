@@ -107,6 +107,7 @@
     <Compile Include="Interface\IPatientJourneyManager.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PatientJourney\JourneyModality.cs" />
     <Compile Include="ViewModel\PatientJourney\PatientSearchModel.cs" />
     <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>
