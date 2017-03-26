@@ -5,17 +5,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Event Management</h2>
 
 
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
-
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
 
 <script src="@Url.Content("~/Scripts/jquery-1.7.1.min")" type="text/javascript"> </script>
-<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
 
-
+<input type="button" value="Create" onclick="location.href='@Url.Action("Create", "Event")'" />
 
 
 <div class="code-cut">

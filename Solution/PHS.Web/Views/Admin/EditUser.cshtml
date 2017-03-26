@@ -48,9 +48,17 @@
             </div>
         </div>
 
+        <div hidden="hidden">
+            @Html.EditorFor(model => model.Sid)
+            @Html.EditorFor(model => model.CreateDT)
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" value="EditUser" class="btn btn-primary" style="width:100px" id="BtnSaveUser">
+                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                    Save
+                </button>
             </div>
         </div>
     </div>

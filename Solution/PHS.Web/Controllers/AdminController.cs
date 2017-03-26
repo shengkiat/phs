@@ -124,6 +124,29 @@ namespace PHS.Web.Controllers
             };
         }
 
+        [HttpPost, ActionName("EditUser")]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult updateUser(Person person)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+
+            using (var personManager = new PersonManager())
+            {
+                if (personManager.UpdatePerson(person, out message))
+                {
+                    SetTempDataMessage(Constants.ValueSuccessfuly("User has been updated"));
+                    return RedirectToAction("SearchUser");
+                }
+                SetViewBagError(message);
+                SetBackURL("SearchUser");
+                return View();
+            }
+        }
+
         public ActionResult BackToSearchUser()
         {
             if (!IsUserAuthenticated())

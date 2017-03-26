@@ -18,6 +18,7 @@ namespace PHS.DB
         public form()
         {
             this.form_fields = new HashSet<form_fields>();
+            this.ModalityForms = new HashSet<ModalityForm>();
         }
     
         public int ID { get; set; }
@@ -36,5 +37,7 @@ namespace PHS.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<form_fields> form_fields { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ModalityForm> ModalityForms { get; set; }
     }
 }
