@@ -459,7 +459,7 @@
           <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="Modality" ToRole="ModalityForm" />
           <NavigationProperty Name="events" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="event" />
           <Property Name="Position" Type="Int32" Nullable="false" />
-          <Property Name="IconPath" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IconPath" Type="String" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
           <Property Name="HasParent" Type="Boolean" />
