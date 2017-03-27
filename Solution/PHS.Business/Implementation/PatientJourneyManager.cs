@@ -184,8 +184,8 @@ namespace PHS.Business.Implementation
             eventTwo.Modalities = new List<Modality>();
             eventTwo.Modalities.Add(modalityOne);
             eventTwo.Modalities.Add(modalityTwo);
-            eventTwo.Modalities.Add(modalityThree);
-            eventTwo.Modalities.Add(modalityFour);
+            eventOne.Modalities.Add(modalityThree);
+            eventOne.Modalities.Add(modalityFour);
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
