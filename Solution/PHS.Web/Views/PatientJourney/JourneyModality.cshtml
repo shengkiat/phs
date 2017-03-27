@@ -7,6 +7,12 @@
     ViewBag.Title = "Journey Modality Page";
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#ptForms").tabs();
+    });
+</script>
+
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
@@ -27,6 +33,19 @@
                     </tr>
                 </table>
             </div>
+        </div>
+        <div class="form-group">
+
+            <table>
+                <tr>
+                    <td>@Html.Partial("_JourneyModalityCirclesPartial", Model.ModalityCircles);</td>
+                    <td>@Html.Partial("_JourneyModalityFormsPartial", Model);</td>
+                </tr>
+            </table>
+
+            
+
+
         </div>
     </div>
 

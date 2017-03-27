@@ -69,6 +69,51 @@ namespace PHS.Business.Implementation
         {
             Dictionary<string, List<PatientEventViewModel>> mockData = new Dictionary<string, List<PatientEventViewModel>>();
 
+            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+            List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
+
+            // status = Pending, InProgress, Completed
+
+            modalityCircle = new ModalityCircleViewModel();
+            modalityCircle.Name = "Registration";
+            modalityCircle.Position = 0;
+            modalityCircle.Active = true;
+            modalityCircle.Visible = true;
+            modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
+            modalityCircle.HasParent = false;
+            modalityCircle.Status = "Pending";
+            modalityCircleList.Add(modalityCircle);
+
+            modalityCircle = new ModalityCircleViewModel();
+            modalityCircle.Name = "History Taking";
+            modalityCircle.Position = 1;
+            modalityCircle.Active = true;
+            modalityCircle.Visible = true;
+            modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
+            modalityCircle.HasParent = true;
+            modalityCircle.Status = "Pending";
+            modalityCircleList.Add(modalityCircle);
+
+            modalityCircle = new ModalityCircleViewModel();
+            modalityCircle.Name = "FIT";
+            modalityCircle.Position = 2;
+            modalityCircle.Active = false;
+            modalityCircle.Visible = true;
+            modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
+            modalityCircle.HasParent = true;
+            modalityCircle.Status = "Pending";
+            modalityCircleList.Add(modalityCircle);
+
+            modalityCircle = new ModalityCircleViewModel();
+            modalityCircle.Name = "TeleHealth";
+            modalityCircle.Position = 3;
+            modalityCircle.Active = true;
+            modalityCircle.Visible = false;
+            modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
+            modalityCircle.HasParent = false;
+            modalityCircle.Status = "Pending";
+            modalityCircleList.Add(modalityCircle);
+
             List<PatientEventViewModel> firstRecords = new List<PatientEventViewModel>();
             PatientEventViewModel patientOne = new PatientEventViewModel();
 
@@ -76,6 +121,16 @@ namespace PHS.Business.Implementation
             modalityOne.ID = 1;
             modalityOne.Name = "Registration";
             modalityOne.ModalityForms = new List<ModalityForm>();
+
+            ModalityForm modalityFormOne = new ModalityForm();
+            modalityFormOne.ModalityID = 50;
+            modalityFormOne.FormID = 40;
+            modalityOne.ModalityForms.Add(modalityFormOne);
+
+            ModalityForm modalityFormTwo = new ModalityForm();
+            modalityFormTwo.ModalityID = 100;
+            modalityFormTwo.FormID = 80;
+            modalityOne.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityTwo = new Modality();
             modalityTwo.ID = 2;
@@ -99,15 +154,19 @@ namespace PHS.Business.Implementation
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
             patientOne.Event = eventOne;
+            patientOne.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientOne);
 
             PatientEventViewModel patientTwo = new PatientEventViewModel();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
             patientTwo.Event = eventTwo;
+            patientTwo.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientTwo);
 
             mockData.Add("S8518538A", firstRecords);
+
+           
 
             return mockData[nric];
         }
