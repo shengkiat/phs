@@ -73,6 +73,7 @@ namespace PHS.Business.Implementation
             List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
 
             // status = Pending, InProgress, Completed
+
             modalityCircle = new ModalityCircleViewModel();
             modalityCircle.Name = "Registration";
             modalityCircle.Position = 0;
@@ -119,12 +120,6 @@ namespace PHS.Business.Implementation
             Modality modalityOne = new Modality();
             modalityOne.ID = 1;
             modalityOne.Name = "Registration";
-            modalityOne.Position = 0;
-            modalityOne.IsActive = true;
-            modalityOne.IsVisible = true;
-            modalityOne.IconPath = "../../Content/images/Modality/achievement.png";
-            modalityOne.HasParent = false;
-            modalityOne.Status = "Pending";
             modalityOne.ModalityForms = new List<ModalityForm>();
 
             ModalityForm modalityFormOne = new ModalityForm();
@@ -140,34 +135,7 @@ namespace PHS.Business.Implementation
             Modality modalityTwo = new Modality();
             modalityTwo.ID = 2;
             modalityTwo.Name = "History Taking";
-            modalityTwo.Position = 1;
-            modalityTwo.IsActive = true;
-            modalityTwo.IsVisible = true;
-            modalityTwo.IconPath = "../../Content/images/Modality/abacus.png";
-            modalityTwo.HasParent = true;
-            modalityTwo.Status = "Pending";
             modalityTwo.ModalityForms = new List<ModalityForm>();
-
-            Modality modalityThree = new Modality();
-            modalityThree.ID = 3;
-            modalityThree.Name = "FIT";
-            modalityThree.Position = 2;
-            modalityThree.IsActive = false;
-            modalityThree.IsVisible = true;
-            modalityThree.IconPath = "../../Content/images/Modality/agenda.png";
-            modalityThree.HasParent = true;
-            modalityThree.Status = "Pending";
-
-            Modality modalityFour = new Modality();
-            modalityFour.ID = 4;
-            modalityFour.Name = "TeleHealth";
-            modalityFour.Position = 3;
-            modalityFour.IsActive = true;
-            modalityFour.IsVisible = false;
-            modalityFour.IconPath = "../../Content/images/Modality/balance.png";
-            modalityFour.HasParent = false;
-            modalityFour.Status = "Pending";
-
 
             @event eventOne = new @event();
             eventOne.ID = 100;
@@ -175,8 +143,6 @@ namespace PHS.Business.Implementation
             eventOne.Modalities = new List<Modality>();
             eventOne.Modalities.Add(modalityOne);
             eventOne.Modalities.Add(modalityTwo);
-            eventOne.Modalities.Add(modalityThree);
-            eventOne.Modalities.Add(modalityFour); 
 
             @event eventTwo = new @event();
             eventTwo.ID = 200;
@@ -184,8 +150,6 @@ namespace PHS.Business.Implementation
             eventTwo.Modalities = new List<Modality>();
             eventTwo.Modalities.Add(modalityOne);
             eventTwo.Modalities.Add(modalityTwo);
-            eventOne.Modalities.Add(modalityThree);
-            eventOne.Modalities.Add(modalityFour);
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
