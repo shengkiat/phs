@@ -23,6 +23,12 @@ namespace PHS.DB
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public int Position { get; set; }
+        public byte[] IconPath { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsVisible { get; set; }
+        public Nullable<bool> HasParent { get; set; }
+        public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModalityForm> ModalityForms { get; set; }

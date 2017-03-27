@@ -407,6 +407,18 @@ namespace PHS.FormBuilder.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.BMI:
+                    string weight = form.SubmittedFieldValue(field.DomId, "Weight");
+                    string height = form.SubmittedFieldValue(field.DomId, "Height");
+
+
+                    String aa = "";
+                    break;
+
+                case Constants.FieldType.MATRIX:
+
+                    break;
+
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
