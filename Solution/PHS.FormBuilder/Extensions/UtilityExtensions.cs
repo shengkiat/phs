@@ -16,6 +16,7 @@ using PHS.Business.Common;
 using PHS.FormBuilder.Models;
 using PHS.Common;
 using System.Data.Entity.Core.Objects.DataClasses;
+using PHS.FormBuilder.ViewModel;
 
 namespace PHS.FormBuilder.Extensions
 {
@@ -254,6 +255,15 @@ namespace PHS.FormBuilder.Extensions
         {
             switch (value.FieldType)
             {
+                case Constants.FieldType.BMI:
+                    BMIViewModel bmi;
+                    if (!string.IsNullOrEmpty(value.Value) && value.Value.Length > 0)
+                    {
+                        bmi = value.Value.FromJson<BMIViewModel>();
+                        return bmi.Format();
+                    }
+                    return "--";
+
                 case Constants.FieldType.BIRTHDAYPICKER:
                     DateTime dateVal;
                     if (!string.IsNullOrEmpty(value.Value) && DateTime.TryParse(value.Value, out dateVal))
@@ -357,7 +367,7 @@ namespace PHS.FormBuilder.Extensions
             {
                 if (obj.IsSavedInCloud)
                 {
-                   // To Retrieve from cloud
+                    // To Retrieve from cloud
                 }
                 else
                 {
@@ -407,6 +417,20 @@ namespace PHS.FormBuilder.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.BMI:
+                    var bmi = new BMIViewModel
+                    {
+                        Weight = form.SubmittedFieldValue(field.DomId, "Weight"),
+                        Height = form.SubmittedFieldValue(field.DomId, "Height"),
+                    };
+
+                    value = bmi.ToJson();
+                    break;
+
+                case Constants.FieldType.MATRIX:
+
+                    break;
+
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
@@ -424,10 +448,7 @@ namespace PHS.FormBuilder.Extensions
                         Blk = form.SubmittedFieldValue(field.DomId, "Blk"),
                         Unit = form.SubmittedFieldValue(field.DomId, "Unit"),
                         StreetAddress = form.SubmittedFieldValue(field.DomId, "StreetAddress"),
-                        State = form.SubmittedFieldValue(field.DomId, "State"),
                         ZipCode = form.SubmittedFieldValue(field.DomId, "ZipCode"),
-                        Country = form.SubmittedFieldValue(field.DomId, "Country")
-
                     };
 
                     if (address.Blk.IsEmptyOrWhiteSpace() && address.StreetAddress.IsEmptyOrWhiteSpace())
@@ -592,7 +613,18 @@ namespace PHS.FormBuilder.Extensions
             }
 
             sb.AppendFormat(" {0}, ", addr.StreetAddress);
-            sb.AppendFormat(" {0}", addr.Country);
+            sb.AppendFormat(" {0} ", addr.ZipCode);
+
+            return sb.ToString();
+        }
+
+        public static string Format(this BMIViewModel bmi)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Weight(kg): {0},", bmi.Weight);
+
+            sb.AppendFormat(" Height(cm): {0}, ", bmi.Height);
+            sb.AppendFormat(" BMI: {0} ", bmi.BodyMassIndex);
 
             return sb.ToString();
         }

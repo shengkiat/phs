@@ -1,0 +1,46 @@
+﻿@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel>
+@using PHS.Business.ViewModel.PatientJourney
+@using PHS.FormBuilder.Helpers
+@using PHS.FormBuilder.Extensions
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "JourneyModalityCircles";
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+@using (Html.BeginForm())
+{
+    @Ajax.ActionLink("Add Modality and Make Active", "UpdatePtJourney", 
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "ptJourney", // <-- DOM element ID to update
+                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                     HttpMethod = "POST" // <-- HTTP method
+                 })
+
+    <br />
+    @Ajax.ActionLink("Reset", "UpdatePtJourneyReset",
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "ptJourney", // <-- DOM element ID to update
+                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                     HttpMethod = "POST" // <-- HTTP method
+                 })
+}
+
+
+
+
+<h2>JourneyModalityCircles Main Page</h2>
+
+@{
+    Html.RenderPartial("_JourneyModalityCirclesPartial");
+}
+

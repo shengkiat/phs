@@ -84,6 +84,12 @@ CREATE TABLE [dbo].[EventModality](
 CREATE TABLE [dbo].[Modality](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](max) NOT NULL,
+	[Position] [int] NOT NULL,
+	[IconPath] [varbinary](max) NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsVisible] [bit] NOT NULL,
+	[HasParent] [bit] NULL,
+	[Status] [nvarchar](max) NULL,
  CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
