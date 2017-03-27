@@ -53,67 +53,77 @@
     ViewBag.Title = "Modality Circles";
 }
 
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
 
 @using (Html.BeginForm())
 {
-    <b>Modalities</b>
+
+
 }
 
-<div style="text-align: center; width: 200px;" id="ptJourney">
-    @{
-        ModalityCircleViewModel firstItem1 = Model.First();
-    }
-    @foreach (var element in Model)
+
+
+    <div style="text-align: center; width: 200px;" id="ptJourney">
+        @{
+                ModalityCircleViewModel firstItem1 = Model.First();
+        }
+        @foreach (var element in Model)
             {
                 if (!@element.Equals(firstItem1))
                 {
                     switch (@element.HasParent)
                     {
                         case true:
-                    <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;" />
+                        <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;" />
+                        break;
+
+                    case false:
+                        <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
+                        break;
+                }
+            }
+
+            switch (@element.Active)
+            {
+                case true:
+                    <button name="buttons" value="@element.Name" class="round-button">
+                        <img src="@element.IconPath" height="20" width="20" />
+                        <br />
+                        @element.Name
+                    </button>
                     break;
 
                 case false:
-                    <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
+                    <button name="buttons" value="@element.Name" class="round-button-inactive">
+                        <img src="@element.IconPath" height="20" width="20" />
+                        <br />
+                        @element.Name
+                    </button>
                     break;
             }
         }
 
-        switch (@element.Active)
-        {
-            case true:
-                <button name="buttons" value="@element.Name" class="round-button">
-                    <img src="@element.IconPath" height="20" width="20" />
-                    <br />
-                    @element.Name
-                </button>
-                break;
 
-            case false:
-                <button name="buttons" value="@element.Name" class="round-button-inactive">
-                    <img src="@element.IconPath" height="20" width="20" />
-                    <br />
-                    @element.Name
-                </button>
-                break;
-        }
-    }
-</div>
+        <br />
+        <br />
 
-
-<br />
-<br />
-
-<div style="font-size: 9px;">
-    @foreach (var element in Model)
+        <div style="font-size: 9px;">
+            @foreach (var element in Model)
             {
-        <li><b>Name: @element.Name</b></li>
-        <li>Position: @element.Position</li>
-        <li>Icon Path: @element.IconPath</li>
+                <li><b>Name: @element.Name</b></li>
+                <li>Position: @element.Position</li>
+                <li>Icon Path: @element.IconPath</li>
                 <li>Active: @element.Active</li>
                 <li>Visible @element.Visible</li>
                 <li>Has Parent: @element.HasParent</li>
                 <li>Status: @element.Status</li>
                 <br />
-    }
-</div>
+            }
+        </div>
+
+    </div>
+
