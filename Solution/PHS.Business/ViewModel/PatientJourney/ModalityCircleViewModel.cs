@@ -14,6 +14,8 @@ namespace PHS.Business.ViewModel.PatientJourney
         public string IconPath { get; set; }
         public bool Active { get; set; }
         public bool Visible { get; set; }
+        public bool HasParent { get; set; }
+        public string Status { get; set; }
 
     }
 }

@@ -91,19 +91,26 @@ namespace PHS.Web.Controllers
             ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
             List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
 
-            modalityCircle.Name = "History Taking";
-            modalityCircle.Position = 0;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
-            modalityCircleList.Add(modalityCircle);
+            // status = Pending, InProgress, Completed
 
             modalityCircle = new ModalityCircleViewModel();
             modalityCircle.Name = "Registration";
+            modalityCircle.Position = 0;
+            modalityCircle.Active = true;
+            modalityCircle.Visible = true;
+            modalityCircle.IconPath = "../../Content/images/Modality/achievement.png"; 
+            modalityCircle.HasParent = false;
+            modalityCircle.Status = "Pending";
+            modalityCircleList.Add(modalityCircle);
+
+            modalityCircle = new ModalityCircleViewModel();
+            modalityCircle.Name = "History Taking";
             modalityCircle.Position = 1;
             modalityCircle.Active = true;
             modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
+            modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
+            modalityCircle.HasParent = true;
+            modalityCircle.Status = "Pending";
             modalityCircleList.Add(modalityCircle);
 
             modalityCircle = new ModalityCircleViewModel();
@@ -112,6 +119,8 @@ namespace PHS.Web.Controllers
             modalityCircle.Active = false;
             modalityCircle.Visible = true;
             modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
+            modalityCircle.HasParent = true;
+            modalityCircle.Status = "Pending";
             modalityCircleList.Add(modalityCircle);
 
             modalityCircle = new ModalityCircleViewModel();
@@ -120,9 +129,12 @@ namespace PHS.Web.Controllers
             modalityCircle.Active = true;
             modalityCircle.Visible = false;
             modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
+            modalityCircle.HasParent = false;
+            modalityCircle.Status = "Pending";
             modalityCircleList.Add(modalityCircle);
 
             return View(modalityCircleList); 
         }
+        
     }
 }

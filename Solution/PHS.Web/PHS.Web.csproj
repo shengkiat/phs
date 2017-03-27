@@ -274,6 +274,8 @@
     <Content Include="Content\images\Modality\agenda-1.png" />
     <Content Include="Content\images\Modality\agenda.png" />
     <Content Include="Content\images\Modality\balance.png" />
+    <Content Include="Content\images\Modality\connectline.png" />
+    <Content Include="Content\images\Modality\connectlineEmpty.png" />
     <Content Include="Content\images\properties-bg.png" />
     <Content Include="Content\images\slide-img-form.png" />
     <Content Include="Content\images\spacer.gif" />

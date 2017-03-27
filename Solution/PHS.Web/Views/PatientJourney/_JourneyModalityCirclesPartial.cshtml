@@ -1,4 +1,5 @@
 ﻿@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel>
+@using PHS.Business.ViewModel.PatientJourney
 @using PHS.FormBuilder.Helpers
 @using PHS.FormBuilder.Extensions
 @using GridMvc.Html
@@ -7,22 +8,41 @@
 <style>
     .round-button {
         display: block;
+        margin: auto;
         width: 100px;
         height: 100px;
-        /*line-height: 50px;*/
         border: 3px solid black;
         border-radius: 50%;
         color: black;
         text-align: center;
         text-decoration: none;
         background: #02d14a;
-        /*box-shadow: 0 0 3px black; */
         font-size: 12px;
         font-weight: bold;
     }
 
         .round-button:hover {
             background: #ffc402;
+        }
+
+    .round-button-inactive {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: grey;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: not-allowed;
+    }
+
+        .round-button-inactive:hover {
+            background: #0f2a54;
         }
 </style>
 
@@ -34,42 +54,66 @@
 }
 
 
-
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal">
-        <hr />
-        <div class="form-group">
-            <div>
-                <table>
-                    <tr>
-                        <td><b>Modalities</b></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    <b>Modalities</b>
 }
 
-<table>
+<div style="text-align: center; width: 200px;" id="ptJourney">
+    @{
+        ModalityCircleViewModel firstItem1 = Model.First();
+    }
     @foreach (var element in Model)
-    {
-        <tr>
-            <td>
+            {
+                if (!@element.Equals(firstItem1))
+                {
+                    switch (@element.HasParent)
+                    {
+                        case true:
+                    <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;" />
+                    break;
+
+                case false:
+                    <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
+                    break;
+            }
+        }
+
+        switch (@element.Active)
+        {
+            case true:
                 <button name="buttons" value="@element.Name" class="round-button">
                     <img src="@element.IconPath" height="20" width="20" />
                     <br />
                     @element.Name
                 </button>
-            </td>
-            <td>
-                <li>Name: @element.Name</li>
-                <li>Position: @element.Position</li>
-                <li>Icon Path: @element.IconPath</li>
+                break;
+
+            case false:
+                <button name="buttons" value="@element.Name" class="round-button-inactive">
+                    <img src="@element.IconPath" height="20" width="20" />
+                    <br />
+                    @element.Name
+                </button>
+                break;
+        }
+    }
+</div>
+
+
+<br />
+<br />
+
+<div style="font-size: 9px;">
+    @foreach (var element in Model)
+            {
+        <li><b>Name: @element.Name</b></li>
+        <li>Position: @element.Position</li>
+        <li>Icon Path: @element.IconPath</li>
                 <li>Active: @element.Active</li>
                 <li>Visible @element.Visible</li>
-            </td>
-        </tr>
+                <li>Has Parent: @element.HasParent</li>
+                <li>Status: @element.Status</li>
+                <br />
     }
-</table>
-
+</div>
