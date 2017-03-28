@@ -130,12 +130,12 @@ namespace PHS.Business.Implementation
 
             ModalityForm modalityFormOne = new ModalityForm();
             modalityFormOne.ModalityID = 50;
-            modalityFormOne.FormID = 40;
+            modalityFormOne.FormID = 1;
             modalityOne.ModalityForms.Add(modalityFormOne);
 
             ModalityForm modalityFormTwo = new ModalityForm();
             modalityFormTwo.ModalityID = 100;
-            modalityFormTwo.FormID = 80;
+            modalityFormTwo.FormID = 2;
             modalityOne.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityTwo = new Modality();
