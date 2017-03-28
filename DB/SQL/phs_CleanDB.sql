@@ -85,7 +85,7 @@ CREATE TABLE [dbo].[Modality](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](max) NOT NULL,
 	[Position] [int] NOT NULL,
-	[IconPath] [varbinary](max) NULL,
+	[IconPath] [nvarchar](max) NULL,
 	[IsActive] [bit] NOT NULL,
 	[IsVisible] [bit] NOT NULL,
 	[HasParent] [bit] NULL,

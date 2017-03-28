@@ -112,7 +112,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Position" Type="int" Nullable="false" />
-          <Property Name="IconPath" Type="varbinary(max)" />
+          <Property Name="IconPath" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="HasParent" Type="bit" />
@@ -456,14 +456,14 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="Modality" ToRole="ModalityForm" />
-          <NavigationProperty Name="events" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="event" />
           <Property Name="Position" Type="Int32" Nullable="false" />
-          <Property Name="IconPath" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IconPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
           <Property Name="HasParent" Type="Boolean" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="Modality" ToRole="ModalityForm" />
+          <NavigationProperty Name="events" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="event" />
         </EntityType>
         <Association Name="FK_ModalityForm_Modality">
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="1" />

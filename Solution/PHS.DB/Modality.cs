@@ -24,7 +24,7 @@ namespace PHS.DB
         public int ID { get; set; }
         public string Name { get; set; }
         public int Position { get; set; }
-        public byte[] IconPath { get; set; }
+        public string IconPath { get; set; }
         public bool IsActive { get; set; }
         public bool IsVisible { get; set; }
         public Nullable<bool> HasParent { get; set; }
