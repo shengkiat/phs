@@ -38,8 +38,8 @@
 
             <table>
                 <tr>
-                    <td>@Html.Partial("_JourneyModalityCirclesPartial", Model.ModalityCircles);</td>
-                    <td>@Html.Partial("_JourneyModalityFormsPartial", Model);</td>
+                    <td>@Html.Partial("_JourneyModalityCirclesPartial", Model.Event.Modalities);</td>
+                    <td style="vertical-align:top">@Html.Partial("_JourneyModalityFormsPartial", Model);</td>
                 </tr>
             </table>
 
