@@ -14,31 +14,43 @@
 
     <div id="ptForms">
 
-        <ul>
+        <ul class="nav nav-tabs">
             @{
                 int counter = 1;
 
                 foreach (var element in Model.ModalityForms)
                 {
-                    <li><a href="#tabs-@counter">@element.FormID</a></li>
+                    if (counter == 1)
+                    {
+                        <li class="active"><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                    }
+
+                    else
+                    {
+                        <li><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                    }
+
+
                     counter = counter + 1;
                 }
             }
             
         </ul>
 
-        <div id="tabs-1">
-            Content for Tab 1 goes here.<br />
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
+        <div class="tab-content">
+            <div id="tabs-1" class="tab-pane fade in active">
+                Content for Tab 1 goes here.<br />
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </div>
 
-        <div id="tabs-2">
-            Content for Tab 2 goes here.<br />
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
+            <div id="tabs-2" class="tab-pane fade">
+                Content for Tab 2 goes here.<br />
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </div>
 
-    </div>
+        </div>
+   </div>
 }
 
