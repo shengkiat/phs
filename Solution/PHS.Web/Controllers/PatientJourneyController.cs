@@ -87,90 +87,165 @@ namespace PHS.Web.Controllers
 
         public ActionResult JourneyModalityCircles()
         {
-            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData(); 
+            //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+            //List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
 
-            return View(modalityCircleList);
+            string message = string.Empty;
+            string nric = "S8518538A";
+            string eventId = "100"; 
+            PatientEventViewModel result = new PatientEventViewModel();
+            using (var getPatientJourney = new PatientJourneyManager())
+            {
+                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                if (patientEvent == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                else
+                {
+                    result = patientEvent;
+                }
+            }
+
+            List<Modality> modalityList = new List<Modality>();
+            modalityList = (List<Modality>) result.Event.Modalities; 
+
+            return View(modalityList);
+        }
+
+
+        public PartialViewResult PassJSON(List<Modality> modalityList)
+        {
+            modalityList.ElementAt(1).Name = "newname"; 
+            modalityList.ElementAt(2).IsActive = true;
+
+            return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
         public PartialViewResult UpdatePtJourney()
         {
-            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
+            //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+            //List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
 
           
-                // status = Pending, InProgress, Completed            
-                modalityCircle.Name = "Registration";
-                modalityCircle.Position = 0;
-                modalityCircle.Active = true;
-                modalityCircle.Visible = true;
-                modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
-                modalityCircle.HasParent = false;
-                modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+            //    // status = Pending, InProgress, Completed            
+            //    modalityCircle.Name = "Registration";
+            //    modalityCircle.Position = 0;
+            //    modalityCircle.Active = true;
+            //    modalityCircle.Visible = true;
+            //    modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
+            //    modalityCircle.HasParent = false;
+            //    modalityCircle.Status = "Pending";
+            //modalityCircleList.Add(modalityCircle);
 
-            modalityCircleList.ElementAt(2).Active = true; 
+            //modalityCircleList.ElementAt(2).Active = true;
 
-            return PartialView("_JourneyModalityCirclesPartial", modalityCircleList);
+
+            string message = string.Empty;
+            string nric = "S8518538A";
+            string eventId = "100";
+            PatientEventViewModel result = new PatientEventViewModel();
+            using (var getPatientJourney = new PatientJourneyManager())
+            {
+                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                if (patientEvent == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                else
+                {
+                    result = patientEvent;
+                }
+            }
+
+            List<Modality> modalityList = new List<Modality>();
+            modalityList = (List<Modality>)result.Event.Modalities;
+
+            modalityList.ElementAt(2).IsActive = true;
+
+            return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
         public PartialViewResult UpdatePtJourneyReset()
         {
-            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
+            //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+            //List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
 
-            return PartialView("_JourneyModalityCirclesPartial", modalityCircleList);
+            string message = string.Empty;
+            string nric = "S8518538A";
+            string eventId = "100";
+            PatientEventViewModel result = new PatientEventViewModel();
+            using (var getPatientJourney = new PatientJourneyManager())
+            {
+                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                if (patientEvent == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                else
+                {
+                    result = patientEvent;
+                }
+            }
+
+            List<Modality> modalityList = new List<Modality>();
+            modalityList = (List<Modality>)result.Event.Modalities;
+
+            return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
-        public List<ModalityCircleViewModel> createModalityCircleData()
-        {
-            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
+        //public List<ModalityCircleViewModel> createModalityCircleData()
+        //{
+        //    ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+        //    List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
 
-            // status = Pending, InProgress, Completed
+        //    // status = Pending, InProgress, Completed
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "Registration";
-            modalityCircle.Position = 0;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
-            modalityCircle.HasParent = false;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+        //    modalityCircle = new ModalityCircleViewModel();
+        //    modalityCircle.Name = "Registration";
+        //    modalityCircle.Position = 0;
+        //    modalityCircle.Active = true;
+        //    modalityCircle.Visible = true;
+        //    modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
+        //    modalityCircle.HasParent = false;
+        //    modalityCircle.Status = "Pending";
+        //    modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "History Taking";
-            modalityCircle.Position = 1;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
-            modalityCircle.HasParent = true;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+        //    modalityCircle = new ModalityCircleViewModel();
+        //    modalityCircle.Name = "History Taking";
+        //    modalityCircle.Position = 1;
+        //    modalityCircle.Active = true;
+        //    modalityCircle.Visible = true;
+        //    modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
+        //    modalityCircle.HasParent = true;
+        //    modalityCircle.Status = "Pending";
+        //    modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "FIT";
-            modalityCircle.Position = 2;
-            modalityCircle.Active = false;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
-            modalityCircle.HasParent = true;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+        //    modalityCircle = new ModalityCircleViewModel();
+        //    modalityCircle.Name = "FIT";
+        //    modalityCircle.Position = 2;
+        //    modalityCircle.Active = false;
+        //    modalityCircle.Visible = true;
+        //    modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
+        //    modalityCircle.HasParent = true;
+        //    modalityCircle.Status = "Pending";
+        //    modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "TeleHealth";
-            modalityCircle.Position = 3;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = false;
-            modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
-            modalityCircle.HasParent = false;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+        //    modalityCircle = new ModalityCircleViewModel();
+        //    modalityCircle.Name = "TeleHealth";
+        //    modalityCircle.Position = 3;
+        //    modalityCircle.Active = true;
+        //    modalityCircle.Visible = false;
+        //    modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
+        //    modalityCircle.HasParent = false;
+        //    modalityCircle.Status = "Pending";
+        //    modalityCircleList.Add(modalityCircle);
 
-            return modalityCircleList; 
-        }
+        //    return modalityCircleList; 
+        //}
 
 
     }

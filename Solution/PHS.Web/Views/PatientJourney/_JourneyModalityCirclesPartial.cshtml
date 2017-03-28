@@ -1,4 +1,6 @@
-﻿@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel>
+﻿@*@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel> *@
+@model List<PHS.DB.Modality>
+@using PHS.DB
 @using PHS.Business.ViewModel.PatientJourney
 @using PHS.FormBuilder.Helpers
 @using PHS.FormBuilder.Extensions
@@ -69,7 +71,7 @@
 
     <div style="text-align: center; width: 200px;" id="ptJourney">
         @{
-                ModalityCircleViewModel firstItem1 = Model.First();
+                Modality firstItem1 = Model.First();
         }
         @foreach (var element in Model)
             {
@@ -87,11 +89,12 @@
                 }
             }
 
-            switch (@element.Active)
+            switch (@element.IsActive)
             {
                 case true:
                     <button name="buttons" value="@element.Name" class="round-button">
-                        <img src="@element.IconPath" height="20" width="20" />
+                        @*<img src="@element.IconPath" height="20" width="20" />*@
+                        <img src="~/Content/images/Modality/abacus.png" height="20" width="20" />
                         <br />
                         @element.Name
                     </button>
@@ -99,7 +102,8 @@
 
                 case false:
                     <button name="buttons" value="@element.Name" class="round-button-inactive">
-                        <img src="@element.IconPath" height="20" width="20" />
+                        @*<img src="@element.IconPath" height="20" width="20" />*@
+                        <img src="~/Content/images/Modality/abacus.png" height="20" width="20" />
                         <br />
                         @element.Name
                     </button>
@@ -116,9 +120,9 @@
             {
                 <li><b>Name: @element.Name</b></li>
                 <li>Position: @element.Position</li>
-                <li>Icon Path: @element.IconPath</li>
-                <li>Active: @element.Active</li>
-                <li>Visible @element.Visible</li>
+               <li>Icon Path: @*@element.IconPath*@</li>
+                <li>Active: @element.IsActive</li>
+                <li>Visible @element.IsVisible</li>
                 <li>Has Parent: @element.HasParent</li>
                 <li>Status: @element.Status</li>
                 <br />
