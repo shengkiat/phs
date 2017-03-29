@@ -20,21 +20,18 @@ namespace PHS.Business.ViewModel.PatientJourney
         public string Gender { get { return "Male"; } }
 
         //public List<ModalityCircleViewModel> ModalityCircles { get; set; }
-        public List<ModalityForm> ModalityForms {
-            get
+        public List<ModalityForm> GetModalityFormsForTabs(int modalityId) {
+            List<ModalityForm> result = new List<ModalityForm>();
+
+            foreach (var modality in Event.Modalities)
             {
-                List<ModalityForm> result = new List<ModalityForm>();
-
-                foreach(var modality in Event.Modalities)
+                if (modality.ID.Equals(modalityId))
                 {
-                    if (modality.Name.Equals("Registration"))
-                    {
-                        result = modality.ModalityForms.ToList();
-                    }
+                    result = modality.ModalityForms.ToList();
                 }
-
-                return result;
             }
+            
+            return result;
         }
     }
 }

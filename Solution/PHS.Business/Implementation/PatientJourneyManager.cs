@@ -118,7 +118,7 @@ namespace PHS.Business.Implementation
             PatientEventViewModel patientOne = new PatientEventViewModel();
 
             Modality modalityOne = new Modality();
-            modalityOne.ID = 1;
+            modalityOne.ID = 50;
             modalityOne.Name = "Registration";
             modalityOne.Position = 0;
             modalityOne.IsActive = true;
