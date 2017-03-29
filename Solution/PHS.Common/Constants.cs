@@ -30,7 +30,8 @@ namespace PHS.Common
         public enum FormFieldMode
         {
             EDIT,
-            INPUT
+            INPUT,
+            READONLY
         }
 
         public enum FieldType
