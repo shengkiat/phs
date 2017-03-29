@@ -19,7 +19,7 @@ namespace PHS.Business.ViewModel.PatientJourney
         public string ContactNumber { get { return "12345678"; } }
         public string Gender { get { return "Male"; } }
 
-        public List<ModalityCircleViewModel> ModalityCircles { get; set; }
+        //public List<ModalityCircleViewModel> ModalityCircles { get; set; }
         public List<ModalityForm> ModalityForms {
             get
             {

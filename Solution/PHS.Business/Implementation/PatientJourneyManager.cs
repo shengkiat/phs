@@ -193,14 +193,14 @@ namespace PHS.Business.Implementation
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
             patientOne.Event = eventOne;
-            patientOne.ModalityCircles = modalityCircleList;
+           // patientOne.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientOne);
 
             PatientEventViewModel patientTwo = new PatientEventViewModel();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
             patientTwo.Event = eventTwo;
-            patientTwo.ModalityCircles = modalityCircleList;
+            //patientTwo.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientTwo);
 
             mockData.Add("S8518538A", firstRecords);
