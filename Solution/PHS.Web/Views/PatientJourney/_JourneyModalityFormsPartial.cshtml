@@ -24,7 +24,7 @@
             @{
                 int counter = 1;
 
-                foreach (var element in Model.ModalityForms)
+                foreach (var element in Model.GetModalityFormsForTabs(50))
                 {
                     if (counter == 1)
                     {
@@ -47,7 +47,7 @@
             @{
                 int anothercounter = 1;
 
-                foreach (var element in Model.ModalityForms)
+                foreach (var element in Model.GetModalityFormsForTabs(50))
                 {
                     if (anothercounter == 1)
                     {
@@ -65,9 +65,13 @@
                     else
                     {
                         <div id="tabs-@anothercounter" class="tab-pane fade">
-                            Content for Tab 2 goes here.<br />
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            <iframe id="form-builder-frame" onload="resizeIframe(this)"
+                                    src="@Url.HttpRouteUrl("form-register", new { embed=true, Id=element.FormID })"
+                                    frameborder="0"
+                                    width="100%"
+                                    marginheight="0"
+                                    marginwidth="0"
+                                    scrolling="yes"></iframe>
                         </div>
                     }
 
