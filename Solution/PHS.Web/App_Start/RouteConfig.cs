@@ -96,6 +96,22 @@ namespace PHS.Web
 
             //** END FORM BUILDER ROUTES **//
 
+            // view form
+            routes.MapRoute(
+               "journeymodality-viewform",
+               "journeymodality/viewform/{formId}/{embed}",
+               new { controller = "patientJourney", action = "viewForm", formId = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { formId = @"\d+" }
+            );
+
+            //
+            routes.MapRoute(
+               "journeymodality-edit",
+               "journeymodality/edit/{formId}",
+               new { controller = "patientJourney", action = "edit", formId = UrlParameter.Optional },
+               new { formId = @"\d+" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -53,7 +53,7 @@
                     {
                         <div id="tabs-@anothercounter" class="tab-pane fade in active">
                             <iframe id="form-builder-frame" onload="resizeIframe(this)"
-                                    src="@Url.HttpRouteUrl("form-register", new { embed=true, Id=element.FormID })"
+                                    src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
                                     frameborder="0"
                                     width="100%"
                                     marginheight="0"
@@ -65,13 +65,7 @@
                     else
                     {
                         <div id="tabs-@anothercounter" class="tab-pane fade">
-                            <iframe id="form-builder-frame" onload="resizeIframe(this)"
-                                    src="@Url.HttpRouteUrl("form-register", new { embed=true, Id=element.FormID })"
-                                    frameborder="0"
-                                    width="100%"
-                                    marginheight="0"
-                                    marginwidth="0"
-                                    scrolling="yes"></iframe>
+                            
                         </div>
                     }
 

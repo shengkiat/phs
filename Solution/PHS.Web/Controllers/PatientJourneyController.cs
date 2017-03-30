@@ -6,11 +6,28 @@ using System.Web.Mvc;
 using PHS.Business.ViewModel.PatientJourney;
 using PHS.Business.Implementation;
 using PHS.DB;
+using PHS.FormBuilder.ViewModels;
+using PHS.Repository.Repository;
+using PHS.Common;
 
 namespace PHS.Web.Controllers
 {
     public class PatientJourneyController : BaseController
     {
+        private FormRepository _formRepo { get; set; }
+
+        public PatientJourneyController()
+            : this(new FormRepository())
+        {
+
+        }
+
+        public PatientJourneyController(FormRepository formRepo)
+        {
+            this._formRepo = formRepo;
+        }
+
+
         // GET: PatientJourney
         public ActionResult Index()
         {
@@ -195,6 +212,27 @@ namespace PHS.Web.Controllers
             modalityList = (List<Modality>)result.Event.Modalities;
 
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
+        }
+
+        public ActionResult ViewForm(int formId, bool embed = false)
+        {
+            FormViewModel model = null;
+            // var form = this._formRepo.GetByPrimaryKey(id);
+
+            //TODO should retrieve form by eventId + formId?
+            var form = this._formRepo.GetForm(formId);
+
+            if (form != null)
+            {
+                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model.Embed = embed;
+            }
+            else
+            {
+                return RedirectToAction("edit", new { formId = form.ID });
+            }
+
+            return View(model);
         }
 
         //public List<ModalityCircleViewModel> createModalityCircleData()

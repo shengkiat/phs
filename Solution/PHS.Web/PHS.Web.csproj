@@ -499,6 +499,7 @@
     <Content Include="Views\PatientJourney\_JourneyModalityCirclesPartial.cshtml" />
     <Content Include="Views\PatientJourney\_JourneyModalityFormsPartial.cshtml" />
     <Content Include="Views\PatientJourney\JourneyModalityCircles.cshtml" />
+    <Content Include="Views\PatientJourney\ViewForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

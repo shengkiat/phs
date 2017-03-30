@@ -1,0 +1,86 @@
+﻿@model PHS.FormBuilder.ViewModels.FormViewModel
+@using PHS.FormBuilder.Helpers
+@using PHS.Common
+@using PHS.FormBuilder.Extensions
+
+@{
+
+    ViewBag.Title = Model.Title;
+    Model.Embed = true;
+
+    if (Model.Embed)
+    {
+        Layout = "~/Views/Shared/_EmbedLayout.cshtml";
+    }
+}
+@section headerScripts{
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.utils.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
+
+    <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-common.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-interface.css")" rel="stylesheet" />
+
+    @if (!Model.Theme.IsNullOrEmpty())
+    {
+        <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
+    }
+
+}
+
+<div class="form-page-container prepend-top span-26">
+    <div class="center-column span-14" style="width:95%">
+        @if (!Model.Embed)
+        {
+            <div class="inner-container">
+                @Html.RouteLink("Home", "form-home", null, new { @class = "image-icon-link home-icon-link" })
+            </div>
+        }
+
+        @using (Html.BeginForm("Register", "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.WriteMessages()
+            <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
+                @{
+                    int counter = 1;
+                    foreach (var field in Model.Fields)
+                    {
+                        if (Model.IsQuestion)
+                        {
+                            <li>
+                                <label class="dynamic">@String.Format("Q{0}", counter)</label>
+                            </li>
+                        }
+
+                        <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                            @Html.Partial("~/Views/Forms/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
+                        </li>
+
+                        counter = counter + 1;
+                    }
+                }
+            </ul>
+
+                    if (Model.Fields != null && Model.Fields.Any())
+                    {
+                        <ul id="submit-button-list" class="vertical-list entry-form-list">
+                            <li>
+                                <label class="label">
+                                    &nbsp;
+                                </label>
+                                <div class="input">
+                                    <input type="submit" class="blue" value="Submit" />
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.Hidden("SubmitFields[-1].Hidden", "")
+                    @Html.HiddenFor(m => m.Embed)
+                    }
+    </div>
+
+</div>
+@section footerScripts{
+
+}
