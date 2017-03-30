@@ -9,6 +9,11 @@ using PHS.DB;
 using PHS.FormBuilder.ViewModels;
 using PHS.Repository.Repository;
 using PHS.Common;
+using PHS.FormBuilder.Extensions;
+using PHS.FormBuilder.Helpers;
+using System.IO;
+using System.Web.Hosting;
+using PHS.Business.Common;
 
 namespace PHS.Web.Controllers
 {
@@ -229,10 +234,146 @@ namespace PHS.Web.Controllers
             }
             else
             {
-                return RedirectToAction("edit", new { formId = form.ID });
+               // return RedirectToAction("edit", new { formId = form.ID });
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Register(IDictionary<string, string> SubmitFields, FormViewModel model, FormCollection form)
+        {
+            IList<string> errors = Enumerable.Empty<string>().ToList();
+            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
+
+            var formObj = this._formRepo.GetForm(model.Id.Value);
+
+
+            var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
+            formView.AssignInputValues(form);
+            this.InsertValuesIntoTempData(SubmitFields, form);
+
+
+            if (formView.Fields.Any())
+            {
+                // first validate fields
+                foreach (var field in formView.Fields)
+                {
+                    var valId = field.ValidationId();
+                    if (!field.SubmittedValueIsValid(form))
+                    {
+                        field.SetFieldErrors();
+                        errors.Add(field.Errors);
+                        goto Error;
+                    }
+
+                    var value = field.SubmittedValue(form);
+                    if (field.IsRequired && value.IsNullOrEmpty())
+                    {
+                        field.Errors = "{0} is a required field".FormatWith(field.Label);
+                        errors.Add(field.Errors);
+                        goto Error;
+                    }
+                };
+
+                //then insert values
+                var entryId = Guid.NewGuid();
+                var notificationView = new NotificationEmailViewModel();
+                notificationView.FormName = formView.Title;
+                IDictionary<string, FormFieldValueViewModel> notificationEntries = new Dictionary<string, FormFieldValueViewModel>();
+                foreach (var field in formView.Fields)
+                {
+                    var value = field.SubmittedValue(form);
+
+                    //if it's a file, save it to hard drive
+                    if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                    {
+                        var file = Request.Files[field.SubmittedFieldName()];
+                        var fileValueObject = value.GetFileValueFromJsonObject();
+
+                        if (fileValueObject != null)
+                        {
+                            
+                            file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                            
+                        }
+                    }
+
+                    this.AddValueToDictionary(ref notificationEntries, field.Label, new FormFieldValueViewModel(field.FieldType, value));
+                    notificationView.Entries = notificationEntries;
+                    this._formRepo.InsertFieldValue(field, value, entryId);
+                }
+
+                //send notification
+                if (!formView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
+                {
+                    notificationView.Email = formView.NotificationEmail;
+                    this.NotifyViaEmail(notificationView);
+                }
+
+                TempData["success"] = formView.ConfirmationMessage;
+                return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
+
+            }
+
+        Error:
+            TempData["error"] = errors.ToUnorderedList();
+            var error = "Unable to save form ".AppendIfDebugMode(errors.ToUnorderedList());
+            return Json(new { success = false, error = error, isautosave = false });
+        }
+
+        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
+        {
+            foreach (var key in form.AllKeys)
+            {
+                ViewData[key.ToLower()] = form[key];
+            }
+
+        }
+
+        private void AddValueToDictionary(ref IDictionary<string, FormFieldValueViewModel> collection, string key, FormFieldValueViewModel value)
+        {
+            if (collection.ContainsKey(key))
+            {
+                var newKey = "";
+                int counter = 2;
+                do
+                {
+                    newKey = "{1} {0}".FormatWith(key, counter);
+                    counter++;
+
+                } while (collection.ContainsKey(newKey));
+
+                collection.Add(newKey, value);
+            }
+            else
+            {
+                collection.Add(key, value);
+            }
+        }
+
+        private void NotifyViaEmail(NotificationEmailViewModel model)
+        {
+            EmailSender emailSender = new EmailSender("MailTemplates", false);
+            var submimssionDetail = this.RenderPartialViewToString("_SubmissionEmailPartial", model);
+            emailSender.SendSubmissionNotificationEmail(model.Email, "New Submission for form \"{0}\"".FormatWith(model.FormName), submimssionDetail);
+        }
+
+        private string RenderPartialViewToString(string viewName, object model)
+        {
+            if (string.IsNullOrEmpty(viewName))
+                viewName = ControllerContext.RouteData.GetRequiredString("action");
+
+            ViewData.Model = model;
+
+            using (StringWriter sw = new StringWriter())
+            {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         //public List<ModalityCircleViewModel> createModalityCircleData()

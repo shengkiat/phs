@@ -26,6 +26,43 @@
         <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
     }
 
+    <script type="text/javascript">
+        function handleBeginSave() {
+            $('.save-button').attr("disabled", "disabled");
+            $('.save-button').addClass("disabled");
+
+            //$('#isAltered').val(0); // prevent autosave while save in progress
+        }
+
+        function enableSubmitButtons() {
+            $('.save-button').removeAttr("disabled", "disabled");
+            $('.save-button').removeClass("disabled");
+        }
+
+        function handleSaveCallback(content) {
+            //$('#IsAutoSave').val('false');
+
+            console.log(content.responseText);
+
+            var response = $.parseJSON(content.responseText);
+            if (response.success) {
+                if (!response.isautosave) {
+                    $U.writeSuccessToContainer($('#message'), response.message);
+                }
+                //bindFieldIds(response.fieldids);
+                //$('#isAltered').val(0);
+                //$('#autosave-container').hide();
+            } else {
+                if (!response.isautosave) {
+                    $U.writeErrorToContainer($('#message'), response.error)
+                }
+            }
+
+            enableSubmitButtons();
+        }
+
+    </script>
+
 }
 
 <div class="form-page-container prepend-top span-26">
@@ -36,9 +73,10 @@
                 @Html.RouteLink("Home", "form-home", null, new { @class = "image-icon-link home-icon-link" })
             </div>
         }
-
-        @using (Html.BeginForm("Register", "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Ajax.BeginForm("Register", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
+        //@using (Html.BeginForm("Register", "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            <div id="message" class="clear"></div>
             @Html.WriteMessages()
             <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
                 @{
@@ -69,7 +107,7 @@
                                     &nbsp;
                                 </label>
                                 <div class="input">
-                                    <input type="submit" class="blue" value="Submit" />
+                                    <input type="submit" class="save-button blue" value="Submit" />
                                 </div>
                             </li>
                         </ul>
@@ -81,6 +119,6 @@
     </div>
 
 </div>
-@section footerScripts{
 
-}
+
+
