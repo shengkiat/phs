@@ -13,9 +13,6 @@
 
 <script>
     $(document).ready(function () {
-
-
-
     $(".cbk").change(function () {
         var select = "";
         $("input[type = 'checkbox']").each(function () {
@@ -41,17 +38,60 @@
 
         });
     });
+    
+    $(document).ready(function () {
+        $(".labelNo").each(function () {
+            $(this).keyup(function () {
+                calculateSum();
+            });
+        });
+
+        $(".labelNo").each(function () {
+            $(this).click(function () {
+                calculateSum();
+            });
+        });
+
+        $(".labelNo").each(function () {
+            $(this).ready(function () {
+                calculateSum();
+            });
+        });
+
+    });
+
+    function calculateSum() {
+
+        var sum = 0;
+        //iterate through each textboxes and add the values
+        $(".labelNo").each(function () {
+
+            //add only if the value is number
+            if (!isNaN(this.value) && this.value.length != 0) {
+                sum += parseFloat(this.value);
+            }
+
+        });
+        $("#sum").html(sum.toFixed(0));
+    }
+
+    function printLabels() {
+        alert("Printing " + document.getElementById("sum").innerText + " Labels");
+    }
+
 </script>
 
 
 
 @using (Html.BeginForm())
 {
+    <h2>Mega Sorting Station - Form A</h2>
+
     <div>
         <table id="tableFormA">
             <tr>
                 <td>
-                    <b>Modality</b>
+                    
                 </td>
                 <td>
                     <b>Eligibility</b>
@@ -66,14 +106,14 @@
             @for (int i = 0; i < Model.Count; i++)
             {
                 <tr>
-                    <td>
-                        <b>@Model.ElementAt(i).Name</b>
+                    <td  style="text-align:center">
+                        <b align="center">@Model.ElementAt(i).Name</b>
                         <br />
-                        <img src="@Model.ElementAt(i).IconPath" height="20" width="20" />
+                        <img src="@Model.ElementAt(i).IconPath" height="40" width="40" />
                     </td>
                     <td>Eligibility</td>
                     <td>@Html.CheckBoxFor(m => m[i].IsActive, new { @class = "cbk", modIsActive = Model[i].Name })</td>
-                    <td>2</td>
+                    <td>@Html.TextBoxFor(m => m[i].Position, new { @class = "labelNo", @type = "number" })</td>
                 </tr>
 
             }
@@ -81,5 +121,12 @@
 
     </div>
 
+    <br />
+    <div id="summation">
+        <b>&nbsp;</b>
+        <b align="right">Number of Labels to be Printed:</b>
+        <b align="center"><span id="sum">0</span></b>
+    </div>
+    <input type="button" value="Print Labels" onclick="printLabels()"/>
 }
 

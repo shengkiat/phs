@@ -123,7 +123,7 @@ namespace PHS.Business.Implementation
             modalityOne.Position = 0;
             modalityOne.IsActive = true;
             modalityOne.IsVisible = true;
-            modalityOne.IconPath = "../../Content/images/Modality/achievement.png";
+            modalityOne.IconPath = "../../Content/images/Modality/01registration.png";
             modalityOne.HasParent = false;
             modalityOne.Status = "Pending";
             modalityOne.ModalityForms = new List<ModalityForm>();
@@ -144,31 +144,100 @@ namespace PHS.Business.Implementation
             modalityTwo.Position = 1;
             modalityTwo.IsActive = true;
             modalityTwo.IsVisible = true;
-            modalityTwo.IconPath = "../../Content/images/Modality/abacus.png";
+            modalityTwo.IconPath = "../../Content/images/Modality/02historytaking.png";
             modalityTwo.HasParent = true;
             modalityTwo.Status = "Pending";
             modalityTwo.ModalityForms = new List<ModalityForm>();
 
             Modality modalityThree = new Modality();
             modalityThree.ID = 3;
-            modalityThree.Name = "FIT";
+            modalityThree.Name = "Mega Sorting Station";
             modalityThree.Position = 2;
-            modalityThree.IsActive = false;
+            modalityThree.IsActive = true;
             modalityThree.IsVisible = true;
-            modalityThree.IconPath = "../../Content/images/Modality/agenda.png";
+            modalityThree.IconPath = "../../Content/images/Modality/03megasorting.png";
             modalityThree.HasParent = true;
             modalityThree.Status = "Pending";
 
             Modality modalityFour = new Modality();
             modalityFour.ID = 4;
-            modalityFour.Name = "TeleHealth";
+            modalityFour.Name = "Phlebotomy";
             modalityFour.Position = 3;
-            modalityFour.IsActive = true;
+            modalityFour.IsActive = false;
             modalityFour.IsVisible = false;
-            modalityFour.IconPath = "../../Content/images/Modality/balance.png";
-            modalityFour.HasParent = false;
+            modalityFour.IconPath = "../../Content/images/Modality/04phlebo.png";
+            modalityFour.HasParent = true;
             modalityFour.Status = "Pending";
 
+            Modality modalityFive = new Modality();
+            modalityFive.ID = 5;
+            modalityFive.Name = "FIT";
+            modalityFive.Position = 4;
+            modalityFive.IsActive = false;
+            modalityFive.IsVisible = false;
+            modalityFive.IconPath = "../../Content/images/Modality/05fit.png";
+            modalityFive.HasParent = true;
+            modalityFive.Status = "Pending";
+
+            Modality modalitySix = new Modality();
+            modalitySix.ID = 6;
+            modalitySix.Name = "Woman Cancer";
+            modalitySix.Position = 5;
+            modalitySix.IsActive = false;
+            modalitySix.IsVisible = false;
+            modalitySix.IconPath = "../../Content/images/Modality/06woman.png";
+            modalitySix.HasParent = true;
+            modalitySix.Status = "Pending";
+
+            Modality modalitySeven = new Modality();
+            modalitySeven.ID = 7;
+            modalitySeven.Name = "Geriatric Screening";
+            modalitySeven.Position = 6;
+            modalitySeven.IsActive = false;
+            modalitySeven.IsVisible = false;
+            modalitySeven.IconPath = "../../Content/images/Modality/07geri.png";
+            modalitySeven.HasParent = true;
+            modalitySeven.Status = "Pending";
+
+            Modality modalityEight = new Modality();
+            modalityEight.ID = 8;
+            modalityEight.Name = "Oral";
+            modalityEight.Position = 7;
+            modalityEight.IsActive = false;
+            modalityEight.IsVisible = false;
+            modalityEight.IconPath = "../../Content/images/Modality/08oral.png";
+            modalityEight.HasParent = true;
+            modalityEight.Status = "Pending";
+
+            Modality modalityNine = new Modality();
+            modalityNine.ID = 9;
+            modalityNine.Name = "Doctor's Consult";
+            modalityNine.Position = 8;
+            modalityNine.IsActive = false;
+            modalityNine.IsVisible = false;
+            modalityNine.IconPath = "../../Content/images/Modality/09doctor.png";
+            modalityNine.HasParent = false;
+            modalityNine.Status = "Pending";
+
+            Modality modalityTen = new Modality();
+            modalityTen.ID = 10;
+            modalityTen.Name = "Exhibition";
+            modalityTen.Position = 9;
+            modalityTen.IsActive = true;
+            modalityTen.IsVisible = false;
+            modalityTen.IconPath = "../../Content/images/Modality/10exhibition.png";
+            modalityTen.HasParent = false;
+            modalityTen.Status = "Pending";
+
+            Modality modalityEleven = new Modality();
+            modalityEleven.ID = 11;
+            modalityEleven.Name = "Summary";
+            modalityEleven.Position = 10;
+            modalityEleven.IsActive = true;
+            modalityEleven.IsVisible = false;
+            modalityEleven.IconPath = "../../Content/images/Modality/11summary.png";
+            modalityEleven.HasParent = false;
+            modalityEleven.Status = "Pending";
 
 
 
@@ -180,6 +249,12 @@ namespace PHS.Business.Implementation
             eventOne.Modalities.Add(modalityTwo);
             eventOne.Modalities.Add(modalityThree);
             eventOne.Modalities.Add(modalityFour);
+            eventOne.Modalities.Add(modalityFive);
+            eventOne.Modalities.Add(modalitySix);
+            eventOne.Modalities.Add(modalitySeven);
+            eventOne.Modalities.Add(modalityEight);
+            eventOne.Modalities.Add(modalityNine);
+            eventOne.Modalities.Add(modalityTen);
 
             @event eventTwo = new @event();
             eventTwo.ID = 200;
@@ -189,6 +264,12 @@ namespace PHS.Business.Implementation
             eventTwo.Modalities.Add(modalityTwo);
             eventTwo.Modalities.Add(modalityThree);
             eventTwo.Modalities.Add(modalityFour);
+            eventTwo.Modalities.Add(modalityFive);
+            eventTwo.Modalities.Add(modalitySix);
+            eventTwo.Modalities.Add(modalitySeven);
+            eventTwo.Modalities.Add(modalityEight);
+            eventTwo.Modalities.Add(modalityNine);
+            eventTwo.Modalities.Add(modalityTen);
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";

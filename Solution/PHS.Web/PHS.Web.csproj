@@ -278,6 +278,17 @@
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
     <Content Include="Content\images\lightbulb.png" />
+    <Content Include="Content\images\Modality\01registration.png" />
+    <Content Include="Content\images\Modality\02historytaking.png" />
+    <Content Include="Content\images\Modality\03megasorting.png" />
+    <Content Include="Content\images\Modality\04phlebo.png" />
+    <Content Include="Content\images\Modality\05fit.png" />
+    <Content Include="Content\images\Modality\06woman.png" />
+    <Content Include="Content\images\Modality\07geri.png" />
+    <Content Include="Content\images\Modality\08oral.png" />
+    <Content Include="Content\images\Modality\09doctor.png" />
+    <Content Include="Content\images\Modality\10exhibition.png" />
+    <Content Include="Content\images\Modality\11summary.png" />
     <Content Include="Content\images\Modality\abacus.png" />
     <Content Include="Content\images\Modality\achievement.png" />
     <Content Include="Content\images\Modality\agenda-1.png" />
