@@ -69,50 +69,50 @@ namespace PHS.Business.Implementation
         {
             Dictionary<string, List<PatientEventViewModel>> mockData = new Dictionary<string, List<PatientEventViewModel>>();
 
-            ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
+            //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
+            //List<ModalityCircleViewModel> modalityCircleList = new List<ModalityCircleViewModel>();
 
-            // status = Pending, InProgress, Completed
+            //// status = Pending, InProgress, Completed
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "Registration";
-            modalityCircle.Position = 0;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
-            modalityCircle.HasParent = false;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+            //modalityCircle = new ModalityCircleViewModel();
+            //modalityCircle.Name = "Registration";
+            //modalityCircle.Position = 0;
+            //modalityCircle.Active = true;
+            //modalityCircle.Visible = true;
+            //modalityCircle.IconPath = "../../Content/images/Modality/achievement.png";
+            //modalityCircle.HasParent = false;
+            //modalityCircle.Status = "Pending";
+            //modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "History Taking";
-            modalityCircle.Position = 1;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
-            modalityCircle.HasParent = true;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+            //modalityCircle = new ModalityCircleViewModel();
+            //modalityCircle.Name = "History Taking";
+            //modalityCircle.Position = 1;
+            //modalityCircle.Active = true;
+            //modalityCircle.Visible = true;
+            //modalityCircle.IconPath = "../../Content/images/Modality/abacus.png";
+            //modalityCircle.HasParent = true;
+            //modalityCircle.Status = "Pending";
+            //modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "FIT";
-            modalityCircle.Position = 2;
-            modalityCircle.Active = false;
-            modalityCircle.Visible = true;
-            modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
-            modalityCircle.HasParent = true;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+            //modalityCircle = new ModalityCircleViewModel();
+            //modalityCircle.Name = "FIT";
+            //modalityCircle.Position = 2;
+            //modalityCircle.Active = false;
+            //modalityCircle.Visible = true;
+            //modalityCircle.IconPath = "../../Content/images/Modality/agenda.png";
+            //modalityCircle.HasParent = true;
+            //modalityCircle.Status = "Pending";
+            //modalityCircleList.Add(modalityCircle);
 
-            modalityCircle = new ModalityCircleViewModel();
-            modalityCircle.Name = "TeleHealth";
-            modalityCircle.Position = 3;
-            modalityCircle.Active = true;
-            modalityCircle.Visible = false;
-            modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
-            modalityCircle.HasParent = false;
-            modalityCircle.Status = "Pending";
-            modalityCircleList.Add(modalityCircle);
+            //modalityCircle = new ModalityCircleViewModel();
+            //modalityCircle.Name = "TeleHealth";
+            //modalityCircle.Position = 3;
+            //modalityCircle.Active = true;
+            //modalityCircle.Visible = false;
+            //modalityCircle.IconPath = "../../Content/images/Modality/balance.png";
+            //modalityCircle.HasParent = false;
+            //modalityCircle.Status = "Pending";
+            //modalityCircleList.Add(modalityCircle);
 
             List<PatientEventViewModel> firstRecords = new List<PatientEventViewModel>();
             PatientEventViewModel patientOne = new PatientEventViewModel();
@@ -123,7 +123,7 @@ namespace PHS.Business.Implementation
             modalityOne.Position = 0;
             modalityOne.IsActive = true;
             modalityOne.IsVisible = true;
-            // modalityOne.IconPath = "../../Content/images/Modality/achievement.png";
+            modalityOne.IconPath = "../../Content/images/Modality/achievement.png";
             modalityOne.HasParent = false;
             modalityOne.Status = "Pending";
             modalityOne.ModalityForms = new List<ModalityForm>();
@@ -144,7 +144,7 @@ namespace PHS.Business.Implementation
             modalityTwo.Position = 1;
             modalityTwo.IsActive = true;
             modalityTwo.IsVisible = true;
-            // modalityTwo.IconPath = "../../Content/images/Modality/abacus.png";
+            modalityTwo.IconPath = "../../Content/images/Modality/abacus.png";
             modalityTwo.HasParent = true;
             modalityTwo.Status = "Pending";
             modalityTwo.ModalityForms = new List<ModalityForm>();
@@ -155,7 +155,7 @@ namespace PHS.Business.Implementation
             modalityThree.Position = 2;
             modalityThree.IsActive = false;
             modalityThree.IsVisible = true;
-            // modalityThree.IconPath = "../../Content/images/Modality/agenda.png";
+            modalityThree.IconPath = "../../Content/images/Modality/agenda.png";
             modalityThree.HasParent = true;
             modalityThree.Status = "Pending";
 
@@ -165,7 +165,7 @@ namespace PHS.Business.Implementation
             modalityFour.Position = 3;
             modalityFour.IsActive = true;
             modalityFour.IsVisible = false;
-            // modalityFour.IconPath = "../../Content/images/Modality/balance.png";
+            modalityFour.IconPath = "../../Content/images/Modality/balance.png";
             modalityFour.HasParent = false;
             modalityFour.Status = "Pending";
 

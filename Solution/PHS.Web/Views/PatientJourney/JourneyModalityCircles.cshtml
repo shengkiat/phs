@@ -15,59 +15,24 @@
     <script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
-<script>
-
-        $(document).ready(function () {
-            //function will be called on button click having id btnsave
-            $("#btnSave").click(function () {
-
-                var dataSent = @Html.Raw(Json.Encode(Model));
-                $.ajax(
-                    {
-                        type: "POST", //HTTP POST Method
-                        url: '@Url.Action("PassJSON", "PatientJourney")', // Controller/View
-                        data: JSON.stringify(dataSent),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (resp) {
-                            $('#ptJourney').html(resp);
-                        }
-                    });
-
-            });
-        });
-
-</script>  
 }
 
 @using (Html.BeginForm())
 {
-    @Ajax.ActionLink("Add Modality and Make Active", "UpdatePtJourney", 
-                 new AjaxOptions
-                 {
-                     UpdateTargetId = "ptJourney", // <-- DOM element ID to update
-                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                     HttpMethod = "POST" // <-- HTTP method
-                 })
 
-    <br />
-    @Ajax.ActionLink("Reset", "UpdatePtJourneyReset",
-                 new AjaxOptions
-                 {
-                     UpdateTargetId = "ptJourney", // <-- DOM element ID to update
-                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                     HttpMethod = "POST" // <-- HTTP method
-                 })
-
-    <br />
-    <input id="btnSave" type="button" name="Save" value="Save" />
 }
-
-
 
 
 <h2>JourneyModalityCircles Main Page</h2>
 
-@{
-    Html.RenderPartial("_JourneyModalityCirclesPartial");
-}
+<table>
+    <tr>
+        <td>
+            @{Html.RenderPartial("_JourneyModalityCirclesPartial");}
+        </td>
+        <td>
+            @{Html.RenderPartial("_MegaSortingStationPartial");}
+        </td>
+    </tr>
+</table>
 
