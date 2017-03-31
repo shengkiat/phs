@@ -16,14 +16,20 @@ IF OBJECT_ID('dbo.form_fields', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.form', 'U') IS NOT NULL 
   DROP TABLE [dbo].[form]; 
   
+IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[EventModality]; 
+  
+IF OBJECT_ID('dbo.Modality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Modality]; 
+  
+IF OBJECT_ID('dbo.EventPatient', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[EventPatient]; 
+  
 IF OBJECT_ID('dbo.event', 'U') IS NOT NULL 
   DROP TABLE [dbo].[event]; 
   
-  IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[event]; 
-  
-  IF OBJECT_ID('dbo.Modality', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[event]; 
+
+
   
 
 CREATE TABLE [dbo].[Person](
@@ -74,6 +80,20 @@ CREATE TABLE [dbo].[Modality](
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+CREATE TABLE [dbo].[EventPatient](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[EventID] [int] NOT NULL,
+	[Nric] [nvarchar](max) NOT NULL,
+	[FullName] [nvarchar](max) NOT NULL,
+	[ContactNumber] [nvarchar](max) NULL,
+	[DateOfBirth] [datetime] NULL,
+	[Language] [nvarchar](max) NOT NULL
+ CONSTRAINT [PK_event_patient] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 
 CREATE TABLE [dbo].[form](
@@ -188,6 +208,11 @@ ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_
 REFERENCES [dbo].[Modality] ([ID])
 GO
 ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
+GO
+ALTER TABLE [dbo].[EventPatient]  WITH CHECK ADD  CONSTRAINT [FK_EventPatient_Event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[Event] ([ID])
+GO
+ALTER TABLE [dbo].[EventPatient] CHECK CONSTRAINT [FK_EventPatient_Event]
 GO
 
 
