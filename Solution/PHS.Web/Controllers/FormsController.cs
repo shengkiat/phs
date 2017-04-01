@@ -827,7 +827,7 @@ namespace PHS.Web.Controllers
                 throw new HttpException(404, "Some description");
             }
 
-            return View("Preview", model);
+            return View("PreRegistration", model);
         }
 
         public ActionResult Preview(int id)

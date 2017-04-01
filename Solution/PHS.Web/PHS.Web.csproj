@@ -523,6 +523,7 @@
     <Content Include="Views\PatientJourney\ViewForm.cshtml" />
     <Content Include="Views\PatientJourney\_MegaSortingStationPartial.cshtml" />
     <Content Include="Views\PatientJourney\_SummaryPartial.cshtml" />
+    <Content Include="Views\Forms\PreRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
