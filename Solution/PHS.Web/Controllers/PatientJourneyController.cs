@@ -190,8 +190,12 @@ namespace PHS.Web.Controllers
                 PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)
                 {
+                    SetViewBagError(message);
+                }
 
-                    
+                else
+                {
+                    result = patientEvent;
                 }
             }
 

@@ -65,8 +65,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".round-button").click(function () {
-            alert($(this).attr('id'));
-            //$("#ptForms").load("@Html.Raw(Url.Action("TestRedirect", "PatientJourneyController")) ")
+            var selectedModalityId = $(this).attr('id');
+            //$("#ptForms").load("@Html.Raw(Url.Action("TestRedirect", "PatientJourneyController", new { nric = "S8518538A", eventId = 50, selectedModalityId = 3 }))) ")
         });
     });
 </script>
