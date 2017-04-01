@@ -97,7 +97,7 @@
             var eventId = "@HttpContext.Current.Request.QueryString["eventId"]";
 
 
-            $("#ptForms").load("/PatientJourney/TestRedirect?nric=" + nric + "&eventId=" + eventId + "&selectedModalityId=" + selectedModalityId)
+            $("#ptForms").load("/PatientJourney/RefreshModalityForms?nric=" + nric + "&eventId=" + eventId + "&selectedModalityId=" + selectedModalityId)
             $(this).attr('class', 'round-button-selected');
 
 

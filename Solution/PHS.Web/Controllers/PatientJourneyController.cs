@@ -107,7 +107,7 @@ namespace PHS.Web.Controllers
 
             return View(result);
         }
-
+        /*
         public ActionResult JourneyModalityCircles()
         {
             //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
@@ -180,9 +180,9 @@ namespace PHS.Web.Controllers
             }
             
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
-        }
+        }*/
 
-        public PartialViewResult TestRedirect(string nric, string eventId, string selectedModalityId)
+        public PartialViewResult RefreshModalityForms(string nric, string eventId, string selectedModalityId)
         {
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
