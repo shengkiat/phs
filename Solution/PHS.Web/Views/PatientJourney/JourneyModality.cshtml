@@ -31,7 +31,10 @@
 
             <table>
                 <tr>
-                    <td style="vertical-align:top; width:50px;">@Html.Partial("_JourneyModalityCirclesPartial", Model.Event.Modalities)</td>
+                    <td style="vertical-align:top; width:50px;">
+                        @Html.ActionLink("Back to Search", "SearchPatient")
+                        @Html.Partial("_JourneyModalityCirclesPartial", Model.Event.Modalities)
+                    </td>
                     <td style="vertical-align:top">@Html.Partial("_JourneyModalityFormsPartial", Model)</td>
                 </tr>
             </table>
