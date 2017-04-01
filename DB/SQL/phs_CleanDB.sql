@@ -304,6 +304,8 @@ GO
 SET IDENTITY_INSERT [dbo].[Person] OFF
 GO
 
+---  Events Sample  --
+
 GO
 SET IDENTITY_INSERT [phs].[dbo].[event] ON 
 
@@ -317,6 +319,26 @@ GO
 
 GO
 SET IDENTITY_INSERT [phs].[dbo].[event] OFF
+
+---  Events Patient Sample  --
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[EventPatient] ON 
+
+GO
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1985-04-13 10:00:00.527' AS DateTime), N'English')
+GO
+
+GO
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1985-04-13 10:00:00.527' AS DateTime), N'English')
+GO
+
+GO
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', 69639756, CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English')
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[EventPatient] OFF
 
 ---  Forms Sample  --
 
