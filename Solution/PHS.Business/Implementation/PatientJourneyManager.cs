@@ -128,15 +128,11 @@ namespace PHS.Business.Implementation
             modalityOne.Status = "Pending";
             modalityOne.ModalityForms = new List<ModalityForm>();
 
+            //Registration form
             ModalityForm modalityFormOne = new ModalityForm();
             modalityFormOne.ModalityID = 50;
             modalityFormOne.FormID = 1;
             modalityOne.ModalityForms.Add(modalityFormOne);
-
-            ModalityForm modalityFormTwo = new ModalityForm();
-            modalityFormTwo.ModalityID = 100;
-            modalityFormTwo.FormID = 2;
-            modalityOne.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityTwo = new Modality();
             modalityTwo.ID = 2;
@@ -148,6 +144,12 @@ namespace PHS.Business.Implementation
             modalityTwo.HasParent = true;
             modalityTwo.Status = "Pending";
             modalityTwo.ModalityForms = new List<ModalityForm>();
+
+            //BMI form
+            ModalityForm modalityFormTwo = new ModalityForm();
+            modalityFormTwo.ModalityID = 100;
+            modalityFormTwo.FormID = 3;
+            modalityTwo.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityThree = new Modality();
             modalityThree.ID = 3;
