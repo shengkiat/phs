@@ -46,6 +46,7 @@
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-global.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/css/plugins/jquery.jcrop.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/forms-sprites.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Content/css/usermanage/um.css")" rel="stylesheet" />
     @RenderSection("headerScripts", false)
 
 
@@ -97,7 +98,7 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li class="sidebar-brand">@Html.ActionLink("User Management", "SearchUser", "Admin", null, null)</li>
+            <li class="sidebar-brand">@Html.ActionLink("User Management", "ManageUser", "Admin", null, null)</li>
             <li class="sidebar-brand">@Html.ActionLink("Event Management", "Index", "Event", null, null)</li>
             <li><a href="#">Form Management</a> </li>
             <li class="sidebar-brand">@Html.ActionLink("Fake Volunteer Login landing page", "SearchPatient", "PatientJourney", null, null)</li>
