@@ -41,10 +41,9 @@
                     @Html.DropDownListFor(m => m.IcFirstDigit, icFirstDigitFields)
                     @Html.EditorFor(m => m.IcNumber, new { htmlAttributes = new { @autocomplete = "off", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", maxlength = "7" } })
                     @Html.DropDownListFor(m => m.IcLastDigit, ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })
-                    <button type="submit" value="SearchPatient" class="button-common" style="border-radius: 17px;" id="BtnSearchUser">
-                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                        Search
-                    </button>
+                    
+                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                           formaction="SearchPatient" formmethod="post" />
                 </div>
             </div>
         </div>
@@ -61,9 +60,8 @@
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
 
-        <button type="submit" disabled value="JourneyModality" class="btn btn-primary btn-lg has-spinner" style="width:100px" id="BtnGoToEvent" formaction="@Url.Action("JourneyModality", "PatientJourney")">
-            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-            Proceed
-        </button>
+
+        <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnSearch" class="button-common" style="border-radius: 17px;"
+                           formaction="@Url.Action("JourneyModality", "PatientJourney")" />
     }
 }
