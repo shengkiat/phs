@@ -39,7 +39,15 @@ namespace PHS.Business.ViewModel.PatientJourney
 
         public bool isMegaSortingModalitySelected()
         {
-            return SelectedModalityId == 3;
+            bool result = false;
+            foreach (var modality in Event.Modalities)
+            {
+                if (modality.ID.Equals(SelectedModalityId))
+                {
+                    result = modality.Name.Equals("Mega Sorting Station");
+                }
+            }
+            return result;
         }
     }
 }
