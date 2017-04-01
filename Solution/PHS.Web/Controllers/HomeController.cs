@@ -45,7 +45,7 @@ namespace PHS.Web.Controllers
                     switch (GetLoginUserRole())
                     {
                         case Constants.User_Role_Admin_Code:
-                            result = Redirect("~/Admin");
+                            result = Redirect("~/Admin/ManageUser");
                             break;
                         case Constants.User_Role_Instructor_Code:
                             result = Redirect("~/Instructor");

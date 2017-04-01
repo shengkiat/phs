@@ -157,6 +157,19 @@ namespace PHS.Web.Controllers
             return View("SearchUser");
         }
 
+        public ActionResult ResetPassword(int userSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            //TODO implement reset password
+
+            string message = string.Empty;
+            return View("Success");
+        }
+
         public ActionResult ManageUser()
         {
             if (!IsUserAuthenticated())
@@ -177,7 +190,7 @@ namespace PHS.Web.Controllers
                 {
                     usm.persons = listUser;
                 }
-                return View("SearchUser", listUser);
+                return View("SearchUser", usm);
             }
         }
 
