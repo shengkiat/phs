@@ -18,6 +18,8 @@
         <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="10" PointY="1.125" />
         <AssociationConnector Association="phsModel.FK_ModalityForm_Modality" />
         <AssociationConnector Association="phsModel.EventModality" />
+        <EntityTypeShape EntityType="phsModel.EventPatient" Width="1.5" PointX="10" PointY="8.5" />
+        <AssociationConnector Association="phsModel.FK_EventPatient_Event" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

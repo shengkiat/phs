@@ -92,6 +92,8 @@ CREATE TABLE [dbo].[Modality](
 	[IsVisible] [bit] NOT NULL,
 	[HasParent] [bit] NULL,
 	[Status] [nvarchar](max) NULL,
+	[Eligibility] [nvarchar](max) NULL,
+	[Label] [int] NULL
  CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

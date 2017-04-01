@@ -26,6 +26,18 @@
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventPatient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="form">
           <Key>
             <PropertyRef Name="ID" />
@@ -117,6 +129,8 @@
           <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="HasParent" Type="bit" />
           <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="Eligiblity" Type="nvarchar(max)" />
+          <Property Name="Labels" Type="int" />
         </EntityType>
         <EntityType Name="ModalityForm">
           <Key>
@@ -180,6 +194,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventPatient_Event">
+          <End Role="event" Type="Self.event" Multiplicity="1" />
+          <End Role="EventPatient" Type="Self.EventPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPatient">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_form_field_values_form_fields">
           <End Role="form_fields" Type="Self.form_fields" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -233,6 +259,7 @@
         <EntityContainer Name="phsModelStoreContainer">
           <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventPatient" EntityType="Self.EventPatient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form" EntityType="Self.form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_field_values" EntityType="Self.form_field_values" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="form_fields" EntityType="Self.form_fields" Schema="dbo" store:Type="Tables" />
@@ -252,6 +279,10 @@
           <AssociationSet Name="FK_EventModality_Modality" Association="Self.FK_EventModality_Modality">
             <End Role="Modality" EntitySet="Modality" />
             <End Role="EventModality" EntitySet="EventModality" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventPatient_Event" Association="Self.FK_EventPatient_Event">
+            <End Role="event" EntitySet="event" />
+            <End Role="EventPatient" EntitySet="EventPatient" />
           </AssociationSet>
           <AssociationSet Name="FK_form_field_values_form_fields" Association="Self.FK_form_field_values_form_fields">
             <End Role="form_fields" EntitySet="form_fields" />
@@ -302,6 +333,11 @@
           <AssociationSet Name="EventModality" Association="phsModel.EventModality">
             <End Role="event" EntitySet="events" />
             <End Role="Modality" EntitySet="Modalities" />
+          </AssociationSet>
+          <EntitySet Name="EventPatients" EntityType="phsModel.EventPatient" />
+          <AssociationSet Name="FK_EventPatient_Event" Association="phsModel.FK_EventPatient_Event">
+            <End Role="event" EntitySet="events" />
+            <End Role="EventPatient" EntitySet="EventPatients" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="form">
@@ -411,6 +447,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="event" ToRole="Modality" />
+          <NavigationProperty Name="EventPatients" Relationship="phsModel.FK_EventPatient_Event" FromRole="event" ToRole="EventPatient" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -464,6 +501,8 @@
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ModalityForms" Relationship="phsModel.FK_ModalityForm_Modality" FromRole="Modality" ToRole="ModalityForm" />
           <NavigationProperty Name="events" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="event" />
+          <Property Name="Eligiblity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Labels" Type="Int32" />
         </EntityType>
         <Association Name="FK_ModalityForm_Modality">
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="1" />
@@ -480,6 +519,31 @@
         <Association Name="EventModality">
           <End Type="phsModel.event" Role="event" Multiplicity="*" />
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
+        </Association>
+        <EntityType Name="EventPatient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="event" Relationship="phsModel.FK_EventPatient_Event" FromRole="EventPatient" ToRole="event" />
+        </EntityType>
+        <Association Name="FK_EventPatient_Event">
+          <End Type="phsModel.event" Role="event" Multiplicity="1" />
+          <End Type="phsModel.EventPatient" Role="EventPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPatient">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -612,6 +676,8 @@
           <EntitySetMapping Name="Modalities">
             <EntityTypeMapping TypeName="phsModel.Modality">
               <MappingFragment StoreEntitySet="Modality">
+                <ScalarProperty Name="Labels" ColumnName="Labels" />
+                <ScalarProperty Name="Eligiblity" ColumnName="Eligiblity" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="HasParent" ColumnName="HasParent" />
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
@@ -631,6 +697,19 @@
               <ScalarProperty Name="ID" ColumnName="EventID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="EventPatients">
+            <EntityTypeMapping TypeName="phsModel.EventPatient">
+              <MappingFragment StoreEntitySet="EventPatient">
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Nric" ColumnName="Nric" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
