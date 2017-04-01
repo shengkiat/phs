@@ -29,9 +29,30 @@
         transition: .5s;
     }
 
-        .round-button:hover {
-            background: #ffc402;
-        }
+    .round-button-selected {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: #a6a6ff;
+        font-size: 12px;
+        font-weight: bold;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        /* ...and now for the proper property */
+        transition: .5s;
+    }
+
+    .round-button:hover {
+        background: #ffc402;
+    }
 
     .round-button-inactive {
         display: block;
@@ -65,8 +86,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".round-button").click(function () {
+            $(".round-button-selected").attr('class', 'round-button');
+
             var selectedModalityId = $(this).attr('id');
             $("#ptForms").load("/PatientJourney/TestRedirect?nric=S8518538A&eventId=100&selectedModalityId=" + selectedModalityId)
+            $(this).attr('class', 'round-button-selected');
+
+            
         });
     });
 </script>
@@ -110,23 +136,36 @@
                 }
             }
 
-            switch (@element.IsActive)
+
+
+            if (@element.IsActive)
             {
-                case true:
+                if (!@element.Equals(firstItem1))
+                {
                     <button name="buttons" value="@element.Name" class="round-button" id="@element.ID">
                         <img src="@element.IconPath" height="35" width="35"  />
                         <br />
                         @element.Name
                     </button>
-                    break;
+                }
 
-                case false:
-                    <button name="buttons" value="@element.Name" class="round-button-inactive">
+                else
+                {
+                    <button name="buttons" value="@element.Name" class="round-button-selected" id="@element.ID">
                         <img src="@element.IconPath" height="35" width="35" />
                         <br />
                         @element.Name
                     </button>
-                    break;
+                }
+            }
+
+            else
+            {
+                <button name="buttons" value="@element.Name" class="round-button-inactive">
+                    <img src="@element.IconPath" height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
             }
         }
         
