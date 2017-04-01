@@ -100,7 +100,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    patientEvent.SelectedModalityId = 50;
+                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
                     result = patientEvent;
                 }
             }
