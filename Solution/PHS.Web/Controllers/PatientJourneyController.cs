@@ -110,7 +110,7 @@ namespace PHS.Web.Controllers
 
             return View(result);
         }
-        /*
+        
         public ActionResult JourneyModalityCircles()
         {
             //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
@@ -183,7 +183,7 @@ namespace PHS.Web.Controllers
             }
             
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
-        }*/
+        }
 
         public PartialViewResult RefreshModalityForms(string selectedModalityId)
         {
