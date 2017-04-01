@@ -93,11 +93,11 @@
 
             var selectedModalityId = $(this).attr('id');
 
-            var nric = "@HttpContext.Current.Request.QueryString["nric"]";
-            var eventId = "@HttpContext.Current.Request.QueryString["eventId"]";
+            //var nric = "@HttpContext.Current.Request.QueryString["nric"]";
+            //var eventId = "@HttpContext.Current.Request.QueryString["eventId"]";
 
 
-            $("#ptForms").load("/PatientJourney/RefreshModalityForms?nric=" + nric + "&eventId=" + eventId + "&selectedModalityId=" + selectedModalityId)
+            $("#ptForms").load("/PatientJourney/RefreshModalityForms?selectedModalityId=" + selectedModalityId)
             $(this).attr('class', 'round-button-selected');
 
 

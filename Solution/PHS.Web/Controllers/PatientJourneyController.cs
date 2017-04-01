@@ -105,6 +105,9 @@ namespace PHS.Web.Controllers
                 }
             }
 
+            TempData["Nric"] = nric;
+            TempData["EventId"] = eventId;
+
             return View(result);
         }
         /*
@@ -182,8 +185,12 @@ namespace PHS.Web.Controllers
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }*/
 
-        public PartialViewResult RefreshModalityForms(string nric, string eventId, string selectedModalityId)
+        public PartialViewResult RefreshModalityForms(string selectedModalityId)
         {
+
+            string nric = TempData["Nric"].ToString();
+            string eventId = TempData["EventId"].ToString();
+
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
@@ -201,6 +208,8 @@ namespace PHS.Web.Controllers
                     result = patientEvent;
                 }
             }
+
+            TempData.Keep();
 
             return PartialView("_JourneyModalityFormsPartial", result);
         }
