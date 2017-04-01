@@ -58,12 +58,14 @@
     <Compile Include="Interface\Core\IRepositoryAsync.cs" />
     <Compile Include="Interface\Core\IUnitOfWork.cs" />
     <Compile Include="Interface\Core\IUnitOfWorkAsync.cs" />
+    <Compile Include="Interface\IEventPatientRepository.cs" />
     <Compile Include="Interface\IEventRepository.cs" />
     <Compile Include="Interface\IMasterAddressRepository.cs" />
     <Compile Include="Interface\IModalityRepository.cs" />
     <Compile Include="Interface\IPersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Core\Repository.cs" />
+    <Compile Include="Repository\EventPatientRepository.cs" />
     <Compile Include="Repository\EventRepository.cs" />
     <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\ModalityRepository.cs" />
