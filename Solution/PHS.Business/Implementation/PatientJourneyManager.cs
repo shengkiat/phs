@@ -257,6 +257,7 @@ namespace PHS.Business.Implementation
             eventOne.Modalities.Add(modalityEight);
             eventOne.Modalities.Add(modalityNine);
             eventOne.Modalities.Add(modalityTen);
+            eventOne.Modalities.Add(modalityEleven);
 
             @event eventTwo = new @event();
             eventTwo.ID = 200;
@@ -272,6 +273,7 @@ namespace PHS.Business.Implementation
             eventTwo.Modalities.Add(modalityEight);
             eventTwo.Modalities.Add(modalityNine);
             eventTwo.Modalities.Add(modalityTen);
+            eventTwo.Modalities.Add(modalityEleven);
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
