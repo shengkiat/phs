@@ -85,6 +85,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+
+
         $(".round-button").click(function () {
             $(".round-button-selected").attr('class', 'round-button');
 
@@ -97,7 +100,7 @@
             $("#ptForms").load("/PatientJourney/TestRedirect?nric=" + nric + "&eventId=" + eventId + "&selectedModalityId=" + selectedModalityId)
             $(this).attr('class', 'round-button-selected');
 
-            
+
         });
     });
 </script>
@@ -156,7 +159,7 @@
 
                 else
                 {
-                    <button name="buttons" value="@element.Name" class="round-button-selected" id="@element.ID">
+                    <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ID">
                         <img src="@element.IconPath" height="35" width="35" />
                         <br />
                         @element.Name
