@@ -49,5 +49,18 @@ namespace PHS.Business.ViewModel.PatientJourney
             }
             return result;
         }
+
+        public bool isSummarySelected()
+        {
+            bool result = false;
+            foreach (var modality in Event.Modalities)
+            {
+                if (modality.ID.Equals(SelectedModalityId))
+                {
+                    result = modality.Name.Equals("Summary");
+                }
+            }
+            return result;
+        }
     }
 }

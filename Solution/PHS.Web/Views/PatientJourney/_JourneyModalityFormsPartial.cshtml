@@ -29,6 +29,11 @@
                     <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
                 }
 
+                else if (Model.isSummarySelected())
+                {
+                    <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
+                }
+
                 else
                 {
                     foreach (var element in Model.GetModalityFormsForTabs())
@@ -59,6 +64,13 @@
                 {
                     <div id="tabs-1" class="tab-pane fade in active">
                         @{Html.RenderPartial("_MegaSortingStationPartial", Model.Event.Modalities);}
+                    </div>
+                }
+
+                else if (Model.isSummarySelected())
+                {
+                    <div id="tabs-1" class="tab-pane fade in active">
+                        @{Html.RenderPartial("_SummaryPartial", Model.Event.Modalities);}
                     </div>
                 }
 
