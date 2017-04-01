@@ -36,5 +36,10 @@ namespace PHS.Business.ViewModel.PatientJourney
             
             return result;
         }
+
+        public bool isMegaSortingModalitySelected()
+        {
+            return SelectedModalityId == 3;
+        }
     }
 }
