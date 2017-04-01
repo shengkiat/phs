@@ -62,7 +62,13 @@
 
 </style>
 
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".round-button").click(function () {
+            alert($(this).attr('id'));
+        });
+    });
+</script>
 
 
 @{
@@ -94,7 +100,7 @@
                     switch (@element.HasParent)
                     {
                         case true:
-                        <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;" />
+                        <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;"/>
                         break;
 
                     case false:
@@ -106,8 +112,8 @@
             switch (@element.IsActive)
             {
                 case true:
-                    <button name="buttons" value="@element.Name" class="round-button">
-                        <img src="@element.IconPath" height="35" width="35" />
+                    <button name="buttons" value="@element.Name" class="round-button" id="@element.ID">
+                        <img src="@element.IconPath" height="35" width="35"  />
                         <br />
                         @element.Name
                     </button>
