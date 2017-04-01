@@ -24,7 +24,10 @@
             @{
                 int counter = 1;
 
-                foreach (var element in Model.GetModalityFormsForTabs(50))
+                //int modalityId = int.Parse(HttpContext.Current.Request.QueryString["mformid"]);
+                int modalityId = 50;
+
+                foreach (var element in Model.GetModalityFormsForTabs(modalityId))
                 {
                     if (counter == 1)
                     {
@@ -47,7 +50,7 @@
             @{
                 int anothercounter = 1;
 
-                foreach (var element in Model.GetModalityFormsForTabs(50))
+                foreach (var element in Model.GetModalityFormsForTabs(modalityId))
                 {
                     if (anothercounter == 1)
                     {
