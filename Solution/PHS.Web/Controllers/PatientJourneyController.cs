@@ -180,6 +180,23 @@ namespace PHS.Web.Controllers
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
+        public PartialViewResult TestRedirect(string nric, string eventId, int selectedModalityId)
+        {
+            string message = string.Empty;
+            PatientEventViewModel result = new PatientEventViewModel();
+
+            using (var getPatientJourney = new PatientJourneyManager())
+            {
+                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                if (patientEvent == null)
+                {
+
+                    
+                }
+            }
+
+            return PartialView("_JourneyModalityFormsPartial", result);
+        }
 
 
         public ActionResult ViewForm(int formId, bool embed = false)
