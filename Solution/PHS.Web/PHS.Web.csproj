@@ -522,6 +522,7 @@
     <Content Include="Views\PatientJourney\JourneyModalityCircles.cshtml" />
     <Content Include="Views\PatientJourney\ViewForm.cshtml" />
     <Content Include="Views\PatientJourney\_MegaSortingStationPartial.cshtml" />
+    <Content Include="Views\PatientJourney\_SummaryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
