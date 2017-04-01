@@ -25,61 +25,82 @@
                 int counter = 1;
 
                 //int modalityId = int.Parse(HttpContext.Current.Request.QueryString["mformid"]);
-               // int modalityId = Model.SelectedModalityId;
+                // int modalityId = Model.SelectedModalityId;
 
-                foreach (var element in Model.GetModalityFormsForTabs())
+                if (Model.SelectedModalityId == 3)
                 {
-                    if (counter == 1)
-                    {
-                        <li class="active"><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
-                    }
-
-                    else
-                    {
-                        <li><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
-                    }
-
-
-                    counter = counter + 1;
+                    <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
                 }
+
+                else
+                {
+                    foreach (var element in Model.GetModalityFormsForTabs())
+                    {
+                        if (counter == 1)
+                        {
+                            <li class="active"><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                        }
+
+                        else
+                        {
+                            <li><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                        }
+
+
+                        counter = counter + 1;
+                    }
+                }
+
+
             }
             
         </ul>
 
         <div class="tab-content">
             @{
-                int anothercounter = 1;
-
-                foreach (var element in Model.GetModalityFormsForTabs())
+                if (Model.SelectedModalityId == 3)
                 {
-                    if (anothercounter == 1)
-                    {
-                        <div id="tabs-@anothercounter" class="tab-pane fade in active">
-                            <iframe id="form-builder-frame" onload="resizeIframe(this)"
-                                    src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
-                                    frameborder="0"
-                                    width="100%"
-                                    marginheight="0"
-                                    marginwidth="0"
-                                    scrolling="yes"></iframe>
-                        </div>
-                    }
-
-                    else
-                    {
-                        <div id="tabs-@anothercounter" class="tab-pane fade">
-                            <iframe id="form-builder-frame" onload="resizeIframe(this)"
-                                    src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
-                                    frameborder="0"
-                                    width="100%"
-                                    marginheight="0"
-                                    marginwidth="0"
-                                    scrolling="yes"></iframe>
-                        </div>
-                    }
-
-                    anothercounter = anothercounter + 1;
+                    <div id="tabs-1" class="tab-pane fade in active">
+                        @{Html.RenderPartial("_MegaSortingStationPartial", Model.Event.Modalities);}
+                    </div>
                 }
+
+                else
+                {
+                    int anothercounter = 1;
+
+                    foreach (var element in Model.GetModalityFormsForTabs())
+                    {
+                        if (anothercounter == 1)
+                        {
+                            <div id="tabs-@anothercounter" class="tab-pane fade in active">
+                                <iframe id="form-builder-frame" onload="resizeIframe(this)"
+                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
+                                        frameborder="0"
+                                        width="100%"
+                                        marginheight="0"
+                                        marginwidth="0"
+                                        scrolling="yes"></iframe>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div id="tabs-@anothercounter" class="tab-pane fade">
+                                <iframe id="form-builder-frame" onload="resizeIframe(this)"
+                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
+                                        frameborder="0"
+                                        width="100%"
+                                        marginheight="0"
+                                        marginwidth="0"
+                                        scrolling="yes"></iframe>
+                            </div>
+                        }
+
+                        anothercounter = anothercounter + 1;
+                    }
+                }
+
             }
 
         </div>
