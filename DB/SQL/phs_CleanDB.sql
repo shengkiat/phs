@@ -304,6 +304,20 @@ GO
 SET IDENTITY_INSERT [dbo].[Person] OFF
 GO
 
+GO
+SET IDENTITY_INSERT [phs].[dbo].[event] ON 
+
+GO
+INSERT [phs].[dbo].[event] ([Id], [Title], [Venue], [IsActive], [StartDT], [EndDT], [CreateDate], [CreateBy]) VALUES (1, N'2015 - Event', N'PHS', 1, CAST(N'2015-04-13 10:00:00.527' AS DateTime), CAST(N'2015-04-14 12:00:00.527' AS DateTime), CAST(N'2015-04-11 10:00:00.527' AS DateTime), N'T')
+GO
+
+GO
+INSERT [phs].[dbo].[event] ([Id], [Title], [Venue], [IsActive], [StartDT], [EndDT], [CreateDate], [CreateBy]) VALUES (2, N'2016 - Event', N'PHS', 1, CAST(N'2016-04-13 10:00:00.527' AS DateTime), CAST(N'2016-04-14 12:00:00.527' AS DateTime), CAST(N'2016-04-11 10:00:00.527' AS DateTime), N'T')
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[event] OFF
+
 ---  Forms Sample  --
 
 
