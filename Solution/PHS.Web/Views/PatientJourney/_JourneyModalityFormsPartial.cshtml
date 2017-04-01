@@ -25,9 +25,9 @@
                 int counter = 1;
 
                 //int modalityId = int.Parse(HttpContext.Current.Request.QueryString["mformid"]);
-                int modalityId = Model.SelectedModalityId;
+               // int modalityId = Model.SelectedModalityId;
 
-                foreach (var element in Model.GetModalityFormsForTabs(modalityId))
+                foreach (var element in Model.GetModalityFormsForTabs())
                 {
                     if (counter == 1)
                     {

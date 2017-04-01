@@ -23,12 +23,12 @@ namespace PHS.Business.ViewModel.PatientJourney
 
         public int SelectedModalityId { get; set; }
 
-        public List<ModalityForm> GetModalityFormsForTabs(int modalityId) {
+        public List<ModalityForm> GetModalityFormsForTabs() {
             List<ModalityForm> result = new List<ModalityForm>();
 
             foreach (var modality in Event.Modalities)
             {
-                if (modality.ID.Equals(modalityId))
+                if (modality.ID.Equals(SelectedModalityId))
                 {
                     result = modality.ModalityForms.ToList();
                 }
