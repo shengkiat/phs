@@ -148,8 +148,13 @@ namespace PHS.Web.Controllers
             
 
             string message = string.Empty;
-            string nric = "S8518538A";
-            string eventId = "100";
+            //string nric = "S8518538A";
+            //string eventId = "100";
+
+            string nric = TempData.Peek("Nric").ToString();
+            string eventId = TempData.Peek("EventId").ToString();
+
+
             PatientEventViewModel result = new PatientEventViewModel();
             using (var getPatientJourney = new PatientJourneyManager())
             {
