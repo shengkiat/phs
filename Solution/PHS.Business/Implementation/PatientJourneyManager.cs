@@ -147,7 +147,7 @@ namespace PHS.Business.Implementation
 
             //BMI form
             ModalityForm modalityFormTwo = new ModalityForm();
-            modalityFormTwo.ModalityID = 100;
+            modalityFormTwo.ModalityID = 2;
             modalityFormTwo.FormID = 3;
             modalityTwo.ModalityForms.Add(modalityFormTwo);
 

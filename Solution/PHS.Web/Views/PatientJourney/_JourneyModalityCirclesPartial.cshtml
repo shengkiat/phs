@@ -66,7 +66,7 @@
     $(document).ready(function () {
         $(".round-button").click(function () {
             var selectedModalityId = $(this).attr('id');
-            //$("#ptForms").load("@Html.Raw(Url.Action("TestRedirect", "PatientJourneyController", new { nric = "S8518538A", eventId = 50, selectedModalityId = 3 }))) ")
+            $("#ptForms").load("/PatientJourney/TestRedirect?nric=S8518538A&eventId=100&selectedModalityId=" + selectedModalityId)
         });
     });
 </script>

@@ -20,6 +20,9 @@ namespace PHS.Business.ViewModel.PatientJourney
         public string Gender { get { return "Male"; } }
 
         //public List<ModalityCircleViewModel> ModalityCircles { get; set; }
+
+        public int SelectedModalityId { get; set; }
+
         public List<ModalityForm> GetModalityFormsForTabs(int modalityId) {
             List<ModalityForm> result = new List<ModalityForm>();
 

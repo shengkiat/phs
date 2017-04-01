@@ -100,6 +100,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
+                    patientEvent.SelectedModalityId = 50;
                     result = patientEvent;
                 }
             }
@@ -126,6 +127,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
+
                     result = patientEvent;
                 }
             }
@@ -180,7 +182,7 @@ namespace PHS.Web.Controllers
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
-        public PartialViewResult TestRedirect(string nric, string eventId, int selectedModalityId)
+        public PartialViewResult TestRedirect(string nric, string eventId, string selectedModalityId)
         {
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
@@ -195,6 +197,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
+                    patientEvent.SelectedModalityId = Int32.Parse(selectedModalityId);
                     result = patientEvent;
                 }
             }
