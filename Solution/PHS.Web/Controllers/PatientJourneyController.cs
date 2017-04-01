@@ -188,8 +188,8 @@ namespace PHS.Web.Controllers
         public PartialViewResult RefreshModalityForms(string selectedModalityId)
         {
 
-            string nric = TempData["Nric"].ToString();
-            string eventId = TempData["EventId"].ToString();
+            string nric = TempData.Peek("Nric").ToString();
+            string eventId = TempData.Peek("EventId").ToString();
 
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
@@ -208,8 +208,6 @@ namespace PHS.Web.Controllers
                     result = patientEvent;
                 }
             }
-
-            TempData.Keep();
 
             return PartialView("_JourneyModalityFormsPartial", result);
         }
