@@ -158,7 +158,7 @@ namespace PHS.Web.Controllers
             return View("SearchUser");
         }
 
-        public ActionResult ResetPassword()
+        public ActionResult ResetPassword(Person person)
         {
             if (!IsUserAuthenticated())
             {
@@ -167,8 +167,8 @@ namespace PHS.Web.Controllers
 
             //TODO implement reset password
 
-            SetTempDataMessage(Constants.ValueSuccessfuly("Password has been updated"));
-            return View("EditUser");
+            SetTempDataMessage(Constants.ValueSuccessfuly("Password has been reset!"));
+            return View("EditUser", person);
         }
 
         public ActionResult ManageUser()
