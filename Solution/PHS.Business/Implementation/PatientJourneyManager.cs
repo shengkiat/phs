@@ -33,7 +33,7 @@ namespace PHS.Business.Implementation
                 {
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
-                        var eventpatients = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
+                        var eventpatients = unitOfWork.EventPatient.FindEventPatients(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
                         //Nric = getMockData(nric);
 
                         if (eventpatients != null && eventpatients.Any())
@@ -86,13 +86,13 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatients = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == intEventId);
+                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == intEventId);
                         //Nric = getMockData(nric);
 
-                        if (eventpatients != null && eventpatients.Any())
+                        if (eventpatient != null)
                         {
                             message = string.Empty;
-                            result = new PatientEventViewModel(eventpatients.FirstOrDefault());
+                            result = new PatientEventViewModel(eventpatient);
 
                             return result;
                         }

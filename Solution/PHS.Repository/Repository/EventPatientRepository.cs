@@ -15,9 +15,14 @@ namespace PHS.Repository.Repository
         {
         }
 
-        public IEnumerable<EventPatient> FindEventPatient(Expression<Func<EventPatient, bool>> predicate)
+        public IEnumerable<EventPatient> FindEventPatients(Expression<Func<EventPatient, bool>> predicate)
         {
             return Context.Set<EventPatient>().Where(predicate).Include(x => x.@event);
+        }
+
+        public EventPatient FindEventPatient(Expression<Func<EventPatient, bool>> predicate)
+        {
+            return Context.Set<EventPatient>().Where(predicate).Include(x => x.@event.Modalities).FirstOrDefault();
         }
     }
 }
