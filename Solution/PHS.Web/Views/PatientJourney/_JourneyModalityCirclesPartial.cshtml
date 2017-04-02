@@ -1,5 +1,5 @@
 ﻿@*@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel> *@
-@model List<PHS.DB.Modality>
+@model ICollection<PHS.DB.Modality>
 @using PHS.DB
 @using PHS.Business.ViewModel.PatientJourney
 @using PHS.FormBuilder.Helpers
@@ -85,14 +85,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+
+
         $(".round-button").click(function () {
             $(".round-button-selected").attr('class', 'round-button');
 
             var selectedModalityId = $(this).attr('id');
-            $("#ptForms").load("/PatientJourney/TestRedirect?nric=S8518538A&eventId=100&selectedModalityId=" + selectedModalityId)
+
+            //var nric = "@HttpContext.Current.Request.QueryString["nric"]";
+            //var eventId = "@HttpContext.Current.Request.QueryString["eventId"]";
+
+
+            $("#ptForms").load("/PatientJourney/RefreshModalityForms?selectedModalityId=" + selectedModalityId)
             $(this).attr('class', 'round-button-selected');
 
-            
+
         });
     });
 </script>
@@ -151,7 +159,7 @@
 
                 else
                 {
-                    <button name="buttons" value="@element.Name" class="round-button-selected" id="@element.ID">
+                    <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ID">
                         <img src="@element.IconPath" height="35" width="35" />
                         <br />
                         @element.Name

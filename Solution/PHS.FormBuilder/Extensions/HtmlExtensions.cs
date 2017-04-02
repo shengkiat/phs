@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
-
+using static PHS.Common.Constants;
 
 namespace PHS.FormBuilder.Extensions
 {
@@ -112,8 +111,30 @@ namespace PHS.FormBuilder.Extensions
             return "/Content/images/spacer.gif";
         }
 
+        public static string GetSaveValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
+        {
+            if (model.EntryId == null || model.EntryId == "")
+            {
+                return "";
+            }
+
+            if (model.FieldType == FieldType.ADDRESS)
+            {
+                if (fieldType == "StreetAddress")
+                {
+                    return "Andy Lau";
+                }
+            }
+
+            return "";
+
+        }
+
         public static string GetTempFormValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
+
+
+
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("SubmitFields[{0}].".FormatWith(model.DomId));
             if (fieldType.IsNullOrEmpty())

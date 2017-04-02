@@ -1,0 +1,34 @@
+﻿th {
+    background-color: #ACD8E2;
+}
+
+
+.button-common{
+    font-family:Verdana,Arial,sans-serif;
+    font-size:1em;
+    border: 1px solid rgb(172, 216, 226);
+    border-radius: 17px; 
+    padding: 9px; 
+    width: 80px; 
+    height: 40px; 
+    background-image: none; 
+    background-color: rgb(172, 216, 226);
+}
+
+.button-other{
+    font-family:Verdana,Arial,sans-serif;
+    font-size:1em;
+    border: 1px solid rgb(172, 216, 226);
+    border-radius: 17px; 
+    padding: 9px; 
+    width: 80px; 
+    height: 40px; 
+    background-image: none; 
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.firer{
+    cursor:pointer!important
+}
+
+valign{display:table-cell;height:inherit;width:inherit;vertical-align:inherit;text-align:inherit}

@@ -28,8 +28,40 @@ namespace PHS.Business.Implementation
             if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
             {
                 string nric = icFirstDigit + icNumber + icLastDigit;
-               
-                result = getMockData(nric);
+
+                try
+                {
+                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    {
+                        var eventpatients = unitOfWork.EventPatient.FindEventPatients(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
+                        //Nric = getMockData(nric);
+
+                        if (eventpatients != null && eventpatients.Any())
+                        {
+                            message = string.Empty;
+                            result = new List<PatientEventViewModel>();
+                            foreach (EventPatient eventPatient in eventpatients.ToList())
+                            {
+                                result.Add(new PatientEventViewModel(eventPatient));
+                            }
+
+                            return result;
+                        }
+                        else
+                        {
+                            message = "Event Patient not found!";
+                            return result;
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEventsByNric");
+                    return null;
+                }
+
             }
 
 
@@ -48,10 +80,35 @@ namespace PHS.Business.Implementation
 
             if (NricChecker.IsNRICValid(nric) && !string.IsNullOrEmpty(eventId))
             {
-                result = getMockData(nric, eventId);
-                if (result == null)
+                //result = getMockData(nric, eventId);
+                try
                 {
-                    message = "Unable to find using Nric and Event";
+                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    {
+                        int intEventId = int.Parse(eventId);
+                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == intEventId);
+                        //Nric = getMockData(nric);
+
+                        if (eventpatient != null)
+                        {
+                            message = string.Empty;
+                            result = new PatientEventViewModel(eventpatient);
+
+                            return result;
+                        }
+                        else
+                        {
+                            message = "Event Patient not found!";
+                            return result;
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEvent");
+                    return null;
                 }
             }
 
@@ -257,6 +314,7 @@ namespace PHS.Business.Implementation
             eventOne.Modalities.Add(modalityEight);
             eventOne.Modalities.Add(modalityNine);
             eventOne.Modalities.Add(modalityTen);
+            eventOne.Modalities.Add(modalityEleven);
 
             @event eventTwo = new @event();
             eventTwo.ID = 200;
@@ -272,6 +330,7 @@ namespace PHS.Business.Implementation
             eventTwo.Modalities.Add(modalityEight);
             eventTwo.Modalities.Add(modalityNine);
             eventTwo.Modalities.Add(modalityTen);
+            eventTwo.Modalities.Add(modalityEleven);
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";

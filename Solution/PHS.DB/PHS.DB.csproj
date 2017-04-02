@@ -54,6 +54,9 @@
     <Compile Include="event.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EventPatient.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="form.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

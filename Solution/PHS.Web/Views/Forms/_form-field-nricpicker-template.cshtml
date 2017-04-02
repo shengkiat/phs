@@ -3,14 +3,19 @@
 @using PHS.FormBuilder.Extensions
 
 <script id="form-field-nricpicker-template" type="text/x-jquery-tmpl">
-    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+    <label style="width: 90%; word-wrap: break-word; text-align: left;"
            data-sub-channel="sub-label-${id}" class="label editable">
         Click to edit
     </label>
 
     <span class="required hidden">*</span>
 
-    <div class="input" style="margin-left: 1cm;">
+    <div class="input" style="width: 70%; margin-left: 1cm;">
+
+        <input id="field-${id}" type="text" style="width: 100px; height:20px; " 
+                maxlength="9" />
+
+
         <ul class="horizontal-list three-field-row">
             <li>
                 <select>

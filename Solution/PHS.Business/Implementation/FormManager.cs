@@ -9,6 +9,8 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using System.IO;
 using OfficeOpenXml;
+using PHS.FormBuilder.ViewModels;
+using PHS.FormBuilder.Extensions;
 
 namespace PHS.Business.Implementation
 {
@@ -61,7 +63,7 @@ namespace PHS.Business.Implementation
             {
                 form = unitOfWork.formRepository.GetForm(formid);
 
-               // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
+                // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
                 using (MemoryStream ms = new MemoryStream(data))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
@@ -75,6 +77,43 @@ namespace PHS.Business.Implementation
                             // check if header match
                             foreach (var field in form.form_fields)
                             {
+                                if (field.FieldType == "ADDRESS")
+                                {
+                                    if (worksheet.Cells[1, x].Value.Equals("Blk/Hse No"))
+                                    {
+                                        x++;
+                                    }
+                                    else
+                                    {
+                                        return ("Invalid File.");
+                                    }
+                                    if (worksheet.Cells[1, x].Value.Equals("Unit"))
+                                    {
+                                        x++;
+                                    }
+                                    else
+                                    {
+                                        return ("Invalid File.");
+                                    }
+                                    if (worksheet.Cells[1, x].Value.Equals("Street Address"))
+                                    {
+                                        x++;
+                                    }
+                                    else
+                                    {
+                                        return ("Invalid File.");
+                                    }
+                                    if (worksheet.Cells[1, x].Value.Equals("Postal Code"))
+                                    {
+                                        x++;
+                                    }
+                                    else
+                                    {
+                                        return ("Invalid File.");
+                                    }
+
+                                }
+
                                 if (worksheet.Cells[1, x].Value.Equals(field.Label))
                                 {
                                     x++;
@@ -90,7 +129,33 @@ namespace PHS.Business.Implementation
 
                             foreach (var field in form.form_fields)
                             {
-                                if (worksheet.Cells[1, y].Value.Equals(field.Label))
+                                if (field.FieldType == "ADDRESS")
+                                {
+                                    for (int row = worksheet.Dimension.Start.Row + 1; row <= worksheet.Dimension.End.Row; row++)
+                                    {
+                                        AddressViewModel address = new AddressViewModel();
+                                        address.Blk = worksheet.Cells[row, y].Value.ToString();
+                                        address.Unit = worksheet.Cells[row, y + 1].Value.ToString();
+                                        address.StreetAddress = worksheet.Cells[row, y + 2].Value.ToString();
+                                        address.ZipCode = worksheet.Cells[row, y + 3].Value.ToString();
+
+                                        string value1 = address.ToJson();
+
+                                        form_field_values value = new form_field_values();
+                                        value.Value = value1;
+                                        value.EntryId = Guid.NewGuid();
+                                        value.DateAdded = DateTime.Now;
+                                        value.FieldId = field.ID;
+
+                                        field.form_field_values.Add(value);
+
+                                        unitOfWork.ActiveLearningContext.form_field_values.Add(value);
+                                    }
+
+                                    y += 4;
+
+                                }
+                                else if (worksheet.Cells[1, y].Value.Equals(field.Label))
                                 {
 
                                     for (int row = worksheet.Dimension.Start.Row + 1; row <= worksheet.Dimension.End.Row; row++)
@@ -112,16 +177,16 @@ namespace PHS.Business.Implementation
 
                                     }
 
-
+                                    y++;
 
                                 }
 
-                                y++;
+                             
                             }
                         }
                     }
                 }
-                
+
                 unitOfWork.Complete();
             }
 

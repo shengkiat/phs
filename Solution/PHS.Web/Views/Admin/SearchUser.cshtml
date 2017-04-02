@@ -9,31 +9,33 @@
     <div class="form-horizontal ">
         <hr />
         <div class="form-group">
-            <b>Search by:</b>
-            User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
-            Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
+            <div style="padding-left: 1.8em">
+                <b>Search by:</b>
+                User id:   @Html.RadioButtonFor(m => m.SearchBy, "UserName", new { @checked = true })
+                Name:      @Html.RadioButtonFor(m => m.SearchBy, "FullName")
 
-            <div class="text-center">
-                <div class="col-md-5">
-                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                <div class="text-center">
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    </div>
                 </div>
             </div>
-            @Html.ActionLink("New", "CreateUser")
-        </div>
-
-        <div class="form-group col-lg-offset-10">
-            <div class="text-center">
-                <button type="submit" value="SearchUser" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnSearchUser">
-                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                    Search
-                </button>
+            <div class="form-group col-lg-offset-10">
+                <div class="text-center">
+                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                           formaction="SearchUser" formmethod="post" />
+                    <input type="submit" name="BtnCreate" value="Create" class="button-other" style="border-radius: 17px;"
+                           formaction="CreateUser" formmethod="get" />
+                </div>
             </div>
         </div>
+
+        
     </div>
 
     if (Model != null && Model.persons != null && Model.persons.Count > 0)
     {
-        <table class="table" style="width:500px;">
+        <table class="table" >
             <tr>
                 <th>User ID</th>
                 <th>Name</th>

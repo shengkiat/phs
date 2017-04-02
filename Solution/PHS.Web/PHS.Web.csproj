@@ -272,6 +272,7 @@
     <Content Include="Content\css\plugins\tipsy.css" />
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\site.css" />
+    <Content Include="Content\css\usermanage\um.css" />
     <Content Include="Content\css\wheel.png" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\images\bg.png" />
@@ -522,6 +523,8 @@
     <Content Include="Views\PatientJourney\JourneyModalityCircles.cshtml" />
     <Content Include="Views\PatientJourney\ViewForm.cshtml" />
     <Content Include="Views\PatientJourney\_MegaSortingStationPartial.cshtml" />
+    <Content Include="Views\PatientJourney\_SummaryPartial.cshtml" />
+    <Content Include="Views\Forms\PreRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

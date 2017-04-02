@@ -4,7 +4,7 @@
     ViewBag.Title = "EditUser";
 }
 
-<h2>EditUser</h2>
+<h3>User Management > User Details</h3>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>User Details</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -61,14 +60,12 @@
                     <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                     Save
                 </button>
+                @Html.ActionLink("Reset Passowrd", "ResetPassword", "Admin", new { id = Model.Sid } , new { @class = "btn btn-primary btn-large" })
+                @Html.ActionLink("Cancel", "BackToSearchUser", "Admin", null, new { @class = "btn btn-primary btn-large" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back", "BackToSearchUser")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

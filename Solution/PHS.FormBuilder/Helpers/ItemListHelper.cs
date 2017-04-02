@@ -98,7 +98,7 @@ namespace PHS.FormBuilder.Helpers
 
         public static IEnumerable<SelectListItem> BirthYears(int minimumAge, int maximumAge)
         {
-            return Enumerable.Range(DateTime.Now.Year - maximumAge, maximumAge - minimumAge).Reverse().Select(v => new SelectListItem { Value = v.ToString(), Text = v.ToString() });
+            return Enumerable.Range(DateTime.Now.Year - maximumAge, maximumAge - (minimumAge-1)).Reverse().Select(v => new SelectListItem { Value = v.ToString(), Text = v.ToString() });
         }
 
         public static IEnumerable<SelectListItem> NumberRange(int minimum, int maximum)

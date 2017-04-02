@@ -147,9 +147,33 @@ namespace PHS.Web.Controllers
                 int x = 1;
                 foreach (var field in form.form_fields)
                 {
-                    worksheet.Cells[1, x].Value = field.Label;
-                    worksheet.Column(x).AutoFit();
-                    x++;
+                    if (field.FieldType == "ADDRESS")
+                    {
+                        worksheet.Cells[1, x].Value = "Blk/Hse No";
+                        worksheet.Column(x).AutoFit();
+                        x++;
+
+                        worksheet.Cells[1, x].Value = "Unit";
+                        worksheet.Column(x).AutoFit();
+                        x++;
+
+                        worksheet.Cells[1, x].Value = "Street Address";
+                        worksheet.Column(x).AutoFit();
+                        x++;
+
+                        worksheet.Cells[1, x].Value = "Postal Code";
+                        worksheet.Column(x).AutoFit();
+                        x++;
+
+                    }
+                    else
+                    {
+                        worksheet.Cells[1, x].Value = field.Label;
+                        worksheet.Column(x).AutoFit();
+                        x++;
+                    }
+
+  
 
                 }
 

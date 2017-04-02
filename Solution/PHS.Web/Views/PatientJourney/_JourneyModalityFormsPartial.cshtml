@@ -13,6 +13,27 @@
         function resizeIframe(obj) {
             obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
         }
+
+        $(document).ready(function ($) {
+            $('.nav-tabs > li > a').on('click', function (event) {
+                //avoid <a> tag to load his href
+                event.preventDefault();
+                //getting the main subjects
+                var id_of_selected = $(this).attr('load-in');
+                var link_to_load = $(this).attr('href');
+                var iframe_to_load = $(document).find('#' + id_of_selected);
+                
+                var selectedFormId = id_of_selected.replace("form-builder-frame-", "");
+
+                //console.log(iframe_to_load);
+                //make the magic
+                if (iframe_to_load.length) {
+                    iframe_to_load.attr('src', "/journeymodality/viewform/" + selectedFormId + "/True?httproute=True"); //this fires the link to destinated iframe
+                    iframe_to_load.parent().addClass('active'); //this make the parent div container of iframe visible
+                }
+
+            });
+        });
 </script>
 
 @using (Html.BeginForm())
@@ -24,10 +45,12 @@
             @{
                 int counter = 1;
 
-                //int modalityId = int.Parse(HttpContext.Current.Request.QueryString["mformid"]);
-                // int modalityId = Model.SelectedModalityId;
+                if (Model.isMegaSortingModalitySelected())
+                {
+                    <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
+                }
 
-                if (Model.SelectedModalityId == 3)
+                else if (Model.isSummarySelected())
                 {
                     <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
                 }
@@ -38,12 +61,12 @@
                     {
                         if (counter == 1)
                         {
-                            <li class="active"><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.form.Title</a></li>
                         }
 
                         else
                         {
-                            <li><a data-toggle="tab" href="#tabs-@counter">@element.FormID</a></li>
+                            <li><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.form.Title</a></li>
                         }
 
 
@@ -58,10 +81,17 @@
 
         <div class="tab-content">
             @{
-                if (Model.SelectedModalityId == 3)
+                if (Model.isMegaSortingModalitySelected())
                 {
                     <div id="tabs-1" class="tab-pane fade in active">
                         @{Html.RenderPartial("_MegaSortingStationPartial", Model.Event.Modalities);}
+                    </div>
+                }
+
+                else if (Model.isSummarySelected())
+                {
+                    <div id="tabs-1" class="tab-pane fade in active">
+                        @{Html.RenderPartial("_SummaryPartial", Model.Event.Modalities);}
                     </div>
                 }
 
@@ -74,7 +104,7 @@
                         if (anothercounter == 1)
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade in active">
-                                <iframe id="form-builder-frame" onload="resizeIframe(this)"
+                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
                                         src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
                                         frameborder="0"
                                         width="100%"
@@ -87,8 +117,8 @@
                         else
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade">
-                                <iframe id="form-builder-frame" onload="resizeIframe(this)"
-                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
+                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
+                                        src=""
                                         frameborder="0"
                                         width="100%"
                                         marginheight="0"

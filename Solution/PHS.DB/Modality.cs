@@ -29,6 +29,8 @@ namespace PHS.DB
         public bool IsVisible { get; set; }
         public Nullable<bool> HasParent { get; set; }
         public string Status { get; set; }
+        public string Eligiblity { get; set; }
+        public Nullable<int> Labels { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModalityForm> ModalityForms { get; set; }

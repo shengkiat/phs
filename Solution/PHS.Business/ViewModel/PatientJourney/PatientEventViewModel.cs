@@ -9,15 +9,35 @@ namespace PHS.Business.ViewModel.PatientJourney
 {
     public class PatientEventViewModel
     {
+
+        public PatientEventViewModel()
+        {
+        }
+
+        public PatientEventViewModel(EventPatient eventPatient)
+        {
+            this.Event = eventPatient.@event;
+            this.FullName = eventPatient.FullName;
+            this.Nric = eventPatient.Nric;
+            this.Language = eventPatient.Language;
+            this.ContactNumber = eventPatient.ContactNumber;
+            this.Gender = eventPatient.Gender;
+
+            int now = int.Parse(eventPatient.@event.StartDT.ToString("yyyy"));
+            int dob = int.Parse(eventPatient.DateOfBirth.Value.ToString("yyyy"));
+            this.Age = (now - dob);
+        }
+
+
         public @event Event { get; set; }
         public string EventId { get { return Event.ID.ToString(); } }
 
         public string Nric { get; set; }
         public string FullName { get; set; }
-        public int Age { get { return 40; } }
-        public string Language { get { return "English"; } }
-        public string ContactNumber { get { return "12345678"; } }
-        public string Gender { get { return "Male"; } }
+        public int Age { get; }
+        public string Language { get; }
+        public string ContactNumber { get; }
+        public string Gender { get; }
 
         //public List<ModalityCircleViewModel> ModalityCircles { get; set; }
 
@@ -34,6 +54,32 @@ namespace PHS.Business.ViewModel.PatientJourney
                 }
             }
             
+            return result;
+        }
+
+        public bool isMegaSortingModalitySelected()
+        {
+            bool result = false;
+            foreach (var modality in Event.Modalities)
+            {
+                if (modality.ID.Equals(SelectedModalityId))
+                {
+                    result = modality.Name.Equals("Mega Sorting Station");
+                }
+            }
+            return result;
+        }
+
+        public bool isSummarySelected()
+        {
+            bool result = false;
+            foreach (var modality in Event.Modalities)
+            {
+                if (modality.ID.Equals(SelectedModalityId))
+                {
+                    result = modality.Name.Equals("Summary");
+                }
+            }
             return result;
         }
     }

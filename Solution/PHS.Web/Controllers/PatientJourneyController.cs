@@ -100,14 +100,18 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    patientEvent.SelectedModalityId = 50;
+                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
                     result = patientEvent;
                 }
             }
 
+            TempData["Nric"] = nric;
+            TempData["EventId"] = eventId;
+
             return View(result);
         }
-
+        
+        /*
         public ActionResult JourneyModalityCircles()
         {
             //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
@@ -137,7 +141,7 @@ namespace PHS.Web.Controllers
 
             return View(modalityList);
         }
-
+        */
 
 
         public PartialViewResult ActivateCirclesFromMSSS(string activateList)
@@ -145,8 +149,13 @@ namespace PHS.Web.Controllers
             
 
             string message = string.Empty;
-            string nric = "S8518538A";
-            string eventId = "100";
+            //string nric = "S8518538A";
+            //string eventId = "100";
+
+            string nric = TempData.Peek("Nric").ToString();
+            string eventId = TempData.Peek("EventId").ToString();
+
+
             PatientEventViewModel result = new PatientEventViewModel();
             using (var getPatientJourney = new PatientJourneyManager())
             {
@@ -182,8 +191,12 @@ namespace PHS.Web.Controllers
             return PartialView("_JourneyModalityCirclesPartial", modalityList);
         }
 
-        public PartialViewResult TestRedirect(string nric, string eventId, string selectedModalityId)
+        public PartialViewResult RefreshModalityForms(string selectedModalityId)
         {
+
+            string nric = TempData.Peek("Nric").ToString();
+            string eventId = TempData.Peek("EventId").ToString();
+
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 

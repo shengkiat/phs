@@ -351,6 +351,12 @@ namespace PHS.Web.Controllers
                 return RedirectToAction("edit", new { id = form.ID });
             }
 
+            // TODO - Set EntryId so as to retrieve back the data
+            //foreach (var field in model.Fields)
+            //{
+            //    field.EntryId = "DD33BCCD-4004-42EF-A878-8E6546B80689";
+            //}
+
             return View(model);
         }
 
@@ -827,7 +833,7 @@ namespace PHS.Web.Controllers
                 throw new HttpException(404, "Some description");
             }
 
-            return View("Preview", model);
+            return View("PreRegistration", model);
         }
 
         public ActionResult Preview(int id)
@@ -851,6 +857,7 @@ namespace PHS.Web.Controllers
             {
                 return RedirectToAction("edit", new { id = form.ID });
             }
+
 
             return View(model);
         }
