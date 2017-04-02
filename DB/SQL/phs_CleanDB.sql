@@ -352,7 +352,7 @@ INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive],
 GO
 
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (2, N'History Taking', 1, N'../../Content/images/Modality/02historytaking.png', 1, 1, 0, N'Pending')
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (2, N'History Taking', 1, N'../../Content/images/Modality/02historytaking.png', 1, 1, 1, N'Pending')
 GO
 
 GO
