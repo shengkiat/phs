@@ -13,7 +13,12 @@
     
     <div class="form-horizontal">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if (TempData["Message"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
+        }
+        <div style="color: red">@ViewBag.error</div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -56,12 +61,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" value="EditUser" class="btn btn-primary" style="width:100px" id="BtnSaveUser">
-                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                    Save
-                </button>
-                @Html.ActionLink("Reset Passowrd", "ResetPassword", "Admin", new { id = Model.Sid } , new { @class = "btn btn-primary btn-large" })
-                @Html.ActionLink("Cancel", "BackToSearchUser", "Admin", null, new { @class = "btn btn-primary btn-large" })
+                <input type="submit" name="BtnEditUser" value="Save" class="button-common" style="border-radius: 17px;"
+                       formaction="EditUser" formmethod="post" />
+                <input type="submit" name="BtnResetPwd" value="Reset Passowrd" class="button-common" style="border-radius: 17px; width: 150px; "
+                       formaction="ResetPassword" formmethod="get" />
+                <input type="submit" name="BtnCancel" value="Cancel" class="cancel button-common" style="border-radius: 17px;"
+                       formaction="ManageUser" formmethod="get" />
             </div>
         </div>
     </div>

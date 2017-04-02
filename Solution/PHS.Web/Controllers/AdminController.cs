@@ -74,7 +74,7 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            SetBackURL("SearchUser");
+            SetBackURL("ManageUser");
 
             string message = string.Empty;
 
@@ -88,13 +88,12 @@ namespace PHS.Web.Controllers
                 if (newUser == null)
                 {
                     SetViewBagError(message);
-                    SetBackURL("SearchUser");
-                    return View();
+                    return View("CreateUser");
                 }
                 else
                 {
-                    SetTempDataMessage(Constants.ValueSuccessfuly("Student has been created"));
-                    return RedirectToAction("SearchUser");
+                    SetTempDataMessage(Constants.ValueSuccessfuly("User has been created"));
+                    return RedirectToAction("ManageUser");
                 }
             }
 
@@ -114,12 +113,13 @@ namespace PHS.Web.Controllers
                 if (user == null)
                 {
                     SetViewBagError(message);
+                    return RedirectToAction("ManageUser");
                 }
                 else
                 {
                     user.Password = string.Empty;
                 }
-                SetBackURL("SearchUser");
+
                 return View(user);
             };
         }
@@ -139,10 +139,11 @@ namespace PHS.Web.Controllers
                 if (personManager.UpdatePerson(person, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("User has been updated"));
-                    return RedirectToAction("SearchUser");
+                    return RedirectToAction("ManageUser");
                 }
+                message = "Update failed!";
                 SetViewBagError(message);
-                SetBackURL("SearchUser");
+
                 return View();
             }
         }
@@ -157,7 +158,7 @@ namespace PHS.Web.Controllers
             return View("SearchUser");
         }
 
-        public ActionResult ResetPassword(int userSid)
+        public ActionResult ResetPassword()
         {
             if (!IsUserAuthenticated())
             {
@@ -166,8 +167,8 @@ namespace PHS.Web.Controllers
 
             //TODO implement reset password
 
-            string message = string.Empty;
-            return View("Success");
+            SetTempDataMessage(Constants.ValueSuccessfuly("Password has been updated"));
+            return View("EditUser");
         }
 
         public ActionResult ManageUser()
