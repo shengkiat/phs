@@ -340,7 +340,22 @@ GO
 GO
 SET IDENTITY_INSERT [phs].[dbo].[EventPatient] OFF
 
+
 ---  Modality Sample  --
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[Modality] ON 
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (1, N'Registration', 0, N'../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending')
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
+
+
+
+--- Event Modality Sample  --
 
 GO
 SET IDENTITY_INSERT [phs].[dbo].[EventModality] ON 
@@ -355,19 +370,6 @@ GO
 
 GO
 SET IDENTITY_INSERT [phs].[dbo].[EventModality] OFF
-
-
---- Event Modality Sample  --
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[Modality] ON 
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (1, N'Registration', 0, N'../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending')
-GO
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
 
 ---  Forms Sample  --
 
