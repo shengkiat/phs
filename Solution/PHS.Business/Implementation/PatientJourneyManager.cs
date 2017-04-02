@@ -85,7 +85,8 @@ namespace PHS.Business.Implementation
                 {
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
-                        var eventpatients = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == int.Parse(eventId));
+                        int intEventId = int.Parse(eventId);
+                        var eventpatients = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == intEventId);
                         //Nric = getMockData(nric);
 
                         if (eventpatients != null && eventpatients.Any())
@@ -106,7 +107,7 @@ namespace PHS.Business.Implementation
                 catch (Exception ex)
                 {
                     ExceptionLog(ex);
-                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEventsByNric");
+                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEvent");
                     return null;
                 }
             }
