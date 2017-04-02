@@ -10,6 +10,12 @@
             box-sizing: border-box;
         }
 
+        .header, .footer {
+            background: #ACD8E0;
+            color: black;
+            box-shadow: 2px 2px 2px gray;
+        }
+
         .column {
             float: left;
         }
@@ -100,9 +106,9 @@
 
 </head>
 <body class="@Html.GetContextCssClass()" style="padding-top: 0px">
-    <header class="container-fluid" style="height: 136px;background: #ACD8E0;color:black;">
-        <img src="~/Content/images/logo.png" alt="logo" style="width:350px;height:134px;padding-left: 100px;padding-top: 1px" />
-    </header>
+    <div class="header" style="height: 136px;">
+        <img src="~/Content/images/logo.png" alt="logo" style="width:350px;height:134px;padding-left: 100px;padding-top: 1px;box-shadow: 2px 0px 2px gray;" />
+    </div>
     @*<div class="navbar-default" style="background: #aaa;color:black;">
             <div class="container">
                 <div class="navbar-header">
@@ -169,9 +175,9 @@
         </div>
     </div>
 
-    <footer class="panel-footer" style="text-align:center;background: #ACD8E0;color:black;">
+    <div class="footer" style="text-align: center;">
         <p>&copy; @DateTime.Now.Year - Public Health Service</p>
-    </footer>
+    </div>
 
     @RenderSection("footerScripts", false)
     <script type="text/javascript">
