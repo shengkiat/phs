@@ -351,6 +351,10 @@ INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive],
 GO
 
 GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (2, N'History Taking', 1, N'../../Content/images/Modality/02historytaking.png', 1, 1, 0, N'Pending')
+GO
+
+GO
 SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
 
 
@@ -366,6 +370,14 @@ GO
 
 GO
 INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 1)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 2)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 2)
 GO
 
 GO
@@ -631,3 +643,23 @@ INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdde
 GO
 SET IDENTITY_INSERT [dbo].[form_field_values] OFF
 GO
+
+--- Modality forms Sample  --
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[ModalityForm] ON 
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (1, 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (2, 3)
+GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (2, 6)
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[ModalityForm
