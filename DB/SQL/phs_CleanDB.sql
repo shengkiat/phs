@@ -92,8 +92,8 @@ CREATE TABLE [dbo].[Modality](
 	[IsVisible] [bit] NOT NULL,
 	[HasParent] [bit] NULL,
 	[Status] [nvarchar](max) NULL,
-	[Eligibility] [nvarchar](max) NULL,
-	[Label] [int] NULL
+	[Eligiblity] [nvarchar](max) NULL,
+	[Labels] [int] NULL
  CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -339,6 +339,35 @@ GO
 
 GO
 SET IDENTITY_INSERT [phs].[dbo].[EventPatient] OFF
+
+---  Modality Sample  --
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[EventModality] ON 
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 1)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 1)
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[EventModality] OFF
+
+
+--- Event Modality Sample  --
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[Modality] ON 
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (1, N'Registration', 0, N'../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending')
+GO
+
+GO
+SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
 
 ---  Forms Sample  --
 
