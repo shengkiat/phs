@@ -28,8 +28,40 @@ namespace PHS.Business.Implementation
             if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
             {
                 string nric = icFirstDigit + icNumber + icLastDigit;
-               
-                result = getMockData(nric);
+
+                try
+                {
+                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    {
+                        var eventpatients = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
+                        //Nric = getMockData(nric);
+
+                        if (eventpatients != null && eventpatients.Any())
+                        {
+                            message = string.Empty;
+                            result = new List<PatientEventViewModel>();
+                            foreach (EventPatient eventPatient in eventpatients.ToList())
+                            {
+                                result.Add(new PatientEventViewModel(eventPatient));
+                            }
+
+                            return result;
+                        }
+                        else
+                        {
+                            message = "Event Patient not found!";
+                            return result;
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEventsByNric");
+                    return null;
+                }
+
             }
 
 

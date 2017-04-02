@@ -9,6 +9,19 @@ namespace PHS.Business.ViewModel.PatientJourney
 {
     public class PatientEventViewModel
     {
+
+        public PatientEventViewModel()
+        {
+        }
+
+        public PatientEventViewModel(EventPatient eventPatient)
+        {
+            this.Event = eventPatient.@event;
+            this.FullName = eventPatient.FullName;
+            this.Nric = eventPatient.Nric;
+        }
+
+
         public @event Event { get; set; }
         public string EventId { get { return Event.ID.ToString(); } }
 
