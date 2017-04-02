@@ -395,7 +395,7 @@
             onblur: 'ignore',
             cssclass: 'ignore',
             submit: 'OK',
-            cancel: 'Cancel',
+          //  cancel: 'Cancel',
             wysiwyg: {
                 controls: {
                     insertOrderedList: { visible: true },
