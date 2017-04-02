@@ -82,7 +82,6 @@ namespace PHS.Web.Controllers
             {
                 //TODO remove hardcode
                 person.Password = "12345";
-                person.Role = Constants.User_Role_Student_Code;
 
                 var newUser = personManager.AddPerson(person, out message);
                 if (newUser == null)
