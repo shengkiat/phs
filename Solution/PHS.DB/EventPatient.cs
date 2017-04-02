@@ -21,6 +21,7 @@ namespace PHS.DB
         public string ContactNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Language { get; set; }
+        public string Gender { get; set; }
     
         public virtual @event @event { get; set; }
     }

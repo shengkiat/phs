@@ -108,7 +108,8 @@ CREATE TABLE [dbo].[EventPatient](
 	[FullName] [nvarchar](max) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
-	[Language] [nvarchar](max) NOT NULL
+	[Language] [nvarchar](max) NOT NULL,
+	[Gender] [nvarchar](max) NOT NULL
  CONSTRAINT [PK_event_patient] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -326,15 +327,15 @@ GO
 SET IDENTITY_INSERT [phs].[dbo].[EventPatient] ON 
 
 GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1985-04-13 10:00:00.527' AS DateTime), N'English')
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
 GO
 
 GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1985-04-13 10:00:00.527' AS DateTime), N'English')
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
 GO
 
 GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', 69639756, CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English')
+INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', 69639756, CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 GO
 
 GO

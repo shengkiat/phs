@@ -37,6 +37,7 @@
           <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="form">
           <Key>
@@ -532,6 +533,7 @@
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
           <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="event" Relationship="phsModel.FK_EventPatient_Event" FromRole="EventPatient" ToRole="event" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_EventPatient_Event">
           <End Type="phsModel.event" Role="event" Multiplicity="1" />
@@ -700,6 +702,7 @@
           <EntitySetMapping Name="EventPatients">
             <EntityTypeMapping TypeName="phsModel.EventPatient">
               <MappingFragment StoreEntitySet="EventPatient">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Language" ColumnName="Language" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
