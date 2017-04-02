@@ -278,7 +278,6 @@
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
     <Content Include="Content\images\lightbulb.png" />
-    <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\Modality\01registration.png" />
     <Content Include="Content\images\Modality\02historytaking.png" />
     <Content Include="Content\images\Modality\03megasorting.png" />
