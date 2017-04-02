@@ -3,31 +3,20 @@
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
 
-<label style="width: 70%; word-wrap: break-word; text-align: left;"
+
+<label style="width: 90%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
        class="label editable">@Model.Label</label>
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
-        <ul class="horizontal-list three-field-row">
-            <li>
-                <select name="SubmitFields[@Model.DomId].FirstDigit">
-                    <option>S</option>
-                </select>
-            </li>
-            <li>
-                <input id="SubmitFields[@Model.DomId].Nricpicker"
-                       name="SubmitFields[@Model.DomId].Nricpicker"
-                       value="@Html.GetTempFormValue(Model, "Nricpicker")" 
-                       type="text" 
-                       style="width: 100px; height:20px;" 
-                       onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="7" />
-            </li>
-            <li>
-                @Html.DropDownList("SubmitFields[" + @Model.DomId+ "].LastDigit", ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })<br />
-            </li>
-        </ul>
+        <input id="SubmitFields[@Model.DomId].Nricpicker"
+               name="SubmitFields[@Model.DomId].Nricpicker"
+               value="@Html.GetTempFormValue(Model, "Nricpicker")"
+               type="text"
+               style="width: 100px; height:20px;" maxlength="9"/>
+              
         @if (Model.IsEditMode())
         {
             @Html.Partial("_form-field-properties-partial", Model)

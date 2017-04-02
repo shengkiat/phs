@@ -151,10 +151,10 @@ namespace PHS.FormBuilder.Extensions
             {
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                    string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
-                    string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+                   // string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
+                   // string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
-                    return NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit);
+                    return NricChecker.IsNRICValid(icNumber);
 
                 case Constants.FieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
@@ -433,10 +433,10 @@ namespace PHS.FormBuilder.Extensions
 
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                    string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
-                    string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+                    //string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
+                  //  string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
-                    value = icFirstDigit + icNumber + icLastDigit;
+                    value = icNumber;
                     break;
 
                 case Constants.FieldType.EMAIL:
@@ -586,6 +586,11 @@ namespace PHS.FormBuilder.Extensions
                     field.Errors = field.Errors.ConcatWith(".");
                 }
             }
+            else if (field.FieldType == Constants.FieldType.NRICPICKER)
+            {
+                field.Errors = "Invalid NRIC";
+            }
+
         }
 
         // for generic interface IEnumerable<T>
