@@ -5,8 +5,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .menu {
+            width: 20%;
+            padding-top: 35px;
+        }
+
+        .content {
+            width: 80%;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding-left: 20%;
+        }
+
+        .menu li {
+            padding: 8px;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-size: 1.4em;
+        }
+    </style>
+
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.s0">
     <title>@ViewBag.Title PHS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -31,11 +69,11 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.numeric.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/form-builder/fbuilder.utils.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/form-builder/fbuilder.global.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>   
+    <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>
 
     <!--Css
     <link type="text/css" href="/Content/css/reset.css" rel="stylesheet" />-->
-    <link type="text/css" href="@Url.Content("~/Content/css/blueprint/screen.css")" rel="stylesheet" />
+    @*<link type="text/css" href="@Url.Content("~/Content/css/blueprint/screen.css")" rel="stylesheet" />*@
     <link type="text/css" href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/themes/base/jquery.ui.selectable.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/themes/base/jquery.ui.autocomplete.css")" rel="stylesheet" />
@@ -53,89 +91,90 @@
     <link type="text/css" href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
 
     @RenderSection("FormCSS", required: false)
-
-
+    
 
 </head>
-<body class="@Html.GetContextCssClass()"   >
-    <div class="navbar navbar-inverse navbar-fixed-top ">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
+<body class="@Html.GetContextCssClass()" style="padding-top: 0px">
+    <header class="container-fluid" style="height: 136px;background: #ACD8E0;color:black;">
+        <img src="~/Content/images/logo.png" alt="logo" style="width:350px;height:134px;padding-left: 100px;padding-top: 1px"/>
+    </header>
+    @*<div class="navbar-default" style="background: #aaa;color:black;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                    </ul>
+                    @{
+
+                        string url = Request.Path;
+                        if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginAdminPartial")
+                        }
+                        else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginInstructorPartial")
+                        }
+                        else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginStudentPartial")
+                        }
+
+
+                    }
+
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                  
-                </ul>
-                @{
+        </div>*@
 
-                    string url = Request.Path;
-                    if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        @Html.Partial("_LoginAdminPartial")
-                    }
-                    else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        @Html.Partial("_LoginInstructorPartial")
-                    }
-                    else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        @Html.Partial("_LoginStudentPartial")
-                    }
-
-
-                }
-
-            </div>
-        </div>
-    </div>
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">@Html.ActionLink("User Management", "SearchUser", "Admin", null, null)</li>
-            <li class="sidebar-brand">@Html.ActionLink("Event Management", "Index", "Event", null, null)</li>
-            <li><a href="#">Form Management</a> </li>
-            <li class="sidebar-brand">@Html.ActionLink("Fake Volunteer Login landing page", "SearchPatient", "PatientJourney", null, null)</li>
-        </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-    <div id="page-body" class="container body-content panel-body glyphicon-align-center" style="min-height:800px;">
-        
-        
-        @RenderBody()
-        <hr />
-
-    </div>
- 
-    @if (!String.IsNullOrEmpty(ViewBag.BackURL))
-    {
-        <div class="container">
-            <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+    <div class="clearfix">
+        <div class="column menu">
+            <ul>
+                <li>@Html.ActionLink("User Management", "SearchUser", "Admin", null, null)</li>
+                <li>@Html.ActionLink("Event Management", "Index", "Event", null, null)</li>
+                <li><a href="#">Form Management</a> </li>
+                <li>@Html.ActionLink("Fake Volunteer Login landing page", "SearchPatient", "PatientJourney", null, null)</li>
+            </ul>
         </div>
-    }
-    <br />
-    
-    <footer class="panel-footer" style="text-align:center">
-        <p>&copy; @DateTime.Now.Year - PT4 Active Learning Application</p>
+        <div class="column content">
+            <!-- /#sidebar-wrapper -->
+            <div id="page-body" class="container body-content panel-body" style="min-height:800px;">
+
+                @RenderBody()
+                <hr />
+
+            </div>
+
+            @if (!String.IsNullOrEmpty(ViewBag.BackURL))
+            {
+                <div class="container">
+                    <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+                </div>
+            }
+            <br />
+        </div>
+    </div>
+
+    <footer class="panel-footer" style="text-align:center;background: #ACD8E0;color:black;">
+        <p>&copy; @DateTime.Now.Year - Public Health Service</p>
     </footer>
-
-
 
     @RenderSection("footerScripts", false)
     <script type="text/javascript">
-            $(document).ready(function () {
-                global.init();
-                @RenderSection("initializers", false)
-            });
-
-
+        $(document).ready(function () {
+            global.init();
+            @RenderSection("initializers", false)
+        });
     </script>
-
 
 </body>
 </html>
