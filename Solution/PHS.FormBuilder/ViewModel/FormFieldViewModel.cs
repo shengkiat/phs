@@ -46,7 +46,7 @@ namespace PHS.FormBuilder.ViewModels
         public string ImageBase64 { get; set; }
         public string MatrixRow { get; set; }
         public string MatrixColumn { get; set; }
-
+        public string EntryId { get; set; }
         #endregion
 
         #region Public Members
