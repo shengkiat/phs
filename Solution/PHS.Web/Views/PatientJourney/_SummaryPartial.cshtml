@@ -1,4 +1,4 @@
-﻿@model List<PHS.DB.Modality>
+﻿
 @using PHS.DB
 @using PHS.Business.ViewModel.PatientJourney
 @using PHS.FormBuilder.Helpers
@@ -12,6 +12,82 @@
 
 @using (Html.BeginForm())
 {
-    
+    <div>
+        <br />
+        <ul class="vertical-list">
+
+
+            <li>
+                <input value="" type="text" class="title" readonly /><br />
+                <span class="sub-label">Weight (kg)</span>
+            </li>
+
+            <li>
+                <input value="" type="text" class="title" readonly /><br />
+                <span class="sub-label">Height (cm)</span>
+            </li>
+
+            <li>
+                <br />
+                <label>BMI: </label>
+            </li>
+
+            <li>
+                <br />
+                <label style="color: green">Low Risk</label>
+            </li>
+
+            <li>
+                <hr />
+                <label>1st Systolic Reading</label>
+
+                <input type="text" value="" 
+                        readonly
+                        style="width: 95%;" />
+            </li>
+
+            <li>
+                <br />
+                <label>2nd Systolic Reading</label>
+
+                <input type="text" value=""
+                       readonly
+                       style="width: 95%;" />
+            </li>
+
+            <li>
+                <br />
+                <label>3rd Systolic Reading</label>
+
+                <input type="text" value=""
+                       readonly
+                       style="width: 95%;" />
+            </li>
+
+            <li>
+                <br />
+                <label>Average Systolic Reading (of all readings)</label>
+
+                <input type="text" value=""
+                       readonly
+                       style="width: 95%;" />
+            </li>
+
+            <li>
+                <hr />
+                <label>Doctor’s Consult Status:</label>
+
+                <label>Completed</label>
+            </li>
+
+            <li>
+                <hr />
+                <label>Exhibition Ambassadors</label>
+                <br />
+                <label>Recommended for:</label>
+            </li>
+
+        </ul>
+    </div>
 }
 
