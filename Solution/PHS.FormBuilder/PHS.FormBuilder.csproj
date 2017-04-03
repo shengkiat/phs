@@ -90,16 +90,6 @@
     <Compile Include="Helpers\UtilityHelper.cs" />
     <Compile Include="Models\FileValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AddressViewModel.cs" />
-    <Compile Include="ViewModel\BMIViewModel.cs" />
-    <Compile Include="ViewModel\CriteriaSubFieldViewModel.cs" />
-    <Compile Include="ViewModel\CriteriaFieldViewModel.cs" />
-    <Compile Include="ViewModel\SortFieldViewModel.cs" />
-    <Compile Include="ViewModel\FormCollectionViewModel.cs" />
-    <Compile Include="ViewModel\FormFieldValueViewModel.cs" />
-    <Compile Include="ViewModel\FormFieldViewModel.cs" />
-    <Compile Include="ViewModel\FormViewModel.cs" />
-    <Compile Include="ViewModel\NotificationEmailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -114,6 +104,9 @@
       <Project>{9f19487d-f572-41c3-910c-aedb45b511d1}</Project>
       <Name>PHS.DB</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

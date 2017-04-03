@@ -6,7 +6,7 @@ using System.Web;
 using System.Collections;
 using PHS.Common;
 using PHS.DB;
-using PHS.FormBuilder.Extensions;
+
 
 namespace PHS.FormBuilder.ViewModels
 {
@@ -70,7 +70,7 @@ namespace PHS.FormBuilder.ViewModels
                 {
                     DomId = field.DomId.Value,
                     Id = field.ID,
-                    Label = field.Label.IsNullOrEmpty() ? "Click to edit" : field.Label,
+                    Label = field.Label.Equals("") ? "Click to edit" : field.Label,
                     Text = field.Text,
                     FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), field.FieldType),
                     IsRequired = field.IsRequired.Value,

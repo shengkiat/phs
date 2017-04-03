@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using PHS.Common;
 using PHS.DB;
-using PHS.FormBuilder.Extensions;
+
 
 namespace PHS.FormBuilder.ViewModels
 {
@@ -24,7 +24,7 @@ namespace PHS.FormBuilder.ViewModels
         public IList<FormFieldValueViewModel> Entries { get; set; }
         public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
         public string Theme { get; set; }
-        public bool Embed { get; set; }   
+        public bool Embed { get; set; }
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
@@ -33,11 +33,13 @@ namespace PHS.FormBuilder.ViewModels
 
         public bool HasTheme
         {
-            get { 
-                return !Theme.IsNullOrEmpty(); 
-            }            
+            get
+            {
+                return false;
+                //return !Theme.IsNullOrEmpty(); 
+            }
         }
-        
+
 
         #endregion
 
@@ -68,7 +70,6 @@ namespace PHS.FormBuilder.ViewModels
             return CreateFromObject(form1, Constants.FormFieldMode.EDIT);
         }
 
-
         public static FormViewModel CreateFromObject(form form1, Constants.FormFieldMode mode)
         {
             if (form1 != null)
@@ -97,11 +98,11 @@ namespace PHS.FormBuilder.ViewModels
             {
                 Title = form1.Title,
                 Id = form1.ID,
-                DateAdded = form1.DateAdded.Value,                
+                DateAdded = form1.DateAdded.Value,
                 ConfirmationMessage = form1.ConfirmationMessage,
                 Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
                 Slug = form1.Slug,
-                Theme= form1.Theme,
+                Theme = form1.Theme,
                 NotificationEmail = form1.NotificationEmail,
                 IsPublic = form1.IsPublic,
                 IsQuestion = form1.IsQuestion,
@@ -126,7 +127,7 @@ namespace PHS.FormBuilder.ViewModels
                 Slug = "test-form",
                 IsPublic = false,
                 IsQuestion = false,
-                NotificationEmail= "",
+                NotificationEmail = "",
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
@@ -135,9 +136,18 @@ namespace PHS.FormBuilder.ViewModels
         }
 
         #endregion
+    }
 
-        #region Private Members
-        #endregion
+    static class UtilityExtensions
+    {
+        public static void Each<T>(this IEnumerable<T> ie, Action<T, int> action)
+        {
+            var i = 0;
 
+            foreach (var e in ie)
+            {
+                action(e, i++);
+            }
+        }
     }
 }
