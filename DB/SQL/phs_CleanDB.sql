@@ -356,6 +356,42 @@ INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive],
 GO
 
 GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (3 N'Mega Sorting Station', 2, N'../../Content/images/Modality/03megasorting.png', 1, 1, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (4, N'Phlebotomy', 3, N'../../Content/images/Modality/04phlebo.png', 0, 0, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (5, N'FIT', 4, N'../../Content/images/Modality/05fit.png', 0, 0, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (6, N'Woman Cancer', 5, N'../../Content/images/Modality/06woman.png', 0, 0, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (7, N'Geriatric Screening', 6, N'../../Content/images/Modality/07geri.png', 0, 0, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (8, N'Oral', 7, N'../../Content/images/Modality/08oral.png', 0, 0, 1, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (9, N'Doctor Consult', 8, N'../../Content/images/Modality/09doctor.png', 0, 0, 0, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (10, N'Exhibition', 9, N'../../Content/images/Modality/10exhibition.png', 1, 0, 0, N'Pending')
+GO
+
+GO
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (11, N'Summary', 10, N'../../Content/images/Modality/11summary.png', 1, 1, 0, N'Pending')
+GO
+
+GO
 SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
 
 
@@ -380,6 +416,79 @@ GO
 GO
 INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 2)
 GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 3)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 3)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 4)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 4)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 5)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 5)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 6)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 6)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 7)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 7)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 8)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 8)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 9)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 9)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 10)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 10)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 11)
+GO
+
+GO
+INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 11)
+GO
+
 
 GO
 SET IDENTITY_INSERT [phs].[dbo].[EventModality] OFF
@@ -660,6 +769,10 @@ GO
 
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (2, 6)
+GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
 GO
 
 GO
