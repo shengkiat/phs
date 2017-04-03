@@ -171,10 +171,8 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            List<Modality> modalityList = new List<Modality>();
-            modalityList = (List<Modality>)result.Event.Modalities;
+            ICollection<Modality> modalityList = result.Event.Modalities;
             
-
             string[] activateArray = activateList.Split('|');
             for (int i = 0; i < modalityList.Count; i++)
             {

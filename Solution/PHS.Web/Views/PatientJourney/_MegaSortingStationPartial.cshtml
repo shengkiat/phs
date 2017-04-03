@@ -112,8 +112,8 @@
                         <img src="@Model.ElementAt(i).IconPath" height="40" width="40" />
                     </td>
                     <td>Eligibility</td>
-                    <td>@Html.CheckBoxFor(m => m[i].IsActive, new { @class = "cbk", modIsActive = Model[i].Name })</td>
-                    <td>@Html.TextBoxFor(m => m[i].Position, new { @class = "labelNo", @type = "number" })</td>
+                    <td>@Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name })</td>
+                    <td>@Html.TextBoxFor(m => m.ElementAt(i).Position, new { @class = "labelNo", @type = "number" })</td>
                 </tr>
 
             }
