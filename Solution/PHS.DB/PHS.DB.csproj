@@ -121,16 +121,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\event.cs" />
     <Compile Include="ViewModels\eventIndexdata.cs" />
-    <Compile Include="ViewModels\Form\AddressViewModel.cs" />
-    <Compile Include="ViewModels\Form\BMIViewModel.cs" />
-    <Compile Include="ViewModels\Form\CriteriaFieldViewModel.cs" />
-    <Compile Include="ViewModels\Form\CriteriaSubFieldViewModel.cs" />
-    <Compile Include="ViewModels\Form\FormCollectionViewModel.cs" />
-    <Compile Include="ViewModels\Form\FormFieldValueViewModel.cs" />
-    <Compile Include="ViewModels\Form\FormFieldViewModel.cs" />
-    <Compile Include="ViewModels\Form\FormViewModel.cs" />
-    <Compile Include="ViewModels\Form\NotificationEmailViewModel.cs" />
-    <Compile Include="ViewModels\Form\SortFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\AddressViewModel.cs" />
+    <Compile Include="ViewModels\Forms\BMIViewModel.cs" />
+    <Compile Include="ViewModels\Forms\CriteriaFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\CriteriaSubFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormCollectionViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormFieldValueViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormViewModel.cs" />
+    <Compile Include="ViewModels\Forms\NotificationEmailViewModel.cs" />
+    <Compile Include="ViewModels\Forms\SortFieldViewModel.cs" />
     <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>

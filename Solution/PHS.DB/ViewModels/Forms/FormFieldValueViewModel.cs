@@ -5,7 +5,7 @@ using System.Web;
 using PHS.DB;
 using PHS.Common;
 
-namespace PHS.FormBuilder.ViewModels
+namespace PHS.DB.ViewModels.Forms
 {
     public class FormFieldValueViewModel
     {

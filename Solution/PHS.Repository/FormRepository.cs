@@ -8,7 +8,7 @@ using PHS.Repository.Repository.Core;
 using PHS.Repository.Context;
 using System.Data.Entity.Core.Objects;
 using PHS.DB;
-using PHS.FormBuilder.ViewModels;
+using PHS.DB.ViewModels.Forms;
 using PHS.FormBuilder.Extensions;
 using PHS.Common;
 using PHS.FormBuilder.Helpers;

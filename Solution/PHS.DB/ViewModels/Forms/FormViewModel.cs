@@ -6,7 +6,7 @@ using PHS.Common;
 using PHS.DB;
 
 
-namespace PHS.FormBuilder.ViewModels
+namespace PHS.DB.ViewModels.Forms
 {
     public class FormViewModel
     {

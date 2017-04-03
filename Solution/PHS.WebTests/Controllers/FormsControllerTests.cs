@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PHS.FormBuilder.ViewModels;
+using PHS.DB.ViewModels.Forms;
 using System.Collections.Generic;
 
 namespace PHS.Web.Controllers.Tests

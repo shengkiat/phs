@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using PHS.Business.ViewModel.PatientJourney;
 using PHS.Business.Implementation;
 using PHS.DB;
-using PHS.FormBuilder.ViewModels;
+using PHS.DB.ViewModels.Forms;
 using PHS.Repository.Repository;
 using PHS.Common;
 using PHS.FormBuilder.Extensions;
