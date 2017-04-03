@@ -31,7 +31,6 @@ namespace PHS.DB
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<@event> events { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<ModalityForm> ModalityForms { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
         public virtual DbSet<EventPatient> EventPatients { get; set; }
     }

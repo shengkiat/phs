@@ -13,13 +13,11 @@
         <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="phsModel.event" Width="1.5" PointX="7.75" PointY="1.25" />
         <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="phsModel.ModalityForm" Width="1.5" PointX="8.5" PointY="5.25" />
-        <AssociationConnector Association="phsModel.FK_ModalityForm_form" />
         <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="10" PointY="1.125" />
-        <AssociationConnector Association="phsModel.FK_ModalityForm_Modality" />
         <AssociationConnector Association="phsModel.EventModality" />
         <EntityTypeShape EntityType="phsModel.EventPatient" Width="1.5" PointX="10" PointY="8.5" />
         <AssociationConnector Association="phsModel.FK_EventPatient_Event" />
+        <AssociationConnector Association="phsModel.ModalityForm" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -72,9 +72,6 @@
     <Compile Include="Modality.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModalityForm.cs">
-      <DependentUpon>PHSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

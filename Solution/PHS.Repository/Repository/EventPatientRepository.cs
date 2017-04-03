@@ -22,7 +22,7 @@ namespace PHS.Repository.Repository
 
         public EventPatient FindEventPatient(Expression<Func<EventPatient, bool>> predicate)
         {
-            return Context.Set<EventPatient>().Where(predicate).Include(x => x.@event.Modalities.Select(y => y.ModalityForms.Select(z => z.form))).FirstOrDefault();
+            return Context.Set<EventPatient>().Where(predicate).Include(x => x.@event.Modalities.Select(y => y.forms)).FirstOrDefault();
         }
     }
 }

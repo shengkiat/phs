@@ -17,8 +17,8 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Modality()
         {
-            this.ModalityForms = new HashSet<ModalityForm>();
             this.events = new HashSet<@event>();
+            this.forms = new HashSet<form>();
         }
     
         public int ID { get; set; }
@@ -33,8 +33,8 @@ namespace PHS.DB
         public Nullable<int> Labels { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ModalityForm> ModalityForms { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<@event> events { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<form> forms { get; set; }
     }
 }

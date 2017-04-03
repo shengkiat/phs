@@ -183,13 +183,13 @@ namespace PHS.Business.Implementation
             modalityOne.IconPath = "../../Content/images/Modality/01registration.png";
             modalityOne.HasParent = false;
             modalityOne.Status = "Pending";
-            modalityOne.ModalityForms = new List<ModalityForm>();
+            //modalityOne.ModalityForms = new List<ModalityForm>();
 
             //Registration form
-            ModalityForm modalityFormOne = new ModalityForm();
-            modalityFormOne.ModalityID = 50;
-            modalityFormOne.FormID = 1;
-            modalityOne.ModalityForms.Add(modalityFormOne);
+            //ModalityForm modalityFormOne = new ModalityForm();
+           // modalityFormOne.ModalityID = 50;
+           // modalityFormOne.FormID = 1;
+          //  modalityOne.ModalityForms.Add(modalityFormOne);
 
             Modality modalityTwo = new Modality();
             modalityTwo.ID = 2;
@@ -200,13 +200,13 @@ namespace PHS.Business.Implementation
             modalityTwo.IconPath = "../../Content/images/Modality/02historytaking.png";
             modalityTwo.HasParent = true;
             modalityTwo.Status = "Pending";
-            modalityTwo.ModalityForms = new List<ModalityForm>();
+         //   modalityTwo.ModalityForms = new List<ModalityForm>();
 
             //BMI form
-            ModalityForm modalityFormTwo = new ModalityForm();
-            modalityFormTwo.ModalityID = 2;
-            modalityFormTwo.FormID = 3;
-            modalityTwo.ModalityForms.Add(modalityFormTwo);
+       //     ModalityForm modalityFormTwo = new ModalityForm();
+        //    modalityFormTwo.ModalityID = 2;
+         //   modalityFormTwo.FormID = 3;
+         //   modalityTwo.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityThree = new Modality();
             modalityThree.ID = 3;

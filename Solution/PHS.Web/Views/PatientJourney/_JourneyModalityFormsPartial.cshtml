@@ -61,12 +61,12 @@
                     {
                         if (counter == 1)
                         {
-                            <li class="active"><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.form.Title</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.ID">@element.Title</a></li>
                         }
 
                         else
                         {
-                            <li><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.form.Title</a></li>
+                            <li><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.ID">@element.Title</a></li>
                         }
 
 
@@ -104,8 +104,8 @@
                         if (anothercounter == 1)
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade in active">
-                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
-                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.FormID })"
+                                <iframe id="form-builder-frame-@element.ID" onload="resizeIframe(this)"
+                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.ID })"
                                         frameborder="0"
                                         width="100%"
                                         marginheight="0"
@@ -117,7 +117,7 @@
                         else
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade">
-                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
+                                <iframe id="form-builder-frame-@element.ID" onload="resizeIframe(this)"
                                         src=""
                                         frameborder="0"
                                         width="100%"
