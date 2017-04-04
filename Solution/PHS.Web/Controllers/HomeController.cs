@@ -47,14 +47,11 @@ namespace PHS.Web.Controllers
                         case Constants.User_Role_Admin_Code:
                             result = Redirect("~/Admin/ManageUser");
                             break;
-                        case Constants.User_Role_Instructor_Code:
-                            result = Redirect("~/Instructor");
-                            break;
-                        case Constants.User_Role_Student_Code:
-                            result = Redirect("~/Student");
+                        case Constants.User_Role_Doctor_Code:
+                            result = Redirect("~/PatientJourney/SearchPatient");
                             break;
                         case Constants.User_Role_Volunteer_Code:
-                            result = Redirect("~/PatientJourney");
+                            result = Redirect("~/PatientJourney/SearchPatient");
                             break;
                     }
                 }

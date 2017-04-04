@@ -119,11 +119,8 @@ namespace PHS.Web.Controllers
             }
             switch (GetLoginUserRole())
             {
-                case Common.Constants.User_Role_Student_Code:
-                    return Redirect("~/student");
-                   
-                case Common.Constants.User_Role_Instructor_Code:
-                    return Redirect("~/instructor");
+                case Common.Constants.User_Role_Doctor_Code:
+                    return Redirect("~/doctor");
                     
                 case Common.Constants.User_Role_Admin_Code:
                     return Redirect("~/admin");
