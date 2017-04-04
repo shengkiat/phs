@@ -109,7 +109,18 @@
 
 
         $(".round-button").click(function () {
-            $(".round-button-selected").attr('class', 'round-button');
+
+            var previousSelectedModalityId = $(".round-button-selected").attr('id');
+
+            var previousSelectedModalityStatus = document.getElementById("[status]-" + previousSelectedModalityId).value;
+
+            if (previousSelectedModalityStatus == 'Pending') {
+                $(".round-button-selected").attr('class', 'round-button');
+            }
+
+            else {
+                $(".round-button-selected").attr('class', 'round-button-completed');
+            }
 
             var selectedModalityId = $(this).attr('id');
 
@@ -175,6 +186,19 @@
                         <br />
                         @element.Name
                     </button>
+
+                    <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
+                }
+
+                else if (element.GetStatus().Equals("Completed"))
+                {
+                    <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
+                        <img src="@element.IconPath" height="35" width="35" />
+                        <br />
+                        @element.Name
+                    </button>
+
+                    <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
                 }
 
                 else
@@ -184,8 +208,10 @@
                         <br />
                         @element.Name
                     </button>
+
+                    <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
                 }
-            }
+        }
 
             else
             {

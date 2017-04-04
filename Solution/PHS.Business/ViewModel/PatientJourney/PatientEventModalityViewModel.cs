@@ -22,9 +22,17 @@ namespace PHS.Business.ViewModel.PatientJourney
             this.IsActive = modality.IsActive;
             this.IsVisible = modality.IsVisible;
             this.HasParent = modality.HasParent;
-            this.Status = modality.Status;
             this.Eligiblity = modality.Eligiblity;
             this.Labels = modality.Labels;
+
+            this.modalityForms = new List<int>();
+
+            foreach(var form in modality.forms)
+            {
+                this.modalityForms.Add(form.ID);
+            }
+
+            this.modalityCompletedForms = new List<int>();
         }
 
         public string EventId { get; }
@@ -37,10 +45,28 @@ namespace PHS.Business.ViewModel.PatientJourney
         public bool IsActive { get; set; }
         public bool IsVisible { get; set; }
         public Nullable<bool> HasParent { get; }
-        public string Status { get; set; }
         public string Eligiblity { get; set; }
         public Nullable<int> Labels { get; set; }
 
+        public List<int> modalityForms { get; set; }
+        public List<int> modalityCompletedForms { get; set; }
 
+        public string GetStatus()
+        {
+            if (modalityForms.Count == modalityCompletedForms.Count)
+            {
+                return "Completed";
+            }
+
+            else
+            {
+                return "Pending";
+            }
+        }
+
+        public bool isModalityFormsContain(int formId)
+        {
+            return modalityForms.Contains(formId);
+        }
     }
 }

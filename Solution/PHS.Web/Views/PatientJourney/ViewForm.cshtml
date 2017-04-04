@@ -52,16 +52,6 @@
 
                 var select = "";
 
-                $("input[type = 'checkbox']").each(function () {
-                    var c = $(this).is(":checked");
-                    if (c) {
-                        select = select + "1|";
-
-                    } else {
-                        select = select + "0|";
-                    }
-                })
-
                 $.ajax(
                     {
                         type: "GET",

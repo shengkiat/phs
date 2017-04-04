@@ -188,16 +188,19 @@ namespace PHS.Web.Controllers
 
             ICollection<PatientEventModalityViewModel> modalityList = (List<PatientEventModalityViewModel>)TempData.Peek("PatientEventModalityViewModel");
 
-            string[] activateArray = activateList.Split('|');
-            for (int i = 0; i < modalityList.Count; i++)
+            if (!string.IsNullOrEmpty(activateList))
             {
-                if(activateArray.ElementAt(i) == "1")
+                string[] activateArray = activateList.Split('|');
+                for (int i = 0; i < modalityList.Count; i++)
                 {
-                    modalityList.ElementAt(i).IsActive = true;
-                }
-                else
-                {
-                    modalityList.ElementAt(i).IsActive = false;
+                    if (activateArray.ElementAt(i) == "1")
+                    {
+                        modalityList.ElementAt(i).IsActive = true;
+                    }
+                    else
+                    {
+                        modalityList.ElementAt(i).IsActive = false;
+                    }
                 }
             }
             
@@ -326,7 +329,18 @@ namespace PHS.Web.Controllers
                 }
 
                 TempData["success"] = formView.ConfirmationMessage;
-                TempData["CompletedForms"] = TempData.Peek("CompletedForms") + "" + model.Id + "|";
+
+                //TODO this codes might not needed after prototype
+                List<PatientEventModalityViewModel> patientEventModalitys = (List<PatientEventModalityViewModel>) TempData.Peek("PatientEventModalityViewModel");
+
+                foreach(var patientEventModality in patientEventModalitys)
+                {
+                    if (patientEventModality.isModalityFormsContain(model.Id.Value))
+                    {
+                        patientEventModality.modalityCompletedForms.Add(model.Id.Value);
+                    }
+                }
+
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
 
             }
