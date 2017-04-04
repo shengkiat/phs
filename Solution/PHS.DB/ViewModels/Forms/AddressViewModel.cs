@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace PHS.FormBuilder.ViewModels
+namespace PHS.DB.ViewModels.Forms
 {
     public class AddressViewModel
     {
