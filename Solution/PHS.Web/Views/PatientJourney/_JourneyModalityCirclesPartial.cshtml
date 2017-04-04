@@ -164,13 +164,13 @@
                 }
             }
 
-
+            int selectedModalityId = int.Parse(TempData.Peek("SelectedModalityId").ToString());
 
             if (@element.IsActive)
             {
-                if (!@element.Equals(firstItem1))
+                if (selectedModalityId == element.ModalityID)
                 {
-                    <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
+                    <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
                         <img src="@element.IconPath" height="35" width="35"  />
                         <br />
                         @element.Name
@@ -179,7 +179,7 @@
 
                 else
                 {
-                    <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
+                    <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
                         <img src="@element.IconPath" height="35" width="35" />
                         <br />
                         @element.Name

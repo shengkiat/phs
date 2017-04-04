@@ -117,7 +117,7 @@ namespace PHS.Web.Controllers
                     TempData["EventId"] = eventId;
                     TempData["PatientEventModalityViewModel"] = patientEventModalitys;
                     TempData["SelectedModalityId"] = patientEvent.Event.Modalities.First().ID;
-                    //patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
+                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
                 }
             }
 
@@ -224,7 +224,7 @@ namespace PHS.Web.Controllers
                 else
                 {
                     TempData["SelectedModalityId"] = selectedModalityId;
-                    //patientEvent.SelectedModalityId = Int32.Parse(selectedModalityId);
+                    patientEvent.SelectedModalityId = Int32.Parse(selectedModalityId);
                     result = patientEvent;
                 }
             }
