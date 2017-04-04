@@ -95,6 +95,13 @@
   <ItemGroup>
     <Compile Include="Common\PasswordManager.cs" />
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\UrlExtensions.cs" />
+    <Compile Include="Extensions\UtilityExtensions.cs" />
+    <Compile Include="Helpers\ItemListHelper.cs" />
+    <Compile Include="Helpers\UtilityHelper.cs" />
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
     <Compile Include="Implementation\EventManager.cs" />

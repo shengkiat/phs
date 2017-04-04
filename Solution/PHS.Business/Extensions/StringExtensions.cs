@@ -78,14 +78,14 @@ namespace PHS.FormBuilder.Extensions
         {
             return str;
 
-            if (!string.IsNullOrEmpty(str))
-            {
-                if (characterCount < 5) return str.Limit(characterCount);       // Can’t do much with such a short limit
-                if (str.Length <= characterCount - 3) return str;
-                else return str.Substring(0, characterCount - 3) + "...";
+            //if (!string.IsNullOrEmpty(str))
+            //{
+            //    if (characterCount < 5) return str.Limit(characterCount);       // Can’t do much with such a short limit
+            //    if (str.Length <= characterCount - 3) return str;
+            //    else return str.Substring(0, characterCount - 3) + "...";
 
-            }
-            return "";
+            //}
+            //return "";
         }
 
         public static bool IsValidEmail(this string target)

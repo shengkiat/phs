@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using System.IO;
-using PHS.Repository.Repository.Core;
-using PHS.Repository.Context;
-using System.Data.Entity.Core.Objects;
+﻿using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Forms;
-using PHS.FormBuilder.Extensions;
-using PHS.Common;
-using PHS.FormBuilder.Helpers;
-using PHS.FormBuilder.Models;
+using PHS.Repository.Context;
+using PHS.Repository.Repository.Core;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 
 namespace PHS.Repository.Repository
@@ -71,7 +64,9 @@ namespace PHS.Repository.Repository
                 var fField = new form_fields
                 {
                     DomId = fieldView.DomId,
-                    Label = fieldView.Label.LimitWithElipses(40),
+                   // Label = fieldView.Label.LimitWithElipses(40),
+
+                    Label = fieldView.Label,
                     Text = fieldView.Text.Trim(),
                     FieldType = fieldView.FieldType.ToString(),
                     IsRequired = fieldView.IsRequired,
@@ -109,7 +104,8 @@ namespace PHS.Repository.Repository
                 if (fField != null)
                 {
 
-                    fField.Label = fieldView.Label.LimitWithElipses(45);
+                  //  fField.Label = fieldView.Label.LimitWithElipses(45);
+                    fField.Label = fieldView.Label;
                     fField.Text = fieldView.Text.Trim();
                     fField.FieldType = fieldView.FieldType.ToString();
                     fField.IsRequired = fieldView.IsRequired;
@@ -148,7 +144,8 @@ namespace PHS.Repository.Repository
             var form = new form
             {
                 Title = formName,
-                Slug = formName.ToSlug(),
+                //Slug = formName.ToSlug(),
+                Slug = formName,
                 Status = Constants.FormStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
@@ -243,35 +240,35 @@ namespace PHS.Repository.Repository
 
             foreach (var entry in entries)
             {
-                this.DeleteFileEntry(entry);
+                //this.DeleteFileEntry(entry);
                 this.DataContext.form_field_values.Remove(entry);
             }
 
             this.SaveChanges();
         }
 
-        public void DeleteFileEntry(form_field_values entry)
-        {
-            if (entry.form_fields.FieldType.ToUpper().IsTheSameAs(Constants.FieldType.FILEPICKER.ToString()))
-            {
-                var fileObj = entry.Value.FromJson<FileValueObject>();
+        //public void DeleteFileEntry(form_field_values entry)
+        //{
+        //    if (entry.form_fields.FieldType.ToUpper().IsTheSameAs(Constants.FieldType.FILEPICKER.ToString()))
+        //    {
+        //        var fileObj = entry.Value.FromJson<FileValueObject>();
 
-                if (fileObj.IsSavedInCloud)
-                {
+        //        if (fileObj.IsSavedInCloud)
+        //        {
                     
-                }
-                else
-                {
-                    if (fileObj != null && !fileObj.FileName.IsNullOrEmpty())
-                    {
-                        if (File.Exists(fileObj.FullFilePath().Replace(@"\\", @"\")))
-                        {
-                            File.Delete(fileObj.FullFilePath().Replace(@"\\", @"\"));
-                        }
-                    }
-                }
-            }
-        }
+        //        }
+        //        else
+        //        {
+        //            if (fileObj != null && !fileObj.FileName.IsNullOrEmpty())
+        //            {
+        //                if (File.Exists(fileObj.FullFilePath().Replace(@"\\", @"\")))
+        //                {
+        //                    File.Delete(fileObj.FullFilePath().Replace(@"\\", @"\"));
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         public List<FormViewModel> GetForms()
         {
@@ -326,17 +323,17 @@ namespace PHS.Repository.Repository
             this.SaveChanges();
         }
 
-        public FileValueObject GetFileFieldValue(int valueId)
-        {
-            var valueObject = this.DataContext.form_field_values.Where(v => v.ID == valueId).FirstOrDefault();
-            if (valueObject != null)
-            {
-                var value = valueObject.Value.FromJson<FileValueObject>();
-                return value;
-            }
+        //public FileValueObject GetFileFieldValue(int valueId)
+        //{
+        //    var valueObject = this.DataContext.form_field_values.Where(v => v.ID == valueId).FirstOrDefault();
+        //    if (valueObject != null)
+        //    {
+        //        var value = valueObject.Value.FromJson<FileValueObject>();
+        //        return value;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         /// <summary>
         /// 

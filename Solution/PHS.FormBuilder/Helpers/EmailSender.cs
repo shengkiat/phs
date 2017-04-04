@@ -1,8 +1,6 @@
-﻿using PHS.FormBuilder.Extensions;
-using PHS.FormBuilder.Helpers;
-using PHS.Common;
+﻿using PHS.Common;
+//using PHS.FormBuilder.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -52,7 +50,8 @@ namespace PHS.Business.Common
             }
             else
             {
-                throw new Exception("Email template \"{0}\" is missing".FormatWith(templateName));
+               // throw new Exception("Email template \"{0}\" is missing".FormatWith(templateName));
+                throw new Exception("Email template: " + templateName +" is missing");
             }
 
             return body;
@@ -65,10 +64,10 @@ namespace PHS.Business.Common
 
             for (var i = 0; i < pairs.Length; i += 2)
             {
-                body = body.Replace("<%={0}%>".FormatWith(pairs[i]), pairs[i + 1]);
+               // body = body.Replace("<%={0}%>".FormatWith(pairs[i]), pairs[i + 1]);
             }
 
-            body = body.Replace("<%=rootUrl%>", UtilityHelper.AbsoluteWebRoot().ToString());
+           // body = body.Replace("<%=rootUrl%>", UtilityHelper.AbsoluteWebRoot().ToString());
 
             return body;
         }
@@ -77,10 +76,10 @@ namespace PHS.Business.Common
         {
             for (var i = 0; i < pairs.Length; i += 2)
             {
-                body = body.Replace("<%={0}%>".FormatWith(pairs[i]), pairs[i + 1]);
+              //  body = body.Replace("<%={0}%>".FormatWith(pairs[i]), pairs[i + 1]);
             }
 
-            body = body.Replace("<%=rootUrl%>", UtilityHelper.AbsoluteWebRoot().ToString());
+         //   body = body.Replace("<%=rootUrl%>", UtilityHelper.AbsoluteWebRoot().ToString());
 
             return body;
         }
@@ -92,21 +91,13 @@ namespace PHS.Business.Common
             {
                 SmtpClient smtp = this.CreateSmtpClient();
 
-                if (UtilityHelper.IsDebugMode())
+                try
                 {
                     smtp.Send(mail);
                 }
-                else
+                catch (Exception ex)
                 {
-
-                    try
-                    {
-                        smtp.Send(mail);
-                    }
-                    catch (Exception ex)
-                    {
-                        //Log Error
-                    }
+                    //Log Error
                 }
             }
         }
