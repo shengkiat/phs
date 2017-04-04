@@ -100,13 +100,26 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
+                    
                     result = patientEvent;
+
+                    //TODO think of way to handle such methods
+
+                    List<PatientEventModalityViewModel> patientEventModalitys = new List<PatientEventModalityViewModel>();
+
+                    foreach(var modality in patientEvent.Event.Modalities)
+                    {
+                        patientEventModalitys.Add(new PatientEventModalityViewModel(result, modality));
+                    }
+
+
+                    TempData["Nric"] = nric;
+                    TempData["EventId"] = eventId;
+                    TempData["PatientEventModalityViewModel"] = patientEventModalitys;
+                    TempData["SelectedModalityId"] = patientEvent.Event.Modalities.First().ID;
+                    //patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
                 }
             }
-
-            TempData["Nric"] = nric;
-            TempData["EventId"] = eventId;
 
             return View(result);
         }
@@ -156,7 +169,7 @@ namespace PHS.Web.Controllers
             string eventId = TempData.Peek("EventId").ToString();
 
 
-            PatientEventViewModel result = new PatientEventViewModel();
+            /*PatientEventViewModel result = new PatientEventViewModel();
             using (var getPatientJourney = new PatientJourneyManager())
             {
                 PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
@@ -171,8 +184,10 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            ICollection<Modality> modalityList = result.Event.Modalities;
-            
+            ICollection<Modality> modalityList = result.Event.Modalities;*/
+
+            ICollection<PatientEventModalityViewModel> modalityList = (List<PatientEventModalityViewModel>)TempData.Peek("PatientEventModalityViewModel");
+
             string[] activateArray = activateList.Split('|');
             for (int i = 0; i < modalityList.Count; i++)
             {
@@ -208,7 +223,8 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    patientEvent.SelectedModalityId = Int32.Parse(selectedModalityId);
+                    TempData["SelectedModalityId"] = selectedModalityId;
+                    //patientEvent.SelectedModalityId = Int32.Parse(selectedModalityId);
                     result = patientEvent;
                 }
             }
@@ -310,6 +326,7 @@ namespace PHS.Web.Controllers
                 }
 
                 TempData["success"] = formView.ConfirmationMessage;
+                TempData["CompletedForms"] = TempData.Peek("CompletedForms") + "" + model.Id + "|";
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
 
             }

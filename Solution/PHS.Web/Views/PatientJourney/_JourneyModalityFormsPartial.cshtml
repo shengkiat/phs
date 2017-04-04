@@ -84,14 +84,14 @@
                 if (Model.isMegaSortingModalitySelected())
                 {
                     <div id="tabs-1" class="tab-pane fade in active">
-                        @{Html.RenderPartial("_MegaSortingStationPartial", Model.Event.Modalities);}
+                        @{Html.RenderPartial("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));}
                     </div>
                 }
 
                 else if (Model.isSummarySelected())
                 {
                     <div id="tabs-1" class="tab-pane fade in active">
-                        @{Html.RenderPartial("_SummaryPartial", Model.Event.Modalities);}
+                        @{Html.RenderPartial("_SummaryPartial", TempData.Peek("PatientEventModalityViewModel"));}
                     </div>
                 }
 

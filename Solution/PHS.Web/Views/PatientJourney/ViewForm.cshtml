@@ -49,6 +49,31 @@
                 if (!response.isautosave) {
                     $U.writeSuccessToContainer($('#message'), response.message);
                 }
+
+                var select = "";
+
+                $("input[type = 'checkbox']").each(function () {
+                    var c = $(this).is(":checked");
+                    if (c) {
+                        select = select + "1|";
+
+                    } else {
+                        select = select + "0|";
+                    }
+                })
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: '@Url.Action("ActivateCirclesFromMSSS", "PatientJourney")', // Controller/View
+                        data: { 'activateList': select },
+                        contentType: "application/json; charset=utf-8",
+                        success: function (resp) {
+                            $('#ptJourney').html(resp);
+                        }
+                    });
+
+
                 //bindFieldIds(response.fieldids);
                 //$('#isAltered').val(0);
                 //$('#autosave-container').hide();
