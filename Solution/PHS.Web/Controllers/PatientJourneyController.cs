@@ -341,6 +341,8 @@ namespace PHS.Web.Controllers
                     }
                 }
 
+                TempData["PatientEventModalityViewModel"] = patientEventModalitys;
+
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
 
             }

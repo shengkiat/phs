@@ -59,7 +59,8 @@
                         data: { 'activateList': select },
                         contentType: "application/json; charset=utf-8",
                         success: function (resp) {
-                            $('#ptJourney').html(resp);
+                            console.log("ActivateCirclesFromMSSS success from viewform");
+                            window.parent.$('#ptJourney').html(resp);
                         }
                     });
 
