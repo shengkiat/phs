@@ -68,6 +68,9 @@
                         @Html.TextBoxFor(m => m.CriteriaValue[@field.FieldLabel], new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
                     }
                 }
+
+                @Html.TextBoxFor(m => m.CriteriaValue["Submitted On"], new { @id = "criteria[Submitted On]", @style = "display:none;" })
+
             </div>
         }
 

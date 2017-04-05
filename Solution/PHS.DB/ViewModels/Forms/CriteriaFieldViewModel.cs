@@ -14,7 +14,7 @@ namespace PHS.DB.ViewModels.Forms
         public Dictionary<string, string> CriteriaValue { get; set; }
         public List<CriteriaSubFieldViewModel> CriteriaSubFields { get; set; }
 
-        public IEnumerable<SelectListItem> FieldLabels { get; set; } // dropdown
+        public List<SelectListItem> FieldLabels { get; set; } // dropdown
         public List<FormFieldViewModel> Fields { get; set; }
         public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
 

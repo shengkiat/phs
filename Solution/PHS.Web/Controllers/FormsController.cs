@@ -523,14 +523,22 @@ namespace PHS.Web.Controllers
             criteriaFieldViewModel.GroupedEntries = formView.GroupedEntries;
             criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
 
-            criteriaFieldViewModel.FieldLabels =
-                from s in formView.GroupedEntries.First()
-                select new SelectListItem
+            criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
+
+            foreach (var s in formView.GroupedEntries.First())
+            {
+                criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                 {
                     Text = s.FieldLabel.Limit(100),
                     Value = s.FieldLabel
-                };
+                });
+            }
 
+            criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
+            {
+                Text = "Submitted On",
+                Value = "Submitted On"
+            });
 
             return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
         }
