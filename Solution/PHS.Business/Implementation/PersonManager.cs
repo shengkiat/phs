@@ -113,11 +113,11 @@ namespace PHS.Business.Implementation
 
                         switch (user.Role)
                         {
-                            case Constants.User_Role_Student_Code:
+                            case Constants.User_Role_Doctor_Code:
                                 authenticatedUser = user;
                                 message = string.Empty;
                                 break;
-                            case Constants.User_Role_Instructor_Code:
+                            case Constants.User_Role_Volunteer_Code:
                                 authenticatedUser = user;
                                 message = string.Empty;
                                 break;

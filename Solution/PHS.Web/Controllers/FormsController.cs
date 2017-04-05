@@ -13,8 +13,6 @@ using System.Web.Hosting;
 using PHS.Repository.Repository;
 using PHS.FormBuilder.Extensions;
 using PHS.Common;
-using PHS.FormBuilder.Models;
-using PHS.FormBuilder.Helpers;
 using PHS.Business.Common;
 using PHS.Business.Implementation;
 using System.Net;
@@ -248,8 +246,8 @@ namespace PHS.Web.Controllers
             catch (Exception ex)
             {
                 //TODO: log error
-                var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
-                return Json(new { success = false, error = error, isautosave = isAutoSave });
+               // var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
+                return Json(new { success = false, error = "Unable to save form ", isautosave = isAutoSave });
             }
 
         }
@@ -408,20 +406,20 @@ namespace PHS.Web.Controllers
                     //if it's a file, save it to hard drive
                     if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
                     {
-                        var file = Request.Files[field.SubmittedFieldName()];
-                        var fileValueObject = value.GetFileValueFromJsonObject();
+                        //var file = Request.Files[field.SubmittedFieldName()];
+                        //var fileValueObject = value.GetFileValueFromJsonObject();
 
-                        if (fileValueObject != null)
-                        {
-                            if (UtilityHelper.UseCloudStorage())
-                            {
-                                this.SaveImageToCloud(file, fileValueObject.SaveName);
-                            }
-                            else
-                            {
-                                file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                            }
-                        }
+                        //if (fileValueObject != null)
+                        //{
+                        //    if (UtilityHelper.UseCloudStorage())
+                        //    {
+                        //        this.SaveImageToCloud(file, fileValueObject.SaveName);
+                        //    }
+                        //    else
+                        //    {
+                        //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                        //    }
+                        //}
                     }
 
                     this.AddValueToDictionary(ref notificationEntries, field.Label, new FormFieldValueViewModel(field.FieldType, value));
@@ -579,25 +577,25 @@ namespace PHS.Web.Controllers
 
         }
 
-        public FileStreamResult GetFileFromDisk(int valueId)
-        {
-            FileValueObject obj = _formRepo.GetFileFieldValue(valueId);
-            if (obj != null)
-            {
-                if (obj.IsSavedInCloud)
-                {
+        //public FileStreamResult GetFileFromDisk(int valueId)
+        //{
+        //    FileValueObject obj = _formRepo.GetFileFieldValue(valueId);
+        //    if (obj != null)
+        //    {
+        //        if (obj.IsSavedInCloud)
+        //        {
 
-                }
-                else
-                {
-                    var filePath = Server.MapPath(obj.SavePath.ConcatWith("/", obj.SaveName));
-                    var stream = UtilityHelper.ReadFile(filePath);
-                    return File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, obj.FileName);
-                }
-            }
+        //        }
+        //        else
+        //        {
+        //            var filePath = Server.MapPath(obj.SavePath.ConcatWith("/", obj.SaveName));
+        //            var stream = UtilityHelper.ReadFile(filePath);
+        //            return File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, obj.FileName);
+        //        }
+        //    }
 
-            throw new Exception("File Not Found");
-        }
+        //    throw new Exception("File Not Found");
+        //}
 
         [HttpPost]
         public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormViewModel model, FormCollection collection)

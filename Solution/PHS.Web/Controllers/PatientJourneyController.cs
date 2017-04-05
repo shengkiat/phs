@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using PHS.Business.ViewModel.PatientJourney;
+﻿using PHS.Business.Common;
 using PHS.Business.Implementation;
-using PHS.DB;
-using PHS.DB.ViewModels.Forms;
-using PHS.Repository.Repository;
+using PHS.Business.ViewModel.PatientJourney;
 using PHS.Common;
+using PHS.DB.ViewModels.Forms;
 using PHS.FormBuilder.Extensions;
-using PHS.FormBuilder.Helpers;
+using PHS.Repository.Repository;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Web.Hosting;
-using PHS.Business.Common;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace PHS.Web.Controllers
 {
@@ -305,15 +301,15 @@ namespace PHS.Web.Controllers
                     //if it's a file, save it to hard drive
                     if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
                     {
-                        var file = Request.Files[field.SubmittedFieldName()];
-                        var fileValueObject = value.GetFileValueFromJsonObject();
+                        //var file = Request.Files[field.SubmittedFieldName()];
+                        //var fileValueObject = value.GetFileValueFromJsonObject();
 
-                        if (fileValueObject != null)
-                        {
+                        //if (fileValueObject != null)
+                        //{
                             
-                            file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                        //    file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
                             
-                        }
+                        //}
                     }
 
                     this.AddValueToDictionary(ref notificationEntries, field.Label, new FormFieldValueViewModel(field.FieldType, value));
@@ -349,8 +345,8 @@ namespace PHS.Web.Controllers
 
         Error:
             TempData["error"] = errors.ToUnorderedList();
-            var error = "Unable to save form ".AppendIfDebugMode(errors.ToUnorderedList());
-            return Json(new { success = false, error = error, isautosave = false });
+           // var error = "Unable to save form ".AppendIfDebugMode(errors.ToUnorderedList());
+            return Json(new { success = false, error = "Unable to save form ", isautosave = false });
         }
 
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)

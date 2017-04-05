@@ -241,6 +241,11 @@ namespace PHS.Web.Controllers
             };
         }
 
+        public ActionResult LogOff()
+        {
+            LogUserOut();
+            return RedirectToLogin();
+        }
 
     }
 }

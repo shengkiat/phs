@@ -1,6 +1,18 @@
-﻿@using PHS.FormBuilder.Helpers
+﻿
 @using PHS.Common
 @using PHS.FormBuilder.Extensions
+@using PHS.DB
+
+@{
+    var menus = new[]
+                {
+                   new { LinkText="User Management", ActionName="ManageUser",ControllerName="Admin",Roles="A"  },
+                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Roles="A"  },
+                   new { LinkText="Form Management", ActionName="",ControllerName="",Roles="A"  },
+                   new { LinkText="Fake Volunteer Login landing page", ActionName="SearchPatient",ControllerName="PatientJourney",Roles="A,V,D"  },
+
+                };
+}
 
 <!DOCTYPE html>
 <html>
@@ -8,6 +20,7 @@
     <style>
         * {
             box-sizing: border-box;
+            font-family: "Times New Roman", Georgia, Serif;
         }
 
         .header, .footer {
@@ -46,6 +59,12 @@
             margin-bottom: 8px;
             color: #ffffff;
             font-size: 1.4em;
+        }
+
+        #colorstrip {
+            width: 100%;
+            border-style: none;
+
         }
     </style>
 
@@ -107,7 +126,9 @@
 </head>
 <body class="@Html.GetContextCssClass()" style="padding-top: 0px;padding-bottom: 0px;">
     <div class="header" style="height: 136px;">
-        <img src="~/Content/images/logo.png" alt="logo" style="width:350px;height:134px;padding-left: 100px;padding-top: 1px;box-shadow: 2px 0px 2px gray;" />
+        <img src="~/Content/images/logo.png" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 1px;box-shadow: 2px 0px 2px gray;" />
+        <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
+        <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
     </div>
     @*<div class="navbar-default" style="background: #aaa;color:black;">
             <div class="container">
@@ -150,10 +171,20 @@
     <div class="clearfix">
         <div class="column menu">
             <ul>
-                <li>@Html.ActionLink("User Management", "SearchUser", "Admin", null, null)</li>
-                <li>@Html.ActionLink("Event Management", "Index", "Event", null, null)</li>
-                <li><a href="#">Form Management</a> </li>
-                <li>@Html.ActionLink("Fake Volunteer Login landing page", "SearchPatient", "PatientJourney", null, null)</li>
+                @if (HttpContext.Current.Session["LoginUser"] != null)
+                {
+                    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+                    var links = from item in menus
+                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .Any(x => role.Equals(x))
+                                select item;
+                    foreach (var link in links)
+                    {
+                        <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                    }
+
+                    <li> @Html.ActionLink("Logout", "LogOff", "Admin")</li>
+                }
             </ul>
         </div>
         <div class="column content">

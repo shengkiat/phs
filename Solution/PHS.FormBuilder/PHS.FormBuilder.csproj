@@ -80,15 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\DateExtensions.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\UrlExtensions.cs" />
-    <Compile Include="Extensions\UtilityExtensions.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
-    <Compile Include="Helpers\ItemListHelper.cs" />
-    <Compile Include="Helpers\UtilityHelper.cs" />
-    <Compile Include="Models\FileValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Models\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
