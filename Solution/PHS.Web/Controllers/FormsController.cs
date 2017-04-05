@@ -489,14 +489,22 @@ namespace PHS.Web.Controllers
 
             var sortFieldViewModel = new SortFieldViewModel();
 
-            sortFieldViewModel.SortFields =
-                from s in formView.GroupedEntries.First()
-                select new SelectListItem
+            sortFieldViewModel.SortFields = new List<SelectListItem>();
+
+            foreach (var s in formView.GroupedEntries.First())
+            {
+                sortFieldViewModel.SortFields.Add(new SelectListItem
                 {
                     Text = s.FieldLabel.Limit(100),
                     Value = s.FieldLabel
-                };
+                });
+            }
 
+            sortFieldViewModel.SortFields.Add(new SelectListItem
+            {
+                Text = "Submitted On",
+                Value = "Submitted On"
+            });
 
             return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
         }

@@ -12,6 +12,6 @@ namespace PHS.DB.ViewModels.Forms
         public string FieldLabel { get; set; }
         public string SortOrder { get; set; }
 
-        public IEnumerable<SelectListItem> SortFields { get; set; } // dropdown
+        public List<SelectListItem> SortFields { get; set; } // dropdown
     }
 }
