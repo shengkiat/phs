@@ -15,6 +15,11 @@
     background-color: rgb(172, 216, 226);
 }
 
+.button-common:disabled,
+.button-common[disabled=disabled]{
+    opacity: 0.65; 
+}
+
 .button-other{
     font-family:Verdana,Arial,sans-serif;
     font-size:1em;
