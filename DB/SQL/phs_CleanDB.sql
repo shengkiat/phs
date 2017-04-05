@@ -356,7 +356,7 @@ INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive],
 GO
 
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (3 N'Mega Sorting Station', 2, N'../../Content/images/Modality/03megasorting.png', 1, 1, 1, N'Pending')
+INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (3, N'Mega Sorting Station', 2, N'../../Content/images/Modality/03megasorting.png', 1, 1, 1, N'Pending')
 GO
 
 GO
@@ -511,6 +511,8 @@ INSERT [phs].[dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage
 GO
 INSERT [phs].[dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (6, N'Vitals', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
+INSERT [phs].[dbo].[form] ([ID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (7, N'Phlebotomy DataEntry', N'New Registration Form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+GO
 SET IDENTITY_INSERT [phs].[dbo].[form] OFF
 GO
 SET IDENTITY_INSERT [dbo].[form_fields] ON 
@@ -638,8 +640,19 @@ INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [M
 GO
 INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (150, N'Click to edit', N'Participant is being referred from: HX Taking Modality', N'HEADER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 3, 0, 18, 100, N'', CAST(N'2017-04-01 15:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
 GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (151, N'PatientID', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (152, N'Name', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (153, N'First Name', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 3, 2, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (154, N'DOB', N'Click to edit', N'BIRTHDAYPICKER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 4, 3, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
+INSERT [dbo].[form_fields] ([ID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn]) VALUES (155, N'<p>Sex</p>', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Male,Female', N'', 5, 4, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'')
+GO
 SET IDENTITY_INSERT [dbo].[form_fields] OFF
 GO
+
 INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (1, 76)
 GO
 INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (1, 77)
@@ -742,6 +755,16 @@ INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 144)
 GO
 INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (6, 145)
 GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (7, 151)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (7, 152)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (7, 153)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (7, 154)
+GO
+INSERT [dbo].[form_form_fields] ([formId], [fieldId]) VALUES (7, 155)
+GO
 SET IDENTITY_INSERT [dbo].[form_field_values] ON 
 
 GO
@@ -750,6 +773,26 @@ GO
 INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (5, 126, N'74ce535d-af74-4db5-a745-9af7e6a41cef', N'Male', CAST(N'2017-03-24 14:30:56.520' AS DateTime))
 GO
 INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (6, 127, N'74ce535d-af74-4db5-a745-9af7e6a41cef', N'{"Id":null,"Blk":"BUKIT BATOK CENTRAL","Unit":"","StreetAddress":"BUKIT BATOK CENTRAL","State":null,"ZipCode":"650625","Country":null,"Longitude":null,"Latitude":null}', CAST(N'2017-03-24 14:30:56.523' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (300, 151, N'abc5a11a-f526-4616-8e51-853d2d796926', N'S8250369B', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (301, 152, N'abc5a11a-f526-4616-8e51-853d2d796926', N'Lawrence DDS', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (302, 153, N'abc5a11a-f526-4616-8e51-853d2d796926', N'Fay', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (303, 154, N'abc5a11a-f526-4616-8e51-853d2d796926', N'13/4/1982 12:00:00 AM', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (304, 155, N'abc5a11a-f526-4616-8e51-853d2d796926', N'Male', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (305, 151, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'S7931278I', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (306, 152, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'Maxwell', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (307, 153, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'Schulist', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (308, 154, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'13/2/1979 12:00:00 AM', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
+GO
+INSERT [dbo].[form_field_values] ([ID], [FieldId], [EntryId], [Value], [DateAdded]) VALUES (309, 155, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'Male', CAST(N'2017-04-05 14:30:56.493' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[form_field_values] OFF
 GO
