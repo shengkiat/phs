@@ -705,7 +705,7 @@ namespace PHS.Web.Controllers
                         row[columnIndex] = "";
                     }
                 }
-                row[columnIndex] = fieldAddedOn.ToString("ddd, MMMM dd, yyyy, HH:mm");
+                row[columnIndex] = fieldAddedOn.ToString("ddd, MMMM dd, yyyy HH:mm");
                 dt.Rows.Add(row);
             }
 

@@ -6,6 +6,15 @@
 
 @using (Html.BeginCollectionItem("CriteriaFields"))
 {
+    <script type="text/javascript">
+
+        $(document).on('focus', '.datepicker', function () {
+            $(this).datetimepicker({
+                format: 'D, MM dd, yyyy hh:ii'
+            })
+        });
+    </script>
+
     <div id="trCriteriaRow0" class="trCriteriaRow0">
 
         @{
@@ -69,8 +78,7 @@
                     }
                 }
 
-                @Html.TextBoxFor(m => m.CriteriaValue["Submitted On"], new { @id = "criteria[Submitted On]", @style = "display:none;" })
-
+                @Html.EditorFor(m => m.CriteriaValue["Submitted On"], new { htmlAttributes = new { @id = "criteria[Submitted On]", @style = "display:none;", @class = "form-control datepicker" }})
             </div>
         }
 

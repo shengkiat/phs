@@ -6,6 +6,8 @@
 
 @using (Html.BeginCollectionItem("CriteriaSubFields"))
 {
+    
+
     <div id="trCriteriaRow1" class="trCriteriaRow1">
 
         <br style="clear:both" />
@@ -77,7 +79,7 @@
                 }
             }
 
-            @Html.TextBoxFor(m => m.CriteriaValue["Submitted On"], new { @id = "criteria[Submitted On]", @style = "display:none;" })
+            @Html.EditorFor(m => m.CriteriaValue["Submitted On"], new { htmlAttributes = new { @id = "criteria[Submitted On]", @style = "display:none;", @class = "form-control datepicker" } })
 
         </div>
         <div style="float:left;">
