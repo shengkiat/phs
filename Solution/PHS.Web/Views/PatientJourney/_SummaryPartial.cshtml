@@ -10,6 +10,13 @@
     ViewBag.Title = "Summary";
 }
 
+<style>
+    input {
+        border: 0;
+    }
+</style>
+
+
 @using (Html.BeginForm())
 {
     <div>
@@ -18,18 +25,18 @@
 
 
             <li>
-                <input value="" type="text" class="title" readonly /><br />
+                <input value="60" type="text"  class="title" readonly /><br />
                 <span class="sub-label">Weight (kg)</span>
             </li>
 
             <li>
-                <input value="" type="text" class="title" readonly /><br />
+                <input value="180"  class="title" readonly /><br />
                 <span class="sub-label">Height (cm)</span>
             </li>
 
             <li>
                 <br />
-                <label>BMI: </label>
+                <label>BMI: 18.5</label>
             </li>
 
             <li>
