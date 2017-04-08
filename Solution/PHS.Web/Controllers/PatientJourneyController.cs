@@ -1,4 +1,5 @@
-﻿using PHS.Business.Common;
+﻿using Novacode;
+using PHS.Business.Common;
 using PHS.Business.Implementation;
 using PHS.Business.ViewModel.PatientJourney;
 using PHS.Common;
@@ -59,7 +60,7 @@ namespace PHS.Web.Controllers
 
             using (var getPatientJourney = new PatientJourneyManager())
             {
-                IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.IcFirstDigit, psm.IcNumber, psm.IcLastDigit, out message);
+                IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.Nric, out message);
                 if (patientEvents == null)
                 {
                     SetViewBagError(message);
@@ -319,6 +320,35 @@ namespace PHS.Web.Controllers
             TempData["error"] = errors.ToUnorderedList();
            // var error = "Unable to save form ".AppendIfDebugMode(errors.ToUnorderedList());
             return Json(new { success = false, error = "Unable to save form ", isautosave = false });
+        }
+
+        public ActionResult GenerateDoctorMemo(string text)
+        {
+
+            if (text == null)
+            {
+                text = "";
+            }
+
+            String guid = Guid.NewGuid().ToString();
+            string templatePath = Server.MapPath("~/App_Data/Doctor's Memo Template.docx");
+
+            // Load template into memory
+            var doc = DocX.Load(templatePath);
+
+            doc.ReplaceText("Replaced", text);
+
+            var ms = new MemoryStream();
+            doc.SaveAs(ms);
+            ms.Position = 0;
+            byte[] fileBytes = ms.ToArray();
+
+            TempData[guid] = fileBytes;
+
+            return new JsonResult()
+            {
+                Data = new { FileGuid = guid, FileName = "Doctor's Memo.docx" }
+            };
         }
 
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)

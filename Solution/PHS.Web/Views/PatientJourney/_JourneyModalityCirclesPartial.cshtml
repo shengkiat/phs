@@ -167,7 +167,7 @@
                     
                 }
 
-                else if (element.GetStatus().Equals("Completed"))
+                else if (element.isAllFormsCompleted())
                 {
                     <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
                         <img src="@element.IconPath" height="35" width="35" />

@@ -64,6 +64,11 @@ namespace PHS.Business.ViewModel.PatientJourney
             }
         }
 
+        public bool isAllFormsCompleted()
+        {
+            return (modalityForms.Count == modalityCompletedForms.Count);
+        }
+
         public bool isModalityFormsContain(int formId)
         {
             return modalityForms.Contains(formId);
