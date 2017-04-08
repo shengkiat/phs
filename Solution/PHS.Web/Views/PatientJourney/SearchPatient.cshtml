@@ -31,16 +31,8 @@
             <div class="text-center">
                 <div>
 
-                    @{ 
-                        var icFirstDigitFields = new List<SelectListItem>()
-                        {
-                            new SelectListItem {Text = "S", Value = "S"},
-                        };
-                    }
-
-                    @Html.DropDownListFor(m => m.IcFirstDigit, icFirstDigitFields)
-                    @Html.EditorFor(m => m.IcNumber, new { htmlAttributes = new { @autocomplete = "off", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", maxlength = "7" } })
-                    @Html.DropDownListFor(m => m.IcLastDigit, ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })
+                    Nric:   
+                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
                     
                     <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
                            formaction="SearchPatient" formmethod="post" />

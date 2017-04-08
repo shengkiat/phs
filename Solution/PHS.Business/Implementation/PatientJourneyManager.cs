@@ -20,14 +20,13 @@ namespace PHS.Business.Implementation
             return new PatientJourneyManager();
         }
 
-        public IList<PatientEventViewModel> GetPatientEventsByNric(string icFirstDigit, string icNumber, string icLastDigit, out string message)
+        public IList<PatientEventViewModel> GetPatientEventsByNric(string nric, out string message)
         {
             IList<PatientEventViewModel> result = null;
             message = string.Empty;
 
-            if (NricChecker.IsNRICValid(icFirstDigit, icNumber, icLastDigit))
+            if (NricChecker.IsNRICValid(nric))
             {
-                string nric = icFirstDigit + icNumber + icLastDigit;
 
                 try
                 {
