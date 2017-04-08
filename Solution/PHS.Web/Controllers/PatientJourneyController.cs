@@ -32,6 +32,11 @@ namespace PHS.Web.Controllers
         // GET: PatientJourney
         public ActionResult Index()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
             return View();
         }
 
