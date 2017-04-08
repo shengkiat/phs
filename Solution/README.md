@@ -10,7 +10,7 @@ Accounts
 6. Username: Volunteer1 Password: 1qazxsw2!@QW
 
 NRICS to test
-1. S 8250369 B
+1. S8250369B
 
 Example URL  
 http://localhost:49972/forms  
