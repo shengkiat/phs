@@ -10,24 +10,24 @@
         $("#btnGenerateDoctorMemo").click(function () {
 
             var doctorText = document.getElementById('SubmitFields[@Model.DomId].TextArea').value;
-           
+
             var jsonObject = {
                 "text": doctorText
             };
 
             $.ajax({
-                url: "@Url.Action("GenerateDoctorMemo")",
+                url: "/forms/GenerateDoctorMemo",
                 type: "POST",
                 data: JSON.stringify(jsonObject),
                 cache: false,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 error: function (response) {
-  
+
                     document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
                 },
                 success: function (response) {
-                   
+
                     window.location = '/forms/DownloadDoctorMemo?fileGuid=' + response.FileGuid
                                       + '&filename=' + response.FileName;
                 }

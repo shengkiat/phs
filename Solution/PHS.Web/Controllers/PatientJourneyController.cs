@@ -322,35 +322,6 @@ namespace PHS.Web.Controllers
             return Json(new { success = false, error = "Unable to save form ", isautosave = false });
         }
 
-        public ActionResult GenerateDoctorMemo(string text)
-        {
-
-            if (text == null)
-            {
-                text = "";
-            }
-
-            String guid = Guid.NewGuid().ToString();
-            string templatePath = Server.MapPath("~/App_Data/Doctor's Memo Template.docx");
-
-            // Load template into memory
-            var doc = DocX.Load(templatePath);
-
-            doc.ReplaceText("Replaced", text);
-
-            var ms = new MemoryStream();
-            doc.SaveAs(ms);
-            ms.Position = 0;
-            byte[] fileBytes = ms.ToArray();
-
-            TempData[guid] = fileBytes;
-
-            return new JsonResult()
-            {
-                Data = new { FileGuid = guid, FileName = "Doctor's Memo.docx" }
-            };
-        }
-
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
         {
             foreach (var key in form.AllKeys)
