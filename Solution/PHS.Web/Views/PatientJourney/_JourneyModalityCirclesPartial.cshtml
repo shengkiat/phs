@@ -74,32 +74,6 @@
         transition: .5s;
     }
 
-    .round-button-inactive {
-        display: block;
-        margin: auto;
-        width: 100px;
-        height: 100px;
-        border: 3px solid black;
-        border-radius: 50%;
-        color: black;
-        text-align: center;
-        text-decoration: none;
-        background: grey;
-        font-size: 12px;
-        font-weight: bold;
-        cursor: not-allowed;
-        -o-transition: .5s;
-        -ms-transition: .5s;
-        -moz-transition: .5s;
-        -webkit-transition: .5s;
-        /* ...and now for the proper property */
-        transition: .5s;
-    }
-
-    .round-button-inactive:hover {
-        background: #0f2a54;
-    }
-
 
 </style>
 
@@ -160,18 +134,21 @@
             PatientEventModalityViewModel firstItem1 = Model.First();
         }
         @foreach (var element in Model)
+        {
+            if (!@element.Equals(firstItem1))
             {
-                if (!@element.Equals(firstItem1))
+                if (@element.IsActive)
                 {
                     switch (@element.HasParent)
                     {
                         case true:
                         <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;"/>
-                        break;
+                            break;
 
-                    case false:
+                        case false:
                         <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
-                        break;
+                            break;
+                    }
                 }
             }
 
@@ -211,15 +188,6 @@
                 }
 
                 <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
-            }
-
-            else
-            {
-                <button name="buttons" value="@element.Name" class="round-button-inactive">
-                    <img src="@element.IconPath" height="35" width="35" />
-                    <br />
-                    @element.Name
-                </button>
             }
         }
         
