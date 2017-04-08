@@ -119,39 +119,6 @@ namespace PHS.Web.Controllers
 
             return View(result);
         }
-        
-        /*
-        public ActionResult JourneyModalityCircles()
-        {
-            //ModalityCircleViewModel modalityCircle = new ModalityCircleViewModel();
-            //List<ModalityCircleViewModel> modalityCircleList = createModalityCircleData();
-
-            string message = string.Empty;
-            string nric = "S8518538A";
-            string eventId = "100"; 
-            PatientEventViewModel result = new PatientEventViewModel();
-            using (var getPatientJourney = new PatientJourneyManager())
-            {
-                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
-                if (patientEvent == null)
-                {
-                    SetViewBagError(message);
-                }
-
-                else
-                {
-
-                    result = patientEvent;
-                }
-            }
-
-            List<Modality> modalityList = new List<Modality>();
-            modalityList = (List<Modality>) result.Event.Modalities; 
-
-            return View(modalityList);
-        }
-        */
-
 
         public PartialViewResult ActivateCirclesFromMSSS(string activateList)
         {
