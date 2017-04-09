@@ -16,7 +16,7 @@
                 maxlength="9" />
 
 
-        <ul class="horizontal-list three-field-row">
+        @*<ul class="horizontal-list three-field-row">
             <li>
                 <select>
                     <option>S</option>
@@ -30,7 +30,7 @@
             <li>
                 @Html.DropDownList("lastdigit-${id}", ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })<br />             
             </li>
-        </ul>
+        </ul>*@
         @Html.Partial("_form-field-properties")
     </div>
     <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">

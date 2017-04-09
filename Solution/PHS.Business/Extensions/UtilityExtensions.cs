@@ -418,7 +418,15 @@ namespace PHS.Business.Extensions
                         Height = form.SubmittedFieldValue(field.DomId, "Height"),
                     };
 
-                    value = bmi.ToJson();
+                    if (bmi.Weight == "" || bmi.Height == "")
+                    {
+                        value = "";
+                    }
+                    else
+                    {
+                        value = bmi.ToJson();
+                    }
+                    
                     break;
 
                 case Constants.FieldType.MATRIX:

@@ -16,6 +16,11 @@ namespace PHS.FormBuilder.ViewModel
         {
             get
             {
+                if (Weight == "" || Height == "")
+                {
+                    return "";
+                }
+
                return (Convert.ToDouble(Weight) / ((Convert.ToDouble(Height) / 100) * ((Convert.ToDouble(Height) / 100)))).ToString("0.##");
 
             }

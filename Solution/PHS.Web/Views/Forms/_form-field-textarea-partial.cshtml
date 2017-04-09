@@ -1,9 +1,6 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
 
-
-@using PHS.Common
 @using PHS.Business.Extensions
-
 
 <div style="width: 90%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
@@ -11,13 +8,12 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-    <div class="input" style="width: 70%; margin-left: 1cm;">
-        <textarea style="min-height:100px; min-width:100px;"
+    <div class="input" style="width: 90%; margin-left: 1cm;">
+        <textarea style="min-height:100px; min-width:100px; max-width: 95%"
                   id="SubmitFields[@Model.DomId].TextArea"
                   name="SubmitFields[@Model.DomId].TextArea"
-                  type="text">
-            @Html.GetTempFormValue(Model)
-        </textarea>
+                  type="text">@Html.GetSubmittedTextValue(Model)</textarea>
+
         @if (Model.IsEditMode())
         {
             @Html.Partial("_form-field-properties-partial", Model)

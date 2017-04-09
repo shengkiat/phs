@@ -1,6 +1,5 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
 
-@using PHS.Common
 @using PHS.Business.Extensions
 
 <script type="text/javascript">
@@ -46,18 +45,22 @@
        class="label editable">@Model.Label</label>
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="vertical-list">
 
-
             <li>
-                <input id="SubmitFields[@Model.DomId].Weight" name="SubmitFields[@Model.DomId].Weight" value="@Html.GetSubmittedTextValue(Model,"Weight")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].Weight" 
+                       name="SubmitFields[@Model.DomId].Weight" 
+                       value="@Html.GetSubmittedTextValue(Model,"Weight")" 
+                       type="number" class="title" /><br />
                 <span class="sub-label">Weight (kg)</span>
             </li>
 
             <li>
-                <input id="SubmitFields[@Model.DomId].Height" name="SubmitFields[@Model.DomId].Height" value="@Html.GetSubmittedTextValue(Model,"Height")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].Height" 
+                       name="SubmitFields[@Model.DomId].Height" 
+                       value="@Html.GetSubmittedTextValue(Model,"Height")" 
+                       type="number" class="title" /><br />
                 <span class="sub-label">Height (cm)</span>
             </li>
 
@@ -75,8 +78,6 @@
                 <br />
                 <label id="SubmitFields[@Model.DomId].BMIStatus">Low Risk</label>
             </li>
-
-
 
         </ul>
         @if (Model.IsEditMode())
