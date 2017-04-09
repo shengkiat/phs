@@ -81,10 +81,6 @@
       <Project>{9f19487d-f572-41c3-910c-aedb45b511d1}</Project>
       <Name>PHS.DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PHS.FormBuilder\PHS.FormBuilder.csproj">
-      <Project>{df7f3f6e-e407-4115-a96d-579aa24ab27b}</Project>
-      <Name>PHS.FormBuilder</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
