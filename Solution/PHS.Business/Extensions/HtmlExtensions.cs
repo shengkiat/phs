@@ -293,7 +293,38 @@ namespace PHS.Business.Extensions
         }
 
 
+        public static bool IsSubmittedValueSelected(this HtmlHelper helper, FormFieldViewModel model, string value, int index)
+        {
+            if (model.EntryId == null || model.EntryId == "")
+            {
+                return false;
+            }
 
+            if (model.FieldType != FieldType.CHECKBOX && model.FieldType != FieldType.RADIOBUTTON && model.FieldType != FieldType.MATRIX)
+            {
+                return false;
+            }
+
+            using (var formManager = new FormManager())
+            {
+
+                var selectedValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+
+                if (selectedValue == null)
+                {
+                    return false;
+                }
+
+                string[] options = selectedValue.Split(",");
+
+                if (value == options[index])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
 
 

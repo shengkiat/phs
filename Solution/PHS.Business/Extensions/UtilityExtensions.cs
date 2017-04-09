@@ -143,8 +143,8 @@ namespace PHS.Business.Extensions
             {
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                   // string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
-                   // string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+                    // string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
+                    // string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
                     return NricChecker.IsNRICValid(icNumber);
 
@@ -411,6 +411,32 @@ namespace PHS.Business.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.FieldType.MATRIX:
+                    StringBuilder builder = new StringBuilder();
+
+                    for (int x = 0; x < 100; x++)
+                    {
+                        value = form.SubmittedFieldValue(field.DomId, "[" + x + "].RadioButton");
+
+                        if (value == null)
+                        {
+                            break;
+                        }
+
+                        if (x == 0)
+                        {
+                            builder.Append(value);
+                        }
+                        else
+                        {
+                            builder.Append("," + value);
+                        }
+                    }
+
+                    value = builder.ToString();
+
+                    break;
+
                 case Constants.FieldType.BMI:
                     var bmi = new BMIViewModel
                     {
@@ -426,17 +452,13 @@ namespace PHS.Business.Extensions
                     {
                         value = bmi.ToJson();
                     }
-                    
-                    break;
-
-                case Constants.FieldType.MATRIX:
 
                     break;
 
                 case Constants.FieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     //string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
-                  //  string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
+                    //  string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
                     value = icNumber;
                     break;

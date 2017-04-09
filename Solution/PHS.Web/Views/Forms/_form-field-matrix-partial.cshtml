@@ -3,9 +3,10 @@
 
 @{
     int columnCounter = 0;
-
-} 
-
+    int rowCounter = 0;
+    string checkedAttribute = "";
+    List<string> columnChoices = new List<string>();
+}
 
 <div style="width: 70%; word-wrap: break-word; text-align: left;"
      data-sub-channel="sub-label-@Model.DomId"
@@ -22,7 +23,8 @@
                 @foreach (var column in Model.MatrixColumn.Split(","))
                 {
                     columnCounter++;
-                   <th style="padding: 0px 0px 0px 12px;">@column</th>
+                    columnChoices.Add(column);
+                    <th style="padding: 0px 0px 0px 12px;">@column</th>
                 }
             </tr>
 
@@ -33,16 +35,28 @@
                         @row
                     </td>
 
-                   @for (var i = 0; i < columnCounter; i++)
-                   {
+                    @for (var i = 0; i < columnCounter; i++)
+                    {
+
+                        if (Html.IsSubmittedValueSelected(Model, @columnChoices[@i], @rowCounter))
+                        {
+                            checkedAttribute = "checked=\"checked\"";
+                        }
+                        else
+                        {
+                            checkedAttribute = "";
+                        }
+
+
                         <td>
-                            <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" />
+                            <input name="SubmitFields[@Model.DomId].[@rowCounter].RadioButton" @checkedAttribute
+                                   value=@columnChoices[@i]
+                                   type="radio" />
                         </td>
                     }
-
-
                 </tr>
 
+                rowCounter++;
             }
         </table>
 
