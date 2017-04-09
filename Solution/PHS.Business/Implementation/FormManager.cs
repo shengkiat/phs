@@ -181,7 +181,7 @@ namespace PHS.Business.Implementation
 
                                 }
 
-                             
+
                             }
                         }
                     }
@@ -194,6 +194,23 @@ namespace PHS.Business.Implementation
 
         }
 
+        public string FindSaveValue(string entryId, int fieldID)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var guid = Guid.Parse(entryId);
+                    var value = unitOfWork.FormViewValues.Find(u => u.EntryId.Equals(guid) && u.FieldId == fieldID);
 
+                    return value.First().Value;
+                }
+            }
+            catch
+            {
+                return "";
+            }
+
+        }
     }
 }

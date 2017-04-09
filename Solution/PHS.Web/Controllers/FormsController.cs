@@ -349,13 +349,31 @@ namespace PHS.Web.Controllers
                 return RedirectToAction("edit", new { id = form.ID });
             }
 
-            // TODO - Set EntryId so as to retrieve back the data
-            //foreach (var field in model.Fields)
-            //{
-            //    field.EntryId = "DD33BCCD-4004-42EF-A878-8E6546B80689";
-            //}
-
             return View(model);
+        }
+
+        public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
+        {
+            FormViewModel model = null;
+
+            var form = this._formRepo.GetForm(id);
+
+            if (form != null)
+            {
+                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model.Embed = embed;
+            }
+            else
+            {
+                return RedirectToAction("edit", new { id = form.ID });
+            }
+
+            foreach (var field in model.Fields)
+            {
+                field.EntryId = entryId;
+            }
+
+            return View("Register",model);
         }
 
         [HttpPost]
@@ -854,7 +872,7 @@ namespace PHS.Web.Controllers
         {
             if (!IsUserAuthenticated())
             {
-                // TODO
+                //TODO - View Form Authentication
                 // return RedirectToLogin();
             }
 

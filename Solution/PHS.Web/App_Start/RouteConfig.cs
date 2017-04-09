@@ -20,7 +20,7 @@ namespace PHS.Web
                "form-preregistration",
                "registration/{id}",
                defaults: new { controller = "forms", action = "PreRegistration", id = UrlParameter.Optional }
-               
+
             );
 
 
@@ -112,6 +112,15 @@ namespace PHS.Web
                new { formId = @"\d+" }
             );
 
+
+            // View Form with past data
+            routes.MapRoute(
+               "ViewSubmittedForm",
+               "forms/saveform/{id}/{entryID}/{embed}",
+               new { controller = "forms", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
+               new { Id = @"\d+" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -119,7 +128,7 @@ namespace PHS.Web
             );
 
 
-           
+
         }
     }
 }

@@ -28,6 +28,7 @@ namespace PHS.Repository
             Events = new EventRepository(_context);
             Modalities = new ModalityRepository(_context);
             EventPatient = new EventPatientRepository(_context);
+            FormViewValues = new FormFieldValueRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -40,6 +41,8 @@ namespace PHS.Repository
         public IModalityRepository Modalities { get; private set; }
 
         public IEventPatientRepository EventPatient { get; private set; }
+
+        public IFormFieldValueRepository FormViewValues { get; private set; }
 
         public int Complete()
         {

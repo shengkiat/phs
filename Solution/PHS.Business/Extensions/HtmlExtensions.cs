@@ -1,4 +1,5 @@
 ﻿
+using PHS.Business.Implementation;
 using PHS.DB.ViewModels.Forms;
 using System.Linq;
 using System.Text;
@@ -111,6 +112,14 @@ namespace PHS.FormBuilder.Extensions
             return "/Content/images/spacer.gif";
         }
 
+        /// <summary>
+        /// Find Save value using EntryId(GUID) of saved submission
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="model"></param>
+        /// <param name="fieldType"></param>
+        /// <param name="returnIfNull"></param>
+        /// <returns></returns>
         public static string GetSaveValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
             if (model.EntryId == null || model.EntryId == "")
@@ -118,13 +127,27 @@ namespace PHS.FormBuilder.Extensions
                 return "";
             }
 
-            if (model.FieldType == FieldType.ADDRESS)
+            using (var formManager = new FormManager())
             {
-                if (fieldType == "StreetAddress")
+
+                switch (model.FieldType)
                 {
-                    return "Andy Lau";
+                    case FieldType.ADDRESS:
+                        break;
+
+                    default:
+                        return formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
                 }
             }
+
+
+                //if (model.FieldType == FieldType.ADDRESS)
+                //{
+                //    if (fieldType == "StreetAddress")
+                //    {
+                //        return "Andy Lau";
+                //    }
+                //}
 
             return "";
 
