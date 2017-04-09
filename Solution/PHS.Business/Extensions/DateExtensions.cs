@@ -1,9 +1,7 @@
 ﻿using System;
-
 using System.Text;
 
-
-namespace PHS.FormBuilder.Extensions
+namespace PHS.Business.Extensions
 {
     public static class DateExtensions
     {

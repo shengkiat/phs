@@ -1,7 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
 
 @using PHS.Common
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 <script type="text/javascript">
 
@@ -49,7 +49,7 @@
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="vertical-list">
- 
+
 
             <li>
                 <input id="SubmitFields[@Model.DomId].Weight" name="SubmitFields[@Model.DomId].Weight" value="@Html.GetTempFormValue(Model,"StreetAddress")" type="text" class="title" /><br />

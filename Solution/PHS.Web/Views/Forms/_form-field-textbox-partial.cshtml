@@ -1,5 +1,5 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 <label style="width: 70%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
@@ -9,7 +9,7 @@
 
     <div class="input" style="width: 70%;  margin-left: 1cm;">
         <input id="SubmitFields[@Model.DomId].TextBox" name="SubmitFields[@Model.DomId].TextBox"
-               type="text" value="@Html.GetSaveValue(Model)" 
+               type="text" value="@Html.GetSubmittedTextValue(Model)" 
                title="@Model.Hint"
                maxlength="@Model.MaxCharacters"
                class="title watermarked"

@@ -1,7 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
 
 @using PHS.Common
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 
 <script type="text/javascript">
@@ -65,7 +65,7 @@
             </li>
 
             <li>
-                <input id="SubmitFields[@Model.DomId].StreetAddress" name="SubmitFields[@Model.DomId].StreetAddress" value="@Html.GetSaveValue(Model,"StreetAddress")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].StreetAddress" name="SubmitFields[@Model.DomId].StreetAddress" value="@Html.GetSubmittedTextValue(Model,"StreetAddress")" type="text" class="title" /><br />
                 <span class="sub-label">Street address</span>
             </li>
 

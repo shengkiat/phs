@@ -1,8 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
 
-
 @using PHS.Common
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 <script type="text/javascript">
 
@@ -51,7 +50,7 @@
                   type="text">
             @Html.GetTempFormValue(Model)
         </textarea>
-        <br/>
+        <br />
         <button type="button" id="btnGenerateDoctorMemo">Download Memo</button>
 
         @if (Model.IsEditMode())

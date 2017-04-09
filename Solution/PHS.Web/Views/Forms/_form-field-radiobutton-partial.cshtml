@@ -1,5 +1,5 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormFieldViewModel
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 <div style="width: 90%; word-wrap: break-word; text-align: left;"
      data-sub-channel="sub-label-@Model.DomId"
@@ -18,7 +18,7 @@
             @foreach (var option in Model.Options.Split(","))
             {
                 <li>
-                    @if (Html.IsTempFormValueSelected(Model, option))
+                    @if (Html.IsSubmittedValueSelected(Model, option))
                     {
                         checkedAttribute = "checked=\"checked\"";
                     }
@@ -39,11 +39,12 @@
 
                     @{counter = counter + 1;}
 
-                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute value="@option" name="radiogroup-@Model.Id" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute
+                           value="@option" name="radiogroup-@Model.Id" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
-            }
-            
+                        }
+
         </ul>
         <ul class="othersoption-list vertical-list">
             @if (Model.AddOthersOption)

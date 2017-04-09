@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using PHS.DB.ViewModels.Forms;
 
 
-namespace PHS.FormBuilder.Extensions
+namespace PHS.Business.Extensions
 {
     public static class UrlExtensions
     {

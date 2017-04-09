@@ -1,17 +1,17 @@
 ﻿
 @using PHS.Common
-@using PHS.FormBuilder.Extensions
+@using PHS.Business.Extensions
 
 <script id="form-field-doctormemo-template" type="text/x-jquery-tmpl">
 
     <p style="width: 90%; word-wrap: break-word; text-align: left;"
-           data-sub-channel="sub-label-${id}"
-           class="label editablewysiwyg">Click to edit</p>
+       data-sub-channel="sub-label-${id}"
+       class="label editablewysiwyg">Click to edit</p>
 
     <span class="required hidden">*</span>
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
-        <textarea id="field-${id}" type="text" ></textarea>
+        <textarea id="field-${id}" type="text"></textarea>
         @Html.Partial("_form-field-properties")
     </div>
     <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">

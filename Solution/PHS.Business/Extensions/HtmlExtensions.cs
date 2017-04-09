@@ -1,5 +1,4 @@
-﻿
-using PHS.Business.Implementation;
+﻿using PHS.Business.Implementation;
 using PHS.DB.ViewModels.Forms;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using static PHS.Common.Constants;
 
-namespace PHS.FormBuilder.Extensions
+namespace PHS.Business.Extensions
 {
     public static class HtmlExtensions
     {
@@ -113,14 +112,14 @@ namespace PHS.FormBuilder.Extensions
         }
 
         /// <summary>
-        /// Find Save value using EntryId(GUID) of saved submission
+        /// Find Save value(Text) using EntryId(GUID) of saved submission
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="model"></param>
         /// <param name="fieldType"></param>
         /// <param name="returnIfNull"></param>
         /// <returns></returns>
-        public static string GetSaveValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
+        public static string GetSubmittedTextValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
             if (model.EntryId == null || model.EntryId == "")
             {
@@ -210,6 +209,60 @@ namespace PHS.FormBuilder.Extensions
 
             return false;
         }
+
+        /// <summary>
+        /// Find if the checkbox is checked from saved submission
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="model"></param>
+        /// <param name="value"></param>
+        /// <returns>True if checkbox is checked</returns>
+        public static bool IsSubmittedValueSelected(this HtmlHelper helper, FormFieldViewModel model, string value)
+        {
+            if (model.EntryId == null || model.EntryId == "")
+            {
+                return false;
+            }
+
+            if (model.FieldType != FieldType.CHECKBOX && model.FieldType != FieldType.RADIOBUTTON)
+            {
+                return false;
+            }
+
+            using (var formManager = new FormManager())
+            {
+
+               var selectedValue =  formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+
+                if (selectedValue == null)
+                {
+                    return false;
+                }
+
+                string[] options = selectedValue.Split(",");
+                foreach (string option in options)
+                {
+                    if (value == option)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

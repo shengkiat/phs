@@ -10,7 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PHS.FormBuilder.Extensions
+namespace PHS.Business.Extensions
 {
     public static class UtilityExtensions
     {

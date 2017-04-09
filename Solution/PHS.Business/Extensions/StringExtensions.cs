@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using System.Text;
 
-namespace PHS.FormBuilder.Extensions
+namespace PHS.Business.Extensions
 {
     public static class StringExtensions
     {

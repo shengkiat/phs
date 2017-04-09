@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.IO;
 using PHS.Common;
 
-namespace PHS.FormBuilder.Helpers
+namespace PHS.Business.Helpers
 {
     public class UtilityHelper
     {
