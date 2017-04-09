@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Implementation;
 using PHS.DB.ViewModels.Forms;
+using PHS.FormBuilder.ViewModel;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -132,6 +133,45 @@ namespace PHS.Business.Extensions
                 switch (model.FieldType)
                 {
                     case FieldType.ADDRESS:
+
+                        var addressValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+
+                        AddressViewModel address = addressValue.FromJson<AddressViewModel>();
+
+                        if (fieldType == "Blk")
+                        {
+                            return address.Blk;
+                        }
+                        else if (fieldType == "Unit")
+                        {
+                            return address.Unit;
+                        }
+                        else if (fieldType == "StreetAddress")
+                        {
+                            return address.StreetAddress;
+                        }
+                        else if (fieldType == "ZipCode")
+                        {
+                            return address.ZipCode;
+                        }
+
+                        break;
+
+                    case FieldType.BMI:
+
+                        var bmiValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+
+                        BMIViewModel bmi = bmiValue.FromJson<BMIViewModel>();
+
+                        if (fieldType == "Weight")
+                        {
+                            return bmi.Weight;
+                        }
+                        else if (fieldType == "Height")
+                        {
+                            return bmi.Height;
+                        }
+
                         break;
 
                     default:
@@ -140,13 +180,13 @@ namespace PHS.Business.Extensions
             }
 
 
-                //if (model.FieldType == FieldType.ADDRESS)
-                //{
-                //    if (fieldType == "StreetAddress")
-                //    {
-                //        return "Andy Lau";
-                //    }
-                //}
+            //if (model.FieldType == FieldType.ADDRESS)
+            //{
+            //    if (fieldType == "StreetAddress")
+            //    {
+            //        return "Andy Lau";
+            //    }
+            //}
 
             return "";
 
@@ -232,7 +272,7 @@ namespace PHS.Business.Extensions
             using (var formManager = new FormManager())
             {
 
-               var selectedValue =  formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                var selectedValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
 
                 if (selectedValue == null)
                 {

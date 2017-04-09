@@ -52,12 +52,12 @@
 
 
             <li>
-                <input id="SubmitFields[@Model.DomId].Weight" name="SubmitFields[@Model.DomId].Weight" value="@Html.GetTempFormValue(Model,"StreetAddress")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].Weight" name="SubmitFields[@Model.DomId].Weight" value="@Html.GetSubmittedTextValue(Model,"Weight")" type="text" class="title" /><br />
                 <span class="sub-label">Weight (kg)</span>
             </li>
 
             <li>
-                <input id="SubmitFields[@Model.DomId].Height" name="SubmitFields[@Model.DomId].Height" value="@Html.GetTempFormValue(Model,"StreetAddress")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].Height" name="SubmitFields[@Model.DomId].Height" value="@Html.GetSubmittedTextValue(Model,"Height")" type="text" class="title" /><br />
                 <span class="sub-label">Height (cm)</span>
             </li>
 
@@ -89,12 +89,6 @@
             <span class="field-validation-error">@Model.Errors</span>
         }
     </div>
-
-
-
-
-
-
 
 
     <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
