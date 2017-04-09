@@ -244,7 +244,7 @@ namespace PHS.Web.Controllers
             catch (Exception ex)
             {
                 //TODO: log error
-               // var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
+                // var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
                 return Json(new { success = false, error = "Unable to save form ", isautosave = isAutoSave });
             }
 
@@ -371,7 +371,7 @@ namespace PHS.Web.Controllers
                 field.EntryId = entryId;
             }
 
-            return View("Register",model);
+            return View("Register", model);
         }
 
         [HttpPost]
@@ -681,26 +681,52 @@ namespace PHS.Web.Controllers
             var dt = new DataTable(form.Title);
             List<string> columnNames = new List<string>();
             int columnCount = 0;
-            foreach (var field in form.GroupedEntries.FirstOrDefault())
-            {
-                if (field.FieldType != Constants.FieldType.HEADER)
-                {
-                    var colName = field.FieldLabel;
-                    if (columnNames.Any(cn => cn.IsTheSameAs(colName)))
-                    {
-                        int colNumber = 1;
-                        do
-                        {
-                            colName = string.Format("{0} ({1})", colName, colNumber);
-                            colNumber++;
 
-                        } while (columnNames.Any(cn => cn.IsTheSameAs(colName)));
+            //TODO - Format Export Forms Data for BMI and Address
+            foreach (var field in form.Fields)
+            {
+
+                if (field.FieldType == Constants.FieldType.MATRIX)
+                {
+                    string[] rows = field.MatrixRow.Split(",");
+                    foreach (string row in rows)
+                    {
+                        dt.Columns.Add(new DataColumn(row));
+
+                        columnCount++;
                     }
-                    columnNames.Add(colName);
-                    dt.Columns.Add(new DataColumn(colName));
                 }
-                columnCount++;
+                else
+                {
+                    var colName = field.Label;
+                    dt.Columns.Add(new DataColumn(colName));
+
+                    columnCount++;
+                }
             }
+
+            // Comment out original
+
+            //foreach (var field in form.GroupedEntries.FirstOrDefault())
+            //{
+            //    if (field.FieldType != Constants.FieldType.HEADER)
+            //    {
+            //        var colName = field.FieldLabel;
+            //        if (columnNames.Any(cn => cn.IsTheSameAs(colName)))
+            //        {
+            //            int colNumber = 1;
+            //            do
+            //            {
+            //                colName = string.Format("{0} ({1})", colName, colNumber);
+            //                colNumber++;
+
+            //            } while (columnNames.Any(cn => cn.IsTheSameAs(colName)));
+            //        }
+            //        columnNames.Add(colName);
+            //        dt.Columns.Add(new DataColumn(colName));
+            //    }
+            //    columnCount++;
+            //}
 
             dt.Columns.Add(new DataColumn("Submitted On"));
 
@@ -711,7 +737,22 @@ namespace PHS.Web.Controllers
                 int columnIndex = 0;
                 for (columnIndex = 0; columnIndex < columnCount; columnIndex++)
                 {
-                    if (columnIndex < group.Count())
+
+                    if (group.FirstOrDefault().FieldType == Constants.FieldType.MATRIX)
+                    {
+                        var matrixField = group.FirstOrDefault().Value;
+
+                        string[] submissions = matrixField.Split(",");
+                        foreach (string submitValue in submissions)
+                        {
+                            row[columnIndex] = submitValue;
+                            columnIndex++;
+                        }
+
+                        columnIndex--;
+                    }
+
+                   else if (columnIndex < group.Count())
                     {
                         var field = group.ElementAt(columnIndex);
                         row[columnIndex] = field.Format(true);
