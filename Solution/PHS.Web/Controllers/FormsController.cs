@@ -4,6 +4,7 @@ using PHS.Business.Extensions;
 using PHS.Business.Implementation;
 using PHS.Common;
 using PHS.DB.ViewModels.Forms;
+using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Repository;
 using System;
 using System.Collections.Generic;
@@ -696,10 +697,36 @@ namespace PHS.Web.Controllers
                         columnCount++;
                     }
                 }
+                else if (field.FieldType == Constants.FieldType.ADDRESS)
+                {
+                    dt.Columns.Add(new DataColumn("Blk"));
+                    dt.Columns.Add(new DataColumn("Unit"));
+                    dt.Columns.Add(new DataColumn("Street Address"));
+                    dt.Columns.Add(new DataColumn("ZipCode"));
+
+                    columnCount += 4;
+
+                }
+                else if (field.FieldType == Constants.FieldType.BMI)
+                {
+                    dt.Columns.Add(new DataColumn("Weight"));
+                    dt.Columns.Add(new DataColumn("Height"));
+                    dt.Columns.Add(new DataColumn("BMI"));
+
+                    columnCount += 3;
+                }
                 else
                 {
                     var colName = field.Label;
-                    dt.Columns.Add(new DataColumn(colName));
+
+                    if (dt.Columns.Contains(colName))
+                    {
+                        dt.Columns.Add(new DataColumn(columnCount + ": " + colName));
+                    }
+                    else
+                    {
+                        dt.Columns.Add(new DataColumn(colName));
+                    }
 
                     columnCount++;
                 }
@@ -735,12 +762,14 @@ namespace PHS.Web.Controllers
                 DataRow row = dt.NewRow();
                 var fieldAddedOn = group.FirstOrDefault().DateAdded;
                 int columnIndex = 0;
-                for (columnIndex = 0; columnIndex < columnCount; columnIndex++)
-                {
 
-                    if (group.FirstOrDefault().FieldType == Constants.FieldType.MATRIX)
+                foreach (var entry in group)
+                {
+                    // for (columnIndex = 0; columnIndex < columnCount; )
+                    //  {
+                    if (entry.FieldType == Constants.FieldType.MATRIX)
                     {
-                        var matrixField = group.FirstOrDefault().Value;
+                        var matrixField = entry.Value;
 
                         string[] submissions = matrixField.Split(",");
                         foreach (string submitValue in submissions)
@@ -751,17 +780,46 @@ namespace PHS.Web.Controllers
 
                         columnIndex--;
                     }
+                    else if (entry.FieldType == Constants.FieldType.ADDRESS)
+                    {
+                        var addressField = entry.Value;
 
-                   else if (columnIndex < group.Count())
+                        AddressViewModel address = addressField.FromJson<AddressViewModel>();
+
+                        row[columnIndex] = address.Blk;
+                        row[columnIndex + 1] = address.Unit;
+                        row[columnIndex + 2] = address.StreetAddress;
+                        row[columnIndex + 3] = address.ZipCode;
+
+                        columnIndex += 4;
+                    }
+                    else if (entry.FieldType == Constants.FieldType.BMI)
+                    {
+                        var bmiField = entry.Value;
+
+                        BMIViewModel bmi = bmiField.FromJson<BMIViewModel>();
+
+                        row[columnIndex] = bmi.Weight;
+                        row[columnIndex + 1] = bmi.Height;
+                        row[columnIndex + 2] = bmi.BodyMassIndex;
+
+                        columnIndex += 3;
+                    }
+                    else if (columnIndex < group.Count())
                     {
                         var field = group.ElementAt(columnIndex);
                         row[columnIndex] = field.Format(true);
+                        columnIndex++;
                     }
                     else
                     {
-                        row[columnIndex] = "";
+
+                        row[columnIndex] = entry.Value;
+                        columnIndex++;
                     }
+                    // }
                 }
+
                 row[columnIndex] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
                 dt.Rows.Add(row);
             }
