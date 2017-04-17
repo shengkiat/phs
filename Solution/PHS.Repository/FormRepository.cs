@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace PHS.Repository.Repository
 {
-    public class FormRepository : BaseRespository<form, int>
+    public class FormRepository : BaseRespository<Form, int>
     {    
-        public form GetForm(int key)
+        public Form GetForm(int key)
         {
             this.DataContext = new PHSContext();
-            return this.DataContext.forms.Where(u => u.ID == key).Include(x => x.form_fields).FirstOrDefault();
+            return this.DataContext.Forms.Where(u => u.ID == key).Include(x => x.FormFields).FirstOrDefault();
         }
 
         public FormRepository(PHSContext datacontext)
@@ -31,27 +31,27 @@ namespace PHS.Repository.Repository
 
         }
 
-        public override DbSet<form> EntitySet
+        public override DbSet<Form> EntitySet
         {
-            get { return this.DataContext.forms; }
+            get { return this.DataContext.Forms; }
         }
 
-        protected override form ConvertToNativeEntity(form entity)
+        protected override Form ConvertToNativeEntity(Form entity)
         {
             return entity;
         }
 
-        protected override int SelectPrimaryKey(form entity)
+        protected override int SelectPrimaryKey(Form entity)
         {
             return entity.ID;
         }
 
-        public override form GetByPrimaryKey(int key)
+        public override Form GetByPrimaryKey(int key)
         {
             return this.GetByPrimaryKey(s => s.ID == key);
         }
 
-        public void UpdateField(form form1, FormFieldViewModel fieldView)
+        public void UpdateField(Form form1, FormFieldViewModel fieldView)
         {
             if (form1 == null)
             {
@@ -61,7 +61,7 @@ namespace PHS.Repository.Repository
             if (!fieldView.Id.HasValue)
             {
                 // create
-                var fField = new form_fields
+                var fField = new FormField
                 {
                     DomId = fieldView.DomId,
                    // Label = fieldView.Label.LimitWithElipses(40),
@@ -95,12 +95,12 @@ namespace PHS.Repository.Repository
                     MatrixColumn = fieldView.MatrixColumn
                 };
 
-                form1.form_fields.Add(fField);
+                form1.FormFields.Add(fField);
                 this.SaveChanges();
             }
             else
             {
-                var fField = this.DataContext.form_fields.Where(field => field.ID == fieldView.Id.Value).FirstOrDefault();
+                var fField = this.DataContext.FormFields.Where(field => field.ID == fieldView.Id.Value).FirstOrDefault();
                 if (fField != null)
                 {
 
@@ -138,10 +138,10 @@ namespace PHS.Repository.Repository
 
         }
 
-        public form CreateNew()
+        public Form CreateNew()
         {
             string formName = "New Registration Form";
-            var form = new form
+            var form = new Form
             {
                 Title = formName,
                 //Slug = formName.ToSlug(),
@@ -152,12 +152,12 @@ namespace PHS.Repository.Repository
                 IsActive = true
             };
 
-            this.DataContext.forms.Add(form);
+            this.DataContext.Forms.Add(form);
             this.SaveChanges();
             return form;
         }
 
-        public void Update(FormViewModel model, form form1)
+        public void Update(FormViewModel model, Form form1)
         {
             if (model == null)
             {
@@ -183,10 +183,10 @@ namespace PHS.Repository.Repository
 
         public void DeleteField(int id)
         {
-            var field = this.DataContext.form_fields.Where(f => f.ID == id).FirstOrDefault();
+            var field = this.DataContext.FormFields.Where(f => f.ID == id).FirstOrDefault();
             if (field != null)
             {
-                this.DataContext.form_fields.Remove(field);
+                this.DataContext.FormFields.Remove(field);
                 this.SaveChanges();
             }
         }
@@ -205,13 +205,13 @@ namespace PHS.Repository.Repository
             return values;
         }
 
-        public List<form_field_values> GetRegistrantsByForm(int formId)
+        public List<FormFieldValue> GetRegistrantsByForm(int formId)
         {
-            var fieldValues = this.DataContext.form_field_values;
+            var fieldValues = this.DataContext.FormFieldValues;
             return this.DataContext
-                             .form_fields
+                             .FormFields
                              .Include("Forms")
-                             .Where(field => field.forms.Any(f => f.ID == formId))
+                             .Where(field => field.Forms.Any(f => f.ID == formId))
                              .Join(fieldValues, fields => fields.ID, fieldValue => fieldValue.FieldId, (FormField, FormFieldValue) => FormFieldValue)
                              .ToList();
         }
@@ -220,7 +220,7 @@ namespace PHS.Repository.Repository
         {
             if (field.FieldType != Constants.FieldType.HEADER)
             {
-                var fieldVal = new form_field_values
+                var fieldVal = new FormFieldValue
                 {
                     FieldId = field.Id.Value,
                     Value = value,
@@ -228,7 +228,7 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow
                 };
 
-                this.DataContext.form_field_values.Add(fieldVal);
+                this.DataContext.FormFieldValues.Add(fieldVal);
                 this.SaveChanges();
             }
         }
@@ -236,20 +236,20 @@ namespace PHS.Repository.Repository
         public void DeleteEntries(IEnumerable<string> selectedEntries)
         {
             var selectedGuids = selectedEntries.Select(se => new Guid(se));
-            var entries = this.DataContext.form_field_values.Where(fv => selectedGuids.Any(se => fv.EntryId == se));
+            var entries = this.DataContext.FormFieldValues.Where(fv => selectedGuids.Any(se => fv.EntryId == se));
 
             foreach (var entry in entries)
             {
                 //this.DeleteFileEntry(entry);
-                this.DataContext.form_field_values.Remove(entry);
+                this.DataContext.FormFieldValues.Remove(entry);
             }
 
             this.SaveChanges();
         }
 
-        //public void DeleteFileEntry(form_field_values entry)
+        //public void DeleteFileEntry(FormFieldValues entry)
         //{
-        //    if (entry.form_fields.FieldType.ToUpper().IsTheSameAs(Constants.FieldType.FILEPICKER.ToString()))
+        //    if (entry.FormFields.FieldType.ToUpper().IsTheSameAs(Constants.FieldType.FILEPICKER.ToString()))
         //    {
         //        var fileObj = entry.Value.FromJson<FileValueObject>();
 
@@ -273,7 +273,7 @@ namespace PHS.Repository.Repository
         public List<FormViewModel> GetForms()
         {
             var formViews = new List<FormViewModel>();
-            var formSet = this.DataContext.forms.ToList();
+            var formSet = this.DataContext.Forms.ToList();
             foreach (var form in formSet)
             {
                 if (form.IsActive)
@@ -285,19 +285,19 @@ namespace PHS.Repository.Repository
             return formViews;
         }
 
-        public List<form> GetBaseForms()
+        public List<Form> GetBaseForms()
         {
-            var formSet = this.DataContext.forms.ToList();
+            var formSet = this.DataContext.Forms.ToList();
            
 
             return formSet;
         }
 
 
-        public form GetPreRegistrationForm(int year = -1)
+        public Form GetPreRegistrationForm(int year = -1)
         {
             
-            var form = this.DataContext.forms.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
+            var form = this.DataContext.Forms.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
 
             return form;
         }
@@ -308,16 +308,16 @@ namespace PHS.Repository.Repository
             this.DeleteForm(form);
         }
 
-        public void DeleteForm(form form1)
+        public void DeleteForm(Form form1)
         {
             form1.IsActive = false;
 
-            //this.DataContext.forms.Remove(form1);
-            //var fields = form1.form_fields.ToList();
+            //this.DataContext.Forms.Remove(form1);
+            //var fields = form1.FormFields.ToList();
 
             //foreach (var f in fields)
             //{
-            //    this.DataContext.form_fields.Remove(f);
+            //    this.DataContext.FormFields.Remove(f);
             //}
 
             this.SaveChanges();
@@ -325,7 +325,7 @@ namespace PHS.Repository.Repository
 
         //public FileValueObject GetFileFieldValue(int valueId)
         //{
-        //    var valueObject = this.DataContext.form_field_values.Where(v => v.ID == valueId).FirstOrDefault();
+        //    var valueObject = this.DataContext.FormFieldValues.Where(v => v.ID == valueId).FirstOrDefault();
         //    if (valueObject != null)
         //    {
         //        var value = valueObject.Value.FromJson<FileValueObject>();
@@ -345,9 +345,9 @@ namespace PHS.Repository.Repository
             int counter = 0;
             this.DeleteSubmissions(olderThanInDays);
             var deleteDate = DateTime.Now.AddDays(-olderThanInDays);
-            var forms = this.DataContext.forms.Where(f => f.DateAdded < deleteDate).ToList();
+            var Forms = this.DataContext.Forms.Where(f => f.DateAdded < deleteDate).ToList();
 
-            foreach (var f in forms)
+            foreach (var f in Forms)
             {
                 this.DeleteForm(f);
                 counter++; ;
@@ -365,13 +365,13 @@ namespace PHS.Repository.Repository
         {
             int counter = 0;
             var deleteDate = DateTime.Now.AddDays(-olderThanInDays);
-            var entries = this.DataContext.form_field_values.Where(fv => fv.DateAdded < deleteDate).ToList();
+            var entries = this.DataContext.FormFieldValues.Where(fv => fv.DateAdded < deleteDate).ToList();
 
             if (entries.Any())
             {
                 foreach (var entry in entries)
                 {
-                    this.DataContext.form_field_values.Remove(entry);
+                    this.DataContext.FormFieldValues.Remove(entry);
                     counter++;
                 }
 

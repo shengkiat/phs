@@ -23,6 +23,6 @@ namespace PHS.DB
         public string Language { get; set; }
         public string Gender { get; set; }
     
-        public virtual @event @event { get; set; }
+        public virtual PHSEvent PHSEvent { get; set; }
     }
 }

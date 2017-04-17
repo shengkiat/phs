@@ -13,7 +13,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<PHS.DB.@event> events = new List<PHS.DB.@event>();
+            IEnumerable<PHS.DB.PHSEvent> events = new List<PHS.DB.PHSEvent>();
             using (var eventManager = new EventManager())
             {
                 events = eventManager.GetAllEvents();
@@ -24,7 +24,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            @event eventModel;
+            PHSEvent eventModel;
 
             using (var eventManager = new EventManager())
             {
@@ -35,7 +35,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(@event eventModel)
+        public ActionResult Edit(PHSEvent eventModel)
         {
             using (var eventManager = new EventManager())
             {
@@ -47,16 +47,16 @@ namespace PHS.Web.Controllers
 
         public ActionResult Create()
         {
-            List<form> forms;
+            List<Form> Forms;
             using (var formManager = new FormManager())
             {
-                forms = formManager.FindAllForms();
+                Forms = formManager.FindAllForms();
 
-                ViewData["ss"] = forms;
+                ViewData["ss"] = Forms;
 
                 String htmlString = "<select id=\"SelectedForm\" name=\"Modalities[0].FormID\">";
                // String htmlString = "";
-                foreach (var form in forms)
+                foreach (var form in Forms)
                 {
                     htmlString += "<option value=\"" + form.ID + "\">" + form.Title + "</option>";
                 }
@@ -69,7 +69,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "ID")]@event eventModel)
+        public ActionResult Create([Bind(Exclude = "ID")]PHSEvent eventModel)
         {
             if (ModelState.IsValid)
             {

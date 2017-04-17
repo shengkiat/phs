@@ -1,4 +1,4 @@
-﻿var forms = function () {
+﻿var Forms = function () {
 
     var dropPosition = 0;
     var activeItemId = 0;
@@ -84,7 +84,7 @@
             $(this).remove();
 
             if (fieldId) {
-                $.post('/forms/deletefield', { eventid: evtId, fieldid: fieldId }, function () {
+                $.post('/Forms/deletefield', { eventid: evtId, fieldid: fieldId }, function () {
                     refreshForm();
                 });
             }

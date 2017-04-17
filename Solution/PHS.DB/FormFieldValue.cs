@@ -12,7 +12,7 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class form_field_values
+    public partial class FormFieldValue
     {
         public int ID { get; set; }
         public int FieldId { get; set; }
@@ -20,6 +20,6 @@ namespace PHS.DB
         public string Value { get; set; }
         public System.DateTime DateAdded { get; set; }
     
-        public virtual form_fields form_fields { get; set; }
+        public virtual FormField FormField { get; set; }
     }
 }

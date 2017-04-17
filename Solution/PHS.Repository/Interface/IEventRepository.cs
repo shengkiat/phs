@@ -4,7 +4,7 @@ using PHS.Repository.Interface.Core;
 
 namespace PHS.Repository.Interface
 {
-    public interface IEventRepository : IRepository<@event>
+    public interface IEventRepository : IRepository<PHSEvent>
     {
     }
 }

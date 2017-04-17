@@ -30,7 +30,7 @@
             $.ajax({
                 type: "GET",
                 data: data,
-                url: '/forms/AddNewSortEntries',
+                url: '/Forms/AddNewSortEntries',
                 error: function (response) {
                     //alert(response);
                 },
@@ -55,7 +55,7 @@
             $.ajax({
                 type: "GET",
                 data: data,
-                url: '/forms/AddNewCriteriaEntries',
+                url: '/Forms/AddNewCriteriaEntries',
                 error: function (response) {
                     //alert(response);
                 },
@@ -84,7 +84,7 @@
             $.ajax({
                 type: "GET",
                 data: data,
-                url: '/forms/AddNewCriteriaSubEntries',
+                url: '/Forms/AddNewCriteriaSubEntries',
                 error: function (response) {
                     //alert(response);
                 },

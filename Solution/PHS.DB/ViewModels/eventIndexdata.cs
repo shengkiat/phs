@@ -8,8 +8,8 @@ namespace PHS.DB.ViewModels
 {
     public class eventIndexdata
     {
-        public IEnumerable<@event> events { get; set; }
+        public IEnumerable<PHSEvent> events { get; set; }
         public IEnumerable<Modality> modalities { get; set; }
-        public IEnumerable<form> forms { get; set; }
+        public IEnumerable<Form> Forms { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace PHS.Web.Controllers
         private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         // 6 hours
-        public const int Cache_Length = 21600;
+        public const int CacheLength = 21600;
 
         #endregion
 

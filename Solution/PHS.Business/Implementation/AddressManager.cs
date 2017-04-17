@@ -21,7 +21,7 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var address = unitOfWork.MasterAddress.Find(u => u.POSTAL_CODE.Equals(postalCode)).FirstOrDefault();
+                var address = unitOfWork.MasterAddress.Find(u => u.PostalCode.Equals(postalCode)).FirstOrDefault();
 
                 if (address != null)
                 {

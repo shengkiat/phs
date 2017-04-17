@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.@event.ID == intEventId);
+                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvent.ID == intEventId);
                         //Nric = getMockData(nric);
 
                         if (eventpatient != null)
@@ -299,7 +299,7 @@ namespace PHS.Business.Implementation
 
 
 
-            @event eventOne = new @event();
+            PHSEvent eventOne = new PHSEvent();
             eventOne.ID = 100;
             eventOne.Title = "2016 - Event";
             eventOne.Modalities = new List<Modality>();
@@ -315,7 +315,7 @@ namespace PHS.Business.Implementation
             eventOne.Modalities.Add(modalityTen);
             eventOne.Modalities.Add(modalityEleven);
 
-            @event eventTwo = new @event();
+            PHSEvent eventTwo = new PHSEvent();
             eventTwo.ID = 200;
             eventTwo.Title = "2015 - Event";
             eventTwo.Modalities = new List<Modality>();

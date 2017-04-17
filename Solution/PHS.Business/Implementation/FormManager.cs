@@ -19,26 +19,26 @@ namespace PHS.Business.Implementation
             return new FormManager();
         }
 
-        public List<form> FindAllForms()
+        public List<Form> FindAllForms()
         {
-            List<form> forms = new List<form>();
+            List<Form> Forms = new List<Form>();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                forms = unitOfWork.formRepository.GetBaseForms();
+                Forms = unitOfWork.formRepository.GetBaseForms();
 
-                if (forms != null)
+                if (Forms != null)
                 {
-                    return forms;
+                    return Forms;
                 }
             }
 
-            return forms;
+            return Forms;
 
         }
 
-        public form FindForm(int formID)
+        public Form FindForm(int formID)
         {
-            form form = new form();
+            Form form = new Form();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 form = unitOfWork.formRepository.GetForm(formID);
@@ -55,7 +55,7 @@ namespace PHS.Business.Implementation
 
         public string InsertUploadDataToForm(byte[] data, int formid)
         {
-            form form = new form();
+            Form form = new Form();
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -73,7 +73,7 @@ namespace PHS.Business.Implementation
                         {
                             int x = 1;
                             // check if header match
-                            foreach (var field in form.form_fields)
+                            foreach (var field in form.FormFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -125,7 +125,7 @@ namespace PHS.Business.Implementation
 
                             int y = 1;
 
-                            foreach (var field in form.form_fields)
+                            foreach (var field in form.FormFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -139,15 +139,15 @@ namespace PHS.Business.Implementation
 
                                         string value1 = address.ToJson();
 
-                                        form_field_values value = new form_field_values();
+                                        FormFieldValue value = new FormFieldValue();
                                         value.Value = value1;
                                         value.EntryId = Guid.NewGuid();
                                         value.DateAdded = DateTime.Now;
                                         value.FieldId = field.ID;
 
-                                        field.form_field_values.Add(value);
+                                        field.FormFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.form_field_values.Add(value);
+                                        unitOfWork.ActiveLearningContext.FormFieldValues.Add(value);
                                     }
 
                                     y += 4;
@@ -163,15 +163,15 @@ namespace PHS.Business.Implementation
                                             continue;
                                         }
 
-                                        form_field_values value = new form_field_values();
+                                        FormFieldValue value = new FormFieldValue();
                                         value.Value = worksheet.Cells[row, y].Value.ToString();
                                         value.EntryId = Guid.NewGuid();
                                         value.DateAdded = DateTime.Now;
                                         value.FieldId = field.ID;
 
-                                        field.form_field_values.Add(value);
+                                        field.FormFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.form_field_values.Add(value);
+                                        unitOfWork.ActiveLearningContext.FormFieldValues.Add(value);
 
                                     }
 

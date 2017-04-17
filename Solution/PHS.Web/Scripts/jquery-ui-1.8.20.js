@@ -4508,7 +4508,7 @@ $.fn.extend({
  * Copyright 2008 George McGinley Smith
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
+ * Redistribution and use in source and binary Forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * Redistributions of source code must retain the above copyright notice, this list of
@@ -4677,7 +4677,7 @@ $.extend($.easing,
  * Copyright 2001 Robert Penner
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
+ * Redistribution and use in source and binary Forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * Redistributions of source code must retain the above copyright notice, this list of
@@ -6049,7 +6049,7 @@ $.widget( "ui.autocomplete", {
 					// when menu is open and has focus
 					if ( self.menu.active ) {
 						// #6055 - Opera still allows the keypress to occur
-						// which causes forms to submit
+						// which causes Forms to submit
 						suppressKeyPress = true;
 						event.preventDefault();
 					}

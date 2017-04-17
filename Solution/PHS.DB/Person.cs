@@ -20,10 +20,10 @@ namespace PHS.DB
         public string FullName { get; set; }
         public bool IsActive { get; set; }
         public string Role { get; set; }
+        public string ContactNumber { get; set; }
         public string PasswordSalt { get; set; }
         public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
-        public string ContactNumber { get; set; }
     }
 }

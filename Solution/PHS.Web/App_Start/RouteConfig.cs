@@ -19,7 +19,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-preregistration",
                "registration/{id}",
-               defaults: new { controller = "forms", action = "PreRegistration", id = UrlParameter.Optional }
+               defaults: new { controller = "Forms", action = "PreRegistration", id = UrlParameter.Optional }
 
             );
 
@@ -27,71 +27,71 @@ namespace PHS.Web
             // download file
             routes.MapRoute(
                "form-download-file",
-               "forms/file/download/{valueId}",
-               new { controller = "forms", action = "GetFileFromDisk", valueId = UrlParameter.Optional }
+               "Forms/file/download/{valueId}",
+               new { controller = "Forms", action = "GetFileFromDisk", valueId = UrlParameter.Optional }
             );
 
 
             // register
             routes.MapRoute(
                "form-edit",
-               "forms/edit/{id}",
-               new { controller = "forms", action = "edit", Id = UrlParameter.Optional },
+               "Forms/edit/{id}",
+               new { controller = "Forms", action = "edit", Id = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
             // register
             routes.MapRoute(
                "form-preview",
-               "forms/preview/{id}",
-               new { controller = "forms", action = "preview", Id = UrlParameter.Optional },
+               "Forms/preview/{id}",
+               new { controller = "Forms", action = "preview", Id = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
             // register
             routes.MapRoute(
                "form-register",
-               "forms/register/{id}/{embed}",
-               new { controller = "forms", action = "register", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "Forms/register/{id}/{embed}",
+               new { controller = "Forms", action = "register", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
             // create form
             routes.MapRoute(
                "form-create",
-               "forms/create",
-               new { controller = "forms", action = "create" }
+               "Forms/create",
+               new { controller = "Forms", action = "create" }
             );
 
             // form confirmation
             routes.MapRoute(
                "form-confirmation",
-               "forms/confirmation/{id}/{embed}",
-               new { controller = "forms", action = "formconfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "Forms/confirmation/{id}/{embed}",
+               new { controller = "Forms", action = "formconfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
             // view form entries
             routes.MapRoute(
                "form-entries",
-               "forms/entries/{formid}",
-               new { controller = "forms", action = "ViewEntries", formId = UrlParameter.Optional },
+               "Forms/entries/{formid}",
+               new { controller = "Forms", action = "ViewEntries", formId = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 
             // delete form
             routes.MapRoute(
                "form-delete",
-               "forms/delete/{formid}",
-               new { controller = "forms", action = "delete", formId = UrlParameter.Optional },
+               "Forms/delete/{formid}",
+               new { controller = "Forms", action = "delete", formId = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 
-            // forms home
+            // Forms home
             routes.MapRoute(
                "form-home",
-               "forms/index",
-               new { controller = "forms", action = "index" }
+               "Forms/index",
+               new { controller = "Forms", action = "index" }
             );
 
             //** END FORM BUILDER ROUTES **//
@@ -116,8 +116,8 @@ namespace PHS.Web
             // View Form with past data
             routes.MapRoute(
                "ViewSubmittedForm",
-               "forms/saveform/{id}/{entryID}/{embed}",
-               new { controller = "forms", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
+               "Forms/saveform/{id}/{entryID}/{embed}",
+               new { controller = "Forms", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 

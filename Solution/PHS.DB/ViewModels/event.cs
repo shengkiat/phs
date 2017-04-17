@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PHS.DB
 {
     [MetadataType(typeof(EventMetadata))]
-    public partial class @event
+    public partial class PHSEvent
     {
         public class EventMetadata
         {

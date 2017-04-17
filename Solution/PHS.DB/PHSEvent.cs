@@ -12,13 +12,13 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class @event
+    public partial class PHSEvent
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public @event()
+        public PHSEvent()
         {
-            this.Modalities = new HashSet<Modality>();
             this.EventPatients = new HashSet<EventPatient>();
+            this.Modalities = new HashSet<Modality>();
         }
     
         public int ID { get; set; }
@@ -31,8 +31,8 @@ namespace PHS.DB
         public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Modality> Modalities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventPatient> EventPatients { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Modality> Modalities { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace PHS.Business.Interface
 {
     public interface IEventManager
     {
-        IEnumerable<@event> GetAllEvents();
-        @event GetEventByID(int ID);
-        bool NewEvent(@event eventModel);
-        bool UpdateEvent(@event eventModel);
+        IEnumerable<PHSEvent> GetAllEvents();
+        PHSEvent GetEventByID(int ID);
+        bool NewEvent(PHSEvent eventModel);
+        bool UpdateEvent(PHSEvent eventModel);
     }
 }

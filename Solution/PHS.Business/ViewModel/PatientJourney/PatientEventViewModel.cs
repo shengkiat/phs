@@ -16,20 +16,20 @@ namespace PHS.Business.ViewModel.PatientJourney
 
         public PatientEventViewModel(EventPatient eventPatient)
         {
-            this.Event = eventPatient.@event;
+            this.Event = eventPatient.PHSEvent;
             this.FullName = eventPatient.FullName;
             this.Nric = eventPatient.Nric;
             this.Language = eventPatient.Language;
             this.ContactNumber = eventPatient.ContactNumber;
             this.Gender = eventPatient.Gender;
 
-            int now = int.Parse(eventPatient.@event.StartDT.ToString("yyyy"));
+            int now = int.Parse(eventPatient.PHSEvent.StartDT.ToString("yyyy"));
             int dob = int.Parse(eventPatient.DateOfBirth.Value.ToString("yyyy"));
             this.Age = (now - dob);
         }
 
 
-        public @event Event { get; set; }
+        public PHSEvent Event { get; set; }
         public string EventId { get { return Event.ID.ToString(); } }
 
         public string Nric { get; set; }
@@ -43,14 +43,14 @@ namespace PHS.Business.ViewModel.PatientJourney
 
         public int SelectedModalityId { get; set; }
 
-        public List<form> GetModalityFormsForTabs() {
-            List<form> result = new List<form>();
+        public List<Form> GetModalityFormsForTabs() {
+            List<Form> result = new List<Form>();
 
             foreach (var modality in Event.Modalities)
             {
                 if (modality.ID.Equals(SelectedModalityId))
                 {
-                    result = modality.forms.ToList();
+                    result = modality.Forms.ToList();
                 }
             }
             

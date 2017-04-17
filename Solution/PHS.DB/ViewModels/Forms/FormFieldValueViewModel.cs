@@ -35,7 +35,7 @@ namespace PHS.DB.ViewModels.Forms
             return new FormFieldValueViewModel();
         }
 
-        public static FormFieldValueViewModel CreateFromObject(form_field_values model)
+        public static FormFieldValueViewModel CreateFromObject(FormFieldValue model)
         {
            // model.FormFieldReference.Load();
             return new FormFieldValueViewModel
@@ -45,9 +45,9 @@ namespace PHS.DB.ViewModels.Forms
                 EntryId = model.EntryId.ToString(),
                 Value = model.Value,
                 DateAdded = model.DateAdded,                
-                FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), model.form_fields.FieldType),
-                FieldLabel = model.form_fields.Label,
-                FieldOrder = model.form_fields.Order.Value
+                FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), model.FormField.FieldType),
+                FieldLabel = model.FormField.Label,
+                FieldOrder = model.FormField.Order.Value
             };
         }
     }

@@ -12,12 +12,12 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class form
+    public partial class Form
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public form()
+        public Form()
         {
-            this.form_fields = new HashSet<form_fields>();
+            this.FormFields = new HashSet<FormField>();
             this.Modalities = new HashSet<Modality>();
         }
     
@@ -36,7 +36,7 @@ namespace PHS.DB
         public bool IsQuestion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<form_fields> form_fields { get; set; }
+        public virtual ICollection<FormField> FormFields { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Modality> Modalities { get; set; }
     }

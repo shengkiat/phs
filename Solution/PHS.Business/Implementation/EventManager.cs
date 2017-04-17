@@ -21,7 +21,7 @@ namespace PHS.Business.Implementation
             return new EventManager();
         }
 
-        public IEnumerable<@event> GetAllEvents()
+        public IEnumerable<PHSEvent> GetAllEvents()
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -29,7 +29,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public @event GetEventByID(int ID)
+        public PHSEvent GetEventByID(int ID)
         {
            
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
@@ -38,7 +38,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool NewEvent(@event eventModel)
+        public bool NewEvent(PHSEvent eventModel)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -50,7 +50,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool UpdateEvent(@event eventModel)
+        public bool UpdateEvent(PHSEvent eventModel)
         {
             if (eventModel == null)
             {

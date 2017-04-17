@@ -23,15 +23,15 @@ namespace PHS.Web.Controllers
         // GET: FormImport
         public ActionResult Index()
         {
-            List<form> forms = new List<form>();
+            List<Form> Forms = new List<Form>();
 
             using (var manager = new FormManager())
             {
-                forms = manager.FindAllForms();
+                Forms = manager.FindAllForms();
 
             }
 
-            return View(forms);
+            return View(Forms);
         }
 
         public string Between( string value, string a, string b)
@@ -123,7 +123,7 @@ namespace PHS.Web.Controllers
             // Create the file using the FileInfo object
             var file = new FileInfo(outputDir + fileName);
 
-            form form = new form();
+            Form form = new Form();
             using (var manager = new FormManager())
             {
                 form = manager.FindForm(formid);
@@ -145,7 +145,7 @@ namespace PHS.Web.Controllers
                 // Start adding the header
                 // First of all the first row
                 int x = 1;
-                foreach (var field in form.form_fields)
+                foreach (var field in form.FormFields)
                 {
                     if (field.FieldType == "ADDRESS")
                     {

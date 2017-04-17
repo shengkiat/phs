@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace PHS.Repository.Repository
 {
-    public class FormFieldValueRepository : Repository<form_field_values>, IFormFieldValueRepository
+    public class FormFieldValueRepository : Repository<FormFieldValue>, IFormFieldValueRepository
     {
         public FormFieldValueRepository(DbContext context) : base(context)
         {

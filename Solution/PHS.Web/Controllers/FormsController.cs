@@ -133,16 +133,9 @@ namespace PHS.Web.Controllers
                     return Json(new { Error = "Invalid" });
                 }
 
-                return Json(new { Blk = address.STREET_NUMBER, Street = address.STREET_NAME });
-
-
+                return Json(new { Blk = address.StreetNumber, Street = address.StreetName });
             }
-            // return Json("'Blk':'123', Street: 'ISS'");
-            return Json(new { Blk = "123", Street = "ISS" });
-            //   return Json("Success");
-
         }
-
 
         [HttpPost]
         public ActionResult Update(bool isAutoSave, FormViewModel model, FormCollection collection, IDictionary<string, string> Fields)
@@ -236,7 +229,7 @@ namespace PHS.Web.Controllers
 
 
                 //  form.FormFields.Load();
-                var fieldOrderById = form.form_fields.Select(ff => new { domid = ff.DomId, id = ff.ID });
+                var fieldOrderById = form.FormFields.Select(ff => new { domid = ff.DomId, id = ff.ID });
 
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
 
@@ -269,12 +262,12 @@ namespace PHS.Web.Controllers
                     }
                     catch (Exception ex)
                     {
-                        TempData["error"] = "Unable to delete form - forms must have no entries to be able to be deleted";
+                        TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
                     }
                 }
             }
 
-            TempData["error"] = "Unable to delete form - forms must have no entries to be able to be deleted";
+            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
             return RedirectToRoute("form-home");
         }
 
@@ -295,7 +288,7 @@ namespace PHS.Web.Controllers
             // var form = this._formRepo.GetByPrimaryKey(id);
             var form = this._formRepo.GetForm(id);
 
-            if (form.form_fields.Count() > 0)
+            if (form.FormFields.Count() > 0)
             {
                 form.Status = toOn ? Constants.FormStatus.PUBLISHED.ToString() : Constants.FormStatus.DRAFT.ToString();
 
@@ -394,7 +387,6 @@ namespace PHS.Web.Controllers
                 // first validate fields
                 foreach (var field in formView.Fields)
                 {
-                    var valId = field.ValidationId();
                     if (!field.SubmittedValueIsValid(form))
                     {
                         field.SetFieldErrors();

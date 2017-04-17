@@ -91,7 +91,7 @@ $.extend( $.fn, {
 					return true;
 				}
 
-				// Prevent submit for invalid forms or custom submit handlers
+				// Prevent submit for invalid Forms or custom submit handlers
 				if ( validator.cancelSubmit ) {
 					validator.cancelSubmit = false;
 					return handle();
@@ -1106,7 +1106,7 @@ $.extend( $.validator, {
 			} );
 		},
 
-		// Cleans up all forms and elements, removes validator-specific events
+		// Cleans up all Forms and elements, removes validator-specific events
 		destroy: function() {
 			this.resetForm();
 
@@ -1350,7 +1350,7 @@ $.extend( $.validator, {
 		// http://jqueryvalidation.org/email-method/
 		email: function( value, element ) {
 
-			// From https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
+			// From https://html.spec.whatwg.org/multipage/Forms.html#valid-e-mail-address
 			// Retrieved 2014-01-14
 			// If you have a problem with this implementation, report a bug against the above spec
 			// Or use custom methods to implement your own email validation

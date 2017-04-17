@@ -12,13 +12,13 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class form_fields
+    public partial class FormField
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public form_fields()
+        public FormField()
         {
-            this.form_field_values = new HashSet<form_field_values>();
-            this.forms = new HashSet<form>();
+            this.FormFieldValues = new HashSet<FormFieldValue>();
+            this.Forms = new HashSet<Form>();
         }
     
         public int ID { get; set; }
@@ -52,8 +52,8 @@ namespace PHS.DB
         public string MatrixColumn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<form_field_values> form_field_values { get; set; }
+        public virtual ICollection<FormFieldValue> FormFieldValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<form> forms { get; set; }
+        public virtual ICollection<Form> Forms { get; set; }
     }
 }

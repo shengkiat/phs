@@ -232,10 +232,10 @@
             /// </summary>
             /// <param name="selector" type="String">Any valid jQuery selector.</param>
 
-            // $forms includes all forms in selector's DOM hierarchy (parent, children and self) that have at least one
+            // $Forms includes all Forms in selector's DOM hierarchy (parent, children and self) that have at least one
             // element with data-val=true
             var $selector = $(selector),
-                $forms = $selector.parents()
+                $Forms = $selector.parents()
                                   .addBack()
                                   .filter("form")
                                   .add($selector.find("form"))
@@ -245,7 +245,7 @@
                 $jQval.unobtrusive.parseElement(this, true);
             });
 
-            $forms.each(function () {
+            $Forms.each(function () {
                 var info = validationInfo(this);
                 if (info) {
                     info.attachValidation();

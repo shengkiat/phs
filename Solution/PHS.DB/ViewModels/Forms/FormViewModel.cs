@@ -65,21 +65,21 @@ namespace PHS.DB.ViewModels.Forms
             return formView;
         }
 
-        public static FormViewModel CreateFromObject(form form1)
+        public static FormViewModel CreateFromObject(Form form1)
         {
             return CreateFromObject(form1, Constants.FormFieldMode.EDIT);
         }
 
-        public static FormViewModel CreateFromObject(form form1, Constants.FormFieldMode mode)
+        public static FormViewModel CreateFromObject(Form form1, Constants.FormFieldMode mode)
         {
             if (form1 != null)
             {
 
                 var formView = CreateBasicFromObject(form1);
 
-                if (form1.form_fields.Count() > 0)
+                if (form1.FormFields.Count() > 0)
                 {
-                    form1.form_fields.OrderBy(o => o.Order).Each((field, index) =>
+                    form1.FormFields.OrderBy(o => o.Order).Each((field, index) =>
                     {
 
                         formView.Fields.Add(FormFieldViewModel.CreateFromObject(field, mode));
@@ -91,7 +91,7 @@ namespace PHS.DB.ViewModels.Forms
             return FormViewModel.Initialize();
         }
 
-        public static FormViewModel CreateBasicFromObject(form form1)
+        public static FormViewModel CreateBasicFromObject(Form form1)
         {
 
             var formView = new FormViewModel

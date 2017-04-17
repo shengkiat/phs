@@ -14,9 +14,9 @@ namespace PHS.DB
     
     public partial class MasterAddress
     {
-        public string POSTAL_CODE { get; set; }
-        public string BUILDING_NAME { get; set; }
-        public string STREET_NUMBER { get; set; }
-        public string STREET_NAME { get; set; }
+        public string PostalCode { get; set; }
+        public string BuildingName { get; set; }
+        public string StreetNumber { get; set; }
+        public string StreetName { get; set; }
     }
 }

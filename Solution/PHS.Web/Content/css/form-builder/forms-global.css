@@ -10,7 +10,7 @@ ul.vertical-list li{list-style-type:none;}
 .link-button{display:inline-block;}
 a.image-bg-link{clear:left;display:inline-block;text-decoration:none;border: 0 none;padding: 0 15px 0 0;text-align: center;height: 30px;line-height: 30px;width: auto;}
 a.image-bg-link span{display:block;height:30px;line-height:30px; padding: 0 0 0 15px;position: relative; white-space: nowrap;}
-.image-bg{background-image:url(../../images/forms-sprite.png) !important;background-repeat:no-repeat !important;}
+.image-bg{background-image:url(../../images/Forms-sprite.png) !important;background-repeat:no-repeat !important;}
 a.icon-link{padding-left:20px;padding-bottom:2px;padding-top:4px;}
 .italicize, .italics{font-style:italic;}
 .align-right, .right-align{text-align:right !important;}
@@ -79,12 +79,12 @@ label{font-weight:normal;}
 a{text-decoration:none;color:#3673e2;}
 a:hover{color:Blue;}
 a.help-icon-1{display:inline-block;width:20px;height:20px;text-align:center;}
-a.help-icon-1 img{margin:0 auto;background:url(../../images/forms-sprite.png) -196px -131px no-repeat;width:18px;height:18px;}
+a.help-icon-1 img{margin:0 auto;background:url(../../images/Forms-sprite.png) -196px -131px no-repeat;width:18px;height:18px;}
 a.help-icon-1:hover img{background-position:-175px -131px; }
-a.image-icon-link{border:1px solid transparent;padding:2px 4px 0px 20px;background-image:url(../../images/forms-sprite.png) !important;background-repeat:no-repeat !important;height:20px;text-decoration:none;color:Black;font-size:11px;display:inline-block;}
+a.image-icon-link{border:1px solid transparent;padding:2px 4px 0px 20px;background-image:url(../../images/Forms-sprite.png) !important;background-repeat:no-repeat !important;height:20px;text-decoration:none;color:Black;font-size:11px;display:inline-block;}
 a.image-icon-link:hover{border:1px solid #c0c0c0;}
-a.image-icon{background-image:url(../../images/forms-sprite.png) !important;background-repeat:no-repeat !important;}
-.header-icon{background-image: url("../../images/forms-sprite.png");background-repeat: no-repeat;float: left;margin: 0;padding: 2px 0 0 27px;}
+a.image-icon{background-image:url(../../images/Forms-sprite.png) !important;background-repeat:no-repeat !important;}
+.header-icon{background-image: url("../../images/Forms-sprite.png");background-repeat: no-repeat;float: left;margin: 0;padding: 2px 0 0 27px;}
 .watermark {color:#999}
 .chars-left{font:normal 10px verdana;color:#c0c0c0;margin-bottom:5px !important;margin-top:0px !important;}
 div.inner-container{width:95%;padding:10px;margin:0 auto;}
@@ -122,7 +122,7 @@ input[type=password].number-field{width:50px;text-align:right;}
 .debug h3{border:1px gray dotted;}
 span.required{color:#2989E3;}
 .required-prompt{font-size:11px;padding-bottom:10px;}
-label.required{background:url(../../images/forms-sprite.png) no-repeat right -2204px;}
+label.required{background:url(../../images/Forms-sprite.png) no-repeat right -2204px;}
 div.tip{font-size:10px;color:#81817e;width:75%;padding:2px 3px 3px 25px;margin:0 auto;background:#fdfdcf url(/Content/images/lightbulb.png) no-repeat 3px 2px;}
 div.tip{-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px; -moz-border-radius-bottomright:5px;-moz-border-radius-top:5px;border-top-right-radius: 5px;border-top-left-radius: 5px;}
 div.tip{-moz-box-shadow: 1px 1px 2px 1px #c0c0c0;-webkit-box-shadow: 1px 1px 2px 1px #c0c0c0;box-shadow:1px 1px 2px 1px #c0c0c0;}
@@ -141,7 +141,7 @@ a.add-icon-link{background-position:-280px -480px;}
 a.delete-icon-link, .delete-icon{background-position:-278px -455px;}
 a.edit-icon-link, .edit-icon{background-position:-278px -423px;}
 a.upgrade-icon-link, .upgrade-icon{background-position: -279px -504px;}
-a.forms-icon-link, .forms-icon{background-position: -281px -535px;}
+a.Forms-icon-link, .Forms-icon{background-position: -281px -535px;}
 a.copy-icon-link, .copy-icon{background-position: -282px -692px;}
 a.settings-icon-link, .settings-icon{background-position: -173px -155px !important;}
 a.delete-field-icon-link, .delete-field-icon{background-position: -197px -155px;}
@@ -154,7 +154,7 @@ a.clock-icon-link, .clock-icon{background-position: -279px -2713px;}
 a.print-icon-link, .print-icon{background-position: -281px -2791px;}
 a.briefcase-icon-link, .briefcase-icon{background-position: -283px -2831px;}
 a.no-ads-icon-link, .no-ads-icon{background-position: -282px -2872px;}
-a.premium-forms-icon-link, .premium-forms-icon{background-position: -282px -2916px;}
+a.premium-Forms-icon-link, .premium-Forms-icon{background-position: -282px -2916px;}
 a.arrow-up-icon-link, .arrow-up-icon{background-position: -283px -2960px;}
 a.star-medal-icon-link, .star-medal-icon{background-position: -283px -3001px;}
 a.edit-description-icon-link, .edit-description-icon{background-position: -281px -3163px;}
@@ -164,10 +164,10 @@ a.flag-icon-link, .flag-icon{background-position: -284px -1902px !important;}
 a.crop-icon-link, .crop-icon{background-position: -288px -1925px !important;}
 a.minus-icon-link, .minus-icon{background-position: -285px -1948px !important;}
 a.lock-icon-link, .lock-icon{background-position: -285px -1970px !important;}
-a.isprivate-icon-link, .isprivate-icon{background:url(../../images/forms-sprite.png) no-repeat right -1967px !important;padding:2px 30px 0 0 !important;}
-a.white-lock-icon-link, white-lock-icon{background:url(../../images/forms-sprite.png) -119px -20px no-repeat;}
-a.white-lock-with-hole-icon-link, white-lock-with-hole-icon{background:url(../../images/forms-sprite.png) -282px -3031px no-repeat;}
-a.white-signup-icon-link, .white-signup-icon{background:url(../../images/forms-sprite.png) -119px 2px no-repeat;}
+a.isprivate-icon-link, .isprivate-icon{background:url(../../images/Forms-sprite.png) no-repeat right -1967px !important;padding:2px 30px 0 0 !important;}
+a.white-lock-icon-link, white-lock-icon{background:url(../../images/Forms-sprite.png) -119px -20px no-repeat;}
+a.white-lock-with-hole-icon-link, white-lock-with-hole-icon{background:url(../../images/Forms-sprite.png) -282px -3031px no-repeat;}
+a.white-signup-icon-link, .white-signup-icon{background:url(../../images/Forms-sprite.png) -119px 2px no-repeat;}
 a.white-add-icon-link, .white-add-icon{background-position: -289px -2179px !important;}
 a.white-edit-icon-link, .white-edit-icon{background-position: -289px -2146px !important;}
 a.white-delete-icon-link, .white-delete-icon{background-position: -289px -2111px !important;}

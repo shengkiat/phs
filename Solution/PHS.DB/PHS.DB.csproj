@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,19 +80,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="event.cs">
-      <DependentUpon>PHSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="EventPatient.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="form.cs">
+    <Compile Include="Form.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="form_fields.cs">
+    <Compile Include="FormField.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="form_field_values.cs">
+    <Compile Include="FormFieldValue.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterAddress.cs">
@@ -101,6 +99,9 @@
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Person.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PHSEvent.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PHSModel.Context.cs">

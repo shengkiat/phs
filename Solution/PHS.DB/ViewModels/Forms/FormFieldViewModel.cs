@@ -56,12 +56,12 @@ namespace PHS.DB.ViewModels.Forms
             return new FormFieldViewModel();
         }
 
-        public static FormFieldViewModel CreateFromObject(form_fields field)
+        public static FormFieldViewModel CreateFromObject(FormField field)
         {
             return CreateFromObject(field, Constants.FormFieldMode.EDIT);
         }
 
-        public static FormFieldViewModel CreateFromObject(form_fields field, Constants.FormFieldMode mode)
+        public static FormFieldViewModel CreateFromObject(FormField field, Constants.FormFieldMode mode)
         {
             if (field != null)
             {
