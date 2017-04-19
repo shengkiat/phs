@@ -18,7 +18,7 @@
     $(function () {
         pageGrids.participantsGrid.onRowSelect(function (e) {
             $("#BtnGoToEvent").prop('disabled', false);
-            $("#BtnGoToEvent").attr("formaction", "/PatientJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+            $("#BtnGoToEvent").attr("formaction", "/phs/PatientJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
         });
     });
 </script>
