@@ -227,15 +227,13 @@ namespace PHS.Web.Controllers
                     }
                 }
 
-
                 //  form.FormFields.Load();
                 var fieldOrderById = form.FormFields.Select(ff => new { domid = ff.DomId, id = ff.ID });
 
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
 
-
             }
-            catch (Exception ex)
+            catch
             {
                 //TODO: log error
                 // var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
@@ -260,7 +258,7 @@ namespace PHS.Web.Controllers
                         TempData["success"] = "Form Deleted";
                         return RedirectToRoute("form-home");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
                     }
@@ -292,8 +290,6 @@ namespace PHS.Web.Controllers
             {
                 form.Status = toOn ? Constants.FormStatus.PUBLISHED.ToString() : Constants.FormStatus.DRAFT.ToString();
 
-
-
                 this._formRepo.SaveChanges();
                 if (toOn)
                 {
@@ -309,10 +305,8 @@ namespace PHS.Web.Controllers
                 TempData["error"] = "Cannot publish form until fields have been added.";
             }
 
-
             return RedirectToAction("edit", new { id = form.ID });
         }
-
 
         public void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
         {
@@ -376,11 +370,9 @@ namespace PHS.Web.Controllers
 
             var formObj = this._formRepo.GetForm(model.Id.Value);
 
-
             var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
             formView.AssignInputValues(form);
             this.InsertValuesIntoTempData(SubmitFields, form);
-
 
             if (formView.Fields.Any())
             {
@@ -477,7 +469,6 @@ namespace PHS.Web.Controllers
             // var form = this._formRepo.GetByPrimaryKey(formId);
 
             var form = this._formRepo.GetForm(formId);
-
 
             var formView = FormViewModel.CreateFromObject(form);
 
@@ -928,7 +919,7 @@ namespace PHS.Web.Controllers
                     TempData["success"] = "The selected entries were deleted";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 TempData["error"] = "An error occured while deleting entries. Try again later.";
             }

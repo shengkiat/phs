@@ -94,7 +94,7 @@ namespace PHS.Business.Common
                 {
                     smtp.Send(mail);
                 }
-                catch (Exception ex)
+                catch
                 {
                     //Log Error
                 }
