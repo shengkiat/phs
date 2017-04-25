@@ -21,14 +21,16 @@ namespace PHS.DB
             this.Modalities = new HashSet<Modality>();
         }
     
-        public int ID { get; set; }
+        public int PHSEventID { get; set; }
         public string Title { get; set; }
         public System.DateTime StartDT { get; set; }
         public System.DateTime EndDT { get; set; }
         public string Venue { get; set; }
-        public string CreateBy { get; set; }
-        public System.DateTime CreateDate { get; set; }
         public bool IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<int> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventPatient> EventPatients { get; set; }

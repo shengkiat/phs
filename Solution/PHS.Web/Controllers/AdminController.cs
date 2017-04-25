@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using PHS.Business.Implementation;
-using PHS.DB;
+﻿using PHS.Business.Implementation;
 using PHS.Business.ViewModel;
-using System.Security.Principal;
-using System.Security.Claims;
-using PHS.Web.Filter;
-
-using PHS.Business.Interface;
-using System.Text;
 using PHS.Common;
+using PHS.DB;
+using PHS.Web.Filter;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace PHS.Web.Controllers
 {
@@ -83,7 +75,7 @@ namespace PHS.Web.Controllers
                 //TODO remove hardcode
                 person.Password = "12345";
 
-                var newUser = personManager.AddPerson(person, out message);
+                var newUser = personManager.AddPerson(GetLoginUser(), person, out message);
                 if (newUser == null)
                 {
                     SetViewBagError(message);
@@ -135,7 +127,7 @@ namespace PHS.Web.Controllers
 
             using (var personManager = new PersonManager())
             {
-                if (personManager.UpdatePerson(person, out message))
+                if (personManager.UpdatePerson(GetLoginUser(), person, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("User has been updated"));
                     return RedirectToAction("ManageUser");

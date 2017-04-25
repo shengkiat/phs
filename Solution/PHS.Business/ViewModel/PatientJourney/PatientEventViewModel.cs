@@ -30,7 +30,7 @@ namespace PHS.Business.ViewModel.PatientJourney
 
 
         public PHSEvent Event { get; set; }
-        public string EventId { get { return Event.ID.ToString(); } }
+        public string EventId { get { return Event.PHSEventID.ToString(); } }
 
         public string Nric { get; set; }
         public string FullName { get; set; }
@@ -48,7 +48,7 @@ namespace PHS.Business.ViewModel.PatientJourney
 
             foreach (var modality in Event.Modalities)
             {
-                if (modality.ID.Equals(SelectedModalityId))
+                if (modality.ModalityID.Equals(SelectedModalityId))
                 {
                     result = modality.Forms.ToList();
                 }
@@ -62,7 +62,7 @@ namespace PHS.Business.ViewModel.PatientJourney
             bool result = false;
             foreach (var modality in Event.Modalities)
             {
-                if (modality.ID.Equals(SelectedModalityId))
+                if (modality.ModalityID.Equals(SelectedModalityId))
                 {
                     result = modality.Name.Equals("Mega Sorting Station");
                 }
@@ -75,7 +75,7 @@ namespace PHS.Business.ViewModel.PatientJourney
             bool result = false;
             foreach (var modality in Event.Modalities)
             {
-                if (modality.ID.Equals(SelectedModalityId))
+                if (modality.ModalityID.Equals(SelectedModalityId))
                 {
                     result = modality.Name.Equals("Summary");
                 }

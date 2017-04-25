@@ -15,7 +15,7 @@ namespace PHS.Business.ViewModel.PatientJourney
             this.EventId = patientEvent.EventId;
             this.Nric = patientEvent.Nric;
 
-            this.ModalityID = modality.ID;
+            this.ModalityID = modality.ModalityID;
             this.Name = modality.Name;
             this.Position = modality.Position;
             this.IconPath = modality.IconPath;

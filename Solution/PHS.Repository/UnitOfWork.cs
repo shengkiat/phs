@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PHS.Repository.Repository;
+using PHS.Repository.Context;
 using PHS.Repository.Interface;
 using PHS.Repository.Interface.Core;
-using PHS.Repository.Context;
-using PHS.Repository.Repository.Core;
-using PHS.Repository.Repository;
-using PHS.DB;
-using ActiveLearning.Repository.Repository;
+using System;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace PHS.Repository
 {
@@ -18,9 +12,12 @@ namespace PHS.Repository
     {
         private readonly PHSContext _context;
 
+     
+
         public UnitOfWork(PHSContext context)
         {
             _context = context;
+        
 
             Persons = new PersonRepository(_context);
             MasterAddress = new MasterAddressRepository(_context);
@@ -46,20 +43,39 @@ namespace PHS.Repository
 
         public int Complete()
         {
-            return _context.SaveChanges();
+            int rowsAffected =  _context.SaveChanges();
+        
+
+            return rowsAffected;
         }
 
         public async Task CompleteAsync()
         {
-            await _context.SaveChangesAsync();
+            int isSaved = await _context.SaveChangesAsync();
+           
         }
+
         public void Dispose()
         {
             _context.Dispose();
         }
+
         public PHSContext ActiveLearningContext
         {
             get { return _context as PHSContext; }
+        }
+
+        public bool EnableAuditLog
+        {
+            get
+            {
+                return _context.IsAuditEnabled;
+            }
+
+            set
+            {
+                _context.IsAuditEnabled = value;
+            }
         }
     }
 }

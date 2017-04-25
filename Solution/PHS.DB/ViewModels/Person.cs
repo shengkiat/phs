@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PHS.DB.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PHS.DB
 {
+    [TrackChangesAttribute]
     [MetadataType(typeof(PersonMetadata))]
     public partial class Person
     {
@@ -29,15 +31,17 @@ namespace PHS.DB
 
             [Display(Name = "Created Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-            public DateTime CreateDT { get; set; }
+            [SkipTrackingAttribute]
+            public DateTime CreatedDateTime { get; set; }
+
+            public int? CreatedBy { get; set; }
 
             [Display(Name = "Updated Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
-            public DateTime? UpdateDT { get; set; }
+            [SkipTrackingAttribute]
+            public DateTime? UpdatedDateTime { get; set; }
 
-            [Display(Name = "Deleted Date")]
-            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
-            public DateTime? DeleteDT { get; set; }
+            public int? UpdatedBy { get; set; }
         }
     }
 }

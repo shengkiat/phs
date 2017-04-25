@@ -191,7 +191,7 @@ namespace PHS.Web.Controllers
         {
             try
             {
-                claims.Add(new Claim(ClaimTypes.PrimarySid, user.Sid.ToString()));
+                claims.Add(new Claim(ClaimTypes.PrimarySid, user.PersonID.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Username));
                 claims.Add(new Claim(ClaimTypes.Role, user.Role));

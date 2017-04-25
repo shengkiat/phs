@@ -21,7 +21,7 @@ namespace PHS.DB
             this.Forms = new HashSet<Form>();
         }
     
-        public int ID { get; set; }
+        public int ModalityID { get; set; }
         public string Name { get; set; }
         public int Position { get; set; }
         public string IconPath { get; set; }

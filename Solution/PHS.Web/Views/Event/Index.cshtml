@@ -28,7 +28,7 @@
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.ID }));
+    .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.PHSEventID }));
 
 }).WithPaging(10).Sortable(true)
 </div>

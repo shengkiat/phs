@@ -12,17 +12,16 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class EventPatient
+    public partial class AuditLog
     {
-        public int ID { get; set; }
-        public int PHSEventID { get; set; }
-        public string Nric { get; set; }
-        public string FullName { get; set; }
-        public string ContactNumber { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
-        public string Language { get; set; }
-        public string Gender { get; set; }
-    
-        public virtual PHSEvent PHSEvent { get; set; }
+        public int AuditLogID { get; set; }
+        public int PersonID { get; set; }
+        public System.DateTime AuditDateTime { get; set; }
+        public string AuditState { get; set; }
+        public string TableName { get; set; }
+        public string RecordID { get; set; }
+        public string ColumnName { get; set; }
+        public string OriginalValue { get; set; }
+        public string NewValue { get; set; }
     }
 }

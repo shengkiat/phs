@@ -17,7 +17,7 @@ namespace PHS.Business.Implementation
     {
         public bool ChangePassword(Person user, string oldPass, string newPass, string newPassConfirm, out string message)
         {
-            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Username))
+            if (user == null || user.PersonID == 0 || string.IsNullOrEmpty(user.Username))
             {
                 message = "Cannot find user";
                 return false;
@@ -59,8 +59,8 @@ namespace PHS.Business.Implementation
             {
                 try
                 {
-                    unitOfWork.Persons.Get(user.Sid).Password = newPassHash;
-                    unitOfWork.Persons.Get(user.Sid).UpdateDT = DateTime.Now;
+                    unitOfWork.Persons.Get(user.PersonID).Password = newPassHash;
+                    unitOfWork.Persons.Get(user.PersonID).UpdatedDateTime = DateTime.Now;
                     unitOfWork.Complete();
                     return true;
                 }
@@ -88,14 +88,14 @@ namespace PHS.Business.Implementation
             Person authenticatedUser = null;
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(userName.Trim()) || string.IsNullOrEmpty(password.Trim()))
             {
-                message = "Please enter Username and Password" ;
+                message = "Please enter Username and Password";
                 return null;
             }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue).FirstOrDefault();
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive).FirstOrDefault();
 
                     if (user != null)
                     {
@@ -168,7 +168,7 @@ namespace PHS.Business.Implementation
 
                     foreach (var person in persons)
                     {
-                        if (!person.DeleteDT.HasValue && person.IsActive)
+                        if (person.IsActive)
                         {
                             list.Add(person);
                         }
@@ -228,7 +228,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue);
+                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive);
 
                     if (users != null && users.Any())
                     {
@@ -253,7 +253,7 @@ namespace PHS.Business.Implementation
         public IList<Person> GetPersonsByFullName(string fullName, out string message)
         {
             IList<Person> persons = null;
-            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(fullName.Trim()) )
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(fullName.Trim()))
             {
                 message = "Name is empty!";
                 return null;
@@ -262,7 +262,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && u.IsActive && !u.DeleteDT.HasValue);
+                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && u.IsActive);
 
                     if (users != null && users.Any())
                     {
@@ -291,7 +291,7 @@ namespace PHS.Business.Implementation
          *Will check username
          *If username exists, will return null and username already exists message 
         */
-        public Person AddPerson(Person person, out string message)
+        public Person AddPerson(Person loginPerson, Person person, out string message)
         {
             message = string.Empty;
             if (person == null)
@@ -322,11 +322,11 @@ namespace PHS.Business.Implementation
             person = hasedUser;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        person.CreateDT = DateTime.Now;
+                        person.CreatedDateTime = DateTime.Now;
                         person.IsActive = true;
                         unitOfWork.Persons.Add(person);
                         unitOfWork.Complete();
@@ -344,11 +344,15 @@ namespace PHS.Business.Implementation
             }
         }
 
-        /*
-        *Will NOT check whether username exists
-        *Username is not allowed to be changed
-        */
-        public bool UpdatePerson(Person person, out string message)
+        /// <summary>
+        /// Will NOT check whether username exists
+        /// Username is not allowed to be changed
+        /// </summary>
+        /// <param name="loginPerson">Person performing the update</param>
+        /// <param name="person">Person to be updated</param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool UpdatePerson(Person loginPerson, Person person, out string message)
         {
             message = string.Empty;
             if (person == null)
@@ -373,12 +377,12 @@ namespace PHS.Business.Implementation
             }
             try
             {
-
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
                 {
-                    var personToUpdate = unitOfWork.Persons.Get(person.Sid);
+                    var personToUpdate = unitOfWork.Persons.Get(person.PersonID);
                     Util.CopyNonNullProperty(person, personToUpdate);
-                    personToUpdate.UpdateDT = DateTime.Now;
+                    personToUpdate.UpdatedDateTime = DateTime.Now;
+                    personToUpdate.UpdatedBy = loginPerson.PersonID;
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.Complete();
@@ -407,7 +411,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                     if (user != null)
                     {
                         message = Constants.ValueAlreadyExists(userName);
@@ -460,5 +464,5 @@ namespace PHS.Business.Implementation
         }
     }
 
-    
+
 }

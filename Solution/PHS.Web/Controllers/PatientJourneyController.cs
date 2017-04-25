@@ -119,8 +119,8 @@ namespace PHS.Web.Controllers
                     TempData["Nric"] = nric;
                     TempData["EventId"] = eventId;
                     TempData["PatientEventModalityViewModel"] = patientEventModalitys;
-                    TempData["SelectedModalityId"] = patientEvent.Event.Modalities.First().ID;
-                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ID;
+                    TempData["SelectedModalityId"] = patientEvent.Event.Modalities.First().ModalityID;
+                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ModalityID;
                 }
             }
 

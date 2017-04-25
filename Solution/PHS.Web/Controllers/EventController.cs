@@ -75,7 +75,7 @@ namespace PHS.Web.Controllers
             {
                 using (var eventManager = new EventManager())
                 {
-                    eventModel.CreateBy = "";
+                    eventModel.CreatedBy = "";
 
                     eventManager.NewEvent(eventModel);
                 }

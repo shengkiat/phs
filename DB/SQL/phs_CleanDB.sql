@@ -14,7 +14,6 @@ IF OBJECT_ID('dbo.FormFormField', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.FormField', 'U') IS NOT NULL 
   DROP TABLE [dbo].[FormField]; 
   
-
 IF OBJECT_ID('dbo.EventModality', 'U') IS NOT NULL 
   DROP TABLE [dbo].[EventModality]; 
   
@@ -30,12 +29,30 @@ IF OBJECT_ID('dbo.EventPatient', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.PHSEvent', 'U') IS NOT NULL 
   DROP TABLE [dbo].[PHSEvent]; 
   
-  IF OBJECT_ID('dbo.Form', 'U') IS NOT NULL 
+IF OBJECT_ID('dbo.Form', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Form]; 
 
-
+IF OBJECT_ID('dbo.AuditLog', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[AuditLog]; 
+  
+CREATE TABLE [dbo].[AuditLog](
+	[AuditLogID] [int] IDENTITY(1,1) NOT NULL,
+	[PersonID] [int] NOT NULL,
+	[AuditDateTime] [datetime2](7) NOT NULL,
+	[AuditState] [nchar](10) NOT NULL,
+	[TableName] [nchar](100) NOT NULL,
+	[RecordID] [nvarchar](max) NULL,
+	[ColumnName] [nchar](100) NOT NULL,
+	[OriginalValue] [nvarchar](max) NULL,
+	[NewValue] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_AuditLog] PRIMARY KEY CLUSTERED 
+(
+	[AuditLogID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+  
 CREATE TABLE [dbo].[Person](
-	[Sid] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[PersonID] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [nvarchar](max) NOT NULL,
 	[Password] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NOT NULL,
@@ -43,25 +60,32 @@ CREATE TABLE [dbo].[Person](
 	[Role] [char](1) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[PasswordSalt] [nvarchar](max) NOT NULL,
-	[CreateDT] [datetime] NOT NULL,
-	[UpdateDT] [datetime] NULL,
-	[DeleteDT] [datetime] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDateTime] [datetime2](7) NULL,
+ CONSTRAINT [PK__Person__CA1E5D78BB4E2436] PRIMARY KEY CLUSTERED 
+(
+	[PersonID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 )
 
 CREATE TABLE [dbo].[PHSEvent](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[PHSEventID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[StartDT] [datetime2] NOT NULL,
-	[EndDT] [datetime2] NOT NULL,
+	[StartDT] [datetime2](7) NOT NULL,
+	[EndDT] [datetime2](7) NOT NULL,
 	[Venue] [nvarchar](max) NULL,
-	[CreateBy] [nvarchar] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
 	[IsActive] [bit] NOT NULL,
+	[CreatedBy] [nvarchar](1) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDateTime] [datetime2](7) NULL,
  CONSTRAINT [PK_event] PRIMARY KEY CLUSTERED 
 (
-	[ID] ASC
+	[PHSEventID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 CREATE TABLE [dbo].[ModalityForm](
 	[ModalityID] [int] NOT NULL,
@@ -74,17 +98,17 @@ CREATE TABLE [dbo].[ModalityForm](
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[EventModality](
-	[EventID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
 	[ModalityID] [int] NOT NULL,
  CONSTRAINT [PK_EventModality_1] PRIMARY KEY CLUSTERED 
 (
-	[EventID] ASC,
+	[PHSEventID] ASC,
 	[ModalityID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[Modality](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ModalityID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](max) NOT NULL,
 	[Position] [int] NOT NULL,
 	[IconPath] [nvarchar](max) NULL,
@@ -96,25 +120,25 @@ CREATE TABLE [dbo].[Modality](
 	[Labels] [int] NULL
  CONSTRAINT [PK_Modality] PRIMARY KEY CLUSTERED 
 (
-	[ID] ASC
+	[ModalityID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 
 CREATE TABLE [dbo].[EventPatient](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[EventID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
 	[Language] [nvarchar](max) NOT NULL,
-	[Gender] [nvarchar](max) NOT NULL
+	[Gender] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_event_patient] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 
 CREATE TABLE [dbo].[Form](
@@ -198,8 +222,21 @@ CREATE TABLE [dbo].[FormFormField](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
-ALTER TABLE [dbo].[FormFieldValue] ADD  CONSTRAINT [DF_form_field_values_DateAdded]  DEFAULT (getutcdate()) FOR [DateAdded]
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_event]
+GO
+ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_Modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ModalityID])
+GO
+ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
+GO
+ALTER TABLE [dbo].[EventPatient]  WITH CHECK ADD  CONSTRAINT [FK_EventPatient_Event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
+GO
+ALTER TABLE [dbo].[EventPatient] CHECK CONSTRAINT [FK_EventPatient_Event]
 GO
 ALTER TABLE [dbo].[FormFieldValue]  WITH CHECK ADD  CONSTRAINT [FK_form_field_values_form_fields] FOREIGN KEY([FieldId])
 REFERENCES [dbo].[FormField] ([ID])
@@ -218,32 +255,15 @@ REFERENCES [dbo].[Form] ([ID])
 GO
 ALTER TABLE [dbo].[FormFormField] CHECK CONSTRAINT [FK_form_fields]
 GO
-
-GO
-ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([EventID])
-REFERENCES [dbo].[PHSEvent] ([ID])
-GO
-ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_event]
-GO
-ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_Modality] FOREIGN KEY([ModalityID])
-REFERENCES [dbo].[Modality] ([ID])
-GO
-ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
-GO
 ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_form] FOREIGN KEY([FormID])
 REFERENCES [dbo].[Form] ([ID])
 GO
 ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_form]
 GO
 ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_Modality] FOREIGN KEY([ModalityID])
-REFERENCES [dbo].[Modality] ([ID])
+REFERENCES [dbo].[Modality] ([ModalityID])
 GO
 ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_Modality]
-GO
-ALTER TABLE [dbo].[EventPatient]  WITH CHECK ADD  CONSTRAINT [FK_EventPatient_Event] FOREIGN KEY([EventID])
-REFERENCES [dbo].[PHSEvent] ([ID])
-GO
-ALTER TABLE [dbo].[EventPatient] CHECK CONSTRAINT [FK_EventPatient_Event]
 GO
 
 
@@ -260,47 +280,47 @@ GO
 SET IDENTITY_INSERT [dbo].[Person] ON 
 
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (1, N'Admin1', N'WG7qLtt1uUZI8IS49HuPRMXk14RdyGCE', N'Super Admin', 1, N'A', N'f+3W4Sgya5jto3JLOKiwC3TJtOPs7yhC', CAST(N'2016-04-13 23:15:17.527' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (1, N'Admin1', N'WG7qLtt1uUZI8IS49HuPRMXk14RdyGCE', N'Super Admin', 1, N'A', NULL, N'f+3W4Sgya5jto3JLOKiwC3TJtOPs7yhC', NULL, CAST(N'2016-04-13 23:15:17.5270000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (2, N'Volunteer1', N't5bahHgyfjMDi7jcwE7zz+CUTW6E8VZw', N'Kent White', 1, N'V', N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ', CAST(N'2016-04-13 23:17:34.010' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (2, N'Volunteer1', N't5bahHgyfjMDi7jcwE7zz+CUTW6E8VZw', N'Kent White', 1, N'D', NULL, N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ', NULL, CAST(N'2016-04-13 23:17:34.0000000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (3, N'Volunteer2', N'xk/xDrqvUTmp//xjd2VaxtsT0uJf9nDj', N'Eric Johnson', 1, N'V', N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ', CAST(N'2016-04-13 23:17:41.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (3, N'Volunteer2', N'xk/xDrqvUTmp//xjd2VaxtsT0uJf9nDj', N'Eric Johnson', 1, N'V', NULL, N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ', NULL, CAST(N'2016-04-13 23:17:41.9100000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (4, N'Volunteer3', N'oa2koZYg8TLrW4qUfykT7ilKoTgL4lEy', N'Tom Cruise', 1, N'V', N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ', CAST(N'2016-04-13 23:18:59.883' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (4, N'Volunteer3', N'oa2koZYg8TLrW4qUfykT7ilKoTgL4lEy', N'Tom Cruise', 1, N'V', NULL, N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ', NULL, CAST(N'2016-04-13 23:18:59.8830000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (5, N'Volunteer4', N'TFQv51wShe7p5Mxinu6wEm66j7eK8AmT', N'Walker Smith', 1, N'V', N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (5, N'Volunteer4', N'TFQv51wShe7p5Mxinu6wEm66j7eK8AmT', N'Walker Smith', 1, N'V', NULL, N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (6, N'Volunteer5', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', N'Celestino Douglas', 1, N'V', N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (6, N'Volunteer5', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', N'Celestino Douglas', 1, N'V', NULL, N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (7, N'Volunteer6', N'6yG3xPGAdpnlCy1UlodH4GGhNw5yEX08', N'Alexandros Hafiz', 1, N'V', N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (7, N'Volunteer6', N'6yG3xPGAdpnlCy1UlodH4GGhNw5yEX08', N'Alexandros Hafiz', 1, N'V', NULL, N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (8, N'Volunteer7', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', N'Dimas Channing', 1, N'V', N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (8, N'Volunteer7', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', N'Dimas Channing', 1, N'V', NULL, N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (9, N'Volunteer8', N'm9Z8my2Kx0tAaEpWOJ3CDki2oua8bDgO', N'Codie Lucinda', 1, N'V', N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (9, N'Volunteer8', N'm9Z8my2Kx0tAaEpWOJ3CDki2oua8bDgO', N'Codie Lucinda', 1, N'V', NULL, N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (10, N'Volunteer9', N'KUlleZSbFADpi8n+M7pIOlCmhEZYJnR6', N'Torger Kayleen', 1, N'V', N'VJkbnSovc1BtPy04RybAo8B8sAAwTn2J ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (10, N'Volunteer9', N'KUlleZSbFADpi8n+M7pIOlCmhEZYJnR6', N'Torger Kayleen', 1, N'V', NULL, N'VJkbnSovc1BtPy04RybAo8B8sAAwTn2J ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (11, N'Volunteer10', N'MWM6zwwL1eeZxfZ3XjUeWYHWkbLM0A4C', N'Filippa Cynbel', 0, N'V', N'cZZ7m8Sj5pv4Ag7hP8ot9ZqDCHbrOooI ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (11, N'Volunteer10', N'MWM6zwwL1eeZxfZ3XjUeWYHWkbLM0A4C', N'Filippa Cynbel', 0, N'V', NULL, N'cZZ7m8Sj5pv4Ag7hP8ot9ZqDCHbrOooI ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (12, N'Doctor1', N'QV7JswCtrAikzyagdRArK41ZR7CHuqf7', N'Adil Hayati', 1, N'D', N'KrTW84isQkhtiMQxzbwLKfIsLmOhobSY ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (12, N'Doctor1', N'QV7JswCtrAikzyagdRArK41ZR7CHuqf7', N'Adil Hayati', 1, N'D', NULL, N'KrTW84isQkhtiMQxzbwLKfIsLmOhobSY ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (13, N'Doctor2', N'+iFZH18HLlJnGWWOWsanO5fxhVgHKIp3', N'Mette Iris', 1, N'D', N'HKjH9qgCG1tyVMVcEIJXdxtxJ5bXYufr ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (13, N'Doctor2', N'+iFZH18HLlJnGWWOWsanO5fxhVgHKIp3', N'Mette Iris', 1, N'D', NULL, N'HKjH9qgCG1tyVMVcEIJXdxtxJ5bXYufr ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (14, N'Doctor3', N'bV2Wt4MR/iKklHcxNfEl5YJd6gtwqZiH', N'Amelia Funanya', 1, N'D', N'8YQJqFAV9xUWwHiXfODFuhuDTS5ukQwt ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (14, N'Doctor3', N'bV2Wt4MR/iKklHcxNfEl5YJd6gtwqZiH', N'Amelia Funanya', 1, N'D', NULL, N'8YQJqFAV9xUWwHiXfODFuhuDTS5ukQwt ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (15, N'Doctor4', N'B2Cw0JIvHX5auHKvd+qJawpAh0xEZFJR', N'Jurgen Sofia', 1, N'D', N'yKV616WHc2i8rUKGMXMhskBWkWXm4AQC ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (15, N'Doctor4', N'B2Cw0JIvHX5auHKvd+qJawpAh0xEZFJR', N'Jurgen Sofia', 1, N'D', NULL, N'yKV616WHc2i8rUKGMXMhskBWkWXm4AQC ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (16, N'Doctor5', N'cP/4dmCYJMfCqT8zEEWCecJLZQzYVqc4', N'Athena Herbert', 1, N'D', N'7bDVnI3WlC1q2ApB+ASvPHsZwKjkvBzZ ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (16, N'Doctor5', N'cP/4dmCYJMfCqT8zEEWCecJLZQzYVqc4', N'Athena Herbert', 1, N'D', NULL, N'7bDVnI3WlC1q2ApB+ASvPHsZwKjkvBzZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (17, N'Doctor6', N'eO060WBvNSFuNE2ZE3HU0yGjqQOK3+yf', N'Chrissy Ambre', 1, N'D', N'4c08nVFZyiI73vZd9P7bEuBvpvHJhYZO ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (17, N'Doctor6', N'eO060WBvNSFuNE2ZE3HU0yGjqQOK3+yf', N'Chrissy Ambre', 1, N'D', NULL, N'4c08nVFZyiI73vZd9P7bEuBvpvHJhYZO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (18, N'Doctor7', N'p4ZhdGoLJKQW8sscjoP+Vkcg/F679pAH', N'Faddei Kir', 1, N'D', N'FHBd7pjdeFwdNJaRJPzxdfpg/zXWChDx ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (18, N'Doctor7', N'p4ZhdGoLJKQW8sscjoP+Vkcg/F679pAH', N'Faddei Kir', 1, N'D', NULL, N'FHBd7pjdeFwdNJaRJPzxdfpg/zXWChDx ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (19, N'Doctor8', N'GucDVKmV2/8cVDywlKRr4g++4/OpJksc', N'Sima Folke', 1, N'D', N'qDzmSff2D9K2BlhQYrZ6YfGB1BETav+j ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (19, N'Doctor8', N'GucDVKmV2/8cVDywlKRr4g++4/OpJksc', N'Sima Folke', 1, N'D', NULL, N'qDzmSff2D9K2BlhQYrZ6YfGB1BETav+j ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (20, N'Doctor9', N'8KJLSQXv5bURV8U2ZU+rAI54+w7A9xYI', N'Wendelin Jaci', 1, N'D', N'zK1HYfERIWKCtu3djAlZD8SheRXI7w6B ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (20, N'Doctor9', N'8KJLSQXv5bURV8U2ZU+rAI54+w7A9xYI', N'Wendelin Jaci', 1, N'D', NULL, N'zK1HYfERIWKCtu3djAlZD8SheRXI7w6B ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[Person] ([Sid], [Username], [Password], [FullName], [IsActive], [Role], [PasswordSalt], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (21, N'Doctor10', N'czIthJ583ZfkcszEIEfEK+q2pWDq3ofB', N'Valencia Demeter', 0, N'D', N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ', CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL)
+INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (21, N'Doctor10', N'czIthJ583ZfkcszEIEfEK+q2pWDq3ofB', N'Valencia Demeter', 0, N'D', NULL, N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Person] OFF
 GO
@@ -308,191 +328,112 @@ GO
 ---  Events Sample  --
 
 GO
-SET IDENTITY_INSERT [phs].[dbo].[PHSEvent] ON 
+SET IDENTITY_INSERT [dbo].[PHSEvent] ON 
 
 GO
-INSERT [phs].[dbo].[PHSEvent] ([Id], [Title], [Venue], [IsActive], [StartDT], [EndDT], [CreateDate], [CreateBy]) VALUES (1, N'2015 - Event', N'PHS', 1, CAST(N'2015-04-13 10:00:00.527' AS DateTime), CAST(N'2015-04-14 12:00:00.527' AS DateTime), CAST(N'2015-04-11 10:00:00.527' AS DateTime), N'T')
+INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (1, N'2015 - Event', CAST(N'2015-04-13 10:00:00.5270000' AS DateTime2), CAST(N'2015-04-14 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2015-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
-
+INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (2, N'2016 - Event', CAST(N'2016-04-13 10:00:00.5270000' AS DateTime2), CAST(N'2016-04-14 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
-INSERT [phs].[dbo].[PHSEvent] ([Id], [Title], [Venue], [IsActive], [StartDT], [EndDT], [CreateDate], [CreateBy]) VALUES (2, N'2016 - Event', N'PHS', 1, CAST(N'2016-04-13 10:00:00.527' AS DateTime), CAST(N'2016-04-14 12:00:00.527' AS DateTime), CAST(N'2016-04-11 10:00:00.527' AS DateTime), N'T')
+SET IDENTITY_INSERT [dbo].[PHSEvent] OFF
 GO
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[PHSEvent] OFF
 
 ---  Events Patient Sample  --
 
 GO
-SET IDENTITY_INSERT [phs].[dbo].[EventPatient] ON 
+SET IDENTITY_INSERT [dbo].[EventPatient] ON 
 
 GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
 GO
+INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+GO
+INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', N'69639756', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 
 GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', 81274563, CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+SET IDENTITY_INSERT [dbo].[EventPatient] OFF
 GO
-
-GO
-INSERT [phs].[dbo].[EventPatient] ([Id], [EventId], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', 69639756, CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
-GO
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[EventPatient] OFF
 
 
 ---  Modality Sample  --
 
 GO
-SET IDENTITY_INSERT [phs].[dbo].[Modality] ON 
+SET IDENTITY_INSERT [dbo].[Modality] ON 
 
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (1, N'Registration', 0, N'../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (1, N'Registration', 0, N'../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending', NULL, NULL)
 GO
-
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (2, N'History Taking', 1, N'../../Content/images/Modality/02historytaking.png', 1, 1, 1, N'Pending', NULL, NULL)
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (2, N'History Taking', 1, N'../../Content/images/Modality/02historytaking.png', 1, 1, 1, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (3, N'Mega Sorting Station', 2, N'../../Content/images/Modality/03megasorting.png', 1, 1, 1, N'Pending', NULL, NULL)
 GO
-
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (4, N'Phlebotomy', 3, N'../../Content/images/Modality/04phlebo.png', 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (3, N'Mega Sorting Station', 2, N'../../Content/images/Modality/03megasorting.png', 1, 1, 1, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (5, N'FIT', 4, N'../../Content/images/Modality/05fit.png', 0, 0, 1, N'Pending', NULL, NULL)
 GO
-
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (6, N'Woman Cancer', 5, N'../../Content/images/Modality/06woman.png', 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (4, N'Phlebotomy', 3, N'../../Content/images/Modality/04phlebo.png', 0, 0, 1, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (7, N'Geriatric Screening', 6, N'../../Content/images/Modality/07geri.png', 0, 0, 1, N'Pending', NULL, NULL)
 GO
-
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (8, N'Oral', 7, N'../../Content/images/Modality/08oral.png', 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (5, N'FIT', 4, N'../../Content/images/Modality/05fit.png', 0, 0, 1, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (9, N'Doctor Consult', 8, N'../../Content/images/Modality/09doctor.png', 0, 0, 0, N'Pending', NULL, NULL)
 GO
-
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (10, N'Exhibition', 9, N'../../Content/images/Modality/10exhibition.png', 1, 0, 0, N'Pending', NULL, NULL)
 GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (6, N'Woman Cancer', 5, N'../../Content/images/Modality/06woman.png', 0, 0, 1, N'Pending')
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (11, N'Summary', 10, N'../../Content/images/Modality/11summary.png', 1, 1, 0, N'Pending', NULL, NULL)
 GO
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (7, N'Geriatric Screening', 6, N'../../Content/images/Modality/07geri.png', 0, 0, 1, N'Pending')
-GO
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (8, N'Oral', 7, N'../../Content/images/Modality/08oral.png', 0, 0, 1, N'Pending')
-GO
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (9, N'Doctor Consult', 8, N'../../Content/images/Modality/09doctor.png', 0, 0, 0, N'Pending')
-GO
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (10, N'Exhibition', 9, N'../../Content/images/Modality/10exhibition.png', 1, 0, 0, N'Pending')
-GO
-
-GO
-INSERT [phs].[dbo].[Modality] ([Id], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status]) VALUES (11, N'Summary', 10, N'../../Content/images/Modality/11summary.png', 1, 1, 0, N'Pending')
-GO
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[Modality] OFF
+SET IDENTITY_INSERT [dbo].[Modality] OFF
 
 
 
 --- Event Modality Sample  --
 
 GO
-SET IDENTITY_INSERT [phs].[dbo].[EventModality] ON 
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 1)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 2)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 3)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 4)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 5)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 6)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 7)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 8)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 9)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 10)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (1, 11)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 1)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 2)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 3)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 4)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 5)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 6)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 7)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 8)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 9)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 10)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 11)
 
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 1)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 1)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 2)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 2)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 3)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 3)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 4)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 4)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 5)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 5)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 6)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 6)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 7)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 7)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 8)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 8)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 9)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 9)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 10)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 10)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (1, 11)
-GO
-
-GO
-INSERT [phs].[dbo].[EventModality] ([EventId], [ModalityId]) VALUES (2, 11)
-GO
-
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[EventModality] OFF
-GO
 ---  Forms Sample  --
 
 
@@ -799,8 +740,6 @@ GO
 
 --- Modality forms Sample  --
 
-GO
-SET IDENTITY_INSERT [phs].[dbo].[ModalityForm] ON 
 
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (1, 1)
@@ -817,6 +756,3 @@ GO
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
 GO
-
-GO
-SET IDENTITY_INSERT [phs].[dbo].[ModalityForm] OFF

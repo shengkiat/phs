@@ -11,18 +11,24 @@ namespace PHS.Repository.Repository.Core
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext Context;
+        protected readonly DbContext dbContext;
         internal DbSet<TEntity> dbSet;
 
         public Repository(DbContext context)
         {
-            Context = context;
+            this.dbContext = context;
             this.dbSet = context.Set<TEntity>();
+        }
+
+        public IContext Context
+        {
+            get;
+            set;
         }
 
         public TEntity Get(int id)
         {
-            return Context.Set<TEntity>().Find(id);
+            return dbContext.Set<TEntity>().Find(id);
         }
 
 
@@ -59,61 +65,61 @@ namespace PHS.Repository.Repository.Core
 
         public async Task<TEntity> GetAsync(int id)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return await dbContext.Set<TEntity>().FindAsync(id);
         }
 
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return dbContext.Set<TEntity>().ToList();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await Context.Set<TEntity>().ToListAsync();
+            return await dbContext.Set<TEntity>().ToListAsync();
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return dbContext.Set<TEntity>().Where(predicate);
         }
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await Context.Set<TEntity>().Where(predicate).ToListAsync();
+            return await dbContext.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().SingleOrDefault(predicate);
+            return dbContext.Set<TEntity>().SingleOrDefault(predicate);
         }
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            return await dbContext.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            dbContext.Set<TEntity>().Add(entity);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
+            dbContext.Set<TEntity>().AddRange(entities);
         }
 
         public void Remove(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
+            dbContext.Set<TEntity>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().RemoveRange(entities);
+            dbContext.Set<TEntity>().RemoveRange(entities);
         }
 
         public PHSContext GetPHSContext
         {
-            get { return Context as PHSContext; }
+            get { return dbContext as PHSContext; }
         }
     }
 }

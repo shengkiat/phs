@@ -14,7 +14,7 @@ namespace PHS.DB
     
     public partial class Person
     {
-        public int Sid { get; set; }
+        public int PersonID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
@@ -22,8 +22,9 @@ namespace PHS.DB
         public string Role { get; set; }
         public string ContactNumber { get; set; }
         public string PasswordSalt { get; set; }
-        public System.DateTime CreateDT { get; set; }
-        public Nullable<System.DateTime> UpdateDT { get; set; }
-        public Nullable<System.DateTime> DeleteDT { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<int> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     }
 }

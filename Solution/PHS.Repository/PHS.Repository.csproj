@@ -53,8 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRespository.cs" />
+    <Compile Include="Context\EntityTrackingConfiguration.cs" />
     <Compile Include="Context\PHSContext.cs" />
     <Compile Include="FormRepository.cs" />
+    <Compile Include="Interface\Core\IContext.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
     <Compile Include="Interface\Core\IRepositoryAsync.cs" />
     <Compile Include="Interface\Core\IUnitOfWork.cs" />

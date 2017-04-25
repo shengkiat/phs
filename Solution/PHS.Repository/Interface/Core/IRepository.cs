@@ -8,6 +8,7 @@ namespace PHS.Repository.Interface.Core
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        IContext Context { get; set; }
         TEntity Get(int id);
         IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties);
 

@@ -5,12 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="phsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="AuditDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AuditState" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TableName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="RecordID" Type="nvarchar(max)" />
+          <Property Name="ColumnName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="OriginalValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="EventModality">
           <Key>
-            <PropertyRef Name="EventID" />
+            <PropertyRef Name="PHSEventID" />
             <PropertyRef Name="ModalityID" />
           </Key>
-          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EventPatient">
@@ -18,7 +32,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
@@ -107,9 +121,9 @@
         </EntityType>
         <EntityType Name="Modality">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ModalityID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModalityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Position" Type="int" Nullable="false" />
           <Property Name="IconPath" Type="nvarchar(max)" />
@@ -130,9 +144,9 @@
         </EntityType>
         <EntityType Name="Person">
           <Key>
-            <PropertyRef Name="Sid" />
+            <PropertyRef Name="PersonID" />
           </Key>
-          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
@@ -140,22 +154,25 @@
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreateDT" Type="datetime" Nullable="false" />
-          <Property Name="UpdateDT" Type="datetime" />
-          <Property Name="DeleteDT" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="PHSEventID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PHSEventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StartDT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EndDT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Venue" Type="nvarchar(max)" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="1" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <Association Name="FK form_fields_form_form_fields">
           <End Role="FormField" Type="Self.FormField" Multiplicity="1">
@@ -176,10 +193,10 @@
           <End Role="EventModality" Type="Self.EventModality" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHSEvent">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="PHSEventID" />
             </Principal>
             <Dependent Role="EventModality">
-              <PropertyRef Name="EventID" />
+              <PropertyRef Name="PHSEventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -188,7 +205,7 @@
           <End Role="EventModality" Type="Self.EventModality" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Modality">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="ModalityID" />
             </Principal>
             <Dependent Role="EventModality">
               <PropertyRef Name="ModalityID" />
@@ -200,10 +217,10 @@
           <End Role="EventPatient" Type="Self.EventPatient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHSEvent">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="PHSEventID" />
             </Principal>
             <Dependent Role="EventPatient">
-              <PropertyRef Name="EventID" />
+              <PropertyRef Name="PHSEventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,7 +267,7 @@
           <End Role="ModalityForm" Type="Self.ModalityForm" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Modality">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="ModalityID" />
             </Principal>
             <Dependent Role="ModalityForm">
               <PropertyRef Name="ModalityID" />
@@ -258,6 +275,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="phsModelStoreContainer">
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPatient" EntityType="Self.EventPatient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
@@ -307,13 +325,13 @@
     <edmx:ConceptualModels>
       <Schema Namespace="phsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
+          <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="EventPatients" EntityType="phsModel.EventPatient" />
           <EntitySet Name="Forms" EntityType="phsModel.Form" />
           <EntitySet Name="FormFields" EntityType="phsModel.FormField" />
           <EntitySet Name="FormFieldValues" EntityType="phsModel.FormFieldValue" />
-          <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
-          <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
           <AssociationSet Name="FK_EventPatient_Event" Association="phsModel.FK_EventPatient_Event">
             <End Role="PHSEvent" EntitySet="PHSEvents" />
@@ -335,13 +353,40 @@
             <End Role="Form" EntitySet="Forms" />
             <End Role="Modality" EntitySet="Modalities" />
           </AssociationSet>
+          <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
         </EntityContainer>
+        <EntityType Name="MasterAddress">
+          <Key>
+            <PropertyRef Name="PostalCode" />
+          </Key>
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="StreetNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
+        </EntityType>
         <EntityType Name="EventPatient">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="PHSEventID" Type="Int32" Nullable="false" />
           <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -417,20 +462,11 @@
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="FormField" Relationship="phsModel.FK_form_field_values_form_fields" FromRole="FormFieldValue" ToRole="FormField" />
         </EntityType>
-        <EntityType Name="MasterAddress">
-          <Key>
-            <PropertyRef Name="PostalCode" />
-          </Key>
-          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="BuildingName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="StreetNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StreetName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Modality">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ModalityID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModalityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="Int32" Nullable="false" />
           <Property Name="IconPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -443,34 +479,20 @@
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="PHSEvent" />
           <NavigationProperty Name="Forms" Relationship="phsModel.ModalityForm" FromRole="Modality" ToRole="Form" />
         </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="Sid" />
-          </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDT" Type="DateTime" Precision="3" />
-          <Property Name="DeleteDT" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="PHSEventID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PHSEventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartDT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EndDT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Venue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="EventPatients" Relationship="phsModel.FK_EventPatient_Event" FromRole="PHSEvent" ToRole="EventPatient" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="PHSEvent" ToRole="Modality" />
         </EntityType>
@@ -479,10 +501,10 @@
           <End Type="phsModel.EventPatient" Role="EventPatient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHSEvent">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="PHSEventID" />
             </Principal>
             <Dependent Role="EventPatient">
-              <PropertyRef Name="EventID" />
+              <PropertyRef Name="PHSEventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -512,12 +534,54 @@
           <End Type="phsModel.Form" Role="Form" Multiplicity="*" />
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="AuditDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AuditState" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecordID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="OriginalValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="phsModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="MasterAddresses">
+            <EntityTypeMapping TypeName="phsModel.MasterAddress">
+              <MappingFragment StoreEntitySet="MasterAddress">
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="phsModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EventPatients">
             <EntityTypeMapping TypeName="phsModel.EventPatient">
               <MappingFragment StoreEntitySet="EventPatient">
@@ -527,7 +591,7 @@
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Nric" ColumnName="Nric" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -597,16 +661,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MasterAddresses">
-            <EntityTypeMapping TypeName="phsModel.MasterAddress">
-              <MappingFragment StoreEntitySet="MasterAddress">
-                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
-                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Modalities">
             <EntityTypeMapping TypeName="phsModel.Modality">
               <MappingFragment StoreEntitySet="Modality">
@@ -619,47 +673,32 @@
                 <ScalarProperty Name="IconPath" ColumnName="IconPath" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="People">
-            <EntityTypeMapping TypeName="phsModel.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="DeleteDT" ColumnName="DeleteDT" />
-                <ScalarProperty Name="UpdateDT" ColumnName="UpdateDT" />
-                <ScalarProperty Name="CreateDT" ColumnName="CreateDT" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHSEvents">
             <EntityTypeMapping TypeName="phsModel.PHSEvent">
               <MappingFragment StoreEntitySet="PHSEvent">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="Venue" ColumnName="Venue" />
                 <ScalarProperty Name="EndDT" ColumnName="EndDT" />
                 <ScalarProperty Name="StartDT" ColumnName="StartDT" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="EventModality" TypeName="phsModel.EventModality" StoreEntitySet="EventModality">
             <EndProperty Name="Modality">
-              <ScalarProperty Name="ID" ColumnName="ModalityID" />
+              <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
             </EndProperty>
             <EndProperty Name="PHSEvent">
-              <ScalarProperty Name="ID" ColumnName="EventID" />
+              <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="FormFormField" TypeName="phsModel.FormFormField" StoreEntitySet="FormFormField">
@@ -672,12 +711,27 @@
           </AssociationSetMapping>
           <AssociationSetMapping Name="ModalityForm" TypeName="phsModel.ModalityForm" StoreEntitySet="ModalityForm">
             <EndProperty Name="Modality">
-              <ScalarProperty Name="ID" ColumnName="ModalityID" />
+              <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
             </EndProperty>
             <EndProperty Name="Form">
               <ScalarProperty Name="ID" ColumnName="FormID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="phsModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OriginalValue" ColumnName="OriginalValue" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
+                <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

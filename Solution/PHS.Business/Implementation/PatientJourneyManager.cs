@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvent.ID == intEventId);
+                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvent.PHSEventID == intEventId);
                         //Nric = getMockData(nric);
 
                         if (eventpatient != null)
@@ -174,7 +174,7 @@ namespace PHS.Business.Implementation
             PatientEventViewModel patientOne = new PatientEventViewModel();
 
             Modality modalityOne = new Modality();
-            modalityOne.ID = 50;
+            modalityOne.ModalityID = 50;
             modalityOne.Name = "Registration";
             modalityOne.Position = 0;
             modalityOne.IsActive = true;
@@ -191,7 +191,7 @@ namespace PHS.Business.Implementation
           //  modalityOne.ModalityForms.Add(modalityFormOne);
 
             Modality modalityTwo = new Modality();
-            modalityTwo.ID = 2;
+            modalityTwo.ModalityID = 2;
             modalityTwo.Name = "History Taking";
             modalityTwo.Position = 1;
             modalityTwo.IsActive = true;
@@ -208,7 +208,7 @@ namespace PHS.Business.Implementation
          //   modalityTwo.ModalityForms.Add(modalityFormTwo);
 
             Modality modalityThree = new Modality();
-            modalityThree.ID = 3;
+            modalityThree.ModalityID = 3;
             modalityThree.Name = "Mega Sorting Station";
             modalityThree.Position = 2;
             modalityThree.IsActive = true;
@@ -218,7 +218,7 @@ namespace PHS.Business.Implementation
             modalityThree.Status = "Pending";
 
             Modality modalityFour = new Modality();
-            modalityFour.ID = 4;
+            modalityFour.ModalityID = 4;
             modalityFour.Name = "Phlebotomy";
             modalityFour.Position = 3;
             modalityFour.IsActive = false;
@@ -228,7 +228,7 @@ namespace PHS.Business.Implementation
             modalityFour.Status = "Pending";
 
             Modality modalityFive = new Modality();
-            modalityFive.ID = 5;
+            modalityFive.ModalityID = 5;
             modalityFive.Name = "FIT";
             modalityFive.Position = 4;
             modalityFive.IsActive = false;
@@ -238,7 +238,7 @@ namespace PHS.Business.Implementation
             modalityFive.Status = "Pending";
 
             Modality modalitySix = new Modality();
-            modalitySix.ID = 6;
+            modalitySix.ModalityID = 6;
             modalitySix.Name = "Woman Cancer";
             modalitySix.Position = 5;
             modalitySix.IsActive = false;
@@ -248,7 +248,7 @@ namespace PHS.Business.Implementation
             modalitySix.Status = "Pending";
 
             Modality modalitySeven = new Modality();
-            modalitySeven.ID = 7;
+            modalitySeven.ModalityID = 7;
             modalitySeven.Name = "Geriatric Screening";
             modalitySeven.Position = 6;
             modalitySeven.IsActive = false;
@@ -258,7 +258,7 @@ namespace PHS.Business.Implementation
             modalitySeven.Status = "Pending";
 
             Modality modalityEight = new Modality();
-            modalityEight.ID = 8;
+            modalityEight.ModalityID = 8;
             modalityEight.Name = "Oral";
             modalityEight.Position = 7;
             modalityEight.IsActive = false;
@@ -268,7 +268,7 @@ namespace PHS.Business.Implementation
             modalityEight.Status = "Pending";
 
             Modality modalityNine = new Modality();
-            modalityNine.ID = 9;
+            modalityNine.ModalityID = 9;
             modalityNine.Name = "Doctor's Consult";
             modalityNine.Position = 8;
             modalityNine.IsActive = false;
@@ -278,7 +278,7 @@ namespace PHS.Business.Implementation
             modalityNine.Status = "Pending";
 
             Modality modalityTen = new Modality();
-            modalityTen.ID = 10;
+            modalityTen.ModalityID = 10;
             modalityTen.Name = "Exhibition";
             modalityTen.Position = 9;
             modalityTen.IsActive = true;
@@ -288,7 +288,7 @@ namespace PHS.Business.Implementation
             modalityTen.Status = "Pending";
 
             Modality modalityEleven = new Modality();
-            modalityEleven.ID = 11;
+            modalityEleven.ModalityID = 11;
             modalityEleven.Name = "Summary";
             modalityEleven.Position = 10;
             modalityEleven.IsActive = true;
@@ -300,7 +300,7 @@ namespace PHS.Business.Implementation
 
 
             PHSEvent eventOne = new PHSEvent();
-            eventOne.ID = 100;
+            eventOne.PHSEventID = 100;
             eventOne.Title = "2016 - Event";
             eventOne.Modalities = new List<Modality>();
             eventOne.Modalities.Add(modalityOne);
@@ -316,7 +316,7 @@ namespace PHS.Business.Implementation
             eventOne.Modalities.Add(modalityEleven);
 
             PHSEvent eventTwo = new PHSEvent();
-            eventTwo.ID = 200;
+            eventTwo.PHSEventID = 200;
             eventTwo.Title = "2015 - Event";
             eventTwo.Modalities = new List<Modality>();
             eventTwo.Modalities.Add(modalityOne);

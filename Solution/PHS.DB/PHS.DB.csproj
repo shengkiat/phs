@@ -80,6 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TrackChangesAttribute.cs" />
+    <Compile Include="AuditLog.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Attributes\SkipTrackingAttribute.cs" />
     <Compile Include="EventPatient.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

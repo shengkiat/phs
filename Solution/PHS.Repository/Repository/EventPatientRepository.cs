@@ -17,12 +17,12 @@ namespace PHS.Repository.Repository
 
         public IEnumerable<EventPatient> FindEventPatients(Expression<Func<EventPatient, bool>> predicate)
         {
-            return Context.Set<EventPatient>().Where(predicate).Include(x => x.PHSEvent);
+            return dbContext.Set<EventPatient>().Where(predicate).Include(x => x.PHSEvent);
         }
 
         public EventPatient FindEventPatient(Expression<Func<EventPatient, bool>> predicate)
         {
-            return Context.Set<EventPatient>().Where(predicate).Include(x => x.PHSEvent.Modalities.Select(y => y.Forms)).FirstOrDefault();
+            return dbContext.Set<EventPatient>().Where(predicate).Include(x => x.PHSEvent.Modalities.Select(y => y.Forms)).FirstOrDefault();
         }
     }
 }

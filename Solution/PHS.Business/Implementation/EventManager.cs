@@ -42,7 +42,7 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                eventModel.CreateDate = DateTime.Now;
+                eventModel.CreatedDateTime = DateTime.Now;
                 eventModel.IsActive = true;
                 unitOfWork.Events.Add(eventModel);
                 unitOfWork.Complete();
@@ -59,7 +59,7 @@ namespace PHS.Business.Implementation
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var eventToUpdate =  unitOfWork.Events.Get(eventModel.ID);
+                var eventToUpdate =  unitOfWork.Events.Get(eventModel.PHSEventID);
 
                
 
