@@ -3,6 +3,7 @@ using PHS.Business.Common;
 using PHS.Business.Extensions;
 using PHS.Business.Implementation;
 using PHS.Common;
+using PHS.DB;
 using PHS.DB.ViewModels.Forms;
 using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Repository;
@@ -40,7 +41,12 @@ namespace PHS.Web.Controllers
         public ActionResult Index()
         {
             var formCollectionView = new FormCollectionViewModel();
-            formCollectionView.Forms = this._formRepo.GetForms().OrderByDescending(f => f.DateAdded).ToList();
+
+            using (var formManager = new FormManager())
+            {
+                formCollectionView.Forms = formManager.FindAllFormsByDes();
+            }
+
             return View(formCollectionView);
         }
 
@@ -92,22 +98,24 @@ namespace PHS.Web.Controllers
 
         public ActionResult Edit(int id)
         {
+            Form form = new Form();
+            using (var formManager = new FormManager())
+            {
+                 form = formManager.FindForm(id);
+            }
 
-
-
-
-            var sad1 = this._formRepo.GetForm(id);
-            FormViewModel model1 = FormViewModel.CreateFromObject(sad1);
-
-
-
+            FormViewModel model1 = FormViewModel.CreateFromObject(form);
 
             return View(model1);
         }
 
         public ActionResult Create()
         {
-            var form = this._formRepo.CreateNew();
+            Form form;
+            using (var formManager = new FormManager())
+            {
+                form = formManager.CreateNewForm();
+            }
 
             return RedirectToAction("edit", new { id = form.ID });
         }
@@ -244,23 +252,28 @@ namespace PHS.Web.Controllers
 
         public ActionResult Delete(int formId)
         {
-            var form = this._formRepo.GetByPrimaryKey(formId);
-            var formView = FormViewModel.CreateFromObject(form);
-
-            if (form != null)
+            using (var formManager = new FormManager())
             {
-                formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-                if (!formView.Entries.Any())
+                var form = formManager.FindForm(formId);
+
+                var formView = FormViewModel.CreateFromObject(form);
+
+                if (form != null)
                 {
-                    try
+                    formView.Entries = formManager.HasSubmissions(formView).ToList();
+
+                    if (!formView.Entries.Any())
                     {
-                        this._formRepo.DeleteForm(formId);
-                        TempData["success"] = "Form Deleted";
-                        return RedirectToRoute("form-home");
-                    }
-                    catch
-                    {
-                        TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
+                        try
+                        {
+                            formManager.DeleteForm(formId);
+                            TempData["success"] = "Form Deleted";
+                            return RedirectToRoute("form-home");
+                        }
+                        catch
+                        {
+                            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
+                        }
                     }
                 }
             }
@@ -545,17 +558,24 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewCriteriaSubEntries(string formId)
         {
-            var form = this._formRepo.GetForm(Int32.Parse(formId));
-
-            var formView = FormViewModel.CreateFromObject(form);
-
-            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
-
             var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
-            criteriaSubFieldViewModel.Fields = formView.Fields;
-            criteriaSubFieldViewModel.GroupedEntries = formView.GroupedEntries;
 
+            using (var formManager = new FormManager())
+            {
+                var form = formManager.FindForm(Int32.Parse(formId));     
+
+              //  var form = this._formRepo.GetForm(Int32.Parse(formId));
+
+                var formView = FormViewModel.CreateFromObject(form);
+
+                formView.Entries = formManager.HasSubmissions(formView).ToList();
+               // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+
+                formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+         
+                criteriaSubFieldViewModel.Fields = formView.Fields;
+                criteriaSubFieldViewModel.GroupedEntries = formView.GroupedEntries;
+            }
             return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
 
@@ -636,25 +656,31 @@ namespace PHS.Web.Controllers
         public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
         {
             int formId = model.Id.Value;
-            // var form = this._formRepo.GetByPrimaryKey(formId);
-            var form = this._formRepo.GetForm(formId);
-            var formView = FormViewModel.CreateFromObject(form);
 
-            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+            using (var formManager = new FormManager())
+            {
+                var form = formManager.FindForm(model.Id.Value);
+               // var form = this._formRepo.GetForm(formId);
+                var formView = FormViewModel.CreateFromObject(form);
 
-            var gridView = new GridView();
-            gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields, model.CriteriaFields);
-            gridView.DataBind();
+               // formView.Entries = formManager.HasSubmissions(formView).ToList();
+                formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
 
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(form.Title.ToSlug()));
-            Response.ContentType = "application/vnd.ms-excel";
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            gridView.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+                formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+
+                var gridView = new GridView();
+                gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields, model.CriteriaFields);
+                gridView.DataBind();
+
+                Response.ClearContent();
+                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(form.Title.ToSlug()));
+                Response.ContentType = "application/vnd.ms-excel";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new HtmlTextWriter(sw);
+                gridView.RenderControl(htw);
+                Response.Write(sw.ToString());
+                Response.End();
+            }
 
             return RedirectToRoute("form-entries", new { formid = formId });
 
@@ -906,22 +932,27 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, FormViewModel model)
         {
-
-            // var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
-            var form = this._formRepo.GetForm(model.Id.Value);
-            var formView = FormViewModel.CreateFromObject(form);
-
-            try
+            // TODO This method not required?
+            Form form;
+            using (var formManager = new FormManager())
             {
-                if (selectedEntries != null && selectedEntries.Any())
+                form = formManager.FindForm(model.Id.Value);
+
+                // var form = this._formRepo.GetForm(model.Id.Value);
+                var formView = FormViewModel.CreateFromObject(form);
+
+                try
                 {
-                    this._formRepo.DeleteEntries(selectedEntries);
-                    TempData["success"] = "The selected entries were deleted";
+                    if (selectedEntries != null && selectedEntries.Any())
+                    {
+                        this._formRepo.DeleteEntries(selectedEntries);
+                        TempData["success"] = "The selected entries were deleted";
+                    }
                 }
-            }
-            catch
-            {
-                TempData["error"] = "An error occured while deleting entries. Try again later.";
+                catch
+                {
+                    TempData["error"] = "An error occured while deleting entries. Try again later.";
+                }
             }
 
             return RedirectToRoute("form-entries", new { formid = model.Id.Value });
@@ -958,18 +989,20 @@ namespace PHS.Web.Controllers
 
             FormViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
-            var form = this._formRepo.GetForm(id);
+            Form form;
+            using (var formManager = new FormManager())
+            {
+                 form = formManager.FindForm(id);
+            }
 
             if (form != null)
             {
                 model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
-
             }
             else
             {
                 return RedirectToAction("edit", new { id = form.ID });
             }
-
 
             return View(model);
         }

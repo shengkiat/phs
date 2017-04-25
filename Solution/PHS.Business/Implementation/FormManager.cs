@@ -9,6 +9,7 @@ using System.IO;
 using OfficeOpenXml;
 using PHS.DB.ViewModels.Forms;
 using PHS.Business.Extensions;
+using System.Transactions;
 
 namespace PHS.Business.Implementation
 {
@@ -24,7 +25,7 @@ namespace PHS.Business.Implementation
             List<Form> Forms = new List<Form>();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                Forms = unitOfWork.formRepository.GetBaseForms();
+                Forms = unitOfWork.FormRepository.GetBaseForms();
 
                 if (Forms != null)
                 {
@@ -36,12 +37,70 @@ namespace PHS.Business.Implementation
 
         }
 
+        public List<FormViewModel> FindAllFormsByDes()
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var forms = unitOfWork.FormRepository.GetForms().OrderByDescending(f => f.DateAdded).ToList();
+
+                return forms;
+            }
+        }
+
         public Form FindForm(int formID)
         {
             Form form = new Form();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.formRepository.GetForm(formID);
+                form = unitOfWork.FormRepository.GetForm(formID);
+
+                if (form != null)
+                {
+                    return form;
+                }
+            }
+
+            return form;
+
+        }
+
+        public void DeleteForm(int formID)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.FormRepository.DeleteForm(formID);
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+        }
+
+        public IEnumerable<FormFieldValueViewModel> HasSubmissions(FormViewModel model)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var fieldValues = unitOfWork.FormRepository.GetRegistrantsByForm(model.Id.Value);
+                var values = fieldValues
+                             .Select((fv) =>
+                             {
+                                 return FormFieldValueViewModel.CreateFromObject(fv);
+                             })
+                             .OrderBy(f => f.FieldOrder)
+                             .ThenByDescending(f => f.DateAdded);
+
+                return values;
+            }
+        }
+
+        public Form CreateNewForm()
+        {
+            Form form = new Form();
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                form = unitOfWork.FormRepository.CreateNew();
 
                 if (form != null)
                 {
@@ -59,7 +118,7 @@ namespace PHS.Business.Implementation
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.formRepository.GetForm(formid);
+                form = unitOfWork.FormRepository.GetForm(formid);
 
                 // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
                 using (MemoryStream ms = new MemoryStream(data))

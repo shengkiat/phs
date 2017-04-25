@@ -21,7 +21,7 @@ namespace PHS.Repository
 
             Persons = new PersonRepository(_context);
             MasterAddress = new MasterAddressRepository(_context);
-            formRepository = new FormRepository(_context);
+            FormRepository = new FormRepository(_context);
             Events = new EventRepository(_context);
             Modalities = new ModalityRepository(_context);
             EventPatient = new EventPatientRepository(_context);
@@ -31,7 +31,7 @@ namespace PHS.Repository
         public IPersonRepository Persons { get; private set; }
         public IMasterAddressRepository MasterAddress { get; private set; }
 
-        public FormRepository formRepository { get; private set; }
+        public FormRepository FormRepository { get; private set; }
 
         public IEventRepository Events { get; private set; }
 

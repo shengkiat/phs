@@ -208,12 +208,34 @@ namespace PHS.Repository.Repository
         public List<FormFieldValue> GetRegistrantsByForm(int formId)
         {
             var fieldValues = this.DataContext.FormFieldValues;
-            return this.DataContext
+
+            var formFieldValues = this.DataContext
                              .FormFields
                              .Include("Forms")
                              .Where(field => field.Forms.Any(f => f.ID == formId))
                              .Join(fieldValues, fields => fields.ID, fieldValue => fieldValue.FieldId, (FormField, FormFieldValue) => FormFieldValue)
                              .ToList();
+
+
+            foreach (var entry in formFieldValues)
+            {
+                if (entry.FormField == null)
+                {
+                  var s =   this.DataContext.FormFieldValues.Include("FormField").Where(x => x.ID == entry.ID).FirstOrDefault();
+                    entry.FormField = s.FormField;
+
+                }
+            }
+
+            return formFieldValues;
+
+
+            //return this.DataContext
+            //                 .FormFields
+            //                 .Include("Forms")
+            //                 .Where(field => field.Forms.Any(f => f.ID == formId))
+            //                 .Join(fieldValues, fields => fields.ID, fieldValue => fieldValue.FieldId, (FormField, FormFieldValue) => FormFieldValue)
+            //                 .ToList();
         }
 
         public void InsertFieldValue(FormFieldViewModel field, string value, Guid entryId, string userId = "")
