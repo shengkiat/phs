@@ -58,20 +58,32 @@
             });
         });
 
+        $("input[type = 'checkbox']").each(function () {
+            $(this).click(function () {
+                calculateSum();
+            });
+        });
+
     });
 
     function calculateSum() {
 
         var sum = 0;
         //iterate through each textboxes and add the values
-        $(".labelNo").each(function () {
 
-            //add only if the value is number
-            if (!isNaN(this.value) && this.value.length != 0) {
-                sum += parseFloat(this.value);
+        $("input[type = 'checkbox']").each(function () {
+            var c = $(this).is(":checked");
+            if (c) {
+                $(this).parent().parent().find(".labelNo").each(function () {
+                    //add only if the value is number
+                    if (!isNaN(this.value) && this.value.length != 0) {
+                        sum += parseFloat(this.value);
+                    }
+                });
             }
-
         });
+
+        
         $("#sum").html(sum.toFixed(0));
     }
 
