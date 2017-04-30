@@ -45,12 +45,7 @@
             @{
                 int counter = 1;
 
-                if (Model.isMegaSortingModalitySelected())
-                {
-                    <li class="active"><a data-toggle="tab" href="#tabs-1">Mega Sorting Station</a></li>
-                }
-
-                else if (Model.isSummarySelected())
+                if (Model.isSummarySelected())
                 {
                     <li class="active"><a data-toggle="tab" href="#tabs-1">Summary</a></li>
                 }
@@ -81,14 +76,9 @@
 
         <div class="tab-content">
             @{
-                if (Model.isMegaSortingModalitySelected())
-                {
-                    <div id="tabs-1" class="tab-pane fade in active">
-                        @{Html.RenderPartial("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));}
-                    </div>
-                }
+                int anothercounter = 1;
 
-                else if (Model.isSummarySelected())
+                if (Model.isSummarySelected())
                 {
                     <div id="tabs-1" class="tab-pane fade in active">
                         @{Html.RenderPartial("_SummaryPartial", TempData.Peek("PatientEventModalityViewModel"));}
@@ -97,7 +87,6 @@
 
                 else
                 {
-                    int anothercounter = 1;
 
                     foreach (var element in Model.GetModalityFormsForTabs())
                     {

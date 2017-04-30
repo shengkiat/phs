@@ -216,8 +216,17 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
-                model.Embed = embed;
+                if (form.Title.Equals("Mega Sorting Station"))
+                {
+                    return PartialView("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));
+                }
+
+                else
+                {
+                    model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                
             }
             else
             {

@@ -57,19 +57,6 @@ namespace PHS.Business.ViewModel.PatientJourney
             return result;
         }
 
-        public bool isMegaSortingModalitySelected()
-        {
-            bool result = false;
-            foreach (var modality in Event.Modalities)
-            {
-                if (modality.ModalityID.Equals(SelectedModalityId))
-                {
-                    result = modality.Name.Equals("Mega Sorting Station");
-                }
-            }
-            return result;
-        }
-
         public bool isSummarySelected()
         {
             bool result = false;
