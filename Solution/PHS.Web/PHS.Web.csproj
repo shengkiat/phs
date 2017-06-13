@@ -428,6 +428,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\signature_pad.js" />
     <Content Include="Scripts\wysiwyg.colorpicker.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -526,6 +527,8 @@
     <Content Include="Views\PatientJourney\_MegaSortingStationPartial.cshtml" />
     <Content Include="Views\PatientJourney\_SummaryPartial.cshtml" />
     <Content Include="Views\Forms\PreRegistration.cshtml" />
+    <Content Include="Views\Forms\_form-field-signature-partial.cshtml" />
+    <Content Include="Views\Forms\_form-field-signature-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

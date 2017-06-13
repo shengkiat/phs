@@ -290,6 +290,7 @@ namespace PHS.Business.Extensions
                         }
                     }
                     return "";
+
                 case Constants.FieldType.FILEPICKER:
 
                     return "";
@@ -556,6 +557,9 @@ namespace PHS.Business.Extensions
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
                 case Constants.FieldType.TEXTBOX:
+                    value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    break;
+                case Constants.FieldType.SIGNATURE:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
                 case Constants.FieldType.FILEPICKER:

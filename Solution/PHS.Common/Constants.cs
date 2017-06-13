@@ -53,7 +53,8 @@ namespace PHS.Common
             IMAGE,
             MATRIX,
             NRICPICKER,
-            DOCTORMEMO
+            DOCTORMEMO,
+            SIGNATURE
         }
 
         public static string OperationFailedDuringRetrievingValue(string value)
