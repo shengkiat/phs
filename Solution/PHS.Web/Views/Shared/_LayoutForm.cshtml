@@ -1,6 +1,19 @@
 ﻿
 @using PHS.Common
 @using PHS.Business.Extensions
+@using PHS.DB
+
+@{
+    var menus = new[]
+                {
+                   new { LinkText="User Management", ActionName="ManageUser",ControllerName="Admin",Roles="A"  },
+                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Roles="A"  },
+                   new { LinkText="Form Management", ActionName="Index",ControllerName="Forms",Roles="A"  },
+                   new { LinkText="Event Helper", ActionName="SearchPatient",ControllerName="PatientJourney",Roles="A,V,D"  },
+
+                };
+}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -229,6 +242,91 @@
         <div id="page-body">
             @RenderBody()
         </div>    
+
+        <nav class="main-menu">
+            <a href="#">
+                <i class="fa fa-home fa-2x"></i>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-home fa-2x"></i>
+                                <span class="nav-text">
+
+                                </span>
+                            </a>
+                        </li>
+
+                        @if (HttpContext.Current.Session["LoginUser"] != null)
+                        {
+                            var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+                            var links = from item in menus
+                                        where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                        .Any(x => role.Equals(x))
+                                        select item;
+                            foreach (var link in links)
+                            {
+                                <li>
+                                    <i class="fa fa-home fa-2x"></i>
+                                    <span class="nav-text">
+                                        @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)
+                                    </span>
+                                </li>
+
+                            }
+                            <li>
+                                <i class="fa fa-home fa-2x"></i>
+                                <span class="nav-text">
+                                    @Html.ActionLink("Logout", "LogOff", "Admin")
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </a>
+        </nav>
+
+        <!-- Sidebar -->
+        <div class="clearfix">
+            <!--
+        <div class="column menu">
+            <ul>
+
+                @if (HttpContext.Current.Session["LoginUser"] != null)
+                {
+                    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+                    var links = from item in menus
+                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .Any(x => role.Equals(x))
+                                select item;
+                    foreach (var link in links)
+                    {
+                        <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                    }
+
+                    <li> @Html.ActionLink("Logout", "LogOff", "Admin")</li>
+                }
+            </ul>
+        </div>
+            -->
+
+            <div class="column content" style="margin:0 auto;">
+                <!-- /#sidebar-wrapper -->
+
+                @if (!String.IsNullOrEmpty(ViewBag.BackURL))
+                {
+                    <div class="container">
+                        <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+                    </div>
+                }
+                <br />
+            </div>
+        </div>
+
+        <div class="footer" style="text-align: center;">
+            <p>&copy; @DateTime.Now.Year - Public Health Service</p>
+        </div>
+
         @RenderSection("footerScripts", false)
         <script type="text/javascript">
                 $(document).ready(function () {                                             
