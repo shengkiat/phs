@@ -4,6 +4,185 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <style>
+            * {
+                box-sizing: border-box;
+                font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
+            }
+
+            .header, .footer {
+                background: #ACD8E0;
+                color: black;
+                box-shadow: 2px 2px 2px gray;
+            }
+
+            .column {
+                <!--
+                float: left;
+                -->
+            }
+
+            .clearfix::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            .menu {
+                width: 20%;
+                padding-top: 35px;
+            }
+
+            .content {
+                width: 80%;
+            }
+
+            .menu ul {
+                list-style-type: none;
+                margin: 0;
+                padding-left: 20%;
+            }
+
+            .menu li {
+                padding: 8px;
+                margin-bottom: 8px;
+                color: #ffffff;
+                font-size: 1.4em;
+            }
+
+            #colorstrip {
+                width: 100%;
+                border-style: none;
+            }
+
+
+
+
+            .fa-2x {
+                font-size: 2em;
+            }
+
+            .fa {
+                position: relative;
+                display: table-cell;
+                width: 60px;
+                height: 36px;
+                text-align: center;
+                vertical-align: middle;
+                font-size: 20px;
+            }
+
+
+            .main-menu:hover, nav.main-menu.expanded {
+                width: 200px;
+                overflow: visible;
+            }
+
+            .main-menu {
+                background: #fbfbfb;
+                border-right: 1px solid #e5e5e5;
+                position: absolute;
+                top: 20%;
+                bottom: 0;
+                height: 80%;
+                left: 0;
+                width: 20px;
+                overflow: hidden;
+                -webkit-transition: width .05s linear;
+                transition: width .05s linear;
+                -webkit-transform: translateZ(0) scale(1,1);
+                z-index: 1000;
+                color: black;
+            }
+
+                .main-menu > ul {
+                    margin: 7px 0;
+                }
+
+                .main-menu li {
+                    position: relative;
+                    display: block;
+                    width: 250px;
+                }
+
+                    .main-menu li > a {
+                        position: relative;
+                        display: table;
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                        color: #999;
+                        font-family: arial;
+                        font-size: 14px;
+                        text-decoration: none;
+                        -webkit-transform: translateZ(0) scale(1,1);
+                        -webkit-transition: all .1s linear;
+                        transition: all .1s linear;
+                    }
+
+                .main-menu .nav-icon {
+                    position: relative;
+                    display: table-cell;
+                    width: 60px;
+                    height: 36px;
+                    text-align: center;
+                    vertical-align: middle;
+                    font-size: 18px;
+                }
+
+                .main-menu .nav-text {
+                    position: relative;
+                    display: table-cell;
+                    vertical-align: middle;
+                    width: 190px;
+                    font-family: 'Titillium Web', sans-serif;
+                }
+
+                .main-menu > ul.logout {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                }
+
+            .no-touch .scrollable.hover {
+                overflow-y: hidden;
+            }
+
+                .no-touch .scrollable.hover:hover {
+                    overflow-y: auto;
+                    overflow: visible;
+                }
+
+            a:hover, a:focus {
+                text-decoration: none;
+            }
+
+            nav {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+
+                nav ul, nav li {
+                    outline: 0;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .main-menu li:hover > a, nav.main-menu li.active > a, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, .no-touch .dashboard-page nav.dashboard-menu ul li:hover a, .dashboard-page nav.dashboard-menu ul li.active a {
+                    color: #fff;
+                    background-color: black;
+                }
+
+            .area {
+                float: left;
+                background: black;
+                width: 100%;
+                height: 80%;
+            }
+        </style>
+
         <meta charset="utf-8" />
         <title>@ViewBag.Title - Drag N' Drop FormBuilder</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -41,18 +220,23 @@
         <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-sprites.css")" rel="stylesheet"  />          
         @RenderSection("headerScripts", false)
     </head>
-    <body class="@Html.GetContextCssClass()">        
-    <div id="page-body">
-        @RenderBody()
-    </div>    
-    @RenderSection("footerScripts", false)
-    <script type="text/javascript">
-            $(document).ready(function () {                                             
-                global.init();
-                @RenderSection("initializers", false)                 
-            });
+    <body class="@Html.GetContextCssClass()">      
+        <div class="header" style="height: 136px;">
+            <img src="~/Content/images/logo.png" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 1px;box-shadow: 2px 0px 2px gray;" />
+            <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
+            <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
+        </div>  
+        <div id="page-body">
+            @RenderBody()
+        </div>    
+        @RenderSection("footerScripts", false)
+        <script type="text/javascript">
+                $(document).ready(function () {                                             
+                    global.init();
+                    @RenderSection("initializers", false)                 
+                });
 
 
-    </script>
-</body>
+        </script>
+    </body>
 </html>

@@ -6,13 +6,13 @@
 h2.form-title{padding-left:5px;padding-right:5px;display:inline-block;clear:both;}
 h2.form-title:hover{cursor:pointer;background-color:#FFFFAA;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px; -moz-border-radius-bottomright:5px;-moz-border-radius-top:5px;border-top-right-radius: 5px;border-top-left-radius: 5px;}
 .form-actions-menu{display:inline-block;}
-.form-actions-menu .seperator-item{width:300px !important;}
+.form-actions-menu .seperator-item{width:250px !important;}
 .form-actions-menu li.published{width:182px !important;}
 .Forms-viewentries h2.form-title{display:block;padding-left:0;margin-bottom:0;}
 
 /*tools menu*/
 ul.form-tools-menu{list-style-type:none;}
-ul.form-tools-menu li.header h3{width:120px;float:left;}
+ul.form-tools-menu li.header h3{width:140px;float:left;}
 ul.form-tools-menu li{overflow:visible;}
 ul.admin-links li.header{display:block;}
 ul.form-tools-menu li a{cursor:move;}
