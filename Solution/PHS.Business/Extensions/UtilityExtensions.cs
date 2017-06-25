@@ -116,7 +116,7 @@ namespace PHS.Business.Extensions
 
         public static bool IsEditMode(this TemplateFieldViewModel field)
         {
-            return field.Mode == Constants.FormFieldMode.EDIT;
+            return field.Mode == Constants.TemplateFieldMode.EDIT;
         }
 
         public static string ValidationId(this TemplateFieldViewModel field)

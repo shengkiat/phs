@@ -12,7 +12,7 @@
         <span>Save</span></a></li>
     
     
-    @if (Model.Status == Constants.FormStatus.PUBLISHED)
+    @if (Model.Status == Constants.TemplateStatus.PUBLISHED)
     {
         <li class="preview-item"><a href="@Url.FormPreviewUrl(Model)" target="_blank" class="image-icon-link preview-icon-link"><span>
         Preview</span></a></li>

@@ -301,7 +301,7 @@ namespace PHS.Web.Controllers
 
             if (form.TemplateFields.Count() > 0)
             {
-                form.Status = toOn ? Constants.FormStatus.PUBLISHED.ToString() : Constants.FormStatus.DRAFT.ToString();
+                form.Status = toOn ? Constants.TemplateStatus.PUBLISHED.ToString() : Constants.TemplateStatus.DRAFT.ToString();
 
                 this._formRepo.SaveChanges();
                 if (toOn)
@@ -340,7 +340,7 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
                 model.Embed = embed;
             }
             else
@@ -359,7 +359,7 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
                 model.Embed = embed;
             }
             else
@@ -383,7 +383,7 @@ namespace PHS.Web.Controllers
 
             var formObj = this._formRepo.GetForm(model.TemplateID.Value);
 
-            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
+            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.TemplateFieldMode.INPUT);
             formView.AssignInputValues(form);
             this.InsertValuesIntoTempData(SubmitFields, form);
 
@@ -540,7 +540,7 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
 
             }
             else
@@ -569,7 +569,7 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
             }
             else
             {

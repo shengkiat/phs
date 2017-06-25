@@ -37,7 +37,7 @@ namespace PHS.DB.ViewModels.Forms
         public int DomId { get; set; }
         public int? MinimumAge { get; set; }
         public int? MaximumAge { get; set; }
-        public Constants.FormFieldMode Mode { get; set; }
+        public Constants.TemplateFieldMode Mode { get; set; }
         public string Errors { get; set; }
         public string InputValue { get; set; }
         public int MaxFileSize { get; set; }
@@ -58,10 +58,10 @@ namespace PHS.DB.ViewModels.Forms
 
         public static TemplateFieldViewModel CreateFromObject(TemplateField field)
         {
-            return CreateFromObject(field, Constants.FormFieldMode.EDIT);
+            return CreateFromObject(field, Constants.TemplateFieldMode.EDIT);
         }
 
-        public static TemplateFieldViewModel CreateFromObject(TemplateField field, Constants.FormFieldMode mode)
+        public static TemplateFieldViewModel CreateFromObject(TemplateField field, Constants.TemplateFieldMode mode)
         {
             if (field != null)
             {

@@ -223,7 +223,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                    model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
                     model.Embed = embed;
                 }
                 
@@ -245,7 +245,7 @@ namespace PHS.Web.Controllers
             var formObj = this._formRepo.GetForm(model.TemplateID.Value);
 
 
-            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
+            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.TemplateFieldMode.INPUT);
             formView.AssignInputValues(form);
             this.InsertValuesIntoTempData(SubmitFields, form);
 

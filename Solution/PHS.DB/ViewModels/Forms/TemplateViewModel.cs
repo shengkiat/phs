@@ -18,7 +18,7 @@ namespace PHS.DB.ViewModels.Forms
         public string Slug { get; set; }
         public DateTime DateAdded { get; set; }
         public List<TemplateFieldViewModel> Fields { get; set; }
-        public Constants.FormStatus Status { get; set; }
+        public Constants.TemplateStatus Status { get; set; }
         public int TabOrder { get; set; }
         public string ConfirmationMessage { get; set; }
         public IList<TemplateFieldValueViewModel> Entries { get; set; }
@@ -51,7 +51,7 @@ namespace PHS.DB.ViewModels.Forms
             var formView = new TemplateViewModel
             {
                 Title = "Registration",
-                Status = Constants.FormStatus.DRAFT,
+                Status = Constants.TemplateStatus.DRAFT,
                 TabOrder = 0,
                 Theme = "",
                 NotificationEmail = "",
@@ -67,10 +67,10 @@ namespace PHS.DB.ViewModels.Forms
 
         public static TemplateViewModel CreateFromObject(Template form1)
         {
-            return CreateFromObject(form1, Constants.FormFieldMode.EDIT);
+            return CreateFromObject(form1, Constants.TemplateFieldMode.EDIT);
         }
 
-        public static TemplateViewModel CreateFromObject(Template form1, Constants.FormFieldMode mode)
+        public static TemplateViewModel CreateFromObject(Template form1, Constants.TemplateFieldMode mode)
         {
             if (form1 != null)
             {
@@ -107,7 +107,7 @@ namespace PHS.DB.ViewModels.Forms
                 IsPublic = form1.IsPublic,
                 IsQuestion = form1.IsQuestion,
                 PublicFormType = form1.PublicFormType,
-                Status = (Constants.FormStatus)Enum.Parse(typeof(Constants.FormStatus), form1.Status),
+                Status = (Constants.TemplateStatus)Enum.Parse(typeof(Constants.TemplateStatus), form1.Status),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };

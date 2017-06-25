@@ -20,13 +20,13 @@ namespace PHS.Common
         public static int DEAULTMAXFILESIZEINKB = 5000;
         public static int DEAULTMINFILESIZEINKB = 10;
 
-        public enum FormStatus
+        public enum TemplateStatus
         {
             DRAFT,
             PUBLISHED
         }
 
-        public enum FormFieldMode
+        public enum TemplateFieldMode
         {
             EDIT,
             INPUT,

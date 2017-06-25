@@ -146,7 +146,7 @@ namespace PHS.Repository.Repository
                 Title = templateName,
                 //Slug = formName.ToSlug(),
                 Slug = templateName,
-                Status = Constants.FormStatus.DRAFT.ToString(),
+                Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
                 IsActive = true
