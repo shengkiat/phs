@@ -15,8 +15,8 @@ namespace PHS.DB.ViewModels.Forms
         public List<CriteriaSubFieldViewModel> CriteriaSubFields { get; set; }
 
         public List<SelectListItem> FieldLabels { get; set; } // dropdown
-        public List<FormFieldViewModel> Fields { get; set; }
-        public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
+        public List<TemplateFieldViewModel> Fields { get; set; }
+        public IEnumerable<IGrouping<string, TemplateFieldValueViewModel>> GroupedEntries { get; set; }
 
         
     }

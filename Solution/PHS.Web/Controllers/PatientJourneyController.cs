@@ -208,7 +208,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult ViewForm(int formId, bool embed = false)
         {
-            FormViewModel model = null;
+            TemplateViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
 
             //TODO should retrieve form by eventId + formId?
@@ -223,7 +223,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                    model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
                     model.Embed = embed;
                 }
                 
@@ -237,7 +237,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(IDictionary<string, string> SubmitFields, FormViewModel model, FormCollection form)
+        public ActionResult Register(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection form)
         {
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
@@ -245,7 +245,7 @@ namespace PHS.Web.Controllers
             var formObj = this._formRepo.GetForm(model.Id.Value);
 
 
-            var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
+            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
             formView.AssignInputValues(form);
             this.InsertValuesIntoTempData(SubmitFields, form);
 
@@ -276,7 +276,7 @@ namespace PHS.Web.Controllers
                 var entryId = Guid.NewGuid();
                 var notificationView = new NotificationEmailViewModel();
                 notificationView.FormName = formView.Title;
-                IDictionary<string, FormFieldValueViewModel> notificationEntries = new Dictionary<string, FormFieldValueViewModel>();
+                IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
                 foreach (var field in formView.Fields)
                 {
                     var value = field.SubmittedValue(form);
@@ -295,7 +295,7 @@ namespace PHS.Web.Controllers
                         //}
                     }
 
-                    this.AddValueToDictionary(ref notificationEntries, field.Label, new FormFieldValueViewModel(field.FieldType, value));
+                    this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
                     notificationView.Entries = notificationEntries;
                     this._formRepo.InsertFieldValue(field, value, entryId);
                 }
@@ -341,7 +341,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        private void AddValueToDictionary(ref IDictionary<string, FormFieldValueViewModel> collection, string key, FormFieldValueViewModel value)
+        private void AddValueToDictionary(ref IDictionary<string, TemplateFieldValueViewModel> collection, string key, TemplateFieldValueViewModel value)
         {
             if (collection.ContainsKey(key))
             {

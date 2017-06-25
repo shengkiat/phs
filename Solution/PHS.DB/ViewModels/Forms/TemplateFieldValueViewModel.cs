@@ -7,7 +7,7 @@ using PHS.Common;
 
 namespace PHS.DB.ViewModels.Forms
 {
-    public class FormFieldValueViewModel
+    public class TemplateFieldValueViewModel
     {
         public int Id { get; set; }
         public int FieldId { get; set; }
@@ -19,26 +19,26 @@ namespace PHS.DB.ViewModels.Forms
         public string FieldLabel { get; set; }
         public int FieldOrder { get; set; }
 
-        public FormFieldValueViewModel()
+        public TemplateFieldValueViewModel()
         {
 
         }
 
-        public FormFieldValueViewModel(Constants.FieldType type, string value)
+        public TemplateFieldValueViewModel(Constants.FieldType type, string value)
         {
             this.Value = value;
             this.FieldType = type;
         }
 
-        public static FormFieldValueViewModel Initialize()
+        public static TemplateFieldValueViewModel Initialize()
         {
-            return new FormFieldValueViewModel();
+            return new TemplateFieldValueViewModel();
         }
 
-        public static FormFieldValueViewModel CreateFromObject(FormFieldValue model)
+        public static TemplateFieldValueViewModel CreateFromObject(FormFieldValue model)
         {
            // model.FormFieldReference.Load();
-            return new FormFieldValueViewModel
+            return new TemplateFieldValueViewModel
             {
                 Id = model.ID,
                 FieldId = model.FieldId,

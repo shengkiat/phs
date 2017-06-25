@@ -42,7 +42,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormViewModel model, FormCollection collection)
+        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, TemplateViewModel model, FormCollection collection)
         {
             //Console.Write(submitButton);
 
@@ -62,7 +62,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, FormViewModel model)
+        public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, TemplateViewModel model)
         {
             // TODO This method not required?
             Form form;
@@ -71,7 +71,7 @@ namespace PHS.Web.Controllers
                 form = formManager.FindForm(model.Id.Value);
 
                 // var form = this._formRepo.GetForm(model.Id.Value);
-                var formView = FormViewModel.CreateFromObject(form);
+                var formView = TemplateViewModel.CreateFromObject(form);
 
                 try
                 {
@@ -97,7 +97,7 @@ namespace PHS.Web.Controllers
 
             var form = this._formRepo.GetForm(formId);
 
-            var formView = FormViewModel.CreateFromObject(form);
+            var formView = TemplateViewModel.CreateFromObject(form);
 
             formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
@@ -109,7 +109,7 @@ namespace PHS.Web.Controllers
         {
             var form = this._formRepo.GetForm(Int32.Parse(formId));
 
-            var formView = FormViewModel.CreateFromObject(form);
+            var formView = TemplateViewModel.CreateFromObject(form);
 
             formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
@@ -140,7 +140,7 @@ namespace PHS.Web.Controllers
         {
             var form = this._formRepo.GetForm(Int32.Parse(formId));
 
-            var formView = FormViewModel.CreateFromObject(form);
+            var formView = TemplateViewModel.CreateFromObject(form);
 
             formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
             formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
@@ -180,7 +180,7 @@ namespace PHS.Web.Controllers
 
                 //  var form = this._formRepo.GetForm(Int32.Parse(formId));
 
-                var formView = FormViewModel.CreateFromObject(form);
+                var formView = TemplateViewModel.CreateFromObject(form);
 
                 formView.Entries = formManager.HasSubmissions(formView).ToList();
                 // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
@@ -193,7 +193,7 @@ namespace PHS.Web.Controllers
             return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
 
-        public ActionResult ExportToExcel(FormViewModel model, FormCollection collection)
+        public ActionResult ExportToExcel(TemplateViewModel model, FormCollection collection)
         {
             int formId = model.Id.Value;
 
@@ -201,7 +201,7 @@ namespace PHS.Web.Controllers
             {
                 var form = formManager.FindForm(model.Id.Value);
                 // var form = this._formRepo.GetForm(formId);
-                var formView = FormViewModel.CreateFromObject(form);
+                var formView = TemplateViewModel.CreateFromObject(form);
 
                 // formView.Entries = formManager.HasSubmissions(formView).ToList();
                 formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
@@ -226,7 +226,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        private DataTable CreateFormEntriesDataTable(FormViewModel form, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
+        private DataTable CreateFormEntriesDataTable(TemplateViewModel form, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
             var dt = new DataTable(form.Title);
             List<string> columnNames = new List<string>();

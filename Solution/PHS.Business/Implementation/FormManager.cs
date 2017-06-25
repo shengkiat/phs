@@ -37,7 +37,7 @@ namespace PHS.Business.Implementation
 
         }
 
-        public List<FormViewModel> FindAllFormsByDes()
+        public List<TemplateViewModel> FindAllFormsByDes()
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -78,7 +78,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public IEnumerable<FormFieldValueViewModel> HasSubmissions(FormViewModel model)
+        public IEnumerable<TemplateFieldValueViewModel> HasSubmissions(TemplateViewModel model)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -86,7 +86,7 @@ namespace PHS.Business.Implementation
                 var values = fieldValues
                              .Select((fv) =>
                              {
-                                 return FormFieldValueViewModel.CreateFromObject(fv);
+                                 return TemplateFieldValueViewModel.CreateFromObject(fv);
                              })
                              .OrderBy(f => f.FieldOrder)
                              .ThenByDescending(f => f.DateAdded);

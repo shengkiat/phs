@@ -5,8 +5,8 @@ using System.Web;
 
 namespace PHS.DB.ViewModels.Forms
 {
-    public class FormCollectionViewModel
+    public class TemplateCollectionViewModel
     {
-        public List<FormViewModel> Forms { get; set; }
+        public List<TemplateViewModel> Forms { get; set; }
     }
 }

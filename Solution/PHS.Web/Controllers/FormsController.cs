@@ -40,7 +40,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Index()
         {
-            var formCollectionView = new FormCollectionViewModel();
+            var formCollectionView = new TemplateCollectionViewModel();
 
             using (var formManager = new FormManager())
             {
@@ -104,7 +104,7 @@ namespace PHS.Web.Controllers
                  form = formManager.FindForm(id);
             }
 
-            FormViewModel model1 = FormViewModel.CreateFromObject(form);
+            TemplateViewModel model1 = TemplateViewModel.CreateFromObject(form);
 
             return View(model1);
         }
@@ -146,7 +146,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(bool isAutoSave, FormViewModel model, FormCollection collection, IDictionary<string, string> Fields)
+        public ActionResult Update(bool isAutoSave, TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
         {
 
             if (!model.Id.HasValue)
@@ -194,7 +194,7 @@ namespace PHS.Web.Controllers
 
                             var fieldTypeEnum = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), fieldType.ToUpper());
 
-                            var fieldView = new FormFieldViewModel
+                            var fieldView = new TemplateFieldViewModel
                             {
                                 DomId = Convert.ToInt32(domId),
                                 FieldType = fieldTypeEnum,
@@ -256,7 +256,7 @@ namespace PHS.Web.Controllers
             {
                 var form = formManager.FindForm(formId);
 
-                var formView = FormViewModel.CreateFromObject(form);
+                var formView = TemplateViewModel.CreateFromObject(form);
 
                 if (form != null)
                 {
@@ -333,14 +333,14 @@ namespace PHS.Web.Controllers
         //[SSl]
         public ActionResult Register(int id, bool embed = false)
         {
-            FormViewModel model = null;
+            TemplateViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
 
             var form = this._formRepo.GetForm(id);
 
             if (form != null)
             {
-                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
                 model.Embed = embed;
             }
             else
@@ -353,13 +353,13 @@ namespace PHS.Web.Controllers
 
         public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
         {
-            FormViewModel model = null;
+            TemplateViewModel model = null;
 
             var form = this._formRepo.GetForm(id);
 
             if (form != null)
             {
-                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
                 model.Embed = embed;
             }
             else
@@ -376,14 +376,14 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(IDictionary<string, string> SubmitFields, FormViewModel model, FormCollection form)
+        public ActionResult Register(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection form)
         {
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
             var formObj = this._formRepo.GetForm(model.Id.Value);
 
-            var formView = FormViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
+            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
             formView.AssignInputValues(form);
             this.InsertValuesIntoTempData(SubmitFields, form);
 
@@ -412,7 +412,7 @@ namespace PHS.Web.Controllers
                 var entryId = Guid.NewGuid();
                 var notificationView = new NotificationEmailViewModel();
                 notificationView.FormName = formView.Title;
-                IDictionary<string, FormFieldValueViewModel> notificationEntries = new Dictionary<string, FormFieldValueViewModel>();
+                IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
                 foreach (var field in formView.Fields)
                 {
                     var value = field.SubmittedValue(form);
@@ -436,7 +436,7 @@ namespace PHS.Web.Controllers
                         //}
                     }
 
-                    this.AddValueToDictionary(ref notificationEntries, field.Label, new FormFieldValueViewModel(field.FieldType, value));
+                    this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
                     notificationView.Entries = notificationEntries;
                     this._formRepo.InsertFieldValue(field, value, entryId);
                 }
@@ -468,7 +468,7 @@ namespace PHS.Web.Controllers
             var form = this._formRepo.GetByPrimaryKey(id);
             if (form != null)
             {
-                var formView = FormViewModel.CreateFromObject(form);
+                var formView = TemplateViewModel.CreateFromObject(form);
                 formView.Embed = embed ?? embed.Value;
                 TempData["success"] = formView.ConfirmationMessage;
                 return View(formView);
@@ -485,7 +485,7 @@ namespace PHS.Web.Controllers
         }
 
 
-        private void AddValueToDictionary(ref IDictionary<string, FormFieldValueViewModel> collection, string key, FormFieldValueViewModel value)
+        private void AddValueToDictionary(ref IDictionary<string, TemplateFieldValueViewModel> collection, string key, TemplateFieldValueViewModel value)
         {
             if (collection.ContainsKey(key))
             {
@@ -534,13 +534,13 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration(int id = -1)
         {
 
-            FormViewModel model = null;
+            TemplateViewModel model = null;
 
             var form = this._formRepo.GetPreRegistrationForm();
 
             if (form != null)
             {
-                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
 
             }
             else
@@ -559,7 +559,7 @@ namespace PHS.Web.Controllers
                 // return RedirectToLogin();
             }
 
-            FormViewModel model = null;
+            TemplateViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
             Form form;
             using (var formManager = new FormManager())
@@ -569,7 +569,7 @@ namespace PHS.Web.Controllers
 
             if (form != null)
             {
-                model = FormViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
+                model = TemplateViewModel.CreateFromObject(form, Constants.FormFieldMode.INPUT);
             }
             else
             {

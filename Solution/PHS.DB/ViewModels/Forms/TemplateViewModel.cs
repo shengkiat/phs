@@ -8,7 +8,7 @@ using PHS.DB;
 
 namespace PHS.DB.ViewModels.Forms
 {
-    public class FormViewModel
+    public class TemplateViewModel
     {
         #region Properties
 
@@ -17,12 +17,12 @@ namespace PHS.DB.ViewModels.Forms
         public string NotificationEmail { get; set; }
         public string Slug { get; set; }
         public DateTime DateAdded { get; set; }
-        public List<FormFieldViewModel> Fields { get; set; }
+        public List<TemplateFieldViewModel> Fields { get; set; }
         public Constants.FormStatus Status { get; set; }
         public int TabOrder { get; set; }
         public string ConfirmationMessage { get; set; }
-        public IList<FormFieldValueViewModel> Entries { get; set; }
-        public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
+        public IList<TemplateFieldValueViewModel> Entries { get; set; }
+        public IEnumerable<IGrouping<string, TemplateFieldValueViewModel>> GroupedEntries { get; set; }
         public string Theme { get; set; }
         public bool Embed { get; set; }
         public bool IsPublic { get; set; }
@@ -45,10 +45,10 @@ namespace PHS.DB.ViewModels.Forms
 
         #region Public Members
 
-        public static FormViewModel Initialize()
+        public static TemplateViewModel Initialize()
         {
 
-            var formView = new FormViewModel
+            var formView = new TemplateViewModel
             {
                 Title = "Registration",
                 Status = Constants.FormStatus.DRAFT,
@@ -57,7 +57,7 @@ namespace PHS.DB.ViewModels.Forms
                 NotificationEmail = "",
                 IsPublic = false,
                 IsQuestion = false,
-                Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
+                Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
@@ -65,12 +65,12 @@ namespace PHS.DB.ViewModels.Forms
             return formView;
         }
 
-        public static FormViewModel CreateFromObject(Form form1)
+        public static TemplateViewModel CreateFromObject(Form form1)
         {
             return CreateFromObject(form1, Constants.FormFieldMode.EDIT);
         }
 
-        public static FormViewModel CreateFromObject(Form form1, Constants.FormFieldMode mode)
+        public static TemplateViewModel CreateFromObject(Form form1, Constants.FormFieldMode mode)
         {
             if (form1 != null)
             {
@@ -82,25 +82,25 @@ namespace PHS.DB.ViewModels.Forms
                     form1.FormFields.OrderBy(o => o.Order).Each((field, index) =>
                     {
 
-                        formView.Fields.Add(FormFieldViewModel.CreateFromObject(field, mode));
+                        formView.Fields.Add(TemplateFieldViewModel.CreateFromObject(field, mode));
                     });
                 }
 
                 return formView;
             }
-            return FormViewModel.Initialize();
+            return TemplateViewModel.Initialize();
         }
 
-        public static FormViewModel CreateBasicFromObject(Form form1)
+        public static TemplateViewModel CreateBasicFromObject(Form form1)
         {
 
-            var formView = new FormViewModel
+            var formView = new TemplateViewModel
             {
                 Title = form1.Title,
                 Id = form1.ID,
                 DateAdded = form1.DateAdded.Value,
                 ConfirmationMessage = form1.ConfirmationMessage,
-                Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
+                Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
                 Slug = form1.Slug,
                 Theme = form1.Theme,
                 NotificationEmail = form1.NotificationEmail,
@@ -115,15 +115,15 @@ namespace PHS.DB.ViewModels.Forms
             return formView;
         }
 
-        public static FormViewModel CreateMock()
+        public static TemplateViewModel CreateMock()
         {
-            var formView = new FormViewModel
+            var formView = new TemplateViewModel
             {
                 Title = "Test Form",
                 Id = 1,
                 DateAdded = DateTime.Now,
                 ConfirmationMessage = "Thank you for filling this form",
-                Fields = Enumerable.Empty<FormFieldViewModel>().ToList(),
+                Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
                 Slug = "test-form",
                 IsPublic = false,
                 IsQuestion = false,

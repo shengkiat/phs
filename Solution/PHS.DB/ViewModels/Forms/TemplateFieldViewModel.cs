@@ -10,7 +10,7 @@ using PHS.DB;
 
 namespace PHS.DB.ViewModels.Forms
 {
-    public class FormFieldViewModel
+    public class TemplateFieldViewModel
     {
         #region Properties
 
@@ -51,22 +51,22 @@ namespace PHS.DB.ViewModels.Forms
 
         #region Public Members
 
-        public static FormFieldViewModel Initialize()
+        public static TemplateFieldViewModel Initialize()
         {
-            return new FormFieldViewModel();
+            return new TemplateFieldViewModel();
         }
 
-        public static FormFieldViewModel CreateFromObject(FormField field)
+        public static TemplateFieldViewModel CreateFromObject(FormField field)
         {
             return CreateFromObject(field, Constants.FormFieldMode.EDIT);
         }
 
-        public static FormFieldViewModel CreateFromObject(FormField field, Constants.FormFieldMode mode)
+        public static TemplateFieldViewModel CreateFromObject(FormField field, Constants.FormFieldMode mode)
         {
             if (field != null)
             {
                 
-                return new FormFieldViewModel
+                return new TemplateFieldViewModel
                 {
                     DomId = field.DomId.Value,
                     Id = field.ID,
@@ -103,7 +103,7 @@ namespace PHS.DB.ViewModels.Forms
                 };
             }
 
-            return FormFieldViewModel.Initialize();
+            return TemplateFieldViewModel.Initialize();
         }
 
         #endregion

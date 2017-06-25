@@ -7,7 +7,7 @@ namespace PHS.Business.Extensions
 {
     public static class UrlExtensions
     {
-        public static string FormUrl(this UrlHelper helper, FormViewModel model, bool isPreview = false)
+        public static string FormUrl(this UrlHelper helper, TemplateViewModel model, bool isPreview = false)
         {
             if (!isPreview)
             {
@@ -19,7 +19,7 @@ namespace PHS.Business.Extensions
             }
         }
 
-        public static string FormPreviewUrl(this UrlHelper helper, FormViewModel model)
+        public static string FormPreviewUrl(this UrlHelper helper, TemplateViewModel model)
         {
 
             return helper.RouteUrl("form-preview", new { id = model.Id });

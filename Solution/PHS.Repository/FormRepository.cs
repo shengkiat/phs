@@ -51,7 +51,7 @@ namespace PHS.Repository.Repository
             return this.GetByPrimaryKey(s => s.ID == key);
         }
 
-        public void UpdateField(Form form1, FormFieldViewModel fieldView)
+        public void UpdateField(Form form1, TemplateFieldViewModel fieldView)
         {
             if (form1 == null)
             {
@@ -157,7 +157,7 @@ namespace PHS.Repository.Repository
             return form;
         }
 
-        public void Update(FormViewModel model, Form form1)
+        public void Update(TemplateViewModel model, Form form1)
         {
             if (model == null)
             {
@@ -191,13 +191,13 @@ namespace PHS.Repository.Repository
             }
         }
 
-        public IEnumerable<FormFieldValueViewModel> GetRegistrantsByForm(FormViewModel model)
+        public IEnumerable<TemplateFieldValueViewModel> GetRegistrantsByForm(TemplateViewModel model)
         {
             var fieldValues = this.GetRegistrantsByForm(model.Id.Value);
             var values = fieldValues
                          .Select((fv) =>
                          {
-                             return FormFieldValueViewModel.CreateFromObject(fv);
+                             return TemplateFieldValueViewModel.CreateFromObject(fv);
                          })
                          .OrderBy(f => f.FieldOrder)
                          .ThenByDescending(f => f.DateAdded);
@@ -238,7 +238,7 @@ namespace PHS.Repository.Repository
             //                 .ToList();
         }
 
-        public void InsertFieldValue(FormFieldViewModel field, string value, Guid entryId, string userId = "")
+        public void InsertFieldValue(TemplateFieldViewModel field, string value, Guid entryId, string userId = "")
         {
             if (field.FieldType != Constants.FieldType.HEADER)
             {
@@ -292,15 +292,15 @@ namespace PHS.Repository.Repository
         //    }
         //}
 
-        public List<FormViewModel> GetForms()
+        public List<TemplateViewModel> GetForms()
         {
-            var formViews = new List<FormViewModel>();
+            var formViews = new List<TemplateViewModel>();
             var formSet = this.DataContext.Forms.ToList();
             foreach (var form in formSet)
             {
                 if (form.IsActive)
                 {
-                    formViews.Add(FormViewModel.CreateBasicFromObject(form));
+                    formViews.Add(TemplateViewModel.CreateBasicFromObject(form));
                 }
             }
 

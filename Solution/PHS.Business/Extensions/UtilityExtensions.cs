@@ -97,7 +97,7 @@ namespace PHS.Business.Extensions
             return form[SubmittedFieldName(domId, field)];
         }
 
-        public static string SubmittedFieldName(this FormFieldViewModel field)
+        public static string SubmittedFieldName(this TemplateFieldViewModel field)
         {
             return SubmittedFieldName(field.DomId, field.FieldType.ToString().ToTitleCase());
         }
@@ -114,17 +114,17 @@ namespace PHS.Business.Extensions
             return form["Fields[{0}].{1}".FormatWith(domId, field)];
         }
 
-        public static bool IsEditMode(this FormFieldViewModel field)
+        public static bool IsEditMode(this TemplateFieldViewModel field)
         {
             return field.Mode == Constants.FormFieldMode.EDIT;
         }
 
-        public static string ValidationId(this FormFieldViewModel field)
+        public static string ValidationId(this TemplateFieldViewModel field)
         {
             return "{0}-{1}".FormatWith(field.FieldType.ToString().ToLower(), field.Id.ToString());
         }
 
-        public static void AssignInputValues(this FormViewModel evtForm, FormCollection form)
+        public static void AssignInputValues(this TemplateViewModel evtForm, FormCollection form)
         {
             if (evtForm.Fields.Any())
             {
@@ -135,7 +135,7 @@ namespace PHS.Business.Extensions
             }
         }
 
-        public static bool SubmittedValueIsValid(this FormFieldViewModel field, FormCollection form)
+        public static bool SubmittedValueIsValid(this TemplateFieldViewModel field, FormCollection form)
         {
             var fType = field.FieldType.ToString().ToTitleCase();
             string value = "";
@@ -243,7 +243,7 @@ namespace PHS.Business.Extensions
             return true;
         }
 
-        public static string Format(this FormFieldValueViewModel value, bool stripHtml = false)
+        public static string Format(this TemplateFieldValueViewModel value, bool stripHtml = false)
         {
             switch (value.FieldType)
             {
@@ -406,7 +406,7 @@ namespace PHS.Business.Extensions
             return string.IsNullOrEmpty(target) || string.IsNullOrWhiteSpace(target);
         }
 
-        public static string SubmittedValue(this FormFieldViewModel field, FormCollection form)
+        public static string SubmittedValue(this TemplateFieldViewModel field, FormCollection form)
         {
             var fType = field.FieldType.ToString().ToTitleCase();
             string value = "";
@@ -599,7 +599,7 @@ namespace PHS.Business.Extensions
         //    }
         //}
 
-        public static void SetFieldErrors(this FormFieldViewModel field)
+        public static void SetFieldErrors(this TemplateFieldViewModel field)
         {
             field.Errors = "Invalid entry submitted for {0}".FormatWith(field.Label);
             if (field.FieldType == Constants.FieldType.FILEPICKER)

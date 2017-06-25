@@ -120,7 +120,7 @@ namespace PHS.Business.Extensions
         /// <param name="fieldType"></param>
         /// <param name="returnIfNull"></param>
         /// <returns></returns>
-        public static string GetSubmittedTextValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
+        public static string GetSubmittedTextValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
             if (model.EntryId == null || model.EntryId == "")
             {
@@ -192,7 +192,7 @@ namespace PHS.Business.Extensions
 
         }
 
-        public static string GetTempFormValue(this HtmlHelper helper, FormFieldViewModel model, string fieldType = "", string returnIfNull = "")
+        public static string GetTempFormValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
 
 
@@ -220,7 +220,7 @@ namespace PHS.Business.Extensions
             return returnIfNull;
         }
 
-        public static bool IsAnyTempFormValueSelected(this HtmlHelper helper, FormFieldViewModel model)
+        public static bool IsAnyTempFormValueSelected(this HtmlHelper helper, TemplateFieldViewModel model)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("SubmitFields[{0}].".FormatWith(model.DomId));
@@ -231,7 +231,7 @@ namespace PHS.Business.Extensions
 
         }
 
-        public static bool IsTempFormValueSelected(this HtmlHelper helper, FormFieldViewModel model, string value)
+        public static bool IsTempFormValueSelected(this HtmlHelper helper, TemplateFieldViewModel model, string value)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("SubmitFields[{0}].".FormatWith(model.DomId));
@@ -257,7 +257,7 @@ namespace PHS.Business.Extensions
         /// <param name="model"></param>
         /// <param name="value"></param>
         /// <returns>True if checkbox is checked</returns>
-        public static bool IsSubmittedValueSelected(this HtmlHelper helper, FormFieldViewModel model, string value)
+        public static bool IsSubmittedValueSelected(this HtmlHelper helper, TemplateFieldViewModel model, string value)
         {
             if (model.EntryId == null || model.EntryId == "")
             {
@@ -293,7 +293,7 @@ namespace PHS.Business.Extensions
         }
 
 
-        public static bool IsSubmittedValueSelected(this HtmlHelper helper, FormFieldViewModel model, string value, int index)
+        public static bool IsSubmittedValueSelected(this HtmlHelper helper, TemplateFieldViewModel model, string value, int index)
         {
             if (model.EntryId == null || model.EntryId == "")
             {

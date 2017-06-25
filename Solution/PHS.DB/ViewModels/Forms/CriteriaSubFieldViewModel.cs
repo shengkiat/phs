@@ -12,7 +12,7 @@ namespace PHS.DB.ViewModels.Forms
         public string CriteriaLogic { get; set; }
         public Dictionary<string, string> CriteriaValue { get; set; }
 
-        public List<FormFieldViewModel> Fields { get; set; }
-        public IEnumerable<IGrouping<string, FormFieldValueViewModel>> GroupedEntries { get; set; }
+        public List<TemplateFieldViewModel> Fields { get; set; }
+        public IEnumerable<IGrouping<string, TemplateFieldValueViewModel>> GroupedEntries { get; set; }
     }
 }
