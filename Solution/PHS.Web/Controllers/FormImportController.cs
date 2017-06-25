@@ -23,7 +23,7 @@ namespace PHS.Web.Controllers
         // GET: FormImport
         public ActionResult Index()
         {
-            List<Form> Forms = new List<Form>();
+            List<Template> Forms = new List<Template>();
 
             using (var manager = new FormManager())
             {
@@ -123,7 +123,7 @@ namespace PHS.Web.Controllers
             // Create the file using the FileInfo object
             var file = new FileInfo(outputDir + fileName);
 
-            Form form = new Form();
+            Template form = new Template();
             using (var manager = new FormManager())
             {
                 form = manager.FindForm(formid);

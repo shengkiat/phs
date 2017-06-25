@@ -65,12 +65,12 @@ namespace PHS.DB.ViewModels.Forms
             return formView;
         }
 
-        public static TemplateViewModel CreateFromObject(Form form1)
+        public static TemplateViewModel CreateFromObject(Template form1)
         {
             return CreateFromObject(form1, Constants.FormFieldMode.EDIT);
         }
 
-        public static TemplateViewModel CreateFromObject(Form form1, Constants.FormFieldMode mode)
+        public static TemplateViewModel CreateFromObject(Template form1, Constants.FormFieldMode mode)
         {
             if (form1 != null)
             {
@@ -91,7 +91,7 @@ namespace PHS.DB.ViewModels.Forms
             return TemplateViewModel.Initialize();
         }
 
-        public static TemplateViewModel CreateBasicFromObject(Form form1)
+        public static TemplateViewModel CreateBasicFromObject(Template form1)
         {
 
             var formView = new TemplateViewModel

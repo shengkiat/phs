@@ -98,7 +98,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            Form form = new Form();
+            Template form = new Template();
             using (var formManager = new FormManager())
             {
                  form = formManager.FindForm(id);
@@ -111,7 +111,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Create()
         {
-            Form form;
+            Template form;
             using (var formManager = new FormManager())
             {
                 form = formManager.CreateNewForm();
@@ -561,7 +561,7 @@ namespace PHS.Web.Controllers
 
             TemplateViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
-            Form form;
+            Template form;
             using (var formManager = new FormManager())
             {
                  form = formManager.FindForm(id);

@@ -328,8 +328,8 @@
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="EventPatients" EntityType="phsModel.EventPatient" />
-          <EntitySet Name="Forms" EntityType="phsModel.Form" />
-          <EntitySet Name="FormFields" EntityType="phsModel.FormField" />
+          <EntitySet Name="Templates" EntityType="phsModel.Template" />
+          <EntitySet Name="TemplateFields" EntityType="phsModel.TemplateField" />
           <EntitySet Name="FormFieldValues" EntityType="phsModel.FormFieldValue" />
           <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
@@ -338,7 +338,7 @@
             <End Role="EventPatient" EntitySet="EventPatients" />
           </AssociationSet>
           <AssociationSet Name="FK_form_field_values_form_fields" Association="phsModel.FK_form_field_values_form_fields">
-            <End Role="FormField" EntitySet="FormFields" />
+            <End Role="FormField" EntitySet="TemplateFields" />
             <End Role="FormFieldValue" EntitySet="FormFieldValues" />
           </AssociationSet>
           <AssociationSet Name="EventModality" Association="phsModel.EventModality">
@@ -346,11 +346,11 @@
             <End Role="Modality" EntitySet="Modalities" />
           </AssociationSet>
           <AssociationSet Name="FormFormField" Association="phsModel.FormFormField">
-            <End Role="FormField" EntitySet="FormFields" />
-            <End Role="Form" EntitySet="Forms" />
+            <End Role="FormField" EntitySet="TemplateFields" />
+            <End Role="Form" EntitySet="Templates" />
           </AssociationSet>
           <AssociationSet Name="ModalityForm" Association="phsModel.ModalityForm">
-            <End Role="Form" EntitySet="Forms" />
+            <End Role="Form" EntitySet="Templates" />
             <End Role="Modality" EntitySet="Modalities" />
           </AssociationSet>
           <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
@@ -395,7 +395,7 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_EventPatient_Event" FromRole="EventPatient" ToRole="PHSEvent" />
         </EntityType>
-        <EntityType Name="Form">
+        <EntityType Name="Template">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -415,7 +415,7 @@
           <NavigationProperty Name="FormFields" Relationship="phsModel.FormFormField" FromRole="Form" ToRole="FormField" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Form" ToRole="Modality" />
         </EntityType>
-        <EntityType Name="FormField">
+        <EntityType Name="TemplateField">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -509,7 +509,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_form_field_values_form_fields">
-          <End Type="phsModel.FormField" Role="FormField" Multiplicity="1">
+          <End Type="phsModel.TemplateField" Role="FormField" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="phsModel.FormFieldValue" Role="FormFieldValue" Multiplicity="*" />
@@ -527,11 +527,11 @@
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
         <Association Name="FormFormField">
-          <End Type="phsModel.FormField" Role="FormField" Multiplicity="*" />
-          <End Type="phsModel.Form" Role="Form" Multiplicity="*" />
+          <End Type="phsModel.TemplateField" Role="FormField" Multiplicity="*" />
+          <End Type="phsModel.Template" Role="Form" Multiplicity="*" />
         </Association>
         <Association Name="ModalityForm">
-          <End Type="phsModel.Form" Role="Form" Multiplicity="*" />
+          <End Type="phsModel.Template" Role="Form" Multiplicity="*" />
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
         <EntityType Name="AuditLog">
@@ -596,8 +596,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Forms">
-            <EntityTypeMapping TypeName="phsModel.Form">
+          <EntitySetMapping Name="Templates">
+            <EntityTypeMapping TypeName="phsModel.Template">
               <MappingFragment StoreEntitySet="Form">
                 <ScalarProperty Name="IsQuestion" ColumnName="IsQuestion" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
@@ -615,8 +615,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FormFields">
-            <EntityTypeMapping TypeName="phsModel.FormField">
+          <EntitySetMapping Name="TemplateFields">
+            <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="FormField">
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />
                 <ScalarProperty Name="MatrixRow" ColumnName="MatrixRow" />

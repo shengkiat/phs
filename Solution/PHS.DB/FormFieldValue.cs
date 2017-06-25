@@ -20,6 +20,6 @@ namespace PHS.DB
         public string Value { get; set; }
         public System.DateTime DateAdded { get; set; }
     
-        public virtual FormField FormField { get; set; }
+        public virtual TemplateField FormField { get; set; }
     }
 }

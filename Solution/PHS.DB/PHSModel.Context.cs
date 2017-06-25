@@ -28,8 +28,8 @@ namespace PHS.DB
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<EventPatient> EventPatients { get; set; }
-        public virtual DbSet<Form> Forms { get; set; }
-        public virtual DbSet<FormField> FormFields { get; set; }
+        public virtual DbSet<Template> Templates { get; set; }
+        public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<FormFieldValue> FormFieldValues { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }

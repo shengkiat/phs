@@ -45,8 +45,8 @@ namespace PHS.Repository.Context
         }
 
         public virtual DbSet<EventPatient> EventPatients { get; set; }
-        public virtual DbSet<Form> Forms { get; set; }
-        public virtual DbSet<FormField> FormFields { get; set; }
+        public virtual DbSet<Template> Forms { get; set; }
+        public virtual DbSet<TemplateField> FormFields { get; set; }
         public virtual DbSet<FormFieldValue> FormFieldValues { get; set; }
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }

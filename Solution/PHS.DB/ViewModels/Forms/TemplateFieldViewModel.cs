@@ -56,12 +56,12 @@ namespace PHS.DB.ViewModels.Forms
             return new TemplateFieldViewModel();
         }
 
-        public static TemplateFieldViewModel CreateFromObject(FormField field)
+        public static TemplateFieldViewModel CreateFromObject(TemplateField field)
         {
             return CreateFromObject(field, Constants.FormFieldMode.EDIT);
         }
 
-        public static TemplateFieldViewModel CreateFromObject(FormField field, Constants.FormFieldMode mode)
+        public static TemplateFieldViewModel CreateFromObject(TemplateField field, Constants.FormFieldMode mode)
         {
             if (field != null)
             {

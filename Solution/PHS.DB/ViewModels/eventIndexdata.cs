@@ -10,6 +10,6 @@ namespace PHS.DB.ViewModels
     {
         public IEnumerable<PHSEvent> events { get; set; }
         public IEnumerable<Modality> modalities { get; set; }
-        public IEnumerable<Form> Forms { get; set; }
+        public IEnumerable<Template> Forms { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult Create()
         {
-            List<Form> Forms;
+            List<Template> Forms;
             using (var formManager = new FormManager())
             {
                 Forms = formManager.FindAllForms();

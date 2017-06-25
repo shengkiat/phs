@@ -11,9 +11,9 @@ using System.Linq;
 
 namespace PHS.Repository.Repository
 {
-    public class FormRepository : BaseRespository<Form, int>
+    public class FormRepository : BaseRespository<Template, int>
     {    
-        public Form GetForm(int key)
+        public Template GetForm(int key)
         {
             this.DataContext = new PHSContext();
             return this.DataContext.Forms.Where(u => u.ID == key).Include(x => x.FormFields).FirstOrDefault();
@@ -31,27 +31,27 @@ namespace PHS.Repository.Repository
 
         }
 
-        public override DbSet<Form> EntitySet
+        public override DbSet<Template> EntitySet
         {
             get { return this.DataContext.Forms; }
         }
 
-        protected override Form ConvertToNativeEntity(Form entity)
+        protected override Template ConvertToNativeEntity(Template entity)
         {
             return entity;
         }
 
-        protected override int SelectPrimaryKey(Form entity)
+        protected override int SelectPrimaryKey(Template entity)
         {
             return entity.ID;
         }
 
-        public override Form GetByPrimaryKey(int key)
+        public override Template GetByPrimaryKey(int key)
         {
             return this.GetByPrimaryKey(s => s.ID == key);
         }
 
-        public void UpdateField(Form form1, TemplateFieldViewModel fieldView)
+        public void UpdateField(Template form1, TemplateFieldViewModel fieldView)
         {
             if (form1 == null)
             {
@@ -61,7 +61,7 @@ namespace PHS.Repository.Repository
             if (!fieldView.Id.HasValue)
             {
                 // create
-                var fField = new FormField
+                var fField = new TemplateField
                 {
                     DomId = fieldView.DomId,
                    // Label = fieldView.Label.LimitWithElipses(40),
@@ -138,10 +138,10 @@ namespace PHS.Repository.Repository
 
         }
 
-        public Form CreateNew()
+        public Template CreateNew()
         {
             string formName = "New Registration Form";
-            var form = new Form
+            var form = new Template
             {
                 Title = formName,
                 //Slug = formName.ToSlug(),
@@ -157,7 +157,7 @@ namespace PHS.Repository.Repository
             return form;
         }
 
-        public void Update(TemplateViewModel model, Form form1)
+        public void Update(TemplateViewModel model, Template form1)
         {
             if (model == null)
             {
@@ -307,7 +307,7 @@ namespace PHS.Repository.Repository
             return formViews;
         }
 
-        public List<Form> GetBaseForms()
+        public List<Template> GetBaseForms()
         {
             var formSet = this.DataContext.Forms.ToList();
            
@@ -316,7 +316,7 @@ namespace PHS.Repository.Repository
         }
 
 
-        public Form GetPreRegistrationForm(int year = -1)
+        public Template GetPreRegistrationForm(int year = -1)
         {
             
             var form = this.DataContext.Forms.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
@@ -330,7 +330,7 @@ namespace PHS.Repository.Repository
             this.DeleteForm(form);
         }
 
-        public void DeleteForm(Form form1)
+        public void DeleteForm(Template form1)
         {
             form1.IsActive = false;
 

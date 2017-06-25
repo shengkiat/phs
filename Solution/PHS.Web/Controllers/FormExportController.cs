@@ -65,7 +65,7 @@ namespace PHS.Web.Controllers
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, TemplateViewModel model)
         {
             // TODO This method not required?
-            Form form;
+            Template form;
             using (var formManager = new FormManager())
             {
                 form = formManager.FindForm(model.Id.Value);

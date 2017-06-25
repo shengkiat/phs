@@ -9,8 +9,8 @@ namespace PHS.Business.Interface
 {
     public interface IFormManager
     {
-        List<Form> FindAllForms();
-        Form FindForm(int formID);
+        List<Template> FindAllForms();
+        Template FindForm(int formID);
 
     }
 }

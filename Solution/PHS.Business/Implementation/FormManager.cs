@@ -20,9 +20,9 @@ namespace PHS.Business.Implementation
             return new FormManager();
         }
 
-        public List<Form> FindAllForms()
+        public List<Template> FindAllForms()
         {
-            List<Form> Forms = new List<Form>();
+            List<Template> Forms = new List<Template>();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 Forms = unitOfWork.FormRepository.GetBaseForms();
@@ -47,9 +47,9 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Form FindForm(int formID)
+        public Template FindForm(int formID)
         {
-            Form form = new Form();
+            Template form = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 form = unitOfWork.FormRepository.GetForm(formID);
@@ -95,9 +95,9 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Form CreateNewForm()
+        public Template CreateNewForm()
         {
-            Form form = new Form();
+            Template form = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 form = unitOfWork.FormRepository.CreateNew();
@@ -114,7 +114,7 @@ namespace PHS.Business.Implementation
 
         public string InsertUploadDataToForm(byte[] data, int formid)
         {
-            Form form = new Form();
+            Template form = new Template();
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
