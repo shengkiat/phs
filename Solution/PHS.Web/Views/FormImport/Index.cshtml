@@ -100,7 +100,7 @@ Uploaded Files:
             alert(id);
 
             var jsonObject = {
-                "formid": id
+                "templateId": id
             };
 
             $.ajax({
@@ -129,7 +129,7 @@ Uploaded Files:
             maxFiles: 1,
             dataType: "json",
             data: {
-                formid: function () {
+                templateId: function () {
                     return $("#ddl option:selected").val();
                 },
             },

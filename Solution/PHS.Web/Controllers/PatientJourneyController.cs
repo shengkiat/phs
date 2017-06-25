@@ -206,24 +206,24 @@ namespace PHS.Web.Controllers
         }
 
 
-        public ActionResult ViewForm(int formId, bool embed = false)
+        public ActionResult ViewForm(int templateId, bool embed = false)
         {
             TemplateViewModel model = null;
             // var form = this._formRepo.GetByPrimaryKey(id);
 
             //TODO should retrieve form by eventId + formId?
-            var form = this._formRepo.GetForm(formId);
+            var template = this._formRepo.GetForm(templateId);
 
-            if (form != null)
+            if (template != null)
             {
-                if (form.Title.Equals("Mega Sorting Station"))
+                if (template.Title.Equals("Mega Sorting Station"))
                 {
                     return PartialView("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));
                 }
 
                 else
                 {
-                    model = TemplateViewModel.CreateFromObject(form, Constants.TemplateFieldMode.INPUT);
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                     model.Embed = embed;
                 }
                 

@@ -87,38 +87,38 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            return RedirectToRoute("form-entries", new { formid = model.TemplateID.Value });
+            return RedirectToRoute("form-entries", new { templateid = model.TemplateID.Value });
 
         }
 
-        public ActionResult ViewEntries(int formId)
+        public ActionResult ViewEntries(int templateId)
         {
             // var form = this._formRepo.GetByPrimaryKey(formId);
 
-            var form = this._formRepo.GetForm(formId);
+            var template = this._formRepo.GetForm(templateId);
 
-            var formView = TemplateViewModel.CreateFromObject(form);
+            var templateView = TemplateViewModel.CreateFromObject(template);
 
-            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
-            return View(formView);
+            return View(templateView);
         }
 
-        public ActionResult AddNewSortEntries(string formId)
+        public ActionResult AddNewSortEntries(string templateId)
         {
-            var form = this._formRepo.GetForm(Int32.Parse(formId));
+            var template = this._formRepo.GetForm(Int32.Parse(templateId));
 
-            var formView = TemplateViewModel.CreateFromObject(form);
+            var templateView = TemplateViewModel.CreateFromObject(template);
 
-            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
             var sortFieldViewModel = new SortFieldViewModel();
 
             sortFieldViewModel.SortFields = new List<SelectListItem>();
 
-            foreach (var s in formView.GroupedEntries.First())
+            foreach (var s in templateView.GroupedEntries.First())
             {
                 sortFieldViewModel.SortFields.Add(new SelectListItem
                 {
@@ -136,23 +136,23 @@ namespace PHS.Web.Controllers
             return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
         }
 
-        public ActionResult AddNewCriteriaEntries(string formId)
+        public ActionResult AddNewCriteriaEntries(string templateId)
         {
-            var form = this._formRepo.GetForm(Int32.Parse(formId));
+            var template = this._formRepo.GetForm(Int32.Parse(templateId));
 
-            var formView = TemplateViewModel.CreateFromObject(form);
+            var templateView = TemplateViewModel.CreateFromObject(template);
 
-            formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-            formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
             var criteriaFieldViewModel = new CriteriaFieldViewModel();
-            criteriaFieldViewModel.Fields = formView.Fields;
-            criteriaFieldViewModel.GroupedEntries = formView.GroupedEntries;
+            criteriaFieldViewModel.Fields = templateView.Fields;
+            criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
             criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
 
             criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
 
-            foreach (var s in formView.GroupedEntries.First())
+            foreach (var s in templateView.GroupedEntries.First())
             {
                 criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                 {
@@ -170,25 +170,25 @@ namespace PHS.Web.Controllers
             return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
         }
 
-        public ActionResult AddNewCriteriaSubEntries(string formId)
+        public ActionResult AddNewCriteriaSubEntries(string templateId)
         {
             var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
 
             using (var formManager = new FormManager())
             {
-                var form = formManager.FindForm(Int32.Parse(formId));
+                var form = formManager.FindForm(Int32.Parse(templateId));
 
                 //  var form = this._formRepo.GetForm(Int32.Parse(formId));
 
-                var formView = TemplateViewModel.CreateFromObject(form);
+                var templateView = TemplateViewModel.CreateFromObject(form);
 
-                formView.Entries = formManager.HasSubmissions(formView).ToList();
+                templateView.Entries = formManager.HasSubmissions(templateView).ToList();
                 // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
 
-                formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+                templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
-                criteriaSubFieldViewModel.Fields = formView.Fields;
-                criteriaSubFieldViewModel.GroupedEntries = formView.GroupedEntries;
+                criteriaSubFieldViewModel.Fields = templateView.Fields;
+                criteriaSubFieldViewModel.GroupedEntries = templateView.GroupedEntries;
             }
             return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
@@ -199,21 +199,21 @@ namespace PHS.Web.Controllers
 
             using (var formManager = new FormManager())
             {
-                var form = formManager.FindForm(model.TemplateID.Value);
+                var template = formManager.FindForm(model.TemplateID.Value);
                 // var form = this._formRepo.GetForm(formId);
-                var formView = TemplateViewModel.CreateFromObject(form);
+                var templateView = TemplateViewModel.CreateFromObject(template);
 
                 // formView.Entries = formManager.HasSubmissions(formView).ToList();
-                formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
+                templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
 
-                formView.GroupedEntries = formView.Entries.GroupBy(g => g.EntryId);
+                templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
                 var gridView = new GridView();
-                gridView.DataSource = this.CreateFormEntriesDataTable(formView, model.SortFields, model.CriteriaFields);
+                gridView.DataSource = this.CreateFormEntriesDataTable(templateView, model.SortFields, model.CriteriaFields);
                 gridView.DataBind();
 
                 Response.ClearContent();
-                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(form.Title.ToSlug()));
+                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(template.Title.ToSlug()));
                 Response.ContentType = "application/vnd.ms-excel";
                 StringWriter sw = new StringWriter();
                 HtmlTextWriter htw = new HtmlTextWriter(sw);
@@ -226,14 +226,14 @@ namespace PHS.Web.Controllers
 
         }
 
-        private DataTable CreateFormEntriesDataTable(TemplateViewModel form, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
+        private DataTable CreateFormEntriesDataTable(TemplateViewModel template, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
-            var dt = new DataTable(form.Title);
+            var dt = new DataTable(template.Title);
             List<string> columnNames = new List<string>();
             int columnCount = 0;
 
             //TODO - Format Export Forms Data for BMI and Address
-            foreach (var field in form.Fields)
+            foreach (var field in template.Fields)
             {
 
                 if (field.FieldType == Constants.FieldType.MATRIX)
@@ -306,7 +306,7 @@ namespace PHS.Web.Controllers
 
             dt.Columns.Add(new DataColumn("Submitted On"));
 
-            foreach (var group in form.GroupedEntries)
+            foreach (var group in template.GroupedEntries)
             {
                 DataRow row = dt.NewRow();
                 var fieldAddedOn = group.FirstOrDefault().DateAdded;

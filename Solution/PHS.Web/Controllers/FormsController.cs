@@ -250,23 +250,23 @@ namespace PHS.Web.Controllers
 
         }
 
-        public ActionResult Delete(int formId)
+        public ActionResult Delete(int templateId)
         {
             using (var formManager = new FormManager())
             {
-                var form = formManager.FindForm(formId);
+                var template = formManager.FindForm(templateId);
 
-                var formView = TemplateViewModel.CreateFromObject(form);
+                var templateView = TemplateViewModel.CreateFromObject(template);
 
-                if (form != null)
+                if (template != null)
                 {
-                    formView.Entries = formManager.HasSubmissions(formView).ToList();
+                    templateView.Entries = formManager.HasSubmissions(templateView).ToList();
 
-                    if (!formView.Entries.Any())
+                    if (!templateView.Entries.Any())
                     {
                         try
                         {
-                            formManager.DeleteForm(formId);
+                            formManager.DeleteForm(templateId);
                             TempData["success"] = "Form Deleted";
                             return RedirectToRoute("form-home");
                         }

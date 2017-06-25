@@ -30,7 +30,7 @@
     }
     @if (Model.GroupedEntries != null && Model.GroupedEntries.Count() > 0)
     {
-        <li><a href="@Url.RouteUrl("form-entries", new { formid = Model.TemplateID.Value })" class="image-icon-link invitations-icon-link">
+        <li><a href="@Url.RouteUrl("form-entries", new { templateId = Model.TemplateID.Value })" class="image-icon-link invitations-icon-link">
             <span>View Entries @Model.GroupedEntries.Any().OutputIfTrue("({0})".FormatWith(Model.GroupedEntries.Count().ToString()))</span></a></li>
     }
     

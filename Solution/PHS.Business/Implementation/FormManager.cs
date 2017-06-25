@@ -47,12 +47,12 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Template FindForm(int formID)
+        public Template FindForm(int templateID)
         {
             Template form = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.FormRepository.GetForm(formID);
+                form = unitOfWork.FormRepository.GetForm(templateID);
 
                 if (form != null)
                 {
@@ -112,13 +112,13 @@ namespace PHS.Business.Implementation
 
         }
 
-        public string InsertUploadDataToForm(byte[] data, int formid)
+        public string InsertUploadDataToForm(byte[] data, int templateID)
         {
             Template form = new Template();
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.FormRepository.GetForm(formid);
+                form = unitOfWork.FormRepository.GetForm(templateID);
 
                 // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
                 using (MemoryStream ms = new MemoryStream(data))
