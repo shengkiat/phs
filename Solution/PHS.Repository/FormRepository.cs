@@ -13,7 +13,7 @@ namespace PHS.Repository.Repository
 {
     public class FormRepository : BaseRespository<Template, int>
     {    
-        public Template GetForm(int key)
+        public Template GetTemplate(int key)
         {
             this.DataContext = new PHSContext();
             return this.DataContext.Templates.Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
@@ -51,9 +51,9 @@ namespace PHS.Repository.Repository
             return this.GetByPrimaryKey(s => s.TemplateID == key);
         }
 
-        public void UpdateField(Template form1, TemplateFieldViewModel fieldView)
+        public void UpdateField(Template template1, TemplateFieldViewModel fieldView)
         {
-            if (form1 == null)
+            if (template1 == null)
             {
                 throw new Exception("Cannot update a field when a form is null");
             }
@@ -95,7 +95,7 @@ namespace PHS.Repository.Repository
                     MatrixColumn = fieldView.MatrixColumn
                 };
 
-                form1.TemplateFields.Add(fField);
+                template1.TemplateFields.Add(fField);
                 this.SaveChanges();
             }
             else
@@ -157,27 +157,27 @@ namespace PHS.Repository.Repository
             return template;
         }
 
-        public void Update(TemplateViewModel model, Template form1)
+        public void Update(TemplateViewModel model, Template template1)
         {
             if (model == null)
             {
                 throw new Exception("Invalid update operation. Form view is null.");
             }
 
-            if (form1 == null)
+            if (template1 == null)
             {
                 throw new Exception("Invalid update operation. Form not found.");
             }
 
-            form1.Status = model.Status.ToString();
-            form1.Title = string.IsNullOrEmpty(model.Title) ? "Registration" : model.Title;
+            template1.Status = model.Status.ToString();
+            template1.Title = string.IsNullOrEmpty(model.Title) ? "Registration" : model.Title;
             // form.TabOrder = model.TabOrder; // excluding tab order for first launch
-            form1.ConfirmationMessage = model.ConfirmationMessage;
-            form1.Theme = model.Theme;
-            form1.IsPublic = model.IsPublic;
-            form1.PublicFormType = model.PublicFormType;
-            form1.IsQuestion = model.IsQuestion;
-            form1.NotificationEmail = model.NotificationEmail;
+            template1.ConfirmationMessage = model.ConfirmationMessage;
+            template1.Theme = model.Theme;
+            template1.IsPublic = model.IsPublic;
+            template1.PublicFormType = model.PublicFormType;
+            template1.IsQuestion = model.IsQuestion;
+            template1.NotificationEmail = model.NotificationEmail;
             this.SaveChanges();
         }
 
@@ -292,27 +292,27 @@ namespace PHS.Repository.Repository
         //    }
         //}
 
-        public List<TemplateViewModel> GetForms()
+        public List<TemplateViewModel> GetTemplates()
         {
-            var formViews = new List<TemplateViewModel>();
-            var formSet = this.DataContext.Templates.ToList();
-            foreach (var form in formSet)
+            var templateViews = new List<TemplateViewModel>();
+            var templateSet = this.DataContext.Templates.ToList();
+            foreach (var template in templateSet)
             {
-                if (form.IsActive)
+                if (template.IsActive)
                 {
-                    formViews.Add(TemplateViewModel.CreateBasicFromObject(form));
+                    templateViews.Add(TemplateViewModel.CreateBasicFromObject(template));
                 }
             }
 
-            return formViews;
+            return templateViews;
         }
 
-        public List<Template> GetBaseForms()
+        public List<Template> GetBaseTemplates()
         {
-            var formSet = this.DataContext.Templates.ToList();
+            var templateSet = this.DataContext.Templates.ToList();
            
 
-            return formSet;
+            return templateSet;
         }
 
 
@@ -324,15 +324,15 @@ namespace PHS.Repository.Repository
             return form;
         }
 
-        public void DeleteForm(int formId)
+        public void DeleteTemplate(int templateId)
         {
-            var form = this.GetByPrimaryKey(formId);
-            this.DeleteForm(form);
+            var template = this.GetByPrimaryKey(templateId);
+            this.DeleteTemplate(template);
         }
 
-        public void DeleteForm(Template form1)
+        public void DeleteTemplate(Template template1)
         {
-            form1.IsActive = false;
+            template1.IsActive = false;
 
             //this.DataContext.Forms.Remove(form1);
             //var fields = form1.FormFields.ToList();
@@ -362,7 +362,7 @@ namespace PHS.Repository.Repository
         /// </summary>
         /// <param name="olderThanInDays"></param>
         /// <returns></returns>
-        public int DeleteForms(int olderThanInDays)
+        public int DeleteTemplates(int olderThanInDays)
         {
             int counter = 0;
             this.DeleteSubmissions(olderThanInDays);
@@ -371,7 +371,7 @@ namespace PHS.Repository.Repository
 
             foreach (var f in Templates)
             {
-                this.DeleteForm(f);
+                this.DeleteTemplate(f);
                 counter++; ;
             }
 

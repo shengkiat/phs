@@ -3,7 +3,7 @@ using PHS.Repository.Interface.Core;
 
 namespace PHS.Repository.Interface
 {
-    public interface IFormFieldValueRepository : IRepository<TemplateFieldValue>
+    public interface ITemplateFieldValueRepository : IRepository<TemplateFieldValue>
     {
 
     }

@@ -212,7 +212,7 @@ namespace PHS.Web.Controllers
             // var form = this._formRepo.GetByPrimaryKey(id);
 
             //TODO should retrieve form by eventId + formId?
-            var template = this._formRepo.GetForm(templateId);
+            var template = this._formRepo.GetTemplate(templateId);
 
             if (template != null)
             {
@@ -242,7 +242,7 @@ namespace PHS.Web.Controllers
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-            var formObj = this._formRepo.GetForm(model.TemplateID.Value);
+            var formObj = this._formRepo.GetTemplate(model.TemplateID.Value);
 
 
             var formView = TemplateViewModel.CreateFromObject(formObj, Constants.TemplateFieldMode.INPUT);

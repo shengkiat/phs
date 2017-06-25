@@ -63,15 +63,15 @@ namespace PHS.Web
                new { controller = "Forms", action = "create" }
             );
 
-            // form confirmation
+            // template confirmation
             routes.MapRoute(
                "form-confirmation",
                "Forms/confirmation/{id}/{embed}",
-               new { controller = "Forms", action = "formconfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "Forms", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
-            // view form entries
+            // view template entries
             routes.MapRoute(
                "form-entries",
                "Forms/entries/{formid}",
@@ -117,7 +117,7 @@ namespace PHS.Web
             routes.MapRoute(
                "ViewSubmittedForm",
                "Forms/saveform/{id}/{entryID}/{embed}",
-               new { controller = "Forms", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
+               new { controller = "Forms", action = "ViewSaveTemplate", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 

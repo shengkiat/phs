@@ -47,18 +47,18 @@ namespace PHS.Web.Controllers
 
         public ActionResult Create()
         {
-            List<Template> Forms;
+            List<Template> templates;
             using (var formManager = new FormManager())
             {
-                Forms = formManager.FindAllForms();
+                templates = formManager.FindAllTemplates();
 
-                ViewData["ss"] = Forms;
+                ViewData["ss"] = templates;
 
                 String htmlString = "<select id=\"SelectedForm\" name=\"Modalities[0].FormID\">";
                // String htmlString = "";
-                foreach (var form in Forms)
+                foreach (var template in templates)
                 {
-                    htmlString += "<option value=\"" + form.TemplateID + "\">" + form.Title + "</option>";
+                    htmlString += "<option value=\"" + template.TemplateID + "\">" + template.Title + "</option>";
                 }
 
                 htmlString += "</select>";

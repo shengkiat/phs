@@ -20,12 +20,12 @@ namespace PHS.Business.Implementation
             return new FormManager();
         }
 
-        public List<Template> FindAllForms()
+        public List<Template> FindAllTemplates()
         {
             List<Template> Forms = new List<Template>();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                Forms = unitOfWork.FormRepository.GetBaseForms();
+                Forms = unitOfWork.FormRepository.GetBaseTemplates();
 
                 if (Forms != null)
                 {
@@ -37,40 +37,40 @@ namespace PHS.Business.Implementation
 
         }
 
-        public List<TemplateViewModel> FindAllFormsByDes()
+        public List<TemplateViewModel> FindAllTemplatesByDes()
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var forms = unitOfWork.FormRepository.GetForms().OrderByDescending(f => f.DateAdded).ToList();
+                var forms = unitOfWork.FormRepository.GetTemplates().OrderByDescending(f => f.DateAdded).ToList();
 
                 return forms;
             }
         }
 
-        public Template FindForm(int templateID)
+        public Template FindTemplate(int templateID)
         {
-            Template form = new Template();
+            Template template = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.FormRepository.GetForm(templateID);
+                template = unitOfWork.FormRepository.GetTemplate(templateID);
 
-                if (form != null)
+                if (template != null)
                 {
-                    return form;
+                    return template;
                 }
             }
 
-            return form;
+            return template;
 
         }
 
-        public void DeleteForm(int formID)
+        public void DeleteTemplate(int templateID)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    unitOfWork.FormRepository.DeleteForm(formID);
+                    unitOfWork.FormRepository.DeleteTemplate(templateID);
 
                     unitOfWork.Complete();
                     scope.Complete();
@@ -95,30 +95,30 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Template CreateNewForm()
+        public Template CreateNewTemplate()
         {
-            Template form = new Template();
+            Template template = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.FormRepository.CreateNew();
+                template = unitOfWork.FormRepository.CreateNew();
 
-                if (form != null)
+                if (template != null)
                 {
-                    return form;
+                    return template;
                 }
             }
 
-            return form;
+            return template;
 
         }
 
-        public string InsertUploadDataToForm(byte[] data, int templateID)
+        public string InsertUploadDataToTemplate(byte[] data, int templateID)
         {
-            Template form = new Template();
+            Template template = new Template();
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                form = unitOfWork.FormRepository.GetForm(templateID);
+                template = unitOfWork.FormRepository.GetTemplate(templateID);
 
                 // byte[] fileByte = System.IO.File.ReadAllBytes(filePath);
                 using (MemoryStream ms = new MemoryStream(data))
@@ -132,7 +132,7 @@ namespace PHS.Business.Implementation
                         {
                             int x = 1;
                             // check if header match
-                            foreach (var field in form.TemplateFields)
+                            foreach (var field in template.TemplateFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -184,7 +184,7 @@ namespace PHS.Business.Implementation
 
                             int y = 1;
 
-                            foreach (var field in form.TemplateFields)
+                            foreach (var field in template.TemplateFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -258,7 +258,7 @@ namespace PHS.Business.Implementation
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var guid = Guid.Parse(entryId);
-                    var value = unitOfWork.FormViewValues.Find(u => u.EntryId.Equals(guid) && u.TemplateFieldID == fieldID);
+                    var value = unitOfWork.TemplateFieldValues.Find(u => u.EntryId.Equals(guid) && u.TemplateFieldID == fieldID);
 
                     return value.First().Value;
                 }

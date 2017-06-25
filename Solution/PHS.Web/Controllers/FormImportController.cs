@@ -23,15 +23,15 @@ namespace PHS.Web.Controllers
         // GET: FormImport
         public ActionResult Index()
         {
-            List<Template> Forms = new List<Template>();
+            List<Template> templates = new List<Template>();
 
             using (var manager = new FormManager())
             {
-                Forms = manager.FindAllForms();
+                templates = manager.FindAllTemplates();
 
             }
 
-            return View(Forms);
+            return View(templates);
         }
 
         public string Between( string value, string a, string b)
@@ -80,7 +80,7 @@ namespace PHS.Web.Controllers
 
                 using (var manager = new FormManager())
                 {
-                    string msg  = manager.InsertUploadDataToForm(data, formid);
+                    string msg  = manager.InsertUploadDataToTemplate(data, formid);
 
                     System.IO.File.Delete(filePath);
 
@@ -126,7 +126,7 @@ namespace PHS.Web.Controllers
             Template form = new Template();
             using (var manager = new FormManager())
             {
-                form = manager.FindForm(formid);
+                form = manager.FindTemplate(formid);
             }
 
             MemoryStream stream;

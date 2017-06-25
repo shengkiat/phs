@@ -450,7 +450,7 @@
     <Content Include="Views\Shared\_MessageBoxPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Forms\Edit.cshtml" />
-    <Content Include="Views\Forms\FormConfirmation.cshtml" />
+    <Content Include="Views\Forms\SubmitConfirmation.cshtml" />
     <Content Include="Views\Forms\Index.cshtml" />
     <Content Include="Views\Forms\Preview.cshtml" />
     <Content Include="Views\Forms\Register.cshtml" />

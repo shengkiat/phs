@@ -65,13 +65,13 @@ namespace PHS.Web.Controllers
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, TemplateViewModel model)
         {
             // TODO This method not required?
-            Template form;
+            Template template;
             using (var formManager = new FormManager())
             {
-                form = formManager.FindForm(model.TemplateID.Value);
+                template = formManager.FindTemplate(model.TemplateID.Value);
 
                 // var form = this._formRepo.GetForm(model.Id.Value);
-                var formView = TemplateViewModel.CreateFromObject(form);
+                var templateView = TemplateViewModel.CreateFromObject(template);
 
                 try
                 {
@@ -95,7 +95,7 @@ namespace PHS.Web.Controllers
         {
             // var form = this._formRepo.GetByPrimaryKey(formId);
 
-            var template = this._formRepo.GetForm(templateId);
+            var template = this._formRepo.GetTemplate(templateId);
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
@@ -107,7 +107,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewSortEntries(string templateId)
         {
-            var template = this._formRepo.GetForm(Int32.Parse(templateId));
+            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
@@ -138,7 +138,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewCriteriaEntries(string templateId)
         {
-            var template = this._formRepo.GetForm(Int32.Parse(templateId));
+            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
@@ -176,11 +176,11 @@ namespace PHS.Web.Controllers
 
             using (var formManager = new FormManager())
             {
-                var form = formManager.FindForm(Int32.Parse(templateId));
+                var template = formManager.FindTemplate(Int32.Parse(templateId));
 
                 //  var form = this._formRepo.GetForm(Int32.Parse(formId));
 
-                var templateView = TemplateViewModel.CreateFromObject(form);
+                var templateView = TemplateViewModel.CreateFromObject(template);
 
                 templateView.Entries = formManager.HasSubmissions(templateView).ToList();
                 // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
@@ -199,7 +199,7 @@ namespace PHS.Web.Controllers
 
             using (var formManager = new FormManager())
             {
-                var template = formManager.FindForm(model.TemplateID.Value);
+                var template = formManager.FindTemplate(model.TemplateID.Value);
                 // var form = this._formRepo.GetForm(formId);
                 var templateView = TemplateViewModel.CreateFromObject(template);
 
