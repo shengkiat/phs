@@ -14,13 +14,14 @@ namespace PHS.Web.Controllers
     using PHS.Common;
     using PHS.DB.ViewModels.Forms;
     using PHS.Repository.Repository;
+    using Repository.Context;
 
     public class PatientJourneyController : BaseController
     {
         private FormRepository _formRepo { get; set; }
 
         public PatientJourneyController()
-            : this(new FormRepository())
+            : this(new FormRepository(new PHSContext()))
         {
 
         }

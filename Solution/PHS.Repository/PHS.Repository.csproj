@@ -63,6 +63,7 @@
     <Compile Include="Interface\Core\IUnitOfWorkAsync.cs" />
     <Compile Include="Interface\IEventPatientRepository.cs" />
     <Compile Include="Interface\IEventRepository.cs" />
+    <Compile Include="Interface\IFormRepository.cs" />
     <Compile Include="Interface\ITemplateFieldValueRepository.cs" />
     <Compile Include="Interface\IMasterAddressRepository.cs" />
     <Compile Include="Interface\IModalityRepository.cs" />

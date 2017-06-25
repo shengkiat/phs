@@ -6,6 +6,7 @@ using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Forms;
 using PHS.FormBuilder.ViewModel;
+using PHS.Repository.Context;
 using PHS.Repository.Repository;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace PHS.Web.Controllers
         private FormRepository _formRepo { get; set; }
 
         public FormExportController()
-            : this(new FormRepository())
+            : this(new FormRepository(new PHSContext()))
         {
 
         }

@@ -6,6 +6,7 @@ using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Forms;
 using PHS.FormBuilder.ViewModel;
+using PHS.Repository.Context;
 using PHS.Repository.Repository;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace PHS.Web.Controllers
         private FormRepository _formRepo { get; set; }
 
         public FormsController()
-            : this(new FormRepository())
+            : this(new FormRepository(new PHSContext()))
         {
 
         }
@@ -154,7 +155,7 @@ namespace PHS.Web.Controllers
                 return Json(new { success = false, error = "Unable to save changes. A valid form was not detected.", isautosave = isAutoSave });
             }
 
-            var template = this._formRepo.GetByPrimaryKey(model.TemplateID.Value);
+            var template = this._formRepo.GetTemplate(model.TemplateID.Value);
 
 
             if (Fields == null)
@@ -465,7 +466,7 @@ namespace PHS.Web.Controllers
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
 
-            var template = this._formRepo.GetByPrimaryKey(id);
+            var template = this._formRepo.GetTemplate(id);
             if (template != null)
             {
                 var templateView = TemplateViewModel.CreateFromObject(template);
