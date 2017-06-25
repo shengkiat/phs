@@ -7,6 +7,6 @@ namespace PHS.DB.ViewModels.Forms
 {
     public class TemplateCollectionViewModel
     {
-        public List<TemplateViewModel> Forms { get; set; }
+        public List<TemplateViewModel> Templates { get; set; }
     }
 }

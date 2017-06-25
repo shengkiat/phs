@@ -10,7 +10,7 @@
     ViewBag.Title = "Welcome to Form Builder";
 }
 
-@if (!Model.Forms.Any())
+@if (!Model.Templates.Any())
 {
     <div class="select-form-container align-center welcome-container">
        <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
@@ -38,7 +38,7 @@ else
       </tr>      
     </thead>
     <tbody>
-    @foreach (var f in Model.Forms)
+    @foreach (var f in Model.Templates)
     {
         <tr>
        <td class="title-column">

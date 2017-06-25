@@ -44,7 +44,7 @@ namespace PHS.Web.Controllers
 
             using (var formManager = new FormManager())
             {
-                formCollectionView.Forms = formManager.FindAllFormsByDes();
+                formCollectionView.Templates = formManager.FindAllFormsByDes();
             }
 
             return View(formCollectionView);
