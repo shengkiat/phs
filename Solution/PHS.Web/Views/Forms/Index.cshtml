@@ -48,7 +48,6 @@ else
         <td>          
           @Html.RouteLink("Edit Form", "form-edit", new { Id = f.Id.Value }, new { @class = "hyperlink-button light-blue-button" })
           @Html.RouteLink("View/Fill Form", "form-preview", new{Id=f.Id.Value}, new { @class="hyperlink-button green-button"})  
-          @Html.RouteLink("View Submissions", "form-entries", new { formId = f.Id.Value}, new{@class="hyperlink-button orange-button" })
           &nbsp;
 
           @if (!f.Fields.Any())

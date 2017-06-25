@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\FormExportController.cs" />
     <Compile Include="Controllers\FormImportController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -454,7 +455,7 @@
     <Content Include="Views\Forms\Preview.cshtml" />
     <Content Include="Views\Forms\Register.cshtml" />
     <Content Include="Views\Forms\RegisterPartial.cshtml" />
-    <Content Include="Views\Forms\ViewEntries.cshtml" />
+    <Content Include="Views\FormExport\ViewEntries.cshtml" />
     <Content Include="Views\Forms\_form-field-address-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-address-template.cshtml" />
     <Content Include="Views\Forms\_form-field-birthdaypicker-partial.cshtml" />
@@ -505,10 +506,10 @@
     <Content Include="Views\Forms\_form-field-nricpicker-template.cshtml" />
     <Content Include="Views\Forms\_form-field-doctormemo-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-doctormemo-template.cshtml" />
-    <Content Include="Views\Forms\_ViewEntriesSortPartial.cshtml" />
+    <Content Include="Views\FormExport\_ViewEntriesSortPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
-    <Content Include="Views\Forms\_ViewEntriesCriteriaPartial.cshtml" />
-    <Content Include="Views\Forms\_ViewEntriesCriteriaSubPartial.cshtml" />
+    <Content Include="Views\FormExport\_ViewEntriesCriteriaPartial.cshtml" />
+    <Content Include="Views\FormExport\_ViewEntriesCriteriaSubPartial.cshtml" />
     <Content Include="Views\FormImport\Index.cshtml" />
     <Content Include="Views\Admin\SearchUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
