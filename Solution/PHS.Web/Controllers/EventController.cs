@@ -58,7 +58,7 @@ namespace PHS.Web.Controllers
                // String htmlString = "";
                 foreach (var form in Forms)
                 {
-                    htmlString += "<option value=\"" + form.ID + "\">" + form.Title + "</option>";
+                    htmlString += "<option value=\"" + form.TemplateID + "\">" + form.Title + "</option>";
                 }
 
                 htmlString += "</select>";

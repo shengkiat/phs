@@ -18,7 +18,7 @@ namespace PHS.DB
         public Modality()
         {
             this.PHSEvents = new HashSet<PHSEvent>();
-            this.Forms = new HashSet<Template>();
+            this.Templates = new HashSet<Template>();
         }
     
         public int ModalityID { get; set; }
@@ -35,6 +35,6 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHSEvent> PHSEvents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Template> Forms { get; set; }
+        public virtual ICollection<Template> Templates { get; set; }
     }
 }

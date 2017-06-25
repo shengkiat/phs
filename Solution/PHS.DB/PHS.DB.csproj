@@ -88,9 +88,6 @@
     <Compile Include="EventPatient.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormFieldValue.cs">
-      <DependentUpon>PHSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="MasterAddress.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
@@ -123,6 +120,9 @@
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TemplateField.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateFieldValue.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\event.cs" />

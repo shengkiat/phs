@@ -117,7 +117,7 @@ namespace PHS.Web.Controllers
                 form = formManager.CreateNewForm();
             }
 
-            return RedirectToAction("edit", new { id = form.ID });
+            return RedirectToAction("edit", new { id = form.TemplateID });
         }
 
         public ActionResult GetAddressByZipCode(string zipcode)
@@ -149,12 +149,12 @@ namespace PHS.Web.Controllers
         public ActionResult Update(bool isAutoSave, TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
         {
 
-            if (!model.Id.HasValue)
+            if (!model.TemplateID.HasValue)
             {
                 return Json(new { success = false, error = "Unable to save changes. A valid form was not detected.", isautosave = isAutoSave });
             }
 
-            var form = this._formRepo.GetByPrimaryKey(model.Id.Value);
+            var form = this._formRepo.GetByPrimaryKey(model.TemplateID.Value);
 
 
             if (Fields == null)
@@ -227,7 +227,7 @@ namespace PHS.Web.Controllers
 
                             if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
                             {
-                                fieldView.Id = Convert.ToInt32(fieldId);
+                                fieldView.TemplateFieldID = Convert.ToInt32(fieldId);
                             }
 
                             this._formRepo.UpdateField(form, fieldView);
@@ -236,7 +236,7 @@ namespace PHS.Web.Controllers
                 }
 
                 //  form.FormFields.Load();
-                var fieldOrderById = form.FormFields.Select(ff => new { domid = ff.DomId, id = ff.ID });
+                var fieldOrderById = form.TemplateFields.Select(ff => new { domid = ff.DomId, id = ff.TemplateFieldID });
 
                 return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
 
@@ -299,7 +299,7 @@ namespace PHS.Web.Controllers
             // var form = this._formRepo.GetByPrimaryKey(id);
             var form = this._formRepo.GetForm(id);
 
-            if (form.FormFields.Count() > 0)
+            if (form.TemplateFields.Count() > 0)
             {
                 form.Status = toOn ? Constants.FormStatus.PUBLISHED.ToString() : Constants.FormStatus.DRAFT.ToString();
 
@@ -318,7 +318,7 @@ namespace PHS.Web.Controllers
                 TempData["error"] = "Cannot publish form until fields have been added.";
             }
 
-            return RedirectToAction("edit", new { id = form.ID });
+            return RedirectToAction("edit", new { id = form.TemplateID });
         }
 
         public void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
@@ -345,7 +345,7 @@ namespace PHS.Web.Controllers
             }
             else
             {
-                return RedirectToAction("edit", new { id = form.ID });
+                return RedirectToAction("edit", new { id = form.TemplateID });
             }
 
             return View(model);
@@ -364,7 +364,7 @@ namespace PHS.Web.Controllers
             }
             else
             {
-                return RedirectToAction("edit", new { id = form.ID });
+                return RedirectToAction("edit", new { id = form.TemplateID });
             }
 
             foreach (var field in model.Fields)
@@ -381,7 +381,7 @@ namespace PHS.Web.Controllers
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-            var formObj = this._formRepo.GetForm(model.Id.Value);
+            var formObj = this._formRepo.GetForm(model.TemplateID.Value);
 
             var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
             formView.AssignInputValues(form);
@@ -451,7 +451,7 @@ namespace PHS.Web.Controllers
                 TempData["success"] = formView.ConfirmationMessage;
                 return RedirectToRoute("form-confirmation", new
                 {
-                    id = formObj.ID,
+                    id = formObj.TemplateID,
                     embed = model.Embed
                 });
 
@@ -573,7 +573,7 @@ namespace PHS.Web.Controllers
             }
             else
             {
-                return RedirectToAction("edit", new { id = form.ID });
+                return RedirectToAction("edit", new { id = form.TemplateID });
             }
 
             return View(model);

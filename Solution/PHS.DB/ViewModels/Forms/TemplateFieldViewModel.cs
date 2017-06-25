@@ -14,7 +14,7 @@ namespace PHS.DB.ViewModels.Forms
     {
         #region Properties
 
-        public int? Id { get; set; }
+        public int? TemplateFieldID { get; set; }
         public string Label { get; set; }
         public Constants.FieldType FieldType { get; set; }
         public bool IsRequired { get; set; }
@@ -69,7 +69,7 @@ namespace PHS.DB.ViewModels.Forms
                 return new TemplateFieldViewModel
                 {
                     DomId = field.DomId.Value,
-                    Id = field.ID,
+                    TemplateFieldID = field.TemplateFieldID,
                     Label = field.Label.Equals("") ? "Click to edit" : field.Label,
                     Text = field.Text,
                     FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), field.FieldType),

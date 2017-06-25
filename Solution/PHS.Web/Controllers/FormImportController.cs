@@ -145,7 +145,7 @@ namespace PHS.Web.Controllers
                 // Start adding the header
                 // First of all the first row
                 int x = 1;
-                foreach (var field in form.FormFields)
+                foreach (var field in form.TemplateFields)
                 {
                     if (field.FieldType == "ADDRESS")
                     {

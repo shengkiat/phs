@@ -134,7 +134,7 @@ namespace PHS.Business.Extensions
                 {
                     case FieldType.ADDRESS:
 
-                        var addressValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                        var addressValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
                         AddressViewModel address = addressValue.FromJson<AddressViewModel>();
 
@@ -159,7 +159,7 @@ namespace PHS.Business.Extensions
 
                     case FieldType.BMI:
 
-                        var bmiValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                        var bmiValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
                         BMIViewModel bmi = bmiValue.FromJson<BMIViewModel>();
 
@@ -175,7 +175,7 @@ namespace PHS.Business.Extensions
                         break;
 
                     default:
-                        return formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                        return formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
                 }
             }
 
@@ -272,7 +272,7 @@ namespace PHS.Business.Extensions
             using (var formManager = new FormManager())
             {
 
-                var selectedValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                var selectedValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
                 if (selectedValue == null)
                 {
@@ -308,7 +308,7 @@ namespace PHS.Business.Extensions
             using (var formManager = new FormManager())
             {
 
-                var selectedValue = formManager.FindSaveValue(model.EntryId, model.Id ?? default(int));
+                var selectedValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
                 if (selectedValue == null)
                 {

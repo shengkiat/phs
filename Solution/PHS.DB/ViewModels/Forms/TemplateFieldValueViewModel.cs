@@ -9,8 +9,8 @@ namespace PHS.DB.ViewModels.Forms
 {
     public class TemplateFieldValueViewModel
     {
-        public int Id { get; set; }
-        public int FieldId { get; set; }
+        public int TemplateFieldValueID { get; set; }
+        public int TemplateFieldID { get; set; }
         public string EntryId { get; set; }
         public string Value { get; set; }
         public DateTime DateAdded { get; set; }
@@ -35,19 +35,19 @@ namespace PHS.DB.ViewModels.Forms
             return new TemplateFieldValueViewModel();
         }
 
-        public static TemplateFieldValueViewModel CreateFromObject(FormFieldValue model)
+        public static TemplateFieldValueViewModel CreateFromObject(TemplateFieldValue model)
         {
            // model.FormFieldReference.Load();
             return new TemplateFieldValueViewModel
             {
-                Id = model.ID,
-                FieldId = model.FieldId,
+                TemplateFieldValueID = model.TemplateFieldValueID,
+                TemplateFieldID = model.TemplateFieldID,
                 EntryId = model.EntryId.ToString(),
                 Value = model.Value,
                 DateAdded = model.DateAdded,                
-                FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), model.FormField.FieldType),
-                FieldLabel = model.FormField.Label,
-                FieldOrder = model.FormField.Order.Value
+                FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), model.TemplateField.FieldType),
+                FieldLabel = model.TemplateField.Label,
+                FieldOrder = model.TemplateField.Order.Value
             };
         }
     }

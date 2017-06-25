@@ -50,7 +50,7 @@ namespace PHS.Business.ViewModel.PatientJourney
             {
                 if (modality.ModalityID.Equals(SelectedModalityId))
                 {
-                    result = modality.Forms.ToList();
+                    result = modality.Templates.ToList();
                 }
             }
             

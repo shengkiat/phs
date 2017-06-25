@@ -40,7 +40,7 @@
                     @{counter = counter + 1;}
 
                     <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute
-                           value="@option" name="radiogroup-@Model.Id" />
+                           value="@option" name="radiogroup-@Model.DomId" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
                         }
@@ -50,14 +50,14 @@
             @if (Model.AddOthersOption)
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.Id" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
                 </li>
             }
             else
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.Id" style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" style="display:none" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" style="display:none" placeholder="Others" />
                 </li>
             }

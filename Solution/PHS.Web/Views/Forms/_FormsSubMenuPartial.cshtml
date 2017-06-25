@@ -20,17 +20,17 @@
         <li class="embed-item"><a href="javascript:void(0);" id="embed-link" class="image-icon-link embed-icon-link"><span>
         Embed</span></a></li>
         
-        <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = false, id = Model.Id })" class="image-icon-link crossbox-icon-link">
+        <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = false, id = Model.TemplateID })" class="image-icon-link crossbox-icon-link">
             <span>Unpublish</span></a></li>
     }
     else
     {
-        <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = true, id = Model.Id })" class="image-icon-link speaker-icon-link">
+        <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = true, id = Model.TemplateID })" class="image-icon-link speaker-icon-link">
             <span>Publish</span></a></li>
     }
     @if (Model.GroupedEntries != null && Model.GroupedEntries.Count() > 0)
     {
-        <li><a href="@Url.RouteUrl("form-entries", new { formid = Model.Id.Value })" class="image-icon-link invitations-icon-link">
+        <li><a href="@Url.RouteUrl("form-entries", new { formid = Model.TemplateID.Value })" class="image-icon-link invitations-icon-link">
             <span>View Entries @Model.GroupedEntries.Any().OutputIfTrue("({0})".FormatWith(Model.GroupedEntries.Count().ToString()))</span></a></li>
     }
     

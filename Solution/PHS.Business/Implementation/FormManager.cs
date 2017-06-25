@@ -82,7 +82,7 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var fieldValues = unitOfWork.FormRepository.GetRegistrantsByForm(model.Id.Value);
+                var fieldValues = unitOfWork.FormRepository.GetRegistrantsByForm(model.TemplateID.Value);
                 var values = fieldValues
                              .Select((fv) =>
                              {
@@ -132,7 +132,7 @@ namespace PHS.Business.Implementation
                         {
                             int x = 1;
                             // check if header match
-                            foreach (var field in form.FormFields)
+                            foreach (var field in form.TemplateFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -184,7 +184,7 @@ namespace PHS.Business.Implementation
 
                             int y = 1;
 
-                            foreach (var field in form.FormFields)
+                            foreach (var field in form.TemplateFields)
                             {
                                 if (field.FieldType == "ADDRESS")
                                 {
@@ -198,15 +198,15 @@ namespace PHS.Business.Implementation
 
                                         string value1 = address.ToJson();
 
-                                        FormFieldValue value = new FormFieldValue();
+                                        TemplateFieldValue value = new TemplateFieldValue();
                                         value.Value = value1;
                                         value.EntryId = Guid.NewGuid();
                                         value.DateAdded = DateTime.Now;
-                                        value.FieldId = field.ID;
+                                        value.TemplateFieldID = field.TemplateFieldID;
 
-                                        field.FormFieldValues.Add(value);
+                                        field.TemplateFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.FormFieldValues.Add(value);
+                                        unitOfWork.ActiveLearningContext.TemplateFieldValues.Add(value);
                                     }
 
                                     y += 4;
@@ -222,15 +222,15 @@ namespace PHS.Business.Implementation
                                             continue;
                                         }
 
-                                        FormFieldValue value = new FormFieldValue();
+                                        TemplateFieldValue value = new TemplateFieldValue();
                                         value.Value = worksheet.Cells[row, y].Value.ToString();
                                         value.EntryId = Guid.NewGuid();
                                         value.DateAdded = DateTime.Now;
-                                        value.FieldId = field.ID;
+                                        value.TemplateFieldID = field.TemplateFieldID;
 
-                                        field.FormFieldValues.Add(value);
+                                        field.TemplateFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.FormFieldValues.Add(value);
+                                        unitOfWork.ActiveLearningContext.TemplateFieldValues.Add(value);
 
                                     }
 
@@ -258,7 +258,7 @@ namespace PHS.Business.Implementation
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var guid = Guid.Parse(entryId);
-                    var value = unitOfWork.FormViewValues.Find(u => u.EntryId.Equals(guid) && u.FieldId == fieldID);
+                    var value = unitOfWork.FormViewValues.Find(u => u.EntryId.Equals(guid) && u.TemplateFieldID == fieldID);
 
                     return value.First().Value;
                 }

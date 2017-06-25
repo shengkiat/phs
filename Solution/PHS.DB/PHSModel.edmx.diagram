@@ -4,21 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="11.25" PointY="1" />
-        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="9" PointY="1" />
-        <EntityTypeShape EntityType="phsModel.EventPatient" Width="1.5" PointX="2" PointY="0.5" />
-        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="6.125" PointY="4.875" />
-        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="1.625" PointY="5.125" />
-        <EntityTypeShape EntityType="phsModel.FormFieldValue" Width="1.5" PointX="3.875" PointY="8.875" />
-        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="6.125" PointY="0.875" />
-        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="4.125" PointY="0.75" />
+      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="56">
+        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.EventPatient" Width="1.5" PointX="5.25" PointY="9.75" />
+        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="5.25" PointY="4.5" />
+        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="1.25" />
         <AssociationConnector Association="phsModel.FK_EventPatient_Event" />
-        <AssociationConnector Association="phsModel.FK_form_field_values_form_fields" />
+        <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />
         <AssociationConnector Association="phsModel.EventModality" />
-        <AssociationConnector Association="phsModel.FormFormField" />
         <AssociationConnector Association="phsModel.ModalityForm" />
-        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="0.5" PointY="0.5" />
+        <AssociationConnector Association="phsModel.TemplateTemplateField" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,11 +17,11 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TemplateField()
         {
-            this.FormFieldValues = new HashSet<FormFieldValue>();
-            this.Forms = new HashSet<Template>();
+            this.TemplateFieldValues = new HashSet<TemplateFieldValue>();
+            this.Templates = new HashSet<Template>();
         }
     
-        public int ID { get; set; }
+        public int TemplateFieldID { get; set; }
         public string Label { get; set; }
         public string Text { get; set; }
         public string FieldType { get; set; }
@@ -52,8 +52,8 @@ namespace PHS.DB
         public string MatrixColumn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormFieldValue> FormFieldValues { get; set; }
+        public virtual ICollection<TemplateFieldValue> TemplateFieldValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Template> Forms { get; set; }
+        public virtual ICollection<Template> Templates { get; set; }
     }
 }

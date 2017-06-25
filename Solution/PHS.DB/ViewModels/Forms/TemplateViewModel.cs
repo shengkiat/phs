@@ -12,7 +12,7 @@ namespace PHS.DB.ViewModels.Forms
     {
         #region Properties
 
-        public int? Id { get; set; }
+        public int? TemplateID { get; set; }
         public string Title { get; set; }
         public string NotificationEmail { get; set; }
         public string Slug { get; set; }
@@ -77,9 +77,9 @@ namespace PHS.DB.ViewModels.Forms
 
                 var formView = CreateBasicFromObject(form1);
 
-                if (form1.FormFields.Count() > 0)
+                if (form1.TemplateFields.Count() > 0)
                 {
-                    form1.FormFields.OrderBy(o => o.Order).Each((field, index) =>
+                    form1.TemplateFields.OrderBy(o => o.Order).Each((field, index) =>
                     {
 
                         formView.Fields.Add(TemplateFieldViewModel.CreateFromObject(field, mode));
@@ -97,7 +97,7 @@ namespace PHS.DB.ViewModels.Forms
             var formView = new TemplateViewModel
             {
                 Title = form1.Title,
-                Id = form1.ID,
+                TemplateID = form1.TemplateID,
                 DateAdded = form1.DateAdded.Value,
                 ConfirmationMessage = form1.ConfirmationMessage,
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
@@ -120,7 +120,7 @@ namespace PHS.DB.ViewModels.Forms
             var formView = new TemplateViewModel
             {
                 Title = "Test Form",
-                Id = 1,
+                TemplateID = 1,
                 DateAdded = DateTime.Now,
                 ConfirmationMessage = "Thank you for filling this form",
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),

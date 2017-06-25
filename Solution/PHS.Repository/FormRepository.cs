@@ -16,7 +16,7 @@ namespace PHS.Repository.Repository
         public Template GetForm(int key)
         {
             this.DataContext = new PHSContext();
-            return this.DataContext.Forms.Where(u => u.ID == key).Include(x => x.FormFields).FirstOrDefault();
+            return this.DataContext.Templates.Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
         public FormRepository(PHSContext datacontext)
@@ -33,7 +33,7 @@ namespace PHS.Repository.Repository
 
         public override DbSet<Template> EntitySet
         {
-            get { return this.DataContext.Forms; }
+            get { return this.DataContext.Templates; }
         }
 
         protected override Template ConvertToNativeEntity(Template entity)
@@ -43,12 +43,12 @@ namespace PHS.Repository.Repository
 
         protected override int SelectPrimaryKey(Template entity)
         {
-            return entity.ID;
+            return entity.TemplateID;
         }
 
         public override Template GetByPrimaryKey(int key)
         {
-            return this.GetByPrimaryKey(s => s.ID == key);
+            return this.GetByPrimaryKey(s => s.TemplateID == key);
         }
 
         public void UpdateField(Template form1, TemplateFieldViewModel fieldView)
@@ -58,7 +58,7 @@ namespace PHS.Repository.Repository
                 throw new Exception("Cannot update a field when a form is null");
             }
 
-            if (!fieldView.Id.HasValue)
+            if (!fieldView.TemplateFieldID.HasValue)
             {
                 // create
                 var fField = new TemplateField
@@ -95,12 +95,12 @@ namespace PHS.Repository.Repository
                     MatrixColumn = fieldView.MatrixColumn
                 };
 
-                form1.FormFields.Add(fField);
+                form1.TemplateFields.Add(fField);
                 this.SaveChanges();
             }
             else
             {
-                var fField = this.DataContext.FormFields.Where(field => field.ID == fieldView.Id.Value).FirstOrDefault();
+                var fField = this.DataContext.TemplateFields.Where(field => field.TemplateFieldID == fieldView.TemplateFieldID.Value).FirstOrDefault();
                 if (fField != null)
                 {
 
@@ -140,21 +140,21 @@ namespace PHS.Repository.Repository
 
         public Template CreateNew()
         {
-            string formName = "New Registration Form";
-            var form = new Template
+            string templateName = "New Registration Form";
+            var template = new Template
             {
-                Title = formName,
+                Title = templateName,
                 //Slug = formName.ToSlug(),
-                Slug = formName,
+                Slug = templateName,
                 Status = Constants.FormStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
                 IsActive = true
             };
 
-            this.DataContext.Forms.Add(form);
+            this.DataContext.Templates.Add(template);
             this.SaveChanges();
-            return form;
+            return template;
         }
 
         public void Update(TemplateViewModel model, Template form1)
@@ -183,17 +183,17 @@ namespace PHS.Repository.Repository
 
         public void DeleteField(int id)
         {
-            var field = this.DataContext.FormFields.Where(f => f.ID == id).FirstOrDefault();
+            var field = this.DataContext.TemplateFields.Where(f => f.TemplateFieldID == id).FirstOrDefault();
             if (field != null)
             {
-                this.DataContext.FormFields.Remove(field);
+                this.DataContext.TemplateFields.Remove(field);
                 this.SaveChanges();
             }
         }
 
         public IEnumerable<TemplateFieldValueViewModel> GetRegistrantsByForm(TemplateViewModel model)
         {
-            var fieldValues = this.GetRegistrantsByForm(model.Id.Value);
+            var fieldValues = this.GetRegistrantsByForm(model.TemplateID.Value);
             var values = fieldValues
                          .Select((fv) =>
                          {
@@ -205,29 +205,29 @@ namespace PHS.Repository.Repository
             return values;
         }
 
-        public List<FormFieldValue> GetRegistrantsByForm(int formId)
+        public List<TemplateFieldValue> GetRegistrantsByForm(int templateId)
         {
-            var fieldValues = this.DataContext.FormFieldValues;
+            var fieldValues = this.DataContext.TemplateFieldValues;
 
-            var formFieldValues = this.DataContext
-                             .FormFields
-                             .Include("Forms")
-                             .Where(field => field.Forms.Any(f => f.ID == formId))
-                             .Join(fieldValues, fields => fields.ID, fieldValue => fieldValue.FieldId, (FormField, FormFieldValue) => FormFieldValue)
+            var templateFieldValues = this.DataContext
+                             .TemplateFields
+                             .Include("Templates")
+                             .Where(field => field.Templates.Any(f => f.TemplateID == templateId))
+                             .Join(fieldValues, fields => fields.TemplateFieldID, fieldValue => fieldValue.TemplateFieldID, (FormField, FormFieldValue) => FormFieldValue)
                              .ToList();
 
 
-            foreach (var entry in formFieldValues)
+            foreach (var entry in templateFieldValues)
             {
-                if (entry.FormField == null)
+                if (entry.TemplateField == null)
                 {
-                  var s =   this.DataContext.FormFieldValues.Include("FormField").Where(x => x.ID == entry.ID).FirstOrDefault();
-                    entry.FormField = s.FormField;
+                    var s =   this.DataContext.TemplateFieldValues.Include("TemplateField").Where(x => x.TemplateFieldValueID == entry.TemplateFieldValueID).FirstOrDefault();
+                    entry.TemplateField = s.TemplateField;
 
                 }
             }
 
-            return formFieldValues;
+            return templateFieldValues;
 
 
             //return this.DataContext
@@ -242,15 +242,15 @@ namespace PHS.Repository.Repository
         {
             if (field.FieldType != Constants.FieldType.HEADER)
             {
-                var fieldVal = new FormFieldValue
+                var fieldVal = new TemplateFieldValue
                 {
-                    FieldId = field.Id.Value,
+                    TemplateFieldID = field.TemplateFieldID.Value,
                     Value = value,
                     EntryId = entryId,
                     DateAdded = DateTime.UtcNow
                 };
 
-                this.DataContext.FormFieldValues.Add(fieldVal);
+                this.DataContext.TemplateFieldValues.Add(fieldVal);
                 this.SaveChanges();
             }
         }
@@ -258,12 +258,12 @@ namespace PHS.Repository.Repository
         public void DeleteEntries(IEnumerable<string> selectedEntries)
         {
             var selectedGuids = selectedEntries.Select(se => new Guid(se));
-            var entries = this.DataContext.FormFieldValues.Where(fv => selectedGuids.Any(se => fv.EntryId == se));
+            var entries = this.DataContext.TemplateFieldValues.Where(fv => selectedGuids.Any(se => fv.EntryId == se));
 
             foreach (var entry in entries)
             {
                 //this.DeleteFileEntry(entry);
-                this.DataContext.FormFieldValues.Remove(entry);
+                this.DataContext.TemplateFieldValues.Remove(entry);
             }
 
             this.SaveChanges();
@@ -295,7 +295,7 @@ namespace PHS.Repository.Repository
         public List<TemplateViewModel> GetForms()
         {
             var formViews = new List<TemplateViewModel>();
-            var formSet = this.DataContext.Forms.ToList();
+            var formSet = this.DataContext.Templates.ToList();
             foreach (var form in formSet)
             {
                 if (form.IsActive)
@@ -309,7 +309,7 @@ namespace PHS.Repository.Repository
 
         public List<Template> GetBaseForms()
         {
-            var formSet = this.DataContext.Forms.ToList();
+            var formSet = this.DataContext.Templates.ToList();
            
 
             return formSet;
@@ -319,7 +319,7 @@ namespace PHS.Repository.Repository
         public Template GetPreRegistrationForm(int year = -1)
         {
             
-            var form = this.DataContext.Forms.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
+            var form = this.DataContext.Templates.First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
 
             return form;
         }
@@ -367,9 +367,9 @@ namespace PHS.Repository.Repository
             int counter = 0;
             this.DeleteSubmissions(olderThanInDays);
             var deleteDate = DateTime.Now.AddDays(-olderThanInDays);
-            var Forms = this.DataContext.Forms.Where(f => f.DateAdded < deleteDate).ToList();
+            var Templates = this.DataContext.Templates.Where(f => f.DateAdded < deleteDate).ToList();
 
-            foreach (var f in Forms)
+            foreach (var f in Templates)
             {
                 this.DeleteForm(f);
                 counter++; ;
@@ -387,13 +387,13 @@ namespace PHS.Repository.Repository
         {
             int counter = 0;
             var deleteDate = DateTime.Now.AddDays(-olderThanInDays);
-            var entries = this.DataContext.FormFieldValues.Where(fv => fv.DateAdded < deleteDate).ToList();
+            var entries = this.DataContext.TemplateFieldValues.Where(fv => fv.DateAdded < deleteDate).ToList();
 
             if (entries.Any())
             {
                 foreach (var entry in entries)
                 {
-                    this.DataContext.FormFieldValues.Remove(entry);
+                    this.DataContext.TemplateFieldValues.Remove(entry);
                     counter++;
                 }
 

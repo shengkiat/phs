@@ -242,7 +242,7 @@ namespace PHS.Web.Controllers
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-            var formObj = this._formRepo.GetForm(model.Id.Value);
+            var formObj = this._formRepo.GetForm(model.TemplateID.Value);
 
 
             var formView = TemplateViewModel.CreateFromObject(formObj, Constants.FormFieldMode.INPUT);
@@ -314,9 +314,9 @@ namespace PHS.Web.Controllers
 
                 foreach(var patientEventModality in patientEventModalitys)
                 {
-                    if (patientEventModality.isModalityFormsContain(model.Id.Value))
+                    if (patientEventModality.isModalityFormsContain(model.TemplateID.Value))
                     {
-                        patientEventModality.modalityCompletedForms.Add(model.Id.Value);
+                        patientEventModality.modalityCompletedForms.Add(model.TemplateID.Value);
                     }
                 }
 

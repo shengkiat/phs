@@ -56,7 +56,7 @@
                 if (Model.GroupedEntries.Count() > 0)
                 {
 
-                    <input id="formId" type="hidden" value="@Model.Id" />
+                    <input id="formId" type="hidden" value="@Model.TemplateID" />
 
                     <ul class="horizontal-list form-actions-list">
                         <li>
@@ -110,7 +110,7 @@
                     <div class="notice">
                         No entries have been submitted</div>
                 }
-                @Html.HiddenFor(m => m.Id);
+                @Html.HiddenFor(m => m.TemplateID);
             }            
         </div>   
         

@@ -4,7 +4,7 @@
 @using PHS.Business.Extensions
 
 @* Hidden field values for all properties that get posted to the server *@
-<input id="fieldid-prop-@Model.DomId" type="hidden" value="@Model.Id" data-sub-channel="sub-order-@Model.DomId" name="Fields[@Model.DomId].Id" />
+<input id="fieldid-prop-@Model.DomId" type="hidden" value="@Model.TemplateFieldID" data-sub-channel="sub-order-@Model.DomId" name="Fields[@Model.DomId].Id" />
 <input id="type-prop-@Model.DomId" type="hidden" value="@Model.FieldType" data-sub-channel="sub-type-@Model.DomId" name="Fields[@Model.DomId].FieldType" />
 <input id="text-prop-@Model.DomId" type="hidden" value="@Model.Text" data-sub-channel="sub-text-@Model.DomId" name="Fields[@Model.DomId].Text" />
 <input id="label-prop-@Model.DomId" type="hidden" value="@Model.Label" data-sub-channel="sub-label-@Model.DomId" name="Fields[@Model.DomId].Label" />

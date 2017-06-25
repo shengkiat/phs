@@ -121,7 +121,7 @@ namespace PHS.Business.Extensions
 
         public static string ValidationId(this TemplateFieldViewModel field)
         {
-            return "{0}-{1}".FormatWith(field.FieldType.ToString().ToLower(), field.Id.ToString());
+            return "{0}-{1}".FormatWith(field.FieldType.ToString().ToLower(), field.TemplateFieldID.ToString());
         }
 
         public static void AssignInputValues(this TemplateViewModel evtForm, FormCollection form)

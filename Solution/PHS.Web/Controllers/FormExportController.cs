@@ -68,7 +68,7 @@ namespace PHS.Web.Controllers
             Template form;
             using (var formManager = new FormManager())
             {
-                form = formManager.FindForm(model.Id.Value);
+                form = formManager.FindForm(model.TemplateID.Value);
 
                 // var form = this._formRepo.GetForm(model.Id.Value);
                 var formView = TemplateViewModel.CreateFromObject(form);
@@ -87,7 +87,7 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            return RedirectToRoute("form-entries", new { formid = model.Id.Value });
+            return RedirectToRoute("form-entries", new { formid = model.TemplateID.Value });
 
         }
 
@@ -195,11 +195,11 @@ namespace PHS.Web.Controllers
 
         public ActionResult ExportToExcel(TemplateViewModel model, FormCollection collection)
         {
-            int formId = model.Id.Value;
+            int formId = model.TemplateID.Value;
 
             using (var formManager = new FormManager())
             {
-                var form = formManager.FindForm(model.Id.Value);
+                var form = formManager.FindForm(model.TemplateID.Value);
                 // var form = this._formRepo.GetForm(formId);
                 var formView = TemplateViewModel.CreateFromObject(form);
 

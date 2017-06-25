@@ -12,14 +12,14 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class FormFieldValue
+    public partial class TemplateFieldValue
     {
-        public int ID { get; set; }
-        public int FieldId { get; set; }
+        public int TemplateFieldValueID { get; set; }
+        public int TemplateFieldID { get; set; }
         public System.Guid EntryId { get; set; }
         public string Value { get; set; }
         public System.DateTime DateAdded { get; set; }
     
-        public virtual TemplateField FormField { get; set; }
+        public virtual TemplateField TemplateField { get; set; }
     }
 }
