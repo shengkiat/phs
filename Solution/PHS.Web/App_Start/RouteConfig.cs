@@ -82,9 +82,9 @@ namespace PHS.Web
             // delete form
             routes.MapRoute(
                "form-deletetemplate",
-               "Forms/deletetemplate/{formid}",
-               new { controller = "Forms", action = "deletetemplate", formId = UrlParameter.Optional },
-               new { formId = @"\d+" }
+               "Forms/deletetemplate/{templateId}",
+               new { controller = "Forms", action = "deletetemplate", templateId = UrlParameter.Optional },
+               new { templateId = @"\d+" }
             );
 
             // Forms home

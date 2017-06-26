@@ -240,7 +240,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        public ActionResult Delete(int templateId)
+        public ActionResult DeleteTemplate(int templateId)
         {
             using (var formManager = new FormManager())
             {
@@ -257,7 +257,7 @@ namespace PHS.Web.Controllers
                         try
                         {
                             formManager.DeleteTemplate(templateId);
-                            TempData["success"] = "Form Deleted";
+                            TempData["success"] = "Template Deleted";
                             return RedirectToRoute("form-home");
                         }
                         catch
@@ -273,7 +273,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteField(int? fieldid)
+        public ActionResult DeleteTemplateField(int? fieldid)
         {
             if (fieldid.HasValue)
             {
