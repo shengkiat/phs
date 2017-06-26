@@ -21,7 +21,7 @@
 
 }
 <div class="form-page-container prepend-top span-26">
-    @using (Ajax.BeginForm("Update", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "Forms.handleBeginSave", OnComplete = "Forms.handleSaveCallback" }, new { id = "main-form" }))
+    @using (Ajax.BeginForm("UpdateTemplate", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "Forms.handleBeginSave", OnComplete = "Forms.handleSaveCallback" }, new { id = "main-form" }))
     {
         <div class="left-column span-4">
             @Html.Partial("_FormToolsMenuPartial", Model)

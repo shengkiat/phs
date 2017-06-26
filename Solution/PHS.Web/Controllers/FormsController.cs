@@ -133,7 +133,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(bool isAutoSave, TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
+        public ActionResult UpdateTemplate(bool isAutoSave, TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
         {
 
             if (!model.TemplateID.HasValue)
