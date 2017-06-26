@@ -150,11 +150,12 @@ namespace PHS.Business.Implementation
             Template template = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                template = unitOfWork.FormRepository.CreateNew();
-
-                if (template != null)
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    return template;
+                    template = unitOfWork.FormRepository.CreateNew();
+
+                    unitOfWork.Complete();
+                    scope.Complete();
                 }
             }
 
