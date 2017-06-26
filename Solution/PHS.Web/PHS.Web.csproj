@@ -488,7 +488,6 @@
     <Content Include="Views\Forms\_form-field-textbox-template.cshtml" />
     <Content Include="Views\Forms\_form-property-editor-partial.cshtml" />
     <Content Include="Views\Forms\_FormEmbedPartial.cshtml" />
-    <Content Include="Views\Forms\_FormsDemoSubMenuPartial.cshtml" />
     <Content Include="Views\Forms\_FormsSubMenuPartial.cshtml" />
     <Content Include="Views\Forms\_FormToolsMenuPartial.cshtml" />
     <Content Include="Views\Forms\_SubmissionEmailPartial.cshtml" />
