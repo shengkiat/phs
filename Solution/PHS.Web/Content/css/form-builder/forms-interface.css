@@ -1,5 +1,5 @@
-﻿.forms-edit .form-page-container div{overflow:visible;}
-.forms-edit .right-column .wide-tip{width:84%;}
+﻿.forms-edittemplate .form-page-container div{overflow:visible;}
+.forms-edittemplate .right-column .wide-tip{width:84%;}
 .Forms-register .center-column{margin:0 auto;float:none !important;}
 .Forms-register #page-body, .Forms-formconfirmation #page-body{width:660px !important;}
 
