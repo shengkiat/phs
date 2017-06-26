@@ -454,7 +454,7 @@ namespace PHS.Web.Controllers
                     }
 
                     TempData["success"] = templateView.ConfirmationMessage;
-                    return RedirectToRoute("form-confirmation", new
+                    return RedirectToRoute("form-submitconfirmation", new
                     {
                         id = template.TemplateID,
                         embed = model.Embed

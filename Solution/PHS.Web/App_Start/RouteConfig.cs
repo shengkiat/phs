@@ -63,10 +63,10 @@ namespace PHS.Web
                new { controller = "Forms", action = "createTemplate" }
             );
 
-            // template confirmation
+            // form submit confirmation
             routes.MapRoute(
-               "form-confirmation",
-               "Forms/confirmation/{id}/{embed}",
+               "form-submitconfirmation",
+               "Forms/submitconfirmation/{id}/{embed}",
                new { controller = "Forms", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
