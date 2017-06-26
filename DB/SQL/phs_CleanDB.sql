@@ -178,7 +178,7 @@ CREATE TABLE [dbo].[TemplateFieldValue](
 	[TemplateFieldValueID] [int] IDENTITY(1,1) NOT NULL,
 	[TemplateFieldID] [int] NOT NULL,
 	[EntryId] [uniqueidentifier] NOT NULL,
-	[Value] [nvarchar](500) NULL,
+	[Value] [nvarchar](max) NULL,
 	[DateAdded] [datetime] NOT NULL,
  CONSTRAINT [PK_template_field_values] PRIMARY KEY CLUSTERED 
 (

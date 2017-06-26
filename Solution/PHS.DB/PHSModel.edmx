@@ -163,7 +163,7 @@
           <Property Name="TemplateFieldValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TemplateFieldID" Type="int" Nullable="false" />
           <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Value" Type="nvarchar" MaxLength="500" />
+          <Property Name="Value" Type="nvarchar(max)" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="TemplateTemplateField">
@@ -248,7 +248,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_template_field_values_template_fields">
+		<Association Name="FK_template_field_values_template_fields">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -311,7 +311,7 @@
             <End Role="Modality" EntitySet="Modality" />
             <End Role="ModalityForm" EntitySet="ModalityForm" />
           </AssociationSet>
-          <AssociationSet Name="FK_template_field_values_template_fields" Association="Self.FK_template_field_values_template_fields">
+		   <AssociationSet Name="FK_template_field_values_template_fields" Association="Self.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateField" />
             <End Role="TemplateFieldValue" EntitySet="TemplateFieldValue" />
           </AssociationSet>
@@ -506,7 +506,7 @@
           <Property Name="TemplateFieldValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TemplateFieldID" Type="Int32" Nullable="false" />
           <Property Name="EntryId" Type="Guid" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="TemplateField" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateFieldValue" ToRole="TemplateField" />
         </EntityType>
