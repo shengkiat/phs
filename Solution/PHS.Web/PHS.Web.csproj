@@ -449,10 +449,10 @@
     <Content Include="Views\Shared\_LoginAdminPartial.cshtml" />
     <Content Include="Views\Shared\_MessageBoxPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Forms\Edit.cshtml" />
+    <Content Include="Views\Forms\EditTemplate.cshtml" />
     <Content Include="Views\Forms\SubmitConfirmation.cshtml" />
     <Content Include="Views\Forms\Index.cshtml" />
-    <Content Include="Views\Forms\Preview.cshtml" />
+    <Content Include="Views\Forms\PreviewTemplate.cshtml" />
     <Content Include="Views\Forms\Register.cshtml" />
     <Content Include="Views\FormExport\ViewEntries.cshtml" />
     <Content Include="Views\Forms\_form-field-address-partial.cshtml" />

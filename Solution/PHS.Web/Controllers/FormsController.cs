@@ -83,7 +83,7 @@ namespace PHS.Web.Controllers
         }
 
 
-        public ActionResult Edit(int id)
+        public ActionResult EditTemplate(int id)
         {
             Template template = new Template();
             using (var formManager = new FormManager())
@@ -96,7 +96,7 @@ namespace PHS.Web.Controllers
             return View(model1);
         }
 
-        public ActionResult Create()
+        public ActionResult CreateTemplate()
         {
             Template template;
             using (var formManager = new FormManager())
@@ -104,7 +104,7 @@ namespace PHS.Web.Controllers
                 template = formManager.CreateNewTemplate();
             }
 
-            return RedirectToAction("edit", new { id = template.TemplateID });
+            return RedirectToAction("EditTemplate", new { id = template.TemplateID });
         }
 
         public ActionResult GetAddressByZipCode(string zipcode)
@@ -344,7 +344,7 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("edit", new { id = template.TemplateID });
+                    return RedirectToAction("edittemplate", new { id = template.TemplateID });
                 }
 
                 return View(model);
@@ -562,7 +562,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult Preview(int id)
+        public ActionResult PreviewTemplate(int id)
         {
             if (!IsUserAuthenticated())
             {
@@ -584,7 +584,7 @@ namespace PHS.Web.Controllers
             }
             else
             {
-                return RedirectToAction("edit", new { id = template.TemplateID });
+                return RedirectToAction("edittemplate", new { id = template.TemplateID });
             }
 
             return View(model);

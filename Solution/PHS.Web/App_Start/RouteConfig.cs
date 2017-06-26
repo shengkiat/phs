@@ -32,19 +32,19 @@ namespace PHS.Web
             );
 
 
-            // register
+            // edit
             routes.MapRoute(
-               "form-edit",
-               "Forms/edit/{id}",
-               new { controller = "Forms", action = "edit", Id = UrlParameter.Optional },
+               "form-edittemplate",
+               "Forms/edittemplate/{id}",
+               new { controller = "Forms", action = "edittemplate", Id = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
-            // register
+            // preview
             routes.MapRoute(
-               "form-preview",
-               "Forms/preview/{id}",
-               new { controller = "Forms", action = "preview", Id = UrlParameter.Optional },
+               "form-previewtemplate",
+               "Forms/previewtemplate/{id}",
+               new { controller = "Forms", action = "previewtemplate", Id = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
@@ -58,9 +58,9 @@ namespace PHS.Web
 
             // create form
             routes.MapRoute(
-               "form-create",
-               "Forms/create",
-               new { controller = "Forms", action = "create" }
+               "form-createtemplate",
+               "Forms/createTemplate",
+               new { controller = "Forms", action = "createTemplate" }
             );
 
             // template confirmation
@@ -81,9 +81,9 @@ namespace PHS.Web
 
             // delete form
             routes.MapRoute(
-               "form-delete",
-               "Forms/delete/{formid}",
-               new { controller = "Forms", action = "delete", formId = UrlParameter.Optional },
+               "form-deletetemplate",
+               "Forms/deletetemplate/{formid}",
+               new { controller = "Forms", action = "deletetemplate", formId = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 
