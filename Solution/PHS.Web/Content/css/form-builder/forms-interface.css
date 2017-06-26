@@ -1,7 +1,7 @@
 ﻿.forms-edittemplate .form-page-container div{overflow:visible;}
 .forms-edittemplate .right-column .wide-tip{width:84%;}
-.Forms-register .center-column{margin:0 auto;float:none !important;}
-.Forms-register #page-body, .Forms-formconfirmation #page-body{width:660px !important;}
+.Forms-fillin .center-column{margin:0 auto;float:none !important;}
+.Forms-fillin #page-body, .Forms-formconfirmation #page-body{width:660px !important;}
 
 h2.form-title{padding-left:5px;padding-right:5px;display:inline-block;clear:both;}
 h2.form-title:hover{cursor:pointer;background-color:#FFFFAA;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px; -moz-border-radius-bottomright:5px;-moz-border-radius-top:5px;border-top-right-radius: 5px;border-top-left-radius: 5px;}
@@ -25,17 +25,17 @@ ul.tools-list{padding-top:0px;}
 /*drag and drop*/
 .form-area{width:100%;height:100%;clear:both;min-height:400px;}
 .drop-form-list{display:block;min-height:400px;list-style-type:none;width:100%;border:0px solid red;}
-.Forms-register .drop-form-list{min-height:200px;}
+.Forms-fillin .drop-form-list{min-height:200px;}
 .drop-form-hover{}
 li.drop-item{padding:5px 0 5px 0;}
 li.drop-item label.label{cursor:pointer;border:1px solid transparent;width:100px;margin-left:10px;margin-right:10px;}
 li.drop-item label.label:hover{background-color:#dbd977;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px; -moz-border-radius-bottomright:5px;-moz-border-radius-top:5px;border-top-right-radius: 5px;border-top-left-radius: 5px;}
-.Forms-register li.drop-item label.label:hover{background-color:transparent;}
+.Forms-fillin li.drop-item label.label:hover{background-color:transparent;}
 li.active{border:1px solid #c0c0c0;background-color:#F0F0F0;}
 li.guido{border-top:1px dotted gray;}
 
-.Forms-register .error{text-align:left;}
-.Forms-register ul.drop-form-list li.drop-item label.label:hover{background-color:transparent;}
+.Forms-fillin .error{text-align:left;}
+.Forms-fillin ul.drop-form-list li.drop-item label.label:hover{background-color:transparent;}
 ul#submit-button-list{padding-bottom:40px;}
 
 
@@ -76,8 +76,8 @@ ul.drop-form-list{padding-bottom:20px;padding-top:20px;}
 .drop-form-list .place-holder{height:44px;background-color:#FFFFAA;border:1px solid #FFFFAA}
 .drop-form-list li .option-list label{display:inline-block;}
 
-.Forms-register ul.drop-form-list{padding-bottom:10px;}
-.Forms-register ul#submit-button-list{padding-bottom:80px;}
+.Forms-fillin ul.drop-form-list{padding-bottom:10px;}
+.Forms-fillin ul#submit-button-list{padding-bottom:80px;}
 
 .autosave-container{padding:2px;text-align:center;background-color:White;bottom:0;height:23px;position:fixed;right:0;width:150px;border:1px solid gray;}
 

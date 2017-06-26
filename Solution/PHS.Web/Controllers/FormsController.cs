@@ -328,7 +328,7 @@ namespace PHS.Web.Controllers
         }
 
         //[SSl]
-        public ActionResult Register(int id, bool embed = false)
+        public ActionResult FillIn(int id, bool embed = false)
         {
             using (var formManager = new FormManager())
             {
@@ -374,12 +374,12 @@ namespace PHS.Web.Controllers
                     field.EntryId = entryId;
                 }
 
-                return View("Register", model);
+                return View("FillIn", model);
             }
         }
 
         [HttpPost]
-        public ActionResult Register(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             using (var formManager = new FormManager())
             {
@@ -464,7 +464,7 @@ namespace PHS.Web.Controllers
 
                 Error:
                 TempData["error"] = errors.ToUnorderedList();
-                return View("Register", templateView);
+                return View("FillIn", templateView);
             }
         }
 

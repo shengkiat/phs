@@ -238,7 +238,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection form)
+        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection form)
         {
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);

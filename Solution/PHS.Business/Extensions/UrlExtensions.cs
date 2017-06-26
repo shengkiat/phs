@@ -11,11 +11,11 @@ namespace PHS.Business.Extensions
         {
             if (!isPreview)
             {
-                return helper.RouteUrl("form-register", new { formName = model.Slug });
+                return helper.RouteUrl("form-fillin", new { formName = model.Slug });
             }
             else
             {
-                return helper.RouteUrl("form-register", new { formName = model.Slug, ipv = true });
+                return helper.RouteUrl("form-fillin", new { formName = model.Slug, ipv = true });
             }
         }
 

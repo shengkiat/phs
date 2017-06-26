@@ -15,7 +15,7 @@ namespace PHS.Web
 
             //** BEGIN FORM BUILDER ROUTES **//
 
-            // register
+            // FillIn
             routes.MapRoute(
                "form-preregistration",
                "registration/{id}",
@@ -48,11 +48,11 @@ namespace PHS.Web
                new { Id = @"\d+" }
             );
 
-            // register
+            // FillIn
             routes.MapRoute(
-               "form-register",
-               "Forms/register/{id}/{embed}",
-               new { controller = "Forms", action = "register", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "form-fillin",
+               "Forms/fillin/{id}/{embed}",
+               new { controller = "Forms", action = "fillin", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 

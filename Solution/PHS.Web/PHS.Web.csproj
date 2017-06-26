@@ -453,7 +453,7 @@
     <Content Include="Views\Forms\SubmitConfirmation.cshtml" />
     <Content Include="Views\Forms\Index.cshtml" />
     <Content Include="Views\Forms\PreviewTemplate.cshtml" />
-    <Content Include="Views\Forms\Register.cshtml" />
+    <Content Include="Views\Forms\FillIn.cshtml" />
     <Content Include="Views\FormExport\ViewEntries.cshtml" />
     <Content Include="Views\Forms\_form-field-address-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-address-template.cshtml" />

@@ -89,8 +89,8 @@
                 @Html.RouteLink("Home", "form-home", null, new { @class = "image-icon-link home-icon-link" })
             </div>
         }
-        @using (Ajax.BeginForm("Register", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
-        //@using (Html.BeginForm("Register", "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Ajax.BeginForm("FillIn", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
+        //@using (Html.BeginForm("FillIn", "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div id="message" class="clear"></div>
             @Html.WriteMessages()
