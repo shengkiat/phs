@@ -92,8 +92,6 @@ namespace PHS.Business.Implementation
                 {
                     unitOfWork.FormRepository.UpdateTemplateField(template, fieldView);
 
-                    
-
                     unitOfWork.Complete();
                     scope.Complete();
                 }

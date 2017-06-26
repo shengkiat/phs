@@ -145,6 +145,8 @@ namespace PHS.Repository.Repository
                 throw new Exception("Invalid update operation. Form not found.");
             }
 
+            dbContext.Entry(template1).State = EntityState.Modified;
+
             template1.Status = model.Status.ToString();
             template1.Title = string.IsNullOrEmpty(model.Title) ? "Registration" : model.Title;
             // form.TabOrder = model.TabOrder; // excluding tab order for first launch
