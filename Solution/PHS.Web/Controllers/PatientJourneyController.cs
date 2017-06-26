@@ -298,7 +298,7 @@ namespace PHS.Web.Controllers
 
                     this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
                     notificationView.Entries = notificationEntries;
-                    this._formRepo.InsertFieldValue(field, value, entryId);
+                    this._formRepo.InsertTemplateFieldValue(field, value, entryId);
                 }
 
                 //send notification

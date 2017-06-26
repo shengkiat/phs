@@ -24,21 +24,7 @@ namespace PHS.Web.Controllers
     [ValidateInput(false)]
     public class FormsController : BaseController
     {
-        //
         // GET: /Forms/
-        private FormRepository _formRepo { get; set; }
-
-        public FormsController()
-            : this(new FormRepository(new PHSContext()))
-        {
-
-        }
-
-        public FormsController(FormRepository formRepo)
-        {
-            this._formRepo = formRepo;
-        }
-
         public ActionResult Index()
         {
             var templateCollectionView = new TemplateCollectionViewModel();
@@ -155,9 +141,6 @@ namespace PHS.Web.Controllers
                 return Json(new { success = false, error = "Unable to save changes. A valid form was not detected.", isautosave = isAutoSave });
             }
 
-            var template = this._formRepo.GetTemplate(model.TemplateID.Value);
-
-
             if (Fields == null)
             {
                 return Json(new { success = false, error = "Unable to detect field values.", isautosave = isAutoSave });
@@ -170,76 +153,82 @@ namespace PHS.Web.Controllers
 
             try
             {
-                // first update the form metadata
-                this._formRepo.Update(model, template);
-
-                // then if fields were passed in, update them
-                if (Fields.Count() > 0)
+                using (var manager = new FormManager())
                 {
-                    foreach (var kvp in Fields)
+                    var template = manager.FindTemplate(model.TemplateID.Value);
+
+                    // first update the form metadata
+                    manager.UpdateTemplate(model, template);
+
+                    // then if fields were passed in, update them
+                    if (Fields.Count() > 0)
                     {
-
-                        var domId = Convert.ToInt32(kvp.Key);
-                        if (domId >= 0)
+                        foreach (var kvp in Fields)
                         {
-                            var fieldType = collection.FormFieldValue(domId, "FieldType");
-                            var fieldId = collection.FormFieldValue(domId, "Id");
-                            var minAge = collection.FormFieldValue(domId, "MinimumAge").IsInt(18);
-                            var maxAge = collection.FormFieldValue(domId, "MaximumAge").IsInt(100);
 
-                            if (minAge >= maxAge)
+                            var domId = Convert.ToInt32(kvp.Key);
+                            if (domId >= 0)
                             {
-                                minAge = 18;
-                                maxAge = 100;
+                                var fieldType = collection.FormFieldValue(domId, "FieldType");
+                                var fieldId = collection.FormFieldValue(domId, "Id");
+                                var minAge = collection.FormFieldValue(domId, "MinimumAge").IsInt(18);
+                                var maxAge = collection.FormFieldValue(domId, "MaximumAge").IsInt(100);
+
+                                if (minAge >= maxAge)
+                                {
+                                    minAge = 18;
+                                    maxAge = 100;
+                                }
+
+                                var fieldTypeEnum = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), fieldType.ToUpper());
+
+                                var fieldView = new TemplateFieldViewModel
+                                {
+                                    DomId = Convert.ToInt32(domId),
+                                    FieldType = fieldTypeEnum,
+                                    MaxCharacters = collection.FormFieldValue(domId, "MaxCharacters").IsInt(),
+                                    Text = collection.FormFieldValue(domId, "Text"),
+                                    Label = collection.FormFieldValue(domId, "Label"),
+                                    IsRequired = collection.FormFieldValue(domId, "IsRequired").IsBool(),
+                                    Options = collection.FormFieldValue(domId, "Options"),
+                                    SelectedOption = collection.FormFieldValue(domId, "SelectedOption"),
+                                    AddOthersOption = collection.FormFieldValue(domId, "AddOthersOption").IsBool(),
+                                    OthersOption = collection.FormFieldValue(domId, "OthersOption"),
+                                    HoverText = collection.FormFieldValue(domId, "HoverText"),
+                                    Hint = collection.FormFieldValue(domId, "Hint"),
+                                    MinimumAge = minAge,
+                                    MaximumAge = maxAge,
+                                    HelpText = collection.FormFieldValue(domId, "HelpText"),
+                                    SubLabel = collection.FormFieldValue(domId, "SubLabel"),
+                                    Size = collection.FormFieldValue(domId, "Size"),
+                                    Columns = collection.FormFieldValue(domId, "Columns").IsInt(20),
+                                    Rows = collection.FormFieldValue(domId, "Columns").IsInt(2),
+                                    Validation = collection.FormFieldValue(domId, "Validation"),
+                                    Order = collection.FormFieldValue(domId, "Order").IsInt(1),
+                                    MaxFileSize = collection.FormFieldValue(domId, "MaxFileSize").IsInt(5000),
+                                    MinFileSize = collection.FormFieldValue(domId, "MinFileSize").IsInt(5),
+                                    ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
+                                    ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
+                                    MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
+                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
+                                };
+
+                                if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
+                                {
+                                    fieldView.TemplateFieldID = Convert.ToInt32(fieldId);
+                                }
+
+                                manager.UpdateTemplateFields(template, fieldView);
+
                             }
-
-                            var fieldTypeEnum = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), fieldType.ToUpper());
-
-                            var fieldView = new TemplateFieldViewModel
-                            {
-                                DomId = Convert.ToInt32(domId),
-                                FieldType = fieldTypeEnum,
-                                MaxCharacters = collection.FormFieldValue(domId, "MaxCharacters").IsInt(),
-                                Text = collection.FormFieldValue(domId, "Text"),
-                                Label = collection.FormFieldValue(domId, "Label"),
-                                IsRequired = collection.FormFieldValue(domId, "IsRequired").IsBool(),
-                                Options = collection.FormFieldValue(domId, "Options"),
-                                SelectedOption = collection.FormFieldValue(domId, "SelectedOption"),
-                                AddOthersOption = collection.FormFieldValue(domId, "AddOthersOption").IsBool(),
-                                OthersOption = collection.FormFieldValue(domId, "OthersOption"),
-                                HoverText = collection.FormFieldValue(domId, "HoverText"),
-                                Hint = collection.FormFieldValue(domId, "Hint"),
-                                MinimumAge = minAge,
-                                MaximumAge = maxAge,
-                                HelpText = collection.FormFieldValue(domId, "HelpText"),
-                                SubLabel = collection.FormFieldValue(domId, "SubLabel"),
-                                Size = collection.FormFieldValue(domId, "Size"),
-                                Columns = collection.FormFieldValue(domId, "Columns").IsInt(20),
-                                Rows = collection.FormFieldValue(domId, "Columns").IsInt(2),
-                                Validation = collection.FormFieldValue(domId, "Validation"),
-                                Order = collection.FormFieldValue(domId, "Order").IsInt(1),
-                                MaxFileSize = collection.FormFieldValue(domId, "MaxFileSize").IsInt(5000),
-                                MinFileSize = collection.FormFieldValue(domId, "MinFileSize").IsInt(5),
-                                ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
-                                ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
-                                MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
-                                MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
-                            };
-
-                            if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
-                            {
-                                fieldView.TemplateFieldID = Convert.ToInt32(fieldId);
-                            }
-
-                            this._formRepo.UpdateField(template, fieldView);
                         }
                     }
+
+                    //  form.FormFields.Load();
+                    var fieldOrderById = template.TemplateFields.Select(ff => new { domid = ff.DomId, id = ff.TemplateFieldID });
+
+                    return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
                 }
-
-                //  form.FormFields.Load();
-                var fieldOrderById = template.TemplateFields.Select(ff => new { domid = ff.DomId, id = ff.TemplateFieldID });
-
-                return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
 
             }
             catch
@@ -288,38 +277,45 @@ namespace PHS.Web.Controllers
         {
             if (fieldid.HasValue)
             {
-                this._formRepo.DeleteField(fieldid.Value);
-                return Json(new { success = true, message = "Field was deleted." });
+                using (var formManager = new FormManager())
+                {
+                    formManager.DeleteTemplateField(fieldid.Value);
+                    return Json(new { success = true, message = "Field was deleted." });
+                }
             }
 
             return Json(new { success = false, message = "Unable to delete field." });
         }
 
+
         public ActionResult TogglePublish(bool toOn, int id)
         {
-            // var form = this._formRepo.GetByPrimaryKey(id);
-            var template = this._formRepo.GetTemplate(id);
-
-            if (template.TemplateFields.Count() > 0)
+            using (var formManager = new FormManager())
             {
-                template.Status = toOn ? Constants.TemplateStatus.PUBLISHED.ToString() : Constants.TemplateStatus.DRAFT.ToString();
+                // var form = this._formRepo.GetByPrimaryKey(id);
+                var template = formManager.FindTemplate(id);
 
-                this._formRepo.SaveChanges();
-                if (toOn)
+                if (template.TemplateFields.Count() > 0)
                 {
-                    TempData["success"] = "This registration form has been published and is now live";
+                    template.Status = toOn ? Constants.TemplateStatus.PUBLISHED.ToString() : Constants.TemplateStatus.DRAFT.ToString();
+
+                    //this._formRepo.SaveChanges();
+                    if (toOn)
+                    {
+                        TempData["success"] = "This form has been published and is now live";
+                    }
+                    else
+                    {
+                        TempData["success"] = "This form is now offline";
+                    }
                 }
                 else
                 {
-                    TempData["success"] = "This registration form is now offline";
+                    TempData["error"] = "Cannot publish form until fields have been added.";
                 }
-            }
-            else
-            {
-                TempData["error"] = "Cannot publish form until fields have been added.";
-            }
 
-            return RedirectToAction("edit", new { id = template.TemplateID });
+                return RedirectToAction("edit", new { id = template.TemplateID });
+            }
         }
 
         public void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
@@ -334,148 +330,159 @@ namespace PHS.Web.Controllers
         //[SSl]
         public ActionResult Register(int id, bool embed = false)
         {
-            TemplateViewModel model = null;
-            // var form = this._formRepo.GetByPrimaryKey(id);
-
-            var template = this._formRepo.GetTemplate(id);
-
-            if (template != null)
+            using (var formManager = new FormManager())
             {
-                model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                model.Embed = embed;
-            }
-            else
-            {
-                return RedirectToAction("edit", new { id = template.TemplateID });
-            }
+                TemplateViewModel model = null;
+                // var form = this._formRepo.GetByPrimaryKey(id);
 
-            return View(model);
+                var template = formManager.FindTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToAction("edit", new { id = template.TemplateID });
+                }
+
+                return View(model);
+            }
         }
 
         public ActionResult ViewSaveTemplate(int id, string entryId, bool embed = false)
         {
-            TemplateViewModel model = null;
-
-            var template = this._formRepo.GetTemplate(id);
-
-            if (template != null)
+            using (var formManager = new FormManager())
             {
-                model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                model.Embed = embed;
-            }
-            else
-            {
-                return RedirectToAction("edit", new { id = template.TemplateID });
-            }
+                TemplateViewModel model = null;
 
-            foreach (var field in model.Fields)
-            {
-                field.EntryId = entryId;
-            }
+                var template = formManager.FindTemplate(id);
 
-            return View("Register", model);
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToAction("edit", new { id = template.TemplateID });
+                }
+
+                foreach (var field in model.Fields)
+                {
+                    field.EntryId = entryId;
+                }
+
+                return View("Register", model);
+            }
         }
 
         [HttpPost]
         public ActionResult Register(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            IList<string> errors = Enumerable.Empty<string>().ToList();
-            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
-
-            var template = this._formRepo.GetTemplate(model.TemplateID.Value);
-
-            var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-            templateView.AssignInputValues(formCollection);
-            this.InsertValuesIntoTempData(SubmitFields, formCollection);
-
-            if (templateView.Fields.Any())
+            using (var formManager = new FormManager())
             {
-                // first validate fields
-                foreach (var field in templateView.Fields)
+                IList<string> errors = Enumerable.Empty<string>().ToList();
+                //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
+
+                var template = formManager.FindTemplate(model.TemplateID.Value);
+
+                var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                templateView.AssignInputValues(formCollection);
+                this.InsertValuesIntoTempData(SubmitFields, formCollection);
+
+                if (templateView.Fields.Any())
                 {
-                    if (!field.SubmittedValueIsValid(formCollection))
+                    // first validate fields
+                    foreach (var field in templateView.Fields)
                     {
-                        field.SetFieldErrors();
-                        errors.Add(field.Errors);
-                        goto Error;
+                        if (!field.SubmittedValueIsValid(formCollection))
+                        {
+                            field.SetFieldErrors();
+                            errors.Add(field.Errors);
+                            goto Error;
+                        }
+
+                        var value = field.SubmittedValue(formCollection);
+                        if (field.IsRequired && value.IsNullOrEmpty())
+                        {
+                            field.Errors = "{0} is a required field".FormatWith(field.Label);
+                            errors.Add(field.Errors);
+                            goto Error;
+                        }
+                    };
+
+                    //then insert values
+                    var entryId = Guid.NewGuid();
+                    var notificationView = new NotificationEmailViewModel();
+                    notificationView.FormName = templateView.Title;
+                    IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
+                    foreach (var field in templateView.Fields)
+                    {
+                        var value = field.SubmittedValue(formCollection);
+
+                        //if it's a file, save it to hard drive
+                        if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                        {
+                            //var file = Request.Files[field.SubmittedFieldName()];
+                            //var fileValueObject = value.GetFileValueFromJsonObject();
+
+                            //if (fileValueObject != null)
+                            //{
+                            //    if (UtilityHelper.UseCloudStorage())
+                            //    {
+                            //        this.SaveImageToCloud(file, fileValueObject.SaveName);
+                            //    }
+                            //    else
+                            //    {
+                            //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                            //    }
+                            //}
+                        }
+
+                        this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
+                        notificationView.Entries = notificationEntries;
+                        formManager.InsertTemplateFieldValue(field, value, entryId);
                     }
 
-                    var value = field.SubmittedValue(formCollection);
-                    if (field.IsRequired && value.IsNullOrEmpty())
+                    //send notification
+                    if (!templateView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
                     {
-                        field.Errors = "{0} is a required field".FormatWith(field.Label);
-                        errors.Add(field.Errors);
-                        goto Error;
-                    }
-                };
-
-                //then insert values
-                var entryId = Guid.NewGuid();
-                var notificationView = new NotificationEmailViewModel();
-                notificationView.FormName = templateView.Title;
-                IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
-                foreach (var field in templateView.Fields)
-                {
-                    var value = field.SubmittedValue(formCollection);
-
-                    //if it's a file, save it to hard drive
-                    if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                    {
-                        //var file = Request.Files[field.SubmittedFieldName()];
-                        //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                        //if (fileValueObject != null)
-                        //{
-                        //    if (UtilityHelper.UseCloudStorage())
-                        //    {
-                        //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                        //    }
-                        //    else
-                        //    {
-                        //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                        //    }
-                        //}
+                        notificationView.Email = templateView.NotificationEmail;
+                        this.NotifyViaEmail(notificationView);
                     }
 
-                    this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
-                    notificationView.Entries = notificationEntries;
-                    this._formRepo.InsertFieldValue(field, value, entryId);
+                    TempData["success"] = templateView.ConfirmationMessage;
+                    return RedirectToRoute("form-confirmation", new
+                    {
+                        id = template.TemplateID,
+                        embed = model.Embed
+                    });
+
                 }
 
-                //send notification
-                if (!templateView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
-                {
-                    notificationView.Email = templateView.NotificationEmail;
-                    this.NotifyViaEmail(notificationView);
-                }
-
-                TempData["success"] = templateView.ConfirmationMessage;
-                return RedirectToRoute("form-confirmation", new
-                {
-                    id = template.TemplateID,
-                    embed = model.Embed
-                });
-
+                Error:
+                TempData["error"] = errors.ToUnorderedList();
+                return View("Register", templateView);
             }
-
-        Error:
-            TempData["error"] = errors.ToUnorderedList();
-            return View("Register", templateView);
         }
 
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
-
-            var template = this._formRepo.GetTemplate(id);
-            if (template != null)
+            using (var formManager = new FormManager())
             {
-                var templateView = TemplateViewModel.CreateFromObject(template);
-                templateView.Embed = embed ?? embed.Value;
-                TempData["success"] = templateView.ConfirmationMessage;
-                return View(templateView);
-            }
+                var template = formManager.FindTemplate(id);
+                if (template != null)
+                {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+                    templateView.Embed = embed ?? embed.Value;
+                    TempData["success"] = templateView.ConfirmationMessage;
+                    return View(templateView);
+                }
 
-            return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         private void NotifyViaEmail(NotificationEmailViewModel model)
@@ -535,21 +542,24 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration(int id = -1)
         {
 
-            TemplateViewModel model = null;
-
-            var template = this._formRepo.GetPreRegistrationForm();
-
-            if (template != null)
+            using (var formManager = new FormManager())
             {
-                model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                TemplateViewModel model = null;
 
-            }
-            else
-            {
-                throw new HttpException(404, "Some description");
-            }
+                var template = formManager.FindPreRegistrationForm();
 
-            return View("PreRegistration", model);
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+
+                }
+                else
+                {
+                    throw new HttpException(404, "No Pre Registration Form found");
+                }
+
+                return View("PreRegistration", model);
+            }
         }
 
         public ActionResult Preview(int id)

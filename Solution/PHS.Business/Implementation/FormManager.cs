@@ -53,15 +53,51 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 template = unitOfWork.FormRepository.GetTemplate(templateID);
+            }
 
-                if (template != null)
-                {
-                    return template;
-                }
+            return template;
+        }
+
+        public Template FindPreRegistrationForm()
+        {
+            Template template = new Template();
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                template = unitOfWork.FormRepository.GetPreRegistrationForm();
             }
 
             return template;
 
+        }
+
+        public void UpdateTemplate(TemplateViewModel model, Template template)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.FormRepository.UpdateTemplate(model, template);
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+        }
+
+        public void UpdateTemplateFields(Template template, TemplateFieldViewModel fieldView)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.FormRepository.UpdateTemplateField(template, fieldView);
+
+                    
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
         }
 
         public void DeleteTemplate(int templateID)
@@ -71,6 +107,20 @@ namespace PHS.Business.Implementation
                 using (TransactionScope scope = new TransactionScope())
                 {
                     unitOfWork.FormRepository.DeleteTemplate(templateID);
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+        }
+
+        public void DeleteTemplateField(int templateFieldID)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.FormRepository.DeleteTemplateField(templateFieldID);
 
                     unitOfWork.Complete();
                     scope.Complete();
@@ -111,6 +161,21 @@ namespace PHS.Business.Implementation
             return template;
 
         }
+
+        public void InsertTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+        }
+
 
         public string InsertUploadDataToTemplate(byte[] data, int templateID)
         {

@@ -21,15 +21,17 @@ namespace PHS.Repository.Repository
 
         public Template GetTemplate(int key)
         {
-            return this.dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
+            return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
-        public void UpdateField(Template template1, TemplateFieldViewModel fieldView)
+        public void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView)
         {
             if (template1 == null)
             {
                 throw new Exception("Cannot update a field when a form is null");
             }
+
+            dbContext.Entry(template1).State = EntityState.Modified;
 
             if (!fieldView.TemplateFieldID.HasValue)
             {
@@ -69,11 +71,11 @@ namespace PHS.Repository.Repository
                 };
 
                 template1.TemplateFields.Add(fField);
-                this.SaveChanges();
+               // this.SaveChanges();
             }
             else
             {
-                var fField = this.dbContext.Set<TemplateField>().Where(field => field.TemplateFieldID == fieldView.TemplateFieldID.Value).FirstOrDefault();
+                var fField = dbContext.Set<TemplateField>().Where(field => field.TemplateFieldID == fieldView.TemplateFieldID.Value).FirstOrDefault();
                 if (fField != null)
                 {
 
@@ -106,7 +108,7 @@ namespace PHS.Repository.Repository
                     fField.MatrixRow = fieldView.MatrixRow;
                 }
 
-                this.SaveChanges();
+              //  this.SaveChanges();
             }
 
         }
@@ -127,11 +129,11 @@ namespace PHS.Repository.Repository
 
             Add(template);
 
-            this.SaveChanges();
+           // this.SaveChanges();
             return template;
         }
 
-        public void Update(TemplateViewModel model, Template template1)
+        public void UpdateTemplate(TemplateViewModel model, Template template1)
         {
             if (model == null)
             {
@@ -152,22 +154,22 @@ namespace PHS.Repository.Repository
             template1.PublicFormType = model.PublicFormType;
             template1.IsQuestion = model.IsQuestion;
             template1.NotificationEmail = model.NotificationEmail;
-            this.SaveChanges();
+           // this.SaveChanges();
         }
 
-        public void DeleteField(int id)
+        public void DeleteTemplateField(int id)
         {
-            var field = this.dbContext.Set<TemplateField>().Where(f => f.TemplateFieldID == id).FirstOrDefault();
+            var field = dbContext.Set<TemplateField>().Where(f => f.TemplateFieldID == id).FirstOrDefault();
             if (field != null)
             {
-                this.dbContext.Set<TemplateField>().Remove(field);
-                this.SaveChanges();
+                dbContext.Set<TemplateField>().Remove(field);
+             //   this.SaveChanges();
             }
         }
 
         public IEnumerable<TemplateFieldValueViewModel> GetRegistrantsByForm(TemplateViewModel model)
         {
-            var fieldValues = this.GetRegistrantsByForm(model.TemplateID.Value);
+            var fieldValues = GetRegistrantsByForm(model.TemplateID.Value);
             var values = fieldValues
                          .Select((fv) =>
                          {
@@ -212,7 +214,7 @@ namespace PHS.Repository.Repository
             //                 .ToList();
         }
 
-        public void InsertFieldValue(TemplateFieldViewModel field, string value, Guid entryId, string userId = "")
+        public void InsertTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId, string userId = "")
         {
             if (field.FieldType != Constants.FieldType.HEADER)
             {
@@ -224,8 +226,8 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow
                 };
 
-                this.dbContext.Set<TemplateFieldValue>().Add(fieldVal);
-                this.SaveChanges();
+                dbContext.Set<TemplateFieldValue>().Add(fieldVal);
+              //  this.SaveChanges();
             }
         }
 
@@ -316,7 +318,7 @@ namespace PHS.Repository.Repository
             //    this.DataContext.FormFields.Remove(f);
             //}
 
-            this.SaveChanges();
+          //  this.SaveChanges();
         }
 
         //public FileValueObject GetFileFieldValue(int valueId)
