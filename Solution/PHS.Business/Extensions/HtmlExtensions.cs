@@ -132,7 +132,7 @@ namespace PHS.Business.Extensions
 
                 switch (model.FieldType)
                 {
-                    case FieldType.ADDRESS:
+                    case TemplateFieldType.ADDRESS:
 
                         var addressValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
@@ -157,7 +157,7 @@ namespace PHS.Business.Extensions
 
                         break;
 
-                    case FieldType.BMI:
+                    case TemplateFieldType.BMI:
 
                         var bmiValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
 
@@ -264,7 +264,7 @@ namespace PHS.Business.Extensions
                 return false;
             }
 
-            if (model.FieldType != FieldType.CHECKBOX && model.FieldType != FieldType.RADIOBUTTON)
+            if (model.FieldType != TemplateFieldType.CHECKBOX && model.FieldType != TemplateFieldType.RADIOBUTTON)
             {
                 return false;
             }
@@ -300,7 +300,7 @@ namespace PHS.Business.Extensions
                 return false;
             }
 
-            if (model.FieldType != FieldType.CHECKBOX && model.FieldType != FieldType.RADIOBUTTON && model.FieldType != FieldType.MATRIX)
+            if (model.FieldType != TemplateFieldType.CHECKBOX && model.FieldType != TemplateFieldType.RADIOBUTTON && model.FieldType != TemplateFieldType.MATRIX)
             {
                 return false;
             }

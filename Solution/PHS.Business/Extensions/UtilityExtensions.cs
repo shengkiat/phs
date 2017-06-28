@@ -141,14 +141,14 @@ namespace PHS.Business.Extensions
             string value = "";
             switch (field.FieldType)
             {
-                case Constants.FieldType.NRICPICKER:
+                case Constants.TemplateFieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     // string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
                     // string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
 
                     return NricChecker.IsNRICValid(icNumber);
 
-                case Constants.FieldType.CHECKBOX:
+                case Constants.TemplateFieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
                     {
@@ -156,7 +156,7 @@ namespace PHS.Business.Extensions
                         if (othersOptionValue.IsNullOrEmpty()) { return false; }
                     }
                     return true;
-                case Constants.FieldType.RADIOBUTTON:
+                case Constants.TemplateFieldType.RADIOBUTTON:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
                     {
@@ -164,13 +164,13 @@ namespace PHS.Business.Extensions
                         if (value.IsNullOrEmpty()) { return false; }
                     }
                     return true;
-                case Constants.FieldType.EMAIL:
+                case Constants.TemplateFieldType.EMAIL:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (value.IsNullOrEmpty()) { return true; }
                     return value.IsValidEmail();
-                case Constants.FieldType.ADDRESS:
+                case Constants.TemplateFieldType.ADDRESS:
                     return true;
-                case Constants.FieldType.PHONE:
+                case Constants.TemplateFieldType.PHONE:
                     var area = form.SubmittedFieldValue(field.DomId, "AreaCode");
                     var number = form.SubmittedFieldValue(field.DomId, "Number");
                     if (area.IsNullOrEmpty() && number.IsNullOrEmpty())
@@ -185,7 +185,7 @@ namespace PHS.Business.Extensions
                     {
                         return area.IsNumeric() && number.IsNumeric();
                     }
-                case Constants.FieldType.BIRTHDAYPICKER:
+                case Constants.TemplateFieldType.BIRTHDAYPICKER:
                     var day = form.SubmittedFieldValue(field.DomId, "Day");
                     var month = form.SubmittedFieldValue(field.DomId, "Month");
                     var year = form.SubmittedFieldValue(field.DomId, "Year");
@@ -199,7 +199,7 @@ namespace PHS.Business.Extensions
                     var format = new string[] { "M-dd-yyyy" };
                     DateTime date;
                     return DateTime.TryParseExact(dateValue, "M-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out date);
-                case Constants.FieldType.FILEPICKER:
+                case Constants.TemplateFieldType.FILEPICKER:
                     HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];
                     var maxSize = field.MaxFileSize * 1024;
                     var minSize = field.MinFileSize * 1024;
@@ -247,7 +247,7 @@ namespace PHS.Business.Extensions
         {
             switch (value.FieldType)
             {
-                case Constants.FieldType.BMI:
+                case Constants.TemplateFieldType.BMI:
                     BMIViewModel bmi;
                     if (!string.IsNullOrEmpty(value.Value) && value.Value.Length > 0)
                     {
@@ -256,14 +256,14 @@ namespace PHS.Business.Extensions
                     }
                     return "--";
 
-                case Constants.FieldType.BIRTHDAYPICKER:
+                case Constants.TemplateFieldType.BIRTHDAYPICKER:
                     DateTime dateVal;
                     if (!string.IsNullOrEmpty(value.Value) && DateTime.TryParse(value.Value, out dateVal))
                     {
                         return dateVal.ToString("dddd, MMMM dd, yyyy");
                     }
                     return value.Value.ToString("--");
-                case Constants.FieldType.ADDRESS:
+                case Constants.TemplateFieldType.ADDRESS:
                     AddressViewModel address;
                     if (!string.IsNullOrEmpty(value.Value) && value.Value.Length > 0)
                     {
@@ -271,7 +271,7 @@ namespace PHS.Business.Extensions
                         return address.Format();
                     }
                     return "--";
-                case Constants.FieldType.CHECKBOX:
+                case Constants.TemplateFieldType.CHECKBOX:
                     if (!string.IsNullOrEmpty(value.Value) && value.Value.Length > 0)
                     {
                         if (!stripHtml)
@@ -291,7 +291,7 @@ namespace PHS.Business.Extensions
                     }
                     return "";
 
-                case Constants.FieldType.FILEPICKER:
+                case Constants.TemplateFieldType.FILEPICKER:
 
                     return "";
 
@@ -412,7 +412,7 @@ namespace PHS.Business.Extensions
             string value = "";
             switch (field.FieldType)
             {
-                case Constants.FieldType.MATRIX:
+                case Constants.TemplateFieldType.MATRIX:
                     StringBuilder builder = new StringBuilder();
 
                     for (int x = 0; x < 100; x++)
@@ -438,7 +438,7 @@ namespace PHS.Business.Extensions
 
                     break;
 
-                case Constants.FieldType.BMI:
+                case Constants.TemplateFieldType.BMI:
                     var bmi = new BMIViewModel
                     {
                         Weight = form.SubmittedFieldValue(field.DomId, "Weight"),
@@ -456,7 +456,7 @@ namespace PHS.Business.Extensions
 
                     break;
 
-                case Constants.FieldType.NRICPICKER:
+                case Constants.TemplateFieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     //string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
                     //  string icLastDigit = form.SubmittedFieldValue(field.DomId, "LastDigit");
@@ -464,10 +464,10 @@ namespace PHS.Business.Extensions
                     value = icNumber;
                     break;
 
-                case Constants.FieldType.EMAIL:
+                case Constants.TemplateFieldType.EMAIL:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
-                case Constants.FieldType.ADDRESS:
+                case Constants.TemplateFieldType.ADDRESS:
                     var address = new AddressViewModel
                     {
                         Blk = form.SubmittedFieldValue(field.DomId, "Blk"),
@@ -485,7 +485,7 @@ namespace PHS.Business.Extensions
                         value = address.ToJson();
                     }
                     break;
-                case Constants.FieldType.BIRTHDAYPICKER:
+                case Constants.TemplateFieldType.BIRTHDAYPICKER:
                     var day = form.SubmittedFieldValue(field.DomId, "Day");
                     var month = form.SubmittedFieldValue(field.DomId, "Month");
                     var year = form.SubmittedFieldValue(field.DomId, "Year");
@@ -510,7 +510,7 @@ namespace PHS.Business.Extensions
 
                     }
                     break;
-                case Constants.FieldType.CHECKBOX:
+                case Constants.TemplateFieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
                     {
@@ -518,7 +518,7 @@ namespace PHS.Business.Extensions
                         value = value.Replace("OthersOption", othersOptionValue);
                     }
                     break;
-                case Constants.FieldType.PHONE:
+                case Constants.TemplateFieldType.PHONE:
                     var area = form.SubmittedFieldValue(field.DomId, "AreaCode");
                     var number = form.SubmittedFieldValue(field.DomId, "Number");
                     if (string.IsNullOrEmpty(area) && string.IsNullOrEmpty(number))
@@ -530,17 +530,17 @@ namespace PHS.Business.Extensions
                         value = "{0}-{1}".FormatWith(area, number);
                     }
                     break;
-                case Constants.FieldType.DROPDOWNLIST:
+                case Constants.TemplateFieldType.DROPDOWNLIST:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
-                case Constants.FieldType.RADIOBUTTON:
+                case Constants.TemplateFieldType.RADIOBUTTON:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     if (!value.IsNullOrEmpty() && value.Equals("OthersOption"))
                     {
                         value = form.SubmittedFieldValue(field.DomId, "OthersOption");
                     }
                     break;
-                case Constants.FieldType.FULLNAME:
+                case Constants.TemplateFieldType.FULLNAME:
                     var fName = form.SubmittedFieldValue(field.DomId, "FirstName");
                     var lName = form.SubmittedFieldValue(field.DomId, "LastName");
                     var initials = form.SubmittedFieldValue(field.DomId, "Initials");
@@ -553,16 +553,16 @@ namespace PHS.Business.Extensions
                         value = "{0} {1} {2}".FormatWith(fName, initials, lName);
                     }
                     break;
-                case Constants.FieldType.TEXTAREA:
+                case Constants.TemplateFieldType.TEXTAREA:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
-                case Constants.FieldType.TEXTBOX:
+                case Constants.TemplateFieldType.TEXTBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
-                case Constants.FieldType.SIGNATURE:
+                case Constants.TemplateFieldType.SIGNATURE:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
-                case Constants.FieldType.FILEPICKER:
+                case Constants.TemplateFieldType.FILEPICKER:
                     //HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];
                     //value = "";
                     //if (file != null && file.ContentLength > 0)
@@ -602,7 +602,7 @@ namespace PHS.Business.Extensions
         public static void SetFieldErrors(this TemplateFieldViewModel field)
         {
             field.Errors = "Invalid entry submitted for {0}".FormatWith(field.Label);
-            if (field.FieldType == Constants.FieldType.FILEPICKER)
+            if (field.FieldType == Constants.TemplateFieldType.FILEPICKER)
             {
                 field.Errors = field.Errors.ConcatWith(", file must be betweeen {0}kb and {1}kb large ".FormatWith(field.MinFileSize.ToString(), field.MaxFileSize.ToString()));
                 if (!string.IsNullOrEmpty(field.ValidFileExtensions))
@@ -614,7 +614,7 @@ namespace PHS.Business.Extensions
                     field.Errors = field.Errors.ConcatWith(".");
                 }
             }
-            else if (field.FieldType == Constants.FieldType.NRICPICKER)
+            else if (field.FieldType == Constants.TemplateFieldType.NRICPICKER)
             {
                 field.Errors = "Invalid NRIC";
             }

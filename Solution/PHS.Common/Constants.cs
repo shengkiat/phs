@@ -33,7 +33,7 @@ namespace PHS.Common
             READONLY
         }
 
-        public enum FieldType
+        public enum TemplateFieldType
         {
             TEXTBOX,
             TEXTAREA,

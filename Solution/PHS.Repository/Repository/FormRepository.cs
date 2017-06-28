@@ -218,7 +218,7 @@ namespace PHS.Repository.Repository
 
         public void InsertTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId, string userId = "")
         {
-            if (field.FieldType != Constants.FieldType.HEADER)
+            if (field.FieldType != Constants.TemplateFieldType.HEADER)
             {
                 var fieldVal = new TemplateFieldValue
                 {

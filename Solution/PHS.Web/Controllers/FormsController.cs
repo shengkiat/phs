@@ -180,7 +180,7 @@ namespace PHS.Web.Controllers
                                     maxAge = 100;
                                 }
 
-                                var fieldTypeEnum = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), fieldType.ToUpper());
+                                var fieldTypeEnum = (Constants.TemplateFieldType)Enum.Parse(typeof(Constants.TemplateFieldType), fieldType.ToUpper());
 
                                 var fieldView = new TemplateFieldViewModel
                                 {
@@ -423,7 +423,7 @@ namespace PHS.Web.Controllers
                         var value = field.SubmittedValue(formCollection);
 
                         //if it's a file, save it to hard drive
-                        if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                        if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
                         {
                             //var file = Request.Files[field.SubmittedFieldName()];
                             //var fileValueObject = value.GetFileValueFromJsonObject();

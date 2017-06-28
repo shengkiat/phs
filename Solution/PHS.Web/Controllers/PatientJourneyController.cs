@@ -283,7 +283,7 @@ namespace PHS.Web.Controllers
                     var value = field.SubmittedValue(form);
 
                     //if it's a file, save it to hard drive
-                    if (field.FieldType == Constants.FieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                    if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
                     {
                         //var file = Request.Files[field.SubmittedFieldName()];
                         //var fileValueObject = value.GetFileValueFromJsonObject();

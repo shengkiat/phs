@@ -237,7 +237,7 @@ namespace PHS.Web.Controllers
             foreach (var field in template.Fields)
             {
 
-                if (field.FieldType == Constants.FieldType.MATRIX)
+                if (field.FieldType == Constants.TemplateFieldType.MATRIX)
                 {
                     string[] rows = field.MatrixRow.Split(",");
                     foreach (string row in rows)
@@ -247,7 +247,7 @@ namespace PHS.Web.Controllers
                         columnCount++;
                     }
                 }
-                else if (field.FieldType == Constants.FieldType.ADDRESS)
+                else if (field.FieldType == Constants.TemplateFieldType.ADDRESS)
                 {
                     dt.Columns.Add(new DataColumn("Blk"));
                     dt.Columns.Add(new DataColumn("Unit"));
@@ -257,7 +257,7 @@ namespace PHS.Web.Controllers
                     columnCount += 4;
 
                 }
-                else if (field.FieldType == Constants.FieldType.BMI)
+                else if (field.FieldType == Constants.TemplateFieldType.BMI)
                 {
                     dt.Columns.Add(new DataColumn("Weight"));
                     dt.Columns.Add(new DataColumn("Height"));
@@ -317,7 +317,7 @@ namespace PHS.Web.Controllers
                 {
                     // for (columnIndex = 0; columnIndex < columnCount; )
                     //  {
-                    if (entry.FieldType == Constants.FieldType.MATRIX)
+                    if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
                     {
                         var matrixField = entry.Value;
 
@@ -330,7 +330,7 @@ namespace PHS.Web.Controllers
 
                         columnIndex--;
                     }
-                    else if (entry.FieldType == Constants.FieldType.ADDRESS)
+                    else if (entry.FieldType == Constants.TemplateFieldType.ADDRESS)
                     {
                         var addressField = entry.Value;
 
@@ -343,7 +343,7 @@ namespace PHS.Web.Controllers
 
                         columnIndex += 4;
                     }
-                    else if (entry.FieldType == Constants.FieldType.BMI)
+                    else if (entry.FieldType == Constants.TemplateFieldType.BMI)
                     {
                         var bmiField = entry.Value;
 

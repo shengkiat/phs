@@ -16,7 +16,7 @@ namespace PHS.DB.ViewModels.Forms
 
         public int? TemplateFieldID { get; set; }
         public string Label { get; set; }
-        public Constants.FieldType FieldType { get; set; }
+        public Constants.TemplateFieldType FieldType { get; set; }
         public bool IsRequired { get; set; }
         public int MaxCharacters { get; set; }
         public string HoverText { get; set; }
@@ -72,7 +72,7 @@ namespace PHS.DB.ViewModels.Forms
                     TemplateFieldID = field.TemplateFieldID,
                     Label = field.Label.Equals("") ? "Click to edit" : field.Label,
                     Text = field.Text,
-                    FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), field.FieldType),
+                    FieldType = (Constants.TemplateFieldType)Enum.Parse(typeof(Constants.TemplateFieldType), field.FieldType),
                     IsRequired = field.IsRequired.Value,
                     MaxCharacters = field.MaxChars.Value,
                     HoverText = field.HoverText,

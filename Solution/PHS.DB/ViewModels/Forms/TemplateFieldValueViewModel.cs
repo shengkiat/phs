@@ -15,7 +15,7 @@ namespace PHS.DB.ViewModels.Forms
         public string Value { get; set; }
         public DateTime DateAdded { get; set; }
         public Guid? UserId { get; set; }
-        public Constants.FieldType FieldType { get; set; }
+        public Constants.TemplateFieldType FieldType { get; set; }
         public string FieldLabel { get; set; }
         public int FieldOrder { get; set; }
 
@@ -24,7 +24,7 @@ namespace PHS.DB.ViewModels.Forms
 
         }
 
-        public TemplateFieldValueViewModel(Constants.FieldType type, string value)
+        public TemplateFieldValueViewModel(Constants.TemplateFieldType type, string value)
         {
             this.Value = value;
             this.FieldType = type;
@@ -45,7 +45,7 @@ namespace PHS.DB.ViewModels.Forms
                 EntryId = model.EntryId.ToString(),
                 Value = model.Value,
                 DateAdded = model.DateAdded,                
-                FieldType = (Constants.FieldType)Enum.Parse(typeof(Constants.FieldType), model.TemplateField.FieldType),
+                FieldType = (Constants.TemplateFieldType)Enum.Parse(typeof(Constants.TemplateFieldType), model.TemplateField.FieldType),
                 FieldLabel = model.TemplateField.Label,
                 FieldOrder = model.TemplateField.Order.Value
             };
