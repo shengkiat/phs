@@ -18,8 +18,10 @@
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
 
+
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-common.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-interface.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Content/jquery.accordion.css")" rel="stylesheet" />
 
     @if (!Model.Theme.IsNullOrEmpty())
     {
@@ -43,44 +45,89 @@
             <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
                 @{
                     int counter = 1;
-                    foreach (var field in Model.Fields)
-                    {
-                        if (Model.IsQuestion)
+                    bool sectionCollapse = false;
+
+                    <div data-accordion-group>
+                        
+                        @foreach (var field in Model.Fields)
                         {
-                            <li>
-                                <label class="dynamic">@String.Format("Q{0}", counter)</label>
-                            </li>
+                            if (Model.IsQuestion)
+                            {
+                                <li>
+                                    <label class="dynamic">@String.Format("Q{0}", counter)</label>
+                                </li>
+                            }
+
+                            if (field.FieldType.ToString().Equals("SECTIONCOLLAPSE"))
+                            {
+                                if (sectionCollapse)
+                                {
+                                    @Html.Raw("</div>");
+                                }
+                                sectionCollapse = true;
+                                @Html.Raw("<div class=\"accordion\" data-accordion>");
+                                <div data-control>@field.Label</div>
+                            }
+
+                            else if (sectionCollapse)
+                            {
+                                <div data-content>
+                                    <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                                        @Html.Partial("_form-field-{0}-partial".FormatWith(field.FieldType.ToString().ToLower()), field)
+                                    </li>
+                                </div>
+
+                            }
+
+                            else
+                            {
+                                <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                                    @Html.Partial("_form-field-{0}-partial".FormatWith(field.FieldType.ToString().ToLower()), field)
+                                </li>
+                            }
+
+
+
+                            counter = counter + 1;
                         }
 
-                        <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
-                            @Html.Partial("_form-field-{0}-partial".FormatWith(field.FieldType.ToString().ToLower()), field)
-                        </li>
+                        @if (sectionCollapse)
+                        {
+                            @Html.Raw("</div>");
+                        }
 
-                        counter = counter + 1;
-                    }
+                    </div>
                 }
             </ul>
 
-                    if (Model.Fields != null && Model.Fields.Any())
-                    {
-                        <ul id="submit-button-list" class="vertical-list entry-form-list">
-                            <li>
-                                <label class="label">
-                                    &nbsp;
-                                </label>
-                                <div class="input">
-                                    <input type="submit" class="blue" value="Submit" />
-                                </div>
-                            </li>
-                        </ul>
-                    }
-                    @Html.HiddenFor(m => m.TemplateID)
-                    @Html.Hidden("SubmitFields[-1].Hidden", "")
-                    @Html.HiddenFor(m => m.Embed)
-                    }
+            if (Model.Fields != null && Model.Fields.Any())
+            {
+                <ul id="submit-button-list" class="vertical-list entry-form-list">
+                    <li>
+                        <label class="label">
+                            &nbsp;
+                        </label>
+                        <div class="input">
+                            <input type="submit" class="blue" value="Submit" />
+                        </div>
+                    </li>
+                </ul>
+            }
+            @Html.HiddenFor(m => m.TemplateID)
+            @Html.Hidden("SubmitFields[-1].Hidden", "")
+            @Html.HiddenFor(m => m.Embed)
+            }
     </div>
 
 </div>
 @section footerScripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.accordion.js")"></script>
 
+    <script>
+
+                $('.accordion').accordion({
+                    "transitionSpeed": 400
+                });
+
+    </script>
 }

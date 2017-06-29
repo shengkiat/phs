@@ -279,6 +279,7 @@
     <Content Include="Content\css\wheel.png" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\down.png" />
     <Content Include="Content\images\field_gradient_bg.gif" />
     <Content Include="Content\images\forms-sprite.png" />
     <Content Include="Content\images\lightbulb.png" />
@@ -306,6 +307,8 @@
     <Content Include="Content\images\spacer.gif" />
     <Content Include="Content\images\spinner.gif" />
     <Content Include="Content\images\sprite0.png" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery.accordion.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -407,6 +410,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.accordion.js" />
     <Content Include="Scripts\jquery.filedrop.js" />
     <Content Include="Scripts\jquery.jeditable.min.js" />
     <Content Include="Scripts\jquery.jeditable.wysiwyg.js" />
@@ -528,6 +532,8 @@
     <Content Include="Views\Forms\PreRegistration.cshtml" />
     <Content Include="Views\Forms\_form-field-signature-partial.cshtml" />
     <Content Include="Views\Forms\_form-field-signature-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-sectioncollapse-template.cshtml" />
+    <Content Include="Views\Forms\_form-field-sectioncollapse-partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
