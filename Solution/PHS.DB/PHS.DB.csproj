@@ -134,9 +134,11 @@
     <Compile Include="ViewModels\Forms\BMIViewModel.cs" />
     <Compile Include="ViewModels\Forms\CriteriaFieldViewModel.cs" />
     <Compile Include="ViewModels\Forms\CriteriaSubFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormCollectionViewModel.cs" />
     <Compile Include="ViewModels\Forms\TemplateCollectionViewModel.cs" />
     <Compile Include="ViewModels\Forms\TemplateFieldValueViewModel.cs" />
     <Compile Include="ViewModels\Forms\TemplateFieldViewModel.cs" />
+    <Compile Include="ViewModels\Forms\FormViewModel.cs" />
     <Compile Include="ViewModels\Forms\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Forms\NotificationEmailViewModel.cs" />
     <Compile Include="ViewModels\Forms\SortFieldViewModel.cs" />
