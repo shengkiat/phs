@@ -40,6 +40,15 @@
           <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Form">
+          <Key>
+            <PropertyRef Name="FormID" />
+          </Key>
+          <Property Name="FormID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="MasterAddress">
           <Key>
             <PropertyRef Name="PostalCode" />
@@ -109,6 +118,7 @@
             <PropertyRef Name="TemplateID" />
           </Key>
           <Property Name="TemplateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Slug" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
@@ -224,12 +234,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Form_Template">
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
+          <End Role="Template" Type="Self.Template" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="FormID" />
+            </Principal>
+            <Dependent Role="Template">
+              <PropertyRef Name="FormID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ModalityForm_form">
-          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Form" Type="Self.Form" Multiplicity="1" />
           <End Role="ModalityForm" Type="Self.ModalityForm" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Template">
-              <PropertyRef Name="TemplateID" />
+            <Principal Role="Form">
+              <PropertyRef Name="FormID" />
             </Principal>
             <Dependent Role="ModalityForm">
               <PropertyRef Name="FormID" />
@@ -248,7 +270,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-		<Association Name="FK_template_field_values_template_fields">
+        <Association Name="FK_template_field_values_template_fields">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -278,6 +300,7 @@
           <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPatient" EntityType="Self.EventPatient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterAddress" EntityType="Self.MasterAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modality" EntityType="Self.Modality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModalityForm" EntityType="Self.ModalityForm" Schema="dbo" store:Type="Tables" />
@@ -303,15 +326,19 @@
             <End Role="PHSEvent" EntitySet="PHSEvent" />
             <End Role="EventPatient" EntitySet="EventPatient" />
           </AssociationSet>
-          <AssociationSet Name="FK_ModalityForm_form" Association="Self.FK_ModalityForm_form">
+          <AssociationSet Name="FK_Form_Template" Association="Self.FK_Form_Template">
+            <End Role="Form" EntitySet="Form" />
             <End Role="Template" EntitySet="Template" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModalityForm_form" Association="Self.FK_ModalityForm_form">
+            <End Role="Form" EntitySet="Form" />
             <End Role="ModalityForm" EntitySet="ModalityForm" />
           </AssociationSet>
           <AssociationSet Name="FK_ModalityForm_Modality" Association="Self.FK_ModalityForm_Modality">
             <End Role="Modality" EntitySet="Modality" />
             <End Role="ModalityForm" EntitySet="ModalityForm" />
           </AssociationSet>
-		   <AssociationSet Name="FK_template_field_values_template_fields" Association="Self.FK_template_field_values_template_fields">
+          <AssociationSet Name="FK_template_field_values_template_fields" Association="Self.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateField" />
             <End Role="TemplateFieldValue" EntitySet="TemplateFieldValue" />
           </AssociationSet>
@@ -327,6 +354,7 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
           <EntitySet Name="EventPatients" EntityType="phsModel.EventPatient" />
+          <EntitySet Name="Forms" EntityType="phsModel.Form" />
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
           <EntitySet Name="People" EntityType="phsModel.Person" />
@@ -338,6 +366,10 @@
             <End Role="PHSEvent" EntitySet="PHSEvents" />
             <End Role="EventPatient" EntitySet="EventPatients" />
           </AssociationSet>
+          <AssociationSet Name="FK_Form_Template" Association="phsModel.FK_Form_Template">
+            <End Role="Form" EntitySet="Forms" />
+            <End Role="Template" EntitySet="Templates" />
+          </AssociationSet>
           <AssociationSet Name="FK_template_field_values_template_fields" Association="phsModel.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="TemplateFieldValue" EntitySet="TemplateFieldValues" />
@@ -347,7 +379,7 @@
             <End Role="Modality" EntitySet="Modalities" />
           </AssociationSet>
           <AssociationSet Name="ModalityForm" Association="phsModel.ModalityForm">
-            <End Role="Template" EntitySet="Templates" />
+            <End Role="Form" EntitySet="Forms" />
             <End Role="Modality" EntitySet="Modalities" />
           </AssociationSet>
           <AssociationSet Name="TemplateTemplateField" Association="phsModel.TemplateTemplateField">
@@ -383,6 +415,17 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_EventPatient_Event" FromRole="EventPatient" ToRole="PHSEvent" />
         </EntityType>
+        <EntityType Name="Form">
+          <Key>
+            <PropertyRef Name="FormID" />
+          </Key>
+          <Property Name="FormID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Templates" Relationship="phsModel.FK_Form_Template" FromRole="Form" ToRole="Template" />
+          <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Form" ToRole="Modality" />
+        </EntityType>
         <EntityType Name="MasterAddress">
           <Key>
             <PropertyRef Name="PostalCode" />
@@ -407,7 +450,7 @@
           <Property Name="Eligiblity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Labels" Type="Int32" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="PHSEvent" />
-          <NavigationProperty Name="Templates" Relationship="phsModel.ModalityForm" FromRole="Modality" ToRole="Template" />
+          <NavigationProperty Name="Forms" Relationship="phsModel.ModalityForm" FromRole="Modality" ToRole="Form" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -448,6 +491,7 @@
             <PropertyRef Name="TemplateID" />
           </Key>
           <Property Name="TemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Slug" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -460,7 +504,7 @@
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Template" ToRole="Modality" />
+          <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.TemplateTemplateField" FromRole="Template" ToRole="TemplateField" />
         </EntityType>
         <EntityType Name="TemplateField">
@@ -522,6 +566,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Form_Template">
+          <End Type="phsModel.Form" Role="Form" Multiplicity="1" />
+          <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Form">
+              <PropertyRef Name="FormID" />
+            </Principal>
+            <Dependent Role="Template">
+              <PropertyRef Name="FormID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_template_field_values_template_fields">
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -541,7 +597,7 @@
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
         <Association Name="ModalityForm">
-          <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
+          <End Type="phsModel.Form" Role="Form" Multiplicity="*" />
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
         <Association Name="TemplateTemplateField">
@@ -580,6 +636,16 @@
                 <ScalarProperty Name="Nric" ColumnName="Nric" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forms">
+            <EntityTypeMapping TypeName="phsModel.Form">
+              <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -658,6 +724,7 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Slug" ColumnName="Slug" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
                 <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -720,8 +787,8 @@
             <EndProperty Name="Modality">
               <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
             </EndProperty>
-            <EndProperty Name="Template">
-              <ScalarProperty Name="TemplateID" ColumnName="FormID" />
+            <EndProperty Name="Form">
+              <ScalarProperty Name="FormID" ColumnName="FormID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="TemplateTemplateField" TypeName="phsModel.TemplateTemplateField" StoreEntitySet="TemplateTemplateField">

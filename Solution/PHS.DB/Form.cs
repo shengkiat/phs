@@ -12,29 +12,23 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Modality
+    public partial class Form
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Modality()
+        public Form()
         {
-            this.PHSEvents = new HashSet<PHSEvent>();
-            this.Forms = new HashSet<Form>();
+            this.Templates = new HashSet<Template>();
+            this.Modalities = new HashSet<Modality>();
         }
     
-        public int ModalityID { get; set; }
-        public string Name { get; set; }
-        public int Position { get; set; }
-        public string IconPath { get; set; }
+        public int FormID { get; set; }
+        public string Title { get; set; }
+        public Nullable<System.DateTime> DateAdded { get; set; }
         public bool IsActive { get; set; }
-        public bool IsVisible { get; set; }
-        public Nullable<bool> HasParent { get; set; }
-        public string Status { get; set; }
-        public string Eligiblity { get; set; }
-        public Nullable<int> Labels { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PHSEvent> PHSEvents { get; set; }
+        public virtual ICollection<Template> Templates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Form> Forms { get; set; }
+        public virtual ICollection<Modality> Modalities { get; set; }
     }
 }

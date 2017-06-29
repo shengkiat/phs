@@ -88,6 +88,9 @@
     <Compile Include="EventPatient.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Form.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MasterAddress.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

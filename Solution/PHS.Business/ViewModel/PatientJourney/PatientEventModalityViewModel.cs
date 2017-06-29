@@ -27,9 +27,9 @@ namespace PHS.Business.ViewModel.PatientJourney
 
             this.modalityForms = new List<int>();
 
-            foreach(var form in modality.Templates)
+            foreach(var form in modality.Forms)
             {
-                this.modalityForms.Add(form.TemplateID);
+                this.modalityForms.Add(form.FormID);
             }
 
             this.modalityCompletedForms = new List<int>();

@@ -17,11 +17,11 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Template()
         {
-            this.Modalities = new HashSet<Modality>();
             this.TemplateFields = new HashSet<TemplateField>();
         }
     
         public int TemplateID { get; set; }
+        public int FormID { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Status { get; set; }
@@ -35,8 +35,7 @@ namespace PHS.DB
         public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Modality> Modalities { get; set; }
+        public virtual Form Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TemplateField> TemplateFields { get; set; }
     }

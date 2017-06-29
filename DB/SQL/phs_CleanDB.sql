@@ -37,12 +37,12 @@ IF OBJECT_ID('dbo.EventPatient', 'U') IS NOT NULL
   
 IF OBJECT_ID('dbo.PHSEvent', 'U') IS NOT NULL 
   DROP TABLE [dbo].[PHSEvent]; 
-  
-IF OBJECT_ID('dbo.Form', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[Form]; 
 
 IF OBJECT_ID('dbo.Template', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Template]; 
+  
+IF OBJECT_ID('dbo.Form', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Form];   
 
 IF OBJECT_ID('dbo.AuditLog', 'U') IS NOT NULL 
   DROP TABLE [dbo].[AuditLog]; 
@@ -155,6 +155,7 @@ CREATE TABLE [dbo].[EventPatient](
 
 CREATE TABLE [dbo].[Template](
 	[TemplateID] [int] IDENTITY(1,1) NOT NULL,
+	[FormID] [int] NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
 	[Slug] [nvarchar](50) NOT NULL,
 	[Status] [nvarchar](50) NULL,
@@ -234,6 +235,16 @@ CREATE TABLE [dbo].[TemplateTemplateField](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[Form](
+	[FormID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[DateAdded] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+ CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
+(
+	[FormID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
@@ -268,7 +279,7 @@ GO
 ALTER TABLE [dbo].[TemplateTemplateField] CHECK CONSTRAINT [FK_template_fields]
 GO
 ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_form] FOREIGN KEY([FormID])
-REFERENCES [dbo].[Template] ([TemplateID])
+REFERENCES [dbo].[Form] ([FormID])
 GO
 ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_form]
 GO
@@ -277,9 +288,11 @@ REFERENCES [dbo].[Modality] ([ModalityID])
 GO
 ALTER TABLE [dbo].[ModalityForm] CHECK CONSTRAINT [FK_ModalityForm_Modality]
 GO
-
-
-
+ALTER TABLE [dbo].[Template]  WITH CHECK ADD  CONSTRAINT [FK_Form_Template] FOREIGN KEY([FormID])
+REFERENCES [dbo].[Form] ([FormID])
+GO
+ALTER TABLE [dbo].[Template] CHECK CONSTRAINT [FK_Form_Template]
+GO
 
 --------------------------Data--------------------- 
 
@@ -439,30 +452,50 @@ GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 10)
 GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 11)
+GO
 
 ---  Forms Sample  --
-
+SET IDENTITY_INSERT [phs].[dbo].[Form] ON 
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (1, N'Registration Form', CAST(N'2017-02-19 09:15:43.527' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (2, N'New Registration Form', CAST(N'2017-03-06 13:16:46.333' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (3, N'BMI + History Taking', CAST(N'2017-03-06 13:19:35.327' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (4, N'PreRegistration Form', CAST(N'2017-03-10 13:08:21.207' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (5, N'Doctor Form', CAST(N'2017-03-26 05:46:01.207' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (6, N'Vitals', CAST(N'2017-03-26 05:47:55.413' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (7, N'Phlebotomy DataEntry', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 0)
+GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (8, N'Mega Sorting Station', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 0)
+GO
+SET IDENTITY_INSERT [phs].[dbo].[Form] OFF
+GO
 
 SET IDENTITY_INSERT [phs].[dbo].[Template] ON 
 
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (1, N'Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-02-19 09:15:43.527' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (1, 1, N'Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-02-19 09:15:43.527' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (2, N'New Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:16:46.333' AS DateTime), NULL, NULL, 0, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (2, 2, N'New Registration Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:16:46.333' AS DateTime), NULL, NULL, 0, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (3, N'BMI + History Taking', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:19:35.327' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (3, 3, N'BMI + History Taking', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-06 13:19:35.327' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (4, N'PreRegistration Form', N'new-registration-form', N'PUBLISHED', N'Thank you for signing up', CAST(N'2017-03-10 13:08:21.207' AS DateTime), NULL, NULL, 1, NULL, 1, N'PRE-REGISTRATION', 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (4, 4, N'PreRegistration Form', N'new-registration-form', N'PUBLISHED', N'Thank you for signing up', CAST(N'2017-03-10 13:08:21.207' AS DateTime), NULL, NULL, 1, NULL, 1, N'PRE-REGISTRATION', 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (5, N'Doctor Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:46:01.207' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (5, 5, N'Doctor Form', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:46:01.207' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (6, N'Vitals', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (6, 6, N'Vitals', N'new-registration-form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-03-26 05:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (7, N'Phlebotomy DataEntry', N'New Registration Form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (7, 7, N'Phlebotomy DataEntry', N'New Registration Form', N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
-INSERT [phs].[dbo].[Template] ([TemplateID], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (8, N'Mega Sorting Station', N'Mega Sorting Station', N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Title], [Slug], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsPublic], [PublicFormType], [IsQuestion]) VALUES (8, 8, N'Mega Sorting Station', N'Mega Sorting Station', N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, NULL, 0)
 GO
 SET IDENTITY_INSERT [phs].[dbo].[Template] OFF
+
 GO
 SET IDENTITY_INSERT [dbo].[TemplateField] ON 
 

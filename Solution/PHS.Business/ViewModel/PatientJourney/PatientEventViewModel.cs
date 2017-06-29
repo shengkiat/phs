@@ -43,14 +43,14 @@ namespace PHS.Business.ViewModel.PatientJourney
 
         public int SelectedModalityId { get; set; }
 
-        public List<Template> GetModalityFormsForTabs() {
-            List<Template> result = new List<Template>();
+        public List<Form> GetModalityFormsForTabs() {
+            List<Form> result = new List<Form>();
 
             foreach (var modality in Event.Modalities)
             {
                 if (modality.ModalityID.Equals(SelectedModalityId))
                 {
-                    result = modality.Templates.ToList();
+                    result = modality.Forms.ToList();
                 }
             }
             
