@@ -48,7 +48,7 @@ namespace PHS.DB.ViewModels.Forms
         public static TemplateViewModel Initialize()
         {
 
-            var formView = new TemplateViewModel
+            var templateView = new TemplateViewModel
             {
                 Title = "Registration",
                 Status = Constants.TemplateStatus.DRAFT,
@@ -62,24 +62,24 @@ namespace PHS.DB.ViewModels.Forms
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
 
-            return formView;
+            return templateView;
         }
 
-        public static TemplateViewModel CreateFromObject(Template form1)
+        public static TemplateViewModel CreateFromObject(Template template1)
         {
-            return CreateFromObject(form1, Constants.TemplateFieldMode.EDIT);
+            return CreateFromObject(template1, Constants.TemplateFieldMode.EDIT);
         }
 
-        public static TemplateViewModel CreateFromObject(Template form1, Constants.TemplateFieldMode mode)
+        public static TemplateViewModel CreateFromObject(Template template1, Constants.TemplateFieldMode mode)
         {
-            if (form1 != null)
+            if (template1 != null)
             {
 
-                var formView = CreateBasicFromObject(form1);
+                var formView = CreateBasicFromObject(template1);
 
-                if (form1.TemplateFields.Count() > 0)
+                if (template1.TemplateFields.Count() > 0)
                 {
-                    form1.TemplateFields.OrderBy(o => o.Order).Each((field, index) =>
+                    template1.TemplateFields.OrderBy(o => o.Order).Each((field, index) =>
                     {
 
                         formView.Fields.Add(TemplateFieldViewModel.CreateFromObject(field, mode));
@@ -91,23 +91,23 @@ namespace PHS.DB.ViewModels.Forms
             return TemplateViewModel.Initialize();
         }
 
-        public static TemplateViewModel CreateBasicFromObject(Template form1)
+        public static TemplateViewModel CreateBasicFromObject(Template template1)
         {
 
             var formView = new TemplateViewModel
             {
-                Title = form1.Title,
-                TemplateID = form1.TemplateID,
-                DateAdded = form1.DateAdded.Value,
-                ConfirmationMessage = form1.ConfirmationMessage,
+                Title = template1.Title,
+                TemplateID = template1.TemplateID,
+                DateAdded = template1.DateAdded.Value,
+                ConfirmationMessage = template1.ConfirmationMessage,
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
-                Slug = form1.Slug,
-                Theme = form1.Theme,
-                NotificationEmail = form1.NotificationEmail,
-                IsPublic = form1.IsPublic,
-                IsQuestion = form1.IsQuestion,
-                PublicFormType = form1.PublicFormType,
-                Status = (Constants.TemplateStatus)Enum.Parse(typeof(Constants.TemplateStatus), form1.Status),
+                Slug = template1.Slug,
+                Theme = template1.Theme,
+                NotificationEmail = template1.NotificationEmail,
+                IsPublic = template1.IsPublic,
+                IsQuestion = template1.IsQuestion,
+                PublicFormType = template1.PublicFormType,
+                Status = (Constants.TemplateStatus)Enum.Parse(typeof(Constants.TemplateStatus), template1.Status),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
@@ -117,7 +117,7 @@ namespace PHS.DB.ViewModels.Forms
 
         public static TemplateViewModel CreateMock()
         {
-            var formView = new TemplateViewModel
+            var templateView = new TemplateViewModel
             {
                 Title = "Test Form",
                 TemplateID = 1,
@@ -132,7 +132,7 @@ namespace PHS.DB.ViewModels.Forms
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
 
-            return formView;
+            return templateView;
         }
 
         #endregion
