@@ -8,6 +8,8 @@
      data-sub-channel="sub-label-@Model.DomId"
      class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
 
+    <img id="ImageView-@Model.DomId" src="~/Content/images/down.png" width="12" height="7">
+
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
