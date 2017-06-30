@@ -456,21 +456,21 @@ GO
 
 ---  Forms Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[Form] ON 
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (1, N'Registration Form', CAST(N'2017-02-19 09:15:43.527' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (1, N'Registration Form', CAST(N'2017-02-19 09:15:43.527' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (2, N'New Registration Form', CAST(N'2017-03-06 13:16:46.333' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (2, N'New Registration Form', CAST(N'2017-03-06 13:16:46.333' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (3, N'BMI + History Taking', CAST(N'2017-03-06 13:19:35.327' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (3, N'BMI + History Taking', CAST(N'2017-03-06 13:19:35.327' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (4, N'PreRegistration Form', CAST(N'2017-03-10 13:08:21.207' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (4, N'PreRegistration Form', CAST(N'2017-03-10 13:08:21.207' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (5, N'Doctor Form', CAST(N'2017-03-26 05:46:01.207' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (5, N'Doctor Form', CAST(N'2017-03-26 05:46:01.207' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (6, N'Vitals', CAST(N'2017-03-26 05:47:55.413' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (6, N'Vitals', CAST(N'2017-03-26 05:47:55.413' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (7, N'Phlebotomy DataEntry', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (7, N'Phlebotomy DataEntry', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 1)
 GO
-INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (8, N'Mega Sorting Station', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 0)
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [DateAdded], [IsActive]) VALUES (8, N'Mega Sorting Station', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [phs].[dbo].[Form] OFF
 GO
