@@ -113,12 +113,32 @@ namespace PHS.Repository.Repository
 
         }
 
-        public Template CreateNew()
+        public Form CreateNewForm()
+        {
+            string formName = "New Registration Form";
+            var form = new Form
+            {
+                Title = formName,
+                DateAdded = DateTime.UtcNow,
+                IsActive = true
+            };
+
+            //Add(template);
+
+            dbContext.Set<Form>().Add(form);
+
+            // this.SaveChanges();
+            return form;
+        }
+
+
+        public Template CreateNewTemplate(int formId)
         {
             string templateName = "New Registration Form";
             var template = new Template
             {
                 Title = templateName,
+                FormID = formId,
                 //Slug = formName.ToSlug(),
                 Slug = templateName,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),

@@ -37,7 +37,6 @@ namespace PHS.Web.Controllers
             return View(formCollectionView);
         }
 
-        // GET: /Forms/
         public ActionResult ViewTemplate(int formId)
         {
             var templateCollectionView = new TemplateCollectionViewModel();
@@ -48,6 +47,49 @@ namespace PHS.Web.Controllers
             }
 
             return View(templateCollectionView);
+        }
+
+        public ActionResult CreateForm()
+        {
+            Template template;
+            using (var formManager = new FormManager())
+            {
+                template = formManager.CreateNewFormAndTemplate();
+            }
+
+            return RedirectToAction("EditTemplate", new { id = template.TemplateID });
+        }
+
+        public ActionResult DeleteForm(int formId)
+        {
+            using (var formManager = new FormManager())
+            {
+                var template = formManager.FindTemplate(formId);
+
+                var templateView = TemplateViewModel.CreateFromObject(template);
+
+                if (template != null)
+                {
+                    templateView.Entries = formManager.HasSubmissions(templateView).ToList();
+
+                    if (!templateView.Entries.Any())
+                    {
+                        try
+                        {
+                            formManager.DeleteTemplate(formId);
+                            TempData["success"] = "Form Deleted";
+                            return RedirectToRoute("form-home");
+                        }
+                        catch
+                        {
+                            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
+                        }
+                    }
+                }
+            }
+
+            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
+            return RedirectToRoute("form-home");
         }
 
         public ActionResult GenerateDoctorMemo(string text)
@@ -107,17 +149,6 @@ namespace PHS.Web.Controllers
             TemplateViewModel model1 = TemplateViewModel.CreateFromObject(template);
 
             return View(model1);
-        }
-
-        public ActionResult CreateTemplate()
-        {
-            Template template;
-            using (var formManager = new FormManager())
-            {
-                template = formManager.CreateNewTemplate();
-            }
-
-            return RedirectToAction("EditTemplate", new { id = template.TemplateID });
         }
 
         public ActionResult GetAddressByZipCode(string zipcode)

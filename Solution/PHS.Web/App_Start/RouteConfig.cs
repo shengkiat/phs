@@ -78,13 +78,6 @@ namespace PHS.Web
                new { Id = @"\d+" }
             );
 
-            // create template
-            routes.MapRoute(
-               "form-createtemplate",
-               "Forms/createTemplate",
-               new { controller = "Forms", action = "createTemplate" }
-            );
-
             // form submit confirmation
             routes.MapRoute(
                "form-submitconfirmation",
