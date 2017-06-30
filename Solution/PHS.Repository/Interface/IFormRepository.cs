@@ -3,7 +3,7 @@ using PHS.Repository.Interface.Core;
 
 namespace PHS.Repository.Interface
 {
-    public interface IFormRepository : IRepository<Template>
+    public interface IFormRepository : IRepository<Form>
     {
 
     }

@@ -455,7 +455,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Forms\EditTemplate.cshtml" />
     <Content Include="Views\Forms\SubmitConfirmation.cshtml" />
-    <Content Include="Views\Forms\Index.cshtml" />
+    <Content Include="Views\Forms\ViewTemplate.cshtml" />
     <Content Include="Views\Forms\PreviewTemplate.cshtml" />
     <Content Include="Views\Forms\FillIn.cshtml" />
     <Content Include="Views\FormExport\ViewEntries.cshtml" />
@@ -534,6 +534,7 @@
     <Content Include="Views\Forms\_form-field-signature-template.cshtml" />
     <Content Include="Views\Forms\_form-field-sectioncollapse-template.cshtml" />
     <Content Include="Views\Forms\_form-field-sectioncollapse-partial.cshtml" />
+    <Content Include="Views\Forms\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -1,4 +1,4 @@
-﻿@model PHS.DB.ViewModels.Forms.TemplateCollectionViewModel
+﻿@model PHS.DB.ViewModels.Forms.FormCollectionViewModel
 
 @using PHS.Business.Extensions
 
@@ -10,13 +10,13 @@
     ViewBag.Title = "Welcome to Form Builder";
 }
 
-@if (!Model.Templates.Any())
+@if (!Model.Forms.Any())
 {
     <div class="select-form-container align-center welcome-container">
        <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
 
-       <h3 class="welcome-text">Welcome to the Form builder. You have not yet created any Templates. Click the button below to begin</h3>
-       @Html.RouteLink("Create Template", "form-createtemplate", null, new { @class="hyperlink-button light-blue-button welcome-button"})
+       <h3 class="welcome-text">Welcome to the Form builder. You have not yet created any Forms. Click the button below to begin</h3>
+       @Html.RouteLink("Create Form", "form-createform", null, new { @class="hyperlink-button light-blue-button welcome-button"})
     </div>
 }
 else
@@ -24,21 +24,21 @@ else
     @Html.WriteMessages()
     <div class="select-form-container">
     <div class="add-form-guide info align-left welcome-instructions">
-      Welcome to the Form builder. You can create and edit Templates using drag-and-drop functionality with the controls below. Click on "Add Template" to create a new 
-      template, or manage existing Templates from the table below.
+      Welcome to the Form builder. You can create and edit Forms. Click on "Add Form" to create a new 
+      Form, or manage existing Forms from the table below.
     </div>
     <div class="add-form-button-container">
-        @Html.RouteLink("Add Template", "form-createtemplate", null, new { @class="hyperlink-button black-button"})
+        @Html.RouteLink("Add Form", "form-createform", null, new { @class="hyperlink-button black-button"})
     </div>
     <table class="main-table">
     <thead>
       <tr>
-        <th><h3>Template List</h3></th>        
+        <th><h3>Form List</h3></th>        
         <th>&nbsp;</th>
       </tr>      
     </thead>
     <tbody>
-    @foreach (var f in Model.Templates)
+    @foreach (var f in Model.Forms)
     {
         <tr>
        <td class="title-column">
@@ -46,14 +46,11 @@ else
          <span class="date">@f.DateAdded.Humanize()</span>
        </td>       
         <td>          
-          @Html.RouteLink("Edit Template", "form-edittemplate", new { Id = f.TemplateID.Value }, new { @class = "hyperlink-button light-blue-button" })
-          @Html.RouteLink("View/Fill Template", "form-previewtemplate", new{Id=f.TemplateID.Value}, new { @class="hyperlink-button green-button"})  
+          @Html.RouteLink("View Template", "form-viewtemplate", new { formId = f.FormID.Value }, new { @class = "hyperlink-button light-blue-button" })
+       
           &nbsp;
 
-          @if (!f.Fields.Any())
-          {                          
-              <a href="@Url.RouteUrl("form-deletetemplate", new {templateId=f.TemplateID.Value})" onclick="return confirm('Are you sure you want to delete this template?');" class="image-bg-link image-bg delete-icon-link" title="Delete Template">&nbsp;</a>
-          }
+         <a href="@Url.RouteUrl("form-deleteform", new {templateId=f.FormID.Value})" onclick="return confirm('Are you sure you want to delete this form?');" class="image-bg-link image-bg delete-icon-link" title="Delete Template">&nbsp;</a>
         </td>
         </tr>
     }

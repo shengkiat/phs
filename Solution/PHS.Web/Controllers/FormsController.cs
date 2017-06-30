@@ -27,11 +27,24 @@ namespace PHS.Web.Controllers
         // GET: /Forms/
         public ActionResult Index()
         {
+            var formCollectionView = new FormCollectionViewModel();
+
+            using (var formManager = new FormManager())
+            {
+                formCollectionView.Forms = formManager.FindAllFormsByDes();
+            }
+
+            return View(formCollectionView);
+        }
+
+        // GET: /Forms/
+        public ActionResult ViewTemplate(int formId)
+        {
             var templateCollectionView = new TemplateCollectionViewModel();
 
             using (var formManager = new FormManager())
             {
-                templateCollectionView.Templates = formManager.FindAllTemplatesByDes();
+                templateCollectionView.Templates = formManager.FindAllTemplates(formId);
             }
 
             return View(templateCollectionView);

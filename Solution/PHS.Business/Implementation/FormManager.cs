@@ -37,13 +37,23 @@ namespace PHS.Business.Implementation
 
         }
 
-        public List<TemplateViewModel> FindAllTemplatesByDes()
+        public List<FormViewModel> FindAllFormsByDes()
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var forms = unitOfWork.FormRepository.GetTemplates().OrderByDescending(f => f.DateAdded).ToList();
+                var forms = unitOfWork.FormRepository.GetForms().OrderByDescending(f => f.DateAdded).ToList();
 
                 return forms;
+            }
+        }
+
+        public List<TemplateViewModel> FindAllTemplates(int formId)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var templates = unitOfWork.FormRepository.GetTemplates(formId).OrderByDescending(f => f.DateAdded).ToList();
+
+                return templates;
             }
         }
 

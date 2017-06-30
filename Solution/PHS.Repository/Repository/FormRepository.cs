@@ -12,7 +12,7 @@ using PHS.Repository.Interface;
 
 namespace PHS.Repository.Repository
 {
-    public class FormRepository : Repository<Template>, IFormRepository
+    public class FormRepository : Repository<Form>, IFormRepository
     {
         public FormRepository(DbContext datacontext) : base(datacontext)
         {
@@ -127,7 +127,9 @@ namespace PHS.Repository.Repository
                 IsActive = true
             };
 
-            Add(template);
+            //Add(template);
+
+            dbContext.Set<Template>().Add(template);
 
            // this.SaveChanges();
             return template;
@@ -255,7 +257,7 @@ namespace PHS.Repository.Repository
 
         //        if (fileObj.IsSavedInCloud)
         //        {
-                    
+
         //        }
         //        else
         //        {
@@ -269,11 +271,25 @@ namespace PHS.Repository.Repository
         //        }
         //    }
         //}
+        public List<FormViewModel> GetForms()
+        {
+            var formViews = new List<FormViewModel>();
+            var formSet = this.dbContext.Set<Form>().ToList();
+            foreach (var form in formSet)
+            {
+                if (form.IsActive)
+                {
+                    formViews.Add(FormViewModel.CreateBasicFromObject(form));
+                }
+            }
 
-        public List<TemplateViewModel> GetTemplates()
+            return formViews;
+        }
+
+        public List<TemplateViewModel> GetTemplates(int formId)
         {
             var templateViews = new List<TemplateViewModel>();
-            var templateSet = this.dbContext.Set<Template>().ToList();
+            var templateSet = dbContext.Set<Template>().Where(u => u.FormID == formId).ToList();
             foreach (var template in templateSet)
             {
                 if (template.IsActive)

@@ -31,8 +31,30 @@ namespace PHS.Web
                new { controller = "Forms", action = "GetFileFromDisk", valueId = UrlParameter.Optional }
             );
 
+            // create form
+            routes.MapRoute(
+               "form-createform",
+               "Forms/createForm",
+               new { controller = "Forms", action = "createForm" }
+            );
 
-            // edit
+            // view template
+            routes.MapRoute(
+               "form-viewtemplate",
+               "Forms/viewtemplate/{formId}",
+               new { controller = "Forms", action = "viewtemplate", formId = UrlParameter.Optional },
+               new { formId = @"\d+" }
+            );
+
+            // delete form
+            routes.MapRoute(
+               "form-deleteform",
+               "Forms/deleteform/{formId}",
+               new { controller = "Forms", action = "deletetemplate", formId = UrlParameter.Optional },
+               new { formId = @"\d+" }
+            );
+
+            // edit template
             routes.MapRoute(
                "form-edittemplate",
                "Forms/edittemplate/{id}",
@@ -40,7 +62,7 @@ namespace PHS.Web
                new { Id = @"\d+" }
             );
 
-            // preview
+            // preview template
             routes.MapRoute(
                "form-previewtemplate",
                "Forms/previewtemplate/{id}",
@@ -56,7 +78,7 @@ namespace PHS.Web
                new { Id = @"\d+" }
             );
 
-            // create form
+            // create template
             routes.MapRoute(
                "form-createtemplate",
                "Forms/createTemplate",
@@ -79,7 +101,7 @@ namespace PHS.Web
                new { formId = @"\d+" }
             );
 
-            // delete form
+            // delete template
             routes.MapRoute(
                "form-deletetemplate",
                "Forms/deletetemplate/{templateId}",

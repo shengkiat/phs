@@ -1,0 +1,65 @@
+﻿@model PHS.DB.ViewModels.Forms.TemplateCollectionViewModel
+
+@using PHS.Business.Extensions
+
+@section FormCSS{
+
+}
+
+@{
+    ViewBag.Title = "Welcome to Form Builder";
+}
+
+@if (!Model.Templates.Any())
+{
+    <div class="select-form-container align-center welcome-container">
+       <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
+
+       <h3 class="welcome-text">Welcome to the Form builder. You have not yet created any Templates. Click the button below to begin</h3>
+       @Html.RouteLink("Create Template", "form-createtemplate", null, new { @class="hyperlink-button light-blue-button welcome-button"})
+    </div>
+}
+else
+{
+    @Html.WriteMessages()
+    <div class="select-form-container">
+    <div class="add-form-guide info align-left welcome-instructions">
+      Welcome to the Form builder. You can create and edit Templates using drag-and-drop functionality with the controls below. Click on "Add Template" to create a new 
+      template, or manage existing Templates from the table below.
+    </div>
+    <div class="add-form-button-container">
+        @Html.RouteLink("Add Template", "form-createtemplate", null, new { @class="hyperlink-button black-button"})
+    </div>
+    <table class="main-table">
+    <thead>
+      <tr>
+        <th><h3>Template List</h3></th>        
+        <th>&nbsp;</th>
+      </tr>      
+    </thead>
+    <tbody>
+    @foreach (var f in Model.Templates)
+    {
+        <tr>
+       <td class="title-column">
+         <span class="title">@f.Title</span><br />
+         <span class="date">@f.DateAdded.Humanize()</span>
+       </td>       
+        <td>          
+          @Html.RouteLink("Edit Template", "form-edittemplate", new { Id = f.TemplateID.Value }, new { @class = "hyperlink-button light-blue-button" })
+          @Html.RouteLink("View/Fill Template", "form-previewtemplate", new{Id=f.TemplateID.Value}, new { @class="hyperlink-button green-button"})  
+          &nbsp;
+
+          @if (!f.Fields.Any())
+          {                          
+              <a href="@Url.RouteUrl("form-deletetemplate", new {templateId=f.TemplateID.Value})" onclick="return confirm('Are you sure you want to delete this template?');" class="image-bg-link image-bg delete-icon-link" title="Delete Template">&nbsp;</a>
+          }
+        </td>
+        </tr>
+    }
+    </tbody>
+    </table>
+
+    </div>
+}
+
