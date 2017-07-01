@@ -10,6 +10,8 @@ using OfficeOpenXml;
 using PHS.DB.ViewModels.Forms;
 using PHS.Business.Extensions;
 using System.Transactions;
+using System.Web.Mvc;
+using PHS.Common;
 
 namespace PHS.Business.Implementation
 {
@@ -303,20 +305,90 @@ namespace PHS.Business.Implementation
 
         }
 
-        public void InsertTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId)
+        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
-            {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
+            string result = null;
+            IList<string> errors = Enumerable.Empty<string>().ToList();
+            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
 
-                    unitOfWork.Complete();
-                    scope.Complete();
+            var template = FindTemplate(model.TemplateID.Value);
+
+            var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+            templateView.AssignInputValues(formCollection);
+           // this.InsertValuesIntoTempData(SubmitFields, formCollection);
+
+            if (templateView.Fields.Any())
+            {
+                // first validate fields
+                foreach (var field in templateView.Fields)
+                {
+                    if (!field.SubmittedValueIsValid(formCollection))
+                    {
+                        field.SetFieldErrors();
+                        errors.Add(field.Errors);
+                    }
+
+                    var value = field.SubmittedValue(formCollection);
+                    if (field.IsRequired && value.IsNullOrEmpty())
+                    {
+                        field.Errors = "{0} is a required field".FormatWith(field.Label);
+                        errors.Add(field.Errors);
+                    }
+                };
+
+                if (errors.Count == 0)
+                {
+                    //then insert values
+                    var entryId = Guid.NewGuid();
+
+                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    {
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            foreach (var field in templateView.Fields)
+                            {
+                                var value = field.SubmittedValue(formCollection);
+
+                                //if it's a file, save it to hard drive
+                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                                {
+                                    //var file = Request.Files[field.SubmittedFieldName()];
+                                    //var fileValueObject = value.GetFileValueFromJsonObject();
+
+                                    //if (fileValueObject != null)
+                                    //{
+                                    //    if (UtilityHelper.UseCloudStorage())
+                                    //    {
+                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                                    //    }
+                                    //}
+                                }
+
+
+                                unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
+                            }
+
+                            unitOfWork.Complete();
+                            scope.Complete();
+
+                            result = "success";
+                        }
+                    }
                 }
             }
-        }
 
+            if (errors.Count > 0)
+            {
+                result = errors.ToUnorderedList();
+            }
+            
+
+            return result;
+        }
 
         public string InsertUploadDataToTemplate(byte[] data, int templateID)
         {

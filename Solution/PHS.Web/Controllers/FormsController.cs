@@ -404,74 +404,25 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                IList<string> errors = Enumerable.Empty<string>().ToList();
-                //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
-
+               
                 var template = formManager.FindTemplate(model.TemplateID.Value);
 
                 var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                templateView.AssignInputValues(formCollection);
-                this.InsertValuesIntoTempData(SubmitFields, formCollection);
+                string result = formManager.FillIn(SubmitFields, model, formCollection);
 
-                if (templateView.Fields.Any())
+                if (result.Equals("success"))
                 {
-                    // first validate fields
-                    foreach (var field in templateView.Fields)
-                    {
-                        if (!field.SubmittedValueIsValid(formCollection))
-                        {
-                            field.SetFieldErrors();
-                            errors.Add(field.Errors);
-                            goto Error;
-                        }
-
-                        var value = field.SubmittedValue(formCollection);
-                        if (field.IsRequired && value.IsNullOrEmpty())
-                        {
-                            field.Errors = "{0} is a required field".FormatWith(field.Label);
-                            errors.Add(field.Errors);
-                            goto Error;
-                        }
-                    };
-
-                    //then insert values
-                    var entryId = Guid.NewGuid();
-                    var notificationView = new NotificationEmailViewModel();
-                    notificationView.FormName = templateView.Title;
-                    IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
-                    foreach (var field in templateView.Fields)
-                    {
-                        var value = field.SubmittedValue(formCollection);
-
-                        //if it's a file, save it to hard drive
-                        if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                        {
-                            //var file = Request.Files[field.SubmittedFieldName()];
-                            //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                            //if (fileValueObject != null)
-                            //{
-                            //    if (UtilityHelper.UseCloudStorage())
-                            //    {
-                            //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                            //    }
-                            //    else
-                            //    {
-                            //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                            //    }
-                            //}
-                        }
-
-                        this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
-                        notificationView.Entries = notificationEntries;
-                        formManager.InsertTemplateFieldValue(field, value, entryId);
-                    }
-
                     //send notification
                     if (!templateView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
                     {
+                        var notificationView = new NotificationEmailViewModel();
+                        notificationView.FormName = templateView.Title;
                         notificationView.Email = templateView.NotificationEmail;
-                        this.NotifyViaEmail(notificationView);
+
+                        //TODO if need to use this, need to retrieve the entries
+                        //notificationView.Entries = ??;
+
+                        NotifyViaEmail(notificationView);
                     }
 
                     TempData["success"] = templateView.ConfirmationMessage;
@@ -480,12 +431,13 @@ namespace PHS.Web.Controllers
                         id = template.TemplateID,
                         embed = model.Embed
                     });
-
                 }
-
-                Error:
-                TempData["error"] = errors.ToUnorderedList();
-                return View("FillIn", templateView);
+                
+                else
+                {
+                    TempData["error"] = result;
+                    return View("FillIn", templateView);
+                }
             }
         }
 
@@ -511,28 +463,6 @@ namespace PHS.Web.Controllers
             EmailSender emailSender = new EmailSender("MailTemplates", false);
             var submimssionDetail = this.RenderPartialViewToString("_SubmissionEmailPartial", model);
             emailSender.SendSubmissionNotificationEmail(model.Email, "New Submission for form \"{0}\"".FormatWith(model.FormName), submimssionDetail);
-        }
-
-
-        private void AddValueToDictionary(ref IDictionary<string, TemplateFieldValueViewModel> collection, string key, TemplateFieldValueViewModel value)
-        {
-            if (collection.ContainsKey(key))
-            {
-                var newKey = "";
-                int counter = 2;
-                do
-                {
-                    newKey = "{1} {0}".FormatWith(key, counter);
-                    counter++;
-
-                } while (collection.ContainsKey(newKey));
-
-                collection.Add(newKey, value);
-            }
-            else
-            {
-                collection.Add(key, value);
-            }
         }
 
         private void SaveImageToCloud(HttpPostedFileBase file, string fileName)
