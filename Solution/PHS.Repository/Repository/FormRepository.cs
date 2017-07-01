@@ -161,6 +161,68 @@ namespace PHS.Repository.Repository
             return template;
         }
 
+        public Template CopyTemplate(Template template1)
+        {
+            var template = new Template
+            {
+                Title = template1.Title,
+                FormID = template1.FormID,
+                IsPublic = template1.IsPublic,
+                IsQuestion = template1.IsQuestion,
+                NotificationEmail = template1.NotificationEmail,
+                Theme = template1.Theme,
+                PublicFormType = template1.PublicFormType,
+                Slug = template1.Slug,
+                Status = Constants.TemplateStatus.DRAFT.ToString(),
+                DateAdded = DateTime.UtcNow,
+                ConfirmationMessage = template1.ConfirmationMessage,
+                IsActive = true,
+                Version = template1.Version + 1
+            };
+
+            dbContext.Set<Template>().Add(template);
+
+            foreach(var templateField1 in template1.TemplateFields)
+            {
+                var fField = new TemplateField
+                {
+                    DomId = templateField1.DomId,
+
+                    Label = templateField1.Label,
+                    Text = templateField1.Text.Trim(),
+                    FieldType = templateField1.FieldType.ToString(),
+                    IsRequired = templateField1.IsRequired,
+                    MaxChars = templateField1.MaxChars,
+                    HoverText = templateField1.HoverText.Trim(),
+                    Hint = templateField1.Hint.Trim(),
+                    SubLabel = templateField1.SubLabel.Trim(),
+                    Size = templateField1.Size,
+                    Columns = templateField1.Columns,
+                    Rows = templateField1.Rows,
+                    Options = templateField1.Options,
+                    SelectedOption = templateField1.SelectedOption,
+                    AddOthersOption = templateField1.AddOthersOption,
+                    OthersOption = templateField1.OthersOption,
+                    HelpText = templateField1.HelpText.Trim(),
+                    Validation = templateField1.Validation,
+                    Order = templateField1.Order,
+                    MinimumAge = templateField1.MinimumAge,
+                    MaximumAge = templateField1.MaximumAge,
+                    MaxFilesizeInKb = templateField1.MaxFilesizeInKb,
+                    MinFilesizeInKb = templateField1.MinFilesizeInKb,
+                    ValidFileExtensions = templateField1.ValidFileExtensions,
+                    DateAdded = DateTime.UtcNow,
+                    ImageBase64 = templateField1.ImageBase64,
+                    MatrixRow = templateField1.MatrixRow,
+                    MatrixColumn = templateField1.MatrixColumn
+                };
+
+                template.TemplateFields.Add(fField);
+            }
+
+            return template;
+        }
+
         public void UpdateTemplate(TemplateViewModel model, Template template1)
         {
             if (model == null)

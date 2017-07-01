@@ -137,6 +137,35 @@ namespace PHS.Business.Implementation
             return template;
         }
 
+        public Template FindTemplateToEdit(int templateID)
+        {
+            Template template = new Template();
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                template = unitOfWork.FormRepository.GetTemplate(templateID);
+
+                var templateView = TemplateViewModel.CreateFromObject(template);
+                templateView.Entries = HasSubmissions(templateView).ToList();
+
+                if (templateView.Entries.Any())
+                {
+                    var templates = FindAllTemplatesByFormId(template.FormID);
+                    if (templates.Count() == template.Version)
+                    {
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            template = unitOfWork.FormRepository.CopyTemplate(template);
+
+                            unitOfWork.Complete();
+                            scope.Complete();
+                        }
+                    }
+                }
+            }
+
+            return template;
+        }
+
         public Template FindPreRegistrationForm()
         {
             Template template = new Template();

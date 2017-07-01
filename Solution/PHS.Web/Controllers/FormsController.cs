@@ -131,7 +131,7 @@ namespace PHS.Web.Controllers
             Template template = new Template();
             using (var formManager = new FormManager())
             {
-                 template = formManager.FindTemplate(id);
+                 template = formManager.FindTemplateToEdit(id);
             }
 
             TemplateViewModel model1 = TemplateViewModel.CreateFromObject(template);
