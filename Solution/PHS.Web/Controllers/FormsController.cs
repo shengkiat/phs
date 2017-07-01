@@ -276,32 +276,21 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                var template = formManager.FindTemplate(templateId);
+                string result = formManager.DeleteTemplate(templateId);
 
-                var templateView = TemplateViewModel.CreateFromObject(template);
-
-                if (template != null)
+                if (result.Equals("success"))
                 {
-                    templateView.Entries = formManager.HasSubmissions(templateView).ToList();
-
-                    if (!templateView.Entries.Any())
-                    {
-                        try
-                        {
-                            formManager.DeleteTemplate(templateId);
-                            TempData["success"] = "Template Deleted";
-                            return RedirectToRoute("form-viewtemplate");
-                        }
-                        catch
-                        {
-                            TempData["error"] = "Unable to delete template - Template must have no entries to be able to be deleted";
-                        }
-                    }
+                    TempData["success"] = "Template Deleted";
+                    return RedirectToRoute("form-viewtemplate");
                 }
-            }
 
-            TempData["error"] = "Unable to delete template - Template must have no entries to be able to be deleted";
-            return RedirectToRoute("form-viewtemplate");
+                else
+                {
+                    TempData["error"] = result;
+                    return RedirectToRoute("form-viewtemplate");
+                }
+                
+            }
         }
 
         [HttpPost]

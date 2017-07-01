@@ -97,6 +97,11 @@ namespace PHS.Business.Implementation
                         }
                     }
                 }
+
+                else
+                {
+                    result = "Unable to delete form - invalid id";
+                }
             }
 
             return result;
@@ -165,18 +170,52 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public void DeleteTemplate(int templateID)
+        public string DeleteTemplate(int templateID)
         {
+            string result = null;
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    unitOfWork.FormRepository.DeleteTemplate(templateID);
+                var template = FindTemplate(templateID);
 
-                    unitOfWork.Complete();
-                    scope.Complete();
+                var templateView = TemplateViewModel.CreateFromObject(template);
+
+                if (template != null)
+                {
+                    templateView.Entries = HasSubmissions(templateView).ToList();
+
+                    if (!templateView.Entries.Any())
+                    {
+                        try
+                        {
+                            using (TransactionScope scope = new TransactionScope())
+                            {
+                                unitOfWork.FormRepository.DeleteTemplate(templateID);
+
+                                unitOfWork.Complete();
+                                scope.Complete();
+
+                                result = "success";
+                            }
+                        }
+                        catch
+                        {
+                            result = "Unable to delete template - there is an error deleting the template";
+                        }
+                    }
+
+                    else
+                    {
+                        result = "Unable to delete template - Template must have no entries to be able to be deleted";
+                    }
+                }
+
+                else
+                {
+                    result = "Unable to delete template - invalid id";
                 }
             }
+
+            return result;
         }
 
         public void DeleteTemplateField(int templateFieldID)
