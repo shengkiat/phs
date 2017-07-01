@@ -248,7 +248,7 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var fieldValues = unitOfWork.FormRepository.GetRegistrantsByForm(model.TemplateID.Value);
+                var fieldValues = unitOfWork.FormRepository.GetTemplateFieldValuesByTemplate(model.TemplateID.Value);
                 var values = fieldValues
                              .Select((fv) =>
                              {

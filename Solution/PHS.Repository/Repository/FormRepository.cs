@@ -198,7 +198,7 @@ namespace PHS.Repository.Repository
 
         public IEnumerable<TemplateFieldValueViewModel> GetRegistrantsByForm(TemplateViewModel model)
         {
-            var fieldValues = GetRegistrantsByForm(model.TemplateID.Value);
+            var fieldValues = GetTemplateFieldValuesByTemplate(model.TemplateID.Value);
             var values = fieldValues
                          .Select((fv) =>
                          {
@@ -210,7 +210,7 @@ namespace PHS.Repository.Repository
             return values;
         }
 
-        public List<TemplateFieldValue> GetRegistrantsByForm(int templateId)
+        public List<TemplateFieldValue> GetTemplateFieldValuesByTemplate(int templateId)
         {
             var fieldValues = this.dbContext.Set<TemplateFieldValue>();
 
