@@ -187,76 +187,10 @@ namespace PHS.Web.Controllers
             {
                 using (var manager = new FormManager())
                 {
+                    manager.UpdateTemplate(model, collection, Fields);
+
                     var template = manager.FindTemplate(model.TemplateID.Value);
 
-                    // first update the form metadata
-                    manager.UpdateTemplate(model, template);
-
-                    // then if fields were passed in, update them
-                    if (Fields.Count() > 0)
-                    {
-                        foreach (var kvp in Fields)
-                        {
-
-                            var domId = Convert.ToInt32(kvp.Key);
-                            if (domId >= 0)
-                            {
-                                var fieldType = collection.FormFieldValue(domId, "FieldType");
-                                var fieldId = collection.FormFieldValue(domId, "Id");
-                                var minAge = collection.FormFieldValue(domId, "MinimumAge").IsInt(18);
-                                var maxAge = collection.FormFieldValue(domId, "MaximumAge").IsInt(100);
-
-                                if (minAge >= maxAge)
-                                {
-                                    minAge = 18;
-                                    maxAge = 100;
-                                }
-
-                                var fieldTypeEnum = (Constants.TemplateFieldType)Enum.Parse(typeof(Constants.TemplateFieldType), fieldType.ToUpper());
-
-                                var fieldView = new TemplateFieldViewModel
-                                {
-                                    DomId = Convert.ToInt32(domId),
-                                    FieldType = fieldTypeEnum,
-                                    MaxCharacters = collection.FormFieldValue(domId, "MaxCharacters").IsInt(),
-                                    Text = collection.FormFieldValue(domId, "Text"),
-                                    Label = collection.FormFieldValue(domId, "Label"),
-                                    IsRequired = collection.FormFieldValue(domId, "IsRequired").IsBool(),
-                                    Options = collection.FormFieldValue(domId, "Options"),
-                                    SelectedOption = collection.FormFieldValue(domId, "SelectedOption"),
-                                    AddOthersOption = collection.FormFieldValue(domId, "AddOthersOption").IsBool(),
-                                    OthersOption = collection.FormFieldValue(domId, "OthersOption"),
-                                    HoverText = collection.FormFieldValue(domId, "HoverText"),
-                                    Hint = collection.FormFieldValue(domId, "Hint"),
-                                    MinimumAge = minAge,
-                                    MaximumAge = maxAge,
-                                    HelpText = collection.FormFieldValue(domId, "HelpText"),
-                                    SubLabel = collection.FormFieldValue(domId, "SubLabel"),
-                                    Size = collection.FormFieldValue(domId, "Size"),
-                                    Columns = collection.FormFieldValue(domId, "Columns").IsInt(20),
-                                    Rows = collection.FormFieldValue(domId, "Columns").IsInt(2),
-                                    Validation = collection.FormFieldValue(domId, "Validation"),
-                                    Order = collection.FormFieldValue(domId, "Order").IsInt(1),
-                                    MaxFileSize = collection.FormFieldValue(domId, "MaxFileSize").IsInt(5000),
-                                    MinFileSize = collection.FormFieldValue(domId, "MinFileSize").IsInt(5),
-                                    ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
-                                    ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
-                                    MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
-                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
-                                };
-
-                                if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
-                                {
-                                    fieldView.TemplateFieldID = Convert.ToInt32(fieldId);
-                                }
-
-                                manager.UpdateTemplateFields(template, fieldView);
-
-                            }
-                        }
-                    }
-
-                    //  form.FormFields.Load();
                     var fieldOrderById = template.TemplateFields.Select(ff => new { domid = ff.DomId, id = ff.TemplateFieldID });
 
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = isAutoSave, fieldids = fieldOrderById });
