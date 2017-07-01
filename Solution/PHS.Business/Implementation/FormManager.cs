@@ -59,7 +59,7 @@ namespace PHS.Business.Implementation
 
                 if (form != null)
                 {
-                    templates = FindAllTemplates(formId);
+                    templates = FindAllTemplatesByFormId(formId);
 
                     foreach(var templateView in templates)
                     {
@@ -107,7 +107,7 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        public List<TemplateViewModel> FindAllTemplates(int formId)
+        public List<TemplateViewModel> FindAllTemplatesByFormId(int formId)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
@@ -181,6 +181,7 @@ namespace PHS.Business.Implementation
 
                 if (template != null)
                 {
+
                     templateView.Entries = HasSubmissions(templateView).ToList();
 
                     if (!templateView.Entries.Any())
