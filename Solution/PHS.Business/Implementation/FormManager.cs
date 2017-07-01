@@ -61,7 +61,12 @@ namespace PHS.Business.Implementation
                 {
                     templates = FindAllTemplatesByFormId(formId);
 
-                    foreach(var templateView in templates)
+                    if (templates.Count() == 1)
+                    {
+                        result = "Unable to delete template - Unable to delete template when there is only one remains";
+                    }
+
+                    foreach (var templateView in templates)
                     {
                         templateView.Entries = HasSubmissions(templateView).ToList();
                         if (templateView.Entries.Any())
