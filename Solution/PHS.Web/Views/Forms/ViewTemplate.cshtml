@@ -38,7 +38,7 @@
 
         @if (!f.Fields.Any())
         {                          
-            <a href="@Url.RouteUrl("form-deletetemplate", new {templateId=f.TemplateID.Value})" onclick="return confirm('Are you sure you want to delete this template?');" class="image-bg-link image-bg delete-icon-link" title="Delete Template">&nbsp;</a>
+            <a href="@Url.RouteUrl("form-deletetemplate", new {formId=f.FormID, templateId=f.TemplateID.Value})" onclick="return confirm('Are you sure you want to delete this template?');" class="image-bg-link image-bg delete-icon-link" title="Delete Template">&nbsp;</a>
         }
     </td>
     </tr>

@@ -13,6 +13,7 @@ namespace PHS.DB.ViewModels.Forms
         #region Properties
 
         public int? TemplateID { get; set; }
+        public int FormID { get; set; }
         public string Title { get; set; }
         public string NotificationEmail { get; set; }
         public string Slug { get; set; }
@@ -98,6 +99,7 @@ namespace PHS.DB.ViewModels.Forms
             {
                 Title = template1.Title,
                 TemplateID = template1.TemplateID,
+                FormID = template1.FormID,
                 DateAdded = template1.DateAdded.Value,
                 ConfirmationMessage = template1.ConfirmationMessage,
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
@@ -121,6 +123,7 @@ namespace PHS.DB.ViewModels.Forms
             {
                 Title = "Test Form",
                 TemplateID = 1,
+                FormID = 1,
                 DateAdded = DateTime.Now,
                 ConfirmationMessage = "Thank you for filling this form",
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),

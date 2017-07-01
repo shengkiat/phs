@@ -182,32 +182,43 @@ namespace PHS.Business.Implementation
                 if (template != null)
                 {
 
-                    templateView.Entries = HasSubmissions(templateView).ToList();
-
-                    if (!templateView.Entries.Any())
+                    var templates = FindAllTemplatesByFormId(template.FormID);
+                    if (templates.Count() == 1)
                     {
-                        try
-                        {
-                            using (TransactionScope scope = new TransactionScope())
-                            {
-                                unitOfWork.FormRepository.DeleteTemplate(templateID);
-
-                                unitOfWork.Complete();
-                                scope.Complete();
-
-                                result = "success";
-                            }
-                        }
-                        catch
-                        {
-                            result = "Unable to delete template - there is an error deleting the template";
-                        }
+                        result = "Unable to delete template - Unable to delete template when there is only one remains";
                     }
 
                     else
                     {
-                        result = "Unable to delete template - Template must have no entries to be able to be deleted";
+                        templateView.Entries = HasSubmissions(templateView).ToList();
+
+                        if (!templateView.Entries.Any())
+                        {
+                            try
+                            {
+                                using (TransactionScope scope = new TransactionScope())
+                                {
+                                    unitOfWork.FormRepository.DeleteTemplate(templateID);
+
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+
+                                    result = "success";
+                                }
+                            }
+                            catch
+                            {
+                                result = "Unable to delete template - there is an error deleting the template";
+                            }
+                        }
+
+                        else
+                        {
+                            result = "Unable to delete template - Template must have no entries to be able to be deleted";
+                        }
                     }
+
+                    
                 }
 
                 else

@@ -272,7 +272,7 @@ namespace PHS.Web.Controllers
 
         }
 
-        public ActionResult DeleteTemplate(int templateId)
+        public ActionResult DeleteTemplate(int formId, int templateId)
         {
             using (var formManager = new FormManager())
             {
@@ -281,13 +281,13 @@ namespace PHS.Web.Controllers
                 if (result.Equals("success"))
                 {
                     TempData["success"] = "Template Deleted";
-                    return RedirectToRoute("form-viewtemplate");
+                    return RedirectToRoute("form-viewtemplate", new { formId = formId });
                 }
 
                 else
                 {
                     TempData["error"] = result;
-                    return RedirectToRoute("form-viewtemplate");
+                    return RedirectToRoute("form-viewtemplate", new { formId = formId });
                 }
                 
             }
