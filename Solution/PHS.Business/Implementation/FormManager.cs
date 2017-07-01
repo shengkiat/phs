@@ -22,18 +22,18 @@ namespace PHS.Business.Implementation
 
         public List<Template> FindAllTemplates()
         {
-            List<Template> Forms = new List<Template>();
+            List<Template> templates = new List<Template>();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                Forms = unitOfWork.FormRepository.GetBaseTemplates();
+                templates = unitOfWork.FormRepository.GetBaseTemplates();
 
-                if (Forms != null)
+                if (templates != null)
                 {
-                    return Forms;
+                    return templates;
                 }
             }
 
-            return Forms;
+            return templates;
 
         }
 
@@ -47,6 +47,61 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public string DeleteFormAndTemplate(int formId)
+        {
+            string result = null;
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+                var formView = FormViewModel.CreateFromObject(form);
+
+                List<TemplateViewModel> templates = null;
+
+                if (form != null)
+                {
+                    templates = FindAllTemplates(formId);
+
+                    foreach(var templateView in templates)
+                    {
+                        templateView.Entries = HasSubmissions(templateView).ToList();
+                        if (templateView.Entries.Any())
+                        {
+                            result = "Unable to delete - Templates must have no entries to be able to be deleted";
+                        }
+                    }
+
+                    if (result.IsNullOrEmpty())
+                    {
+                        try
+                        {
+                            using (TransactionScope scope = new TransactionScope())
+                            {
+                                foreach (var templateView in templates)
+                                {
+                                    unitOfWork.FormRepository.DeleteTemplate(templateView.TemplateID.Value);
+                                }
+
+                                unitOfWork.FormRepository.DeleteForm(formId);
+
+                                unitOfWork.Complete();
+                                scope.Complete();
+
+                                result = "success";
+                            }
+
+
+                        }
+                        catch
+                        {
+                            result = "Unable to delete form - there is an error deleting the form and template";
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public List<TemplateViewModel> FindAllTemplates(int formId)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
@@ -56,6 +111,8 @@ namespace PHS.Business.Implementation
                 return templates;
             }
         }
+
+        
 
         public Template FindTemplate(int templateID)
         {

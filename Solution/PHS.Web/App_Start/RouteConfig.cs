@@ -50,7 +50,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-deleteform",
                "Forms/deleteform/{formId}",
-               new { controller = "Forms", action = "deletetemplate", formId = UrlParameter.Optional },
+               new { controller = "Forms", action = "deleteform", formId = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 

@@ -64,32 +64,20 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                var template = formManager.FindTemplate(formId);
+                string result = formManager.DeleteFormAndTemplate(formId);
 
-                var templateView = TemplateViewModel.CreateFromObject(template);
-
-                if (template != null)
+                if (result.Equals("success"))
                 {
-                    templateView.Entries = formManager.HasSubmissions(templateView).ToList();
+                    TempData["success"] = "Form and Template Deleted";
+                    return RedirectToRoute("form-home");
+                }
 
-                    if (!templateView.Entries.Any())
-                    {
-                        try
-                        {
-                            formManager.DeleteTemplate(formId);
-                            TempData["success"] = "Form Deleted";
-                            return RedirectToRoute("form-home");
-                        }
-                        catch
-                        {
-                            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
-                        }
-                    }
+                else
+                {
+                    TempData["error"] = result;
+                    return RedirectToRoute("form-home");
                 }
             }
-
-            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
-            return RedirectToRoute("form-home");
         }
 
         public ActionResult GenerateDoctorMemo(string text)
@@ -302,18 +290,18 @@ namespace PHS.Web.Controllers
                         {
                             formManager.DeleteTemplate(templateId);
                             TempData["success"] = "Template Deleted";
-                            return RedirectToRoute("form-home");
+                            return RedirectToRoute("form-viewtemplate");
                         }
                         catch
                         {
-                            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
+                            TempData["error"] = "Unable to delete template - Template must have no entries to be able to be deleted";
                         }
                     }
                 }
             }
 
-            TempData["error"] = "Unable to delete form - Forms must have no entries to be able to be deleted";
-            return RedirectToRoute("form-home");
+            TempData["error"] = "Unable to delete template - Template must have no entries to be able to be deleted";
+            return RedirectToRoute("form-viewtemplate");
         }
 
         [HttpPost]

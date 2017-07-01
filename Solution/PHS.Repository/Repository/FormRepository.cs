@@ -19,6 +19,11 @@ namespace PHS.Repository.Repository
 
         }
 
+        public Form GetForm(int key)
+        {
+            return dbContext.Set<Form>().Where(u => u.FormID == key).Include(x => x.Templates).FirstOrDefault();
+        }
+
         public Template GetTemplate(int key)
         {
             return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
@@ -336,6 +341,27 @@ namespace PHS.Repository.Repository
             var form = this.dbContext.Set<Template>().First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
 
             return form;
+        }
+
+        public void DeleteForm(int formId)
+        {
+            var form = this.GetForm(formId);
+            this.DeleteForm(form);
+        }
+
+        public void DeleteForm(Form form)
+        {
+            form.IsActive = false;
+
+            //this.DataContext.Forms.Remove(form1);
+            //var fields = form1.FormFields.ToList();
+
+            //foreach (var f in fields)
+            //{
+            //    this.DataContext.FormFields.Remove(f);
+            //}
+
+            //  this.SaveChanges();
         }
 
         public void DeleteTemplate(int templateId)
