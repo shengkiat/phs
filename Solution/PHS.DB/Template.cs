@@ -34,6 +34,7 @@ namespace PHS.DB
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
+        public int Version { get; set; }
     
         public virtual Form Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

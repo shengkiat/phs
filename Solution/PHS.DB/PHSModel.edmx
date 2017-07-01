@@ -131,6 +131,7 @@
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="IsQuestion" Type="bit" Nullable="false" />
+          <Property Name="Version" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TemplateField">
           <Key>
@@ -506,6 +507,7 @@
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.TemplateTemplateField" FromRole="Template" ToRole="TemplateField" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TemplateField">
           <Key>
@@ -712,6 +714,7 @@
           <EntitySetMapping Name="Templates">
             <EntityTypeMapping TypeName="phsModel.Template">
               <MappingFragment StoreEntitySet="Template">
+                <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="IsQuestion" ColumnName="IsQuestion" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />

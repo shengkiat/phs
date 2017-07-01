@@ -29,6 +29,7 @@ namespace PHS.DB.ViewModels.Forms
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
+        public int Version { get; set; }
         public List<SortFieldViewModel> SortFields { get; set; }
         public List<CriteriaFieldViewModel> CriteriaFields { get; set; }
 
@@ -109,6 +110,7 @@ namespace PHS.DB.ViewModels.Forms
                 IsPublic = template1.IsPublic,
                 IsQuestion = template1.IsQuestion,
                 PublicFormType = template1.PublicFormType,
+                Version = template1.Version,
                 Status = (Constants.TemplateStatus)Enum.Parse(typeof(Constants.TemplateStatus), template1.Status),
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()

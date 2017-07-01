@@ -149,7 +149,8 @@ namespace PHS.Repository.Repository
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
-                IsActive = true
+                IsActive = true,
+                Version = 1
             };
 
             //Add(template);
