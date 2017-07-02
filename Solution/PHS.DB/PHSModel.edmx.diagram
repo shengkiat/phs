@@ -10,11 +10,11 @@
         <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="0.75" PointY="9.625" />
         <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="10.75" PointY="4.75" />
         <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="8" PointY="6.625" />
-        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="5.75" PointY="10.75" />
         <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="5.75" PointY="2.875" />
-        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="2.625" />
-        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="8.25" />
         <AssociationConnector Association="phsModel.FK_EventPatient_Event" />
         <AssociationConnector Association="phsModel.FK_Form_Template" />
         <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />

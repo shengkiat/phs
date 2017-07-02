@@ -217,7 +217,7 @@ namespace PHS.Web.Controllers
 
             if (template != null)
             {
-                if (template.Title.Equals("Mega Sorting Station"))
+                if (model.Title.Equals("Mega Sorting Station"))
                 {
                     return PartialView("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));
                 }

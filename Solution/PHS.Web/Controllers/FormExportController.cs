@@ -214,7 +214,7 @@ namespace PHS.Web.Controllers
                 gridView.DataBind();
 
                 Response.ClearContent();
-                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(template.Title.ToSlug()));
+                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(templateView.Title.ToSlug()));
                 Response.ContentType = "application/vnd.ms-excel";
                 StringWriter sw = new StringWriter();
                 HtmlTextWriter htw = new HtmlTextWriter(sw);

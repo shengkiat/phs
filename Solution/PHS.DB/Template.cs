@@ -22,8 +22,6 @@ namespace PHS.DB
     
         public int TemplateID { get; set; }
         public int FormID { get; set; }
-        public string Title { get; set; }
-        public string Slug { get; set; }
         public string Status { get; set; }
         public string ConfirmationMessage { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }

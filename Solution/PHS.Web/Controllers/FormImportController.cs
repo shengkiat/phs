@@ -3,6 +3,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using PHS.Business.Implementation;
 using PHS.DB;
+using PHS.DB.ViewModels.Forms;
 using PHS.Web.Controllers;
 using System;
 using System.Collections.Generic;
@@ -123,11 +124,13 @@ namespace PHS.Web.Controllers
             // Create the file using the FileInfo object
             var file = new FileInfo(outputDir + fileName);
 
-            Template form = new Template();
+            Template template = new Template();
             using (var manager = new FormManager())
             {
-                form = manager.FindTemplate(formid);
+                template = manager.FindTemplate(formid);
             }
+
+            var templateView = TemplateViewModel.CreateFromObject(template);
 
             MemoryStream stream;
 
@@ -135,7 +138,8 @@ namespace PHS.Web.Controllers
             using (var package = new ExcelPackage(file))
             {
                 // add a new worksheet to the empty workbook
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(form.Title);
+                
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(templateView.Title);
 
                 // --------- Data and styling goes here -------------- //
                 // Add some formatting to the worksheet
@@ -145,7 +149,7 @@ namespace PHS.Web.Controllers
                 // Start adding the header
                 // First of all the first row
                 int x = 1;
-                foreach (var field in form.TemplateFields)
+                foreach (var field in template.TemplateFields)
                 {
                     if (field.FieldType == "ADDRESS")
                     {
@@ -191,7 +195,7 @@ namespace PHS.Web.Controllers
 
             return new JsonResult()
             {
-                Data = new { FileGuid = guid, FileName = form.Title + ".xlsx" }
+                Data = new { FileGuid = guid, FileName = templateView.Title + ".xlsx" }
             };
 
         }

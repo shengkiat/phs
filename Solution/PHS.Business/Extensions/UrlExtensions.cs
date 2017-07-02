@@ -7,6 +7,7 @@ namespace PHS.Business.Extensions
 {
     public static class UrlExtensions
     {
+        /*
         public static string FormUrl(this UrlHelper helper, TemplateViewModel model, bool isPreview = false)
         {
             if (!isPreview)
@@ -17,7 +18,7 @@ namespace PHS.Business.Extensions
             {
                 return helper.RouteUrl("form-fillin", new { formName = model.Slug, ipv = true });
             }
-        }
+        }*/
 
         public static string FormPreviewUrl(this UrlHelper helper, TemplateViewModel model)
         {

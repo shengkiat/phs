@@ -119,8 +119,6 @@
           </Key>
           <Property Name="TemplateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FormID" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Slug" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="ConfirmationMessage" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" />
@@ -493,8 +491,6 @@
           </Key>
           <Property Name="TemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FormID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Slug" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmationMessage" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
@@ -505,9 +501,9 @@
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.TemplateTemplateField" FromRole="Template" ToRole="TemplateField" />
-          <Property Name="Version" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TemplateField">
           <Key>
@@ -725,8 +721,6 @@
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="ConfirmationMessage" ColumnName="ConfirmationMessage" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Slug" ColumnName="Slug" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FormID" ColumnName="FormID" />
                 <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
               </MappingFragment>

@@ -26,7 +26,7 @@ namespace PHS.Repository.Repository
 
         public Template GetTemplate(int key)
         {
-            return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.TemplateFields).FirstOrDefault();
+            return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
         public void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView)
@@ -149,10 +149,7 @@ namespace PHS.Repository.Repository
         {
             var template = new Template
             {
-                Title = title,
                 FormID = formId,
-                //Slug = formName.ToSlug(),
-                Slug = title,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
@@ -172,14 +169,12 @@ namespace PHS.Repository.Repository
         {
             var template = new Template
             {
-                Title = template1.Title,
                 FormID = template1.FormID,
                 IsPublic = template1.IsPublic,
                 IsQuestion = template1.IsQuestion,
                 NotificationEmail = template1.NotificationEmail,
                 Theme = template1.Theme,
                 PublicFormType = template1.PublicFormType,
-                Slug = template1.Slug,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = template1.ConfirmationMessage,
@@ -245,7 +240,6 @@ namespace PHS.Repository.Repository
             dbContext.Entry(template1).State = EntityState.Modified;
 
             template1.Status = model.Status.ToString();
-            template1.Title = string.IsNullOrEmpty(model.Title) ? "Registration" : model.Title;
             // form.TabOrder = model.TabOrder; // excluding tab order for first launch
             template1.ConfirmationMessage = model.ConfirmationMessage;
             template1.Theme = model.Theme;
@@ -384,7 +378,7 @@ namespace PHS.Repository.Repository
         public List<TemplateViewModel> GetTemplates(int formId)
         {
             var templateViews = new List<TemplateViewModel>();
-            var templateSet = dbContext.Set<Template>().Where(u => u.FormID == formId).ToList();
+            var templateSet = dbContext.Set<Template>().Where(u => u.FormID == formId).Include(u => u.Form).ToList();
             foreach (var template in templateSet)
             {
                 if (template.IsActive)

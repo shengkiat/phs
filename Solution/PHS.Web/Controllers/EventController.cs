@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Implementation;
 using PHS.DB;
+using PHS.DB.ViewModels.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,8 @@ namespace PHS.Web.Controllers
                // String htmlString = "";
                 foreach (var template in templates)
                 {
-                    htmlString += "<option value=\"" + template.TemplateID + "\">" + template.Title + "</option>";
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+                    htmlString += "<option value=\"" + template.TemplateID + "\">" + templateView.Title + "</option>";
                 }
 
                 htmlString += "</select>";

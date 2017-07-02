@@ -18,7 +18,6 @@ namespace PHS.DB.ViewModels.Forms
         public int FormID { get; set; }
         public string Title { get; set; }
         public string NotificationEmail { get; set; }
-        public string Slug { get; set; }
         public DateTime DateAdded { get; set; }
         public List<TemplateFieldViewModel> Fields { get; set; }
         public Constants.TemplateStatus Status { get; set; }
@@ -75,7 +74,6 @@ namespace PHS.DB.ViewModels.Forms
 
             var templateView = new TemplateViewModel
             {
-                Title = "Registration",
                 Status = Constants.TemplateStatus.DRAFT,
                 TabOrder = 0,
                 Theme = "",
@@ -121,13 +119,12 @@ namespace PHS.DB.ViewModels.Forms
 
             var formView = new TemplateViewModel
             {
-                Title = template1.Title,
+                Title = template1.Form.Title,
                 TemplateID = template1.TemplateID,
                 FormID = template1.FormID,
                 DateAdded = template1.DateAdded.Value,
                 ConfirmationMessage = template1.ConfirmationMessage,
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
-                Slug = template1.Slug,
                 Theme = template1.Theme,
                 NotificationEmail = template1.NotificationEmail,
                 IsPublic = template1.IsPublic,
@@ -146,13 +143,11 @@ namespace PHS.DB.ViewModels.Forms
         {
             var templateView = new TemplateViewModel
             {
-                Title = "Test Form",
                 TemplateID = 1,
                 FormID = 1,
                 DateAdded = DateTime.Now,
                 ConfirmationMessage = "Thank you for filling this form",
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
-                Slug = "test-form",
                 IsPublic = false,
                 IsQuestion = false,
                 NotificationEmail = "",
