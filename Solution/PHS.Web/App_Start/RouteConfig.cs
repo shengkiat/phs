@@ -38,6 +38,13 @@ namespace PHS.Web
                new { controller = "Forms", action = "createForm" }
             );
 
+            // create form
+            routes.MapRoute(
+               "form-editform",
+               "Forms/editForm",
+               new { controller = "Forms", action = "editForm" }
+            );
+
             // view template
             routes.MapRoute(
                "form-viewtemplate",

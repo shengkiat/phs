@@ -10,10 +10,18 @@
     ViewBag.Title = "Welcome to Form Builder";
 }
 
-<div id="dialog">
-    <form id="modalform" method="post">
+<div id="createformdialog">
+    <form id="createform" method="post">
         <label>Name:</label>
         <input id="title" name="title" type="text">
+    </form>
+</div>
+
+<div id="editformdialog">
+    <form id="editform" method="post">
+        <input id="edit-id" name="edit-id" type="hidden">
+        <label>Name:</label>
+        <input id="edit-title" name="edit-title" type="text">
     </form>
 </div>
 
@@ -23,7 +31,7 @@
        <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
 
        <h3 class="welcome-text">Welcome to the Form builder. You have not yet created any Forms. Click the button below to begin</h3>
-       @Html.RouteLink("Create Form", "form-createform", null, new { @class="hyperlink-button light-blue-button welcome-button"})
+        <a href="#" id="createForm" class="hyperlink-button black-button">Add Form</a>
     </div>
 }
 else
@@ -35,7 +43,7 @@ else
       Form, or manage existing Forms from the table below.
     </div>
     <div class="add-form-button-container">
-        <a href="#" id="addForm" class="hyperlink-button black-button">Add Form</a>
+        <a href="#" id="createForm" class="hyperlink-button black-button">Add Form</a>
     </div>
     <table class="main-table">
     <thead>
@@ -48,17 +56,19 @@ else
     @foreach (var f in Model.Forms)
     {
         <tr>
-       <td class="title-column">
-         <span class="title">@f.Title</span><br />
-         <span class="date">@f.DateAdded.Humanize()</span>
-       </td>       
-        <td>          
-          @Html.RouteLink("View Template", "form-viewtemplate", new { formId = f.FormID.Value }, new { @class = "hyperlink-button light-blue-button" })
-       
-          &nbsp;
+           <td class="title-column">
+             <span class="title">@f.Title</span><br />
+             <span class="date">@f.DateAdded.Humanize()</span>
+           </td>       
+            <td>          
+                <a href="#" class="hyperlink-button light-blue-button">Edit Form</a>
+                @Html.RouteLink("View Template", "form-viewtemplate", new { formId = f.FormID.Value }, new { @class = "hyperlink-button green-button" })
+                <input id="FormId" type="hidden" value="@f.FormID.Value" />
+                <input id="FormTitle" type="hidden" value="@f.Title" />
+                &nbsp;
 
-         <a href="@Url.RouteUrl("form-deleteform", new {formId=f.FormID.Value})" onclick="return confirm('Are you sure you want to delete this form?');" class="image-bg-link image-bg delete-icon-link" title="Delete Form">&nbsp;</a>
-        </td>
+                <a href="@Url.RouteUrl("form-deleteform", new {formId=f.FormID.Value})" onclick="return confirm('Are you sure you want to delete this form?');" class="image-bg-link image-bg delete-icon-link" title="Delete Form">&nbsp;</a>
+            </td>
         </tr>
     }
     </tbody>
@@ -70,7 +80,7 @@ else
 @section footerScripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#dialog').dialog({
+            $('#createformdialog').dialog({
                 autoOpen: false,
                 modal: true,
                 title: 'New Form Name',
@@ -80,7 +90,7 @@ else
                             url: '@Url.Action("CreateForm")',
                             timeout: 30000,
                             type: "POST",
-                            data: $('#modalform').serialize(),
+                            data: $('#createform').serialize(),
                             error: function(XMLHttpRequest, textStatus, errorThrown)  {
                                 alert("An error has occurred making the request: " + errorThrown)
                             },
@@ -89,7 +99,7 @@ else
                                 var myActionUrl = '@Url.Action("EditTemplate", "Forms", new { id = "templateId" })';
                                 myActionUrl = myActionUrl.replace("templateId", templateId);
                                 window.location.href = myActionUrl;
-                                $('#dialog').dialog("close");
+                                $('#createformdialog').dialog("close");
                             }
                         })
 
@@ -99,9 +109,58 @@ else
                     }
                 }
             });
-            $('#addForm').click(function () {
-                $('#dialog').dialog('open');
+
+            $('#editformdialog').dialog({
+                autoOpen: false,
+                modal: true,
+                title: 'Edit Form Name',
+                buttons: {
+                    'Save': function () {
+
+                        var jsonObject = {
+                            "id": parseInt(document.getElementById("edit-id").value),
+                            "title": document.getElementById("edit-title").value
+                        };
+
+                        $.ajax({
+                            url: '@Url.Action("EditForm")',
+                            timeout: 30000,
+                            type: "POST",
+                            data: JSON.stringify(jsonObject),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert("An error has occurred making the request: " + errorThrown)
+                            },
+                            success: function (response) {
+                                location.reload();
+                                $('#editformdialog').dialog("close");
+                            }
+                        })
+
+                    },
+                    'Cancel': function () {
+                        $(this).dialog('close');
+                    }
+                }
             });
+
+            $('#createForm').click(function () {
+                $('#createformdialog').dialog('open');
+            });
+
+            $('.light-blue-button').click(function () {
+                $(this).parent().find("#FormId").each(function () {
+                    document.getElementById("edit-id").value = this.value;
+                });
+
+                $(this).parent().find("#FormTitle").each(function () {
+                    document.getElementById("edit-title").value = this.value;
+                });
+               
+                $('#editformdialog').dialog('open');
+            });
+
         });
 </script>
 }

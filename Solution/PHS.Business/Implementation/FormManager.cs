@@ -120,7 +120,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        
+
 
         public Template FindTemplate(int templateID)
         {
@@ -139,6 +139,11 @@ namespace PHS.Business.Implementation
             {
                 Constants.TemplateMode Mode = Constants.TemplateMode.EDIT;
                 Template template = unitOfWork.FormRepository.GetTemplate(templateID);
+
+                if (template == null)
+                {
+                    //result = "Unable to delete template - invalid id";
+                }
 
                 var templateView = TemplateViewModel.CreateFromObject(template);
                 templateView.Entries = HasSubmissions(templateView).ToList();
@@ -311,7 +316,7 @@ namespace PHS.Business.Implementation
                         }
                     }
 
-                    
+
                 }
 
                 else
@@ -371,6 +376,34 @@ namespace PHS.Business.Implementation
 
             return template;
 
+        }
+
+        public string EditForm(int id, string title)
+        {
+            string result = null;
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                Form form = unitOfWork.FormRepository.GetForm(id);
+                if (form != null)
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.FormRepository.UpdateForm(title, form);
+
+                        unitOfWork.Complete();
+                        scope.Complete();
+
+                        result = "success";
+                    }
+                }
+
+                else
+                {
+                    result = "Unable to edit form - invalid id";
+                }
+            }
+
+            return result;
         }
 
         public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)

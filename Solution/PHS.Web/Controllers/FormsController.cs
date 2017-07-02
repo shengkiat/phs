@@ -60,6 +60,37 @@ namespace PHS.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EditForm(int id, string title)
+        {
+            using (var formManager = new FormManager())
+            {
+                try
+                {
+                    string result = formManager.EditForm(id, title);
+
+                    if (result.Equals("success"))
+                    {
+                        TempData["success"] = "Your changes were saved.";
+                        return Json(new { success = false, message = "Your changes were saved." });
+                    }
+
+                    else
+                    {
+                        TempData["error"] = result;
+                        return Json(new { success = false, error = result });
+                    }
+
+                }
+
+                catch
+                {
+                    TempData["error"] = "Unable to save form";
+                    return Json(new { success = false, error = "Unable to save form" });
+                }
+            }
+        }
+
         public ActionResult DeleteForm(int formId)
         {
             using (var formManager = new FormManager())
@@ -197,7 +228,7 @@ namespace PHS.Web.Controllers
             {
                 //TODO: log error
                 // var error = "Unable to save form ".AppendIfDebugMode(ex.ToString());
-                return Json(new { success = false, error = "Unable to save form ", isautosave = isAutoSave });
+                return Json(new { success = false, error = "Unable to save template ", isautosave = isAutoSave });
             }
 
         }

@@ -135,7 +135,16 @@ namespace PHS.Repository.Repository
             return form;
         }
 
+        public void UpdateForm(string title, Form form1)
+        {
+            if (form1 == null)
+            {
+                throw new Exception("Invalid update operation. Template not found.");
+            }
 
+            dbContext.Entry(form1).State = EntityState.Modified;
+            form1.Title = title;
+        }
         public Template CreateNewTemplate(string title, int formId)
         {
             var template = new Template
@@ -225,12 +234,12 @@ namespace PHS.Repository.Repository
         {
             if (model == null)
             {
-                throw new Exception("Invalid update operation. Form view is null.");
+                throw new Exception("Invalid update operation. Template view is null.");
             }
 
             if (template1 == null)
             {
-                throw new Exception("Invalid update operation. Form not found.");
+                throw new Exception("Invalid update operation. Template not found.");
             }
 
             dbContext.Entry(template1).State = EntityState.Modified;
