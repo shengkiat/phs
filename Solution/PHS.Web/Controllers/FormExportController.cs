@@ -100,7 +100,7 @@ namespace PHS.Web.Controllers
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
-            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
             templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
             return View(templateView);
@@ -112,7 +112,7 @@ namespace PHS.Web.Controllers
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
-            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
             templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
             var sortFieldViewModel = new SortFieldViewModel();
@@ -143,7 +143,7 @@ namespace PHS.Web.Controllers
 
             var templateView = TemplateViewModel.CreateFromObject(template);
 
-            templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
             templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
             var criteriaFieldViewModel = new CriteriaFieldViewModel();
@@ -205,7 +205,7 @@ namespace PHS.Web.Controllers
                 var templateView = TemplateViewModel.CreateFromObject(template);
 
                 // formView.Entries = formManager.HasSubmissions(formView).ToList();
-                templateView.Entries = this._formRepo.GetRegistrantsByForm(templateView).ToList();
+                templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
 
                 templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 

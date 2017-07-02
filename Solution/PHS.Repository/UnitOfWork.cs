@@ -31,7 +31,7 @@ namespace PHS.Repository
         public IPersonRepository Persons { get; private set; }
         public IMasterAddressRepository MasterAddress { get; private set; }
 
-        public FormRepository FormRepository { get; private set; }
+        public IFormRepository FormRepository { get; private set; }
 
         public IEventRepository Events { get; private set; }
 

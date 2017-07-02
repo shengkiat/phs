@@ -260,7 +260,7 @@ namespace PHS.Repository.Repository
             }
         }
 
-        public IEnumerable<TemplateFieldValueViewModel> GetRegistrantsByForm(TemplateViewModel model)
+        public IEnumerable<TemplateFieldValueViewModel> GetTemplateFieldValuesByForm(TemplateViewModel model)
         {
             var fieldValues = GetTemplateFieldValuesByTemplate(model.TemplateID.Value);
             var values = fieldValues
