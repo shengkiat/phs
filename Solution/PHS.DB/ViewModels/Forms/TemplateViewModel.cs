@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using PHS.Common;
 using PHS.DB;
-
+using static PHS.Common.Constants;
 
 namespace PHS.DB.ViewModels.Forms
 {
     public class TemplateViewModel
     {
+
         #region Properties
+        private Constants.TemplateMode mode;
 
         public int? TemplateID { get; set; }
         public int FormID { get; set; }
@@ -30,6 +32,27 @@ namespace PHS.DB.ViewModels.Forms
         public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
         public int Version { get; set; }
+        public Constants.TemplateMode Mode
+        {
+            get
+            {
+                return mode;
+            }
+
+            set
+            {
+                mode = value;
+
+                if (mode == TemplateMode.READONLY)
+                {
+                    foreach (var field in Fields)
+                    {
+                        field.Mode = TemplateFieldMode.READONLY;
+                    }
+                }
+               
+            }
+        }
         public List<SortFieldViewModel> SortFields { get; set; }
         public List<CriteriaFieldViewModel> CriteriaFields { get; set; }
 

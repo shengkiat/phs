@@ -114,6 +114,11 @@ namespace PHS.Business.Extensions
             return form["Fields[{0}].{1}".FormatWith(domId, field)];
         }
 
+        public static bool IsEditMode(this TemplateViewModel field)
+        {
+            return field.Mode == Constants.TemplateMode.EDIT;
+        }
+
         public static bool IsEditMode(this TemplateFieldViewModel field)
         {
             return field.Mode == Constants.TemplateFieldMode.EDIT;

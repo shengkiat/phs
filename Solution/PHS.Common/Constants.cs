@@ -26,6 +26,13 @@ namespace PHS.Common
             PUBLISHED
         }
 
+        public enum TemplateMode
+        {
+            EDIT,
+            INPUT,
+            READONLY
+        }
+
         public enum TemplateFieldMode
         {
             EDIT,

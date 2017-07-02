@@ -33,10 +33,10 @@ namespace PHS.DB.ViewModels.Forms
 
         public static FormViewModel CreateFromObject(Form form1)
         {
-            return CreateFromObject(form1, Constants.TemplateFieldMode.EDIT);
+            return CreateFromObject(form1, Constants.TemplateMode.EDIT);
         }
 
-        public static FormViewModel CreateFromObject(Form form1, Constants.TemplateFieldMode mode)
+        public static FormViewModel CreateFromObject(Form form1, Constants.TemplateMode mode)
         {
             if (form1 != null)
             {

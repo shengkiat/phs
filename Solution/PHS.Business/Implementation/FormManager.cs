@@ -12,6 +12,7 @@ using PHS.Business.Extensions;
 using System.Transactions;
 using System.Web.Mvc;
 using PHS.Common;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
@@ -137,12 +138,12 @@ namespace PHS.Business.Implementation
             return template;
         }
 
-        public Template FindTemplateToEdit(int templateID)
+        public TemplateViewModel FindTemplateToEdit(int templateID)
         {
-            Template template = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                template = unitOfWork.FormRepository.GetTemplate(templateID);
+                Constants.TemplateMode Mode = Constants.TemplateMode.EDIT;
+                Template template = unitOfWork.FormRepository.GetTemplate(templateID);
 
                 var templateView = TemplateViewModel.CreateFromObject(template);
                 templateView.Entries = HasSubmissions(templateView).ToList();
@@ -160,10 +161,18 @@ namespace PHS.Business.Implementation
                             scope.Complete();
                         }
                     }
-                }
-            }
 
-            return template;
+                    else
+                    {
+                        Mode = Constants.TemplateMode.READONLY;
+                    }
+                }
+
+                TemplateViewModel model1 = TemplateViewModel.CreateFromObject(template);
+                model1.Mode = Mode;
+
+                return model1;
+            }
         }
 
         public Template FindPreRegistrationForm()

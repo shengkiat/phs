@@ -128,15 +128,11 @@ namespace PHS.Web.Controllers
 
         public ActionResult EditTemplate(int id)
         {
-            Template template = new Template();
             using (var formManager = new FormManager())
             {
-                 template = formManager.FindTemplateToEdit(id);
+                TemplateViewModel model1 = formManager.FindTemplateToEdit(id);
+                return View(model1);
             }
-
-            TemplateViewModel model1 = TemplateViewModel.CreateFromObject(template);
-
-            return View(model1);
         }
 
         public ActionResult GetAddressByZipCode(string zipcode)

@@ -24,7 +24,11 @@
     @using (Ajax.BeginForm("UpdateTemplate", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "Forms.handleBeginSave", OnComplete = "Forms.handleSaveCallback" }, new { id = "main-form" }))
     {
         <div class="left-column span-4">
-            @Html.Partial("_FormToolsMenuPartial", Model)
+            @if (Model.IsEditMode())
+            {
+                @Html.Partial("_FormToolsMenuPartial", Model)
+            }
+            
         </div>
         <div class="center-column span-14">
             <div class="inner-container">
@@ -59,15 +63,18 @@
                         </li>
                     }
                 </ul>
-                <ul id="submit-button-list" class="vertical-list entry-form-list">
-                    <li>
-                        <label class="label">&nbsp;</label>
-                        <div class="input">
-                            <input type="submit" value="Save Changes" class="save-button blue" />
-                            <br /><br />
-                        </div>
-                    </li>
-                </ul>
+                @if (Model.IsEditMode())
+                {
+                    <ul id="submit-button-list" class="vertical-list entry-form-list">
+                        <li>
+                            <label class="label">&nbsp;</label>
+                            <div class="input">
+                                <input type="submit" value="Save Changes" class="save-button blue" />
+                                <br /><br />
+                            </div>
+                        </li>
+                    </ul>
+                }
             </div>
         </div>
         <div class="right-column span-7 last">
