@@ -354,33 +354,15 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Template CreateNewFormAndTemplate()
+        public Template CreateNewFormAndTemplate(string title)
         {
             Template template = new Template();
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    var form = unitOfWork.FormRepository.CreateNewForm();
-                    template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
-
-                    unitOfWork.Complete();
-                    scope.Complete();
-                }
-            }
-
-            return template;
-
-        }
-
-        public Template CreateNewTemplate(int formId)
-        {
-            Template template = new Template();
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
-            {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    template = unitOfWork.FormRepository.CreateNewTemplate(formId);
+                    var form = unitOfWork.FormRepository.CreateNewForm(title);
+                    template = unitOfWork.FormRepository.CreateNewTemplate(title, form.FormID);
 
                     unitOfWork.Complete();
                     scope.Complete();

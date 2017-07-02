@@ -10,6 +10,13 @@
     ViewBag.Title = "Welcome to Form Builder";
 }
 
+<div id="dialog">
+    <form id="modalform" method="post">
+        <label>Name:</label>
+        <input id="title" name="title" type="text">
+    </form>
+</div>
+
 @if (!Model.Forms.Any())
 {
     <div class="select-form-container align-center welcome-container">
@@ -28,7 +35,7 @@ else
       Form, or manage existing Forms from the table below.
     </div>
     <div class="add-form-button-container">
-        @Html.RouteLink("Add Form", "form-createform", null, new { @class="hyperlink-button black-button"})
+        <a href="#" id="addForm" class="hyperlink-button black-button">Add Form</a>
     </div>
     <table class="main-table">
     <thead>
@@ -59,4 +66,44 @@ else
 
     </div>
 }
+
+@section footerScripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dialog').dialog({
+                autoOpen: false,
+                modal: true,
+                title: 'New Form Name',
+                buttons:{
+                    'Create': function () {
+                        $.ajax({
+                            url: '@Url.Action("CreateForm")',
+                            timeout: 30000,
+                            type: "POST",
+                            data: $('#modalform').serialize(),
+                            error: function(XMLHttpRequest, textStatus, errorThrown)  {
+                                alert("An error has occurred making the request: " + errorThrown)
+                            },
+                            success: function (response) {
+                                var templateId = response.id;
+                                var myActionUrl = '@Url.Action("EditTemplate", "Forms", new { id = "templateId" })';
+                                myActionUrl = myActionUrl.replace("templateId", templateId);
+                                window.location.href = myActionUrl;
+                                $('#dialog').dialog("close");
+                            }
+                        })
+
+                    },
+                    'Cancel': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            $('#addForm').click(function () {
+                $('#dialog').dialog('open');
+            });
+        });
+</script>
+}
+
 

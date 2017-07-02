@@ -118,12 +118,11 @@ namespace PHS.Repository.Repository
 
         }
 
-        public Form CreateNewForm()
+        public Form CreateNewForm(string title)
         {
-            string formName = "New Registration Form";
             var form = new Form
             {
-                Title = formName,
+                Title = title,
                 DateAdded = DateTime.UtcNow,
                 IsActive = true
             };
@@ -137,15 +136,14 @@ namespace PHS.Repository.Repository
         }
 
 
-        public Template CreateNewTemplate(int formId)
+        public Template CreateNewTemplate(string title, int formId)
         {
-            string templateName = "New Registration Form";
             var template = new Template
             {
-                Title = templateName,
+                Title = title,
                 FormID = formId,
                 //Slug = formName.ToSlug(),
-                Slug = templateName,
+                Slug = title,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",

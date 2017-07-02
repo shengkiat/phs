@@ -49,15 +49,15 @@ namespace PHS.Web.Controllers
             return View(templateCollectionView);
         }
 
-        public ActionResult CreateForm()
+        [HttpPost]
+        public ActionResult CreateForm(string title)
         {
             Template template;
             using (var formManager = new FormManager())
             {
-                template = formManager.CreateNewFormAndTemplate();
+                template = formManager.CreateNewFormAndTemplate(title);
+                return Json(new { id = template.TemplateID });
             }
-
-            return RedirectToAction("EditTemplate", new { id = template.TemplateID });
         }
 
         public ActionResult DeleteForm(int formId)
