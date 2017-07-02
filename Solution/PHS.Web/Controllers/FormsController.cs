@@ -162,7 +162,16 @@ namespace PHS.Web.Controllers
             using (var formManager = new FormManager())
             {
                 TemplateViewModel model1 = formManager.FindTemplateToEdit(id);
-                return View(model1);
+                if (model1 == null)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                else
+                {
+                    return View(model1);
+                }
+                
             }
         }
 
@@ -326,7 +335,7 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("edittemplate", new { id = template.TemplateID });
+                    return RedirectToAction("Index", "Error");
                 }
 
                 return View(model);
@@ -345,18 +354,19 @@ namespace PHS.Web.Controllers
                 {
                     model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                     model.Embed = embed;
+
+                    foreach (var field in model.Fields)
+                    {
+                        field.EntryId = entryId;
+                    }
+
+                    return View("FillIn", model);
                 }
+
                 else
                 {
-                    return RedirectToAction("edit", new { id = template.TemplateID });
+                    return RedirectToAction("Index", "Error");
                 }
-
-                foreach (var field in model.Fields)
-                {
-                    field.EntryId = entryId;
-                }
-
-                return View("FillIn", model);
             }
         }
 
@@ -482,24 +492,22 @@ namespace PHS.Web.Controllers
                 // return RedirectToLogin();
             }
 
-            TemplateViewModel model = null;
-            // var form = this._formRepo.GetByPrimaryKey(id);
-            Template template;
             using (var formManager = new FormManager())
             {
-                 template = formManager.FindTemplate(id);
+                Template template = formManager.FindTemplate(id);
+
+                if (template != null)
+                {
+                    TemplateViewModel model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Error");
+                }
             }
 
-            if (template != null)
-            {
-                model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-            }
-            else
-            {
-                return RedirectToAction("edittemplate", new { id = template.TemplateID });
-            }
-
-            return View(model);
+            
         }
 
         protected string RenderPartialViewToString(string viewName, object model)

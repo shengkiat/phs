@@ -56,12 +56,13 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 var form = unitOfWork.FormRepository.GetForm(formId);
-                var formView = FormViewModel.CreateFromObject(form);
-
-                List<TemplateViewModel> templates = null;
 
                 if (form != null)
                 {
+                    var formView = FormViewModel.CreateFromObject(form);
+
+                    List<TemplateViewModel> templates = null;
+
                     templates = FindAllTemplatesByFormId(formId);
 
                     foreach (var templateView in templates)
@@ -124,7 +125,7 @@ namespace PHS.Business.Implementation
 
         public Template FindTemplate(int templateID)
         {
-            Template template = new Template();
+            Template template = null;
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 template = unitOfWork.FormRepository.GetTemplate(templateID);
@@ -137,13 +138,14 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                Constants.TemplateMode Mode = Constants.TemplateMode.EDIT;
                 Template template = unitOfWork.FormRepository.GetTemplate(templateID);
 
                 if (template == null)
                 {
-                    //result = "Unable to delete template - invalid id";
+                    return null;
                 }
+
+                Constants.TemplateMode Mode = Constants.TemplateMode.EDIT;
 
                 var templateView = TemplateViewModel.CreateFromObject(template);
                 templateView.Entries = HasSubmissions(templateView).ToList();
@@ -275,10 +277,9 @@ namespace PHS.Business.Implementation
             {
                 var template = FindTemplate(templateID);
 
-                var templateView = TemplateViewModel.CreateFromObject(template);
-
                 if (template != null)
                 {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
 
                     var templates = FindAllTemplatesByFormId(template.FormID);
                     if (templates.Count() == 1)
