@@ -159,6 +159,23 @@ namespace PHS.Business.Implementation
             return template;
         }
 
+        public FormViewModel FindFormToEdit(int formID)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                Form form = unitOfWork.FormRepository.GetForm(formID);
+
+                if (form == null)
+                {
+                    return null;
+                }
+
+                FormViewModel model1 = FormViewModel.CreateFromObject(form);
+
+                return model1;
+            }
+        }
+
         public TemplateViewModel FindTemplateToEdit(int templateID)
         {
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
@@ -373,15 +390,15 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Template CreateNewFormAndTemplate(string title)
+        public Template CreateNewFormAndTemplate(FormViewModel formViewModel)
         {
-            Template template = new Template();
+            Template template = null;
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    var form = unitOfWork.FormRepository.CreateNewForm(title);
-                    template = unitOfWork.FormRepository.CreateNewTemplate(title, form.FormID);
+                    var form = unitOfWork.FormRepository.CreateNewForm(formViewModel);
+                    template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
 
                     unitOfWork.Complete();
                     scope.Complete();
@@ -392,17 +409,17 @@ namespace PHS.Business.Implementation
 
         }
 
-        public string EditForm(int id, string title)
+        public string EditForm(FormViewModel formViewModel)
         {
             string result = null;
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                Form form = unitOfWork.FormRepository.GetForm(id);
+                Form form = unitOfWork.FormRepository.GetForm(formViewModel.FormID.Value);
                 if (form != null)
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        unitOfWork.FormRepository.UpdateForm(title, form);
+                        unitOfWork.FormRepository.UpdateForm(formViewModel, form);
 
                         unitOfWork.Complete();
                         scope.Complete();

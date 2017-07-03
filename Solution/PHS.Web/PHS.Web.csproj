@@ -536,6 +536,8 @@
     <Content Include="Views\Forms\_form-field-sectioncollapse-partial.cshtml" />
     <Content Include="Views\Forms\Index.cshtml" />
     <Content Include="Views\Forms\PublicFillIn.cshtml" />
+    <Content Include="Views\Forms\EditForm.cshtml" />
+    <Content Include="Views\Forms\CreateForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
