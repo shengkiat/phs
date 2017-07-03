@@ -49,36 +49,69 @@ namespace PHS.Web.Controllers
             return View(templateCollectionView);
         }
 
-        [HttpPost]
-        public ActionResult CreateForm(string title)
+        public ActionResult CreateForm()
         {
-            Template template;
+            FormViewModel model1 = FormViewModel.Initialize();
+            return View(model1);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateForm(FormViewModel formViewModel)
+        {
             using (var formManager = new FormManager())
             {
-                template = formManager.CreateNewFormAndTemplate(title);
-                return Json(new { id = template.TemplateID });
+                Template template = formManager.CreateNewFormAndTemplate(formViewModel);
+                if (template != null)
+                {
+                    return RedirectToAction("editTemplate", new { id = template.TemplateID });
+                }
+
+                else
+                {
+                    TempData["error"] = "Error creating new form";
+                    return View();
+                }
+
+            }
+        }
+
+        public ActionResult EditForm(int id)
+        {
+            using (var formManager = new FormManager())
+            {
+                FormViewModel model1 = formManager.FindFormToEdit(id);
+                if (model1 == null)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                else
+                {
+                    return View(model1);
+                }
             }
         }
 
         [HttpPost]
-        public ActionResult EditForm(int id, string title)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditForm(FormViewModel formViewModel)
         {
             using (var formManager = new FormManager())
             {
                 try
                 {
-                    string result = formManager.EditForm(id, title);
+                    string result = formManager.EditForm(formViewModel);
 
                     if (result.Equals("success"))
                     {
-                        TempData["success"] = "Your changes were saved.";
-                        return Json(new { success = false, message = "Your changes were saved." });
+                        return RedirectToAction("Index");
                     }
 
                     else
                     {
                         TempData["error"] = result;
-                        return Json(new { success = false, error = result });
+                        return View();
                     }
 
                 }
@@ -86,7 +119,7 @@ namespace PHS.Web.Controllers
                 catch
                 {
                     TempData["error"] = "Unable to save form";
-                    return Json(new { success = false, error = "Unable to save form" });
+                    return View();
                 }
             }
         }
@@ -305,7 +338,7 @@ namespace PHS.Web.Controllers
                     TempData["error"] = "Cannot publish form until fields have been added.";
                 }
 
-                return RedirectToAction("edit", new { id = template.TemplateID });
+                return RedirectToAction("editTemplate", new { id = template.TemplateID });
             }
         }
 

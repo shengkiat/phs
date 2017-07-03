@@ -1,0 +1,100 @@
+﻿@model PHS.DB.ViewModels.Forms.FormViewModel
+
+@{
+    ViewBag.Title = "Edit Form";
+}
+
+<h2>Edit Form</h2>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#IsPublic").on("change", function () {
+
+            if ($(this).val() == 'true') {
+                $("#PublicType").show();
+            } else {
+                $("#PublicType").hide();
+            }
+
+        });
+    });
+
+</script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>FormViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.FormID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsPublic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+
+                    var listItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "True", Value = "true"},
+                            new SelectListItem {Text = "False", Value = "false"}
+                        };
+
+                    @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty)
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PublicFormType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+
+                    var listItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Pre Registration", Value = "PRE-REGISTRATION"},
+                            new SelectListItem {Text = "Out Reach", Value = "OUTREACH"}
+                        };
+
+                    @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty)
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

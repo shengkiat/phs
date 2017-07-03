@@ -13,9 +13,9 @@ namespace PHS.Repository.Interface
         Form GetPublicForm(string slug);
         Template GetTemplate(int key);
         void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView);
-        Form CreateNewForm(string title);
-        void UpdateForm(string title, Form form1);
-        Template CreateNewTemplate(string title, int formId);
+        Form CreateNewForm(FormViewModel formViewModel);
+        void UpdateForm(FormViewModel formViewModel, Form form1);
+        Template CreateNewTemplate(int formId);
         Template CopyTemplate(Template template1);
         void UpdateTemplate(TemplateViewModel model, Template template1);
         void DeleteTemplateField(int id);

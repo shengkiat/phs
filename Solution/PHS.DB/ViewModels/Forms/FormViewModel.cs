@@ -26,10 +26,7 @@ namespace PHS.DB.ViewModels.Forms
         public static FormViewModel Initialize()
         {
 
-            var formView = new FormViewModel
-            {
-                Title = "Registration",
-            };
+            var formView = new FormViewModel();
 
             return formView;
         }

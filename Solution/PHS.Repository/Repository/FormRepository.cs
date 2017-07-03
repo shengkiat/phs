@@ -123,11 +123,14 @@ namespace PHS.Repository.Repository
 
         }
 
-        public Form CreateNewForm(string title)
+        public Form CreateNewForm(FormViewModel formViewModel)
         {
             var form = new Form
             {
-                Title = title,
+                Title = formViewModel.Title,
+                Slug = formViewModel.Slug,
+                IsPublic = formViewModel.IsPublic,
+                PublicFormType = formViewModel.PublicFormType,
                 DateAdded = DateTime.UtcNow,
                 IsActive = true
             };
@@ -140,7 +143,7 @@ namespace PHS.Repository.Repository
             return form;
         }
 
-        public void UpdateForm(string title, Form form1)
+        public void UpdateForm(FormViewModel formViewModel, Form form1)
         {
             if (form1 == null)
             {
@@ -148,9 +151,12 @@ namespace PHS.Repository.Repository
             }
 
             dbContext.Entry(form1).State = EntityState.Modified;
-            form1.Title = title;
+            form1.Title = formViewModel.Title;
+            form1.IsPublic = formViewModel.IsPublic;
+            form1.Slug = formViewModel.Slug;
+            form1.PublicFormType = form1.PublicFormType;
         }
-        public Template CreateNewTemplate(string title, int formId)
+        public Template CreateNewTemplate(int formId)
         {
             var template = new Template
             {
