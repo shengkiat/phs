@@ -129,8 +129,6 @@
           <Property Name="NotificationEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="EventID" Type="int" />
-          <Property Name="IsPublic" Type="bit" Nullable="false" />
-          <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="IsQuestion" Type="bit" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
         </EntityType>
@@ -423,13 +421,13 @@
           </Key>
           <Property Name="FormID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Templates" Relationship="phsModel.FK_Form_Template" FromRole="Form" ToRole="Template" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Form" ToRole="Modality" />
-          <Property Name="Slug" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
-          <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MasterAddress">
           <Key>
@@ -504,8 +502,6 @@
           <Property Name="NotificationEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="EventID" Type="Int32" />
-          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
-          <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
           <Property Name="Version" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
@@ -646,11 +642,11 @@
           <EntitySetMapping Name="Forms">
             <EntityTypeMapping TypeName="phsModel.Form">
               <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="Slug" ColumnName="Slug" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FormID" ColumnName="FormID" />
               </MappingFragment>
@@ -721,8 +717,6 @@
               <MappingFragment StoreEntitySet="Template">
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="IsQuestion" ColumnName="IsQuestion" />
-                <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
-                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NotificationEmail" ColumnName="NotificationEmail" />

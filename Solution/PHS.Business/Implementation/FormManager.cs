@@ -134,6 +134,19 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public Template FindPreRegistrationForm()
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                Form form = unitOfWork.FormRepository.GetPreRegistrationForm();
+                if (form != null)
+                {
+                    return form.Templates.OrderBy(f => f.Version).First();
+                }
+                return null;
+            }
+        }
+
 
         public Template FindTemplate(int templateID)
         {
@@ -187,18 +200,6 @@ namespace PHS.Business.Implementation
 
                 return model1;
             }
-        }
-
-        public Template FindPreRegistrationForm()
-        {
-            Template template = new Template();
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
-            {
-                template = unitOfWork.FormRepository.GetPreRegistrationForm();
-            }
-
-            return template;
-
         }
 
         public void UpdateTemplate(TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)

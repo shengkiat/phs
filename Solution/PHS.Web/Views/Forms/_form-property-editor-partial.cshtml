@@ -50,6 +50,48 @@
                     @Html.HiddenFor(m => m.Status)
                 </td>
             </tr>
+            <tr>
+                <td class="label">
+                    <label class="label">
+                        Public
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        var listItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "True", Value = "true"},
+                            new SelectListItem {Text = "False", Value = "false"}
+                        };
+
+                        @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty, new { @disabled = "disabled" })
+                    }
+
+                </td>
+            </tr>
+
+            <tr id="PublicType">
+                <td class="label">
+                    <label class="label">
+                        Public Form Type
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        var listItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Pre Registration", Value = "PRE-REGISTRATION"},
+                            new SelectListItem {Text = "Out Reach", Value = "OUTREACH"}
+                        };
+
+                        @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty, new { @disabled = "disabled" })
+                    }
+
+                </td>
+            </tr>
+
             @*<tr>
                 <td class="label">
                     <label class="label">
@@ -75,49 +117,7 @@
                 <td class="input">
                     @Html.TextBoxFor(m => m.NotificationEmail)
                 </td>
-            </tr>
-
-            <tr>
-                <td class="label">
-                    <label class="label">
-                        Public
-                    </label>
-                </td>
-                <td class="input">
-                    @{
-
-                        var listItems = new List<SelectListItem>()
-                        {
-                            new SelectListItem {Text = "True", Value = "true"},
-                            new SelectListItem {Text = "False", Value = "false"}
-                        };
-
-                        @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty)
-                    }
-
-                </td>
-            </tr>
-
-            <tr id="PublicType">
-                <td class="label">
-                    <label class="label">
-                        Public Form Type
-                    </label>
-                </td>
-                <td class="input">
-                    @{
-
-                        var listItems1 = new List<SelectListItem>()
-                        {
-                            new SelectListItem {Text = "Pre Registration", Value = "PRE-REGISTRATION"},
-                            new SelectListItem {Text = "Out Reach", Value = "OUTREACH"}
-                        };
-
-                        @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty)
-                    }
-
-                </td>
-            </tr>
+            </tr> 
 
             <tr>
                 <td class="label">

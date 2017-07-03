@@ -175,11 +175,9 @@ namespace PHS.Repository.Repository
             var template = new Template
             {
                 FormID = template1.FormID,
-                IsPublic = template1.IsPublic,
                 IsQuestion = template1.IsQuestion,
                 NotificationEmail = template1.NotificationEmail,
                 Theme = template1.Theme,
-                PublicFormType = template1.PublicFormType,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = template1.ConfirmationMessage,
@@ -248,8 +246,6 @@ namespace PHS.Repository.Repository
             // form.TabOrder = model.TabOrder; // excluding tab order for first launch
             template1.ConfirmationMessage = model.ConfirmationMessage;
             template1.Theme = model.Theme;
-            template1.IsPublic = model.IsPublic;
-            template1.PublicFormType = model.PublicFormType;
             template1.IsQuestion = model.IsQuestion;
             template1.NotificationEmail = model.NotificationEmail;
            // this.SaveChanges();
@@ -404,10 +400,10 @@ namespace PHS.Repository.Repository
         }
 
 
-        public Template GetPreRegistrationForm(int year = -1)
+        public Form GetPreRegistrationForm(int year = -1)
         {
             
-            var form = this.dbContext.Set<Template>().First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
+            var form = this.dbContext.Set<Form>().First(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION"));
 
             return form;
         }

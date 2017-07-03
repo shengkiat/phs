@@ -29,8 +29,6 @@ namespace PHS.DB
         public string NotificationEmail { get; set; }
         public bool IsActive { get; set; }
         public Nullable<int> EventID { get; set; }
-        public bool IsPublic { get; set; }
-        public string PublicFormType { get; set; }
         public bool IsQuestion { get; set; }
         public int Version { get; set; }
     

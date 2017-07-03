@@ -23,11 +23,11 @@ namespace PHS.DB
     
         public int FormID { get; set; }
         public string Title { get; set; }
-        public Nullable<System.DateTime> DateAdded { get; set; }
-        public bool IsActive { get; set; }
         public string Slug { get; set; }
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public Nullable<System.DateTime> DateAdded { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Template> Templates { get; set; }

@@ -29,6 +29,7 @@ namespace PHS.DB.ViewModels.Forms
         public bool Embed { get; set; }
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public string Slug { get; set; }
         public bool IsQuestion { get; set; }
         public int Version { get; set; }
         public Constants.TemplateMode Mode
@@ -119,7 +120,7 @@ namespace PHS.DB.ViewModels.Forms
 
             var formView = new TemplateViewModel
             {
-                Title = template1.Form.Title,
+                
                 TemplateID = template1.TemplateID,
                 FormID = template1.FormID,
                 DateAdded = template1.DateAdded.Value,
@@ -127,11 +128,14 @@ namespace PHS.DB.ViewModels.Forms
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
                 Theme = template1.Theme,
                 NotificationEmail = template1.NotificationEmail,
-                IsPublic = template1.IsPublic,
                 IsQuestion = template1.IsQuestion,
-                PublicFormType = template1.PublicFormType,
                 Version = template1.Version,
                 Status = (Constants.TemplateStatus)Enum.Parse(typeof(Constants.TemplateStatus), template1.Status),
+
+                Title = template1.Form.Title,
+                IsPublic = template1.Form.IsPublic,
+                Slug = template1.Form.Slug,
+                PublicFormType = template1.Form.PublicFormType,
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };

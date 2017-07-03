@@ -26,7 +26,7 @@ namespace PHS.Repository.Interface
         List<FormViewModel> GetForms();
         List<TemplateViewModel> GetTemplates(int formId);
         List<Template> GetBaseTemplates();
-        Template GetPreRegistrationForm(int year = -1);
+        Form GetPreRegistrationForm(int year = -1);
         void DeleteForm(int formId);
         void DeleteForm(Form form);
         void DeleteTemplate(int templateId);
