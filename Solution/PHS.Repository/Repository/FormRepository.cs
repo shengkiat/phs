@@ -29,6 +29,11 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
+        public Form GetPublicForm(string slug)
+        {
+            return dbContext.Set<Form>().Where(u => u.IsPublic == true && (slug.Equals(u.Slug) || slug.Equals("" + u.FormID))).Include(x => x.Templates).FirstOrDefault();
+        }
+
         public void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView)
         {
             if (template1 == null)

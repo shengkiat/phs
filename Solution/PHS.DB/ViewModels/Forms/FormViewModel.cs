@@ -14,6 +14,9 @@ namespace PHS.DB.ViewModels.Forms
 
         public int? FormID { get; set; }
         public string Title { get; set; }
+        public string Slug { get; set; }
+        public bool IsPublic { get; set; }
+        public string PublicFormType { get; set; }
         public DateTime DateAdded { get; set; }
 
         #endregion
@@ -54,6 +57,9 @@ namespace PHS.DB.ViewModels.Forms
             {
                 Title = form1.Title,
                 FormID = form1.FormID,
+                Slug = form1.Slug,
+                IsPublic = form1.IsPublic,
+                PublicFormType = form1.PublicFormType,
                 DateAdded = form1.DateAdded.Value
             };
 

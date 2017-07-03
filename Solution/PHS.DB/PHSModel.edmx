@@ -46,6 +46,9 @@
           </Key>
           <Property Name="FormID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -424,6 +427,9 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Templates" Relationship="phsModel.FK_Form_Template" FromRole="Form" ToRole="Template" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Form" ToRole="Modality" />
+          <Property Name="Slug" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MasterAddress">
           <Key>
@@ -640,6 +646,9 @@
           <EntitySetMapping Name="Forms">
             <EntityTypeMapping TypeName="phsModel.Form">
               <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="Title" ColumnName="Title" />

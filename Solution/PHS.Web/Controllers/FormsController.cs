@@ -319,6 +319,28 @@ namespace PHS.Web.Controllers
         }
 
         //[SSl]
+        public ActionResult PublicFillIn(string slug, bool embed = false)
+        {
+            using (var formManager = new FormManager())
+            {
+                var template = formManager.FindPublicTemplate(slug);
+
+                if (template != null)
+                {
+                    TemplateViewModel model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+               
+            }
+        }
+
+        //[SSl]
         public ActionResult FillIn(int id, bool embed = false)
         {
             using (var formManager = new FormManager())

@@ -15,12 +15,19 @@ namespace PHS.Web
 
             //** BEGIN FORM BUILDER ROUTES **//
 
-            // FillIn
+            // PreRegistration
             routes.MapRoute(
                "form-preregistration",
                "registration/{id}",
                defaults: new { controller = "Forms", action = "PreRegistration", id = UrlParameter.Optional }
 
+            );
+
+            // PreRegistration
+            routes.MapRoute(
+               "form-public",
+               "public/{slug}/{embed}",
+               new { controller = "Forms", action = "publicFillIn", slug = UrlParameter.Optional, embed = UrlParameter.Optional }
             );
 
 

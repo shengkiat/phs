@@ -121,6 +121,18 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public Template FindPublicTemplate(string slug)
+        {
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                Form form = unitOfWork.FormRepository.GetPublicForm(slug);
+                if (form != null)
+                {
+                    return form.Templates.OrderBy(f => f.Version).First();
+                }
+                return null;
+            }
+        }
 
 
         public Template FindTemplate(int templateID)
