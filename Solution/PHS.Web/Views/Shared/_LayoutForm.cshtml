@@ -6,10 +6,10 @@
 @{
     var menus = new[]
                 {
-                   new { LinkText="User Management", ActionName="ManageUser",ControllerName="Admin",Roles="A"  },
-                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Roles="A"  },
-                   new { LinkText="Form Management", ActionName="Index",ControllerName="Forms",Roles="A"  },
-                   new { LinkText="Event Helper", ActionName="SearchPatient",ControllerName="PatientJourney",Roles="A,V,D"  },
+                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="A"  },
+                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="A"  },
+                   new { LinkText="Form Management", ActionName="Index",ControllerName="Forms",Area="",Roles="A"  },
+                   new { LinkText="Event Helper", ActionName="SearchPatient",ControllerName="PatientJourney",Area="",Roles="A,V,D"  },
 
                 };
 }
@@ -269,7 +269,7 @@
                                 <li>
                                     <i class="fa fa-home fa-2x"></i>
                                     <span class="nav-text">
-                                        @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)
+                                        @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
                                     </span>
                                 </li>
 
@@ -277,7 +277,7 @@
                             <li>
                                 <i class="fa fa-home fa-2x"></i>
                                 <span class="nav-text">
-                                    @Html.ActionLink("Logout", "LogOff", "Admin")
+                                    @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })
                                 </span>
                             </li>
                         }
@@ -301,10 +301,10 @@
                                 select item;
                     foreach (var link in links)
                     {
-                        <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
                     }
 
-                    <li> @Html.ActionLink("Logout", "LogOff", "Admin")</li>
+                    <li> @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })</li>
                 }
             </ul>
         </div>

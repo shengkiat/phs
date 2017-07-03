@@ -1,0 +1,118 @@
+﻿@model IEnumerable<PHS.DB.Person>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+    {
+    <p>
+        <b>Search by:</b>
+        User Id:   @Html.RadioButton("SearchBy", "UserId", true)
+        Name:      @Html.RadioButton("SearchBy", "Name") <br />
+        @Html.TextBox("SearchString")
+        <button type="submit" class="btn btn-basic" value="Search">
+            <span class="glyphicon glyphicon-search"></span> Search
+        </button>
+        @Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
+        <div class="dropdown inline-block">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Other Actions
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Reset Password</a></li>
+                <li><a href="#">Activate</a></li>
+                <li><a href="#">Inactivate</a></li>
+            </ul>
+        </div>
+    </p>
+    }
+</p>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactNumber)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td class="vcenter">
+                            <input type="checkbox" id=item.PersonID value="1" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Username, "UserDetails", new { userid = item.PersonID })
+                        </td>
+                        <td>
+                            @if (item.IsActive == true)
+                            {
+                                <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
+                            }
+                            else
+                            {
+                                <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                        " ",
+                        "EditUser",
+                        "User",
+                        new { userid = item.PersonID },
+                        new
+                        {
+                            @class = "glyphicon glyphicon-edit"
+                        })
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                        " ",
+                        "DeleteUser",
+                        "User",
+                        new { userid = item.PersonID },
+                        new
+                        {
+                            @onclick = "return confirm('Are you sure you want to delete this User');",
+                            @class = "glyphicon glyphicon-trash"
+                        })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

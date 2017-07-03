@@ -6,10 +6,10 @@
 @{
     var menus = new[]
                 {
-                   new { LinkText="User Management", ActionName="ManageUser",ControllerName="Admin",Roles="A"  },
-                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Roles="A"  },
-                   new { LinkText="Form Management", ActionName="Index",ControllerName="Forms",Roles="A"  },
-                   new { LinkText="Event Helper", ActionName="SearchPatient",ControllerName="PatientJourney",Roles="A,V,D"  },
+                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="A"  },
+                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="A"  },
+                   new { LinkText="Form Management", ActionName="Index",ControllerName="Forms",Area="",Roles="A"  },
+                   new { LinkText="Event Helper", ActionName="SearchPatient",ControllerName="PatientJourney",Area="",Roles="A,V,D"  },
 
                 };
 }
@@ -230,6 +230,10 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/form-builder/fbuilder.global.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/bootstrap-datetimepicker.js")"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!--Css
     <link type="text/css" href="/Content/css/reset.css" rel="stylesheet" />-->
@@ -309,7 +313,7 @@
                                 <a href="#">
                                     <i class="fa fa-home fa-2x"></i>
                                     <span class="nav-text">
-                                        
+
                                     </span>
                                 </a>
                             </li>
@@ -323,19 +327,18 @@
                                             select item;
                                 foreach (var link in links)
                                 {
-                                    <li>                         
-                                            <i class="fa fa-home fa-2x"></i>
-                                            <span class="nav-text">
-                                                @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)
-                                            </span>                              
-                                    </li>                                  
-
-                                }
-                                <li>                          
+                                    <li>
                                         <i class="fa fa-home fa-2x"></i>
                                         <span class="nav-text">
-                                            @Html.ActionLink("Logout", "LogOff", "Admin")
-                                        </span>                                    
+                                            @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
+                                        </span>
+                                    </li>
+                                }
+                                <li>
+                                    <i class="fa fa-home fa-2x"></i>
+                                    <span class="nav-text">
+                                        @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })
+                                    </span>
                                 </li>
                             }
                         </ul>
@@ -358,10 +361,10 @@
                                 select item;
                     foreach (var link in links)
                     {
-                        <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
                     }
 
-                    <li> @Html.ActionLink("Logout", "LogOff", "Admin")</li>
+                    <li> @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })</li>
                 }
             </ul>
         </div>

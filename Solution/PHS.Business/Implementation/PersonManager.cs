@@ -168,7 +168,7 @@ namespace PHS.Business.Implementation
 
                     foreach (var person in persons)
                     {
-                        if (person.IsActive)
+                        //if (person.IsActive)
                         {
                             list.Add(person);
                         }
@@ -228,7 +228,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive);
+                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) /*&& u.IsActive*/);
 
                     if (users != null && users.Any())
                     {
@@ -250,6 +250,42 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public IList<Person> GetPersonsByUserID(string userId, out string message)
+        {
+            IList<Person> persons = null;
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userId.Trim()))
+            {
+                message = "User ID is empty!";
+                return null;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userId) /*&& u.IsActive*/);
+
+                    if (users != null && users.Any())
+                    {
+                        message = string.Empty;
+                        persons = users.ToList();
+
+                        return persons;
+                    }
+                    else
+                    {
+                        message = "User not found!";
+                        return persons;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
+                return persons;
+            }
+        }
+
         public IList<Person> GetPersonsByFullName(string fullName, out string message)
         {
             IList<Person> persons = null;
@@ -262,7 +298,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && u.IsActive);
+                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) /*&& u.IsActive*/);
 
                     if (users != null && users.Any())
                     {
@@ -463,6 +499,4 @@ namespace PHS.Business.Implementation
 
         }
     }
-
-
 }

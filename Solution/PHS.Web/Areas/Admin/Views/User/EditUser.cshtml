@@ -1,0 +1,94 @@
+﻿@model PHS.DB.Person
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Edit User</h3>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @if (TempData["Message"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
+        }
+        <div style="color: red">@ViewBag.error</div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="radio-inline">
+                    @Html.RadioButtonFor(model => model.Role, "V") Volunteer
+                </div>
+                <div class="radio-inline">
+                    @Html.RadioButtonFor(model => model.Role, "D") Doctor
+                </div>
+                <div class="radio-inline">
+                    @Html.RadioButtonFor(model => model.Role, "A") Admin
+                </div>
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div hidden="hidden">
+            @Html.EditorFor(model => model.PersonID)
+            @Html.EditorFor(model => model.Role)
+            @Html.EditorFor(model => model.IsActive)
+            @Html.EditorFor(model => model.CreatedDateTime)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="BtnEditUser" value="Save" class="button-common" style="border-radius: 17px;"
+                       formaction="EditUser" formmethod="post" />
+                <input type="submit" name="BtnResetPwd" value="Reset Passowrd" class="button-common" style="border-radius: 17px; width: 150px; "
+                       formaction="ResetPassword" formmethod="post" />
+                <input type="submit" name="BtnCancel" value="Cancel" class="cancel button-common" style="border-radius: 17px;"
+                       formaction="Index" formmethod="get" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
