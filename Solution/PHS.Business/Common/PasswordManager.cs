@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Web.Security;
 
 namespace PHS.Business.Common
 {
@@ -30,9 +31,9 @@ namespace PHS.Business.Common
 
         public static bool ValidatePassword(string password, string correctHash, string correctSalt)
         {
-           
+
             byte[] salt = Convert.FromBase64String(correctSalt);
-         
+
             byte[] hash = Convert.FromBase64String(correctHash);
 
             byte[] testHash = PBKDF2(password, salt, PBKDF2_ITERATIONS, hash.Length);
@@ -59,6 +60,12 @@ namespace PHS.Business.Common
             string regexPattern = @"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
             return Regex.IsMatch(plainPassword, regexPattern);
+        }
+
+        public static string GeneratePassword()
+        {
+            string password = Membership.GeneratePassword(12, 2);
+            return password;
         }
     }
 }

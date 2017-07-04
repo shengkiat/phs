@@ -16,7 +16,7 @@ namespace PHS.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //LogUserOut();
+            LogUserOut();
             return Redirect("~/Home/login");
         }
 
@@ -25,8 +25,8 @@ namespace PHS.Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Login()
         {
-          //  LogUserOut();
-         //   GetErrorAneMessage();
+            LogUserOut();
+            GetErrorAneMessage();
             return View();
         }
 

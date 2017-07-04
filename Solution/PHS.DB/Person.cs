@@ -26,5 +26,6 @@ namespace PHS.DB
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
+        public bool UsingTempPW { get; set; }
     }
 }
