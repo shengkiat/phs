@@ -9,6 +9,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.SessionState;
 using Microsoft.Owin;
+using ExpressiveAnnotations.MvcUnobtrusive.Providers;
 
 namespace PHS.Web
 {
@@ -22,6 +23,12 @@ namespace PHS.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
+            ModelValidatorProviders.Providers.Remove(
+                ModelValidatorProviders.Providers
+                .FirstOrDefault(x => x is DataAnnotationsModelValidatorProvider));
+            ModelValidatorProviders.Providers.Add(
+                new ExpressiveAnnotationsModelValidatorProvider());
 
             log4net.Config.XmlConfigurator.Configure();
         }

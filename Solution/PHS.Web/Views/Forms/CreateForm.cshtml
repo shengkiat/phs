@@ -6,6 +6,11 @@
 
 <h2>Create Form</h2>
 
+<script src="/Scripts/jquery.validate.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script src="/Scripts/expressive.annotations.validate.min.js"></script>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -62,6 +67,7 @@
                         };
 
                     @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty)
+                    @Html.ValidationMessageFor(model => model.IsPublic, "", new { @class = "text-danger" })
                 }
             </div>
         </div>
@@ -88,6 +94,7 @@
                         };
 
                     @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty)
+                    @Html.ValidationMessageFor(model => model.PublicFormType, "", new { @class = "text-danger" })
                 }
             </div>
         </div>

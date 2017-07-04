@@ -6,6 +6,7 @@ using PHS.Common;
 using PHS.DB;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using ExpressiveAnnotations.Attributes;
 
 namespace PHS.DB.ViewModels.Forms
 {
@@ -21,13 +22,15 @@ namespace PHS.DB.ViewModels.Forms
         public string Title { get; set; }
 
         [StringLength(50)]
-        //[RequiredIf("Phone == null", ErrorMessage = "At least email or phone should be provided.")]
+        [RequiredIf("IsPublic == true", ErrorMessage = "Slug is required.")]
         public string Slug { get; set; }
 
         [DisplayName("Is Public")]
+        [Required(ErrorMessage = "Is Public is required")]
         public bool IsPublic { get; set; }
 
         [DisplayName("Public Form Type")]
+        [RequiredIf("IsPublic == true", ErrorMessage = "Public Form Type is required.")]
         public string PublicFormType { get; set; }
 
         [ScaffoldColumn(false)]
