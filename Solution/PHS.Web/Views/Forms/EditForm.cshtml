@@ -10,12 +10,22 @@
 
     $(document).ready(function () {
 
+        if ($("#IsPublic").val() == 'true') {
+            $("#PublicFormType").show();
+            $("#Slug").show();
+        } else {
+            $("#PublicFormType").hide();
+            $("#Slug").hide();
+        }
+
         $("#IsPublic").on("change", function () {
 
             if ($(this).val() == 'true') {
-                $("#PublicType").show();
+                $("#PublicFormType").show();
+                $("#Slug").show();
             } else {
-                $("#PublicType").hide();
+                $("#PublicFormType").hide();
+                $("#Slug").hide();
             }
 
         });
@@ -29,7 +39,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>FormViewModel</h4>
+        <h4>@Model.Title</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
