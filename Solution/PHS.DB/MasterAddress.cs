@@ -11,9 +11,11 @@ namespace PHS.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class MasterAddress
     {
+        [Key]
         public string PostalCode { get; set; }
         public string BuildingName { get; set; }
         public string StreetNumber { get; set; }

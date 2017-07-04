@@ -31,6 +31,16 @@ namespace PHS.Repository.Context
            // ObjectContext.SavingChanges += OnSavingChanges;
         }
 
+        public PHSContext(DbConnection connection)
+            : base(connection, true)
+        {
+            Configuration.LazyLoadingEnabled = false;
+
+            IsAuditEnabled = true;
+
+            // ObjectContext.SavingChanges += OnSavingChanges;
+        }
+
         public PHSContext(Person person) : this()
         {
             this.person = person;

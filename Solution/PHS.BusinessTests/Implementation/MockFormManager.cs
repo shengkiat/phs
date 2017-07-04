@@ -7,9 +7,16 @@ namespace PHS.BusinessTests.Implementation
 {
     public class MockFormManager : FormManager
     {
-        public override IUnitOfWork CreateUnitOfWork()
+        private IUnitOfWork _unitOfWork;
+
+        public MockFormManager(IUnitOfWork unitOfWork)
         {
-            return new UnitOfWork(new PHSContext());
+            _unitOfWork = unitOfWork;
+        }
+
+        protected override IUnitOfWork CreateUnitOfWork()
+        {
+            return _unitOfWork;
         }
     }
 
