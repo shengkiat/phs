@@ -395,14 +395,23 @@ namespace PHS.Business.Implementation
             Template template = null;
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
+                if (!formViewModel.IsPublic)
+                {
+                    formViewModel.Slug = null;
+                    formViewModel.PublicFormType = null;
+                }
+
+                else
+                {
+                    Form form = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
+                    if (form != null)
+                    {
+                        throw new Exception("Slug has already being used. Please use another.");
+                    }
+                }
+
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    if (!formViewModel.IsPublic)
-                    {
-                        formViewModel.Slug = null;
-                        formViewModel.PublicFormType = null;
-                    }
-
                     var form = unitOfWork.FormRepository.CreateNewForm(formViewModel);
                     template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
 
@@ -423,6 +432,21 @@ namespace PHS.Business.Implementation
                 Form form = unitOfWork.FormRepository.GetForm(formViewModel.FormID.Value);
                 if (form != null)
                 {
+                    if (!formViewModel.IsPublic)
+                    {
+                        formViewModel.Slug = null;
+                        formViewModel.PublicFormType = null;
+                    }
+
+                    else
+                    {
+                        Form form1 = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
+                        if (form1 != null && form1.FormID != formViewModel.FormID)
+                        {
+                            throw new Exception("Slug has already being used. Please use another.");
+                        }
+                    }
+
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.FormRepository.UpdateForm(formViewModel, form);

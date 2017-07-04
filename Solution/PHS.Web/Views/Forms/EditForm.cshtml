@@ -1,5 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormViewModel
 
+@using PHS.Business.Extensions
+
 @{
     ViewBag.Title = "Edit Form";
 }
@@ -42,7 +44,9 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    @Html.WriteMessages()
+
     <div class="form-horizontal">
         <h4>@Model.Title</h4>
         <hr />

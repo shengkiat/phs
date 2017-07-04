@@ -24,6 +24,11 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Form>().Where(u => u.FormID == key).Include(x => x.Templates).FirstOrDefault();
         }
 
+        public Form GetForm(string slug)
+        {
+            return dbContext.Set<Form>().Where(u => u.IsPublic == true && (slug.Equals(u.Slug))).FirstOrDefault();
+        }
+
         public Template GetTemplate(int key)
         {
             return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
@@ -518,5 +523,7 @@ namespace PHS.Repository.Repository
         {
             this.dbContext.SaveChanges();
         }
+
+        
     }
 }

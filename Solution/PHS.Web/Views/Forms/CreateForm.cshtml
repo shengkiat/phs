@@ -1,5 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Forms.FormViewModel
 
+@using PHS.Business.Extensions
+
 @{
     ViewBag.Title = "Create Form";
 }
@@ -41,7 +43,9 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
+    @Html.WriteMessages()
+
     <div class="form-horizontal">
         <h4>Create</h4>
         <hr />

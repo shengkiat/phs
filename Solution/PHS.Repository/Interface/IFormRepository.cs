@@ -10,6 +10,7 @@ namespace PHS.Repository.Interface
     public interface IFormRepository : IRepository<Form>
     {
         Form GetForm(int key);
+        Form GetForm(string slug);
         Form GetPublicForm(string slug);
         Template GetTemplate(int key);
         void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView);

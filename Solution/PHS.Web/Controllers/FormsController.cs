@@ -61,15 +61,24 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                Template template = formManager.CreateNewFormAndTemplate(formViewModel);
-                if (template != null)
+                try
                 {
-                    return RedirectToAction("editTemplate", new { id = template.TemplateID });
+                    Template template = formManager.CreateNewFormAndTemplate(formViewModel);
+                    if (template != null)
+                    {
+                        return RedirectToAction("editTemplate", new { id = template.TemplateID });
+                    }
+
+                    else
+                    {
+                        TempData["error"] = "Error creating new form";
+                        return View();
+                    }
                 }
 
-                else
+                catch (Exception ex)
                 {
-                    TempData["error"] = "Error creating new form";
+                    TempData["error"] = ex.Message;
                     return View();
                 }
 
@@ -111,15 +120,15 @@ namespace PHS.Web.Controllers
                     else
                     {
                         TempData["error"] = result;
-                        return View();
+                        return View(formViewModel);
                     }
 
                 }
 
-                catch
+                catch (Exception ex)
                 {
-                    TempData["error"] = "Unable to save form";
-                    return View();
+                    TempData["error"] = ex.Message;
+                    return View(formViewModel);
                 }
             }
         }
