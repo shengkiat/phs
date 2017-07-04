@@ -60,11 +60,6 @@ namespace PHS.Repository
             _context.Dispose();
         }
 
-        public PHSContext ActiveLearningContext
-        {
-            get { return _context as PHSContext; }
-        }
-
         public bool EnableAuditLog
         {
             get

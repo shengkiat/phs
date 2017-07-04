@@ -42,7 +42,7 @@ namespace PHS.Business.Implementation
 
         public List<FormViewModel> FindAllFormsByDes()
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var forms = unitOfWork.FormRepository.GetForms().OrderByDescending(f => f.DateAdded).ToList();
 
@@ -53,7 +53,7 @@ namespace PHS.Business.Implementation
         public string DeleteFormAndTemplate(int formId)
         {
             string result = null;
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var form = unitOfWork.FormRepository.GetForm(formId);
 
@@ -113,7 +113,7 @@ namespace PHS.Business.Implementation
 
         public List<TemplateViewModel> FindAllTemplatesByFormId(int formId)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var templates = unitOfWork.FormRepository.GetTemplates(formId).OrderByDescending(f => f.DateAdded).ToList();
 
@@ -123,7 +123,7 @@ namespace PHS.Business.Implementation
 
         public Template FindPublicTemplate(string slug)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 Form form = unitOfWork.FormRepository.GetPublicForm(slug);
                 if (form != null)
@@ -136,7 +136,7 @@ namespace PHS.Business.Implementation
 
         public Template FindPreRegistrationForm()
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 Form form = unitOfWork.FormRepository.GetPreRegistrationForm();
                 if (form != null)
@@ -151,7 +151,7 @@ namespace PHS.Business.Implementation
         public Template FindTemplate(int templateID)
         {
             Template template = null;
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 template = unitOfWork.FormRepository.GetTemplate(templateID);
             }
@@ -161,7 +161,7 @@ namespace PHS.Business.Implementation
 
         public FormViewModel FindFormToEdit(int formID)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 Form form = unitOfWork.FormRepository.GetForm(formID);
 
@@ -178,7 +178,7 @@ namespace PHS.Business.Implementation
 
         public TemplateViewModel FindTemplateToEdit(int templateID)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 Template template = unitOfWork.FormRepository.GetTemplate(templateID);
 
@@ -221,7 +221,7 @@ namespace PHS.Business.Implementation
 
         public void UpdateTemplate(TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var template = FindTemplate(model.TemplateID.Value);
 
@@ -303,7 +303,7 @@ namespace PHS.Business.Implementation
         public string DeleteTemplate(int templateID)
         {
             string result = null;
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var template = FindTemplate(templateID);
 
@@ -361,7 +361,7 @@ namespace PHS.Business.Implementation
 
         public void DeleteTemplateField(int templateFieldID)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
@@ -375,7 +375,7 @@ namespace PHS.Business.Implementation
 
         public IEnumerable<TemplateFieldValueViewModel> HasSubmissions(TemplateViewModel model)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var fieldValues = unitOfWork.FormRepository.GetTemplateFieldValuesByTemplate(model.TemplateID.Value);
                 var values = fieldValues
@@ -393,7 +393,7 @@ namespace PHS.Business.Implementation
         public Template CreateNewFormAndTemplate(FormViewModel formViewModel)
         {
             Template template = null;
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 if (!formViewModel.IsPublic)
                 {
@@ -427,7 +427,7 @@ namespace PHS.Business.Implementation
         public string EditForm(FormViewModel formViewModel)
         {
             string result = null;
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 Form form = unitOfWork.FormRepository.GetForm(formViewModel.FormID.Value);
                 if (form != null)
@@ -503,7 +503,7 @@ namespace PHS.Business.Implementation
                     //then insert values
                     var entryId = Guid.NewGuid();
 
-                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    using (var unitOfWork = CreateUnitOfWork())
                     {
                         using (TransactionScope scope = new TransactionScope())
                         {
@@ -556,7 +556,7 @@ namespace PHS.Business.Implementation
         {
             Template template = new Template();
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 template = unitOfWork.FormRepository.GetTemplate(templateID);
 
@@ -646,7 +646,7 @@ namespace PHS.Business.Implementation
 
                                         field.TemplateFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.TemplateFieldValues.Add(value);
+                                        unitOfWork.TemplateFieldValues.Add(value);
                                     }
 
                                     y += 4;
@@ -670,7 +670,7 @@ namespace PHS.Business.Implementation
 
                                         field.TemplateFieldValues.Add(value);
 
-                                        unitOfWork.ActiveLearningContext.TemplateFieldValues.Add(value);
+                                        unitOfWork.TemplateFieldValues.Add(value);
 
                                     }
 
@@ -695,7 +695,7 @@ namespace PHS.Business.Implementation
         {
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var guid = Guid.Parse(entryId);
                     var value = unitOfWork.TemplateFieldValues.Find(u => u.EntryId.Equals(guid) && u.TemplateFieldID == fieldID);
