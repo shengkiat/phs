@@ -397,6 +397,12 @@ namespace PHS.Business.Implementation
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
+                    if (!formViewModel.IsPublic)
+                    {
+                        formViewModel.Slug = null;
+                        formViewModel.PublicFormType = null;
+                    }
+
                     var form = unitOfWork.FormRepository.CreateNewForm(formViewModel);
                     template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
 
