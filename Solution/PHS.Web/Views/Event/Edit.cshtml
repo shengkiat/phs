@@ -10,12 +10,6 @@
 
     function addRow() {
 
-        @{
-            PHS.DB.Modality m = new PHS.DB.Modality();
-            m.Name = "";
-            Model.Modalities.Add(m);
-        }
-
         var index = $("#tbBooks").children("tr").length;
 
         var indexCell = "<td style='display:none'><input name='Books.Index' type='hidden' value='" + index + "' /></td>";
@@ -186,6 +180,117 @@
                 $("#tbBooks").append(newRow);
             </script>
             
+        }
+
+        @if (Model != null && Model.Modalities !=null)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                Modality Name
+                            </th>
+                            <th>
+                                Is Active
+                            </th>
+                            <th>
+                                Form Linked
+                            </th>
+                            <th>
+                                Up
+                            </th>
+                            <th>
+                                Down
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Modalities)
+                        {
+                            <tr>
+                                <td class="vcenter">
+                                    @if (item.ModalityID != 0)
+                                    {
+                                        <input type="checkbox" id=item.ModalityID value="1" />
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ModalityID != 0)
+                                    {
+                                        @Html.ActionLink(item.Name, "Details", "Modality", new { modalityid = item.ModalityID }, null)
+                                    }
+                                    else
+                                    {
+                                        @item.Name
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Forms != null && item.Forms.Count > 0)
+                                    {
+                                        <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
+                                    }
+                                </td>
+                                @if (item.ModalityID != 0)
+                                {
+                                    <td>
+                                        <input type='button' value='&#8679;' />
+                                    </td>
+                                    <td>
+                                        <input type='button' value='&#8681;' />
+                                    </td>
+                                }
+                                <td>
+                                    @if (item.ModalityID != 0)
+                                    {
+                                        @Html.ActionLink(
+                                         " ",
+                                         "Edit",
+                                         "Modality",
+                                         new { modalityid = item.ModalityID },
+                                         new
+                                         {
+                                             @class = "glyphicon glyphicon-edit"
+                                         })
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ModalityID != 0)
+                                    {
+                                        @Html.ActionLink(
+                                         " ",
+                                         "Delete",
+                                         "Modality",
+                                         new { modalityid = item.ModalityID },
+                                         new
+                                         {
+                                             @onclick = "return confirm('Are you sure you want to delete this Modality');",
+                                             @class = "glyphicon glyphicon-trash"
+                                         })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
 
 

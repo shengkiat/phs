@@ -14,8 +14,9 @@
 <script src="@Url.Content("~/Scripts/jquery-1.7.1.min")" type="text/javascript"> </script>
 <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
 
-<input type="button" value="Create" onclick="location.href='@Url.Action("Create", "Event")'" />
-
+<div style="clear:both;margin-bottom:10px">
+    @Html.ActionLink("Create", "Create", "Event", null, new { @class = "btn btn-primary" })
+</div>
 
 <div class="code-cut">
     @Html.Grid(Model).Columns(columns =>
