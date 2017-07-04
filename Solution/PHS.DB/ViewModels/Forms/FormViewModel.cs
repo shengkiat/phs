@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using PHS.Common;
 using PHS.DB;
-
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PHS.DB.ViewModels.Forms
 {
@@ -12,11 +13,24 @@ namespace PHS.DB.ViewModels.Forms
     {
         #region Properties
 
+        [ScaffoldColumn(false)]
         public int? FormID { get; set; }
+
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(50)]
         public string Title { get; set; }
+
+        [StringLength(50)]
+        [RequiredIf("Phone == null", ErrorMessage = "At least email or phone should be provided.")]
         public string Slug { get; set; }
+
+        [DisplayName("Is Public")]
         public bool IsPublic { get; set; }
+
+        [DisplayName("Public Form Type")]
         public string PublicFormType { get; set; }
+
+        [ScaffoldColumn(false)]
         public DateTime DateAdded { get; set; }
 
         #endregion
