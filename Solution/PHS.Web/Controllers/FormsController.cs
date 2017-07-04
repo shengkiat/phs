@@ -83,7 +83,7 @@ namespace PHS.Web.Controllers
                 FormViewModel model1 = formManager.FindFormToEdit(id);
                 if (model1 == null)
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("Invalid id");
                 }
 
                 else
@@ -197,7 +197,7 @@ namespace PHS.Web.Controllers
                 TemplateViewModel model1 = formManager.FindTemplateToEdit(id);
                 if (model1 == null)
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("Invalid id");
                 }
 
                 else
@@ -366,7 +366,7 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("Unable to find any form");
                 }
 
                
@@ -390,7 +390,7 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("invalid id");
                 }
 
                 return View(model);
@@ -420,7 +420,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("invalid id");
                 }
             }
         }
@@ -480,7 +480,7 @@ namespace PHS.Web.Controllers
                     return View(templateView);
                 }
 
-                return RedirectToAction("Index", "Error");
+                return RedirectToError("invalid id");
             }
         }
 
@@ -516,7 +516,7 @@ namespace PHS.Web.Controllers
         //    throw new Exception("File Not Found");
         //}
 
-        public ActionResult PreRegistration(int id = -1)
+        public ActionResult PreRegistration()
         {
 
             using (var formManager = new FormManager())
@@ -558,7 +558,7 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Error");
+                    return RedirectToError("invalid id");
                 }
             }
 

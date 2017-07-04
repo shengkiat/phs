@@ -18,8 +18,8 @@ namespace PHS.Web
             // PreRegistration
             routes.MapRoute(
                "form-preregistration",
-               "registration/{id}",
-               defaults: new { controller = "Forms", action = "PreRegistration", id = UrlParameter.Optional }
+               "registration",
+               defaults: new { controller = "Forms", action = "PreRegistration" }
 
             );
 
