@@ -21,7 +21,7 @@ namespace PHS.DB.ViewModels.Forms
         public string Title { get; set; }
 
         [StringLength(50)]
-        [RequiredIf("Phone == null", ErrorMessage = "At least email or phone should be provided.")]
+        //[RequiredIf("Phone == null", ErrorMessage = "At least email or phone should be provided.")]
         public string Slug { get; set; }
 
         [DisplayName("Is Public")]
