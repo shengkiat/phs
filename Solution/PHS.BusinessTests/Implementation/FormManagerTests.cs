@@ -29,7 +29,7 @@ namespace PHS.Business.Implementation.Tests
         public void FindAllTemplates()
         {
             FormManager target = new MockFormManager();
-            target.FindAllTemplates();
+            Console.Write(target.FindAllTemplates().Count());
         }
     }
 }
