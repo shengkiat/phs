@@ -100,6 +100,7 @@
           <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
+          <Property Name="UsingTempPW" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
@@ -471,6 +472,7 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
@@ -681,6 +683,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="phsModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="UsingTempPW" ColumnName="UsingTempPW" />
                 <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />

@@ -350,12 +350,12 @@ namespace PHS.Business.Implementation
                 //message = Constants.PleaseEnterValue(Constants.FullName);
                 return null;
             }
-            var hasedUser = GenerateHashedUser(person, out message);
-            if (hasedUser == null)
+            var hashedUser = GenerateHashedUser(person, out message);
+            if (hashedUser == null)
             {
                 return null;
             }
-            person = hasedUser;
+            person = hashedUser;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
@@ -364,6 +364,7 @@ namespace PHS.Business.Implementation
                     {
                         person.CreatedDateTime = DateTime.Now;
                         person.IsActive = true;
+                        person.UsingTempPW = true;
                         unitOfWork.Persons.Add(person);
                         unitOfWork.Complete();
                         scope.Complete();

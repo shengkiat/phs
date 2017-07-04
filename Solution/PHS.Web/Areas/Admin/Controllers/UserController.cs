@@ -1,4 +1,5 @@
-﻿using PHS.Business.Implementation;
+﻿using PHS.Business.Common;
+using PHS.Business.Implementation;
 using PHS.Business.ViewModel;
 using PHS.Common;
 using PHS.DB;
@@ -100,7 +101,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             using (var personManager = new PersonManager())
             {
                 //TODO remove hardcode
-                person.Password = "12345";
+                //person.Password = "12345";
+                string tempPassword = PasswordManager.GeneratePassword();
+                person.Password = tempPassword;
 
                 var newUser = personManager.AddPerson(GetLoginUser(), person, out message);
                 if (newUser == null)
@@ -110,7 +113,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                     return View();
                 }
 
-                SetTempDataMessage(Constants.ValueSuccessfuly("User has been created"));
+                SetTempDataMessage(person.Username + " has been created successfully with password " + tempPassword);
                 SetBackURL("Index");
                 return RedirectToAction("Index");
             }
