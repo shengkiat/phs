@@ -18,6 +18,7 @@ using PHS.Business.Extensions;
 using System.Transactions;
 using System.Web.Mvc;
 using PHS.Common;
+using PHS.BusinessTests.Implementation;
 
 namespace PHS.Business.Implementation.Tests
 {
@@ -27,7 +28,7 @@ namespace PHS.Business.Implementation.Tests
         [TestMethod()]
         public void FindAllTemplates()
         {
-            FormManager target = new FormManager();
+            FormManager target = new MockFormManager();
             target.FindAllTemplates();
         }
     }

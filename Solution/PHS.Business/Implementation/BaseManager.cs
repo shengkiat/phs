@@ -25,7 +25,7 @@ namespace PHS.Business.Implementation
         // Instantiate a SafeHandle instance.
         SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
-        public IUnitOfWork CreateUnitOfWork()
+        public virtual IUnitOfWork CreateUnitOfWork()
         {
             return new UnitOfWork(new PHSContext());
         }
