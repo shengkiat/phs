@@ -68,6 +68,10 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     SetViewBagError(message);
                 }
+                else
+                {
+                    person.Password = string.Empty;
+                }
 
                 SetBackURL("Index");
                 return View(person);
@@ -169,17 +173,41 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult ResetPassword(Person person)
+        [HttpPost]
+        public ActionResult ResetPassword(string[] selectedUsers)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            //TODO implement reset password
+            if(selectedUsers.Length == 0)
+            {
+                SetTempDataMessage("No Selection made!!");
+                return RedirectToLogin();
+            }
 
-            SetTempDataMessage(Constants.ValueSuccessfuly("Password has been reset!"));
-            return View("EditUser", person);
+            string message = string.Empty;
+            string tempPW = PasswordManager.GeneratePassword();
+
+            using (var personManager = new PersonManager())
+            {
+
+                foreach (var username in selectedUsers)
+                {
+                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
+                    user.Password = newPassHash;
+                    user.UsingTempPW = true;
+                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
+                    {
+                        SetViewBagError(message);
+                    }
+                }
+            }
+
+            SetTempDataMessage("Password has been reset to " + tempPW);
+            return RedirectToAction("Index");
         }
 
         public ActionResult LogOff()
