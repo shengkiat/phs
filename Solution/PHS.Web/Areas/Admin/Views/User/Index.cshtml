@@ -5,75 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    @using (Html.BeginForm("Index", "User", FormMethod.Get))
-    {
-        if (TempData["Message"] != null)
-        {
-        <p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
-        }
+<style type="text/css">
+    .div-inline {
+        display: inline-block;
+    }
+</style>
+
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
+}
+
+@using (Html.BeginForm("Index", "User", FormMethod.Get))
+{
     <p>
         <b>Search by:</b>
         User Id:   @Html.RadioButton("SearchBy", "UserId", true)
-        Name:      @Html.RadioButton("SearchBy", "Name") <br />
+        Name: @Html.RadioButton("SearchBy", "Name") <br />
         @Html.TextBox("SearchString")
         <button type="submit" class="btn btn-basic" value="Search">
             <span class="glyphicon glyphicon-search"></span> Search
         </button>
-        @Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
-        <div class="dropdown inline-block">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Other Actions
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Reset Password</a></li>
-                <li><a href="#">Activate</a></li>
-                <li><a href="#">Inactivate</a></li>
-            </ul>
-        </div>
     </p>
-    }
-</p>
+}
 
-@if (Model != null && Model.Count() > 0)
+@Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
+
+<div class="dropdown div-inline">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        Other Actions
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li>@Html.ActionLink("ResetPassword", "ResetPassword", "User")</li>
+        <li>@Html.ActionLink("Activate", "Activate", "User")</li>
+        <li>@Html.ActionLink("Inactivate", "Inactivate", "User")</li>
+    </ul>
+</div>
+@using (Html.BeginForm("ResetPassword", "User", FormMethod.Post))
 {
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Username)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsActive)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FullName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Role)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContactNumber)
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-            {
+    <input id="selectedIds" type="submit" value="Reset Password" class="btn" />
+
+    if (Model != null && Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsActive)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContactNumber)
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach(var item in Model)
+                {
                     <tr>
                         <td class="vcenter">
-                            <input type="checkbox" id=item.PersonID value="1" />
+                            <input type = "checkbox" id="checkboxid" name="selectedUsers" value="@item.Username" />
                         </td>
                         <td>
-                            @Html.ActionLink(item.Username, "UserDetails", new { userid = item.PersonID })
+                            @Html.ActionLink(item.Username, "UserDetails", new { userid = item.PersonID
+})
                         </td>
                         <td>
-                            @if (item.IsActive == true)
+                            @if(item.IsActive == true)
                             {
                                 <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
                             }
@@ -93,30 +104,31 @@
                         </td>
                         <td>
                             @Html.ActionLink(
-                        " ",
-                        "EditUser",
-                        "User",
-                        new { userid = item.PersonID },
-                        new
-                        {
-                            @class = "glyphicon glyphicon-edit"
-                        })
+                                " ",
+                                "EditUser",
+                                "User",
+                                new { userid = item.PersonID },
+                                new
+                                {
+                                    @class = "glyphicon glyphicon-edit"
+                                })
                         </td>
                         <td>
                             @Html.ActionLink(
-                        " ",
-                        "DeleteUser",
-                        "User",
-                        new { userid = item.PersonID },
-                        new
-                        {
-                            @onclick = "return confirm('Are you sure you want to delete this User');",
-                            @class = "glyphicon glyphicon-trash"
-                        })
+                                " ",
+                                "DeleteUser",
+                                "User",
+                                new { userid = item.PersonID },
+                                new
+                                {
+                                    @onclick = "return confirm('Are you sure you want to delete this User');",
+                                    @class = "glyphicon glyphicon-trash"
+                                })
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 }
