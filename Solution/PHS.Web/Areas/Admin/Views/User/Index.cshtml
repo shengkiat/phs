@@ -8,6 +8,10 @@
 <p>
     @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
+        if (TempData["Message"] != null)
+        {
+        <p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
+        }
     <p>
         <b>Search by:</b>
         User Id:   @Html.RadioButton("SearchBy", "UserId", true)

@@ -60,6 +60,7 @@ namespace PHS.Business.Implementation
                 try
                 {
                     unitOfWork.Persons.Get(user.PersonID).Password = newPassHash;
+                    unitOfWork.Persons.Get(user.PersonID).UsingTempPW = false;
                     unitOfWork.Persons.Get(user.PersonID).UpdatedDateTime = DateTime.Now;
                     unitOfWork.Complete();
                     return true;

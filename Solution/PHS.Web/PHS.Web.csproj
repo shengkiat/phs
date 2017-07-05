@@ -555,6 +555,7 @@
     <Content Include="Views\Forms\PublicFillIn.cshtml" />
     <Content Include="Views\Forms\EditForm.cshtml" />
     <Content Include="Views\Forms\CreateForm.cshtml" />
+    <Content Include="Views\Home\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

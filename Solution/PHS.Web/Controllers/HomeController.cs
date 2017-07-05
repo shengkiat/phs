@@ -42,6 +42,67 @@ namespace PHS.Web.Controllers
                 if (authenticatedUser != null)
                 {
                     LogUserIn(authenticatedUser);
+                    result = Redirect("~/Home/Reset");
+                }
+                SetViewBagError(message);
+
+                return result;
+            }
+        }
+
+        // GET: /Home/Reset
+        [HttpGet]
+        public ActionResult Reset()
+        {
+            Person loginuser = GetLoginUser();
+            if (loginuser == null)
+            {
+                return RedirectToLogin();
+            }
+            ActionResult result = View();
+            if (loginuser.UsingTempPW)
+            {
+                result = View();
+            }
+            else
+            {
+                switch (GetLoginUserRole())
+                {
+                    case Constants.User_Role_Admin_Code:
+                        result = Redirect("~/Admin/User");
+                        break;
+                    case Constants.User_Role_Doctor_Code:
+                        result = Redirect("~/PatientJourney/SearchPatient");
+                        break;
+                    case Constants.User_Role_Volunteer_Code:
+                        result = Redirect("~/PatientJourney/SearchPatient");
+                        break;
+                }
+            }
+            return result;
+        }
+
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Reset(string oldPass, string newPass, string newPassConfirm)
+        {
+            var user = GetLoginUser();
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            string message = string.Empty;
+            using (var userManager = new PersonManager())
+            {
+                if (!userManager.ChangePassword(user, oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
+                {
+                    SetViewBagError(message);
+                    return View();
+                }
+                else
+                {
+                    ActionResult result = View();
                     switch (GetLoginUserRole())
                     {
                         case Constants.User_Role_Admin_Code:
@@ -54,10 +115,8 @@ namespace PHS.Web.Controllers
                             result = Redirect("~/PatientJourney/SearchPatient");
                             break;
                     }
+                    return result;
                 }
-                SetViewBagError(message);
-
-                return result;
             }
         }
 
