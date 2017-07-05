@@ -15,7 +15,7 @@ namespace PHS.Web.Controllers
         }
 
         // GET: Modality/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int modalityid)
         {
             return View();
         }
@@ -43,7 +43,9 @@ namespace PHS.Web.Controllers
         }
 
         // GET: Modality/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Edit(int modalityid)
         {
             return View();
         }
@@ -65,7 +67,9 @@ namespace PHS.Web.Controllers
         }
 
         // GET: Modality/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Delete(int ModalityID)
         {
             return View();
         }
