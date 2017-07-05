@@ -23,6 +23,7 @@ namespace PHS.Business.Implementation
             return new FormManager();
         }
 
+        [System.Obsolete("To be deprecated since use by formImport")]
         public List<Template> FindAllTemplates()
         {
             List<Template> templates = new List<Template>();
