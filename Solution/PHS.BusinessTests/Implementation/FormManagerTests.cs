@@ -45,6 +45,30 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(Exception),
+            "Slug has already being used. Please use another.")]
+        public void CreateNewFormAndTemplate_UnableToEditBecauseSlugExists()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Slug = "slug1";
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "TEST";
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+            Assert.IsNotNull(template.Form);
+            Assert.IsNotNull(template.Form.FormID);
+
+            formViewModel = new FormViewModel();
+            formViewModel.Slug = "slug1";
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "HELLO";
+
+            _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.Fail("Expecting exception");
+        }
+
+        [TestMethod()]
         public void EditForm_EditSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
@@ -58,6 +82,16 @@ namespace PHS.Business.Implementation.Tests
 
             string result = _target.EditForm(formViewModel);
             Assert.AreEqual("success", result);
+        }
+
+        [TestMethod()]
+        public void EditForm_ReturnError()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.FormID = -1;
+
+            string result = _target.EditForm(formViewModel);
+            Assert.AreEqual("Unable to edit form - invalid id", result);
         }
 
         [TestMethod()]
@@ -138,6 +172,9 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postExecuteResult);
         }
 
+
+        //test for Constants.TemplateMode.READONLY scenario
+        //test for FindTemplateToEdit to do copyTemplate
         [TestMethod()]
         public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
         {
@@ -151,8 +188,6 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
         }
 
-        //test for Constants.TemplateMode.READONLY scenario
-        //test for FindTemplateToEdit to do copyTemplate
 
         [TestMethod()]
         public void DeleteTemplate_UnableToDeleteBecauseOfOnlyVersion()
@@ -170,8 +205,16 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(templateResult);
         }
 
+
         //test for able to delete when there is two version
         //test for unable to delete when there is form submission
+        [TestMethod()]
+        public void DeleteTemplate_ReturnError()
+        {
+            string deleteResult = _target.DeleteTemplate(-1);
+            Assert.AreEqual(deleteResult, "Unable to delete template - invalid id");
+        }
+
 
         [TestMethod()]
         public void DeleteFormAndTemplate_DeleteSuccess()
@@ -192,6 +235,14 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNull(templateResult);
         }
 
+        //test for unable to delete when there is form submission
+        [TestMethod()]
+        public void DeleteFormAndTemplate_ReturnError()
+        {
+            string deleteResult = _target.DeleteFormAndTemplate(-1);
+            Assert.AreEqual(deleteResult, "Unable to delete form - invalid id");
+        }
+
         [TestMethod()]
         public void FindAllFormsByDes_ShouldHaveNoRecordAfterDelete()
         {
@@ -210,6 +261,15 @@ namespace PHS.Business.Implementation.Tests
             List<FormViewModel> postExecuteResult = _target.FindAllFormsByDes();
             Assert.IsNotNull(postExecuteResult);
             Assert.AreEqual(postExecuteResult.Count(), 0);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(Exception),
+            "Invalid id")]
+        public void FindAllTemplatesByFormId_ThrowExceptionForInvalidId()
+        {
+            _target.FindAllTemplatesByFormId(-1);
+            Assert.Fail("Expecting exception");    
         }
 
         [TestMethod()]

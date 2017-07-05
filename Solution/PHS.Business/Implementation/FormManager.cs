@@ -116,6 +116,12 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+                if (form == null)
+                {
+                    throw new Exception("Invalid id");
+                }
+
                 var templates = unitOfWork.FormRepository.GetTemplates(formId).OrderByDescending(f => f.DateAdded).ToList();
 
                 return templates;
