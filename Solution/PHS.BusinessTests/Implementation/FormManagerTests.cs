@@ -45,6 +45,54 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void EditForm_EditSuccess()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+            Assert.IsNotNull(template.Form);
+            Assert.IsNotNull(template.Form.FormID);
+
+            formViewModel.FormID = template.Form.FormID;
+
+            string result = _target.EditForm(formViewModel);
+            Assert.AreEqual("success", result);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(Exception),
+            "Slug has already being used. Please use another.")]
+        public void EditForm_UnableToEditBecauseSlugExists()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Slug = "slug1";
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "TEST";
+
+            Template templateOne = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(templateOne);
+            Assert.IsNotNull(templateOne.Form);
+            Assert.IsNotNull(templateOne.Form.FormID);
+
+            formViewModel = new FormViewModel();
+            formViewModel.Slug = "slug2";
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "TEST";
+
+            Template templateTwo = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(templateTwo);
+            Assert.IsNotNull(templateTwo.Form);
+            Assert.IsNotNull(templateTwo.Form.FormID);
+
+            formViewModel.FormID = templateTwo.Form.FormID;
+            formViewModel.Slug = "slug1";
+
+            _target.EditForm(formViewModel);
+            Assert.Fail("Expecting exception");
+        }
+
+        [TestMethod()]
         public void FindAllFormsByDes_ShouldHaveRecordAfterCreate()
         {
             List<FormViewModel> preExecuteResult = _target.FindAllFormsByDes();
@@ -79,6 +127,53 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void FindTemplate_ShouldHaveRecordAfterCreate()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            Template postExecuteResult = _target.FindTemplate(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+        }
+
+        [TestMethod()]
+        public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
+        }
+
+        //test for Constants.TemplateMode.READONLY scenario
+        //test for FindTemplateToEdit to do copyTemplate
+
+        [TestMethod()]
+        public void DeleteTemplate_UnableToDeleteBecauseOfOnlyVersion()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+            Assert.IsNotNull(template.Form);
+
+            string deleteResult = _target.DeleteTemplate(template.TemplateID);
+            Assert.AreEqual(deleteResult, "Unable to delete template when there is only one remains");
+
+            Template templateResult = _target.FindTemplate(template.TemplateID);
+            Assert.IsNotNull(templateResult);
+        }
+
+        //test for able to delete when there is two version
+        //test for unable to delete when there is form submission
+
+        [TestMethod()]
         public void DeleteFormAndTemplate_DeleteSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
@@ -90,8 +185,11 @@ namespace PHS.Business.Implementation.Tests
             string deleteResult = _target.DeleteFormAndTemplate(template.Form.FormID);
             Assert.AreEqual(deleteResult, "success");
 
-            FormViewModel result = _target.FindFormToEdit(template.Form.FormID);
-            Assert.IsNull(result);
+            FormViewModel formViewResult = _target.FindFormToEdit(template.Form.FormID);
+            Assert.IsNull(formViewResult);
+
+            Template templateResult = _target.FindTemplate(template.TemplateID);
+            Assert.IsNull(templateResult);
         }
 
         [TestMethod()]
@@ -169,6 +267,24 @@ namespace PHS.Business.Implementation.Tests
 
             Template postExecuteResult = _target.FindPublicTemplate(slug);
             Assert.IsNull(postExecuteResult);
+        }
+
+        [TestMethod()]
+        public void FindPreRegistrationForm_ShouldHaveRecord()
+        {
+            Template preExecuteResult = _target.FindPreRegistrationForm();
+            Assert.IsNull(preExecuteResult);
+
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "PRE-REGISTRATION";
+            formViewModel.Slug = "TEST";
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            Template postExecuteResult = _target.FindPreRegistrationForm();
+            Assert.IsNotNull(postExecuteResult);
         }
 
         [TestInitialize]

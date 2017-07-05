@@ -31,7 +31,7 @@ namespace PHS.Repository.Repository
 
         public Template GetTemplate(int key)
         {
-            return dbContext.Set<Template>().Where(u => u.TemplateID == key).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
+            return dbContext.Set<Template>().Where(u => u.TemplateID == key && u.IsActive == true).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
         public Form GetPublicForm(string slug)
@@ -414,7 +414,7 @@ namespace PHS.Repository.Repository
         public Form GetPreRegistrationForm(int year = -1)
         {
             
-            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION")).Include(x => x.Templates).First();
+            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION")).Include(x => x.Templates).FirstOrDefault();
 
             return form;
         }

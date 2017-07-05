@@ -315,7 +315,7 @@ namespace PHS.Business.Implementation
                     var templates = FindAllTemplatesByFormId(template.FormID);
                     if (templates.Count() == 1)
                     {
-                        result = "Unable to delete template - Unable to delete template when there is only one remains";
+                        result = "Unable to delete template when there is only one remains";
                     }
 
                     else
