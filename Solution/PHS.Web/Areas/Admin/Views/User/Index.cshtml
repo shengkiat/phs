@@ -29,22 +29,23 @@
     </p>
 }
 
-@Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
-
-<div class="dropdown div-inline">
+@*<div class="dropdown div-inline">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
         Other Actions
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-        <li>@Html.ActionLink("ResetPassword", "ResetPassword", "User")</li>
-        <li>@Html.ActionLink("Activate", "Activate", "User")</li>
-        <li>@Html.ActionLink("Inactivate", "Inactivate", "User")</li>
+        <li><input type="submit" class="form-control btn btn-default" name="dropdownselection" value="ResetPassword"></li>
+        <li><input type="submit" class="form-control btn btn-default" name="dropdownselection" value="Activate"></li>
+        <li><input type="submit" class="form-control btn btn-default" name="dropdownselection" value="Inactivate"></li>
     </ul>
-</div>
-@using (Html.BeginForm("ResetPassword", "User", FormMethod.Post))
+</div>*@
+@using (Html.BeginForm("Action", "User", FormMethod.Post))
 {
-    <input id="selectedIds" type="submit" value="Reset Password" class="btn" />
+    @Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
+    <input name="SubmitBtn" type="submit" value="Reset Password" class="btn" />
+    <input name="SubmitBtn" type="submit" value="Activate" class="btn" />
+    <input name="SubmitBtn" type="submit" value="Inactivate" class="btn" />
 
     if (Model != null && Model.Count() > 0)
     {
