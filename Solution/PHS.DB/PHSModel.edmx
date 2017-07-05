@@ -71,7 +71,8 @@
           <Property Name="IconPath" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsVisible" Type="bit" Nullable="false" />
-          <Property Name="HasParent" Type="bit" />
+          <Property Name="IsMandatory" Type="bit" Nullable="false" />
+		  <Property Name="HasParent" Type="bit" />
           <Property Name="Status" Type="nvarchar(max)" />
           <Property Name="Eligiblity" Type="nvarchar(max)" />
           <Property Name="Labels" Type="int" />
@@ -449,6 +450,7 @@
           <Property Name="IconPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
+		  <Property Name="IsMandatory" Type="Boolean" Nullable="false" />
           <Property Name="HasParent" Type="Boolean" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Eligiblity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -673,6 +675,7 @@
                 <ScalarProperty Name="HasParent" ColumnName="HasParent" />
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+				<ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
                 <ScalarProperty Name="IconPath" ColumnName="IconPath" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

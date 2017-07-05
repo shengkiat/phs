@@ -6,5 +6,7 @@ namespace PHS.Repository.Interface
 {
     public interface IEventRepository : IRepository<PHSEvent>
     {
+        PHSEvent GetEvent(int id);
     }
+
 }
