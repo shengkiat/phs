@@ -21,7 +21,7 @@ namespace PHS.Repository.Repository
 
         public Form GetForm(int key)
         {
-            return dbContext.Set<Form>().Where(u => u.FormID == key).Include(x => x.Templates).FirstOrDefault();
+            return dbContext.Set<Form>().Where(u => u.FormID == key && u.IsActive == true).Include(x => x.Templates).FirstOrDefault();
         }
 
         public Form GetForm(string slug)

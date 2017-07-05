@@ -33,18 +33,30 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void FindAllFormsByDes()
-        {
-            _target.FindAllFormsByDes();
-        }
-
-        [TestMethod()]
-        public void CreateNewFormAndTemplate()
+        public void CreateNewFormAndTemplate_CreateSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            _target.FindTemplate(template.TemplateID);
+            Assert.IsNotNull(template);
+            Assert.IsNotNull(template.TemplateID);
+        }
+
+        [TestMethod()]
+        public void FindAllFormsByDes_ShouldHaveRecordsAfterCreate()
+        {
+            List<FormViewModel> preExecuteResult = _target.FindAllFormsByDes();
+            Assert.IsNotNull(preExecuteResult);
+            Assert.AreEqual(preExecuteResult.Count(), 0);
+
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            List<FormViewModel> postExecuteResult = _target.FindAllFormsByDes();
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(postExecuteResult.Count(), 1);
         }
 
         [TestMethod()]
@@ -52,9 +64,15 @@ namespace PHS.Business.Implementation.Tests
         {
             FormViewModel formViewModel = new FormViewModel();
 
-            _target.DeleteFormAndTemplate(1011);
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+            Assert.IsNotNull(template.Form);
 
-            _target.FindFormToEdit(1011);
+            string deleteResult = _target.DeleteFormAndTemplate(template.Form.FormID);
+            Assert.AreEqual(deleteResult, "success");
+
+            FormViewModel result = _target.FindFormToEdit(template.Form.FormID);
+            Assert.IsNull(result);
         }
 
         [TestInitialize]
