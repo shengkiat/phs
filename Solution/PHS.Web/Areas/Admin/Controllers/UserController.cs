@@ -181,7 +181,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 return RedirectToLogin();
             }
 
-            if(selectedUsers.Length == 0)
+            if(selectedUsers == null || selectedUsers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
                 return RedirectToAction("Index");
