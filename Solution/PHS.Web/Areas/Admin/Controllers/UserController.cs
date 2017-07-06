@@ -53,7 +53,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         // GET: /Admin/UserDetails
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult UserDetails(int userid)
+        public ActionResult UserDetails(int userid = 0)
         {
             if (!IsUserAuthenticated())
             {
@@ -78,6 +78,8 @@ namespace PHS.Web.Areas.Admin.Controllers
             };
         }
 
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CreateUser()
         {
             if (!IsUserAuthenticated())
@@ -123,7 +125,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult EditUser(int userid)
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult EditUser(int userid = 0)
         {
             if (!IsUserAuthenticated())
             {
@@ -142,7 +146,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     user.Password = string.Empty;
                 }
-                SetBackURL("Index");
+                //SetBackURL("Index");
                 return View(user);
             };
         }
@@ -174,6 +178,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Action(string SubmitBtn, string[] selectedUsers)
         {
             if (!IsUserAuthenticated())
