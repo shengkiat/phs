@@ -375,10 +375,8 @@ namespace PHS.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToError("Unable to find any form");
+                    throw new HttpException(404, "No public Form found");
                 }
-
-               
             }
         }
 

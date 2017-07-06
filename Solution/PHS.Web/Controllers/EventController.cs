@@ -25,14 +25,23 @@ namespace PHS.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            PHSEvent eventModel;
-
-            using (var eventManager = new EventManager())
+            if (!IsUserAuthenticated())
             {
-                eventModel = eventManager.GetEventByID(id);
+                return RedirectToLogin();
             }
 
-            return View(eventModel);
+            string message = string.Empty;
+            using (var getEvent = new EventManager())
+            {
+                PHSEvent eventModel = getEvent.GetEventByID(id, out message);
+                if (eventModel == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                SetBackURL("Index");
+                return View(eventModel);
+            };
         }
 
         [HttpPost]
@@ -84,15 +93,18 @@ namespace PHS.Web.Controllers
                 using (var eventManager = new EventManager())
                 {
                     eventModel.CreatedBy = "";
+                    eventModel.Modalities = BuildDefaultModalites();
+
+                    foreach (var newModality in eventModel.Modalities)
+                    {
+                        newModality.IsActive = true;
+                    }
 
                     eventManager.NewEvent(eventModel);
                 }
-
-
             }
             else {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
-               
             }
 
             return RedirectToAction("Index");
@@ -110,17 +122,19 @@ namespace PHS.Web.Controllers
             mRegister.IconPath = "../../../Content/images/Modality/01registration.png";
             mRegister.IsActive = false;
             mRegister.IsVisible = true;
+            mRegister.IsMandatory = true;
             mRegister.HasParent = false;
             mRegister.Status = "Pending";
             modalities.Add(mRegister);
 
             Modality mHistoryTaking = new Modality();
             mHistoryTaking.Name = "History Taking";
-            mHistoryTaking.Position = 0;
+            mHistoryTaking.Position = 1;
             mHistoryTaking.IconPath = "../../../Content/images/Modality/02historytaking.png";
             mHistoryTaking.IsActive = false;
             mHistoryTaking.IsVisible = true;
-            mHistoryTaking.HasParent = false;
+            mHistoryTaking.IsMandatory = true;
+            mHistoryTaking.HasParent = true;
             mHistoryTaking.Status = "Pending";
             modalities.Add(mHistoryTaking);
 

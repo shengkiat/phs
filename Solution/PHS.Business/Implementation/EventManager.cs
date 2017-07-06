@@ -29,12 +29,31 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public PHSEvent GetEventByID(int ID)
+        public PHSEvent GetEventByID(int ID, out string message)
         {
-           
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            message = string.Empty;
+
+            try
             {
-                return unitOfWork.Events.Get(null,null,includeProperties: "Modalities").FirstOrDefault();
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var phsEvent = unitOfWork.Events.GetEvent(ID);
+
+                    if (phsEvent == null)
+                    {
+                        message = "Event Not Found";
+                        return null;
+                    }
+
+                    message = string.Empty;
+                    return phsEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Event by ID");
+                return null;
             }
         }
 
@@ -45,7 +64,25 @@ namespace PHS.Business.Implementation
                 eventModel.CreatedDateTime = DateTime.Now;
                 eventModel.IsActive = true;
                 unitOfWork.Events.Add(eventModel);
-                unitOfWork.Complete();
+
+                //foreach (var newModality in eventModel.Modalities)
+                //{
+
+                //    Modality modalityDB = new Modality();
+                //    Util.CopyNonNullProperty(newModality, modalityDB);
+                //    modalityDB.IsActive = true;
+                //    modalityDB.PHSEvents.Add(eventModel);
+
+                //    unitOfWork.Modalities.Add(modalityDB);
+
+                //}
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+
                 return true;
             }
         }
@@ -59,30 +96,25 @@ namespace PHS.Business.Implementation
 
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
-                var eventToUpdate =  unitOfWork.Events.Get(eventModel.PHSEventID);
+                var eventToUpdate =  unitOfWork.Events.GetEvent(eventModel.PHSEventID);
 
-               
+                //foreach (var newModality in eventModel.Modalities)
+                //{
 
-                foreach (var newModality in eventModel.Modalities)
-                {
+                //    Modality modality = new Modality();
+                //    modality.Name = newModality.Name;
 
-                    Modality modality = new Modality();
-                    modality.Name = newModality.Name;
+                //    unitOfWork.Modalities.Add(modality);
 
-                    unitOfWork.Modalities.Add(modality);
+                //    eventToUpdate.Modalities.Add(modality);
 
-                    eventToUpdate.Modalities.Add(modality);
-
-                }
-
-
+                //}
 
                 eventToUpdate.Title = eventModel.Title;
                 eventToUpdate.Venue = eventModel.Venue;
                 eventToUpdate.StartDT = eventModel.StartDT;
                 eventToUpdate.EndDT = eventModel.EndDT;
-
-               // eventToUpdate.UpdateDT = DateTime.Now;
+                eventToUpdate.UpdatedDateTime = DateTime.Now;
 
                 using (TransactionScope scope = new TransactionScope())
                 {

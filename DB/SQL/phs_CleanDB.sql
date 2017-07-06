@@ -128,6 +128,7 @@ CREATE TABLE [dbo].[Modality](
 	[IconPath] [nvarchar](max) NULL,
 	[IsActive] [bit] NOT NULL,
 	[IsVisible] [bit] NOT NULL,
+	[IsMandatory] [bit] NOT NULL,
 	[HasParent] [bit] NULL,
 	[Status] [nvarchar](max) NULL,
 	[Eligiblity] [nvarchar](max) NULL,
@@ -388,25 +389,25 @@ GO
 SET IDENTITY_INSERT [dbo].[Modality] ON 
 
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (1, N'Registration', 0, N'../../../Content/images/Modality/01registration.png', 1, 1, 0, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (1, N'Registration', 0, N'../../../Content/images/Modality/01registration.png', 1, 1, 1, 0, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (2, N'History Taking', 1, N'../../../Content/images/Modality/02historytaking.png', 1, 1, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (2, N'History Taking', 1, N'../../../Content/images/Modality/02historytaking.png', 1, 1, 1, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (4, N'Phlebotomy', 3, N'../../../Content/images/Modality/04phlebo.png', 0, 0, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (4, N'Phlebotomy', 3, N'../../../Content/images/Modality/04phlebo.png', 0, 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (5, N'FIT', 4, N'../../../Content/images/Modality/05fit.png', 0, 0, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (5, N'FIT', 4, N'../../../Content/images/Modality/05fit.png', 0, 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (6, N'Woman Cancer', 5, N'../../../Content/images/Modality/06woman.png', 0, 0, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (6, N'Woman Cancer', 5, N'../../../Content/images/Modality/06woman.png', 0, 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (7, N'Geriatric Screening', 6, N'../../../Content/images/Modality/07geri.png', 0, 0, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (7, N'Geriatric Screening', 6, N'../../../Content/images/Modality/07geri.png', 0, 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (8, N'Oral', 7, N'../../../Content/images/Modality/08oral.png', 0, 0, 1, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (8, N'Oral', 7, N'../../../Content/images/Modality/08oral.png', 0, 0, 0, 1, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (9, N'Doctor Consult', 8, N'../../../Content/images/Modality/09doctor.png', 0, 0, 0, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (9, N'Doctor Consult', 8, N'../../../Content/images/Modality/09doctor.png', 0, 0, 0, 0, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (10, N'Exhibition', 9, N'../../../Content/images/Modality/10exhibition.png', 1, 0, 0, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (10, N'Exhibition', 9, N'../../../Content/images/Modality/10exhibition.png', 1, 0, 0, 0, N'Pending', NULL, NULL)
 GO
-INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (11, N'Summary', 10, N'../../../Content/images/Modality/11summary.png', 1, 1, 0, N'Pending', NULL, NULL)
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (11, N'Summary', 10, N'../../../Content/images/Modality/11summary.png', 1, 1, 0, 0, N'Pending', NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Modality] OFF
 

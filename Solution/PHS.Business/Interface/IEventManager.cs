@@ -10,7 +10,7 @@ namespace PHS.Business.Interface
     public interface IEventManager
     {
         IEnumerable<PHSEvent> GetAllEvents();
-        PHSEvent GetEventByID(int ID);
+        PHSEvent GetEventByID(int ID, out string message);
         bool NewEvent(PHSEvent eventModel);
         bool UpdateEvent(PHSEvent eventModel);
     }

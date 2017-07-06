@@ -116,6 +116,12 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+                if (form == null)
+                {
+                    throw new Exception("Invalid id");
+                }
+
                 var templates = unitOfWork.FormRepository.GetTemplates(formId).OrderByDescending(f => f.DateAdded).ToList();
 
                 return templates;
@@ -315,7 +321,7 @@ namespace PHS.Business.Implementation
                     var templates = FindAllTemplatesByFormId(template.FormID);
                     if (templates.Count() == 1)
                     {
-                        result = "Unable to delete template - Unable to delete template when there is only one remains";
+                        result = "Unable to delete template when there is only one remains";
                     }
 
                     else
