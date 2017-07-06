@@ -337,7 +337,7 @@
                                 <li>
                                     <i class="fa fa-home fa-2x"></i>
                                     <span class="nav-text">
-                                        @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })
+                                        @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
                                     </span>
                                 </li>
                             }
@@ -364,7 +364,7 @@
                         <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
                     }
 
-                    <li> @Html.ActionLink("Logout", "LogOff", "User", new { area = "Admin" })</li>
+                    <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
                 }
             </ul>
         </div>

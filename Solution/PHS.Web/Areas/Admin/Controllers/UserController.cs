@@ -249,11 +249,5 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        public ActionResult LogOff()
-        {
-            LogUserOut();
-            return RedirectToLogin();
-        }
     }
 }
