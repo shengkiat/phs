@@ -555,12 +555,12 @@
     <Content Include="Views\Forms\PublicFillIn.cshtml" />
     <Content Include="Views\Forms\EditForm.cshtml" />
     <Content Include="Views\Forms\CreateForm.cshtml" />
+    <Content Include="Views\Modality\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Modality\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

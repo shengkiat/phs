@@ -186,7 +186,7 @@
         @if (Model != null && Model.Modalities != null)
         {
             <div style="clear:both;margin-bottom:5px">
-                @Html.ActionLink("Add Modality", "Create", "Modality", null, new { @class = "btn btn-default" })
+                @Html.ActionLink("Add Modality", "Create", "Modality", new { eventid = Model.PHSEventID }, new { @class = "btn btn-default" })
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -252,13 +252,20 @@
                                         <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
                                     }
                                 </td>
-                                @if (item.ModalityID != 0)
+                                @if (item.ModalityID != 0 && item.IsMandatory == false)
                                 {
                                     <td>
                                         <input type='button' value='&#8679;' />
                                     </td>
                                     <td>
                                         <input type='button' value='&#8681;' />
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                    </td>
+                                    <td>
                                     </td>
                                 }
                                 <td>
@@ -276,7 +283,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @if (item.ModalityID != 0)
+                                    @if (item.ModalityID != 0 && item.IsMandatory == false)
                                     {
                                         @Html.ActionLink(
                                          " ",
