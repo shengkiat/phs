@@ -96,11 +96,12 @@
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
           <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedBy" Type="nvarchar(max)" />
           <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
           <Property Name="UsingTempPW" Type="bit" Nullable="false" />
+          <Property Name="DeleteStatus" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
@@ -468,11 +469,12 @@
           <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedBy" Type="String" />
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="PHSEvent">
           <Key>
@@ -683,6 +685,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="phsModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />
                 <ScalarProperty Name="UsingTempPW" ColumnName="UsingTempPW" />
                 <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

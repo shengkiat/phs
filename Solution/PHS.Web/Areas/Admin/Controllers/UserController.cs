@@ -177,8 +177,30 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult DeleteUser(int userid = 0)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+
+            using (var personManager = new PersonManager())
+            {
+                if (personManager.DeletePerson(GetLoginUser(), userid, out message))
+                {
+                    SetTempDataMessage(Constants.ValueSuccessfuly("User has been deleted"));
+                    return RedirectToAction("Index");
+                }
+                SetViewBagError(message);
+
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Action(string SubmitBtn, string[] selectedUsers)
         {
             if (!IsUserAuthenticated())

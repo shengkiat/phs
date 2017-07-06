@@ -22,10 +22,11 @@ namespace PHS.DB
         public string Role { get; set; }
         public string ContactNumber { get; set; }
         public string PasswordSalt { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
-        public Nullable<int> UpdatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public bool UsingTempPW { get; set; }
+        public bool DeleteStatus { get; set; }
     }
 }

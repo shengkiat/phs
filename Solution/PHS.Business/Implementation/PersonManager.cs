@@ -96,7 +96,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive).FirstOrDefault();
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteStatus).FirstOrDefault();
 
                     if (user != null)
                     {
@@ -169,7 +169,7 @@ namespace PHS.Business.Implementation
 
                     foreach (var person in persons)
                     {
-                        //if (person.IsActive)
+                        if (!person.DeleteStatus)
                         {
                             list.Add(person);
                         }
@@ -202,7 +202,7 @@ namespace PHS.Business.Implementation
 
                     if (person == null)
                     {
-                        message = "Invalid UserName";
+                        message = "Invalid User Id";
                         return null;
                     }
 
@@ -229,7 +229,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) /*&& u.IsActive*/);
+                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
@@ -263,7 +263,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userId) /*&& u.IsActive*/);
+                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userId) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
@@ -299,7 +299,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) /*&& u.IsActive*/);
+                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
@@ -364,7 +364,7 @@ namespace PHS.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         person.CreatedDateTime = DateTime.Now;
-                        person.IsActive = true;
+                        person.CreatedBy = loginPerson.Username;
                         person.UsingTempPW = true;
                         unitOfWork.Persons.Add(person);
                         unitOfWork.Complete();
@@ -420,7 +420,7 @@ namespace PHS.Business.Implementation
                     var personToUpdate = unitOfWork.Persons.Get(person.PersonID);
                     Util.CopyNonNullProperty(person, personToUpdate);
                     personToUpdate.UpdatedDateTime = DateTime.Now;
-                    personToUpdate.UpdatedBy = loginPerson.PersonID;
+                    personToUpdate.UpdatedBy = loginPerson.Username;
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.Complete();
@@ -438,6 +438,39 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public bool DeletePerson(Person loginPerson,int personid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                {
+                    var person = unitOfWork.Persons.Get(personid);
+
+                    if (person == null)
+                    {
+                        message = "Invalid User Id";
+                        return false;
+                    }
+                    person.UpdatedDateTime = DateTime.Now;
+                    person.UpdatedBy = loginPerson.Username;
+                    person.DeleteStatus = true;
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                    message = string.Empty;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = "Operation failed during deleting user";
+                return false;
+            }
+        }
         public bool UserNameExists(string userName, out string message)
         {
             if (string.IsNullOrEmpty(userName))
