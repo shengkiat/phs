@@ -172,6 +172,56 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postExecuteResult);
         }
 
+        [TestMethod()]
+        public void UpdateTemplate_ShouldHaveFieldRecordsAfterSave()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(0, templateViewModel.Fields.Count);
+
+            FormCollection collection = new FormCollection();
+            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
+            collection.Add("Fields[1].FieldType", "TEXTBOX");
+            collection.Add("Fields[1].MaxCharacters", "200");
+            collection.Add("Fields[1].IsRequired", "false");
+            collection.Add("Fields[1].AddOthersOption", "false");
+            collection.Add("Fields[1].MinimumAge", "18");
+            collection.Add("Fields[1].MaximumAge", "100");
+            collection.Add("Fields[1].Text", "");
+            collection.Add("Fields[1].Label", "Click to edit");
+            collection.Add("Fields[1].HoverText", "");
+            collection.Add("Fields[1].SubLabel", "");
+            collection.Add("Fields[1].HelpText", "");
+            collection.Add("Fields[1].Hint", "");
+
+
+            IDictionary<string, string> Fields = new System.Collections.Generic.Dictionary<string, string>();
+            Fields.Add("1", "1");
+
+            _target.UpdateTemplate(templateViewModel, collection, Fields);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+        }
+
+        /* [TestMethod()]
+         public void FillIn_ShouldHaveRecordAfterCreate()
+         {
+             FormViewModel formViewModel = new FormViewModel();
+
+             Template template = _target.CreateNewFormAndTemplate(formViewModel);
+             Assert.IsNotNull(template);
+
+             string result = _target.FillIn(template.TemplateID);
+             Assert.AreEqual(result, "success");
+         } */
+
 
         //test for Constants.TemplateMode.READONLY scenario
         //test for FindTemplateToEdit to do copyTemplate
@@ -182,6 +232,21 @@ namespace PHS.Business.Implementation.Tests
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
+
+            TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
+        }
+
+        [TestMethod()]
+        public void FindTemplateToEdit_CopyToNewTemplate()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+
 
             TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(postExecuteResult);
@@ -273,7 +338,9 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void FindAllTemplatesByFormId_ShouldHaveNoRecordAfterDelete()
+        [ExpectedException(typeof(Exception),
+            "Invalid id")]
+        public void FindAllTemplatesByFormId_ThrowExceptionForInvalidIdAfterDelete()
         {
             List<FormViewModel> preExecuteResult = _target.FindAllFormsByDes();
             Assert.IsNotNull(preExecuteResult);
