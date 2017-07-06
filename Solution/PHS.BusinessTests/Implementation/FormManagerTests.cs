@@ -210,17 +210,56 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, templateViewModel.Fields.Count);
         }
 
-        /* [TestMethod()]
+         [TestMethod()]
          public void FillIn_ShouldHaveRecordAfterCreate()
          {
-             FormViewModel formViewModel = new FormViewModel();
+            FormViewModel formViewModel = new FormViewModel();
 
-             Template template = _target.CreateNewFormAndTemplate(formViewModel);
-             Assert.IsNotNull(template);
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
 
-             string result = _target.FillIn(template.TemplateID);
-             Assert.AreEqual(result, "success");
-         } */
+            TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection = new FormCollection();
+            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
+            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
+            fieldCollection.Add("Fields[1].MaxCharacters", "200");
+            fieldCollection.Add("Fields[1].IsRequired", "false");
+            fieldCollection.Add("Fields[1].AddOthersOption", "false");
+            fieldCollection.Add("Fields[1].MinimumAge", "18");
+            fieldCollection.Add("Fields[1].MaximumAge", "100");
+            fieldCollection.Add("Fields[1].Text", "");
+            fieldCollection.Add("Fields[1].Label", "Click to edit");
+            fieldCollection.Add("Fields[1].HoverText", "");
+            fieldCollection.Add("Fields[1].SubLabel", "");
+            fieldCollection.Add("Fields[1].HelpText", "");
+            fieldCollection.Add("Fields[1].Hint", "");
+
+            IDictionary<string, string> Fields = new System.Collections.Generic.Dictionary<string, string>();
+            Fields.Add("1", "1");
+
+            _target.UpdateTemplate(templateViewModel, fieldCollection, Fields);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+        }
 
 
         //test for Constants.TemplateMode.READONLY scenario
