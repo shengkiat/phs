@@ -211,7 +211,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
          [TestMethod()]
-         public void FillIn_ShouldHaveRecordAfterCreate()
+         public void FillIn_HasSubmissions()
          {
             FormViewModel formViewModel = new FormViewModel();
 
