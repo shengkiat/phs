@@ -223,9 +223,6 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, templateViewModel.Entries.Count);
         }
 
-        
-        //test for Constants.TemplateMode.READONLY scenario
-        //test for FindTemplateToEdit to do copyTemplate
         [TestMethod()]
         public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
         {
@@ -242,16 +239,63 @@ namespace PHS.Business.Implementation.Tests
         [TestMethod()]
         public void FindTemplateToEdit_CopyToNewTemplate()
         {
-            FormViewModel formViewModel = new FormViewModel();
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
 
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
 
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
 
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
 
             TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(postExecuteResult);
             Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
+            Assert.AreNotEqual(template.TemplateID, postExecuteResult.TemplateID);
+        }
+
+        [TestMethod()]
+        public void FindTemplateToEdit_ReadOnlyTemplateWhenViewOldTemplate()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(Constants.TemplateMode.READONLY, postExecuteResult.Mode);
+            Assert.AreEqual(template.TemplateID, postExecuteResult.TemplateID);
         }
 
 
