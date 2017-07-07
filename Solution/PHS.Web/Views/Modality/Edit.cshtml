@@ -1,0 +1,67 @@
+﻿@model PHS.Business.ViewModel.Event.ModalityEventViewModel
+
+@{
+    ViewBag.Title = "UpdateModality";
+}
+
+<h2>Update Modality</h2>
+
+@using (Html.BeginForm("updatemodalityform"))
+{
+    @Html.AntiForgeryToken()
+    <div hidden="hidden">
+        @Html.HiddenFor(x => x.IsMandatory)
+        @Html.HiddenFor(x => x.EventID)
+        @Html.HiddenFor(x => x.Status)
+    </div>
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div style="color: red">@ViewBag.error</div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsMandatory, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model.IsMandatory == true)
+                {
+                    <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
+                }
+            </div>
+        </div>
+        @if (Model.ModalityID != 0 && Model.IconPath != null && Model.IconPath != "")
+        <div class="form-group">
+            <label class="control-label col-md-2">Icon</label>
+            <div class="col-md-10">
+                <img src="@Url.Content(Model.IconPath)" style="height:25px;width:25px;" alt="Image" />
+            </div>
+        </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(m => m.ImageUpload, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.ImageUpload, new { type = "file" })
+            </div>
+        </div>
+        <h4>Forms</h4>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+                @Html.ActionLink("Back", "Edit", "Event", new { id = Model.EventID }, new { @class = "btn btn-common cancel" })
+            </div>
+        </div>
+    </div>
+}

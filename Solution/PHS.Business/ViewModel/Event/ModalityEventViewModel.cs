@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PHS.Business.ViewModel.Event
 {
@@ -17,5 +19,8 @@ namespace PHS.Business.ViewModel.Event
         public bool HasParent { get; set; }
         public string Status { get; set; }
         public int EventID { get; set; }
+        public int ModalityID { get; set; }
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase ImageUpload { get; set; }
     }
 }

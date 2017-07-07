@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PHS.Business.Implementation;
 using PHS.Common;
+using System.IO;
 
 namespace PHS.Web.Controllers
 {
@@ -20,8 +21,9 @@ namespace PHS.Web.Controllers
         }
 
         // GET: Modality/Details/5
-        public ActionResult Details(int modalityid)
+        public ActionResult Details(int modalityid, int eventid)
         {
+
             return View();
         }
 
@@ -42,26 +44,57 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            string message = string.Empty;
-
-            try
+            var validImageTypes = new string[]
             {
+                "image/gif",
+                "image/jpeg",
+                "image/pjpeg",
+                "image/png"
+            };
 
-                using (var modalityManager = new ModalityManager())
+            if (modalityEventView.ImageUpload == null || modalityEventView.ImageUpload.ContentLength == 0)
+            {
+                ModelState.AddModelError("ImageUpload", "This field is required");
+            }
+            else if (!validImageTypes.Contains(modalityEventView.ImageUpload.ContentType))
+            {
+                ModelState.AddModelError("ImageUpload", "Please choose either a GIF, JPG or PNG image.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                string message = string.Empty;
+
+                if (modalityEventView.ImageUpload != null && modalityEventView.ImageUpload.ContentLength > 0)
                 {
-                    modalityManager.NewModality(modalityEventView, out message);
+                    var uploadDir = "~/Content/images/Modality"; 
+                    var imagePath = Path.Combine(Server.MapPath(uploadDir), modalityEventView.ImageUpload.FileName);
+                    var imageUrl = Path.Combine(uploadDir, modalityEventView.ImageUpload.FileName);
+                    modalityEventView.ImageUpload.SaveAs(imagePath);
+                    modalityEventView.IconPath = imageUrl;
+                }
+
+                try
+                {
+                    using (var modalityManager = new ModalityManager())
+                    {
+                        modalityManager.NewModality(modalityEventView, out message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringAddingValue("Modality");
+
+                    SetViewBagError(message);
+                    return View(modalityEventView);
                 }
 
                 return RedirectToAction("Edit", "Event", new { id = modalityEventView.EventID });
             }
-            catch (Exception ex)
-            {
-                ExceptionLog(ex);
-                message = Constants.OperationFailedDuringAddingValue("Modality");
 
-                SetViewBagError(message);
-                return View(modalityEventView);
-            }
+            return View(modalityEventView);
+
         }
 
         // POST: Modality/CreateForms
@@ -83,25 +116,34 @@ namespace PHS.Web.Controllers
         // GET: Modality/Edit/5
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult Edit(int modalityid)
+        public ActionResult Edit(int modalityid, int eventid)
         {
-            return View();
+            string message = string.Empty;
+            using (var mManager = new ModalityManager())
+            {
+                Modality modality = mManager.GetModalityByID(modalityid, out message);
+                if (modality == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                ModalityEventViewModel view = MapModalityToView(modality);
+                view.EventID = eventid;
+
+                return View(view);
+            };
         }
 
         // POST: Modality/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ModalityEventViewModel viewModel)
         {
-            try
+            using (var mManager = new ModalityManager())
             {
-                // TODO: Add update logic here
+                //mManager.UpdateModality(); TODO
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Edit", "Event", new { id = viewModel.EventID });
         }
 
         // GET: Modality/Delete/5
@@ -143,5 +185,14 @@ namespace PHS.Web.Controllers
 
             return modality;
         }
+
+        private ModalityEventViewModel MapModalityToView(Modality modality)
+        {
+            ModalityEventViewModel view = new ModalityEventViewModel();
+            Util.CopyNonNullProperty(modality, view);
+
+            return view;
+        }
     }
+        
 }

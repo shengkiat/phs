@@ -197,6 +197,9 @@
                                 Modality Name
                             </th>
                             <th>
+                                Icon
+                            </th>
+                            <th>
                                 Is Mandatory
                             </th>
                             <th>
@@ -225,11 +228,17 @@
                                 <td>
                                     @if (item.ModalityID != 0)
                                     {
-                                        @Html.ActionLink(item.Name, "Details", "Modality", new { modalityid = item.ModalityID }, null)
+                                        @Html.ActionLink(item.Name, "Details", "Modality", new { modalityid = item.ModalityID, eventid = Model.PHSEventID}, null)
                                     }
                                     else
                                     {
                                         @item.Name
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ModalityID != 0 && item.IconPath != null && item.IconPath != "")
+                                    {
+                                        <img src="@Url.Content(item.IconPath)" style="height:25px;width:25px;" alt="Image" />
                                     }
                                 </td>
                                 <td>
@@ -275,7 +284,7 @@
                                          " ",
                                          "Edit",
                                          "Modality",
-                                         new { modalityid = item.ModalityID },
+                                         new { modalityid = item.ModalityID, eventid = Model.PHSEventID},
                                          new
                                          {
                                              @class = "glyphicon glyphicon-edit"

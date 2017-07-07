@@ -556,6 +556,7 @@
     <Content Include="Views\Forms\EditForm.cshtml" />
     <Content Include="Views\Forms\CreateForm.cshtml" />
     <Content Include="Views\Modality\Create.cshtml" />
+    <Content Include="Views\Modality\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
