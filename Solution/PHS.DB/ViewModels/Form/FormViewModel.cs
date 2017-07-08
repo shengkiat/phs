@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ExpressiveAnnotations.Attributes;
 
-namespace PHS.DB.ViewModels.Forms
+namespace PHS.DB.ViewModels.Form
 {
     public class FormViewModel
     {
@@ -48,12 +48,12 @@ namespace PHS.DB.ViewModels.Forms
             return formView;
         }
 
-        public static FormViewModel CreateFromObject(Form form1)
+        public static FormViewModel CreateFromObject(DB.Form form1)
         {
             return CreateFromObject(form1, Constants.TemplateMode.EDIT);
         }
 
-        public static FormViewModel CreateFromObject(Form form1, Constants.TemplateMode mode)
+        public static FormViewModel CreateFromObject(DB.Form form1, Constants.TemplateMode mode)
         {
             if (form1 != null)
             {
@@ -64,7 +64,7 @@ namespace PHS.DB.ViewModels.Forms
             return FormViewModel.Initialize();
         }
 
-        public static FormViewModel CreateBasicFromObject(Form form1)
+        public static FormViewModel CreateBasicFromObject(DB.Form form1)
         {
 
             var formView = new FormViewModel

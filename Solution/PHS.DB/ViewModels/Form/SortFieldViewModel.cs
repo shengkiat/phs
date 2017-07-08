@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace PHS.DB.ViewModels.Forms
+namespace PHS.DB.ViewModels.Form
 {
     public class SortFieldViewModel
     {

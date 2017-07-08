@@ -1,6 +1,6 @@
 ﻿
 using PHS.DB;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;

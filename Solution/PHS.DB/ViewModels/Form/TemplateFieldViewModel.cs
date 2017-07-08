@@ -8,7 +8,7 @@ using PHS.Common;
 using PHS.DB;
 
 
-namespace PHS.DB.ViewModels.Forms
+namespace PHS.DB.ViewModels.Form
 {
     public class TemplateFieldViewModel
     {

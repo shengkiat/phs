@@ -6,7 +6,7 @@ using PHS.Common;
 using PHS.DB;
 using static PHS.Common.Constants;
 
-namespace PHS.DB.ViewModels.Forms
+namespace PHS.DB.ViewModels.Form
 {
     public class TemplateViewModel
     {
