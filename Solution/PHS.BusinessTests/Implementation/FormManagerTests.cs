@@ -195,8 +195,8 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, templateViewModel.Fields.Count);
         }
 
-         [TestMethod()]
-         public void FillIn_HasSubmissions()
+        [TestMethod()]
+        public void FillIn_SuccessWithHasSubmissions()
         {
             Template template;
             TemplateViewModel templateViewModel;
