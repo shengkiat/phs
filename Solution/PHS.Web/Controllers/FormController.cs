@@ -22,7 +22,7 @@ using System.Web.UI.WebControls;
 namespace PHS.Web.Controllers
 {
     [ValidateInput(false)]
-    public class FormsController : BaseController
+    public class FormController : BaseController
     {
         // GET: /Forms/
         public ActionResult Index()

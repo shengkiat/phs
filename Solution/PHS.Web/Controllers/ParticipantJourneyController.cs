@@ -16,17 +16,17 @@ namespace PHS.Web.Controllers
     using PHS.Repository.Repository;
     using Repository.Context;
 
-    public class PatientJourneyController : BaseController
+    public class ParticipantJourneyController : BaseController
     {
         private FormRepository _formRepo { get; set; }
 
-        public PatientJourneyController()
+        public ParticipantJourneyController()
             : this(new FormRepository(new PHSContext()))
         {
 
         }
 
-        public PatientJourneyController(FormRepository formRepo)
+        public ParticipantJourneyController(FormRepository formRepo)
         {
             this._formRepo = formRepo;
         }

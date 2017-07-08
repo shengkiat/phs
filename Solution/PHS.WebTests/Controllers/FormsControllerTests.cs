@@ -10,7 +10,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateSorting_EmptyRecord()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
@@ -23,7 +23,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateSorting_OneRecord()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
@@ -41,7 +41,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateSorting_MultipleRecords()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
@@ -64,7 +64,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_EmptyRecord()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -77,7 +77,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingSimpleMapping()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -97,7 +97,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordWithSubRecordUsingSimpleMapping()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -128,7 +128,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_MultipleRecordUsingSimpleMapping()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -167,7 +167,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingStartsWiths()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -187,7 +187,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingEndWiths()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -207,7 +207,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingContains()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -227,7 +227,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingDoesNotContains()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
@@ -247,7 +247,7 @@ namespace PHS.Web.Controllers.Tests
         [TestMethod()]
         public void GenerateFlitering_OneRecordUsingIn()
         {
-            FormsController target = new FormsController();
+            FormController target = new FormController();
             PrivateObject obj = new PrivateObject(target);
 
             List<CriteriaFieldViewModel> fields = new List<CriteriaFieldViewModel>();
