@@ -315,14 +315,71 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(templateResult);
         }
 
-
-        //test for able to delete when there is two version
-        //test for unable to delete when there is form submission
         [TestMethod()]
         public void DeleteTemplate_ReturnError()
         {
             string deleteResult = _target.DeleteTemplate(-1);
             Assert.AreEqual(deleteResult, "Unable to delete template - invalid id");
+        }
+
+        [TestMethod()]
+        public void DeleteTemplate_DeleteNewVersionAfterCopy()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel newTemplate = _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            string deleteResult = _target.DeleteTemplate(newTemplate.TemplateID.Value);
+            Assert.AreEqual(deleteResult, "success");
+        }
+
+        [TestMethod()]
+        public void DeleteTemplate_UnableToDeleteWhenSubmission()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            string deleteResult = _target.DeleteTemplate(templateViewModel.TemplateID.Value);
+            Assert.AreEqual(deleteResult, "Unable to delete template - Template must have no entries to be able to be deleted");
         }
 
 
@@ -345,12 +402,39 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNull(templateResult);
         }
 
-        //test for unable to delete when there is form submission
         [TestMethod()]
         public void DeleteFormAndTemplate_ReturnError()
         {
             string deleteResult = _target.DeleteFormAndTemplate(-1);
             Assert.AreEqual(deleteResult, "Unable to delete form - invalid id");
+        }
+
+        [TestMethod()]
+        public void DeleteFormAndTemplate_UnableToDeleteWhenSubmission()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            string deleteResult = _target.DeleteFormAndTemplate(template.FormID);
+            Assert.AreEqual(deleteResult, "Unable to delete - Templates must have no entries to be able to be deleted");
         }
 
         [TestMethod()]
