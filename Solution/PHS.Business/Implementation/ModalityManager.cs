@@ -83,6 +83,11 @@ namespace PHS.Business.Implementation
 
         }
 
+        public bool UpdateModality(Modality modalityModel)
+        {
+            throw new NotImplementedException();
+        }
+
         //public bool UpdateModality(Modality modalityModel)
         //{
         //    using (var unitOfWork = new UnitOfWork(new PHSContext()))

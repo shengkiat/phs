@@ -42,7 +42,7 @@
             </div>
         </div>
         @if (Model.ModalityID != 0 && Model.IconPath != null && Model.IconPath != "")
-        <div class="form-group">
+        {<div class="form-group">
             <label class="control-label col-md-2">Icon</label>
             <div class="col-md-10">
                 <img src="@Url.Content(Model.IconPath)" style="height:25px;width:25px;" alt="Image" />
