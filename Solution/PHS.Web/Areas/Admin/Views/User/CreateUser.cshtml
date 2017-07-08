@@ -59,8 +59,24 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IsActive)
+                @Html.CheckBoxFor(model => model.IsActive, new { @class = "activecheckbox" })
                 @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EffectiveStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EffectiveStartDate, new { @class = "form-control datepickerstart" })
+                @Html.ValidationMessageFor(model => model.EffectiveStartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EffectiveEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EffectiveEndDate, new { @class = "form-control datepickerend" })
+                @Html.ValidationMessageFor(model => model.EffectiveEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -75,9 +91,30 @@
     </div>
 }
 
-<script type="text/javascript">
+<script>
     $(function () {
-       $('.datepicker').datepicker();
+        $('.datepickerstart').datepicker(
+            {
+                minDate: 0,
+                dateFormat: 'yy-mm-dd'
+            }).datepicker("setDate", "0");
+        $('.datepickerend').datepicker(
+            {
+                minDate: 0,
+                dateFormat: 'yy-mm-dd'
+            }).datepicker("setDate", "2099/12/31");
+        $('.activecheckbox').change(function () {
+            if($('.activecheckbox').prop('checked') == true) {
+            $(".datepickerstart").prop('disabled', false);
+            $(".datepickerend").prop('disabled', false);
+            }
+            else {
+                $(".datepickerstart").prop('disabled', true);
+                $(".datepickerend").prop('disabled', true);
+            }
+        });
+        $('.activecheckbox').prop('checked', true);
+        $('.activecheckbox').trigger('change');
     });
 </script>
 
