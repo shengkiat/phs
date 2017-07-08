@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 
 
 namespace PHS.Business.Extensions

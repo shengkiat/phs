@@ -28,7 +28,30 @@ namespace PHS.Business.Implementation
 
         public Modality GetModalityByID(int ID, out string message)
         {
-            throw new NotImplementedException();
+            message = string.Empty;
+
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var modality = unitOfWork.Modalities.Get(ID);
+
+                    if (modality == null)
+                    {
+                        message = "Modality Not Found";
+                        return null;
+                    }
+
+                    message = string.Empty;
+                    return modality;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Modality by ID");
+                return null;
+            }
         }
 
         public bool NewModality(ModalityEventViewModel modalityEventView, out string message)
@@ -64,5 +87,14 @@ namespace PHS.Business.Implementation
         {
             throw new NotImplementedException();
         }
+
+        //public bool UpdateModality(Modality modalityModel)
+        //{
+        //    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+        //    {
+        //        var modalityToUpdate = unitOfWork.Modalities.Get(modalityModel.ModalityID);
+        //        modalityToUpdate.
+        //    }
+        //}
     }
 }

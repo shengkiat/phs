@@ -1,0 +1,74 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
+
+@using PHS.Common
+@using PHS.Business.Extensions
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnGenerateDoctorMemo").click(function () {
+
+            var doctorText = document.getElementById('SubmitFields[@Model.DomId].TextArea').value;
+
+            var jsonObject = {
+                "text": doctorText
+            };
+
+            $.ajax({
+                url: "/Forms/GenerateDoctorMemo",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+
+                    document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
+                },
+                success: function (response) {
+
+                    window.location = '/Forms/DownloadDoctorMemo?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            });
+
+        });
+    });
+
+</script>
+
+<div style="width: 90%; word-wrap: break-word; text-align: left;"
+     data-sub-channel="sub-label-@Model.DomId"
+     class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
+
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+    <div class="input" style="width: 70%; margin-left: 1cm;">
+        <textarea style="min-height:100px; min-width:100px;"
+                  id="SubmitFields[@Model.DomId].TextArea"
+                  name="SubmitFields[@Model.DomId].TextArea"
+                  type="text">@Html.GetTempFormValue(Model)</textarea>
+        <br />
+        <button type="button" id="btnGenerateDoctorMemo">Download Memo</button>
+
+        @if (Model.IsEditMode())
+        {
+            @Html.Partial("_form-field-properties-partial", Model)
+        }
+
+        @if (!Model.Errors.IsNullOrEmpty())
+        {
+            <span class="field-validation-error">@Model.Errors</span>
+        }
+    </div>
+
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-settings-template")
+    }
+
+

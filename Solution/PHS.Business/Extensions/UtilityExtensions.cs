@@ -1,5 +1,5 @@
 ﻿using PHS.Common;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using System;
 using System.Collections.Generic;

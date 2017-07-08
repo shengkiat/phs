@@ -1,0 +1,82 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
+@using PHS.Business.Extensions
+
+<div style="width: 90%; word-wrap: break-word; text-align: left;"
+     data-sub-channel="sub-label-@Model.DomId"
+     class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
+
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+    <div class="input" style="width: 70%; margin-left: 1cm;">
+        <ul class="option-list vertical-list">
+            @{var checkedAttribute = "";
+            bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+            bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+            int counter = 0;
+            }
+
+            @foreach (var option in Model.Options.Split(","))
+            {
+                <li>
+                    @if (Html.IsSubmittedValueSelected(Model, option))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+
+                    @if (checkDefault && Model.SelectedOption.IsTheSameAs(option))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+
+                    @if (checkFirst && counter == 0)
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+
+                    @{counter = counter + 1;}
+
+                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute
+                           value="@option" name="radiogroup-@Model.DomId" />
+                    <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
+                </li>
+                        }
+
+        </ul>
+        <ul class="othersoption-list vertical-list">
+            @if (Model.AddOthersOption)
+            {
+                <li>
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
+                </li>
+            }
+            else
+            {
+                <li>
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" style="display:none" placeholder="Others" />
+                </li>
+            }
+        </ul>
+        @if (Model.IsEditMode())
+        {
+            @Html.Partial("_form-field-properties-partial", Model)
+        }
+
+        @if (!Model.Errors.IsNullOrEmpty())
+        {
+            <span class="field-validation-error">@Model.Errors</span>
+        }
+    </div>
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-settings-template")
+    }

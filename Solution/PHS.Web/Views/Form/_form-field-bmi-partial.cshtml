@@ -1,0 +1,102 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
+
+@using PHS.Business.Extensions
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnBmiSubmit").click(function () {
+
+            var weight = document.getElementById('SubmitFields[@Model.DomId].Weight').value
+            var height = document.getElementById('SubmitFields[@Model.DomId].Height').value
+
+
+            if (weight > 0 && height > 0) {
+                var finalBmi = (weight / (height / 100 * height / 100)).toFixed(1)
+                document.getElementById("SubmitFields[@Model.DomId].BMI").innerHTML = "BMI: " + finalBmi;
+
+                if (finalBmi < 18.5) {
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").innerHTML = "Under Weight";
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = 'green';
+                }
+                if (finalBmi > 18.5 && finalBmi < 23) {
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").innerHTML = "Low Risk";
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = 'green';
+                }
+                if (finalBmi > 23 && finalBmi < 27.5) {
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").innerHTML = "Moderate Risk";
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = 'GoldenRod';
+                }
+                if (finalBmi > 25) {
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").innerHTML = "High Risk";
+                    document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = 'red';
+                }
+            }
+            else {
+                alert("Please Fill in everything correctly")
+            }
+        });
+    });
+
+</script>
+
+<label style="width: 90%; word-wrap: break-word; text-align: left;"
+       data-sub-channel="sub-label-@Model.DomId"
+       class="label editable">@Model.Label</label>
+    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+    <div class="input" style="width: 70%; margin-left: 1cm;">
+        <ul class="vertical-list">
+
+            <li>
+                <input id="SubmitFields[@Model.DomId].Weight" 
+                       name="SubmitFields[@Model.DomId].Weight" 
+                       value="@Html.GetSubmittedTextValue(Model,"Weight")" 
+                       type="number" class="title" /><br />
+                <span class="sub-label">Weight (kg)</span>
+            </li>
+
+            <li>
+                <input id="SubmitFields[@Model.DomId].Height" 
+                       name="SubmitFields[@Model.DomId].Height" 
+                       value="@Html.GetSubmittedTextValue(Model,"Height")" 
+                       type="number" class="title" /><br />
+                <span class="sub-label">Height (cm)</span>
+            </li>
+
+
+            <li>
+                <button type="button" id="btnBmiSubmit">Check</button>
+            </li>
+
+            <li>
+                <br />
+                <label id="SubmitFields[@Model.DomId].BMI">BMI: </label>
+            </li>
+
+            <li>
+                <br />
+                <label id="SubmitFields[@Model.DomId].BMIStatus">Low Risk</label>
+            </li>
+
+        </ul>
+        @if (Model.IsEditMode())
+        {
+            @Html.Partial("_form-field-properties-partial", Model)
+        }
+
+        @if (!Model.Errors.IsNullOrEmpty())
+        {
+            <span class="field-validation-error">@Model.Errors</span>
+        }
+    </div>
+
+
+    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+        <img src="@Html.SpacerImage()" alt="help" />
+    </a>
+
+    @if (Model.IsEditMode())
+    {
+        @Html.Partial("_form-field-settings-template")
+    }

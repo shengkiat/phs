@@ -1,6 +1,6 @@
 ﻿using PHS.Business.Implementation;
 using PHS.DB;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using System;
 using System.Collections.Generic;
 using System.Linq;

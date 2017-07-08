@@ -13,7 +13,7 @@ using PHS.DB;
 using PHS.Repository;
 using PHS.Repository.Context;
 using System.IO;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using PHS.Business.Extensions;
 using System.Transactions;
 using System.Web.Mvc;
@@ -184,61 +184,23 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(templateViewModel.Fields);
             Assert.AreEqual(0, templateViewModel.Fields.Count);
 
-            FormCollection collection = new FormCollection();
-            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            collection.Add("Fields[1].FieldType", "TEXTBOX");
-            collection.Add("Fields[1].MaxCharacters", "200");
-            collection.Add("Fields[1].IsRequired", "false");
-            collection.Add("Fields[1].AddOthersOption", "false");
-            collection.Add("Fields[1].MinimumAge", "18");
-            collection.Add("Fields[1].MaximumAge", "100");
-            collection.Add("Fields[1].Text", "");
-            collection.Add("Fields[1].Label", "Click to edit");
-            collection.Add("Fields[1].HoverText", "");
-            collection.Add("Fields[1].SubLabel", "");
-            collection.Add("Fields[1].HelpText", "");
-            collection.Add("Fields[1].Hint", "");
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
 
-
-            IDictionary<string, string> Fields = new System.Collections.Generic.Dictionary<string, string>();
-            Fields.Add("1", "1");
-
-            _target.UpdateTemplate(templateViewModel, collection, Fields);
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
 
             templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
             Assert.AreEqual(1, templateViewModel.Fields.Count);
         }
 
-         [TestMethod()]
-         public void FillIn_HasSubmissions()
-         {
-            FormViewModel formViewModel = new FormViewModel();
-
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
-
-            TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
-
-            FormCollection fieldCollection = new FormCollection();
-            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
-            fieldCollection.Add("Fields[1].MaxCharacters", "200");
-            fieldCollection.Add("Fields[1].IsRequired", "false");
-            fieldCollection.Add("Fields[1].AddOthersOption", "false");
-            fieldCollection.Add("Fields[1].MinimumAge", "18");
-            fieldCollection.Add("Fields[1].MaximumAge", "100");
-            fieldCollection.Add("Fields[1].Text", "");
-            fieldCollection.Add("Fields[1].Label", "Click to edit");
-            fieldCollection.Add("Fields[1].HoverText", "");
-            fieldCollection.Add("Fields[1].SubLabel", "");
-            fieldCollection.Add("Fields[1].HelpText", "");
-            fieldCollection.Add("Fields[1].Hint", "");
-
-            IDictionary<string, string> Fields = new System.Collections.Generic.Dictionary<string, string>();
-            Fields.Add("1", "1");
-
-            _target.UpdateTemplate(templateViewModel, fieldCollection, Fields);
+        [TestMethod()]
+        public void FillIn_SuccessWithHasSubmissions()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
 
             templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
@@ -261,9 +223,6 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, templateViewModel.Entries.Count);
         }
 
-
-        //test for Constants.TemplateMode.READONLY scenario
-        //test for FindTemplateToEdit to do copyTemplate
         [TestMethod()]
         public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
         {
@@ -280,16 +239,63 @@ namespace PHS.Business.Implementation.Tests
         [TestMethod()]
         public void FindTemplateToEdit_CopyToNewTemplate()
         {
-            FormViewModel formViewModel = new FormViewModel();
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
 
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
 
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
 
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
 
             TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(postExecuteResult);
             Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
+            Assert.AreNotEqual(template.TemplateID, postExecuteResult.TemplateID);
+        }
+
+        [TestMethod()]
+        public void FindTemplateToEdit_ReadOnlyTemplateWhenViewOldTemplate()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(Constants.TemplateMode.READONLY, postExecuteResult.Mode);
+            Assert.AreEqual(template.TemplateID, postExecuteResult.TemplateID);
         }
 
 
@@ -309,14 +315,71 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(templateResult);
         }
 
-
-        //test for able to delete when there is two version
-        //test for unable to delete when there is form submission
         [TestMethod()]
         public void DeleteTemplate_ReturnError()
         {
             string deleteResult = _target.DeleteTemplate(-1);
             Assert.AreEqual(deleteResult, "Unable to delete template - invalid id");
+        }
+
+        [TestMethod()]
+        public void DeleteTemplate_DeleteNewVersionAfterCopy()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel newTemplate = _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            string deleteResult = _target.DeleteTemplate(newTemplate.TemplateID.Value);
+            Assert.AreEqual(deleteResult, "success");
+        }
+
+        [TestMethod()]
+        public void DeleteTemplate_UnableToDeleteWhenSubmission()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
+
+            string deleteResult = _target.DeleteTemplate(templateViewModel.TemplateID.Value);
+            Assert.AreEqual(deleteResult, "Unable to delete template - Template must have no entries to be able to be deleted");
         }
 
 
@@ -339,12 +402,39 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNull(templateResult);
         }
 
-        //test for unable to delete when there is form submission
         [TestMethod()]
         public void DeleteFormAndTemplate_ReturnError()
         {
             string deleteResult = _target.DeleteFormAndTemplate(-1);
             Assert.AreEqual(deleteResult, "Unable to delete form - invalid id");
+        }
+
+        [TestMethod()]
+        public void DeleteFormAndTemplate_UnableToDeleteWhenSubmission()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            string deleteResult = _target.DeleteFormAndTemplate(template.FormID);
+            Assert.AreEqual(deleteResult, "Unable to delete - Templates must have no entries to be able to be deleted");
         }
 
         [TestMethod()]
@@ -475,5 +565,47 @@ namespace PHS.Business.Implementation.Tests
             _context = null;
             _target = null;
         }
+
+        
+
+        private void CreateDefaultTemplateAndField(out Template template, out TemplateViewModel templateViewModel)
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
+
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
+        }
+
+        private FormCollection CeateFieldForm(int id, out FormCollection fieldCollection, out IDictionary<string, string> fields)
+        {
+            fieldCollection = new FormCollection();
+
+            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
+            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
+            fieldCollection.Add("Fields[1].MaxCharacters", "200");
+            fieldCollection.Add("Fields[1].IsRequired", "false");
+            fieldCollection.Add("Fields[1].AddOthersOption", "false");
+            fieldCollection.Add("Fields[1].MinimumAge", "18");
+            fieldCollection.Add("Fields[1].MaximumAge", "100");
+            fieldCollection.Add("Fields[1].Text", "");
+            fieldCollection.Add("Fields[1].Label", "Click to edit");
+            fieldCollection.Add("Fields[1].HoverText", "");
+            fieldCollection.Add("Fields[1].SubLabel", "");
+            fieldCollection.Add("Fields[1].HelpText", "");
+            fieldCollection.Add("Fields[1].Hint", "");
+
+            fields = new System.Collections.Generic.Dictionary<string, string>();
+            fields.Add("1", "1");
+
+            return fieldCollection;
+        }
+
     }
 }

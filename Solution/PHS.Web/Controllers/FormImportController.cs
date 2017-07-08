@@ -3,7 +3,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using PHS.Business.Implementation;
 using PHS.DB;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using PHS.Web.Controllers;
 using System;
 using System.Collections.Generic;

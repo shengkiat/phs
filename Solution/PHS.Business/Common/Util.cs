@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PHS.Business.Common
 {
-    class Util
+    public class Util
     {
         #region Copy values
 

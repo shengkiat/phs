@@ -4,7 +4,7 @@ using PHS.Business.Extensions;
 using PHS.Business.Implementation;
 using PHS.Common;
 using PHS.DB;
-using PHS.DB.ViewModels.Forms;
+using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Context;
 using PHS.Repository.Repository;
