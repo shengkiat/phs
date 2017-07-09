@@ -1,4 +1,4 @@
-﻿using PHS.Business.ViewModel.PatientJourney;
+﻿using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.DB;
 using System;
 using System.Collections.Generic;

@@ -129,7 +129,7 @@ namespace PHS.Web
             routes.MapRoute(
                "journeymodality-viewform",
                "journeymodality/viewform/{formId}/{embed}",
-               new { controller = "patientJourney", action = "viewForm", formId = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "participantJourney", action = "viewForm", formId = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 
@@ -137,7 +137,7 @@ namespace PHS.Web
             routes.MapRoute(
                "journeymodality-edit",
                "journeymodality/edit/{formId}",
-               new { controller = "patientJourney", action = "edit", formId = UrlParameter.Optional },
+               new { controller = "participantJourney", action = "edit", formId = UrlParameter.Optional },
                new { formId = @"\d+" }
             );
 

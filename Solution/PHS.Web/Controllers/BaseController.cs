@@ -126,7 +126,7 @@ namespace PHS.Web.Controllers
                     return Redirect("~/admin/user");
                    
                 case Common.Constants.User_Role_Volunteer_Code:
-                    return Redirect("~/patientjourney");
+                    return Redirect("~/participantJourney");
                    
                 default:
                     return RedirectToLogin();

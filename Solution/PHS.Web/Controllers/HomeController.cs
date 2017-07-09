@@ -52,10 +52,10 @@ namespace PHS.Web.Controllers
                             result = Redirect("~/Admin/User");
                             break;
                         case Constants.User_Role_Doctor_Code:
-                            result = Redirect("~/PatientJourney/SearchPatient");
+                            result = Redirect("~/ParticipantJourney/Index");
                             break;
                         case Constants.User_Role_Volunteer_Code:
-                            result = Redirect("~/PatientJourney/SearchPatient");
+                            result = Redirect("~/ParticipantJourney/Index");
                             break;
                     }
                 }

@@ -9,7 +9,7 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
-using PHS.Business.ViewModel.PatientJourney;
+using PHS.Business.ViewModel.ParticipantJourney;
 
 namespace PHS.Business.Implementation
 {
