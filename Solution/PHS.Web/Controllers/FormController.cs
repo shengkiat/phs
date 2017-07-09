@@ -8,6 +8,7 @@ using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Context;
 using PHS.Repository.Repository;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,12 +17,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace PHS.Web.Controllers
 {
     [ValidateInput(false)]
+    //[CustomAuthorize(Roles = Constants.User_Role_Admin_Code)]
     public class FormController : BaseController
     {
         // GET: /Forms/
