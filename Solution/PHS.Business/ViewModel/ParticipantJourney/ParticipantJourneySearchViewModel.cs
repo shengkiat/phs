@@ -7,11 +7,8 @@ using PHS.DB;
 
 namespace PHS.Business.ViewModel.ParticipantJourney
 {
-    public class PatientSearchModel
+    public class ParticipantJourneySearchViewModel
     {
-        //public string IcFirstDigit { get; set; }
-        //public string IcNumber { get; set; }
-        //public string IcLastDigit { get; set; }
         public string Nric { get; set; }
         public IList<PatientEventViewModel> PatientEvents { get; set; }
     }

@@ -31,7 +31,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchParticipantJourney(PatientSearchModel psm)
+        public ActionResult SearchParticipantJourney(ParticipantJourneySearchViewModel psm)
         {
             if (!IsUserAuthenticated())
             {
@@ -44,7 +44,7 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
-            PatientSearchModel result = new PatientSearchModel();
+            ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
 
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
