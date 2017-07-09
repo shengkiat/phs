@@ -47,7 +47,7 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientSearchModel result = new PatientSearchModel();
 
-            using (var getPatientJourney = new PatientJourneyManager())
+            using (var getPatientJourney = new ParticipantJourneyManager())
             {
                 IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.Nric, out message);
                 if (patientEvents == null)
@@ -81,7 +81,7 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var getPatientJourney = new PatientJourneyManager())
+            using (var getPatientJourney = new ParticipantJourneyManager())
             {
                 PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)
@@ -174,7 +174,7 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var getPatientJourney = new PatientJourneyManager())
+            using (var getPatientJourney = new ParticipantJourneyManager())
             {
                 PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)

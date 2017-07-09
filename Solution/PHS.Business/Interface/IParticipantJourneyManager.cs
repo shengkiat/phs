@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PHS.Business.Interface
 {
-    public interface IPatientJourneyManager : IDisposable
+    public interface IParticipantJourneyManager : IDisposable
     {
         IList<PatientEventViewModel> GetPatientEventsByNric(string nric, out string message);
         PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message);

@@ -13,11 +13,11 @@ using PHS.Business.ViewModel.ParticipantJourney;
 
 namespace PHS.Business.Implementation
 {
-    public class PatientJourneyManager : BaseManager, IPatientJourneyManager, IManagerFactoryBase<IPatientJourneyManager>
+    public class ParticipantJourneyManager : BaseManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
     {
-        public IPatientJourneyManager Create()
+        public IParticipantJourneyManager Create()
         {
-            return new PatientJourneyManager();
+            return new ParticipantJourneyManager();
         }
 
         public IList<PatientEventViewModel> GetPatientEventsByNric(string nric, out string message)
