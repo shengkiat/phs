@@ -310,7 +310,7 @@ namespace PHS.Business.Extensions
                     //        {
                     //            var imagePreviewClass = "";
                     //            var imagePreviewAttribute = "";
-                    //            var downloadPath = "/Forms/file/download/{0}".FormatWith(value.Id);
+                    //            var downloadPath = "/PublicForm/file/download/{0}".FormatWith(value.Id);
                     //            if (fileValueObject.IsImage())
                     //            {
                     //                imagePreviewClass = "img-tip";

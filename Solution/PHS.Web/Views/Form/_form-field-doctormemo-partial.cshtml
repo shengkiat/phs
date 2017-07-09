@@ -15,7 +15,7 @@
             };
 
             $.ajax({
-                url: "/Forms/GenerateDoctorMemo",
+                url: "/PublicForm/GenerateDoctorMemo",
                 type: "POST",
                 data: JSON.stringify(jsonObject),
                 cache: false,
@@ -27,7 +27,7 @@
                 },
                 success: function (response) {
 
-                    window.location = '/Forms/DownloadDoctorMemo?fileGuid=' + response.FileGuid
+                    window.location = '/PublicForm/DownloadDoctorMemo?fileGuid=' + response.FileGuid
                                       + '&filename=' + response.FileName;
                 }
             });

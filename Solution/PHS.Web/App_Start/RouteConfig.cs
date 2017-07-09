@@ -19,7 +19,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-preregistration",
                "registration",
-               defaults: new { controller = "Form", action = "PreRegistration" }
+               defaults: new { controller = "PublicForm", action = "PreRegistration" }
 
             );
 
@@ -27,16 +27,16 @@ namespace PHS.Web
             routes.MapRoute(
                "form-public",
                "public/{slug}/{embed}",
-               new { controller = "Form", action = "publicFillIn", slug = UrlParameter.Optional, embed = UrlParameter.Optional }
+               new { controller = "PublicForm", action = "publicFillIn", slug = UrlParameter.Optional, embed = UrlParameter.Optional }
             );
 
 
             // download file
-            routes.MapRoute(
-               "form-download-file",
-               "Form/file/download/{valueId}",
-               new { controller = "Form", action = "GetFileFromDisk", valueId = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+               //"form-download-file",
+              // "Form/file/download/{valueId}",
+              // new { controller = "Form", action = "GetFileFromDisk", valueId = UrlParameter.Optional }
+            //);
 
             // create form
             routes.MapRoute(
@@ -45,7 +45,7 @@ namespace PHS.Web
                new { controller = "Form", action = "createForm" }
             );
 
-            // create form
+            // edit form
             routes.MapRoute(
                "form-editform",
                "Form/editForm",
@@ -88,7 +88,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-fillin",
                "Form/fillin/{id}/{embed}",
-               new { controller = "Form", action = "fillin", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "PublicForm", action = "fillin", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
@@ -96,7 +96,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-submitconfirmation",
                "Form/submitconfirmation/{id}/{embed}",
-               new { controller = "Form", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "PublicForm", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 

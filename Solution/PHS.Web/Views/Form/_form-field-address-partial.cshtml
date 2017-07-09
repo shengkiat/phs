@@ -19,13 +19,13 @@
             };
 
             $.ajax({
-                url: "@Url.Action("GetAddressByZipCode")",
+                url: "/PublicForm/GetAddressByZipCode",
                 type: "POST",
             data: JSON.stringify(jsonObject),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             error: function (response) {
-                
+
                 document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
             },
             success: function (response) {

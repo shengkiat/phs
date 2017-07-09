@@ -107,7 +107,7 @@
                         }
 
                         <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
-                            @Html.Partial("~/Views/Forms/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
+                            @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
                         </li>
 
                         counter = counter + 1;

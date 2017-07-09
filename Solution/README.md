@@ -16,6 +16,9 @@ Example URL
 http://localhost:49972/forms  
 http://localhost:49972/home/login  
 
+http://localhost:49972/phs/public/prereg
+http://localhost:49972/phs/registration
+
 Test URL
 https://itumed-test.stf.nus.edu.sg/phs   
 
