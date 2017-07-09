@@ -19,6 +19,8 @@ namespace PHS.DB
         public string Password { get; set; }
         public string FullName { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<System.DateTime> EffectiveStartDate { get; set; }
+        public Nullable<System.DateTime> EffectiveEndDate { get; set; }
         public string Role { get; set; }
         public string ContactNumber { get; set; }
         public string PasswordSalt { get; set; }

@@ -94,6 +94,8 @@
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="EffectiveStartDate" Type="datetime2" Precision="7" />
+          <Property Name="EffectiveEndDate" Type="datetime2" Precision="7" />
           <Property Name="Role" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
@@ -468,6 +470,8 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EffectiveStartDate" Type="DateTime" Precision="7" />
+          <Property Name="EffectiveEndDate" Type="DateTime" Precision="7" />
           <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -697,6 +701,8 @@
                 <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
+                <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

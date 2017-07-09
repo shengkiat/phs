@@ -18,8 +18,18 @@ namespace PHS.DB
             [Display(Name = "Full Name")]
             public string FullName { get; set; }
 
-            [Display(Name = "Is Active")]
+            [Display(Name = "Active")]
             public bool IsActive { get; set; }
+
+            [Display(Name = "Effective Start Date")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true, NullDisplayText = "-")]
+            [SkipTrackingAttribute]
+            public DateTime? EffectiveStartDate { get; set; }
+
+            [Display(Name = "Effective End Date")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true, NullDisplayText = "-")]
+            [SkipTrackingAttribute]
+            public DateTime? EffectiveEndDate { get; set; }
 
             [Required(ErrorMessage = "Please enter Password")]
             [DataType(DataType.Password)]

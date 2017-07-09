@@ -236,6 +236,38 @@ namespace PHS.Web.Controllers
         #endregion
 
         #region Profile
+
+        public ActionResult EditProfile()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            var user = GetLoginUser();
+            user.Password = string.Empty;
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(Person person)
+        {
+            var user = GetLoginUser();
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+
+            using (var personManager = new PersonManager())
+            {
+                if (personManager.UpdatePerson(GetLoginUser(), person, out message))
+                {
+                    return RedirectToHome();
+                }
+                SetViewBagError(message);
+                return View(person);
+            }
+        }
         public ActionResult ChangePassword()
         {
             if (!IsUserAuthenticated())

@@ -171,7 +171,8 @@ namespace PHS.Business.Implementation
                     {
                         if (!person.DeleteStatus)
                         {
-                            list.Add(person);
+                            var user = SetActiveStatus(person);
+                            list.Add(user);
                         }
                     }
                     if (list.Count == 0)
@@ -532,6 +533,27 @@ namespace PHS.Business.Implementation
                 return null;
             }
 
+        }
+
+        public Person SetActiveStatus(Person person)
+        {
+            if (person == null)
+            {
+                return null;
+            }
+
+            if(person.IsActive)
+            {
+                if(DateTime.Now >= person.EffectiveStartDate && DateTime.Now <=person.EffectiveEndDate)
+                {
+                    person.IsActive = true;
+                }
+                else
+                {
+                    person.IsActive = false;
+                }
+            }
+            return person;
         }
     }
 }
