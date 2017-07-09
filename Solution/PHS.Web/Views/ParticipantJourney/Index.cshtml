@@ -2,6 +2,12 @@
 
 @using GridMvc.Html
 
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"> </script>
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
 @{
     ViewBag.Title = "Search Participant Page";
 }
@@ -17,8 +23,8 @@
 
                 @Html.Grid(Model).Named("eventGrid").Columns(columns =>
                 {
-                    columns.Add(c => c.Title).Titled("Event").Filterable(false);
                     columns.Add(c => c.PHSEventID, true).Titled("EventID").Filterable(false);
+                    columns.Add(c => c.Title).Titled("Event").Filterable(false);
                     columns.Add(c => c.Venue).Titled("Venue").Filterable(false);
                     columns.Add(c => c.StartDT).Titled("Start Date").Filterable(false);
                     columns.Add(c => c.EndDT).Titled("End Date").Filterable(false);
@@ -34,3 +40,22 @@
 <div id="results">
 
 </div>
+
+@section footerScripts{
+    <script>
+        $(document).ready(function () {
+
+            $('tbody tr:first').each(function () {
+                $(this).addClass('grid-row-selected');
+                var eventId = $(this).find("td:first").html();
+                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + eventId + "&nric=" + e.row.Nric); //Will set it
+            });
+
+            pageGrids.eventGrid.onRowSelect(function (e) {
+                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+            });
+
+
+        });
+    </script>
+}
