@@ -15,11 +15,13 @@ namespace PHS.Web.Controllers
     using PHS.DB.ViewModels.Form;
     using PHS.Repository.Repository;
     using Repository.Context;
+    using Filter;
 
+    [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code )]
     public class PastParticipantJourneyController : BaseController
     {
 
-        // GET: PatientJourney
+
         public ActionResult Index()
         {
             if (!IsUserAuthenticated())
