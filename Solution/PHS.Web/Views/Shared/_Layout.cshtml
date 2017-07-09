@@ -265,141 +265,152 @@
         <img src="~/Content/images/logo.png" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 1px;box-shadow: 2px 0px 2px gray;" />
         <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
         <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
+        @if (HttpContext.Current.Session["LoginUser"] != null)
+        {
+            var username = (HttpContext.Current.Session["LoginUser"] as Person).Username;
+            <div style="padding-right: 100px; padding-bottom: 0px">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Hello " + username + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" }) </li>
+                </ul>
+            </div>
+        }
     </div>
-    @*<div class="navbar-default" style="background: #aaa;color:black;">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-
-                    </ul>
-                    @{
-
-                        string url = Request.Path;
-                        if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            @Html.Partial("_LoginAdminPartial")
-                        }
-                        else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            @Html.Partial("_LoginInstructorPartial")
-                        }
-                        else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            @Html.Partial("_LoginStudentPartial")
-                        }
-
-
-                    }
-
-                </div>
-            </div>
-        </div>*@
-
-    <div class="area"></div>
-    <nav class="main-menu">      
-                <a href="#">
-                    <i class="fa fa-home fa-2x"></i>
-                    <div>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-home fa-2x"></i>
-                                    <span class="nav-text">
-
-                                    </span>
-                                </a>
-                            </li>
-
-                            @if (HttpContext.Current.Session["LoginUser"] != null)
-                            {
-                                var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
-                                var links = from item in menus
-                                            where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                            .Any(x => role.Equals(x))
-                                            select item;
-                                foreach (var link in links)
-                                {
-                                    <li>
-                                        <i class="fa fa-home fa-2x"></i>
-                                        <span class="nav-text">
-                                            @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
-                                        </span>
-                                    </li>
-                                }
-                                <li>
-                                    <i class="fa fa-home fa-2x"></i>
-                                    <span class="nav-text">
-                                        @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
-                                    </span>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </a>    
-    </nav>
-
-    <!-- Sidebar -->
-    <div class="clearfix">
-        <!--
-        <div class="column menu">           
-            <ul>
-
-                @if (HttpContext.Current.Session["LoginUser"] != null)
-                {
-                    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
-                    var links = from item in menus
-                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                .Any(x => role.Equals(x))
-                                select item;
-                    foreach (var link in links)
-                    {
-                        <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
-                    }
-
-                    <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
-                }
-            </ul>
-        </div>
-            -->
-
-        <div class="column content" style="margin:0 auto;">
-            <!-- /#sidebar-wrapper -->
-            <div id="page-body" class="container body-content panel-body" style="min-height:800px;min-width: 1130px">
-
-                @RenderBody()
-                <hr />
-
-            </div>
-
-            @if (!String.IsNullOrEmpty(ViewBag.BackURL))
-            {
+        @*<div class="navbar-default" style="background: #aaa;color:black;">
                 <div class="container">
-                    <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+
+                        </ul>
+                        @{
+
+                            string url = Request.Path;
+                            if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                @Html.Partial("_LoginAdminPartial")
+                            }
+                            else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                @Html.Partial("_LoginInstructorPartial")
+                            }
+                            else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                @Html.Partial("_LoginStudentPartial")
+                            }
+
+
+                        }
+
+                    </div>
                 </div>
-            }
-            <br />
+            </div>*@
+    <div class="area"></div>
+@if (HttpContext.Current.Session["LoginUser"] != null)
+{
+    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+    var links = from item in menus
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => role.Equals(x))
+                select item;
+    <nav class="main-menu">
+        <a href="#">
+            <i class="fa fa-home fa-2x"></i>
+            <div>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-home fa-2x"></i>
+                            <span class="nav-text">
+
+                            </span>
+                        </a>
+                    </li>
+                            
+                    @foreach (var link in links)
+                    {
+                        <li>
+                            <i class="fa fa-home fa-2x"></i>
+                            <span class="nav-text">
+                                @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
+                            </span>
+                        </li>
+                    }
+                    <li>
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                            @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </a>
+    </nav>
+}
+
+        <!-- Sidebar -->
+        <div class="clearfix">
+            <!--
+            <div class="column menu">
+                <ul>
+
+                    @if (HttpContext.Current.Session["LoginUser"] != null)
+                    {
+                        var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+                        var links = from item in menus
+                                    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Any(x => role.Equals(x))
+                                    select item;
+                        foreach (var link in links)
+                        {
+                            <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
+                        }
+
+                        <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
+                    }
+                </ul>
+            </div>
+                -->
+
+            <div class="column content" style="margin:0 auto;">
+                <!-- /#sidebar-wrapper -->
+                <div id="page-body" class="container body-content panel-body" style="min-height:800px;min-width: 1130px">
+
+                    @RenderBody()
+                    <hr />
+
+                </div>
+
+                @if (!String.IsNullOrEmpty(ViewBag.BackURL))
+            {
+                    <div class="container">
+                        <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+                    </div>
+                }
+                <br />
+            </div>
         </div>
-    </div>
 
-    <div class="footer" style="text-align: center;">
-        <p>&copy; @DateTime.Now.Year - Public Health Service</p>
-    </div>
+        <div class="footer" style="text-align: center;">
+            <p>&copy; @DateTime.Now.Year - Public Health Service</p>
+        </div>
 
-    @RenderSection("footerScripts", false)
-    <script type="text/javascript">
-        $(document).ready(function () {
-            global.init();
-            @RenderSection("initializers", false)
-        });
-    </script>
+        @RenderSection("footerScripts", false)
+        <script type="text/javascript">
+            $(document).ready(function () {
+                global.init();
+                @RenderSection("initializers", false)
+            });
+        </script>
 
 </body>
 </html>
