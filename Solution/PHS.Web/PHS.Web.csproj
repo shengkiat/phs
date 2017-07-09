@@ -557,11 +557,13 @@
     <Content Include="Views\Form\CreateForm.cshtml" />
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
+    <Content Include="Views\Shared\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

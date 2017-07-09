@@ -267,13 +267,21 @@
         <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
         @if (HttpContext.Current.Session["LoginUser"] != null)
         {
-            var username = (HttpContext.Current.Session["LoginUser"] as Person).Username;
+            //var username = (HttpContext.Current.Session["LoginUser"] as Person).Username;
             <div style="padding-right: 100px; padding-bottom: 0px">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        @Html.ActionLink("Hello " + username + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <ul>
+                    <li class="btn-group nav navbar-right">
+                        <button type="button" class="btn navbar-btn">@User.Identity.Name</button>
+                        <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Edit Profile", "EditProfile", new { area = "", controller = "Home" })</li>
+                            <li>@Html.ActionLink("Change Password", "ChangePassword", new { area = "", controller = "Home" })</li>
+                            <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
+                        </ul>
                     </li>
-                    <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" }) </li>
                 </ul>
             </div>
         }
