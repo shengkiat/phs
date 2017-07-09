@@ -1,4 +1,4 @@
-﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneySearchViewModel
+﻿@model PHS.Business.ViewModel.PastParticipantJourney.ParticipantJourneySearchViewModel
 @using PHS.Business.Helpers
 @using PHS.Business.Extensions
 @using GridMvc.Html
@@ -14,7 +14,7 @@
     $(function () {
         pageGrids.participantsGrid.onRowSelect(function (e) {
             $("#BtnGoToEvent").prop('disabled', false);
-            $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+            $("#BtnGoToEvent").attr("formaction", "/phs/PastParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
         });
     });
 </script>
@@ -33,7 +33,7 @@
         using (Html.BeginForm())
         {
             <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnGoToEvent" class="button-common" style="border-radius: 17px;"
-                   formaction="@Url.Action("JourneyModality", "ParticipantJourney")" />
+                   formaction="@Url.Action("JourneyModality", "PastParticipantJourney")" />
             
         }
     }

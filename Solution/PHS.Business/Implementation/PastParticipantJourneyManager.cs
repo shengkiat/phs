@@ -9,15 +9,15 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
-using PHS.Business.ViewModel.ParticipantJourney;
+using PHS.Business.ViewModel.PastParticipantJourney;
 
 namespace PHS.Business.Implementation
 {
-    public class ParticipantJourneyManager : BaseManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
+    public class PastParticipantJourneyManager : BaseManager, IPastParticipantJourneyManager, IManagerFactoryBase<IPastParticipantJourneyManager>
     {
-        public IParticipantJourneyManager Create()
+        public IPastParticipantJourneyManager Create()
         {
-            return new ParticipantJourneyManager();
+            return new PastParticipantJourneyManager();
         }
 
         public IList<PatientEventViewModel> GetPatientEventsByNric(string nric, out string message)

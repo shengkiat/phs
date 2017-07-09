@@ -222,7 +222,7 @@
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModalityController.cs" />
-    <Compile Include="Controllers\ParticipantJourneyController.cs" />
+    <Compile Include="Controllers\PastParticipantJourneyController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -533,18 +533,18 @@
     <Content Include="Views\Admin\SearchUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
-    <Content Include="Views\ParticipantJourney\Index.cshtml" />
+    <Content Include="Views\PastParticipantJourney\Index.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
-    <Content Include="Views\ParticipantJourney\JourneyModality.cshtml" />
-    <Content Include="Views\ParticipantJourney\_JourneyModalityCirclesPartial.cshtml" />
-    <Content Include="Views\ParticipantJourney\_JourneyModalityFormsPartial.cshtml" />
-    <Content Include="Views\ParticipantJourney\ViewForm.cshtml" />
-    <Content Include="Views\ParticipantJourney\_MegaSortingStationPartial.cshtml" />
-    <Content Include="Views\ParticipantJourney\_SummaryPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\JourneyModality.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_JourneyModalityCirclesPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_JourneyModalityFormsPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\ViewForm.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_MegaSortingStationPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_SummaryPartial.cshtml" />
     <Content Include="Views\Form\PreRegistration.cshtml" />
     <Content Include="Views\Form\_form-field-signature-partial.cshtml" />
     <Content Include="Views\Form\_form-field-signature-template.cshtml" />
@@ -557,7 +557,7 @@
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
     <Content Include="Views\Shared\EditProfile.cshtml" />
-    <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

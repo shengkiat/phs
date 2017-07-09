@@ -10,13 +10,13 @@ namespace PHS.Web.Controllers
     using PHS.Business.Common;
     using PHS.Business.Extensions;
     using PHS.Business.Implementation;
-    using PHS.Business.ViewModel.ParticipantJourney;
+    using PHS.Business.ViewModel.PastParticipantJourney;
     using PHS.Common;
     using PHS.DB.ViewModels.Form;
     using PHS.Repository.Repository;
     using Repository.Context;
 
-    public class ParticipantJourneyController : BaseController
+    public class PastParticipantJourneyController : BaseController
     {
 
         // GET: PatientJourney
@@ -31,7 +31,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchParticipantJourney(ParticipantJourneySearchViewModel psm)
+        public ActionResult SearchParticipantJourney(PastParticipantJourneySearchViewModel psm)
         {
             if (!IsUserAuthenticated())
             {
@@ -44,9 +44,9 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
-            ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
+            PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new PastParticipantJourneyManager())
             {
                 IList<PatientEventViewModel> patientEvents = participantJourneyManager.GetPatientEventsByNric(psm.Nric, out message);
                 if (patientEvents == null)
@@ -87,7 +87,7 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new PastParticipantJourneyManager())
             {
                 PatientEventViewModel patientEvent = participantJourneyManager.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)
@@ -180,7 +180,7 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new PastParticipantJourneyManager())
             {
                 PatientEventViewModel patientEvent = participantJourneyManager.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)

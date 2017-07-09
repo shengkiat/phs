@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PHS.Business.ViewModel.ParticipantJourney
+namespace PHS.Business.ViewModel.PastParticipantJourney
 {
     public class ModalityCircleViewModel
     {
