@@ -126,6 +126,88 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public bool DeActiveEvent(PHSEvent eventModel)
+        {
+            if (eventModel == null)
+            {
+                return false;
+            }
+
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var eventToUpdate = unitOfWork.Events.GetEvent(eventModel.PHSEventID);
+
+                eventToUpdate.IsActive = false;
+                eventToUpdate.UpdatedDateTime = DateTime.Now;
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+
+                return true;
+            }
+        }
+
+        public bool DeleteEvent(int eventid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var phsEvent = unitOfWork.Events.GetEvent(eventid);
+
+                    if (phsEvent == null)
+                    {
+                        message = "Invalid Event Id";
+                        return false;
+                    }
+
+                    if (phsEvent.EventPatients != null && phsEvent.EventPatients.Count >0)
+                    {
+                        message = "Can't delete event with partients!";
+                        return false;
+                    }
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        List<Modality> modalitiesToDelete = new List<Modality>();
+
+                        foreach (var modality in phsEvent.Modalities)
+                        {
+                            Modality modalityToDelete = unitOfWork.Modalities.Get(modality.ModalityID);
+                            modalitiesToDelete.Add(modalityToDelete);
+                        }
+
+                        //remove EventModality
+                        foreach (Modality m in modalitiesToDelete)
+                        {
+                            phsEvent.Modalities.Remove(m);
+                        }
+
+                        //remove Modality
+                        unitOfWork.Modalities.RemoveRange(modalitiesToDelete);
+
+                        //remove event
+                        unitOfWork.Events.Remove(phsEvent);
+
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                    message = string.Empty;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = "Operation failed during deleting Event";
+                return false;
+            }
+        }
+
         public bool DeleteEventModality(int modalityid, int eventid, out string message)
         {
             message = string.Empty;
