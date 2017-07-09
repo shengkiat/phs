@@ -1,4 +1,6 @@
-﻿using PHS.Common;
+﻿using PHS.Business.Implementation;
+using PHS.Common;
+using PHS.DB;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,12 @@ namespace PHS.Web.Controllers
         // GET: ParticipantJourney
         public ActionResult Index()
         {
-            return View();
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                IEnumerable<PHSEvent> events = participantJourneyManager.FindActiveEvents();
+                return View(events);
+            }
+                
         }
     }
 }

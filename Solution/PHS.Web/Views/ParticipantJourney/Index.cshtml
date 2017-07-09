@@ -1,4 +1,6 @@
-﻿@model PHS.Business.ViewModel.PastParticipantJourney.PastParticipantJourneySearchViewModel
+﻿@model IEnumerable<PHS.DB.PHSEvent>
+
+@using GridMvc.Html
 
 @{
     ViewBag.Title = "Search Participant Page";
@@ -9,21 +11,26 @@
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
-            <div class="text-center">
-                <div>
 
-                    Nric:
-                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+            @if (Model != null)
+            {
 
-                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
-                           formaction="SearchPatient" formmethod="post" />
-                </div>
-            </div>
+                @Html.Grid(Model).Named("eventGrid").Columns(columns =>
+                {
+                    columns.Add(c => c.Title).Titled("Event").Filterable(false);
+                    columns.Add(c => c.PHSEventID, true).Titled("EventID").Filterable(false);
+                    columns.Add(c => c.Venue).Titled("Venue").Filterable(false);
+                    columns.Add(c => c.StartDT).Titled("Start Date").Filterable(false);
+                    columns.Add(c => c.EndDT).Titled("End Date").Filterable(false);
+                }).WithPaging(10).Selectable(true)
+            }
+
+            
         </div>
     </div>
 }
 
 
 <div id="results">
-    @{Html.RenderPartial("_SearchParticipantJourneyResultPartial", Model);}
+
 </div>
