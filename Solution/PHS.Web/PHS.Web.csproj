@@ -558,6 +558,7 @@
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
     <Content Include="Views\Shared\EditProfile.cshtml" />
+    <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

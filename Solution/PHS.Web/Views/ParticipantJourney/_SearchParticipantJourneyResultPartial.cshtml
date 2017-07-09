@@ -3,10 +3,6 @@
 @using PHS.Business.Extensions
 @using GridMvc.Html
 
-@{
-    ViewBag.Title = "Search Participant Page";
-}
-
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
 
 
@@ -22,28 +18,10 @@
         });
     });
 </script>
-
-@using (Html.BeginForm())
-{
-    <div class="form-horizontal">
-        <hr />
-        <div class="form-group">
-            <div class="text-center">
-                <div>
-
-                    Nric:   
-                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
-                    
-                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
-                           formaction="SearchPatient" formmethod="post" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    if (Model.PatientEvents != null && Model.PatientEvents.Count > 0)
+@{
+    if (Model != null && Model.PatientEvents != null && Model.PatientEvents.Count > 0)
     {
-       
+
         @Html.Grid(Model.PatientEvents).Named("participantsGrid").Columns(columns =>
         {
             columns.Add(c => c.Event.Title).Titled("Event").Filterable(false);
@@ -52,8 +30,12 @@
             columns.Add(c => c.FullName).Titled("Name").Filterable(false);
         }).WithPaging(10).Selectable(true)
 
-
-        <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnSearch" class="button-common" style="border-radius: 17px;"
-                           formaction="@Url.Action("JourneyModality", "ParticipantJourney")" />
+        using (Html.BeginForm())
+        {
+            <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnGoToEvent" class="button-common" style="border-radius: 17px;"
+                   formaction="@Url.Action("JourneyModality", "ParticipantJourney")" />
+            
+        }
     }
 }
+
