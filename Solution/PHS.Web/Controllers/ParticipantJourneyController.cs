@@ -289,36 +289,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
-        {
-            foreach (var key in form.AllKeys)
-            {
-                ViewData[key.ToLower()] = form[key];
-            }
-
-        }
-
-        private void AddValueToDictionary(ref IDictionary<string, TemplateFieldValueViewModel> collection, string key, TemplateFieldValueViewModel value)
-        {
-            if (collection.ContainsKey(key))
-            {
-                var newKey = "";
-                int counter = 2;
-                do
-                {
-                    newKey = "{1} {0}".FormatWith(key, counter);
-                    counter++;
-
-                } while (collection.ContainsKey(newKey));
-
-                collection.Add(newKey, value);
-            }
-            else
-            {
-                collection.Add(key, value);
-            }
-        }
-
+       
         private void NotifyViaEmail(NotificationEmailViewModel model)
         {
             EmailSender emailSender = new EmailSender("MailTemplates", false);
