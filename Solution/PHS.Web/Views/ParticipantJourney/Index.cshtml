@@ -1,0 +1,29 @@
+﻿@model PHS.Business.ViewModel.PastParticipantJourney.PastParticipantJourneySearchViewModel
+
+@{
+    ViewBag.Title = "Search Participant Page";
+}
+
+@using (Ajax.BeginForm("SearchParticipantJourney", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div class="text-center">
+                <div>
+
+                    Nric:
+                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+
+                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                           formaction="SearchPatient" formmethod="post" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div id="results">
+    @{Html.RenderPartial("_SearchParticipantJourneyResultPartial", Model);}
+</div>
