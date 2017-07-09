@@ -13,5 +13,6 @@ namespace PHS.Business.Interface
         PHSEvent GetEventByID(int ID, out string message);
         bool NewEvent(PHSEvent eventModel);
         bool UpdateEvent(PHSEvent eventModel);
+        bool DeleteEventModality(int modalityid, int eventid, out string message);
     }
 }

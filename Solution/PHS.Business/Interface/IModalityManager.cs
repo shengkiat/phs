@@ -13,6 +13,6 @@ namespace PHS.Business.Interface
         IEnumerable<Modality> GetAllModalities(int EventID);
         Modality GetModalityByID(int ID, out string message);
         bool NewModality(ModalityEventViewModel modalityEventView, out string message);
-        bool UpdateModality(Modality modalityModel);
+        bool UpdateModality(ModalityEventViewModel modalityEventView, out string message);
     }
 }

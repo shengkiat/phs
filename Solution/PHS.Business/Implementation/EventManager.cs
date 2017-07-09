@@ -126,17 +126,46 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public bool DeleteEventModality(int modalityid, int eventid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var phsEvent = unitOfWork.Events.GetEvent(eventid);
 
+                    if (phsEvent == null)
+                    {
+                        message = "Invalid Event Id";
+                        return false;
+                    }
 
+                    Modality modalityToDelete = unitOfWork.Modalities.Get(modalityid);
 
+                    if (modalityToDelete != null)
+                    {
 
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            phsEvent.Modalities.Remove(modalityToDelete);
+                            unitOfWork.Modalities.Remove(modalityToDelete);
 
-
-
-
-
-
-
+                            unitOfWork.Complete();
+                            scope.Complete();
+                        }
+                    }
+                    message = string.Empty;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = "Operation failed during deleting Modality";
+                return false;
+            }
+        }
 
     }
 }

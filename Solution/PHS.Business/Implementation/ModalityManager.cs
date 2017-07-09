@@ -11,6 +11,7 @@ using System.Transactions;
 using PHS.Business.Common;
 using PHS.Business.ViewModel.Event;
 using PHS.Common;
+using System.IO;
 
 namespace PHS.Business.Implementation
 {
@@ -57,6 +58,7 @@ namespace PHS.Business.Implementation
         public bool NewModality(ModalityEventViewModel modalityEventView, out string message)
         {
             message = string.Empty;
+
             Modality modality = new Modality();
 
             Util.CopyNonNullProperty(modalityEventView, modality);
@@ -83,17 +85,60 @@ namespace PHS.Business.Implementation
 
         }
 
-        public bool UpdateModality(Modality modalityModel)
+        public bool UpdateModality(ModalityEventViewModel modalityEventView, out string message)
         {
-            throw new NotImplementedException();
+            message = string.Empty;
+
+            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            {
+                var modalityToUpdate = unitOfWork.Modalities.Get(modalityEventView.ModalityID);
+                modalityToUpdate.Name = modalityEventView.Name;
+                if (modalityEventView.IconPath != null && modalityEventView.IconPath.Length > 0) {
+                    modalityToUpdate.IconPath = modalityEventView.IconPath;
+                }
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+
+                return true;
+            }
+
         }
 
-        //public bool UpdateModality(Modality modalityModel)
+        //public bool DeleteModality(int modalityid, int eventid, out string message)
         //{
-        //    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+        //    message = string.Empty;
+        //    try
         //    {
-        //        var modalityToUpdate = unitOfWork.Modalities.Get(modalityModel.ModalityID);
-        //        modalityToUpdate.
+        //        using (var unitOfWork = new UnitOfWork(new PHSContext()))
+        //        {
+        //            Modality modality = GetModalityByID(modalityid, out message);
+
+        //            if (modality == null)
+        //            {
+        //                message = "Invalid Modality Id";
+        //                return false;
+        //            }
+
+        //            using (TransactionScope scope = new TransactionScope())
+        //            {
+        //                unitOfWork.Modalities.Remove(modality);
+
+        //                unitOfWork.Complete();
+        //                scope.Complete();
+        //            }
+        //            message = string.Empty;
+        //            return true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionLog(ex);
+        //        message = "Operation failed during deleting Modality";
+        //        return false;
         //    }
         //}
     }
