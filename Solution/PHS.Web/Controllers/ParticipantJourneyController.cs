@@ -46,9 +46,9 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientSearchModel result = new PatientSearchModel();
 
-            using (var getPatientJourney = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.Nric, out message);
+                IList<PatientEventViewModel> patientEvents = participantJourneyManager.GetPatientEventsByNric(psm.Nric, out message);
                 if (patientEvents == null)
                 {
                     SetViewBagError(message);
@@ -87,9 +87,9 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var getPatientJourney = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                PatientEventViewModel patientEvent = participantJourneyManager.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)
                 {
                     SetViewBagError(message);
@@ -180,9 +180,9 @@ namespace PHS.Web.Controllers
             string message = string.Empty;
             PatientEventViewModel result = new PatientEventViewModel();
 
-            using (var getPatientJourney = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                PatientEventViewModel patientEvent = getPatientJourney.GetPatientEvent(nric, eventId, out message);
+                PatientEventViewModel patientEvent = participantJourneyManager.GetPatientEvent(nric, eventId, out message);
                 if (patientEvent == null)
                 {
                     SetViewBagError(message);
