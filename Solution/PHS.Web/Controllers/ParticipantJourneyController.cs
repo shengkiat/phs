@@ -70,40 +70,6 @@ namespace PHS.Web.Controllers
             }
         }
 
-        // Both GET and POST: /PatientJourney/SearchPatient
-        [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult SearchPatient(PatientSearchModel psm)
-        {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
-
-            if (psm == null)
-            {
-                return View();
-            }
-
-            string message = string.Empty;
-            PatientSearchModel result = new PatientSearchModel();
-
-            using (var getPatientJourney = new ParticipantJourneyManager())
-            {
-                IList<PatientEventViewModel> patientEvents = getPatientJourney.GetPatientEventsByNric(psm.Nric, out message);
-                if (patientEvents == null)
-                {
-                    SetViewBagError(message);
-                }
-
-                else
-                {
-                    result.PatientEvents = patientEvents;
-                }
-            }
-
-            return View(result);
-        }
-
         // Both GET and POST: /PatientJourney/JourneyModality
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult JourneyModality(string nric, string eventId)
