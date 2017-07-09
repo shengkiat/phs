@@ -18,19 +18,6 @@ namespace PHS.Web.Controllers
 
     public class ParticipantJourneyController : BaseController
     {
-        private FormRepository _formRepo { get; set; }
-
-        public ParticipantJourneyController()
-            : this(new FormRepository(new PHSContext()))
-        {
-
-        }
-
-        public ParticipantJourneyController(FormRepository formRepo)
-        {
-            this._formRepo = formRepo;
-        }
-
 
         // GET: PatientJourney
         public ActionResult Index()
@@ -213,124 +200,87 @@ namespace PHS.Web.Controllers
             // var form = this._formRepo.GetByPrimaryKey(id);
 
             //TODO should retrieve form by eventId + formId?
-            var template = this._formRepo.GetTemplate(templateId);
+            using (var formManager = new FormManager())
+            { 
+                var template = formManager.FindTemplate(templateId);
 
-            if (template != null)
-            {
-                if (model.Title.Equals("Mega Sorting Station"))
+                if (template != null)
                 {
-                    return PartialView("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));
+                    if (model.Title.Equals("Mega Sorting Station"))
+                    {
+                        return PartialView("_MegaSortingStationPartial", TempData.Peek("PatientEventModalityViewModel"));
+                    }
+
+                    else
+                    {
+                        model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                        model.Embed = embed;
+                    }
+
+                }
+                else
+                {
+                    // return RedirectToAction("edit", new { formId = form.ID });
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        {
+            using (var formManager = new FormManager())
+            {
+                IList<string> errors = Enumerable.Empty<string>().ToList();
+                //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
+
+                var template = formManager.FindTemplate(model.TemplateID.Value);
+
+
+                var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                string result = formManager.FillIn(SubmitFields, model, formCollection);
+
+                if (result.Equals("success"))
+                {
+                    //send notification
+                    if (!templateView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
+                    {
+                        var notificationView = new NotificationEmailViewModel();
+                        notificationView.FormName = templateView.Title;
+                        notificationView.Email = templateView.NotificationEmail;
+
+                        //TODO if need to use this, need to retrieve the entries
+                        //notificationView.Entries = ??;
+
+                        NotifyViaEmail(notificationView);
+                    }
+
+                    TempData["success"] = templateView.ConfirmationMessage;
+
+                    //TODO this codes might not needed after prototype
+                    List<PatientEventModalityViewModel> patientEventModalitys = (List<PatientEventModalityViewModel>)TempData.Peek("PatientEventModalityViewModel");
+
+                    foreach (var patientEventModality in patientEventModalitys)
+                    {
+                        if (patientEventModality.isModalityFormsContain(model.TemplateID.Value))
+                        {
+                            patientEventModality.modalityCompletedForms.Add(model.TemplateID.Value);
+                        }
+                    }
+
+                    TempData["PatientEventModalityViewModel"] = patientEventModalitys;
+
+                    return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                 }
 
                 else
                 {
-                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                    model.Embed = embed;
+                    TempData["error"] = result;
+                    return Json(new { success = false, error = "Unable to save form ", isautosave = false });
                 }
-                
-            }
-            else
-            {
-               // return RedirectToAction("edit", new { formId = form.ID });
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection form)
-        {
-            IList<string> errors = Enumerable.Empty<string>().ToList();
-            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
-
-            var formObj = this._formRepo.GetTemplate(model.TemplateID.Value);
-
-
-            var formView = TemplateViewModel.CreateFromObject(formObj, Constants.TemplateFieldMode.INPUT);
-            formView.AssignInputValues(form);
-            this.InsertValuesIntoTempData(SubmitFields, form);
-
-
-            if (formView.Fields.Any())
-            {
-                // first validate fields
-                foreach (var field in formView.Fields)
-                {
-                    var valId = field.ValidationId();
-                    if (!field.SubmittedValueIsValid(form))
-                    {
-                        field.SetFieldErrors();
-                        errors.Add(field.Errors);
-                        goto Error;
-                    }
-
-                    var value = field.SubmittedValue(form);
-                    if (field.IsRequired && value.IsNullOrEmpty())
-                    {
-                        field.Errors = "{0} is a required field".FormatWith(field.Label);
-                        errors.Add(field.Errors);
-                        goto Error;
-                    }
-                };
-
-                //then insert values
-                var entryId = Guid.NewGuid();
-                var notificationView = new NotificationEmailViewModel();
-                notificationView.FormName = formView.Title;
-                IDictionary<string, TemplateFieldValueViewModel> notificationEntries = new Dictionary<string, TemplateFieldValueViewModel>();
-                foreach (var field in formView.Fields)
-                {
-                    var value = field.SubmittedValue(form);
-
-                    //if it's a file, save it to hard drive
-                    if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                    {
-                        //var file = Request.Files[field.SubmittedFieldName()];
-                        //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                        //if (fileValueObject != null)
-                        //{
-                            
-                        //    file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                            
-                        //}
-                    }
-
-                    this.AddValueToDictionary(ref notificationEntries, field.Label, new TemplateFieldValueViewModel(field.FieldType, value));
-                    notificationView.Entries = notificationEntries;
-                    this._formRepo.InsertTemplateFieldValue(field, value, entryId);
-                }
-
-                //send notification
-                if (!formView.NotificationEmail.IsNullOrEmpty() && WebConfig.Get<bool>("enablenotifications", true))
-                {
-                    notificationView.Email = formView.NotificationEmail;
-                    this.NotifyViaEmail(notificationView);
-                }
-
-                TempData["success"] = formView.ConfirmationMessage;
-
-                //TODO this codes might not needed after prototype
-                List<PatientEventModalityViewModel> patientEventModalitys = (List<PatientEventModalityViewModel>) TempData.Peek("PatientEventModalityViewModel");
-
-                foreach(var patientEventModality in patientEventModalitys)
-                {
-                    if (patientEventModality.isModalityFormsContain(model.TemplateID.Value))
-                    {
-                        patientEventModality.modalityCompletedForms.Add(model.TemplateID.Value);
-                    }
-                }
-
-                TempData["PatientEventModalityViewModel"] = patientEventModalitys;
-
-                return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
 
             }
-
-        Error:
-            TempData["error"] = errors.ToUnorderedList();
-           // var error = "Unable to save form ".AppendIfDebugMode(errors.ToUnorderedList());
-            return Json(new { success = false, error = "Unable to save form ", isautosave = false });
         }
 
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection form)
