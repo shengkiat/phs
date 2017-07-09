@@ -1,24 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PHS.Business.Implementation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PHS.Business.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using PHS.DB;
-using PHS.Repository;
 using PHS.Repository.Context;
-using System.IO;
 using PHS.DB.ViewModels.Form;
-using PHS.Business.Extensions;
-using System.Transactions;
 using System.Web.Mvc;
 using PHS.Common;
-using PHS.BusinessTests.Implementation;
 using PHS.Repository.Interface.Core;
 using PHS.BusinessTests;
 using Effort;
@@ -605,6 +593,21 @@ namespace PHS.Business.Implementation.Tests
             fields.Add("1", "1");
 
             return fieldCollection;
+        }
+
+        private class MockFormManager : FormManager
+        {
+            private IUnitOfWork _unitOfWork;
+
+            public MockFormManager(IUnitOfWork unitOfWork)
+            {
+                _unitOfWork = unitOfWork;
+            }
+
+            protected override IUnitOfWork CreateUnitOfWork()
+            {
+                return _unitOfWork;
+            }
         }
 
     }

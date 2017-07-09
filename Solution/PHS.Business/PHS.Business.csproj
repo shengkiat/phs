@@ -109,6 +109,7 @@
     <Compile Include="Implementation\ModalityManager.cs" />
     <Compile Include="Implementation\EventManager.cs" />
     <Compile Include="Implementation\FormManager.cs" />
+    <Compile Include="Implementation\ParticipantJourneyManager.cs" />
     <Compile Include="Implementation\PastParticipantJourneyManager.cs" />
     <Compile Include="Implementation\PersonManager.cs" />
     <Compile Include="Interface\IAddressManager.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Interface\IEventManager.cs" />
     <Compile Include="Interface\IFormManager.cs" />
     <Compile Include="Interface\IManagerFactoryBase.cs" />
+    <Compile Include="Interface\IParticipantJourneyManager.cs" />
     <Compile Include="Interface\IPastParticipantJourneyManager.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
