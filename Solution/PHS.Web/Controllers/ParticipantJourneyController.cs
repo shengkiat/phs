@@ -10,7 +10,7 @@ namespace PHS.Web.Controllers
     using PHS.Business.Common;
     using PHS.Business.Extensions;
     using PHS.Business.Implementation;
-    using PHS.Business.ViewModel.PatientJourney;
+    using PHS.Business.ViewModel.ParticipantJourney;
     using PHS.Common;
     using PHS.DB.ViewModels.Form;
     using PHS.Repository.Repository;
