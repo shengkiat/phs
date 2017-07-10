@@ -1,6 +1,7 @@
 ﻿using Effort;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PHS.Business.Implementation;
+using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.BusinessTests;
 using PHS.DB;
 using PHS.Repository.Context;
@@ -36,10 +37,10 @@ namespace PHS.Business.Implementation.Tests
 
             _unitOfWork.Complete();
 
-            IEnumerable<PHSEvent> result = _target.FindActiveEvents();
+            ParticipantJourneySearchViewModel result = _target.FindActiveEvents();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(1, result.PHSEvents.Count());
         }
 
         [TestInitialize]

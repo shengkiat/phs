@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PHS.DB.PHSEvent>
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneySearchViewModel
 
 @using GridMvc.Html
 
@@ -17,11 +17,26 @@
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
+            <div class="text-center">
+                <div>
+
+                    Nric:
+                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+
+                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                           formaction="SearchPatient" formmethod="post" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <h3>Active Events</h3>
 
             @if (Model != null)
             {
 
-                @Html.Grid(Model).Named("eventGrid").Columns(columns =>
+                @Html.Grid(Model.PHSEvents).Named("eventGrid").Columns(columns =>
                 {
                     columns.Add(c => c.PHSEventID, true).Titled("EventID").Filterable(false);
                     columns.Add(c => c.Title).Titled("Event").Filterable(false);
@@ -30,9 +45,10 @@
                     columns.Add(c => c.EndDT).Titled("End Date").Filterable(false);
                 }).WithPaging(10).Selectable(true)
             }
-
             
         </div>
+        
+        
     </div>
 }
 
