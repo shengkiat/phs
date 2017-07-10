@@ -24,5 +24,17 @@ namespace PHS.Web.Controllers
             }
                 
         }
+
+        [HttpPost]
+        public ActionResult SearchParticipantJourney(ParticipantJourneySearchViewModel psm)
+        {
+
+            if (psm == null)
+            {
+                return View();
+            }
+
+            return View();
+        }
     }
 }

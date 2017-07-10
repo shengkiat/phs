@@ -10,6 +10,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
     public class ParticipantJourneySearchViewModel
     {
         public string Nric { get; set; }
+        public int PHSEventId { get; set; }
         public IEnumerable<PHSEvent> PHSEvents { get; set; }
     }
 }

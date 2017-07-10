@@ -24,7 +24,7 @@
                     @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
 
                     <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
-                           formaction="SearchPatient" formmethod="post" />
+                           formaction="SearchParticipantJourney" formmethod="post" />
                 </div>
             </div>
         </div>
@@ -44,6 +44,8 @@
                     columns.Add(c => c.StartDT).Titled("Start Date").Filterable(false);
                     columns.Add(c => c.EndDT).Titled("End Date").Filterable(false);
                 }).WithPaging(10).Selectable(true)
+
+                @Html.HiddenFor(m => m.PHSEventId)
             }
             
         </div>
@@ -64,11 +66,11 @@
             $('tbody tr:first').each(function () {
                 $(this).addClass('grid-row-selected');
                 var eventId = $(this).find("td:first").html();
-                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + eventId + "&nric=" + e.row.Nric); //Will set it
+                document.getElementById("PHSEventId").value = eventId;
             });
 
             pageGrids.eventGrid.onRowSelect(function (e) {
-                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+                document.getElementById("PHSEventId").value = e.row.PHSEventID;
             });
 
 
