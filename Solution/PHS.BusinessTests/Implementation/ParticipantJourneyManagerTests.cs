@@ -22,7 +22,7 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void FindActiveEventsTest_FindActiveEvent()
+        public void RetrieveActiveScreeningEvent_FindActiveEvent()
         {
             PHSEvent phsEvent = new PHSEvent()
             {
@@ -37,7 +37,7 @@ namespace PHS.Business.Implementation.Tests
 
             _unitOfWork.Complete();
 
-            ParticipantJourneySearchViewModel result = _target.FindActiveEvents();
+            ParticipantJourneySearchViewModel result = _target.RetrieveActiveScreeningEvent();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.PHSEvents.Count());

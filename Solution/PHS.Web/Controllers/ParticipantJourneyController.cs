@@ -19,7 +19,7 @@ namespace PHS.Web.Controllers
         {
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                ParticipantJourneySearchViewModel result = participantJourneyManager.FindActiveEvents();
+                ParticipantJourneySearchViewModel result = participantJourneyManager.RetrieveActiveScreeningEvent();
                 return View(result);
             }
                 
@@ -34,7 +34,13 @@ namespace PHS.Web.Controllers
                 return View();
             }
 
-            return View();
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                //ParticipantJourneySearchViewModel result = participantJourneyManager.SearchParticipantJourney(psm);
+                //return View(result);
+
+                return View();
+            }
         }
     }
 }

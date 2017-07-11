@@ -16,8 +16,31 @@ namespace PHS.Business.Implementation
             return new ParticipantJourneyManager();
         }
 
-        public ParticipantJourneySearchViewModel FindActiveEvents()
+        public ParticipantJourneySearchViewModel RetrieveActiveScreeningEvent()
         {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
+                DateTime currentTime = DateTime.Now;
+                result.PHSEvents = unitOfWork.Events.GetAll();
+                //result.PHSEvents = unitOfWork.Events.GetAll().Where(e => e.IsActive == true && currentTime.Ticks > e.StartDT.Ticks && currentTime.Ticks < e.EndDT.Ticks);
+
+                return result;
+            }
+        }
+
+        public ParticipantJourneySearchViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm)
+        {
+            if (psm == null)
+            {
+                throw new Exception("Parameter cannot be null");
+            }
+
+            if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                throw new Exception("Nric or PHSEventId cannot be null");
+            }
+
             using (var unitOfWork = CreateUnitOfWork())
             {
                 ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
