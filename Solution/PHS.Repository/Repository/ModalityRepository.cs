@@ -2,6 +2,7 @@
 using PHS.Repository.Interface;
 using PHS.Repository.Repository.Core;
 using System.Data.Entity;
+using System.Linq;
 
 namespace PHS.Repository.Repository
 {
@@ -9,6 +10,11 @@ namespace PHS.Repository.Repository
     {
         public ModalityRepository(DbContext context) : base(context)
         {
+        }
+
+        public Modality GetModalityByID(int id)
+        {
+            return dbContext.Set<Modality>().Where(u => u.ModalityID == id && u.IsActive == true).Include(x => x.Forms).FirstOrDefault();
         }
     }
 }

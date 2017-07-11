@@ -17,7 +17,7 @@ namespace PHS.Repository.Interface.Core
 
         IModalityRepository Modalities { get; }
 
-        IEventPatientRepository EventPatient { get; }
+        IParticipantRepository Participant { get; }
 
         ITemplateFieldValueRepository TemplateFieldValues { get;  }
 

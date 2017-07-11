@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Implementation;
+using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
 using PHS.DB;
 using PHS.Web.Filter;
@@ -18,10 +19,28 @@ namespace PHS.Web.Controllers
         {
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                IEnumerable<PHSEvent> events = participantJourneyManager.FindActiveEvents();
-                return View(events);
+                ParticipantJourneySearchViewModel result = participantJourneyManager.RetrieveActiveScreeningEvent();
+                return View(result);
             }
                 
+        }
+
+        [HttpPost]
+        public ActionResult SearchParticipantJourney(ParticipantJourneySearchViewModel psm)
+        {
+
+            if (psm == null)
+            {
+                return View();
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                //ParticipantJourneySearchViewModel result = participantJourneyManager.SearchParticipantJourney(psm);
+                //return View(result);
+
+                return View();
+            }
         }
     }
 }

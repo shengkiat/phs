@@ -54,7 +54,7 @@ namespace PHS.Repository.Context
             }
         }
 
-        public virtual DbSet<EventPatient> EventPatients { get; set; }
+        public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }

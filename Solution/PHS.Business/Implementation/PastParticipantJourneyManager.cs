@@ -32,14 +32,14 @@ namespace PHS.Business.Implementation
                 {
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
-                        var eventpatients = unitOfWork.EventPatient.FindEventPatients(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
+                        var eventpatients = unitOfWork.Participant.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
                         //Nric = getMockData(nric);
 
                         if (eventpatients != null && eventpatients.Any())
                         {
                             message = string.Empty;
                             result = new List<PatientEventViewModel>();
-                            foreach (EventPatient eventPatient in eventpatients.ToList())
+                            foreach (Participant eventPatient in eventpatients.ToList())
                             {
                                 result.Add(new PatientEventViewModel(eventPatient));
                             }
@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatient = unitOfWork.EventPatient.FindEventPatient(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvent.PHSEventID == intEventId);
+                        var eventpatient = unitOfWork.Participant.FindParticipant(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvents.All(z=> z.PHSEventID == intEventId));
                         //Nric = getMockData(nric);
 
                         if (eventpatient != null)
@@ -333,14 +333,14 @@ namespace PHS.Business.Implementation
 
             patientOne.FullName = "ABCDE";
             patientOne.Nric = "S8518538A";
-            patientOne.Event = eventOne;
+            //patientOne.Event = eventOne;
            // patientOne.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientOne);
 
             PatientEventViewModel patientTwo = new PatientEventViewModel();
             patientTwo.FullName = "ABCDE";
             patientTwo.Nric = "S8518538A";
-            patientTwo.Event = eventTwo;
+           // patientTwo.Event = eventTwo;
             //patientTwo.ModalityCircles = modalityCircleList;
             firstRecords.Add(patientTwo);
 

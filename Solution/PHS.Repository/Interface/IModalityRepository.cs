@@ -5,5 +5,6 @@ namespace PHS.Repository.Interface
 {
     public interface  IModalityRepository : IRepository<Modality>
     {
+        Modality GetModalityByID(int id);
     }
 }

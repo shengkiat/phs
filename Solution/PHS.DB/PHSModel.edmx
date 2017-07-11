@@ -27,19 +27,6 @@
           <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="EventPatient">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PHSEventID" Type="int" Nullable="false" />
-          <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ContactNumber" Type="nvarchar(max)" />
-          <Property Name="DateOfBirth" Type="datetime" />
-          <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="Form">
           <Key>
             <PropertyRef Name="FormID" />
@@ -72,7 +59,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsVisible" Type="bit" Nullable="false" />
           <Property Name="IsMandatory" Type="bit" Nullable="false" />
-		  <Property Name="HasParent" Type="bit" />
+          <Property Name="HasParent" Type="bit" />
           <Property Name="Status" Type="nvarchar(max)" />
           <Property Name="Eligiblity" Type="nvarchar(max)" />
           <Property Name="Labels" Type="int" />
@@ -84,6 +71,26 @@
           </Key>
           <Property Name="ModalityID" Type="int" Nullable="false" />
           <Property Name="FormID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipantPHSEvent">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+            <PropertyRef Name="PHSEventID" />
+          </Key>
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="PHSEventID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -189,6 +196,32 @@
           <Property Name="TemplateID" Type="int" Nullable="false" />
           <Property Name="TemplateFieldID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK participant_phs_event_participant">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ParticipantPHSEvent" Type="Self.ParticipantPHSEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipantPHSEvent">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK participant_phs_event_phs_event">
+          <End Role="PHSEvent" Type="Self.PHSEvent" Multiplicity="1" />
+          <End Role="ParticipantPHSEvent" Type="Self.ParticipantPHSEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHSEvent">
+              <PropertyRef Name="PHSEventID" />
+            </Principal>
+            <Dependent Role="ParticipantPHSEvent">
+              <PropertyRef Name="PHSEventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK template_fields_template_template_fields">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -224,18 +257,6 @@
             </Principal>
             <Dependent Role="EventModality">
               <PropertyRef Name="ModalityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventPatient_Event">
-          <End Role="PHSEvent" Type="Self.PHSEvent" Multiplicity="1" />
-          <End Role="EventPatient" Type="Self.EventPatient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PHSEvent">
-              <PropertyRef Name="PHSEventID" />
-            </Principal>
-            <Dependent Role="EventPatient">
-              <PropertyRef Name="PHSEventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -304,17 +325,26 @@
         <EntityContainer Name="phsModelStoreContainer">
           <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventPatient" EntityType="Self.EventPatient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterAddress" EntityType="Self.MasterAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modality" EntityType="Self.Modality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModalityForm" EntityType="Self.ModalityForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantPHSEvent" EntityType="Self.ParticipantPHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHSEvent" EntityType="Self.PHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateTemplateField" EntityType="Self.TemplateTemplateField" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK participant_phs_event_participant" Association="Self.FK participant_phs_event_participant">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="ParticipantPHSEvent" EntitySet="ParticipantPHSEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK participant_phs_event_phs_event" Association="Self.FK participant_phs_event_phs_event">
+            <End Role="PHSEvent" EntitySet="PHSEvent" />
+            <End Role="ParticipantPHSEvent" EntitySet="ParticipantPHSEvent" />
+          </AssociationSet>
           <AssociationSet Name="FK template_fields_template_template_fields" Association="Self.FK template_fields_template_template_fields">
             <End Role="TemplateField" EntitySet="TemplateField" />
             <End Role="TemplateTemplateField" EntitySet="TemplateTemplateField" />
@@ -326,10 +356,6 @@
           <AssociationSet Name="FK_EventModality_Modality" Association="Self.FK_EventModality_Modality">
             <End Role="Modality" EntitySet="Modality" />
             <End Role="EventModality" EntitySet="EventModality" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventPatient_Event" Association="Self.FK_EventPatient_Event">
-            <End Role="PHSEvent" EntitySet="PHSEvent" />
-            <End Role="EventPatient" EntitySet="EventPatient" />
           </AssociationSet>
           <AssociationSet Name="FK_Form_Template" Association="Self.FK_Form_Template">
             <End Role="Form" EntitySet="Form" />
@@ -358,19 +384,15 @@
       <Schema Namespace="phsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
-          <EntitySet Name="EventPatients" EntityType="phsModel.EventPatient" />
           <EntitySet Name="Forms" EntityType="phsModel.Form" />
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
+          <EntitySet Name="Participants" EntityType="phsModel.Participant" />
           <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
           <EntitySet Name="Templates" EntityType="phsModel.Template" />
           <EntitySet Name="TemplateFields" EntityType="phsModel.TemplateField" />
           <EntitySet Name="TemplateFieldValues" EntityType="phsModel.TemplateFieldValue" />
-          <AssociationSet Name="FK_EventPatient_Event" Association="phsModel.FK_EventPatient_Event">
-            <End Role="PHSEvent" EntitySet="PHSEvents" />
-            <End Role="EventPatient" EntitySet="EventPatients" />
-          </AssociationSet>
           <AssociationSet Name="FK_Form_Template" Association="phsModel.FK_Form_Template">
             <End Role="Form" EntitySet="Forms" />
             <End Role="Template" EntitySet="Templates" />
@@ -386,6 +408,10 @@
           <AssociationSet Name="ModalityForm" Association="phsModel.ModalityForm">
             <End Role="Form" EntitySet="Forms" />
             <End Role="Modality" EntitySet="Modalities" />
+          </AssociationSet>
+          <AssociationSet Name="ParticipantPHSEvent" Association="phsModel.ParticipantPHSEvent">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="PHSEvent" EntitySet="PHSEvents" />
           </AssociationSet>
           <AssociationSet Name="TemplateTemplateField" Association="phsModel.TemplateTemplateField">
             <End Role="TemplateField" EntitySet="TemplateFields" />
@@ -405,20 +431,6 @@
           <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="OriginalValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NewValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="EventPatient">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PHSEventID" Type="Int32" Nullable="false" />
-          <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_EventPatient_Event" FromRole="EventPatient" ToRole="PHSEvent" />
         </EntityType>
         <EntityType Name="Form">
           <Key>
@@ -453,13 +465,26 @@
           <Property Name="IconPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsVisible" Type="Boolean" Nullable="false" />
-		  <Property Name="IsMandatory" Type="Boolean" Nullable="false" />
+          <Property Name="IsMandatory" Type="Boolean" Nullable="false" />
           <Property Name="HasParent" Type="Boolean" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Eligiblity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Labels" Type="Int32" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="PHSEvent" />
           <NavigationProperty Name="Forms" Relationship="phsModel.ModalityForm" FromRole="Modality" ToRole="Form" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHSEvents" Relationship="phsModel.ParticipantPHSEvent" FromRole="Participant" ToRole="PHSEvent" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -475,9 +500,9 @@
           <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedBy" Type="String" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
           <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
@@ -496,8 +521,8 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="EventPatients" Relationship="phsModel.FK_EventPatient_Event" FromRole="PHSEvent" ToRole="EventPatient" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="PHSEvent" ToRole="Modality" />
+          <NavigationProperty Name="Participants" Relationship="phsModel.ParticipantPHSEvent" FromRole="PHSEvent" ToRole="Participant" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -564,18 +589,6 @@
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="TemplateField" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateFieldValue" ToRole="TemplateField" />
         </EntityType>
-        <Association Name="FK_EventPatient_Event">
-          <End Type="phsModel.PHSEvent" Role="PHSEvent" Multiplicity="1" />
-          <End Type="phsModel.EventPatient" Role="EventPatient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PHSEvent">
-              <PropertyRef Name="PHSEventID" />
-            </Principal>
-            <Dependent Role="EventPatient">
-              <PropertyRef Name="PHSEventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Form_Template">
           <End Type="phsModel.Form" Role="Form" Multiplicity="1" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
@@ -610,6 +623,10 @@
           <End Type="phsModel.Form" Role="Form" Multiplicity="*" />
           <End Type="phsModel.Modality" Role="Modality" Multiplicity="*" />
         </Association>
+        <Association Name="ParticipantPHSEvent">
+          <End Type="phsModel.Participant" Role="Participant" Multiplicity="*" />
+          <End Type="phsModel.PHSEvent" Role="PHSEvent" Multiplicity="*" />
+        </Association>
         <Association Name="TemplateTemplateField">
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
@@ -632,20 +649,6 @@
                 <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventPatients">
-            <EntityTypeMapping TypeName="phsModel.EventPatient">
-              <MappingFragment StoreEntitySet="EventPatient">
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Language" ColumnName="Language" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Nric" ColumnName="Nric" />
-                <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -679,13 +682,26 @@
                 <ScalarProperty Name="Eligiblity" ColumnName="Eligiblity" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="HasParent" ColumnName="HasParent" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-				<ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
                 <ScalarProperty Name="IconPath" ColumnName="IconPath" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="phsModel.Participant">
+              <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Nric" ColumnName="Nric" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -701,8 +717,8 @@
                 <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
                 <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
+                <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -804,6 +820,14 @@
             </EndProperty>
             <EndProperty Name="Form">
               <ScalarProperty Name="FormID" ColumnName="FormID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ParticipantPHSEvent" TypeName="phsModel.ParticipantPHSEvent" StoreEntitySet="ParticipantPHSEvent">
+            <EndProperty Name="PHSEvent">
+              <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
+            </EndProperty>
+            <EndProperty Name="Participant">
+              <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="TemplateTemplateField" TypeName="phsModel.TemplateTemplateField" StoreEntitySet="TemplateTemplateField">

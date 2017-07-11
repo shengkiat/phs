@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Implementation;
+using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using System;
@@ -21,38 +22,6 @@ namespace PHS.Web.Controllers
             }
 
             return View(events);
-        }
-
-        public ActionResult Edit(int id)
-        {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
-
-            string message = string.Empty;
-            using (var getEvent = new EventManager())
-            {
-                PHSEvent eventModel = getEvent.GetEventByID(id, out message);
-                if (eventModel == null)
-                {
-                    SetViewBagError(message);
-                }
-
-                SetBackURL("Index");
-                return View(eventModel);
-            };
-        }
-
-        [HttpPost]
-        public ActionResult Edit(PHSEvent eventModel)
-        {
-            using (var eventManager = new EventManager())
-            {
-                eventManager.UpdateEvent(eventModel);
-            }
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult Create()
@@ -92,7 +61,15 @@ namespace PHS.Web.Controllers
             {
                 using (var eventManager = new EventManager())
                 {
-                    eventModel.CreatedBy = "";
+                    //Person loginUser = GetLoginUser();
+                    //if(loginUser != null)
+                    //{
+                    //    eventModel.CreatedBy = loginUser.PersonID;
+                    //}
+                    //else
+                    //{
+                        eventModel.CreatedBy = "";
+                    //}
                     eventModel.Modalities = BuildDefaultModalites();
 
                     foreach (var newModality in eventModel.Modalities)
@@ -110,8 +87,61 @@ namespace PHS.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int id)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
 
+            string message = string.Empty;
+            using (var getEvent = new EventManager())
+            {
+                PHSEvent eventModel = getEvent.GetEventByID(id, out message);
+                if (eventModel == null)
+                {
+                    SetViewBagError(message);
+                }
 
+                SetBackURL("Index");
+                return View(eventModel);
+            };
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PHSEvent eventModel)
+        {
+            using (var eventManager = new EventManager())
+            {
+                eventManager.UpdateEvent(eventModel);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            string message = string.Empty;
+            using (var getEvent = new EventManager())
+            {
+                bool isDeleted = getEvent.DeleteEvent(id, out message);
+
+                if (isDeleted == false)
+                {
+                    SetTempDataError(message);
+                }else
+                {
+                    SetTempDataMessage(Constants.ValueSuccessfuly("Event has been deleted!"));
+                }
+
+                return RedirectToAction("Index");
+            };
+        }
 
         private List<Modality> BuildDefaultModalites()
         {

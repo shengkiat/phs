@@ -35,6 +35,12 @@ IF OBJECT_ID('dbo.Modality', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.EventPatient', 'U') IS NOT NULL 
   DROP TABLE [dbo].[EventPatient]; 
   
+IF OBJECT_ID('dbo.ParticipantPHSEvent', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[ParticipantPHSEvent]; 
+  
+IF OBJECT_ID('dbo.Participant', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Participant]; 
+  
 IF OBJECT_ID('dbo.PHSEvent', 'U') IS NOT NULL 
   DROP TABLE [dbo].[PHSEvent]; 
 
@@ -142,18 +148,17 @@ CREATE TABLE [dbo].[Modality](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 
-CREATE TABLE [dbo].[EventPatient](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[PHSEventID] [int] NOT NULL,
+CREATE TABLE [dbo].[Participant](
+	[ParticipantID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
 	[Language] [nvarchar](max) NOT NULL,
 	[Gender] [nvarchar](max) NOT NULL,
- CONSTRAINT [PK_event_patient] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Participant] PRIMARY KEY CLUSTERED 
 (
-	[ID] ASC
+	[ParticipantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
@@ -251,6 +256,17 @@ CREATE TABLE [dbo].[Form](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+
+CREATE TABLE [dbo].[ParticipantPHSEvent](
+	[ParticipantID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
+ CONSTRAINT [PK_participant_phs_event] PRIMARY KEY CLUSTERED 
+(
+	[ParticipantID] ASC,
+	[PHSEventID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
@@ -260,11 +276,6 @@ ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_
 REFERENCES [dbo].[Modality] ([ModalityID])
 GO
 ALTER TABLE [dbo].[EventModality] CHECK CONSTRAINT [FK_EventModality_Modality]
-GO
-ALTER TABLE [dbo].[EventPatient]  WITH CHECK ADD  CONSTRAINT [FK_EventPatient_Event] FOREIGN KEY([PHSEventID])
-REFERENCES [dbo].[PHSEvent] ([PHSEventID])
-GO
-ALTER TABLE [dbo].[EventPatient] CHECK CONSTRAINT [FK_EventPatient_Event]
 GO
 ALTER TABLE [dbo].[TemplateFieldValue]  WITH CHECK ADD  CONSTRAINT [FK_template_field_values_template_fields] FOREIGN KEY([TemplateFieldID])
 REFERENCES [dbo].[TemplateField] ([TemplateFieldID])
@@ -298,7 +309,17 @@ REFERENCES [dbo].[Form] ([FormID])
 GO
 ALTER TABLE [dbo].[Template] CHECK CONSTRAINT [FK_Form_Template]
 GO
-
+ALTER TABLE [dbo].[ParticipantPHSEvent]  WITH CHECK ADD  CONSTRAINT [FK participant_phs_event_participant] FOREIGN KEY([ParticipantID])
+REFERENCES [dbo].[Participant] ([ParticipantID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ParticipantPHSEvent] CHECK CONSTRAINT [FK participant_phs_event_participant]
+GO
+ALTER TABLE [dbo].[ParticipantPHSEvent]  WITH CHECK ADD  CONSTRAINT [FK participant_phs_event_phs_event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
+GO
+ALTER TABLE [dbo].[ParticipantPHSEvent] CHECK CONSTRAINT [FK participant_phs_event_phs_event]
+GO
 --------------------------Data--------------------- 
 
 
@@ -368,20 +389,34 @@ GO
 SET IDENTITY_INSERT [dbo].[PHSEvent] OFF
 GO
 
----  Events Patient Sample  --
+---  Participant Sample  --
 
 GO
-SET IDENTITY_INSERT [dbo].[EventPatient] ON 
+SET IDENTITY_INSERT [dbo].[Participant] ON 
 
 GO
-INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, 1, N'S8250369B', N'Lawrence Fay DDS', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
 GO
-INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, 2, N'S8250369B', N'Lawrence Fay DDS', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
-GO
-INSERT [dbo].[EventPatient] ([ID], [PHSEventID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (3, 2, N'S7931278I', N'Maxwell Schulist', N'69639756', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [ContactNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'69639756', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 
 GO
-SET IDENTITY_INSERT [dbo].[EventPatient] OFF
+SET IDENTITY_INSERT [dbo].[Participant] OFF
+GO
+
+---  Participant PHSEvent Sample  --
+
+GO
+SET IDENTITY_INSERT [dbo].[Participant] ON 
+
+GO
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 1)
+GO
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 2)
+GO
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 2)
+
+GO
+SET IDENTITY_INSERT [dbo].[Participant] OFF
 GO
 
 
