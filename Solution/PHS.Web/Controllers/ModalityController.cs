@@ -173,6 +173,7 @@ namespace PHS.Web.Controllers
         {
             ModalityEventViewModel view = new ModalityEventViewModel();
             Util.CopyNonNullProperty(modality, view);
+            view.Forms = modality.Forms; 
 
             return view;
         }

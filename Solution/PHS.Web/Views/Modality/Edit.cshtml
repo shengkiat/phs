@@ -57,6 +57,62 @@
             </div>
         </div>
         <h4>Forms</h4>
+        <div>@Model.Forms.Count</div>
+
+
+        @if (Model != null && Model.Forms != null)
+        {
+            <div style="clear:both;margin-bottom:5px">
+                @Html.ActionLink("Add Form", "EditModalityForm", "Form", new { eventid = Model.EventID, modalityid = Model.ModalityID }, new { @class = "btn btn-default" })
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                Modality Name
+                            </th>
+                            <th>
+                                Icon
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Forms)
+                        {
+                            <tr>
+                                <td class="vcenter">
+                                    @if (item.FormID != 0)
+                                    {
+                                        <input type="checkbox" id=item.ModalityID value="1" />
+                                    }
+                                </td>
+                                <td>
+                                    @item.Title
+                                </td>
+                                <td>
+                                    @if (item.FormID != 0)
+                                    {
+                                        @Html.ActionLink(
+                                         " ",
+                                         "Delete",
+                                         "Modality",
+                                         new { modalityid = item.FormID },
+                                         new
+                                         {
+                                             @onclick = "return confirm('Are you sure you want to delete this Modality');",
+                                             @class = "glyphicon glyphicon-trash"
+                                         })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
