@@ -37,7 +37,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     if (searchBy == "UserId")
                     {
-                        users = personManager.GetPersonsByUserID(searchString, out message);
+                        users = personManager.GetPersonsByUserName(searchString, out message);
                     }
                     else
                     {

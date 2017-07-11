@@ -96,7 +96,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteStatus).FirstOrDefault();
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus).FirstOrDefault();
 
                     if (user != null)
                     {
@@ -109,6 +109,12 @@ namespace PHS.Business.Implementation
                         if (!PasswordManager.ValidatePassword(password, user.Password, user.PasswordSalt))
                         {
                             message = "Invalid Username or Password";
+                            return authenticatedUser;
+                        }
+
+                        if (!GetCurrentActiveStatus(user))
+                        {
+                            message = "Account is inactive. Please contact system admin";
                             return authenticatedUser;
                         }
 
@@ -171,8 +177,8 @@ namespace PHS.Business.Implementation
                     {
                         if (!person.DeleteStatus)
                         {
-                            var user = SetActiveStatus(person);
-                            list.Add(user);
+                            person.IsActive = GetCurrentActiveStatus(person);
+                            list.Add(person);
                         }
                     }
                     if (list.Count == 0)
@@ -199,7 +205,8 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var person = unitOfWork.Persons.Get(personSid);
+                    //var person = unitOfWork.Persons.Get(personSid);
+                    var person = unitOfWork.Persons.Find(u => u.PersonID.Equals(personSid) && !u.DeleteStatus).First();
 
                     if (person == null)
                     {
@@ -223,7 +230,7 @@ namespace PHS.Business.Implementation
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
-                message = "User Id is empty!";
+                message = "User Name is empty!";
                 return null;
             }
             try
@@ -247,24 +254,24 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
+                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Username");
                 return null;
             }
         }
 
-        public IList<Person> GetPersonsByUserID(string userId, out string message)
+        public IList<Person> GetPersonsByUserName(string userName, out string message)
         {
             IList<Person> persons = null;
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userId.Trim()))
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
-                message = "User ID is empty!";
+                message = "User Name is empty!";
                 return null;
             }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userId) && !u.DeleteStatus);
+                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userName) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
@@ -283,7 +290,7 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
+                message = Constants.OperationFailedDuringRetrievingValue("Person by Username");
                 return persons;
             }
         }
@@ -342,8 +349,9 @@ namespace PHS.Business.Implementation
                 message = Constants.PleaseFillInAllRequiredFields();
                 return null;
             }
-            if (UserNameExists(person.Username, out message))
+            if (UserNameExists(person.Username, person.PersonID, out message))
             {
+                message = "Username already exists";
                 return null;
             }
             if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
@@ -402,6 +410,11 @@ namespace PHS.Business.Implementation
             if (string.IsNullOrEmpty(person.Username) || string.IsNullOrEmpty(person.Username.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+            if (UserNameExists(person.Username, person.PersonID, out message))
+            {
+                message = "Username already exists";
                 return false;
             }
             if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
@@ -472,7 +485,8 @@ namespace PHS.Business.Implementation
                 return false;
             }
         }
-        public bool UserNameExists(string userName, out string message)
+
+        public bool UserNameExists(string userName, int personSId, out string message)
         {
             if (string.IsNullOrEmpty(userName))
             {
@@ -483,7 +497,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.PersonID != personSId).FirstOrDefault();
                     if (user != null)
                     {
                         message = Constants.ValueAlreadyExists(userName);
@@ -535,25 +549,25 @@ namespace PHS.Business.Implementation
 
         }
 
-        public Person SetActiveStatus(Person person)
+        public bool GetCurrentActiveStatus(Person person)
         {
             if (person == null)
             {
-                return null;
+                return false;
             }
 
             if(person.IsActive)
             {
                 if(DateTime.Now >= person.EffectiveStartDate && DateTime.Now <=person.EffectiveEndDate)
                 {
-                    person.IsActive = true;
+                    return true;
                 }
                 else
                 {
-                    person.IsActive = false;
+                    return false;
                 }
             }
-            return person;
+            return false;
         }
     }
 }
