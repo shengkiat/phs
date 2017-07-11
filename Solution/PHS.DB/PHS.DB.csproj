@@ -89,9 +89,6 @@
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Attributes\SkipTrackingAttribute.cs" />
-    <Compile Include="EventPatient.cs">
-      <DependentUpon>PHSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Form.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
@@ -99,6 +96,9 @@
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Modality.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Participant.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Person.cs">

@@ -26,10 +26,10 @@ namespace PHS.DB
         }
     
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
-        public virtual DbSet<EventPatient> EventPatients { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
+        public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
         public virtual DbSet<Template> Templates { get; set; }

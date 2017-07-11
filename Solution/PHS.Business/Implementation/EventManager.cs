@@ -165,7 +165,7 @@ namespace PHS.Business.Implementation
                         return false;
                     }
 
-                    if (phsEvent.EventPatients != null && phsEvent.EventPatients.Count >0)
+                    if (phsEvent.Participants != null && phsEvent.Participants.Count >0)
                     {
                         message = "Can't delete event with partients!";
                         return false;

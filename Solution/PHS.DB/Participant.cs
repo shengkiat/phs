@@ -12,10 +12,15 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class EventPatient
+    public partial class Participant
     {
-        public int ID { get; set; }
-        public int PHSEventID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Participant()
+        {
+            this.PHSEvents = new HashSet<PHSEvent>();
+        }
+    
+        public int ParticipantID { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
         public string ContactNumber { get; set; }
@@ -23,6 +28,7 @@ namespace PHS.DB
         public string Language { get; set; }
         public string Gender { get; set; }
     
-        public virtual PHSEvent PHSEvent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PHSEvent> PHSEvents { get; set; }
     }
 }
