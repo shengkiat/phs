@@ -22,9 +22,8 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = CreateUnitOfWork())
             {
                 ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
-                DateTime currentTime = DateTime.Now;
-                result.PHSEvents = unitOfWork.Events.GetAll();
-                //result.PHSEvents = unitOfWork.Events.GetAll().Where(e => e.IsActive == true && currentTime.Ticks > e.StartDT.Ticks && currentTime.Ticks < e.EndDT.Ticks);
+                //result.PHSEvents = unitOfWork.Events.GetAll();
+                result.PHSEvents = unitOfWork.Events.GetAllActiveEvents();
 
                 return result;
             }
@@ -54,18 +53,31 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = CreateUnitOfWork())
                 {
+                    PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
 
-                    Participant participant = unitOfWork.Participants.FindParticipant(e => e.Nric.Equals(psm.Nric));
-
-                    if (participant != null)
+                    if (phsEvent == null)
                     {
-                        result = new ParticipantJourneyViewModel(participant);
+                        message = "Screening Event is not active";
                     }
 
                     else
                     {
-                        message = "No registration record found. Do you want to register this Nric?";
+                        Participant participant = unitOfWork.Participants.FindParticipant(p => p.Nric.Equals(psm.Nric) && p.PHSEvents.All(e => e.PHSEventID == psm.PHSEventId));
+
+                        if (participant != null)
+                        {
+                            result = new ParticipantJourneyViewModel(participant);
+                        }
+
+                        else
+                        {
+                            //TODO retrieve pre-reg records
+
+
+                            message = "No registration record found. Do you want to register this Nric?";
+                        }
                     }
+                    
 
                 }
             }

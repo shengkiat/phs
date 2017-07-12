@@ -62,7 +62,7 @@ namespace PHS.Business.Implementation.Tests
             ParticipantJourneySearchViewModel result = _target.RetrieveActiveScreeningEvent();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.PHSEvents.Count());
+            Assert.AreEqual(0, result.PHSEvents.Count());
         }
 
         [TestMethod()]
@@ -84,7 +84,7 @@ namespace PHS.Business.Implementation.Tests
             ParticipantJourneySearchViewModel result = _target.RetrieveActiveScreeningEvent();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.PHSEvents.Count());
+            Assert.AreEqual(0, result.PHSEvents.Count());
         }
 
         [TestMethod()]
@@ -108,6 +108,19 @@ namespace PHS.Business.Implementation.Tests
             psm.Nric = "S8250369B";
             psm.PHSEventId = 1;
 
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
             string message = string.Empty;
 
             ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
@@ -121,7 +134,39 @@ namespace PHS.Business.Implementation.Tests
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
             psm.Nric = "S8250369B";
-            psm.PHSEventId = 1;
+            psm.PHSEventId = 2;
+
+            PHSEvent phsEventOne = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-198),
+                IsActive = false
+            };
+
+            PHSEvent phsEventTwo = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEventOne);
+            _unitOfWork.Events.Add(phsEventTwo);
+
+            participant.PHSEvents.Add(phsEventOne);
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
 
             string message = string.Empty;
 
@@ -143,8 +188,8 @@ namespace PHS.Business.Implementation.Tests
                 Title = "Test",
                 Venue = "Test",
                 StartDT = DateTime.Now.AddDays(-2),
-                EndDT = DateTime.Now.AddDays(-1),
-                IsActive = false
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
             };
 
             Participant participant = new Participant()
@@ -164,7 +209,10 @@ namespace PHS.Business.Implementation.Tests
 
             ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
 
+            Assert.AreEqual(string.Empty, message);
             Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Event);
+            Assert.AreEqual(phsEvent.PHSEventID, result.Event.PHSEventID);
         }
 
 
