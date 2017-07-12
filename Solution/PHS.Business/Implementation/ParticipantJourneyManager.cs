@@ -64,7 +64,7 @@ namespace PHS.Business.Implementation
 
                     else
                     {
-                        message = "No participant found. Do you want to register this Nric?";
+                        message = "No registration record found. Do you want to register this Nric?";
                     }
 
                 }

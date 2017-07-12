@@ -110,9 +110,61 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            _target.RetrieveParticipantJourney(psm, out message);
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
 
-            Assert.AreEqual("No participant found. Do you want to register this Nric?", message);
+            Assert.IsNull(result);
+            Assert.AreEqual("No registration record found. Do you want to register this Nric?", message);
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourney_FindParticipantButNotActiveEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            string message = string.Empty;
+
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
+
+            Assert.IsNull(result);
+            Assert.AreEqual("No registration record found. Do you want to register this Nric?", message);
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourney_FoundParticipant()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(-1),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
+
+            Assert.IsNotNull(result);
         }
 
 
