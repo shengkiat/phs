@@ -1,41 +1,12 @@
-﻿@model PHS.Business.ViewModel.PastParticipantJourney.PastParticipantJourneySearchViewModel
-@using PHS.Business.Helpers
-@using PHS.Business.Extensions
-@using GridMvc.Html
-
-<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
-
-
-<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"> </script>
-<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
-<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
-
-<script>
-    $(function () {
-        pageGrids.participantsGrid.onRowSelect(function (e) {
-            $("#BtnGoToEvent").prop('disabled', false);
-            $("#BtnGoToEvent").attr("formaction", "/phs/PastParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
-        });
-    });
-</script>
-@{
-    if (Model != null && Model.PatientEvents != null && Model.PatientEvents.Count > 0)
-    {
-
-        @Html.Grid(Model.PatientEvents).Named("participantsGrid").Columns(columns =>
-        {
-            columns.Add(c => c.Event.Title).Titled("Event").Filterable(false);
-            columns.Add(c => c.EventId, true).Titled("EventID").Filterable(false);
-            columns.Add(c => c.Nric).Titled("NRIC").Filterable(false);
-            columns.Add(c => c.FullName).Titled("Name").Filterable(false);
-        }).WithPaging(10).Selectable(true)
-
-        using (Html.BeginForm())
-        {
-            <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnGoToEvent" class="button-common" style="border-radius: 17px;"
-                   formaction="@Url.Action("JourneyModality", "PastParticipantJourney")" />
-            
-        }
-    }
+﻿@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
 }
-
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}

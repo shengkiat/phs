@@ -22,7 +22,6 @@ namespace PHS.Web.Controllers
                 ParticipantJourneySearchViewModel result = participantJourneyManager.RetrieveActiveScreeningEvent();
                 return View(result);
             }
-                
         }
 
         [HttpPost]
@@ -39,13 +38,24 @@ namespace PHS.Web.Controllers
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
                 ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message);
-                //return View(result);
                 if (result == null)
                 {
                     SetViewBagError(message);
+                    if (Request.IsAjaxRequest())
+                    {
+                        return PartialView("_SearchParticipantJourneyResultPartial");
+                    }
+                    else
+                    {
+                        return View(psm);
+                    }
                 }
 
-                return View();
+                else
+                {
+                    return RedirectToAction("JourneyModality");
+                }
+
             }
         }
     }

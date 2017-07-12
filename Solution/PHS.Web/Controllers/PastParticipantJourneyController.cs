@@ -64,7 +64,7 @@ namespace PHS.Web.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_SearchParticipantJourneyResultPartial", result);
+                return PartialView("_SearchParticipantJourneyResultPartial");
             }
             else
             {

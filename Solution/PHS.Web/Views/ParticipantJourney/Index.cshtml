@@ -29,6 +29,10 @@
             </div>
         </div>
 
+        <div id="results">
+            @{Html.RenderPartial("_SearchParticipantJourneyResultPartial");}
+        </div>
+
         <div class="form-group">
 
             <h3>Active Events</h3>
@@ -53,11 +57,6 @@
         
     </div>
 }
-
-
-<div id="results">
-
-</div>
 
 @section footerScripts{
     <script>
