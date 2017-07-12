@@ -32,7 +32,7 @@ namespace PHS.Business.Implementation
                 {
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
-                        var eventpatients = unitOfWork.Participant.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
+                        var eventpatients = unitOfWork.Participants.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
                         //Nric = getMockData(nric);
 
                         if (eventpatients != null && eventpatients.Any())
@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatient = unitOfWork.Participant.FindParticipant(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvents.All(z=> z.PHSEventID == intEventId));
+                        var eventpatient = unitOfWork.Participants.FindParticipant(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvents.All(z=> z.PHSEventID == intEventId));
                         //Nric = getMockData(nric);
 
                         if (eventpatient != null)

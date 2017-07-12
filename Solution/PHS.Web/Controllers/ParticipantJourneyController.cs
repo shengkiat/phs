@@ -12,7 +12,7 @@ using System.Web.Mvc;
 namespace PHS.Web.Controllers
 {
     [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code + Constants.User_Role_Volunteer_Code)]
-    public class ParticipantJourneyController : Controller
+    public class ParticipantJourneyController : BaseController
     {
         // GET: ParticipantJourney
         public ActionResult Index()
@@ -34,10 +34,16 @@ namespace PHS.Web.Controllers
                 return View();
             }
 
+            string message = string.Empty;
+
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                //ParticipantJourneySearchViewModel result = participantJourneyManager.SearchParticipantJourney(psm);
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message);
                 //return View(result);
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                }
 
                 return View();
             }

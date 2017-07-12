@@ -22,7 +22,7 @@ namespace PHS.Repository.Repository
 
         public Participant FindParticipant(Expression<Func<Participant, bool>> predicate)
         {
-            return dbContext.Set<Participant>().Where(predicate).Include(x => x.PHSEvents.FirstOrDefault().Modalities.Select(y => y.Forms)).FirstOrDefault();
+            return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).FirstOrDefault();
         }
     }
 }

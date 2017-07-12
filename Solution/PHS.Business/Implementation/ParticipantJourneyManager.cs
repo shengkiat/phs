@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Interface;
 using PHS.Business.ViewModel.ParticipantJourney;
+using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
@@ -29,27 +30,47 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public ParticipantJourneySearchViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm)
+        public ParticipantJourneyViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm, out string message)
         {
+            message = string.Empty;
+            ParticipantJourneyViewModel result = null;
+
             if (psm == null)
             {
-                throw new Exception("Parameter cannot be null");
+                message = "Parameter cannot be null";
             }
 
-            if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                throw new Exception("Nric or PHSEventId cannot be null");
+                message = "Nric or PHSEventId cannot be null";
             }
 
-            using (var unitOfWork = CreateUnitOfWork())
+            else if (!NricChecker.IsNRICValid(psm.Nric))
             {
-                ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
-                DateTime currentTime = DateTime.Now;
-                result.PHSEvents = unitOfWork.Events.GetAll();
-                //result.PHSEvents = unitOfWork.Events.GetAll().Where(e => e.IsActive == true && currentTime.Ticks > e.StartDT.Ticks && currentTime.Ticks < e.EndDT.Ticks);
-
-                return result;
+                message = "Invalid Nric";
             }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+
+                    Participant participant = unitOfWork.Participants.FindParticipant(e => e.Nric.Equals(psm.Nric));
+
+                    if (participant != null)
+                    {
+                        result = new ParticipantJourneyViewModel(participant);
+                    }
+
+                    else
+                    {
+                        message = "No participant found. Do you want to register this Nric?";
+                    }
+
+                }
+            }
+
+            return result;
         }
     }
 }

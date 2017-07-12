@@ -22,7 +22,7 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void RetrieveActiveScreeningEvent_FindActiveEvent()
+        public void RetrieveActiveScreeningEvent_AbleToFindActiveEvent()
         {
             PHSEvent phsEvent = new PHSEvent()
             {
@@ -42,6 +42,79 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.PHSEvents.Count());
         }
+
+        [TestMethod()]
+        public void RetrieveActiveScreeningEvent_NoActiveEventWhenIsInactive()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = false
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            ParticipantJourneySearchViewModel result = _target.RetrieveActiveScreeningEvent();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.PHSEvents.Count());
+        }
+
+        [TestMethod()]
+        public void RetrieveActiveScreeningEvent_NoActiveEventWhenNonBetweenStartEndDate()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(-1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            ParticipantJourneySearchViewModel result = _target.RetrieveActiveScreeningEvent();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.PHSEvents.Count());
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourney_InvalidNric()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric ="S82";
+            psm.PHSEventId = 1;
+
+            string message = string.Empty;
+
+            _target.RetrieveParticipantJourney(psm, out message);
+
+            Assert.AreEqual("Invalid Nric", message);
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourney_NoParticipantMessage()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            string message = string.Empty;
+
+            _target.RetrieveParticipantJourney(psm, out message);
+
+            Assert.AreEqual("No participant found. Do you want to register this Nric?", message);
+        }
+
 
         [TestInitialize]
         public void SetupTest()
@@ -80,5 +153,6 @@ namespace PHS.Business.Implementation.Tests
                 return _unitOfWork;
             }
         }
+
     }
 }
