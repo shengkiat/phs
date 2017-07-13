@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation.Tests
 {
@@ -95,8 +96,9 @@ namespace PHS.Business.Implementation.Tests
             psm.PHSEventId = 1;
 
             string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
 
-            _target.RetrieveParticipantJourney(psm, out message);
+            _target.RetrieveParticipantJourney(psm, out message, out messageType);
 
             Assert.AreEqual("Invalid Nric", message);
         }
@@ -122,8 +124,9 @@ namespace PHS.Business.Implementation.Tests
             _unitOfWork.Complete();
 
             string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
 
-            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message, out messageType);
 
             Assert.IsNull(result);
             Assert.AreEqual("No registration record found. Do you want to register this Nric?", message);
@@ -169,8 +172,9 @@ namespace PHS.Business.Implementation.Tests
             _unitOfWork.Complete();
 
             string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
 
-            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message, out messageType);
 
             Assert.IsNull(result);
             Assert.AreEqual("No registration record found. Do you want to register this Nric?", message);
@@ -206,8 +210,9 @@ namespace PHS.Business.Implementation.Tests
             _unitOfWork.Complete();
 
             string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
 
-            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message);
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message, out messageType);
 
             Assert.AreEqual(string.Empty, message);
             Assert.IsNotNull(result);
