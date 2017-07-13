@@ -72,9 +72,18 @@ namespace PHS.Business.Implementation
                         else
                         {
                             //TODO retrieve pre-reg records
+                            PreRegistration preRegistration = unitOfWork.PreRegistrations.FindPreRegistration(p => p.Nric.Equals(psm.Nric));
+                            if (preRegistration == null)
+                            {
+                                message = "No registration record found. Do you want to register this Nric?";
+                            }
 
+                            else
+                            {
+                                message = "Do you want to register this Nric?";
+                            }
 
-                            message = "No registration record found. Do you want to register this Nric?";
+                           
                         }
                     }
                     
