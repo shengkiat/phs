@@ -41,6 +41,9 @@ IF OBJECT_ID('dbo.ParticipantPHSEvent', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.Participant', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Participant]; 
   
+IF OBJECT_ID('dbo.PreRegistration', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[PreRegistration]; 
+  
 IF OBJECT_ID('dbo.PHSEvent', 'U') IS NOT NULL 
   DROP TABLE [dbo].[PHSEvent]; 
 
@@ -159,6 +162,25 @@ CREATE TABLE [dbo].[Participant](
  CONSTRAINT [PK_Participant] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+CREATE TABLE [dbo].[PreRegistration](
+	[PreRegistrationID] [int] IDENTITY(1,1) NOT NULL,
+	[Nric] [nvarchar](max) NOT NULL,
+	[FullName] [nvarchar](max) NOT NULL,
+	[Salutation] [nvarchar](4) NOT NULL,
+	[ContactNumber] [nvarchar](max) NULL,
+	[DateOfBirth] [datetime] NULL,
+	[Citizenship] [nvarchar](max) NOT NULL,
+	[Race] [nvarchar](max) NOT NULL,
+	[Language] [nvarchar](max) NOT NULL,
+	[PreferedTime] [nvarchar](max) NOT NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[Gender] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_PreRegistration] PRIMARY KEY CLUSTERED 
+(
+	[PreRegistrationID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 

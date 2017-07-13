@@ -128,6 +128,23 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="PreRegistration">
+          <Key>
+            <PropertyRef Name="PreRegistrationID" />
+          </Key>
+          <Property Name="PreRegistrationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Salutation" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Citizenship" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Race" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PreferedTime" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Template">
           <Key>
             <PropertyRef Name="TemplateID" />
@@ -333,6 +350,7 @@
           <EntitySet Name="ParticipantPHSEvent" EntityType="Self.ParticipantPHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHSEvent" EntityType="Self.PHSEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreRegistration" EntityType="Self.PreRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
@@ -390,6 +408,7 @@
           <EntitySet Name="Participants" EntityType="phsModel.Participant" />
           <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
+          <EntitySet Name="PreRegistrations" EntityType="phsModel.PreRegistration" />
           <EntitySet Name="Templates" EntityType="phsModel.Template" />
           <EntitySet Name="TemplateFields" EntityType="phsModel.TemplateField" />
           <EntitySet Name="TemplateFieldValues" EntityType="phsModel.TemplateFieldValue" />
@@ -523,6 +542,23 @@
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="PHSEvent" ToRole="Modality" />
           <NavigationProperty Name="Participants" Relationship="phsModel.ParticipantPHSEvent" FromRole="PHSEvent" ToRole="Participant" />
+        </EntityType>
+        <EntityType Name="PreRegistration">
+          <Key>
+            <PropertyRef Name="PreRegistrationID" />
+          </Key>
+          <Property Name="PreRegistrationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Salutation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Citizenship" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Race" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreferedTime" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -740,6 +776,24 @@
                 <ScalarProperty Name="StartDT" ColumnName="StartDT" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreRegistrations">
+            <EntityTypeMapping TypeName="phsModel.PreRegistration">
+              <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PreferedTime" ColumnName="PreferedTime" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Nric" ColumnName="Nric" />
+                <ScalarProperty Name="PreRegistrationID" ColumnName="PreRegistrationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -32,6 +32,7 @@ namespace PHS.DB
         public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
+        public virtual DbSet<PreRegistration> PreRegistrations { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }
