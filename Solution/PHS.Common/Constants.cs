@@ -20,6 +20,12 @@ namespace PHS.Common
         public static int DEAULTMAXFILESIZEINKB = 5000;
         public static int DEAULTMINFILESIZEINKB = 10;
 
+        public enum MessageType
+        {
+            PROMPT,
+            ERROR
+        }
+
         public enum TemplateStatus
         {
             DRAFT,

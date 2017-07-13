@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static PHS.Common.Constants;
 
 namespace PHS.Web.Controllers
 {
@@ -34,13 +35,23 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
 
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message);
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
                 if (result == null)
                 {
-                    SetViewBagError(message);
+                    if (MessageType.ERROR == messageType)
+                    {
+                        SetViewBagError(message);
+                    }
+
+                    else
+                    {
+                        SetViewBagMessage(message);
+                    }
+                    
                     if (Request.IsAjaxRequest())
                     {
                         return PartialView("_SearchParticipantJourneyResultPartial");

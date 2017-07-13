@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Interface;
+using PHS.Business.ViewModel;
 using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
 using PHS.DB;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
@@ -29,9 +31,11 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public ParticipantJourneyViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm, out string message)
+        public ParticipantJourneyViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm, out string message, out MessageType messageType)
         {
             message = string.Empty;
+            messageType = MessageType.ERROR;
+
             ParticipantJourneyViewModel result = null;
 
             if (psm == null)
@@ -71,7 +75,9 @@ namespace PHS.Business.Implementation
 
                         else
                         {
-                            //TODO retrieve pre-reg records
+
+                            messageType = MessageType.PROMPT;
+
                             PreRegistration preRegistration = unitOfWork.PreRegistrations.FindPreRegistration(p => p.Nric.Equals(psm.Nric));
                             if (preRegistration == null)
                             {
@@ -82,12 +88,8 @@ namespace PHS.Business.Implementation
                             {
                                 message = "Do you want to register this Nric?";
                             }
-
-                           
                         }
                     }
-                    
-
                 }
             }
 
