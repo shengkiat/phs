@@ -589,7 +589,7 @@ namespace PHS.Business.Implementation
         private string getStringValue(IDictionary<string, object> values, string key)
         {
             string result = string.Empty;
-            if (values[key] != null)
+            if (values.ContainsKey(key) && values[key] != null)
             {
                 result = values[key].ToString();
             }
