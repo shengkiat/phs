@@ -139,20 +139,22 @@ namespace PHS.Business.Implementation
                             }
                         }
 
-                        else
-                        {
-                            participant = new Participant()
-                            {
-                                Nric = psm.Nric
-                            };
-                        }
-
                         using (TransactionScope scope = new TransactionScope())
                         {
-                            participant.PHSEvents.Add(phsEvent);
+                            if (participant == null)
+                            {
+                                unitOfWork.Participants.AddParticipantWithPHSEvent(psm.Nric, phsEvent);
+                            }
+
+                            else
+                            {
+                                unitOfWork.Participants.AddPHSEventToParticipant(participant, phsEvent);
+                            }
 
                             unitOfWork.Complete();
                             scope.Complete();
+
+                            result = "success";
                         }
                     }
                 }

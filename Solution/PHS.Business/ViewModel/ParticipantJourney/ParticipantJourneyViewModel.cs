@@ -19,9 +19,16 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             ContactNumber = participant.ContactNumber;
             Gender = participant.Gender;
 
-            int now = int.Parse(Event.StartDT.ToString("yyyy"));
-            int dob = int.Parse(participant.DateOfBirth.Value.ToString("yyyy"));
-            Age = (now - dob);
+            if (participant.DateOfBirth != null)
+            {
+                int now = int.Parse(Event.StartDT.ToString("yyyy"));
+                int dob = int.Parse(participant.DateOfBirth.Value.ToString("yyyy"));
+                Age = (now - dob);
+            }
+            else
+            {
+                Age = 0;
+            }
         }
 
 

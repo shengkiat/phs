@@ -11,5 +11,9 @@ namespace PHS.Repository.Interface
         IEnumerable<Participant> FindParticipants(Expression<Func<Participant, bool>> predicate);
         Participant FindParticipant(string nric);
         Participant FindParticipant(string nric, int phsEventId);
+
+        void AddParticipantWithPHSEvent(string nric, PHSEvent phsEvent);
+
+        void AddPHSEventToParticipant(Participant participant, PHSEvent phsEvent);
     }
 }

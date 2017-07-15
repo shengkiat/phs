@@ -286,6 +286,76 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("Screening Event is not active", result);
         }
 
+        [TestMethod()]
+        public void RegisterParticipant_AlreadyHasPHSEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string result = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("Invalid register participant", result);
+        }
+
+        [TestMethod()]
+        public void RegisterParticipant_NewParticipantAndPHSEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel preResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNull(preResult);
+
+            string registerResult = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("success", registerResult);
+
+            ParticipantJourneyViewModel postResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNotNull(postResult);
+            Assert.IsNotNull(postResult.Event);
+
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
