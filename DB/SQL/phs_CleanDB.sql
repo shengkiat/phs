@@ -168,6 +168,7 @@ CREATE TABLE [dbo].[Participant](
 CREATE TABLE [dbo].[PreRegistration](
 	[PreRegistrationID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
+	[EntryId] [uniqueidentifier] NOT NULL,
 	[FullName] [nvarchar](max) NOT NULL,
 	[Salutation] [nvarchar](4) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,

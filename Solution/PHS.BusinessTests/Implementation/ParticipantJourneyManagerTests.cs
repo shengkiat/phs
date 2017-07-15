@@ -385,7 +385,8 @@ namespace PHS.Business.Implementation.Tests
                 Race = "Chinese",
                 Language = "English",
                 DateOfBirth = DateTime.Now,
-                CreatedDateTime = DateTime.Now.AddMinutes(-60)
+                CreatedDateTime = DateTime.Now.AddMinutes(-60),
+                EntryId = Guid.NewGuid()
             };
 
             PreRegistration preRegistrationTwo = new PreRegistration()
@@ -400,7 +401,8 @@ namespace PHS.Business.Implementation.Tests
                 Race = "Chinese",
                 Language = "English",
                 DateOfBirth = DateTime.Now,
-                CreatedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.Now,
+                EntryId = Guid.NewGuid()
             };
 
             _unitOfWork.PreRegistrations.Add(preRegistrationOne);
@@ -529,7 +531,8 @@ namespace PHS.Business.Implementation.Tests
                 Salutation = "Mr",
                 Race = "Chinese",
                 Language = "English",
-                DateOfBirth = DateTime.Now
+                DateOfBirth = DateTime.Now,
+                EntryId = Guid.NewGuid()
             };
 
             _unitOfWork.PreRegistrations.Add(preRegistration);

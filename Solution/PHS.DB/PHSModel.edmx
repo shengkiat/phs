@@ -134,6 +134,7 @@
           </Key>
           <Property Name="PreRegistrationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Salutation" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
@@ -561,6 +562,7 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EntryId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -784,6 +786,7 @@
           <EntitySetMapping Name="PreRegistrations">
             <EntityTypeMapping TypeName="phsModel.PreRegistration">
               <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
