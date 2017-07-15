@@ -356,6 +356,62 @@ namespace PHS.Business.Implementation.Tests
 
         }
 
+        [TestMethod()]
+        public void RegisterParticipant_ExistingParticipantAndPHSEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 2;
+
+            PHSEvent phsEventOne = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            PHSEvent phsEventTwo = new PHSEvent()
+            {
+                Title = "Test 16",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEventOne);
+            _unitOfWork.Events.Add(phsEventTwo);
+
+            participant.PHSEvents.Add(phsEventOne);
+
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel preResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNull(preResult);
+
+            string registerResult = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("success", registerResult);
+
+            ParticipantJourneyViewModel postResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNotNull(postResult);
+            Assert.IsNotNull(postResult.Event);
+
+        }
+
         [TestInitialize]
         public void SetupTest()
         {

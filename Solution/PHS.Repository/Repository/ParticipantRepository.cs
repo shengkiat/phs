@@ -22,7 +22,7 @@ namespace PHS.Repository.Repository
 
         public Participant FindParticipant(string nric, int phsEventId)
         {
-            return find(p => p.Nric.Equals(nric) && p.PHSEvents.All(e => e.PHSEventID == phsEventId));
+            return find(p => p.Nric.Equals(nric) && p.PHSEvents.Any(e => e.PHSEventID == phsEventId));
         }
 
         public Participant FindParticipant(string nric)
