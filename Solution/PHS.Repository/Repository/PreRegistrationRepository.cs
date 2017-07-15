@@ -19,7 +19,7 @@ namespace PHS.Repository.Repository
 
         public PreRegistration FindPreRegistration(Expression<Func<PreRegistration, bool>> predicate)
         {
-            return dbContext.Set<PreRegistration>().Where(predicate).FirstOrDefault();
+            return dbContext.Set<PreRegistration>().Where(predicate).OrderByDescending(p => p.CreatedDateTime).FirstOrDefault();
         }
     }
 }

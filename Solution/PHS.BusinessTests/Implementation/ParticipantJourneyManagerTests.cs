@@ -373,7 +373,7 @@ namespace PHS.Business.Implementation.Tests
                 IsActive = true
             };
 
-            PreRegistration preRegistration = new PreRegistration()
+            PreRegistration preRegistrationOne = new PreRegistration()
             {
                 Nric = "S8250369B",
                 Address = "Test Add",
@@ -384,10 +384,27 @@ namespace PHS.Business.Implementation.Tests
                 Salutation = "Mr",
                 Race = "Chinese",
                 Language = "English",
-                DateOfBirth = DateTime.Now
+                DateOfBirth = DateTime.Now,
+                CreatedDateTime = DateTime.Now.AddMinutes(-60)
             };
 
-            _unitOfWork.PreRegistrations.Add(preRegistration);
+            PreRegistration preRegistrationTwo = new PreRegistration()
+            {
+                Nric = "S8250369B",
+                Address = "Test Add",
+                Citizenship = "Singaporean",
+                ContactNumber = "12345678",
+                FullName = "Tester",
+                Gender = "Female",
+                Salutation = "Mr",
+                Race = "Chinese",
+                Language = "English",
+                DateOfBirth = DateTime.Now,
+                CreatedDateTime = DateTime.Now
+            };
+
+            _unitOfWork.PreRegistrations.Add(preRegistrationOne);
+            _unitOfWork.PreRegistrations.Add(preRegistrationTwo);
 
             _unitOfWork.Events.Add(phsEvent);
 
@@ -407,7 +424,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult);
             Assert.IsNotNull(postResult.Event);
 
-            Assert.AreEqual(preRegistration.Gender, postResult.Gender);
+            Assert.AreEqual(preRegistrationTwo.Gender, postResult.Gender);
 
         }
 
