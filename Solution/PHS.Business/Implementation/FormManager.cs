@@ -553,6 +553,8 @@ namespace PHS.Business.Implementation
                                 PreRegistration preRegistration = new PreRegistration();
 
                                 preRegistration.EntryId = entryId;
+                                preRegistration.CreatedDateTime = DateTime.Now;
+
                                 preRegistration.Citizenship = getStringValue(values, PreRegistration_Field_Name_Citizenship);
                                 preRegistration.ContactNumber = getStringValue(values, PreRegistration_Field_Name_ContactNumber);
                                 preRegistration.DateOfBirth = getDateTimeValue(values, PreRegistration_Field_Name_DateOfBirth);
@@ -563,6 +565,7 @@ namespace PHS.Business.Implementation
                                 preRegistration.Address = getStringValue(values, PreRegistration_Field_Name_Address);
                                 preRegistration.Language = getStringValue(values, PreRegistration_Field_Name_Language);
                                 preRegistration.FullName = getStringValue(values, PreRegistration_Field_Name_FullName);
+                                preRegistration.Gender = getStringValue(values, PreRegistration_Field_Name_Gender);
 
                                 unitOfWork.PreRegistrations.Add(preRegistration);
                             }
@@ -600,9 +603,9 @@ namespace PHS.Business.Implementation
         private Nullable<System.DateTime> getDateTimeValue(IDictionary<string, object> values, string key)
         {
             Nullable<System.DateTime> result = null;
-            if (values[key] != null)
+            if (values.ContainsKey(key) && values[key] != null)
             {
-                result = (DateTime) values[key];
+                result = Convert.ToDateTime(values[key].ToString());
             }
 
             return result;
