@@ -364,8 +364,40 @@
                 </td>
                <td class="input">
                     <input type="text"  data-field-property="helptext" class="is-publisher"/>
-        </td>
-    </tr> 
+                </td>
+            </tr> 
+
+            <!-- PreRegistration Field Name Row -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        PreRegistration Field Name
+                    </label>
+                </td>
+                <td class="input">
+                    
+                    @{
+
+                        var listItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "NRIC", Value = "NRIC"},
+                            new SelectListItem {Text = "FULLNAME", Value = "FULLNAME"}
+                        };
+
+                        @Html.DropDownList("preregistrationfieldname", listItems, 
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "preregistrationfieldname"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+                    
+
+                </td>
+            </tr>
+            <!--// end PreRegistration Field Name Row -->
     </table> 
     </li>
 </ul>

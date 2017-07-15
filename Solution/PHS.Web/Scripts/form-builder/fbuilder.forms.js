@@ -832,6 +832,7 @@
                     "valid extensions: " + $('#validextensions-prop-' + domid).val() + "\n" +
                     "Help Txt: " + $('#helptext-prop-' + domid).val() + "\n" +
                     "Order: " + $('#order-prop-' + domid).val() + "\n" +
+                    "PreRegistration Field Name: " + $('#preregistrationfieldname-prop-' + domid).val() + "\n" +
                     "ImageBase64: " + $('#image-prop-' + domid).val() + "\n";
 
         return props;

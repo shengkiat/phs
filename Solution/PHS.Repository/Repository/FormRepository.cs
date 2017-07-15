@@ -230,7 +230,9 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow,
                     ImageBase64 = templateField1.ImageBase64,
                     MatrixRow = templateField1.MatrixRow,
-                    MatrixColumn = templateField1.MatrixColumn
+                    MatrixColumn = templateField1.MatrixColumn,
+                    PreRegistrationFieldName = templateField1.PreRegistrationFieldName
+                    
                 };
 
                 template.TemplateFields.Add(fField);
