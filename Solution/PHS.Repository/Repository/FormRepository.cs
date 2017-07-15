@@ -414,7 +414,7 @@ namespace PHS.Repository.Repository
         public Form GetPreRegistrationForm(int year = -1)
         {
             
-            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION")).Include(x => x.Templates).FirstOrDefault();
+            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals(Constants.Public_Form_Type_PreRegistration)).Include(x => x.Templates).FirstOrDefault();
 
             return form;
         }

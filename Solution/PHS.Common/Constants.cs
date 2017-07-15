@@ -20,6 +20,9 @@ namespace PHS.Common
         public static int DEAULTMAXFILESIZEINKB = 5000;
         public static int DEAULTMINFILESIZEINKB = 10;
 
+        public const string Public_Form_Type_PreRegistration = "PRE-REGISTRATION";
+        public const string Public_Form_Type_OutReach = "OUTREACH";
+
         public enum MessageType
         {
             PROMPT,
