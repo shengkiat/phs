@@ -2,7 +2,7 @@
 {
     <div class="alert alert-success text-center">
         <strong>@ViewBag.Message</strong>
-        <a href="@Url.Action("CreateForm", "Forms")" id="RegisterParticipant" class="hyperlink-button green-button">Yes, Register</a>
+        <a href="@Url.Action("RegisterParticipant", "ParticipantJourney")" id="RegisterParticipant" class="hyperlink-button green-button">Yes, Register</a>
     </div>
 }
 @if (!String.IsNullOrEmpty(ViewBag.Error))

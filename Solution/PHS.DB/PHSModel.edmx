@@ -78,11 +78,11 @@
           </Key>
           <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" />
           <Property Name="ContactNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
-          <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Language" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ParticipantPHSEvent">
           <Key>
@@ -498,11 +498,11 @@
           </Key>
           <Property Name="ParticipantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <Property Name="Language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Language" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.ParticipantPHSEvent" FromRole="Participant" ToRole="PHSEvent" />
         </EntityType>
         <EntityType Name="Person">

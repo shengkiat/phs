@@ -154,11 +154,11 @@ CREATE TABLE [dbo].[Modality](
 CREATE TABLE [dbo].[Participant](
 	[ParticipantID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
-	[FullName] [nvarchar](max) NOT NULL,
+	[FullName] [nvarchar](max) NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
-	[Language] [nvarchar](max) NOT NULL,
-	[Gender] [nvarchar](max) NOT NULL,
+	[Language] [nvarchar](max) NULL,
+	[Gender] [nvarchar](max) NULL,
  CONSTRAINT [PK_Participant] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantID] ASC

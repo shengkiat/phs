@@ -33,12 +33,12 @@ namespace PHS.Web.Controllers
             {
                 return View();
             }
-
-            string message = string.Empty;
-            MessageType messageType = MessageType.ERROR;
-
+            
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
                 ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
                 if (result == null)
                 {
@@ -51,10 +51,13 @@ namespace PHS.Web.Controllers
                     {
                         SetViewBagMessage(message);
                     }
-                    
+
+                    TempData["ToRegister"] = psm;
+
+
                     if (Request.IsAjaxRequest())
                     {
-                        return PartialView("_SearchParticipantJourneyResultPartial");
+                        return PartialView("_SearchParticipantJourneyResultPartial", psm);
                     }
                     else
                     {
@@ -64,9 +67,35 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    return RedirectToAction("JourneyModality");
+                    return RedirectToAction("JourneyModality", psm);
                 }
 
+            }
+        }
+
+        public ActionResult RegisterParticipant()
+        {
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ToRegister");
+
+            if (psm == null)
+            {
+                SetViewBagMessage("No Participant information found");
+                return RedirectToAction("Index", psm);
+            }
+
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+
+                string result = participantJourneyManager.RegisterParticipant(psm);
+
+                if (!result.Equals("success"))
+                {
+                    SetViewBagMessage(result);
+                    return RedirectToAction("Index", psm);
+                }
+
+                return RedirectToAction("JourneyModality", psm);
             }
         }
     }
