@@ -354,6 +354,61 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult);
             Assert.IsNotNull(postResult.Event);
 
+            Assert.IsNull(postResult.Gender);
+        }
+
+        [TestMethod()]
+        public void RegisterParticipant_NewParticipantAndPHSEventWithPreRegistration()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            PreRegistration preRegistration = new PreRegistration()
+            {
+                Nric = "S8250369B",
+                Address = "Test Add",
+                Citizenship = "Singaporean",
+                ContactNumber = "12345678",
+                FullName = "Tester",
+                Gender = "Male",
+                Salutation = "Mr",
+                Race = "Chinese",
+                Language = "English",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.PreRegistrations.Add(preRegistration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel preResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNull(preResult);
+
+            string registerResult = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("success", registerResult);
+
+            ParticipantJourneyViewModel postResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNotNull(postResult);
+            Assert.IsNotNull(postResult.Event);
+
+            Assert.AreEqual(preRegistration.Gender, postResult.Gender);
+
         }
 
         [TestMethod()]
@@ -384,7 +439,8 @@ namespace PHS.Business.Implementation.Tests
             Participant participant = new Participant()
             {
                 Nric = "S8250369B",
-                DateOfBirth = DateTime.Now
+                DateOfBirth = DateTime.Now,
+                ContactNumber = "88776655"
             };
 
             _unitOfWork.Events.Add(phsEventOne);
@@ -410,6 +466,81 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult);
             Assert.IsNotNull(postResult.Event);
 
+            Assert.AreEqual("88776655", postResult.ContactNumber);
+        }
+
+        [TestMethod()]
+        public void RegisterParticipant_ExistingParticipantAndPHSEventWithPreRegistration()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 2;
+
+            PHSEvent phsEventOne = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            PHSEvent phsEventTwo = new PHSEvent()
+            {
+                Title = "Test 16",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now,
+                ContactNumber = "88776655"
+            };
+
+            PreRegistration preRegistration = new PreRegistration()
+            {
+                Nric = "S8250369B",
+                Address = "Test Add",
+                Citizenship = "Singaporean",
+                ContactNumber = "12345678",
+                FullName = "Tester",
+                Gender = "Male",
+                Salutation = "Mr",
+                Race = "Chinese",
+                Language = "English",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.PreRegistrations.Add(preRegistration);
+
+            _unitOfWork.Events.Add(phsEventOne);
+            _unitOfWork.Events.Add(phsEventTwo);
+
+            participant.PHSEvents.Add(phsEventOne);
+
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel preResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNull(preResult);
+
+            string registerResult = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("success", registerResult);
+
+            ParticipantJourneyViewModel postResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNotNull(postResult);
+            Assert.IsNotNull(postResult.Event);
+
+            Assert.AreEqual("12345678", postResult.ContactNumber);
         }
 
         [TestInitialize]

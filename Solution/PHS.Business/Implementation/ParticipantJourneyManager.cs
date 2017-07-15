@@ -1,4 +1,5 @@
-﻿using PHS.Business.Interface;
+﻿using PHS.Business.Common;
+using PHS.Business.Interface;
 using PHS.Business.ViewModel;
 using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
@@ -174,7 +175,11 @@ namespace PHS.Business.Implementation
 
         private void copyPreRegistrationToParticipant(Participant participant, PreRegistration preRegistration)
         {
-
+            if (preRegistration != null)
+            {
+                Util.CopyNonNullProperty(preRegistration, participant);
+            }
+            
         }
     }
 }
