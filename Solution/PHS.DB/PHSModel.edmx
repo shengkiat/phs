@@ -196,6 +196,7 @@
           <Property Name="ImageBase64" Type="varchar(max)" />
           <Property Name="MatrixRow" Type="varchar(max)" />
           <Property Name="MatrixColumn" Type="varchar(max)" />
+          <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -617,6 +618,7 @@
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
+          <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -823,6 +825,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
+                <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />
                 <ScalarProperty Name="MatrixRow" ColumnName="MatrixRow" />
                 <ScalarProperty Name="ImageBase64" ColumnName="ImageBase64" />

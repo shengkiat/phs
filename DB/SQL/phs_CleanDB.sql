@@ -249,6 +249,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[ImageBase64] [varchar](max) NULL,
 	[MatrixRow] [varchar](max) NULL,
 	[MatrixColumn] [varchar](max) NULL,
+	[PreRegistrationFieldName] [varchar](max) NULL,
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldID] ASC
