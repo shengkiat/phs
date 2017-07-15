@@ -139,15 +139,24 @@ namespace PHS.Business.Implementation
                             }
                         }
 
+                        PreRegistration preRegistration = unitOfWork.PreRegistrations.FindPreRegistration(p => p.Nric.Equals(psm.Nric));
+
                         using (TransactionScope scope = new TransactionScope())
                         {
                             if (participant == null)
                             {
-                                unitOfWork.Participants.AddParticipantWithPHSEvent(psm.Nric, phsEvent);
+                                participant = new Participant()
+                                {
+                                    Nric = psm.Nric
+                                };
+
+                                copyPreRegistrationToParticipant(participant, preRegistration);
+                                unitOfWork.Participants.AddParticipantWithPHSEvent(participant, phsEvent);
                             }
 
                             else
                             {
+                                copyPreRegistrationToParticipant(participant, preRegistration);
                                 unitOfWork.Participants.AddPHSEventToParticipant(participant, phsEvent);
                             }
 
@@ -161,6 +170,11 @@ namespace PHS.Business.Implementation
             }
 
             return result;
+        }
+
+        private void copyPreRegistrationToParticipant(Participant participant, PreRegistration preRegistration)
+        {
+
         }
     }
 }

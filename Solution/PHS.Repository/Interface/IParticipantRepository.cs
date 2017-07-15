@@ -12,7 +12,7 @@ namespace PHS.Repository.Interface
         Participant FindParticipant(string nric);
         Participant FindParticipant(string nric, int phsEventId);
 
-        void AddParticipantWithPHSEvent(string nric, PHSEvent phsEvent);
+        void AddParticipantWithPHSEvent(Participant participant, PHSEvent phsEvent);
 
         void AddPHSEventToParticipant(Participant participant, PHSEvent phsEvent);
     }
