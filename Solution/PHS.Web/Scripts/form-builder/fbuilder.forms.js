@@ -704,6 +704,11 @@
                 $('#maxAge').val(maxAge);
                 $('#minAge').val(minAge);
                 break;
+            case "preregistrationfieldname":
+                var value = targetContainer.find('#preregistrationfieldname-prop-' + domId).val();
+                
+                $('#preregistrationfieldname').val(value);
+                break;
             case "matrixrow":
                 // value is row
                 // set value to column

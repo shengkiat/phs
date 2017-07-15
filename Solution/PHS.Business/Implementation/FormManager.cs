@@ -287,7 +287,8 @@ namespace PHS.Business.Implementation
                                     ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
                                     ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
-                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
+                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
+                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName")
                                 };
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())

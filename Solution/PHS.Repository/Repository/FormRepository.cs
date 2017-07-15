@@ -82,7 +82,8 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow,
                     ImageBase64 = fieldView.ImageBase64,
                     MatrixRow = fieldView.MatrixRow,
-                    MatrixColumn = fieldView.MatrixColumn
+                    MatrixColumn = fieldView.MatrixColumn,
+                    PreRegistrationFieldName = fieldView.PreRegistrationFieldName
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -121,6 +122,7 @@ namespace PHS.Repository.Repository
                     fField.ImageBase64 = fieldView.ImageBase64;
                     fField.MatrixColumn = fieldView.MatrixColumn;
                     fField.MatrixRow = fieldView.MatrixRow;
+                    fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                 }
 
               //  this.SaveChanges();
