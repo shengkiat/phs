@@ -144,6 +144,7 @@
           <Property Name="PreferedTime" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -559,6 +560,7 @@
           <Property Name="PreferedTime" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -782,6 +784,7 @@
           <EntitySetMapping Name="PreRegistrations">
             <EntityTypeMapping TypeName="phsModel.PreRegistration">
               <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PreferedTime" ColumnName="PreferedTime" />

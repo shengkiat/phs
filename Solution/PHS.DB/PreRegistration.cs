@@ -26,5 +26,6 @@ namespace PHS.DB
         public string PreferedTime { get; set; }
         public string Address { get; set; }
         public string Gender { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
     }
 }

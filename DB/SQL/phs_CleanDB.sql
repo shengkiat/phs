@@ -178,6 +178,7 @@ CREATE TABLE [dbo].[PreRegistration](
 	[PreferedTime] [nvarchar](max) NOT NULL,
 	[Address] [nvarchar](max) NOT NULL,
 	[Gender] [nvarchar](max) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
  CONSTRAINT [PK_PreRegistration] PRIMARY KEY CLUSTERED 
 (
 	[PreRegistrationID] ASC
