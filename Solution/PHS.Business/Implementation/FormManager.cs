@@ -514,6 +514,8 @@ namespace PHS.Business.Implementation
                     {
                         using (TransactionScope scope = new TransactionScope())
                         {
+                            IDictionary<string, object> values = new Dictionary<string, object>();
+
                             foreach (var field in templateView.Fields)
                             {
                                 var value = field.SubmittedValue(formCollection);
@@ -537,9 +539,34 @@ namespace PHS.Business.Implementation
                                     //}
                                 }
 
+                                if (!string.IsNullOrEmpty(field.PreRegistrationFieldName))
+                                {
+                                    values.Add(field.PreRegistrationFieldName, value);
+                                }
+                                
 
                                 unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
                             }
+
+                            if (Public_Form_Type_PreRegistration.Equals(template.Form.PublicFormType))
+                            {
+                                PreRegistration preRegistration = new PreRegistration();
+
+                                preRegistration.EntryId = entryId;
+                                preRegistration.Citizenship = getStringValue(values, PreRegistration_Field_Name_Citizenship);
+                                preRegistration.ContactNumber = getStringValue(values, PreRegistration_Field_Name_ContactNumber);
+                                preRegistration.DateOfBirth = getDateTimeValue(values, PreRegistration_Field_Name_DateOfBirth);
+                                preRegistration.Nric = getStringValue(values, PreRegistration_Field_Name_Nric);
+                                preRegistration.PreferedTime = getStringValue(values, PreRegistration_Field_Name_PreferedTime);
+                                preRegistration.Race = getStringValue(values, PreRegistration_Field_Name_Race);
+                                preRegistration.Salutation = getStringValue(values, PreRegistration_Field_Name_Salutation);
+                                preRegistration.Address = getStringValue(values, PreRegistration_Field_Name_Address);
+                                preRegistration.Language = getStringValue(values, PreRegistration_Field_Name_Language);
+                                preRegistration.FullName = getStringValue(values, PreRegistration_Field_Name_FullName);
+
+                                unitOfWork.PreRegistrations.Add(preRegistration);
+                            }
+
 
                             unitOfWork.Complete();
                             scope.Complete();
@@ -555,6 +582,28 @@ namespace PHS.Business.Implementation
                 result = errors.ToUnorderedList();
             }
             
+
+            return result;
+        }
+
+        private string getStringValue(IDictionary<string, object> values, string key)
+        {
+            string result = string.Empty;
+            if (values[key] != null)
+            {
+                result = values[key].ToString();
+            }
+
+            return result;
+        }
+
+        private Nullable<System.DateTime> getDateTimeValue(IDictionary<string, object> values, string key)
+        {
+            Nullable<System.DateTime> result = null;
+            if (values[key] != null)
+            {
+                result = (DateTime) values[key];
+            }
 
             return result;
         }
