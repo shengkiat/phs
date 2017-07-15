@@ -66,7 +66,7 @@ namespace PHS.Business.Implementation
 
                     else
                     {
-                        Participant participant = unitOfWork.Participants.FindParticipant(p => p.Nric.Equals(psm.Nric) && p.PHSEvents.All(e => e.PHSEventID == psm.PHSEventId));
+                        Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
 
                         if (participant != null)
                         {
@@ -89,6 +89,62 @@ namespace PHS.Business.Implementation
                                 message = "Do you want to register this Nric?";
                             }
                         }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public string RegisterParticipant(ParticipantJourneySearchViewModel psm)
+        {
+            string result = null;
+
+            if (psm == null)
+            {
+                return "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                return "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                return "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
+
+                    if (phsEvent == null)
+                    {
+                        return "Screening Event is not active";
+                    }
+
+                    else
+                    {
+                        Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric);
+
+                        if (participant != null)
+                        {
+                            participant = new Participant()
+                            {
+                                Nric = psm.Nric
+                            };
+                        }
+
+                        else
+                        {
+
+                        }
+
+
+                        
                     }
                 }
             }

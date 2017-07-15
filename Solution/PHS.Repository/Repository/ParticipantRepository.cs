@@ -20,7 +20,17 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Participant>().Where(predicate).Include(x => x.PHSEvents);
         }
 
-        public Participant FindParticipant(Expression<Func<Participant, bool>> predicate)
+        public Participant FindParticipant(string nric, int phsEventId)
+        {
+            return find(p => p.Nric.Equals(nric) && p.PHSEvents.All(e => e.PHSEventID == phsEventId));
+        }
+
+        public Participant FindParticipant(string nric)
+        {
+            return find(p => p.Nric.Equals(nric));
+        }
+
+        private Participant find(Expression<Func<Participant, bool>> predicate)
         {
             return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).FirstOrDefault();
         }

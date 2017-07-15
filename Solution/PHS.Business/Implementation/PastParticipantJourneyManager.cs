@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
                         int intEventId = int.Parse(eventId);
-                        var eventpatient = unitOfWork.Participants.FindParticipant(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase) && u.PHSEvents.All(z=> z.PHSEventID == intEventId));
+                        var eventpatient = unitOfWork.Participants.FindParticipant(nric, intEventId);
                         //Nric = getMockData(nric);
 
                         if (eventpatient != null)
