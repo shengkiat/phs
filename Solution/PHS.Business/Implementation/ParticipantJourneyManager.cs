@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
@@ -132,19 +133,27 @@ namespace PHS.Business.Implementation
 
                         if (participant != null)
                         {
+                            if (participant.PHSEvents.All(e => e.PHSEventID == psm.PHSEventId))
+                            {
+                                return "Invalid register participant";
+                            }
+                        }
+
+                        else
+                        {
                             participant = new Participant()
                             {
                                 Nric = psm.Nric
                             };
                         }
 
-                        else
+                        using (TransactionScope scope = new TransactionScope())
                         {
+                            participant.PHSEvents.Add(phsEvent);
 
+                            unitOfWork.Complete();
+                            scope.Complete();
                         }
-
-
-                        
                     }
                 }
             }

@@ -104,6 +104,35 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void RetrieveParticipantJourney_NotActiveEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(-1),
+                IsActive = false
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel result = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+
+            Assert.IsNull(result);
+            Assert.AreEqual("Screening Event is not active", message);
+        }
+
+        [TestMethod()]
         public void RetrieveParticipantJourney_NoParticipantMessage()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
@@ -220,6 +249,42 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(phsEvent.PHSEventID, result.Event.PHSEventID);
         }
 
+        [TestMethod()]
+        public void RegisterParticipant_InvalidNric()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S82";
+            psm.PHSEventId = 1;
+
+            string result = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("Invalid Nric", result);
+        }
+
+        [TestMethod()]
+        public void RegisterParticipant_NotActiveEvent()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-2),
+                EndDT = DateTime.Now.AddDays(-1),
+                IsActive = false
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string result = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("Screening Event is not active", result);
+        }
 
         [TestInitialize]
         public void SetupTest()
