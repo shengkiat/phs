@@ -85,6 +85,55 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FindPublicTemplate_ShouldGetActiveVersionAfterDelete()
+        {
+            string slug = "test";
+
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Slug = slug;
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "TEST";
+
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
+
+            Template preExecuteResult = _target.FindPublicTemplate(slug);
+            Assert.IsNotNull(preExecuteResult);
+            Assert.AreEqual(1, preExecuteResult.Version);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(executeResult);
+
+            Template postExecuteResult = _target.FindPublicTemplate(slug);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(2, postExecuteResult.Version);
+
+            _formManager.DeleteTemplate(executeResult.TemplateID.Value);
+
+            postExecuteResult = _target.FindPublicTemplate(slug);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(1, postExecuteResult.Version);
+        }
+
+        [TestMethod()]
         public void FindPublicTemplate_ShouldHaveNoRecordAfterCreateNonPublic()
         {
             string slug = "test";
@@ -162,6 +211,53 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FindPreRegistrationForm_ShouldGetActiveVersionAfterDelete()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.IsPublic = true;
+            formViewModel.PublicFormType = "PRE-REGISTRATION";
+            formViewModel.Slug = "TEST";
+
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
+
+            Template preExecuteResult = _target.FindPreRegistrationForm();
+            Assert.IsNotNull(preExecuteResult);
+            Assert.AreEqual(1, preExecuteResult.Version);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(executeResult);
+
+            Template postExecuteResult = _target.FindPreRegistrationForm();
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(2, postExecuteResult.Version);
+
+            _formManager.DeleteTemplate(executeResult.TemplateID.Value);
+
+            postExecuteResult = _target.FindPreRegistrationForm();
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(1, postExecuteResult.Version);
+        }
+
+        [TestMethod()]
         public void FindLatestTemplate_ShouldHaveRecordAfterCreate()
         {
             Template preExecuteResult = _target.FindLatestTemplate(1);
@@ -210,6 +306,48 @@ namespace PHS.BusinessTests.Implementation
             Template postExecuteResult = _target.FindLatestTemplate(1);
             Assert.IsNotNull(postExecuteResult);
             Assert.AreEqual(2, postExecuteResult.Version);
+        }
+
+        [TestMethod()]
+        public void FindLatestTemplate_ShouldGetActiveVersionAfterDelete()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(new FormViewModel(), out template, out templateViewModel);
+
+            Template preExecuteResult = _target.FindLatestTemplate(1);
+            Assert.IsNotNull(preExecuteResult);
+            Assert.AreEqual(1, preExecuteResult.Version);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(executeResult);
+
+            Template postExecuteResult = _target.FindLatestTemplate(1);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(2, postExecuteResult.Version);
+
+            _formManager.DeleteTemplate(executeResult.TemplateID.Value);
+
+            postExecuteResult = _target.FindLatestTemplate(1);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(1, postExecuteResult.Version);
         }
 
         [TestMethod()]
