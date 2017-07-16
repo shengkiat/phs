@@ -47,41 +47,36 @@ namespace PHS.Web.Controllers
             //}
 
             //Create default Modalities
-            List<Modality> modalities = BuildDefaultModalites();
-            PHSEvent phsEvent = new PHSEvent();
-            phsEvent.Modalities = modalities;
-            
+            PHSEvent phsEvent = buildDefaultEvent();
+
             return View(phsEvent);
         }
 
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "ID")]PHSEvent eventModel)
         {
-            if (ModelState.IsValid)
+            string message = string.Empty;
+
+            using (var eventManager = new EventManager())
             {
-                using (var eventManager = new EventManager())
+                //Person loginUser = GetLoginUser();
+                //if(loginUser != null)
+                //{
+                //    eventModel.CreatedBy = loginUser.PersonID;
+                //}
+                //else
+                //{
+                    eventModel.CreatedBy = "";
+                //}
+                eventModel.Modalities = BuildDefaultModalites();
+
+                bool isCreated = eventManager.NewEvent(eventModel, out message);
+
+                if(isCreated == false)
                 {
-                    //Person loginUser = GetLoginUser();
-                    //if(loginUser != null)
-                    //{
-                    //    eventModel.CreatedBy = loginUser.PersonID;
-                    //}
-                    //else
-                    //{
-                        eventModel.CreatedBy = "";
-                    //}
-                    eventModel.Modalities = BuildDefaultModalites();
-
-                    foreach (var newModality in eventModel.Modalities)
-                    {
-                        newModality.IsActive = true;
-                    }
-
-                    eventManager.NewEvent(eventModel);
+                    SetViewBagError(message);
+                    return View(eventModel);
                 }
-            }
-            else {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
             }
 
             return RedirectToAction("Index");
@@ -193,7 +188,13 @@ namespace PHS.Web.Controllers
             return modalities; 
         }
 
-
+        private PHSEvent buildDefaultEvent()
+        {
+            List<Modality> modalities = BuildDefaultModalites();
+            PHSEvent phsEvent = new PHSEvent();
+            phsEvent.Modalities = modalities;
+            return phsEvent;
+        }
 
     }
 }
