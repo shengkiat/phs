@@ -174,8 +174,9 @@ namespace PHS.Web.Controllers
         protected string RenderPartialViewToString(string viewName, object model)
         {
             if (string.IsNullOrEmpty(viewName))
+            {
                 viewName = ControllerContext.RouteData.GetRequiredString("action");
-
+            }
             ViewData.Model = model;
 
             using (StringWriter sw = new StringWriter())
