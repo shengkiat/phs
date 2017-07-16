@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using static PHS.Common.Constants;
 
 namespace PHS.Web.Controllers
@@ -67,7 +68,8 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    return RedirectToAction("JourneyModality", psm);
+                    string url = Url.Action("JourneyModality", "ParticipantJourney", new { Nric = psm.Nric , PHSEventId = psm.PHSEventId });
+                    return JavaScript("window.location = '" + url + "'");
                 }
 
             }
@@ -96,6 +98,35 @@ namespace PHS.Web.Controllers
                 }
 
                 return RedirectToAction("JourneyModality", psm);
+            }
+        }
+
+        public ActionResult JourneyModality(ParticipantJourneySearchViewModel psm)
+        {
+            if (psm == null)
+            {
+                return Redirect("Index");
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return Redirect("Index");
+                }
+
+                else
+                {
+
+                    return View(result);
+
+                }
             }
         }
     }
