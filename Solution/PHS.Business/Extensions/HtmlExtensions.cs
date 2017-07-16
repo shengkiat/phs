@@ -138,23 +138,25 @@ namespace PHS.Business.Extensions
 
                         AddressViewModel address = addressValue.FromJson<AddressViewModel>();
 
-                        if (fieldType == "Blk")
+                        if (address != null)
                         {
-                            return address.Blk;
+                            if (fieldType == "Blk")
+                            {
+                                return address.Blk;
+                            }
+                            else if (fieldType == "Unit")
+                            {
+                                return address.Unit;
+                            }
+                            else if (fieldType == "StreetAddress")
+                            {
+                                return address.StreetAddress;
+                            }
+                            else if (fieldType == "ZipCode")
+                            {
+                                return address.ZipCode;
+                            }
                         }
-                        else if (fieldType == "Unit")
-                        {
-                            return address.Unit;
-                        }
-                        else if (fieldType == "StreetAddress")
-                        {
-                            return address.StreetAddress;
-                        }
-                        else if (fieldType == "ZipCode")
-                        {
-                            return address.ZipCode;
-                        }
-
                         break;
 
                     case TemplateFieldType.BMI:
