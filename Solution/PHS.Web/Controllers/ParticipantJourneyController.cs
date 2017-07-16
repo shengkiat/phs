@@ -77,14 +77,13 @@ namespace PHS.Web.Controllers
 
         public ActionResult RegisterParticipant()
         {
-            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ToRegister");
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData["ToRegister"];
 
             if (psm == null)
             {
                 SetViewBagMessage("No Participant information found");
                 return RedirectToAction("Index", psm);
             }
-
 
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
@@ -124,6 +123,19 @@ namespace PHS.Web.Controllers
 
                 else
                 {
+                    result.SelectedModalityId = result.Event.Modalities.First().ModalityID;
+
+                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
+
+                    foreach (var modality in result.Event.Modalities)
+                    {
+                        participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
+                    }
+
+                    //TempData["Nric"] = nric;
+                    // TempData["EventId"] = eventId;
+                    TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
+                    TempData["SelectedModalityId"] = result.SelectedModalityId;
 
                     return View(result);
 

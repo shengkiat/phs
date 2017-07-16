@@ -1,5 +1,5 @@
-﻿@model ICollection<PHS.Business.ViewModel.PastParticipantJourney.PatientEventModalityViewModel>
-@using PHS.Business.ViewModel.PastParticipantJourney
+﻿@model ICollection<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
+@using PHS.Business.ViewModel.ParticipantJourney
 
 @using PHS.Business.Extensions
 @using GridMvc.Html
@@ -118,7 +118,7 @@
 
 <div style="text-align: center; width: 200px;" id="ptJourney">
     @{
-        PatientEventModalityViewModel firstItem1 = Model.First();
+        ParticipantJourneyModalityCircleViewModel firstItem1 = Model.First();
     }
     @foreach (var element in Model)
     {

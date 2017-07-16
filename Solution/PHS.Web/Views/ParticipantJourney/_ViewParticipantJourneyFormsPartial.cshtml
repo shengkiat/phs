@@ -1,5 +1,5 @@
-﻿@model PHS.Business.ViewModel.PastParticipantJourney.PatientEventViewModel
-@using PHS.Business.ViewModel.PastParticipantJourney
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyViewModel
+@using PHS.Business.ViewModel.ParticipantJourney
 
 @using PHS.Business.Extensions
 @using GridMvc.Html
@@ -28,7 +28,7 @@
                 //console.log(iframe_to_load);
                 //make the magic
                 if (iframe_to_load.length) {
-                    iframe_to_load.attr('src', "/phs/journeymodality/viewform/" + selectedFormId + "/True?httproute=True"); //this fires the link to destinated iframe
+                    iframe_to_load.attr('src', "/phs/participantjourney/viewform/" + selectedFormId + "/True?httproute=True"); //this fires the link to destinated iframe
                     iframe_to_load.parent().addClass('active'); //this make the parent div container of iframe visible
                 }
 
@@ -56,12 +56,12 @@
                     {
                         if (counter == 1)
                         {
-                            <li class="active"><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.ID">@element.Title</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.Title</a></li>
                         }
 
                         else
                         {
-                            <li><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.ID">@element.Title</a></li>
+                            <li><a data-toggle="tab" href="#tabs-@counter" load-in="form-builder-frame-@element.FormID">@element.Title</a></li>
                         }
 
 
@@ -93,8 +93,8 @@
                         if (anothercounter == 1)
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade in active">
-                                <iframe id="form-builder-frame-@element.ID" onload="resizeIframe(this)"
-                                        src="@Url.HttpRouteUrl("journeymodality-viewform", new { embed=true, formId=element.ID })"
+                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
+                                        src="@Url.HttpRouteUrl("participantjourney-viewform", new { embed=true, formId=element.FormID })"
                                         frameborder="0"
                                         width="100%"
                                         marginheight="0"
@@ -106,7 +106,7 @@
                         else
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade">
-                                <iframe id="form-builder-frame-@element.ID" onload="resizeIframe(this)"
+                                <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
                                         src=""
                                         frameborder="0"
                                         width="100%"
