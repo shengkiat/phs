@@ -28,7 +28,7 @@ namespace PHS.Business.Implementation
                 Form form = unitOfWork.FormRepository.GetPublicForm(slug);
                 if (form != null)
                 {
-                    return form.Templates.OrderBy(f => f.Version).First();
+                    return form.Templates.OrderByDescending(f => f.Version).First();
                 }
                 return null;
             }
@@ -41,7 +41,7 @@ namespace PHS.Business.Implementation
                 Form form = unitOfWork.FormRepository.GetPreRegistrationForm();
                 if (form != null)
                 {
-                    return form.Templates.OrderBy(f => f.Version).First();
+                    return form.Templates.OrderByDescending(f => f.Version).First();
                 }
                 return null;
             }
@@ -54,7 +54,7 @@ namespace PHS.Business.Implementation
                 Form form = unitOfWork.FormRepository.GetForm(formId);
                 if (form != null)
                 {
-                    return form.Templates.OrderBy(f => f.Version).First();
+                    return form.Templates.OrderByDescending(f => f.Version).First();
                 }
                 return null;
             }
