@@ -154,7 +154,7 @@ namespace PHS.Web
             routes.MapRoute(
                "ViewSubmittedForm",
                "Form/saveform/{id}/{entryID}/{embed}",
-               new { controller = "Form", action = "ViewSaveTemplate", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
+               new { controller = "PublicForm", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
