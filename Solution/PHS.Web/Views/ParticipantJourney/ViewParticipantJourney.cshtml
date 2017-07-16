@@ -1,0 +1,47 @@
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyViewModel
+
+@using PHS.Business.Extensions
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Journey Modality Page";
+}
+
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div>
+                <table class="table">
+                    <tr>
+                        <td><b>@Model.FullName</b></td>
+                        <td>Gender : @Model.Gender</td>
+                        <td>Age : @Model.Age</td>
+                    </tr>
+
+                    <tr>
+                        <td>Language : @Model.Language</td>
+                        <td>NRIC : @Model.Nric</td>
+                        <td>Contact : @Model.ContactNumber</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+
+            <table  class="table">
+                <tr>
+                    <td style="vertical-align:top; width:50px;">
+                        @Html.ActionLink("Back to Search", "Index")
+                        @Html.Partial("_ViewParticipantJourneyCirclePartial", TempData.Peek("ParticipantJourneyModalityCircleViewModel"))
+                    </td>
+                    <td style="vertical-align:top">@Html.Partial("_ViewParticipantJourneyFormPartial", Model)</td>
+                </tr>
+            </table>
+
+            
+
+
+        </div>
+    </div>
+

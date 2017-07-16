@@ -19,7 +19,7 @@ namespace PHS.Web.Controllers
         //[SSl]
         public ActionResult PublicFillIn(string slug, bool embed = false)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 var template = formManager.FindPublicTemplate(slug);
 
@@ -39,7 +39,7 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration()
         {
 
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 TemplateViewModel model = null;
 
@@ -59,12 +59,33 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult FillIn(int id, bool embed = false)
+        public ActionResult ViewForm(int id, bool embed = false)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 TemplateViewModel model = null;
-                // var form = this._formRepo.GetByPrimaryKey(id);
+
+                var template = formManager.FindLatestTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToError("invalid id");
+                }
+
+                return View("FillIn", model);
+            }
+        }
+
+        public ActionResult FillIn(int id, bool embed = false)
+        {
+            using (var formManager = new PublicFormManager())
+            {
+                TemplateViewModel model = null;
 
                 var template = formManager.FindTemplate(id);
 
@@ -85,7 +106,9 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            using (var formManager = new FormManager())
+            InsertValuesIntoTempData(SubmitFields, formCollection);
+
+            using (var formManager = new PublicFormManager())
             {
 
                 var template = formManager.FindTemplate(model.TemplateID.Value);
@@ -126,7 +149,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 var template = formManager.FindTemplate(id);
                 if (template != null)
@@ -190,6 +213,33 @@ namespace PHS.Web.Controllers
 
         //    throw new Exception("File Not Found");
         //}
+
+        public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
+        {
+            using (var formManager = new PublicFormManager())
+            {
+                TemplateViewModel model = null;
+
+                var template = formManager.FindLatestTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToError("invalid id");
+                }
+
+                foreach (var field in model.Fields)
+                {
+                    field.EntryId = entryId;
+                }
+
+                return View("FillIn", model);
+            }
+        }
 
 
         public ActionResult GetAddressByZipCode(string zipcode)

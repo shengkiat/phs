@@ -364,8 +364,49 @@
                 </td>
                <td class="input">
                     <input type="text"  data-field-property="helptext" class="is-publisher"/>
-        </td>
-    </tr> 
+                </td>
+            </tr> 
+
+            <!-- PreRegistration Field Name Row -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        PreRegistration Field Name
+                    </label>
+                </td>
+                <td class="input">
+                    
+                    @{
+
+                        var listItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "NRIC", Value = "NRIC"},
+                            new SelectListItem {Text = "FULLNAME", Value = "FULLNAME"},
+                            new SelectListItem {Text = "SALUTATION", Value = "SALUTATION"},
+                            new SelectListItem {Text = "CONTACTNUMBER", Value = "CONTACTNUMBER"},
+                            new SelectListItem {Text = "DATEOFBIRTH", Value = "DATEOFBIRTH"},
+                            new SelectListItem {Text = "CITIZENSHIP", Value = "CITIZENSHIP"},
+                            new SelectListItem {Text = "RACE", Value = "RACE"},
+                            new SelectListItem {Text = "LANGUAGE", Value = "LANGUAGE"},
+                            new SelectListItem {Text = "PREFEREDTIME", Value = "PREFEREDTIME"},
+                            new SelectListItem {Text = "ADDRESS", Value = "ADDRESS"},
+                            new SelectListItem {Text = "GENDER", Value = "GENDER"}
+                        };
+
+                        @Html.DropDownList("preregistrationfieldname", listItems, 
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "preregistrationfieldname"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+                    
+
+                </td>
+            </tr>
+            <!--// end PreRegistration Field Name Row -->
     </table> 
     </li>
 </ul>

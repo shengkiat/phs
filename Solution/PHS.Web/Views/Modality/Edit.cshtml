@@ -58,6 +58,38 @@
         </div>
         <h4>Forms</h4>
 
+        @if (Model != null && Model.modalityFormList != null)
+        {
+            <div style="clear:both;margin-bottom:5px">
+                @Html.ActionLink("Add/Remove Form", "EditModalityForm", "Form", new { eventid = Model.EventID, modalityid = Model.ModalityID }, new { @class = "btn btn-default" })
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Form Name
+                            </th>
+                            <th>
+                                URL
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.modalityFormList)
+                        {
+                            <tr>        
+                                <td>
+                                    @item.FormName
+                                </td>  
+                                <td>@Html.Encode(item.publicURL)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-primary">Save</button>

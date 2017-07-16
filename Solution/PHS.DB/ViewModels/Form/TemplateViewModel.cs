@@ -99,18 +99,18 @@ namespace PHS.DB.ViewModels.Form
             if (template1 != null)
             {
 
-                var formView = CreateBasicFromObject(template1);
+                var templateView = CreateBasicFromObject(template1);
 
                 if (template1.TemplateFields.Count() > 0)
                 {
                     template1.TemplateFields.OrderBy(o => o.Order).Each((field, index) =>
                     {
 
-                        formView.Fields.Add(TemplateFieldViewModel.CreateFromObject(field, mode));
+                        templateView.Fields.Add(TemplateFieldViewModel.CreateFromObject(field, mode));
                     });
                 }
 
-                return formView;
+                return templateView;
             }
             return TemplateViewModel.Initialize();
         }
@@ -118,7 +118,7 @@ namespace PHS.DB.ViewModels.Form
         public static TemplateViewModel CreateBasicFromObject(Template template1)
         {
 
-            var formView = new TemplateViewModel
+            var templateView = new TemplateViewModel
             {
                 
                 TemplateID = template1.TemplateID,
@@ -140,7 +140,7 @@ namespace PHS.DB.ViewModels.Form
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
             };
 
-            return formView;
+            return templateView;
         }
 
         public static TemplateViewModel CreateMock()

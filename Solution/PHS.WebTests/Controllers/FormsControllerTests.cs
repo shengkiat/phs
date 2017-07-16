@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PHS.Web.Controllers.Tests
 {
-    [TestClass()]
+   // [TestClass()]
     public class FormsControllerTests
     {
         [TestMethod()]

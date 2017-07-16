@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PHS.Business.Implementation;
 using PHS.Common;
 using System.IO;
+using PHS.DB.ViewModels;
 
 namespace PHS.Web.Controllers
 {
@@ -91,7 +92,6 @@ namespace PHS.Web.Controllers
 
                 ModalityEventViewModel view = MapModalityToView(modality);
                 view.EventID = eventid;
-
                 return View(view);
             };
         }
@@ -173,6 +173,29 @@ namespace PHS.Web.Controllers
         {
             ModalityEventViewModel view = new ModalityEventViewModel();
             Util.CopyNonNullProperty(modality, view);
+     
+            List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
+
+            for(int i=0; i < modality.Forms.Count; i++)
+            {
+                ModalityForm modalityForm = new ModalityForm();
+                modalityForm.FormID = modality.Forms.ElementAt(i).FormID;
+                modalityForm.FormName = modality.Forms.ElementAt(i).Title;
+                modalityForm.IsSelected = true;
+                modalityForm.ModalityID = modality.ModalityID;
+                modalityForm.ModalityName = modality.Name;
+
+                if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                {
+                    Uri originalUri = System.Web.HttpContext.Current.Request.Url;         
+                    modalityForm.publicURL = originalUri.Authority + "/phs/public/" + modality.Forms.ElementAt(i).Slug;
+
+                }
+
+                modalityFormList.Add(modalityForm); 
+            }
+
+            view.modalityFormList = modalityFormList; 
 
             return view;
         }

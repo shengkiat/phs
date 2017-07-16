@@ -1,0 +1,184 @@
+﻿@model ICollection<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
+@using PHS.Business.ViewModel.ParticipantJourney
+
+@using PHS.Business.Extensions
+@using GridMvc.Html
+
+
+<style>
+    .round-button {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: #ffffff;
+        font-size: 12px;
+        font-weight: bold;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        /* ...and now for the proper property */
+        transition: .5s;
+    }
+
+    .round-button:hover {
+        background: #ffc402;
+    }
+
+    .round-button-selected {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: #0094ff;
+        font-size: 12px;
+        font-weight: bold;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        /* ...and now for the proper property */
+        transition: .5s;
+    }
+
+    .round-button-completed {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: #02d14a;
+        font-size: 12px;
+        font-weight: bold;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        /* ...and now for the proper property */
+        transition: .5s;
+    }
+
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $(".round-button").click(function () {
+
+            var previousSelectedModalityId = $(".round-button-selected").attr('id');
+
+            var previousSelectedModalityStatus = document.getElementById("[status]-" + previousSelectedModalityId).value;
+
+            if (previousSelectedModalityStatus == 'Pending') {
+                $(".round-button-selected").attr('class', 'round-button');
+            }
+
+            else {
+                $(".round-button-selected").attr('class', 'round-button-completed');
+            }
+
+            var selectedModalityId = $(this).attr('id');
+
+            $("#ptForms").load("/phs/ParticipantJourney/RefreshViewParticipantJourneyForm?selectedModalityId=" + selectedModalityId)
+            $(this).attr('class', 'round-button-selected');
+
+
+        });
+    });
+</script>
+
+
+@{
+    ViewBag.Title = "Modality Circles";
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+<div style="text-align: center; width: 200px;" id="ptJourney">
+    @{
+        ParticipantJourneyModalityCircleViewModel firstItem1 = Model.First();
+    }
+    @foreach (var element in Model)
+    {
+        if (!@element.Equals(firstItem1))
+        {
+            if (@element.IsActive)
+            {
+                switch (@element.HasParent)
+                {
+                    case true:
+                    <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;"/>
+                        break;
+
+                    case false:
+                    <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
+                        break;
+                }
+            }
+        }
+
+        int selectedModalityId = int.Parse(TempData.Peek("SelectedModalityId").ToString());
+
+        if (@element.IsActive)
+        {
+            if (selectedModalityId == element.ModalityID)
+            {
+                <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35"  />
+                    <br />
+                    @element.Name
+                </button>
+
+                    
+            }
+
+            else if (element.isAllFormsCompleted())
+            {
+                <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
+
+                    
+            }
+
+            else
+            {
+                <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
+            }
+
+            <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
+        }
+    }
+        
+</div>
+
+
+

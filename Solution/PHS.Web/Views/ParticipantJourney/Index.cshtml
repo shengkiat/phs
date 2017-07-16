@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PHS.DB.PHSEvent>
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneySearchViewModel
 
 @using GridMvc.Html
 
@@ -15,13 +15,14 @@
 @using (Ajax.BeginForm("SearchParticipantJourney", new AjaxOptions { UpdateTargetId = "results" }))
 {
     <div class="form-horizontal">
-        <hr />
         <div class="form-group">
+
+            <h3>Active Events</h3>
 
             @if (Model != null)
             {
 
-                @Html.Grid(Model).Named("eventGrid").Columns(columns =>
+                @Html.Grid(Model.PHSEvents).Named("eventGrid").Columns(columns =>
                 {
                     columns.Add(c => c.PHSEventID, true).Titled("EventID").Filterable(false);
                     columns.Add(c => c.Title).Titled("Event").Filterable(false);
@@ -29,17 +30,34 @@
                     columns.Add(c => c.StartDT).Titled("Start Date").Filterable(false);
                     columns.Add(c => c.EndDT).Titled("End Date").Filterable(false);
                 }).WithPaging(10).Selectable(true)
+
+                @Html.HiddenFor(m => m.PHSEventId)
             }
 
-            
         </div>
+
+        <div class="form-group">
+            <div class="text-center">
+                <div>
+
+                    Nric:
+                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+
+                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                           formaction="SearchParticipantJourney" formmethod="post" />
+                </div>
+            </div>
+        </div>
+
+        <div id="results">
+            @{Html.RenderPartial("_SearchParticipantJourneyResultPartial");}
+        </div>
+
+        
+        
+        
     </div>
 }
-
-
-<div id="results">
-
-</div>
 
 @section footerScripts{
     <script>
@@ -48,11 +66,11 @@
             $('tbody tr:first').each(function () {
                 $(this).addClass('grid-row-selected');
                 var eventId = $(this).find("td:first").html();
-                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + eventId + "&nric=" + e.row.Nric); //Will set it
+                document.getElementById("PHSEventId").value = eventId;
             });
 
             pageGrids.eventGrid.onRowSelect(function (e) {
-                $("#BtnGoToEvent").attr("formaction", "/phs/ParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+                document.getElementById("PHSEventId").value = e.row.PHSEventID;
             });
 
 

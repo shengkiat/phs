@@ -1,0 +1,93 @@
+﻿@model PHS.Business.ViewModel.Event.ModalityFormViewModel
+
+@{
+    ViewBag.Title = "EditModalityForm";
+}
+
+<h2>Add/Remove Forms from Modality</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+   
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <h4>Event: @Model.EventName</h4>            
+     
+
+            <h4>Modality: @Model.ModalityName</h4>
+   
+    </div>
+}
+
+@if (Model != null && Model.ModalityFormList != null)
+{
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Remove</th>
+                            <th>Add</th>
+                           
+                            <th>
+                                Form Name
+                            </th>
+                         
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ModalityFormList)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.IsSelected == true)
+                                    {
+                                        @Html.ActionLink(
+                                         "Remove",
+                                         "RemoveModalityForm",
+                                         "Form",
+                                         new { formID = item.FormID, modalityID = Model.ModalityID, eventID = Model.EventID },
+                                         new
+                                         {
+                                             @onclick = "return confirm('Are you sure you want to Remove this Form from the Modality?');",
+                                             @class = "glyphicon glyphicon-minus"
+                                         })
+                                    }                                  
+
+                                </td>
+                                <td>
+                                    @if (item.IsSelected == false)
+                                {
+                                    @Html.ActionLink(
+                                         "Add",
+                                         "AddModalityForm",
+                                         "Form",
+                                         new { formID = item.FormID, modalityID = Model.ModalityID, eventID = Model.EventID},
+                                         new
+                                         {
+                                             @onclick = "return confirm('Are you sure you want to Add this Form from the Modality?');",
+                                             @class = "glyphicon glyphicon-plus"
+                                         })
+                                }
+                                </td>
+                                <td>
+                                    @item.FormName
+                                </td>
+                     
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+}
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Back", "Edit", "Modality", new { modalityid = Model.ModalityID, eventid = Model.EventID }, new { @class = "btn btn-primary" })
+    </div>
+</div>

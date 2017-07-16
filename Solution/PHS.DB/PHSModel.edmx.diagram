@@ -5,21 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="phsModel.EventPatient" Width="1.5" PointX="8" PointY="3.25" />
+        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="5.75" />
         <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="0.75" PointY="9.25" />
-        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="10.75" PointY="4.75" />
-        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="8" PointY="6.875" />
-        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="10.75" PointY="7.75" />
-        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="5.75" PointY="2.875" />
+        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="5.75" PointY="9.75" />
+        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="10.25" PointY="4.75" />
+        <EntityTypeShape EntityType="phsModel.Participant" Width="1.5" PointX="5.75" PointY="1.5" />
+        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="8" PointY="1.125" />
+        <EntityTypeShape EntityType="phsModel.PreRegistration" Width="1.5" PointX="9.75" PointY="9.75" />
         <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="2.875" />
         <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="7.875" />
-        <AssociationConnector Association="phsModel.FK_EventPatient_Event" />
         <AssociationConnector Association="phsModel.FK_Form_Template" />
         <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />
         <AssociationConnector Association="phsModel.EventModality" />
         <AssociationConnector Association="phsModel.ModalityForm" />
+        <AssociationConnector Association="phsModel.ParticipantPHSEvent" />
         <AssociationConnector Association="phsModel.TemplateTemplateField" />
       </Diagram>
     </edmx:Diagrams>

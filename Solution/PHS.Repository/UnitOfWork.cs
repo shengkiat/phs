@@ -24,7 +24,8 @@ namespace PHS.Repository
             FormRepository = new FormRepository(_context);
             Events = new EventRepository(_context);
             Modalities = new ModalityRepository(_context);
-            EventPatient = new EventPatientRepository(_context);
+            Participants = new ParticipantRepository(_context);
+            PreRegistrations = new PreRegistrationRepository(_context);
             TemplateFieldValues = new TemplateFieldValueRepository(_context);
         }
 
@@ -37,7 +38,9 @@ namespace PHS.Repository
 
         public IModalityRepository Modalities { get; private set; }
 
-        public IEventPatientRepository EventPatient { get; private set; }
+        public IParticipantRepository Participants { get; private set; }
+
+        public IPreRegistrationRepository PreRegistrations { get; private set; }
 
         public ITemplateFieldValueRepository TemplateFieldValues { get; private set; }
 

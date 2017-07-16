@@ -14,16 +14,16 @@ namespace PHS.Business.ViewModel.PastParticipantJourney
         {
         }
 
-        public PatientEventViewModel(EventPatient eventPatient)
+        public PatientEventViewModel(Participant eventPatient)
         {
-            this.Event = eventPatient.PHSEvent;
+            this.Event = eventPatient.PHSEvents.FirstOrDefault();
             this.FullName = eventPatient.FullName;
             this.Nric = eventPatient.Nric;
             this.Language = eventPatient.Language;
             this.ContactNumber = eventPatient.ContactNumber;
             this.Gender = eventPatient.Gender;
 
-            int now = int.Parse(eventPatient.PHSEvent.StartDT.ToString("yyyy"));
+            int now = int.Parse(Event.StartDT.ToString("yyyy"));
             int dob = int.Parse(eventPatient.DateOfBirth.Value.ToString("yyyy"));
             this.Age = (now - dob);
         }

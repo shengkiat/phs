@@ -12,17 +12,21 @@ namespace PHS.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class EventPatient
+    public partial class PreRegistration
     {
-        public int ID { get; set; }
-        public int PHSEventID { get; set; }
+        public int PreRegistrationID { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
+        public string Salutation { get; set; }
         public string ContactNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string Citizenship { get; set; }
+        public string Race { get; set; }
         public string Language { get; set; }
+        public string PreferedTime { get; set; }
+        public string Address { get; set; }
         public string Gender { get; set; }
-    
-        public virtual PHSEvent PHSEvent { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public System.Guid EntryId { get; set; }
     }
 }

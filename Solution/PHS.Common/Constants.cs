@@ -20,6 +20,27 @@ namespace PHS.Common
         public static int DEAULTMAXFILESIZEINKB = 5000;
         public static int DEAULTMINFILESIZEINKB = 10;
 
+        public const string Public_Form_Type_PreRegistration = "PRE-REGISTRATION";
+        public const string Public_Form_Type_OutReach = "OUTREACH";
+
+        public const string PreRegistration_Field_Name_Nric = "NRIC";
+        public const string PreRegistration_Field_Name_FullName = "FULLNAME";
+        public const string PreRegistration_Field_Name_Salutation = "SALUTATION";
+        public const string PreRegistration_Field_Name_ContactNumber = "CONTACTNUMBER";
+        public const string PreRegistration_Field_Name_DateOfBirth = "DATEOFBIRTH";
+        public const string PreRegistration_Field_Name_Citizenship = "CITIZENSHIP";
+        public const string PreRegistration_Field_Name_Race = "RACE";
+        public const string PreRegistration_Field_Name_Language = "LANGUAGE";
+        public const string PreRegistration_Field_Name_PreferedTime = "PREFEREDTIME";
+        public const string PreRegistration_Field_Name_Address = "ADDRESS";
+        public const string PreRegistration_Field_Name_Gender = "GENDER";
+
+        public enum MessageType
+        {
+            PROMPT,
+            ERROR
+        }
+
         public enum TemplateStatus
         {
             DRAFT,
