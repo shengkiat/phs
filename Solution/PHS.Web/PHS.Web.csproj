@@ -563,9 +563,9 @@
     <Content Include="Views\ParticipantJourney\Index.cshtml" />
     <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\Form\EditModalityForm.cshtml" />
-    <Content Include="Views\ParticipantJourney\JourneyModality.cshtml" />
-    <Content Include="Views\ParticipantJourney\_JourneyModalityCirclesPartial.cshtml" />
-    <Content Include="Views\ParticipantJourney\_JourneyModalityFormsPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\ViewParticipantJourney.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyCirclesPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyFormsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

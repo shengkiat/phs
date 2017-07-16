@@ -68,7 +68,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    string url = Url.Action("JourneyModality", "ParticipantJourney", new { Nric = psm.Nric , PHSEventId = psm.PHSEventId });
+                    string url = Url.Action("ViewParticipantJourney", "ParticipantJourney", new { Nric = psm.Nric , PHSEventId = psm.PHSEventId });
                     return JavaScript("window.location = '" + url + "'");
                 }
 
@@ -97,11 +97,12 @@ namespace PHS.Web.Controllers
                     return RedirectToAction("Index", psm);
                 }
 
-                return RedirectToAction("JourneyModality", psm);
+                string url = Url.Action("ViewParticipantJourney", "ParticipantJourney", new { Nric = psm.Nric, PHSEventId = psm.PHSEventId });
+                return JavaScript("window.location = '" + url + "'");
             }
         }
 
-        public ActionResult JourneyModality(ParticipantJourneySearchViewModel psm)
+        public ActionResult ViewParticipantJourney(ParticipantJourneySearchViewModel psm)
         {
             if (psm == null)
             {
