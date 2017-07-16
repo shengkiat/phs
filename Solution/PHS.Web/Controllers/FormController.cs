@@ -2,8 +2,10 @@
 using PHS.Business.Common;
 using PHS.Business.Extensions;
 using PHS.Business.Implementation;
+using PHS.Business.ViewModel.Event;
 using PHS.Common;
 using PHS.DB;
+using PHS.DB.ViewModels;
 using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Context;
@@ -156,7 +158,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        
+
 
         public ActionResult EditTemplate(int id)
         {
@@ -172,7 +174,7 @@ namespace PHS.Web.Controllers
                 {
                     return View(model1);
                 }
-                
+
             }
         }
 
@@ -235,7 +237,7 @@ namespace PHS.Web.Controllers
                     TempData["error"] = result;
                     return RedirectToRoute("form-viewtemplate", new { formId = formId });
                 }
-                
+
             }
         }
 
@@ -286,7 +288,7 @@ namespace PHS.Web.Controllers
         }
 
         //[SSl]
-        
+
 
         public ActionResult ViewSaveTemplate(int id, string entryId, bool embed = false)
         {
@@ -316,7 +318,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        
+
         public ActionResult PreviewTemplate(int id)
         {
             if (!IsUserAuthenticated())
@@ -340,10 +342,58 @@ namespace PHS.Web.Controllers
                 }
             }
 
+
+        }
+
+        public ActionResult EditModalityForm(int eventid, int modalityid)
+        {
+            using (var formManager = new FormManager())
+            {
+                ModalityFormViewModel model = new ModalityFormViewModel();
+
+
+                model.ModalityFormList = formManager.FindModalityForm(modalityid);
+                model.ModalityID = modalityid;
+                model.EventID = eventid;
+
+                using (var modalityManager = new ModalityManager())
+                {
+                    string message = string.Empty;
+                    Modality modality = modalityManager.GetModalityByID(modalityid, out message);
+                    model.ModalityName = modality.Name;
+                }
+
+                using (var eventManager = new EventManager())
+                {
+                    string message = string.Empty;
+                    PHSEvent phsEvent = eventManager.GetEventByID(eventid, out message);
+                    model.EventName = phsEvent.Title; 
+                }
+
+
+                    return View(model);              
+            }
             
         }
 
-        
+        public ActionResult AddModalityForm(int formID, int modalityID, int eventID)
+        {
+            using (var formManager = new FormManager())
+            {
+                formManager.AddModalityForm(formID, modalityID);
+                return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });
+            }            
+        }
+
+        public ActionResult RemoveModalityForm(int formID, int modalityID, int eventID)
+        {
+            using (var formManager = new FormManager())
+            {
+                formManager.RemoveModalityForm(formID, modalityID);
+                return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });
+            }
+        }
+
         public ActionResult Error()
         {
             return View();

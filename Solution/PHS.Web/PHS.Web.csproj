@@ -562,6 +562,7 @@
     <Content Include="Views\PastParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\Index.cshtml" />
     <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
+    <Content Include="Views\Form\EditModalityForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

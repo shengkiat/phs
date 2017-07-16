@@ -13,6 +13,7 @@ using System.Transactions;
 using System.Web.Mvc;
 using PHS.Common;
 using static PHS.Common.Constants;
+using PHS.DB.ViewModels;
 
 namespace PHS.Business.Implementation
 {
@@ -768,6 +769,101 @@ namespace PHS.Business.Implementation
                 return "";
             }
 
+        }
+
+        public List<ModalityForm> FindModalityForm(int modalityID)
+        {
+            ICollection<Form> formList;
+            Modality modality;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {                    
+                    var forms = unitOfWork.FormRepository.GetAll();
+                    formList = (ICollection<Form>) forms;
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID); 
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
+
+            for (int i = 0; i < formList.Count; i ++)
+            {
+                ModalityForm modalityForm = new ModalityForm();
+                Boolean isSelected = false; 
+                for(int j = 0; j < modality.Forms.Count; j++)
+                {
+                    if (modality.Forms.ElementAt(j).FormID == formList.ElementAt(i).FormID)
+                    {
+                        isSelected = true;
+                        break;
+                    }
+                }
+
+                modalityForm.FormName = formList.ElementAt(i).Title;
+                modalityForm.FormID = formList.ElementAt(i).FormID;
+                modalityForm.IsSelected = isSelected;
+
+                modalityFormList.Add(modalityForm); 
+            }
+
+            return modalityFormList; 
+        }
+
+        public void AddModalityForm(int formID, int modalityID)
+        {
+            Form form; 
+            Modality modality;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID);
+
+                    modality.Forms.Add(form);
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+               
+            }
+        }
+
+        public void RemoveModalityForm(int formID, int modalityID)
+        {
+            Form form;
+            Modality modality;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID);
+
+                    modality.Forms.Remove(form);
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

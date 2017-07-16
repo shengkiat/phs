@@ -149,6 +149,7 @@
     <Compile Include="ViewModels\Form\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Form\NotificationEmailViewModel.cs" />
     <Compile Include="ViewModels\Form\SortFieldViewModel.cs" />
+    <Compile Include="ViewModels\ModalityForm.cs" />
     <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>
