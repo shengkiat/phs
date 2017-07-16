@@ -61,7 +61,7 @@
         @if (Model != null && Model.modalityFormList != null)
         {
             <div style="clear:both;margin-bottom:5px">
-                @Html.ActionLink("Add Form", "EditModalityForm", "Form", new { eventid = Model.EventID, modalityid = Model.ModalityID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Add/Remove Form", "EditModalityForm", "Form", new { eventid = Model.EventID, modalityid = Model.ModalityID }, new { @class = "btn btn-default" })
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">
