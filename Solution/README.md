@@ -18,6 +18,7 @@ http://localhost:49972/home/login
 
 http://localhost:49972/phs/public/prereg
 http://localhost:49972/phs/registration
+http://localhost:49972/phs/Form/saveform/4/74CE535D-AF74-4DB5-A745-9AF7E6A41CEF
 
 Test URL
 https://itumed-test.stf.nus.edu.sg/phs   
