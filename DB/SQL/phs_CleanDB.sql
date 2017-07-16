@@ -851,6 +851,17 @@ INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [E
 GO
 INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (309, 155, N'b611fbb9-4cbf-4414-959f-a7a95d39a0d3', N'Male', CAST(N'2017-04-05 14:32:56.493' AS DateTime))
 GO
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (310, 128, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Ben', CAST(0x0000A7B100C3DAB5 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (311, 125, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'S8518538A', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (312, 129, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Mr', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (313, 126, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Male', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (314, 130, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'18/10/1982 12:00:00 AM', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (315, 131, N'7051512f-7156-4e6b-9130-564c20e85d2e', NULL, CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (316, 132, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Chinese', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (317, 133, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'English', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (318, 134, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Morning', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (319, 127, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'{"Id":null,"Blk":"484D","Unit":"","StreetAddress":"CHOA CHU KANG AVENUE 5","ZipCode":"684484"}', CAST(0x0000A7B100C3DAB6 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (320, 147, N'7051512f-7156-4e6b-9130-564c20e85d2e', N'Yes', CAST(0x0000A7B100C3DAB6 AS DateTime))
 SET IDENTITY_INSERT [dbo].[TemplateFieldValue] OFF
 GO
 
