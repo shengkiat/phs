@@ -106,6 +106,8 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
+            InsertValuesIntoTempData(SubmitFields, formCollection);
+
             using (var formManager = new PublicFormManager())
             {
 
@@ -211,6 +213,33 @@ namespace PHS.Web.Controllers
 
         //    throw new Exception("File Not Found");
         //}
+
+        public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
+        {
+            using (var formManager = new PublicFormManager())
+            {
+                TemplateViewModel model = null;
+
+                var template = formManager.FindLatestTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToError("invalid id");
+                }
+
+                foreach (var field in model.Fields)
+                {
+                    field.EntryId = entryId;
+                }
+
+                return View("FillIn", model);
+            }
+        }
 
 
         public ActionResult GetAddressByZipCode(string zipcode)
