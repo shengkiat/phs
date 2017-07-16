@@ -176,6 +176,34 @@ namespace PHS.Business.Extensions
 
                         break;
 
+                    case TemplateFieldType.BIRTHDAYPICKER:
+                        var birthdayValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+
+                        string[] values = birthdayValue.Split("/");
+
+                        if (fieldType == "Day")
+                        {
+                            return values[0];
+                        }
+
+                        else if (fieldType == "Month")
+                        {
+                            return values[1];
+                        }
+
+                        else if (fieldType == "Year")
+                        {
+                            return values[2].Substring(0,4);
+                        }
+
+                        //var day = form.SubmittedFieldValue(field.DomId, "Day");
+                       // var month = form.SubmittedFieldValue(field.DomId, "Month");
+                        //var year = form.SubmittedFieldValue(field.DomId, "Year");
+
+                       // var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
+
+                        break;
+
                     default:
                         return formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
                 }
