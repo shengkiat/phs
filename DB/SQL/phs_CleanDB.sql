@@ -473,6 +473,10 @@ INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive
 GO
 INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (11, N'Summary', 10, N'../../../Content/images/Modality/11summary.png', 1, 1, 0, 0, N'Pending', NULL, NULL)
 GO
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (12, N'Miscellaneous Forms', 90, N'../../../Content/images/Modality/11summary.png', 1, 1, 1, 1, N'Pending', NULL, NULL)
+GO
+INSERT [dbo].[Modality] ([ModalityID], [Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) VALUES (13, N'Public Forms', 99, N'../../../Content/images/Modality/11summary.png', 1, 0, 1, 0, N'Public', NULL, NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Modality] OFF
 
 
@@ -519,6 +523,10 @@ GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 10)
 GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 11)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 12)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 13)
 GO
 
 ---  Forms Sample  --
@@ -867,4 +875,8 @@ GO
 
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
+GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (13, 6)
 GO
