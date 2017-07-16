@@ -608,7 +608,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = CreateUnitOfWork())
                 {                    
-                    var forms = unitOfWork.FormRepository.GetAll();
+                    var forms = unitOfWork.FormRepository.GetAll().Where(f => f.IsActive == true);
                     formList = (ICollection<Form>) forms;
                     modality = unitOfWork.Modalities.GetModalityByID(modalityID); 
 
