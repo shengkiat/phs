@@ -238,7 +238,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 IList<string> errors = Enumerable.Empty<string>().ToList();
                 //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);

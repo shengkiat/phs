@@ -158,8 +158,6 @@ namespace PHS.Web.Controllers
             }
         }
 
-
-
         public ActionResult EditTemplate(int id)
         {
             using (var formManager = new FormManager())

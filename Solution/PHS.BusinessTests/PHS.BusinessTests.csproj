@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Implementation\FormManagerTests.cs" />
     <Compile Include="Implementation\ParticipantJourneyManagerTests.cs" />
+    <Compile Include="Implementation\PublicFormManagerTests.cs" />
     <Compile Include="MockUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

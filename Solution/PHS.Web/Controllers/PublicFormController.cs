@@ -19,7 +19,7 @@ namespace PHS.Web.Controllers
         //[SSl]
         public ActionResult PublicFillIn(string slug, bool embed = false)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 var template = formManager.FindPublicTemplate(slug);
 
@@ -39,7 +39,7 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration()
         {
 
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 TemplateViewModel model = null;
 
@@ -61,10 +61,9 @@ namespace PHS.Web.Controllers
 
         public ActionResult FillIn(int id, bool embed = false)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 TemplateViewModel model = null;
-                // var form = this._formRepo.GetByPrimaryKey(id);
 
                 var template = formManager.FindTemplate(id);
 
@@ -85,7 +84,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
 
                 var template = formManager.FindTemplate(model.TemplateID.Value);
@@ -126,7 +125,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new PublicFormManager())
             {
                 var template = formManager.FindTemplate(id);
                 if (template != null)
