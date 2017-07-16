@@ -132,14 +132,45 @@ namespace PHS.Web.Controllers
                         participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
                     }
 
-                    //TempData["Nric"] = nric;
-                    // TempData["EventId"] = eventId;
+                    TempData["ParticipantJourneySearchViewModel"] = psm;
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     TempData["SelectedModalityId"] = result.SelectedModalityId;
 
                     return View(result);
 
                 }
+            }
+        }
+
+        public ActionResult RefreshViewParticipantJourneyForm(string selectedModalityId)
+        {
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
+
+            if (psm == null)
+            {
+                return Redirect("Index");
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return Redirect("Index");
+                }
+
+                else
+                {
+                    TempData["SelectedModalityId"] = selectedModalityId;
+                    result.SelectedModalityId = Int32.Parse(selectedModalityId);
+                }
+
+                return PartialView("_ViewParticipantJourneyFormPartial", result);
             }
         }
     }

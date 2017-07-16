@@ -564,8 +564,8 @@
     <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\Form\EditModalityForm.cshtml" />
     <Content Include="Views\ParticipantJourney\ViewParticipantJourney.cshtml" />
-    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyCirclesPartial.cshtml" />
-    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyFormsPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyCirclePartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyFormPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_MegaSortingStationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
