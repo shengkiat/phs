@@ -380,7 +380,7 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                formManager.AddModalityForm(formID, modalityID);
+                formManager.AddModalityForm(formID, modalityID, eventID);
                 return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });
             }            
         }
@@ -389,7 +389,7 @@ namespace PHS.Web.Controllers
         {
             using (var formManager = new FormManager())
             {
-                formManager.RemoveModalityForm(formID, modalityID);
+                formManager.RemoveModalityForm(formID, modalityID, eventID);
                 return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });
             }
         }

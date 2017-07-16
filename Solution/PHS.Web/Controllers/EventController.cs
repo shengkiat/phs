@@ -168,6 +168,28 @@ namespace PHS.Web.Controllers
             mHistoryTaking.Status = "Pending";
             modalities.Add(mHistoryTaking);
 
+            Modality miscForm = new Modality();
+            miscForm.Name = "Miscellaneous Forms";
+            miscForm.Position = 90;
+            miscForm.IconPath = "../../../Content/images/Modality/02historytaking.png";
+            miscForm.IsActive = true;
+            miscForm.IsVisible = true;
+            miscForm.IsMandatory = true;
+            miscForm.HasParent = true;
+            miscForm.Status = "Pending";
+            modalities.Add(miscForm);
+
+            Modality publicForm = new Modality();
+            publicForm.Name = "Public Forms";
+            publicForm.Position = 99;
+            publicForm.IconPath = "../../../Content/images/Modality/02historytaking.png";
+            publicForm.IsActive = true;
+            publicForm.IsVisible = false;
+            publicForm.IsMandatory = true;
+            publicForm.HasParent = false;
+            publicForm.Status = "Public";
+            modalities.Add(publicForm);
+
             return modalities; 
         }
 

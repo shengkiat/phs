@@ -58,7 +58,7 @@
         </div>
         <h4>Forms</h4>
 
-        @if (Model != null && Model.Forms != null)
+        @if (Model != null && Model.modalityFormList != null)
         {
             <div style="clear:both;margin-bottom:5px">
                 @Html.ActionLink("Add Form", "EditModalityForm", "Form", new { eventid = Model.EventID, modalityid = Model.ModalityID }, new { @class = "btn btn-default" })
@@ -67,44 +67,22 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>
-                                Modality Name
+                                Form Name
                             </th>
                             <th>
-                                Icon
+                                URL
                             </th>
-
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Forms)
+                        @foreach (var item in Model.modalityFormList)
                         {
-                            <tr>
-                                <td class="vcenter">
-                                    @if (item.FormID != 0)
-                                    {
-                                        <input type="checkbox" id=item.ModalityID value="1" />
-                                    }
-                                </td>
+                            <tr>        
                                 <td>
-                                    @item.Title
-                                </td>
-                                <td>
-                                    @if (item.FormID != 0)
-                                    {
-                                        @Html.ActionLink(
-                                         " ",
-                                         "Delete",
-                                         "Modality",
-                                         new { modalityid = item.FormID },
-                                         new
-                                         {
-                                             @onclick = "return confirm('Are you sure you want to delete this Modality');",
-                                             @class = "glyphicon glyphicon-trash"
-                                         })
-                                    }
-                                </td>
+                                    @item.FormName
+                                </td>  
+                                <td>@Html.Encode(item.publicURL)</td>
                             </tr>
                         }
                     </tbody>

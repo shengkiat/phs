@@ -14,6 +14,7 @@ using System.Web.Mvc;
 using PHS.Common;
 using static PHS.Common.Constants;
 using PHS.DB.ViewModels;
+using System.Web;
 
 namespace PHS.Business.Implementation
 {
@@ -775,6 +776,8 @@ namespace PHS.Business.Implementation
         {
             ICollection<Form> formList;
             Modality modality;
+            Boolean isPublicFacing = false;
+            
             try
             {
                 using (var unitOfWork = CreateUnitOfWork())
@@ -782,6 +785,11 @@ namespace PHS.Business.Implementation
                     var forms = unitOfWork.FormRepository.GetAll();
                     formList = (ICollection<Form>) forms;
                     modality = unitOfWork.Modalities.GetModalityByID(modalityID); 
+
+                    if(modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        isPublicFacing = true; 
+                    }
                 }
             }
             catch
@@ -808,13 +816,21 @@ namespace PHS.Business.Implementation
                 modalityForm.FormID = formList.ElementAt(i).FormID;
                 modalityForm.IsSelected = isSelected;
 
+                if(isPublicFacing)
+                {
+
+                    modalityForm.publicURL = HttpContext.Current.Request.Url.AbsolutePath;
+
+
+                }
+
                 modalityFormList.Add(modalityForm); 
             }
 
             return modalityFormList; 
         }
 
-        public void AddModalityForm(int formID, int modalityID)
+        public void AddModalityForm(int formID, int modalityID, int eventID)
         {
             Form form; 
             Modality modality;
@@ -824,8 +840,12 @@ namespace PHS.Business.Implementation
                 {
                     form = unitOfWork.FormRepository.Get(formID);
                     modality = unitOfWork.Modalities.GetModalityByID(modalityID);
-
                     modality.Forms.Add(form);
+
+                    if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        AddToPublicFacing(formID, eventID, "PRE-REGISTRATION");
+                    }
 
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -840,7 +860,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public void RemoveModalityForm(int formID, int modalityID)
+        public void RemoveModalityForm(int formID, int modalityID, int eventID)
         {
             Form form;
             Modality modality;
@@ -852,6 +872,68 @@ namespace PHS.Business.Implementation
                     modality = unitOfWork.Modalities.GetModalityByID(modalityID);
 
                     modality.Forms.Remove(form);
+
+                    if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        RemoveFromPublicFacing(formID);
+                    }
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void AddToPublicFacing(int formID, int eventID, string publicFormType)
+        {
+            Form form;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+
+                    PHSEvent phsEvent = unitOfWork.Events.Get(eventID);
+
+                    string publicURL = phsEvent.Title.Replace(" ", "") + "_" + form.Title.Replace(" ", "").Substring(0, 6); 
+
+                    form.IsPublic = true;
+                    form.PublicFormType = publicFormType;
+                    form.Slug = publicURL;
+                                
+
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void RemoveFromPublicFacing(int formID)
+        {
+            Form form;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    form.IsPublic = false;
+                    form.PublicFormType = null;
+                    form.Slug = null; 
 
                     using (TransactionScope scope = new TransactionScope())
                     {

@@ -16,5 +16,7 @@ namespace PHS.DB.ViewModels
         public int FormID { get; set; }
 
         public Boolean IsSelected { get; set; }
+
+        public String publicURL { get; set; }
     }
 }

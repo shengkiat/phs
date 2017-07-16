@@ -1,4 +1,5 @@
 ﻿using PHS.DB;
+using PHS.DB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,6 @@ namespace PHS.Business.ViewModel.Event
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
 
-        public ICollection<Form> Forms { get; set; }
+        public List<ModalityForm> modalityFormList { get; set; }
     }
 }
