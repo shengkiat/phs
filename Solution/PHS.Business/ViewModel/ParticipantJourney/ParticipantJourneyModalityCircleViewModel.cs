@@ -44,11 +44,11 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public bool IsActive { get; set; }
         public bool IsVisible { get; set; }
         public Nullable<bool> HasParent { get; }
-        public string Eligiblity { get; set; }
-        public Nullable<int> Labels { get; set; }
+        public string Eligiblity { get; }
+        public Nullable<int> Labels { get; }
 
-        public List<int> modalityForms { get; set; }
-        public List<int> modalityCompletedForms { get; set; }
+        public List<int> modalityForms { get; }
+        public List<int> modalityCompletedForms { get; }
 
         public string GetStatus()
         {
