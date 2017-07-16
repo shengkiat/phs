@@ -128,8 +128,8 @@ namespace PHS.Web
             // view form
             routes.MapRoute(
                "participantjourney-viewform",
-               "publicform/fillin/{id}/{embed}",
-               new { controller = "publicform", action = "FillIn", id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "publicform/viewform/{id}/{embed}",
+               new { controller = "publicform", action = "ViewForm", id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { id = @"\d+" }
             );
 

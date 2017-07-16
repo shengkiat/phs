@@ -28,7 +28,7 @@
                 //console.log(iframe_to_load);
                 //make the magic
                 if (iframe_to_load.length) {
-                    iframe_to_load.attr('src', "/phs/participantjourney/viewform/" + selectedFormId + "/True?httproute=True"); //this fires the link to destinated iframe
+                    iframe_to_load.attr('src', "/phs/publicform/viewform/" + selectedFormId + "/True?httproute=True"); //this fires the link to destinated iframe
                     iframe_to_load.parent().addClass('active'); //this make the parent div container of iframe visible
                 }
 
@@ -94,7 +94,7 @@
                         {
                             <div id="tabs-@anothercounter" class="tab-pane fade in active">
                                 <iframe id="form-builder-frame-@element.FormID" onload="resizeIframe(this)"
-                                        src="@Url.HttpRouteUrl("participantjourney-viewform", new { embed=true, formId=element.FormID })"
+                                        src="@Url.HttpRouteUrl("participantjourney-viewform", new { embed=true, id=element.FormID })"
                                         frameborder="0"
                                         width="100%"
                                         marginheight="0"

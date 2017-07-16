@@ -59,6 +59,28 @@ namespace PHS.Web.Controllers
             }
         }
 
+        public ActionResult ViewForm(int id, bool embed = false)
+        {
+            using (var formManager = new PublicFormManager())
+            {
+                TemplateViewModel model = null;
+
+                var template = formManager.FindLatestTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+                }
+                else
+                {
+                    return RedirectToError("invalid id");
+                }
+
+                return View("FillIn", model);
+            }
+        }
+
         public ActionResult FillIn(int id, bool embed = false)
         {
             using (var formManager = new PublicFormManager())

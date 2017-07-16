@@ -47,6 +47,19 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public Template FindLatestTemplate(int formId)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                Form form = unitOfWork.FormRepository.GetForm(formId);
+                if (form != null)
+                {
+                    return form.Templates.OrderBy(f => f.Version).First();
+                }
+                return null;
+            }
+        }
+
         public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             string result = null;
