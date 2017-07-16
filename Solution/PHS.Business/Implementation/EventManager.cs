@@ -57,25 +57,28 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool NewEvent(PHSEvent eventModel)
+        public bool NewEvent(PHSEvent eventModel, out string message)
         {
+            message = string.Empty;
+
+            validateEvent(eventModel, out message);
+
+            if(message != string.Empty)
+            {
+                return false;
+            }
+
             using (var unitOfWork = new UnitOfWork(new PHSContext()))
             {
+
+                foreach (var newModality in eventModel.Modalities)
+                {
+                    newModality.IsActive = true;
+                }
+
                 eventModel.CreatedDateTime = DateTime.Now;
                 eventModel.IsActive = true;
                 unitOfWork.Events.Add(eventModel);
-
-                //foreach (var newModality in eventModel.Modalities)
-                //{
-
-                //    Modality modalityDB = new Modality();
-                //    Util.CopyNonNullProperty(newModality, modalityDB);
-                //    modalityDB.IsActive = true;
-                //    modalityDB.PHSEvents.Add(eventModel);
-
-                //    unitOfWork.Modalities.Add(modalityDB);
-
-                //}
 
                 using (TransactionScope scope = new TransactionScope())
                 {
@@ -247,6 +250,71 @@ namespace PHS.Business.Implementation
                 message = "Operation failed during deleting Modality";
                 return false;
             }
+        }
+
+        public bool EventTitleExists(string eventTitle, out string message)
+        {
+            if (string.IsNullOrEmpty(eventTitle))
+            {
+                message = Constants.ValueIsEmpty("Event Title");
+                return true;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                {
+                    var phsEvent = unitOfWork.Events.Find(e => e.Title.Equals(eventTitle, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                    if (phsEvent != null)
+                    {
+                        message = Constants.ValueAlreadyExists(eventTitle);
+                        return true;
+                    }
+                }
+                message = string.Empty;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Event Title");
+                return true;
+            }
+        }
+
+        private void validateEvent(PHSEvent eventModel, out string message)
+        {
+            if (eventModel == null)
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return;
+            }
+
+            if ((string.IsNullOrEmpty(eventModel.Title) || string.IsNullOrEmpty(eventModel.Title.Trim()))
+                ||
+                (string.IsNullOrEmpty(eventModel.Venue) || string.IsNullOrEmpty(eventModel.Venue.Trim()))
+                )
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return;
+            }
+
+            if (EventTitleExists(eventModel.Title, out message))
+            {
+                return;
+            }
+
+            if (eventModel.StartDT == null || eventModel.EndDT == null)
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return;
+            }
+
+            if (eventModel.StartDT <= DateTime.Today || eventModel.EndDT <= DateTime.Today)
+            {
+                message = "Input Date must larger than today";
+                return;
+            }
+
         }
 
     }
