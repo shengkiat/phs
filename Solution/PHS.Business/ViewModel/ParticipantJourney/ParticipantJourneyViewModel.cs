@@ -10,9 +10,9 @@ namespace PHS.Business.ViewModel.ParticipantJourney
     public class ParticipantJourneyViewModel
     {
 
-        public ParticipantJourneyViewModel(Participant participant)
+        public ParticipantJourneyViewModel(Participant participant, int PHSEventId)
         {
-            Event = participant.PHSEvents.FirstOrDefault();
+            Event = participant.PHSEvents.Where(e=> e.PHSEventID == PHSEventId).FirstOrDefault();
             FullName = participant.FullName;
             Nric = participant.Nric;
             Language = participant.Language;

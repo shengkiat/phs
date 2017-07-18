@@ -72,7 +72,7 @@ namespace PHS.Business.Implementation
 
                         if (participant != null)
                         {
-                            result = new ParticipantJourneyViewModel(participant);
+                            result = new ParticipantJourneyViewModel(participant, psm.PHSEventId);
                         }
 
                         else
