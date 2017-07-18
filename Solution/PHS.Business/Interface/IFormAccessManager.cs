@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PHS.Business.Interface
 {
-    public interface IPublicFormManager
+    public interface IFormAccessManager
     {
     }
 }

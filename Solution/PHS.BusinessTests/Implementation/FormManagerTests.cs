@@ -16,7 +16,7 @@ namespace PHS.Business.Implementation.Tests
     [TestClass()]
     public class FormManagerTests
     {
-        private PublicFormManager _publicFormManager;
+        private FormAccessManager _publicFormManager;
         private FormManager _target;
         private IUnitOfWork _unitOfWork;
         private PHSContext _context;
@@ -533,7 +533,7 @@ namespace PHS.Business.Implementation.Tests
             }
         }
 
-        private class MockPublicFormManager : PublicFormManager
+        private class MockPublicFormManager : FormAccessManager
         {
             private IUnitOfWork _unitOfWork;
 

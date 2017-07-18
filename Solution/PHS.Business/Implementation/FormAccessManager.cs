@@ -14,11 +14,11 @@ using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
-    public class PublicFormManager : BaseFormManager, IPublicFormManager, IManagerFactoryBase<IPublicFormManager>
+    public class FormAccessManager : BaseFormManager, IFormAccessManager, IManagerFactoryBase<IFormAccessManager>
     {
-        public IPublicFormManager Create()
+        public IFormAccessManager Create()
         {
-            return new PublicFormManager();
+            return new FormAccessManager();
         }
 
         public Template FindPublicTemplate(string slug)

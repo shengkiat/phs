@@ -19,7 +19,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-preregistration",
                "registration",
-               defaults: new { controller = "PublicForm", action = "PreRegistration" }
+               defaults: new { controller = "FormAccess", action = "PreRegistration" }
 
             );
 
@@ -27,7 +27,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-public",
                "public/{slug}/{embed}",
-               new { controller = "PublicForm", action = "publicFillIn", slug = UrlParameter.Optional, embed = UrlParameter.Optional }
+               new { controller = "FormAccess", action = "publicFillIn", slug = UrlParameter.Optional, embed = UrlParameter.Optional }
             );
 
 
@@ -88,7 +88,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-fillin",
                "Form/fillin/{id}/{embed}",
-               new { controller = "PublicForm", action = "fillin", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "FormAccess", action = "fillin", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
@@ -96,7 +96,7 @@ namespace PHS.Web
             routes.MapRoute(
                "form-submitconfirmation",
                "Form/submitconfirmation/{id}/{embed}",
-               new { controller = "PublicForm", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               new { controller = "FormAccess", action = "SubmitConfirmation", Id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 
@@ -125,11 +125,11 @@ namespace PHS.Web
 
             //** END FORM BUILDER ROUTES **//
 
-            // view form
+            // Internal FillIn
             routes.MapRoute(
                "participantjourney-viewform",
-               "publicform/viewform/{id}/{embed}",
-               new { controller = "publicform", action = "ViewForm", id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "formaccess/InternalFillIn/{id}/{embed}",
+               new { controller = "FormAccess", action = "InternalFillIn", id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { id = @"\d+" }
             );
 
@@ -154,7 +154,7 @@ namespace PHS.Web
             routes.MapRoute(
                "ViewSubmittedForm",
                "Form/saveform/{id}/{entryID}/{embed}",
-               new { controller = "PublicForm", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
+               new { controller = "FormAccess", action = "ViewSaveForm", Id = UrlParameter.Optional, entryID= UrlParameter.Optional,  embed = UrlParameter.Optional },
                new { Id = @"\d+" }
             );
 

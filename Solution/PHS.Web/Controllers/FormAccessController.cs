@@ -14,12 +14,12 @@ using PHS.Business.Extensions;
 
 namespace PHS.Web.Controllers
 {
-    public class PublicFormController : BaseController
+    public class FormAccessController : BaseController
     {
         //[SSl]
         public ActionResult PublicFillIn(string slug, bool embed = false)
         {
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 var template = formManager.FindPublicTemplate(slug);
 
@@ -39,7 +39,7 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration()
         {
 
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 TemplateViewModel model = null;
 
@@ -59,9 +59,9 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult ViewForm(int id, bool embed = false)
+        public ActionResult InternalFillIn(int id, bool embed = false)
         {
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 TemplateViewModel model = null;
 
@@ -71,6 +71,11 @@ namespace PHS.Web.Controllers
                 {
                     model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                     model.Embed = embed;
+
+                    if (!IsUserAuthenticated())
+                    {
+                        return RedirectToError("Unauthorized access");
+                    }
                 }
                 else
                 {
@@ -83,7 +88,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult FillIn(int id, bool embed = false)
         {
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 TemplateViewModel model = null;
 
@@ -92,6 +97,12 @@ namespace PHS.Web.Controllers
                 if (template != null)
                 {
                     model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+
+                    if (!model.IsPublic && !IsUserAuthenticated())
+                    {
+                        return RedirectToError("Unauthorized access");
+                    }
+
                     model.Embed = embed;
                 }
                 else
@@ -108,7 +119,7 @@ namespace PHS.Web.Controllers
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
 
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
 
                 var template = formManager.FindTemplate(model.TemplateID.Value);
@@ -149,7 +160,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 var template = formManager.FindTemplate(id);
                 if (template != null)
@@ -217,7 +228,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
         {
-            using (var formManager = new PublicFormManager())
+            using (var formManager = new FormAccessManager())
             {
                 TemplateViewModel model = null;
 

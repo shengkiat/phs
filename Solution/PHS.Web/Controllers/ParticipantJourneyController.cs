@@ -96,8 +96,7 @@ namespace PHS.Web.Controllers
                     return RedirectToAction("Index", psm);
                 }
 
-                string url = Url.Action("ViewParticipantJourney", "ParticipantJourney", new { Nric = psm.Nric, PHSEventId = psm.PHSEventId });
-                return JavaScript("window.location = '" + url + "'");
+                return RedirectToAction("ViewParticipantJourney", psm);
             }
         }
 
