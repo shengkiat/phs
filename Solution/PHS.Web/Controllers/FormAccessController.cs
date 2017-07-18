@@ -76,6 +76,11 @@ namespace PHS.Web.Controllers
                     {
                         return RedirectToError("Unauthorized access");
                     }
+
+                    if (model.Title.Equals("Mega Sorting Station"))
+                    {
+                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"));
+                    }
                 }
                 else
                 {
@@ -258,6 +263,11 @@ namespace PHS.Web.Controllers
         {
             int postalCode = 0;
 
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToError("Unauthorized access");
+            }
+
             if (!Int32.TryParse(zipcode, out postalCode))
             {
                 // not int
@@ -285,11 +295,14 @@ namespace PHS.Web.Controllers
             {
                 ViewData[key.ToLower()] = formCollection[key];
             }
-
         }
 
         public ActionResult GenerateDoctorMemo(string text)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToError("Unauthorized access");
+            }
 
             if (text == null)
             {
@@ -320,6 +333,11 @@ namespace PHS.Web.Controllers
         [HttpGet]
         public ActionResult DownloadDoctorMemo(string fileGuid, string fileName)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToError("Unauthorized access");
+            }
+
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];
