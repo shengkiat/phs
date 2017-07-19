@@ -14,6 +14,7 @@ namespace PHS.DB
     
     public partial class ParticipantJourneyModality
     {
+        public int ParticipantJourneyModalityID { get; set; }
         public int ParticipantID { get; set; }
         public int PHSEventID { get; set; }
         public int ModalityID { get; set; }

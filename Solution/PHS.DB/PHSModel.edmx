@@ -91,6 +91,7 @@
             <PropertyRef Name="ModalityID" />
             <PropertyRef Name="FormID" />
           </Key>
+          <Property Name="ParticipantJourneyModalityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParticipantID" Type="int" Nullable="false" />
           <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
@@ -613,6 +614,7 @@
             <PropertyRef Name="ModalityID" />
             <PropertyRef Name="FormID" />
           </Key>
+          <Property Name="ParticipantJourneyModalityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParticipantID" Type="Int32" Nullable="false" />
           <Property Name="PHSEventID" Type="Int32" Nullable="false" />
           <Property Name="ModalityID" Type="Int32" Nullable="false" />
@@ -919,6 +921,7 @@
                 <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
                 <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="ParticipantJourneyModalityID" ColumnName="ParticipantJourneyModalityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

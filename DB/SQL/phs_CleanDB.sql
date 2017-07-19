@@ -295,6 +295,7 @@ CREATE TABLE [dbo].[ParticipantPHSEvent](
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[ParticipantJourneyModality](
+	[ParticipantJourneyModalityID] [int] IDENTITY(1,1) NOT NULL,
 	[ParticipantID] [int] NOT NULL,
 	[PHSEventID] [int] NOT NULL,
 	[ModalityID] [int] NOT NULL,
