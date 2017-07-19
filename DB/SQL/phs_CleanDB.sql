@@ -1,6 +1,8 @@
 ﻿--------------------------Table Structure-----------------  
 USE [phs]
 
+IF OBJECT_ID('dbo.ParticipantJourneyModality', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[ParticipantJourneyModality]; 
 
 IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Person]; 
@@ -292,6 +294,21 @@ CREATE TABLE [dbo].[ParticipantPHSEvent](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[ParticipantJourneyModality](
+	[ParticipantID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
+	[ModalityID] [int] NOT NULL,
+	[FormID] [int] NOT NULL,
+	[EntryId] [uniqueidentifier] NOT NULL
+ CONSTRAINT [PK_participant_journey_modality] PRIMARY KEY CLUSTERED 
+(
+	[ParticipantID] ASC,
+	[PHSEventID] ASC,
+	[ModalityID] ASC,
+	[FormID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
@@ -344,6 +361,26 @@ ALTER TABLE [dbo].[ParticipantPHSEvent]  WITH CHECK ADD  CONSTRAINT [FK particip
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
 ALTER TABLE [dbo].[ParticipantPHSEvent] CHECK CONSTRAINT [FK participant_phs_event_phs_event]
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_phs_event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_phs_event]
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_participant] FOREIGN KEY([ParticipantID])
+REFERENCES [dbo].[Participant] ([ParticipantID])
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_participant]
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_form] FOREIGN KEY([FormID])
+REFERENCES [dbo].[Form] ([FormID])
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_form]
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ModalityID])
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_modality]
 GO
 --------------------------Data--------------------- 
 

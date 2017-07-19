@@ -101,6 +101,9 @@
     <Compile Include="Participant.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ParticipantJourneyModality.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

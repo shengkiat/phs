@@ -5,18 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="5.75" />
-        <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="0.75" PointY="9.25" />
-        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="5.75" PointY="9.75" />
-        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="10.25" PointY="4.75" />
-        <EntityTypeShape EntityType="phsModel.Participant" Width="1.5" PointX="5.75" PointY="1.5" />
-        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="7.75" PointY="9.75" />
-        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="8" PointY="1.125" />
-        <EntityTypeShape EntityType="phsModel.PreRegistration" Width="1.5" PointX="9.75" PointY="9.75" />
-        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="2.875" />
-        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="1.125" />
-        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="4" />
+        <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="7.75" PointY="4" />
+        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="6" PointY="8.5" />
+        <EntityTypeShape EntityType="phsModel.Participant" Width="1.5" PointX="1.5" PointY="14" />
+        <EntityTypeShape EntityType="phsModel.ParticipantJourneyModality" Width="1.5" PointX="8.25" PointY="9" />
+        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="9.75" PointY="4" />
+        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="3.75" PointY="13.625" />
+        <EntityTypeShape EntityType="phsModel.PreRegistration" Width="1.5" PointX="5.75" PointY="13" />
+        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="3" PointY="8.625" />
+        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="5.25" />
+        <AssociationConnector Association="phsModel.FK_participant_journey_modality_form" />
         <AssociationConnector Association="phsModel.FK_Form_Template" />
+        <AssociationConnector Association="phsModel.FK_participant_journey_modality_modality" />
+        <AssociationConnector Association="phsModel.FK_participant_journey_modality_participant" />
+        <AssociationConnector Association="phsModel.FK_participant_journey_modality_phs_event" />
         <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />
         <AssociationConnector Association="phsModel.EventModality" />
         <AssociationConnector Association="phsModel.ModalityForm" />

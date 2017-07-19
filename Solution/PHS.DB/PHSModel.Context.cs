@@ -30,6 +30,7 @@ namespace PHS.DB
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
         public virtual DbSet<Participant> Participants { get; set; }
+        public virtual DbSet<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
         public virtual DbSet<PreRegistration> PreRegistrations { get; set; }
