@@ -54,7 +54,9 @@
   <ItemGroup>
     <Compile Include="Context\EntityTrackingConfiguration.cs" />
     <Compile Include="Context\PHSContext.cs" />
+    <Compile Include="Interface\IParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IPreRegistrationRepository.cs" />
+    <Compile Include="Repository\ParticipantJourneyModalityRepository.cs" />
     <Compile Include="Repository\FormRepository.cs" />
     <Compile Include="Interface\Core\IContext.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
