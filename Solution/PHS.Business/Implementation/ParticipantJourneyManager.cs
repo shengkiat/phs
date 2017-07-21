@@ -161,6 +161,22 @@ namespace PHS.Business.Implementation
                                 unitOfWork.Participants.AddPHSEventToParticipant(participant, phsEvent);
                             }
 
+                            foreach(var modality in phsEvent.Modalities)
+                            {
+                                foreach(var form in modality.Forms)
+                                {
+                                    ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
+                                    {
+                                        ParticipantID = participant.ParticipantID,
+                                        PHSEventID = phsEvent.PHSEventID,
+                                        FormID = form.FormID,
+                                        ModalityID = modality.ModalityID
+                                    };
+
+                                    participant.ParticipantJourneyModalities.Add(participantJourneyModality);
+                                }
+                            }
+
                             unitOfWork.Complete();
                             scope.Complete();
 

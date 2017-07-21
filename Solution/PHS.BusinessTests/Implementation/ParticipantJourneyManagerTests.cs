@@ -336,6 +336,20 @@ namespace PHS.Business.Implementation.Tests
                 IsActive = true
             };
 
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
             _unitOfWork.Events.Add(phsEvent);
 
             _unitOfWork.Complete();
@@ -355,6 +369,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult.Event);
 
             Assert.IsNull(postResult.Gender);
+
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u=> u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            Assert.IsNotNull(pjmResult);
+            Assert.AreEqual(1, pjmResult.ParticipantID);
+            Assert.AreEqual(1, pjmResult.ModalityID);
+            Assert.AreEqual(1, pjmResult.PHSEventID);
+            Assert.AreEqual(1, pjmResult.FormID);
         }
 
         [TestMethod()]

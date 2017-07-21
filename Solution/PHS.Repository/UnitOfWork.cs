@@ -27,6 +27,7 @@ namespace PHS.Repository
             Participants = new ParticipantRepository(_context);
             PreRegistrations = new PreRegistrationRepository(_context);
             TemplateFieldValues = new TemplateFieldValueRepository(_context);
+            ParticipantJourneyModalities = new ParticipantJourneyModalityRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
