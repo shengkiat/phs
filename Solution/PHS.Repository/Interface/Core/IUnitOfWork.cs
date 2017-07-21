@@ -19,6 +19,8 @@ namespace PHS.Repository.Interface.Core
 
         IParticipantRepository Participants { get; }
 
+        IParticipantJourneyModalityRepository ParticipantJourneyModalities { get; }
+
         IPreRegistrationRepository PreRegistrations { get; }
 
         ITemplateFieldValueRepository TemplateFieldValues { get;  }

@@ -40,6 +40,8 @@ namespace PHS.Repository
 
         public IParticipantRepository Participants { get; private set; }
 
+        public IParticipantJourneyModalityRepository ParticipantJourneyModalities { get; private set; }
+
         public IPreRegistrationRepository PreRegistrations { get; private set; }
 
         public ITemplateFieldValueRepository TemplateFieldValues { get; private set; }
