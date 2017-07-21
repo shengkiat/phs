@@ -394,6 +394,16 @@ namespace PHS.Business.Implementation.Tests
                 IsActive = true
             };
 
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
             PreRegistration preRegistrationOne = new PreRegistration()
             {
                 Nric = "S8250369B",
@@ -426,6 +436,11 @@ namespace PHS.Business.Implementation.Tests
                 EntryId = Guid.NewGuid()
             };
 
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
             _unitOfWork.PreRegistrations.Add(preRegistrationOne);
             _unitOfWork.PreRegistrations.Add(preRegistrationTwo);
 
@@ -448,6 +463,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult.Event);
 
             Assert.AreEqual(preRegistrationTwo.Gender, postResult.Gender);
+
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            Assert.IsNotNull(pjmResult);
+            Assert.AreEqual(1, pjmResult.ParticipantID);
+            Assert.AreEqual(1, pjmResult.ModalityID);
+            Assert.AreEqual(1, pjmResult.PHSEventID);
+            Assert.AreEqual(1, pjmResult.FormID);
 
         }
 
@@ -483,12 +505,26 @@ namespace PHS.Business.Implementation.Tests
                 ContactNumber = "88776655"
             };
 
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
             _unitOfWork.Events.Add(phsEventOne);
             _unitOfWork.Events.Add(phsEventTwo);
 
             participant.PHSEvents.Add(phsEventOne);
 
             _unitOfWork.Participants.Add(participant);
+
+            modality.Forms.Add(form);
+
+            phsEventTwo.Modalities.Add(modality);
 
             _unitOfWork.Complete();
 
@@ -507,6 +543,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult.Event);
 
             Assert.AreEqual("88776655", postResult.ContactNumber);
+
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            Assert.IsNotNull(pjmResult);
+            Assert.AreEqual(1, pjmResult.ParticipantID);
+            Assert.AreEqual(1, pjmResult.ModalityID);
+            Assert.AreEqual(2, pjmResult.PHSEventID);
+            Assert.AreEqual(1, pjmResult.FormID);
         }
 
         [TestMethod()]
@@ -556,6 +599,17 @@ namespace PHS.Business.Implementation.Tests
                 EntryId = Guid.NewGuid()
             };
 
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
+         
             _unitOfWork.PreRegistrations.Add(preRegistration);
 
             _unitOfWork.Events.Add(phsEventOne);
@@ -564,6 +618,10 @@ namespace PHS.Business.Implementation.Tests
             participant.PHSEvents.Add(phsEventOne);
 
             _unitOfWork.Participants.Add(participant);
+
+            modality.Forms.Add(form);
+
+            phsEventTwo.Modalities.Add(modality);
 
             _unitOfWork.Complete();
 
@@ -582,6 +640,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult.Event);
 
             Assert.AreEqual("12345678", postResult.ContactNumber);
+
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            Assert.IsNotNull(pjmResult);
+            Assert.AreEqual(1, pjmResult.ParticipantID);
+            Assert.AreEqual(1, pjmResult.ModalityID);
+            Assert.AreEqual(2, pjmResult.PHSEventID);
+            Assert.AreEqual(1, pjmResult.FormID);
         }
 
         [TestInitialize]

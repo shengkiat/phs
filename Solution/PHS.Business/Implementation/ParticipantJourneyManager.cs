@@ -121,6 +121,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = CreateUnitOfWork())
                 {
+
                     PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
 
                     if (phsEvent == null)
