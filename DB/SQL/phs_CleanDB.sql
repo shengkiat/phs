@@ -950,5 +950,5 @@ INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (13, 6)
 GO
 
 GO
-INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 1, N'7051512f-7156-4e6b-9130-564c20e85d2e')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
 GO
