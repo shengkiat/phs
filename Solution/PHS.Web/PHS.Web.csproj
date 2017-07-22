@@ -541,12 +541,6 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
-    <Content Include="Views\PastParticipantJourney\JourneyModality.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_JourneyModalityCirclesPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_JourneyModalityFormsPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\ViewForm.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_MegaSortingStationPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_SummaryPartial.cshtml" />
     <Content Include="Views\FormAccess\PreRegistration.cshtml" />
     <Content Include="Views\Form\_form-field-signature-partial.cshtml" />
     <Content Include="Views\Form\_form-field-signature-template.cshtml" />
