@@ -117,48 +117,18 @@ namespace PHS.Web.Controllers
                     }
 
                     TempData["success"] = templateView.ConfirmationMessage;
-
-                    if (templateView.IsPublic)
+                    return RedirectToRoute("form-submitconfirmation", new
                     {
-                        return RedirectToRoute("form-submitconfirmation", new
-                        {
-                            id = template.TemplateID,
-                            embed = model.Embed
-                        });
-                    }
-
-                    else
-                    {
-                        List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
-
-                        foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
-                        {
-                            if (participantJourneyModalityCircle.isModalityFormsContain(model.TemplateID.Value))
-                            {
-                                participantJourneyModalityCircle.modalityCompletedForms.Add(model.TemplateID.Value);
-                            }
-                        }
-
-                        TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
-
-                        return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
-                    }
+                        id = template.TemplateID,
+                        embed = model.Embed
+                    });
                     
                 }
 
                 else
                 {
                     TempData["error"] = result;
-                    if (templateView.IsPublic)
-                    {
-                        return View("FillIn", templateView);
-                    }
-
-                    else
-                    {
-                        return Json(new { success = false, error = "Unable to save form ", isautosave = false });
-                    }
-
+                    return View("FillIn", templateView);
                 }
             }
         }
@@ -187,7 +157,7 @@ namespace PHS.Web.Controllers
             emailSender.SendSubmissionNotificationEmail(model.Email, "New Submission for form \"{0}\"".FormatWith(model.FormName), submimssionDetail);
         }
 
-        protected string RenderPartialViewToString(string viewName, object model)
+        private string RenderPartialViewToString(string viewName, object model)
         {
             if (string.IsNullOrEmpty(viewName))
             {
@@ -289,7 +259,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
+        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
         {
             foreach (var key in formCollection.AllKeys)
             {

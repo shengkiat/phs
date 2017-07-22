@@ -1,4 +1,6 @@
-﻿using PHS.Business.Implementation;
+﻿using PHS.Business.Common;
+using PHS.Business.Extensions;
+using PHS.Business.Implementation;
 using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Business.ViewModel.PastParticipantJourney;
 using PHS.Common;
@@ -7,6 +9,7 @@ using PHS.DB.ViewModels.Form;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -219,6 +222,77 @@ namespace PHS.Web.Controllers
                 {
                     return RedirectToError("invalid id");
                 }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        {
+            InsertValuesIntoTempData(SubmitFields, formCollection);
+
+            using (var formManager = new FormAccessManager())
+            {
+
+                var template = formManager.FindTemplate(model.TemplateID.Value);
+
+                var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                string result = formManager.FillIn(SubmitFields, model, formCollection);
+
+                if (result.Equals("success"))
+                {
+
+                    TempData["success"] = templateView.ConfirmationMessage;
+
+                    if (templateView.IsPublic)
+                    {
+                        return RedirectToRoute("form-submitconfirmation", new
+                        {
+                            id = template.TemplateID,
+                            embed = model.Embed
+                        });
+                    }
+
+                    else
+                    {
+                        List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
+
+                        foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
+                        {
+                            if (participantJourneyModalityCircle.isModalityFormsContain(model.TemplateID.Value))
+                            {
+                                participantJourneyModalityCircle.modalityCompletedForms.Add(model.TemplateID.Value);
+                            }
+                        }
+
+                        TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
+
+                        return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
+                    }
+
+                }
+
+                else
+                {
+                    TempData["error"] = result;
+                    if (templateView.IsPublic)
+                    {
+                        return View("FillIn", templateView);
+                    }
+
+                    else
+                    {
+                        return Json(new { success = false, error = "Unable to save form ", isautosave = false });
+                    }
+
+                }
+            }
+        }
+
+        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
+        {
+            foreach (var key in formCollection.AllKeys)
+            {
+                ViewData[key.ToLower()] = formCollection[key];
             }
         }
 
