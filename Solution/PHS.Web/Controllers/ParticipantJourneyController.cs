@@ -3,6 +3,7 @@ using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Business.ViewModel.PastParticipantJourney;
 using PHS.Common;
 using PHS.DB;
+using PHS.DB.ViewModels.Form;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
@@ -173,6 +174,51 @@ namespace PHS.Web.Controllers
                 }
 
                 return PartialView("_ViewParticipantJourneyFormPartial", result);
+            }
+        }
+
+
+        public ActionResult InternalFillIn(int id, bool embed = false)
+        {
+            using (var formManager = new FormAccessManager())
+            {
+                TemplateViewModel model = null;
+
+                var template = formManager.FindLatestTemplate(id);
+
+                if (template != null)
+                {
+                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                    model.Embed = embed;
+
+                    if (model.Title.Equals("Mega Sorting Station"))
+                    {
+                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"));
+                    }
+
+                    ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
+
+                    using (var participantJourneyManager = new ParticipantJourneyManager())
+                    {
+                        string message = string.Empty;
+                        ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, out message);
+
+                        if (participantJourneyModality != null)
+                        {
+                            foreach (var field in model.Fields)
+                            {
+                                field.EntryId = participantJourneyModality.EntryId.ToString();
+                            }
+                        }
+                        
+                    }
+
+                    return View("~/Views/FormAccess/FillIn.cshtml", model);
+                }
+                else
+                {
+                    return RedirectToError("invalid id");
+                }
             }
         }
 

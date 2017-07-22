@@ -128,8 +128,8 @@ namespace PHS.Web
             // Internal FillIn
             routes.MapRoute(
                "participantjourney-viewform",
-               "formaccess/InternalFillIn/{id}/{embed}",
-               new { controller = "FormAccess", action = "InternalFillIn", id = UrlParameter.Optional, embed = UrlParameter.Optional },
+               "participantjourney/InternalFillIn/{id}/{embed}",
+               new { controller = "Participantjourney", action = "InternalFillIn", id = UrlParameter.Optional, embed = UrlParameter.Optional },
                new { id = @"\d+" }
             );
 

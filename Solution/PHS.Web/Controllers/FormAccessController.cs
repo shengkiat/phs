@@ -60,38 +60,6 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult InternalFillIn(int id, bool embed = false)
-        {
-            using (var formManager = new FormAccessManager())
-            {
-                TemplateViewModel model = null;
-
-                var template = formManager.FindLatestTemplate(id);
-
-                if (template != null)
-                {
-                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                    model.Embed = embed;
-
-                    if (!IsUserAuthenticated())
-                    {
-                        return RedirectToError("Unauthorized access");
-                    }
-
-                    if (model.Title.Equals("Mega Sorting Station"))
-                    {
-                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"));
-                    }
-                }
-                else
-                {
-                    return RedirectToError("invalid id");
-                }
-
-                return View("FillIn", model);
-            }
-        }
-
         public ActionResult FillIn(int id, bool embed = false)
         {
             using (var formManager = new FormAccessManager())
