@@ -1,0 +1,167 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateViewModel
+
+@using PHS.Common
+@using PHS.Business.Extensions
+
+@{
+
+    ViewBag.Title = Model.Title;
+    Model.Embed = true;
+    Layout = "~/Views/Shared/_EmbedLayout.cshtml";
+}
+@section headerScripts{
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.utils.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
+
+    <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-common.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-interface.css")" rel="stylesheet" />
+
+    @if (!Model.Theme.IsNullOrEmpty())
+    {
+        <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
+    }
+
+    <script type="text/javascript">
+        function handleBeginSave() {
+            $('.save-button').attr("disabled", "disabled");
+            $('.save-button').addClass("disabled");
+
+            //$('#isAltered').val(0); // prevent autosave while save in progress
+        }
+
+        function enableSubmitButtons() {
+            $('.save-button').removeAttr("disabled", "disabled");
+            $('.save-button').removeClass("disabled");
+        }
+
+        function handleSaveCallback(content) {
+            //$('#IsAutoSave').val('false');
+
+            console.log(content.responseText);
+
+            var response = $.parseJSON(content.responseText);
+            if (response.success) {
+                if (!response.isautosave) {
+                    $U.writeSuccessToContainer($('#message'), response.message);
+                }
+
+                var select = "";
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: '@Url.Action("ActivateCirclesFromMSSS", "PatientJourney")', // Controller/View
+                        data: { 'activateList': select },
+                        contentType: "application/json; charset=utf-8",
+                        success: function (resp) {
+                            console.log("ActivateCirclesFromMSSS success from viewform");
+                            window.parent.$('#ptJourney').html(resp);
+                        }
+                    });
+
+
+                //bindFieldIds(response.fieldids);
+                //$('#isAltered').val(0);
+                //$('#autosave-container').hide();
+            } else {
+                if (!response.isautosave) {
+                    $U.writeErrorToContainer($('#message'), response.error)
+                }
+            }
+
+            enableSubmitButtons();
+        }
+
+    </script>
+
+}
+
+<div class="form-page-container prepend-top span-26">
+    <div class="center-column span-14" style="width:95%">
+
+        @using (Ajax.BeginForm("FillIn", "FormAccess", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
+        {
+            <div id="message" class="clear"></div>
+            @Html.WriteMessages()
+            <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
+                @{
+                    int counter = 1;
+                    bool sectionCollapse = false;
+
+                    <div data-accordion-group>
+
+                        @foreach (var field in Model.Fields)
+                        {
+                            if (Model.IsQuestion)
+                            {
+                                <li>
+                                    <label class="dynamic">@String.Format("Q{0}", counter)</label>
+                                </li>
+                            }
+
+                            if (field.FieldType.ToString().Equals("SECTIONCOLLAPSE"))
+                            {
+                                if (sectionCollapse)
+                                {
+                                    @Html.Raw("</div>");
+                                }
+                                sectionCollapse = true;
+                                @Html.Raw("<div class=\"accordion\" data-accordion>");
+                                <div data-control>@field.Label</div>
+                            }
+
+                            else if (sectionCollapse)
+                            {
+                                <div data-content>
+                                    <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                                        @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
+                                    </li>
+                                </div>
+
+                            }
+
+                            else
+                            {
+                                <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                                    @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
+                                </li>
+                            }
+
+
+
+                            counter = counter + 1;
+                        }
+
+                        @if (sectionCollapse)
+                        {
+                            @Html.Raw("</div>");
+                        }
+
+                    </div>
+                }
+            </ul>
+
+            if (Model.Fields != null && Model.Fields.Any())
+            {
+                <ul id="submit-button-list" class="vertical-list entry-form-list">
+                    <li>
+                        <label class="label">
+                            &nbsp;
+                        </label>
+                        <div class="input">
+                            <input type="submit" class="save-button blue" value="Submit" />
+                        </div>
+                    </li>
+                </ul>
+            }
+            @Html.HiddenFor(m => m.TemplateID)
+            @Html.Hidden("SubmitFields[-1].Hidden", "")
+            @Html.HiddenFor(m => m.Embed)
+            }
+    </div>
+
+</div>
+
+
+

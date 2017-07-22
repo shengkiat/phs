@@ -141,7 +141,7 @@ namespace PHS.Web.Controllers
 
                         TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
 
-                        return Json(new { success = true, message = templateView.ConfirmationMessage, isautosave = false });
+                        return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                     }
                     
                 }

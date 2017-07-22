@@ -213,7 +213,7 @@ namespace PHS.Web.Controllers
                         
                     }
 
-                    return View("~/Views/FormAccess/FillIn.cshtml", model);
+                    return View("_FillInPartial", model);
                 }
                 else
                 {
