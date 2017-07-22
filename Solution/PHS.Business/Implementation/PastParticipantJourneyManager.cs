@@ -49,13 +49,18 @@ namespace PHS.Business.Implementation
                             DateTime currentTime = DateTime.Now;
                             foreach (PHSEvent phsEvent in participant.PHSEvents)
                             {
-                                if (!phsEvent.IsActive && currentTime.Ticks > phsEvent.EndDT.Ticks)
+                                if (currentTime.Ticks > phsEvent.EndDT.Ticks)
                                 {
                                     result.Add(new ParticipantJourneyViewModel(participant, phsEvent.PHSEventID));
                                 }
                                 
                             }
 
+                            if (result.Count == 0)
+                            {
+                                message = "No result found";
+                            }
+                            
                             return result;
                         }
                         else

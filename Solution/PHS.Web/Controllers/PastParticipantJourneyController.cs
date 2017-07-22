@@ -41,7 +41,7 @@ namespace PHS.Web.Controllers
                 PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
 
                 IList<ParticipantJourneyViewModel> participantJourneyViewModels = participantJourneyManager.GetAllParticipantJourneyByNric(psm.Nric, out message);
-                if (participantJourneyViewModels == null)
+                if (!string.IsNullOrEmpty(message))
                 {
                     SetViewBagError(message);
                 }
