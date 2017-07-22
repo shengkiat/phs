@@ -77,6 +77,58 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("Test 15", result.FirstOrDefault().Event.Title);
         }
 
+        [TestMethod()]
+        public void RetrievePastParticipantJourney_InvalidNric()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S82";
+            psm.PHSEventId = 1;
+
+            string message = string.Empty;
+
+            _target.RetrievePastParticipantJourney(psm, out message);
+
+            Assert.AreEqual("Invalid Nric", message);
+        }
+
+        [TestMethod()]
+        public void RetrievePastParticipantJourney()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEventOne = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-198),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEventOne);
+
+            participant.PHSEvents.Add(phsEventOne);
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            ParticipantJourneyViewModel result = _target.RetrievePastParticipantJourney(psm, out message);
+
+            Assert.AreEqual(string.Empty, message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test", result.Event.Title);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {

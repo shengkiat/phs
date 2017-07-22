@@ -17,6 +17,7 @@ namespace PHS.Web.Controllers
     using Repository.Context;
     using Filter;
     using Business.ViewModel.ParticipantJourney;
+    using static Common.Constants;
 
     [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code )]
     public class PastParticipantJourneyController : BaseController
@@ -58,6 +59,46 @@ namespace PHS.Web.Controllers
                 else
                 {
                     return View(result);
+                }
+            }
+        }
+
+        public ActionResult ViewPastParticipantJourney(ParticipantJourneySearchViewModel psm)
+        {
+            if (psm == null)
+            {
+                return Redirect("Index");
+            }
+
+            using (var participantJourneyManager = new PastParticipantJourneyManager())
+            {
+                string message = string.Empty;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrievePastParticipantJourney(psm, out message);
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    SetViewBagError(message);
+                    return Redirect("Index");
+                }
+
+                else
+                {
+                    result.SelectedModalityId = result.Event.Modalities.First().ModalityID;
+
+                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
+
+                    foreach (var modality in result.Event.Modalities)
+                    {
+                        participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
+                    }
+
+                    TempData["ParticipantJourneySearchViewModel"] = psm;
+                    TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
+                    TempData["SelectedModalityId"] = result.SelectedModalityId;
+
+                    return View("~/Views/ParticipantJourney/ViewParticipantJourney.cshtml", result);
+
                 }
             }
         }

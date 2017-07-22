@@ -11,6 +11,7 @@ using PHS.Business.Common;
 using PHS.Common;
 using PHS.Business.ViewModel.PastParticipantJourney;
 using PHS.Business.ViewModel.ParticipantJourney;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
@@ -81,6 +82,50 @@ namespace PHS.Business.Implementation
 
             return result;
         }
+
+        public ParticipantJourneyViewModel RetrievePastParticipantJourney(ParticipantJourneySearchViewModel psm, out string message)
+        {
+            message = string.Empty;
+
+            ParticipantJourneyViewModel result = null;
+
+            if (psm == null)
+            {
+                message = "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                message = "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
+
+                    if (participant != null)
+                    {
+                        result = new ParticipantJourneyViewModel(participant, psm.PHSEventId);
+                    }
+
+                    else
+                    {
+                        message = "No result found";
+                    }
+                    
+                }
+            }
+
+            return result;
+        }
+
 
         [System.Obsolete("To be deprecated since use by formImport")]
         public PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message)
