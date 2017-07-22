@@ -84,8 +84,6 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    result.SelectedModalityId = result.Event.Modalities.First().ModalityID;
-
                     List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
 
                     foreach (var modality in result.Event.Modalities)
@@ -93,9 +91,13 @@ namespace PHS.Web.Controllers
                         participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
                     }
 
+                    ParticipantJourneyFormViewModel participantJourneyformView = new ParticipantJourneyFormViewModel(result.Participant, psm.PHSEventId);
+                    participantJourneyformView.SelectedModalityId = result.Event.Modalities.First().ModalityID;
+
                     TempData["ParticipantJourneySearchViewModel"] = psm;
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
-                    TempData["SelectedModalityId"] = result.SelectedModalityId;
+                    TempData["ParticipantJourneyFormViewModel"] = participantJourneyformView;
+                    TempData["SelectedModalityId"] = participantJourneyformView.SelectedModalityId;
 
                     return View("~/Views/ParticipantJourney/ViewParticipantJourney.cshtml", result);
 

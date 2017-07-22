@@ -98,6 +98,49 @@ namespace PHS.Business.Implementation
             return result;
         }
 
+        public ParticipantJourneyFormViewModel RetrieveParticipantJourneyForm(ParticipantJourneySearchViewModel psm, out string message)
+        {
+            message = string.Empty;
+
+            ParticipantJourneyFormViewModel result = null;
+
+            if (psm == null)
+            {
+                message = "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                message = "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
+
+                    if (participant != null)
+                    {
+                        result = new ParticipantJourneyFormViewModel(participant, psm.PHSEventId);
+                    }
+
+                    else
+                    {
+                        message = "No result found";
+                    }
+
+                }
+            }
+
+            return result;
+        }
+
         public string RegisterParticipant(ParticipantJourneySearchViewModel psm)
         {
             string result = null;

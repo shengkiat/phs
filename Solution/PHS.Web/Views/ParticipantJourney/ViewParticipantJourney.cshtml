@@ -33,9 +33,9 @@
                 <tr>
                     <td style="vertical-align:top; width:50px;">
                         @Html.ActionLink("Back to Search", "Index")
-                        @Html.Partial("_ViewParticipantJourneyCirclePartial", TempData.Peek("ParticipantJourneyModalityCircleViewModel"))
+                        @Html.Partial("~/Views/ParticipantJourney/_ViewParticipantJourneyCirclePartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"))
                     </td>
-                    <td style="vertical-align:top">@Html.Partial("_ViewParticipantJourneyFormPartial", Model)</td>
+                    <td style="vertical-align:top">@Html.Partial("~/Views/ParticipantJourney/_ViewParticipantJourneyFormPartial.cshtml", TempData.Peek("ParticipantJourneyFormViewModel"))</td>
                 </tr>
             </table>
 

@@ -92,7 +92,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void RetrievePastParticipantJourney()
+        public void RetrievePastParticipantJourney_ShouldHaveRecord()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
             psm.Nric = "S8250369B";

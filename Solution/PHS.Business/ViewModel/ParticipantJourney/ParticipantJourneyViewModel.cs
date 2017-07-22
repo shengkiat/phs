@@ -13,6 +13,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public ParticipantJourneyViewModel(Participant participant, int PHSEventId)
         {
             Event = participant.PHSEvents.Where(e=> e.PHSEventID == PHSEventId).FirstOrDefault();
+            Participant = participant;
+
             FullName = participant.FullName;
             Nric = participant.Nric;
             Language = participant.Language;
@@ -31,8 +33,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             }
         }
 
-
         public PHSEvent Event { get; }
+        public Participant Participant { get; }
         public string EventId { get { return Event.PHSEventID.ToString(); } }
 
         public string Nric { get; }
@@ -42,33 +44,6 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string ContactNumber { get; }
         public string Gender { get; }
 
-        public int SelectedModalityId { get; set; }
-
-        public List<Form> GetModalityFormsForTabs() {
-            List<Form> result = new List<Form>();
-
-            foreach (var modality in Event.Modalities)
-            {
-                if (modality.ModalityID.Equals(SelectedModalityId))
-                {
-                    result = modality.Forms.ToList();
-                }
-            }
-            
-            return result;
-        }
-
-        public bool isSummarySelected()
-        {
-            bool result = false;
-            foreach (var modality in Event.Modalities)
-            {
-                if (modality.ModalityID.Equals(SelectedModalityId))
-                {
-                    result = modality.Name.Equals("Summary");
-                }
-            }
-            return result;
-        }
+        
     }
 }
