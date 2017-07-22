@@ -919,6 +919,23 @@ INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [E
 INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (337, 92, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea', N'Yes participant consents to the above.', CAST(0x0000A7B800B2039B AS DateTime))
 INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (338, 94, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea', N'Participant consents to receiving periodic SMS updates with health tips and advice on healthy living as well as reminders to visit my primary care doctor for follow-up care.', CAST(0x0000A7B800B2039B AS DateTime))
 INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (339, 103, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea', N'Yes', CAST(0x0000A7B800B2039B AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (340, 113, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (341, 115, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'NIL', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (342, 116, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'NIL', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (343, 117, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'Diabetes Mellitus 糖尿病', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (344, 118, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'NIL', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (345, 119, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'No', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (346, 120, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (347, 121, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46', N'No', CAST(0x0000A7B800D8913D AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (348, 137, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'{"Weight":"85","Height":"178","BodyMassIndex":"26.83"}', CAST(0x0000A7B800DC92D0 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (349, 138, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'89', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (350, 139, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'90', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (351, 140, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'100', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (352, 141, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'101', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (353, 143, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'121', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (354, 142, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'120', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (355, 145, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'150', CAST(0x0000A7B800DC92D1 AS DateTime))
+INSERT [dbo].[TemplateFieldValue] ([TemplateFieldValueID], [TemplateFieldID], [EntryId], [Value], [DateAdded]) VALUES (356, 144, N'c36dc1a4-8566-4710-a22f-5410adb4efe3', N'144', CAST(0x0000A7B800DC92D1 AS DateTime))
 SET IDENTITY_INSERT [dbo].[TemplateFieldValue] OFF
 GO
 
@@ -951,4 +968,6 @@ GO
 
 GO
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
 GO
