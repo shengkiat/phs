@@ -10,6 +10,7 @@ using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
 using PHS.Business.ViewModel.PastParticipantJourney;
+using PHS.Business.ViewModel.ParticipantJourney;
 
 namespace PHS.Business.Implementation
 {
@@ -20,35 +21,42 @@ namespace PHS.Business.Implementation
             return new PastParticipantJourneyManager();
         }
 
-        public IList<PatientEventViewModel> GetPatientEventsByNric(string nric, out string message)
+        public IList<ParticipantJourneyViewModel> GetAllParticipantJourneyByNric(string nric, out string message)
         {
-            IList<PatientEventViewModel> result = null;
+            IList<ParticipantJourneyViewModel> result = null;
             message = string.Empty;
 
-            if (NricChecker.IsNRICValid(nric))
+            if (string.IsNullOrEmpty(nric))
             {
+                message = "Nric cannot be null";
+            }
 
+            else if (!NricChecker.IsNRICValid(nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
                 try
                 {
                     using (var unitOfWork = new UnitOfWork(new PHSContext()))
                     {
-                        var eventpatients = unitOfWork.Participants.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase));
-                        //Nric = getMockData(nric);
+                        var participant = unitOfWork.Participants.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-                        if (eventpatients != null && eventpatients.Any())
+                        if (participant != null)
                         {
-                            message = string.Empty;
-                            result = new List<PatientEventViewModel>();
-                            foreach (Participant eventPatient in eventpatients.ToList())
+                            result = new List<ParticipantJourneyViewModel>();
+                            foreach (PHSEvent phsEvent in participant.PHSEvents)
                             {
-                                result.Add(new PatientEventViewModel(eventPatient));
+                                result.Add(new ParticipantJourneyViewModel(participant, phsEvent.PHSEventID));
                             }
 
                             return result;
                         }
                         else
                         {
-                            message = "Event Patient not found!";
+                            message = "Participant not found!";
                             return result;
                         }
                     }
@@ -57,21 +65,15 @@ namespace PHS.Business.Implementation
                 catch (Exception ex)
                 {
                     ExceptionLog(ex);
-                    message = Constants.OperationFailedDuringRetrievingValue("GetPatientEventsByNric");
+                    message = Constants.OperationFailedDuringRetrievingValue("GetAllParticipantJourneyByNric");
                     return null;
                 }
-
-            }
-
-
-            else
-            {
-                message = "Invalid Nric!";
             }
 
             return result;
         }
 
+        [System.Obsolete("To be deprecated since use by formImport")]
         public PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message)
         {
             PatientEventViewModel result = null;
@@ -120,7 +122,7 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-
+        [System.Obsolete("To be deprecated since use by formImport")]
         private List<PatientEventViewModel> getMockData(string nric)
         {
             Dictionary<string, List<PatientEventViewModel>> mockData = new Dictionary<string, List<PatientEventViewModel>>();
@@ -351,6 +353,7 @@ namespace PHS.Business.Implementation
             return mockData[nric];
         }
 
+        [System.Obsolete("To be deprecated since use by formImport")]
         private PatientEventViewModel getMockData(string nric, string eventId)
         {
             List<PatientEventViewModel> patientEvents = getMockData(nric);

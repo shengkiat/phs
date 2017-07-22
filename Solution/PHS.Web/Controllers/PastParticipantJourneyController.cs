@@ -16,111 +16,50 @@ namespace PHS.Web.Controllers
     using PHS.Repository.Repository;
     using Repository.Context;
     using Filter;
+    using Business.ViewModel.ParticipantJourney;
 
     [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code )]
     public class PastParticipantJourneyController : BaseController
     {
-
-
         public ActionResult Index()
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
-
             return View();
         }
 
         [HttpPost]
-        public ActionResult SearchParticipantJourney(PastParticipantJourneySearchViewModel psm)
+        public ActionResult SearchPastParticipantJourney(PastParticipantJourneySearchViewModel psm)
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
 
             if (psm == null)
             {
                 return View();
             }
 
-            string message = string.Empty;
-            PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
-
             using (var participantJourneyManager = new PastParticipantJourneyManager())
             {
-                IList<PatientEventViewModel> patientEvents = participantJourneyManager.GetPatientEventsByNric(psm.Nric, out message);
-                if (patientEvents == null)
+                string message = string.Empty;
+                PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
+
+                IList<ParticipantJourneyViewModel> participantJourneyViewModels = participantJourneyManager.GetAllParticipantJourneyByNric(psm.Nric, out message);
+                if (participantJourneyViewModels == null)
                 {
                     SetViewBagError(message);
                 }
 
                 else
                 {
-                    result.PatientEvents = patientEvents;
+                    result.ParticipantJourneyViewModels = participantJourneyViewModels;
                 }
-            }
 
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("_SearchParticipantJourneyResultPartial");
-            }
-            else
-            {
-                return View(result);
-            }
-        }
-
-        // Both GET and POST: /PatientJourney/JourneyModality
-        [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult JourneyModality(string nric, string eventId)
-        {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
-
-            if (string.IsNullOrEmpty(nric) || string.IsNullOrEmpty(eventId))
-            {
-                return Redirect("~/patientjourney");
-            }
-
-            string message = string.Empty;
-            PatientEventViewModel result = new PatientEventViewModel();
-
-            using (var participantJourneyManager = new PastParticipantJourneyManager())
-            {
-                PatientEventViewModel patientEvent = participantJourneyManager.GetPatientEvent(nric, eventId, out message);
-                if (patientEvent == null)
+                if (Request.IsAjaxRequest())
                 {
-                    SetViewBagError(message);
+                    return PartialView("_SearchPastParticipantJourneyResultPartial", result);
                 }
-
                 else
                 {
-                    
-                    result = patientEvent;
-
-                    //TODO think of way to handle such methods
-
-                    List<PatientEventModalityViewModel> patientEventModalitys = new List<PatientEventModalityViewModel>();
-
-                    foreach(var modality in patientEvent.Event.Modalities)
-                    {
-                        patientEventModalitys.Add(new PatientEventModalityViewModel(result, modality));
-                    }
-
-
-                    TempData["Nric"] = nric;
-                    TempData["EventId"] = eventId;
-                    TempData["PatientEventModalityViewModel"] = patientEventModalitys;
-                    TempData["SelectedModalityId"] = patientEvent.Event.Modalities.First().ModalityID;
-                    patientEvent.SelectedModalityId = patientEvent.Event.Modalities.First().ModalityID;
+                    return View(result);
                 }
             }
-
-            return View(result);
         }
 
         public PartialViewResult ActivateCirclesFromMSSS(string activateList)

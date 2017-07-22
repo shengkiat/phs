@@ -4,7 +4,7 @@
     ViewBag.Title = "Search Participant Page";
 }
 
-@using (Ajax.BeginForm("SearchParticipantJourney", new AjaxOptions { UpdateTargetId = "results" }))
+@using (Ajax.BeginForm("SearchPastParticipantJourney", new AjaxOptions { UpdateTargetId = "results" }))
 {
     <div class="form-horizontal">
         <hr />
@@ -25,5 +25,5 @@
 
 
 <div id="results">
-    @{Html.RenderPartial("_SearchParticipantJourneyResultPartial", Model);}
+    @{Html.RenderPartial("_SearchPastParticipantJourneyResultPartial", Model);}
 </div>

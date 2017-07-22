@@ -18,11 +18,19 @@
         });
     });
 </script>
+
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+
 @{
-    if (Model != null && Model.PatientEvents != null && Model.PatientEvents.Count > 0)
+    if (Model != null && Model.ParticipantJourneyViewModels != null && Model.ParticipantJourneyViewModels.Count > 0)
     {
 
-        @Html.Grid(Model.PatientEvents).Named("participantsGrid").Columns(columns =>
+        @Html.Grid(Model.ParticipantJourneyViewModels).Named("participantsGrid").Columns(columns =>
         {
             columns.Add(c => c.Event.Title).Titled("Event").Filterable(false);
             columns.Add(c => c.EventId, true).Titled("EventID").Filterable(false);
@@ -33,7 +41,7 @@
         using (Html.BeginForm())
         {
             <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnGoToEvent" class="button-common" style="border-radius: 17px;"
-                   formaction="@Url.Action("JourneyModality", "PastParticipantJourney")" />
+                   formaction="@Url.Action("ViewParticipantJourney", "ParticipantJourney")" />
             
         }
     }

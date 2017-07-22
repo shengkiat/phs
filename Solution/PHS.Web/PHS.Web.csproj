@@ -559,7 +559,7 @@
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
     <Content Include="Views\Shared\EditProfile.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_SearchPastParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\Index.cshtml" />
     <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\Form\EditModalityForm.cshtml" />
