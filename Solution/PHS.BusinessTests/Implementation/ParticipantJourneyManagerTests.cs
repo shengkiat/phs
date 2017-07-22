@@ -92,7 +92,7 @@ namespace PHS.Business.Implementation.Tests
         public void RetrieveParticipantJourney_InvalidNric()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
-            psm.Nric ="S82";
+            psm.Nric = "S82";
             psm.PHSEventId = 1;
 
             string message = string.Empty;
@@ -370,7 +370,7 @@ namespace PHS.Business.Implementation.Tests
 
             Assert.IsNull(postResult.Gender);
 
-            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u=> u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
             Assert.IsNotNull(pjmResult);
             Assert.AreEqual(1, pjmResult.ParticipantID);
             Assert.AreEqual(1, pjmResult.ModalityID);
@@ -609,7 +609,7 @@ namespace PHS.Business.Implementation.Tests
                 Title = "Test form"
             };
 
-         
+
             _unitOfWork.PreRegistrations.Add(preRegistration);
 
             _unitOfWork.Events.Add(phsEventOne);
@@ -700,6 +700,105 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod()]
+        public void RetrieveParticipantJourneyModality_InvalidNric()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S82";
+            psm.PHSEventId = 1;
+
+            int formId = 1;
+
+            string message = string.Empty;
+
+            _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+
+            Assert.AreEqual("Invalid Nric", message);
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourneyModality_NoRecordFound()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            int formId = 1;
+
+            string message = string.Empty;
+
+            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod()]
+        public void RetrieveParticipantJourneyModality_ShouldHaveRecord()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            int formId = 1;
+            Guid entryId = new Guid();
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now,
+                ContactNumber = "88776655"
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = psm.PHSEventId,
+                ModalityID = 1,
+                FormID = formId,
+                EntryId = entryId
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(entryId, result.EntryId);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
@@ -737,6 +836,7 @@ namespace PHS.Business.Implementation.Tests
                 return _unitOfWork;
             }
         }
+
 
     }
 }

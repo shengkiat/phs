@@ -233,6 +233,38 @@ namespace PHS.Business.Implementation
             return result;
         }
 
+        public ParticipantJourneyModality RetrieveParticipantJourneyModality(ParticipantJourneySearchViewModel psm, int formID, out string message)
+        {
+            message = string.Empty;
+
+            ParticipantJourneyModality result = null;
+
+            if (psm == null)
+            {
+                message = "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                message = "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    result = unitOfWork.ParticipantJourneyModalities.Find(p => p.PHSEventID == psm.PHSEventId && p.FormID == formID && p.Participant.Nric.Equals(psm.Nric)).FirstOrDefault();
+                }
+            }
+
+            return result;
+        }
+
         private void copyPreRegistrationToParticipant(Participant participant, PreRegistration preRegistration)
         {
             if (preRegistration != null)
