@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace PHS.BusinessTests.Implementation
 {
     [TestClass()]
-    public class PublicFormManagerTests
+    public class FormAccessManagerTests
     {
         private FormManager _formManager;
         private FormAccessManager _target;
