@@ -14,7 +14,7 @@
     $(function () {
         pageGrids.participantsGrid.onRowSelect(function (e) {
             $("#BtnGoToEvent").prop('disabled', false);
-            $("#BtnGoToEvent").attr("formaction", "/phs/PastParticipantJourney/JourneyModality?eventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
+            $("#BtnGoToEvent").attr("formaction", "/phs/PastParticipantJourney/ViewPastParticipantJourney?PHSEventId=" + e.row.EventId + "&nric=" + e.row.Nric); //Will set it
         });
     });
 </script>
@@ -41,7 +41,7 @@
         using (Html.BeginForm())
         {
             <input type="submit" disabled value="Proceed" id="BtnGoToEvent" name="BtnGoToEvent" class="button-common" style="border-radius: 17px;"
-                   formaction="@Url.Action("ViewParticipantJourney", "ParticipantJourney")" />
+                   formaction="@Url.Action("ViewPastParticipantJourney", "PastParticipantJourney")" />
             
         }
     }
