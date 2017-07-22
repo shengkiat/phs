@@ -11,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PHS.Business.Extensions;
+using PHS.Business.ViewModel.ParticipantJourney;
 
 namespace PHS.Web.Controllers
 {
@@ -148,17 +149,48 @@ namespace PHS.Web.Controllers
                     }
 
                     TempData["success"] = templateView.ConfirmationMessage;
-                    return RedirectToRoute("form-submitconfirmation", new
+
+                    if (templateView.IsPublic)
                     {
-                        id = template.TemplateID,
-                        embed = model.Embed
-                    });
+                        return RedirectToRoute("form-submitconfirmation", new
+                        {
+                            id = template.TemplateID,
+                            embed = model.Embed
+                        });
+                    }
+
+                    else
+                    {
+                        List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
+
+                        foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
+                        {
+                            if (participantJourneyModalityCircle.isModalityFormsContain(model.TemplateID.Value))
+                            {
+                                participantJourneyModalityCircle.modalityCompletedForms.Add(model.TemplateID.Value);
+                            }
+                        }
+
+                        TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
+
+                        return Json(new { success = true, message = templateView.ConfirmationMessage, isautosave = false });
+                    }
+                    
                 }
 
                 else
                 {
                     TempData["error"] = result;
-                    return View("FillIn", templateView);
+                    if (templateView.IsPublic)
+                    {
+                        return View("FillIn", templateView);
+                    }
+
+                    else
+                    {
+                        return Json(new { success = false, error = "Unable to save form ", isautosave = false });
+                    }
+
                 }
             }
         }
