@@ -23,7 +23,7 @@ namespace PHS.Business.Implementation
 
         public IList<ParticipantJourneyViewModel> GetAllParticipantJourneyByNric(string nric, out string message)
         {
-            IList<ParticipantJourneyViewModel> result = null;
+            IList<ParticipantJourneyViewModel> result = new List<ParticipantJourneyViewModel>();
             message = string.Empty;
 
             if (string.IsNullOrEmpty(nric))
@@ -40,16 +40,20 @@ namespace PHS.Business.Implementation
             {
                 try
                 {
-                    using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                    using (var unitOfWork = CreateUnitOfWork())
                     {
                         var participant = unitOfWork.Participants.FindParticipants(u => u.Nric.Equals(nric, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                         if (participant != null)
                         {
-                            result = new List<ParticipantJourneyViewModel>();
+                            DateTime currentTime = DateTime.Now;
                             foreach (PHSEvent phsEvent in participant.PHSEvents)
                             {
-                                result.Add(new ParticipantJourneyViewModel(participant, phsEvent.PHSEventID));
+                                if (!phsEvent.IsActive && currentTime.Ticks > phsEvent.EndDT.Ticks)
+                                {
+                                    result.Add(new ParticipantJourneyViewModel(participant, phsEvent.PHSEventID));
+                                }
+                                
                             }
 
                             return result;
