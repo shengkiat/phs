@@ -133,9 +133,6 @@
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyModalityCircleViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyViewModel.cs" />
-    <Compile Include="ViewModel\PastParticipantJourney\ModalityCircleViewModel.cs" />
-    <Compile Include="ViewModel\PastParticipantJourney\PatientEventModalityViewModel.cs" />
-    <Compile Include="ViewModel\PastParticipantJourney\PatientEventViewModel.cs" />
     <Compile Include="ViewModel\PastParticipantJourney\PastParticipantJourneySearchViewModel.cs" />
     <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>
