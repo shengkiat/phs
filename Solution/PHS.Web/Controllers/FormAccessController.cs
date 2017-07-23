@@ -233,11 +233,6 @@ namespace PHS.Web.Controllers
         {
             int postalCode = 0;
 
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToError("Unauthorized access");
-            }
-
             if (!Int32.TryParse(zipcode, out postalCode))
             {
                 // not int

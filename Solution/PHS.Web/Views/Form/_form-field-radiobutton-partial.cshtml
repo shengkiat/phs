@@ -9,10 +9,11 @@
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
-            @{var checkedAttribute = "";
-            bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
-            bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
-            int counter = 0;
+            @{
+                var checkedAttribute = "";
+                bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+                bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+                int counter = 0;
             }
 
             @foreach (var option in Model.Options.Split(","))
@@ -32,6 +33,11 @@
                         checkedAttribute = "checked=\"checked\"";
                     }
 
+                    @if (Html.GetTempFormValue(Model, "RadioButton").IsTheSameAs(option))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+
                     @if (checkFirst && counter == 0)
                     {
                         checkedAttribute = "checked=\"checked\"";
@@ -43,14 +49,31 @@
                            value="@option" name="radiogroup-@Model.DomId" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
-                        }
+             }
 
         </ul>
         <ul class="othersoption-list vertical-list">
             @if (Model.AddOthersOption)
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" />
+                    @if (Html.IsSubmittedValueSelected(Model, "OthersOption"))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+
+                    @if (!string.IsNullOrEmpty(Html.GetTempFormValue(Model, "OthersOption")))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" @checkedAttribute value="OthersOption" name="radiogroup-@Model.DomId" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
                 </li>
             }

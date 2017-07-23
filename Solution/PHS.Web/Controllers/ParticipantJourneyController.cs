@@ -239,50 +239,27 @@ namespace PHS.Web.Controllers
 
                 if (result.Equals("success"))
                 {
-
                     TempData["success"] = templateView.ConfirmationMessage;
 
-                    if (templateView.IsPublic)
-                    {
-                        return RedirectToRoute("form-submitconfirmation", new
-                        {
-                            id = template.TemplateID,
-                            embed = model.Embed
-                        });
-                    }
+                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
 
-                    else
+                    foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
                     {
-                        List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
-
-                        foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
+                        if (participantJourneyModalityCircle.isModalityFormsContain(templateView.FormID))
                         {
-                            if (participantJourneyModalityCircle.isModalityFormsContain(model.TemplateID.Value))
-                            {
-                                participantJourneyModalityCircle.modalityCompletedForms.Add(model.TemplateID.Value);
-                            }
+                            participantJourneyModalityCircle.modalityCompletedForms.Add(templateView.FormID);
                         }
-
-                        TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
-
-                        return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                     }
 
+                    TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
+
+                    return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                 }
 
                 else
                 {
                     TempData["error"] = result;
-                    if (templateView.IsPublic)
-                    {
-                        return View("FillIn", templateView);
-                    }
-
-                    else
-                    {
-                        return Json(new { success = false, error = "Unable to save form ", isautosave = false });
-                    }
-
+                    return Json(new { success = false, error = "Unable to save form ", isautosave = false });
                 }
             }
         }

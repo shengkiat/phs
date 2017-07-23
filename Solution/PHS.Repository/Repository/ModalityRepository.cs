@@ -14,6 +14,11 @@ namespace PHS.Repository.Repository
 
         public Modality GetModalityByID(int id)
         {
+            return dbContext.Set<Modality>().Where(u => u.ModalityID == id).Include(x => x.Forms).FirstOrDefault();
+        }
+
+        public Modality GetActiveModalityByID(int id)
+        {
             return dbContext.Set<Modality>().Where(u => u.ModalityID == id && u.IsActive == true).Include(x => x.Forms).FirstOrDefault();
         }
     }

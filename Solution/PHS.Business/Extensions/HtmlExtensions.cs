@@ -122,6 +122,13 @@ namespace PHS.Business.Extensions
         /// <returns></returns>
         public static string GetSubmittedTextValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
+            string tempValue = GetTempFormValue(helper, model, fieldType, returnIfNull);
+
+            if (!string.IsNullOrEmpty(tempValue))
+            {
+                return tempValue;
+            }
+
             if (model.EntryId == null || model.EntryId == "")
             {
                 return "";
@@ -212,24 +219,12 @@ namespace PHS.Business.Extensions
                 }
             }
 
-
-            //if (model.FieldType == FieldType.ADDRESS)
-            //{
-            //    if (fieldType == "StreetAddress")
-            //    {
-            //        return "Andy Lau";
-            //    }
-            //}
-
             return "";
 
         }
 
         public static string GetTempFormValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
-
-
-
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("SubmitFields[{0}].".FormatWith(model.DomId));
             if (fieldType.IsNullOrEmpty())
