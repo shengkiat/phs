@@ -10,5 +10,6 @@ namespace PHS.Repository.Interface
 {
     public interface IParticipantJourneyModalityRepository : IRepository<ParticipantJourneyModality>
     {
+        ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId);
     }
 }

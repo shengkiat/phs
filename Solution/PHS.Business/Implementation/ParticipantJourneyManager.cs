@@ -261,20 +261,20 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = CreateUnitOfWork())
                 {
-                    result = unitOfWork.ParticipantJourneyModalities.Find(p => p.PHSEventID == psm.PHSEventId && p.FormID == formID && p.Participant.Nric.Equals(psm.Nric)).FirstOrDefault();
+                    result = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formID);
                 }
             }
 
             return result;
         }
 
-        public string InternalFillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public string InternalFillIn(ParticipantJourneySearchViewModel psm, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             var template = FindTemplate(model.TemplateID.Value);
 
             using (var unitOfWork = CreateUnitOfWork())
             {
-                using (var fillIn = new InternalFormFillIn(unitOfWork))
+                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }

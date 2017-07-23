@@ -14,6 +14,13 @@ namespace PHS.Repository.Repository
     {
         public ParticipantJourneyModalityRepository(DbContext context) : base(context)
         {
+            
         }
+
+        public ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId)
+        {
+            return Find(p => p.PHSEventID == phsEventId && p.FormID == formId && p.Participant.Nric.Equals(nric)).FirstOrDefault();
+        }
+
     }
 }
