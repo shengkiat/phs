@@ -274,14 +274,12 @@ namespace PHS.Web.Controllers
 
         public PartialViewResult ActivateCirclesFromMSSS(string activateList)
         {
-
-
-            string message = string.Empty;
+            //string message = string.Empty;
             //string nric = "S8518538A";
             //string eventId = "100";
 
-            string nric = TempData.Peek("Nric").ToString();
-            string eventId = TempData.Peek("EventId").ToString();
+            //string nric = TempData.Peek("Nric").ToString();
+            //string eventId = TempData.Peek("EventId").ToString();
 
 
             /*PatientEventViewModel result = new PatientEventViewModel();
@@ -301,7 +299,7 @@ namespace PHS.Web.Controllers
 
             ICollection<Modality> modalityList = result.Event.Modalities;*/
 
-            ICollection<PatientEventModalityViewModel> modalityList = (List<PatientEventModalityViewModel>)TempData.Peek("PatientEventModalityViewModel");
+            ICollection<ParticipantJourneyModalityCircleViewModel> modalityList = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
 
             if (!string.IsNullOrEmpty(activateList))
             {
@@ -319,7 +317,7 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            return PartialView("_JourneyModalityCirclesPartial", modalityList);
+            return PartialView("_ViewParticipantJourneyCirclePartial", modalityList);
         }
     }
 }

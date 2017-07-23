@@ -3,7 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PHS.Business.Implementation;
 using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.BusinessTests;
+using PHS.Common;
 using PHS.DB;
+using PHS.DB.ViewModels.Form;
 using PHS.Repository.Context;
 using PHS.Repository.Interface.Core;
 using System;
@@ -11,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation.Tests
@@ -19,6 +22,7 @@ namespace PHS.Business.Implementation.Tests
     public class ParticipantJourneyManagerTests
     {
         private ParticipantJourneyManager _target;
+        private FormManager _formManager;
         private IUnitOfWork _unitOfWork;
         private PHSContext _context;
 
@@ -799,6 +803,124 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(entryId, result.EntryId);
         }
 
+        [TestMethod()]
+        [ExpectedException(typeof(Exception),
+            "No participantJourneyModality found")]
+        public void InternalFillIn_ExceptionRequiredParticipantJourneyModality()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+            TemplateViewModel templateViewModel = CreateFormAndTemplateWithSampleField();
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            Assert.Fail("Expecting exception");
+
+        }
+
+        [TestMethod()]
+        public void InternalFillIn_InsertValues()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+            TemplateViewModel templateViewModel = CreateFormAndTemplateWithSampleField();
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now,
+                ContactNumber = "88776655"
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = psm.PHSEventId,
+                ModalityID = 1,
+                FormID = 1
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1);
+            Assert.IsNotNull(journeyModalityResult);
+            Assert.AreEqual(templateViewModel.Entries.FirstOrDefault().EntryId, journeyModalityResult.EntryId.ToString());
+        }
+
+        private TemplateViewModel CreateFormAndTemplateWithSampleField()
+        {
+            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+            return templateViewModel;
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
@@ -806,6 +928,7 @@ namespace PHS.Business.Implementation.Tests
             _context = new PHSContext(connection);
             _unitOfWork = new MockUnitOfWork(_context);
 
+            _formManager = new MockFormManager(_unitOfWork);
             _target = new MockParticipantJourneyManager(_unitOfWork);
         }
 
@@ -819,7 +942,32 @@ namespace PHS.Business.Implementation.Tests
 
             _unitOfWork = null;
             _context = null;
+            _formManager = null;
             _target = null;
+        }
+
+        private FormCollection CeateFieldForm(int id, out FormCollection fieldCollection, out IDictionary<string, string> fields)
+        {
+            fieldCollection = new FormCollection();
+
+            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
+            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
+            fieldCollection.Add("Fields[1].MaxCharacters", "200");
+            fieldCollection.Add("Fields[1].IsRequired", "false");
+            fieldCollection.Add("Fields[1].AddOthersOption", "false");
+            fieldCollection.Add("Fields[1].MinimumAge", "18");
+            fieldCollection.Add("Fields[1].MaximumAge", "100");
+            fieldCollection.Add("Fields[1].Text", "");
+            fieldCollection.Add("Fields[1].Label", "Click to edit");
+            fieldCollection.Add("Fields[1].HoverText", "");
+            fieldCollection.Add("Fields[1].SubLabel", "");
+            fieldCollection.Add("Fields[1].HelpText", "");
+            fieldCollection.Add("Fields[1].Hint", "");
+
+            fields = new System.Collections.Generic.Dictionary<string, string>();
+            fields.Add("1", "1");
+
+            return fieldCollection;
         }
 
         private class MockParticipantJourneyManager : ParticipantJourneyManager
@@ -829,6 +977,21 @@ namespace PHS.Business.Implementation.Tests
             public MockParticipantJourneyManager(IUnitOfWork _unitOfWork)
             {
                 this._unitOfWork = _unitOfWork;
+            }
+
+            protected override IUnitOfWork CreateUnitOfWork()
+            {
+                return _unitOfWork;
+            }
+        }
+
+        private class MockFormManager : FormManager
+        {
+            private IUnitOfWork _unitOfWork;
+
+            public MockFormManager(IUnitOfWork unitOfWork)
+            {
+                _unitOfWork = unitOfWork;
             }
 
             protected override IUnitOfWork CreateUnitOfWork()

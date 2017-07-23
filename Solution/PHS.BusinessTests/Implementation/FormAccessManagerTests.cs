@@ -1,6 +1,7 @@
 ﻿using Effort;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PHS.Business.Implementation;
+using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.Repository.Context;
@@ -376,6 +377,60 @@ namespace PHS.BusinessTests.Implementation
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
 
             Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+        }
+
+        [TestMethod()]
+        public void FillIn_SuccessForPreRegistrationForm()
+        {
+            FormViewModel formViewModel = new FormViewModel()
+            {
+                IsPublic = true,
+                PublicFormType = Constants.Public_Form_Type_PreRegistration,
+                Slug = "prereg",
+                Title = "PreReg"
+            };
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
+
+            fieldCollection.Add("Fields[1].PreRegistrationFieldName", Constants.PreRegistration_Field_Name_FullName);
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            IEnumerable<PreRegistration> preRegistrations = _unitOfWork.PreRegistrations.GetAll();
+            Assert.AreEqual(1, preRegistrations.Count());
+            var preRegistrationResult = preRegistrations.FirstOrDefault();
+            Assert.AreEqual("HelloTest", preRegistrationResult.FullName);
         }
 
         [TestInitialize]
@@ -410,6 +465,7 @@ namespace PHS.BusinessTests.Implementation
             Assert.IsNotNull(template);
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
             CeateFieldForm(1, out fieldCollection, out fields);
