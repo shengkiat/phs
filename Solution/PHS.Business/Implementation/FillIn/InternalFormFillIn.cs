@@ -27,7 +27,7 @@ namespace PHS.Business.Implementation.FillIn
             ParticipantJourneyModality participantJourneyModality = FindParticipantJourneyModality();
             if (participantJourneyModality != null)
             {
-                if (participantJourneyModality.EntryId == null)
+                if (participantJourneyModality.EntryId == Guid.Empty)
                 {
                     UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
                 }
@@ -37,6 +37,11 @@ namespace PHS.Business.Implementation.FillIn
                     //update template field value
                 }
             }
+
+            else
+            {
+                throw new Exception("No participantJourneyModality found");
+            }
             
         }
 
@@ -45,10 +50,15 @@ namespace PHS.Business.Implementation.FillIn
             ParticipantJourneyModality participantJourneyModality = FindParticipantJourneyModality();
             if (participantJourneyModality != null)
             {
-                if (participantJourneyModality.EntryId == null)
+                if (participantJourneyModality.EntryId == Guid.Empty)
                 {
-                    participantJourneyModality.EntryId = entryId;
+                    UnitOfWork.ParticipantJourneyModalities.UpdateParticipantJourneyModalityEntryId(participantJourneyModality, entryId);
                 }
+            }
+
+            else
+            {
+                throw new Exception("No participantJourneyModality found");
             }
         }
 
