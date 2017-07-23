@@ -104,8 +104,6 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var personManager = new PersonManager())
             {
-                //TODO remove hardcode
-                //person.Password = "12345";
                 string tempPassword = PasswordManager.GeneratePassword();
                 person.Password = tempPassword;
 
@@ -283,7 +281,6 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var personManager = new PersonManager())
             {
-
                 foreach (var username in selectedusers)
                 {
                     var user = personManager.GetPersonByUserName(username.ToString(), out message);
@@ -296,7 +293,6 @@ namespace PHS.Web.Areas.Admin.Controllers
                     }
                 }
             }
-
             SetTempDataMessage("Password has been reset to " + tempPW);
             return RedirectToAction("Index");
         }

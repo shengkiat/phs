@@ -186,6 +186,7 @@
                     var viewUrl = '@Url.Action("Activate", "User")';
                     $.post(viewUrl, { selectedusers: getCheckedUsers(), startDate: $('.datepickerstart').val(), endDate: $('.datepickerend').val() });
                     $(this).dialog("close");
+                    location.reload();
                     return true;
                 },
                 "Cancel": function () { $(this).dialog("close"); return false; }
@@ -201,6 +202,7 @@
         if (answer) {
             var viewUrl = '@Url.Action("Inactivate", "User")';
             $.post(viewUrl, { selectedusers: getCheckedUsers() });
+            location.reload();
         }
         return true;
     });
@@ -210,6 +212,7 @@
         if (answer) {
             var viewUrl = '@Url.Action("ResetPassword", "User")';
             $.post(viewUrl, { selectedusers: getCheckedUsers() });
+            location.reload();
         }
         return true;
     });
