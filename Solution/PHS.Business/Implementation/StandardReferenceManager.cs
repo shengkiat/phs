@@ -66,7 +66,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public StandardReference AddStandardReference(Person loginPerson, StandardReference standardReference, out string message)
+        public StandardReference AddStandardReference(StandardReference standardReference, out string message)
         {
             message = string.Empty;
             if (standardReference == null)
@@ -87,7 +87,7 @@ namespace PHS.Business.Implementation
             
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -107,7 +107,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool UpdateStandardReference(Person loginPerson, StandardReference standardReference, out string message)
+        public bool UpdateStandardReference(StandardReference standardReference, out string message)
         {
             message = string.Empty;
             if (standardReference == null)
@@ -128,7 +128,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var standardReferenceToUpdate = unitOfWork.StandardReferences.GetStandardReference(standardReference.StandardReferenceID);
                     Util.CopyNonNullProperty(standardReference, standardReferenceToUpdate);
