@@ -47,7 +47,7 @@
         <textarea style="min-height:100px; min-width:100px;"
                   id="SubmitFields[@Model.DomId].TextArea"
                   name="SubmitFields[@Model.DomId].TextArea"
-                  type="text">@Html.GetTempFormValue(Model)</textarea>
+                  type="text">@Html.GetSubmittedTextValue(Model)</textarea>
         <br />
         <button type="button" id="btnGenerateDoctorMemo">Download Memo</button>
 

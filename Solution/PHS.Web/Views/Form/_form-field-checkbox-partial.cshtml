@@ -14,13 +14,18 @@
             {
                 <li>
                     @if (Html.IsSubmittedValueSelected(Model, option))
-                {
-                    checkedAttribute = "checked=\"checked\"";
-                }
-                else
-                {
-                    checkedAttribute = "";
-                }
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+
+                    @if (Html.GetTempFormValue(Model, "Checkbox").IsTheSameAs(option))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
 
                     <input id="SubmitFields[@Model.DomId].Checkbox"
                            name="SubmitFields[@Model.DomId].Checkbox"
@@ -33,7 +38,24 @@
             @if (Model.AddOthersOption)
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
+                    @if (Html.IsSubmittedValueSelected(Model, "OthersOption"))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+
+                    @if (!string.IsNullOrEmpty(Html.GetTempFormValue(Model, "OthersOption")))
+                    {
+                        checkedAttribute = "checked=\"checked\"";
+                    }
+                    else
+                    {
+                        checkedAttribute = "";
+                    }
+                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @checkedAttribute type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
                     <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" placeholder="Others" value="@Html.GetTempFormValue(Model, "OthersOption")" />
                 </li>
             }
