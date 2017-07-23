@@ -1,0 +1,33 @@
+﻿@model PHS.DB.StandardReference
+
+@{
+    ViewBag.Title = "Standard Reference Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Standard Reference Details</h2>
+@if (Model != null)
+{
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+        </dl>
+        <hr />
+        <h4>Reference Ranges</h4>
+        @Html.Partial("_ReferenceRangeTable", Model)
+        
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Back", "Index", "StandardReference", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}

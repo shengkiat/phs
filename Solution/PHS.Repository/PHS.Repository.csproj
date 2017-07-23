@@ -57,6 +57,9 @@
     <Compile Include="Interface\IParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IPreRegistrationRepository.cs" />
     <Compile Include="Repository\ParticipantJourneyModalityRepository.cs" />
+    <Compile Include="Interface\IReferenceRangeRepository.cs" />
+    <Compile Include="Interface\IStandardReferenceRepository.cs" />
+
     <Compile Include="Repository\FormRepository.cs" />
     <Compile Include="Interface\Core\IContext.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
@@ -75,6 +78,9 @@
     <Compile Include="Repository\ParticipantRepository.cs" />
     <Compile Include="Repository\EventRepository.cs" />
     <Compile Include="Repository\PreRegistrationRepository.cs" />
+    <Compile Include="Repository\ReferenceRangeRepository.cs" />
+    <Compile Include="Repository\StandardReferenceRepository.cs" />
+
     <Compile Include="Repository\TemplateFieldValueRepository.cs" />
     <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\ModalityRepository.cs" />

@@ -107,7 +107,9 @@
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseFormManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
-    <Compile Include="Implementation\FillIn\BaseFormFillIn.cs" />
+	<Compile Include="Implementation\ReferenceRangeManager.cs" />
+    <Compile Include="Implementation\StandardReferenceManager.cs" />
+	<Compile Include="Implementation\FillIn\BaseFormFillIn.cs" />
     <Compile Include="Implementation\FillIn\InternalFormFillIn.cs" />
     <Compile Include="Implementation\ModalityManager.cs" />
     <Compile Include="Implementation\EventManager.cs" />
@@ -126,6 +128,9 @@
     <Compile Include="Interface\IPastParticipantJourneyManager.cs" />
     <Compile Include="Interface\IPersonManager.cs" />
     <Compile Include="Interface\IFormAccessManager.cs" />
+    <Compile Include="Interface\IReferenceRangeManger.cs" />
+    <Compile Include="Interface\IStandardReferenceManager.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Event\ModalityEventViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityFormViewModel.cs" />

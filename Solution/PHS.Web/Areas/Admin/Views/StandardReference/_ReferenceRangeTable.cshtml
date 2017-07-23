@@ -1,0 +1,44 @@
+﻿@model PHS.DB.StandardReference 
+    
+@if (Model.ReferenceRanges != null && Model.ReferenceRanges.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Minimum Value
+                    </th>
+                    <th>
+                        Maximum Value
+                    </th>
+                    <th>
+                        Result
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ReferenceRanges)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.MinimumValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.MaximumValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Result)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

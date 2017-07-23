@@ -161,6 +161,24 @@
           <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="ReferenceRange">
+          <Key>
+            <PropertyRef Name="ReferenceRangeID" />
+          </Key>
+          <Property Name="ReferenceRangeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MinimumValue" Type="float" Nullable="false" />
+          <Property Name="MaximumValue" Type="float" Nullable="false" />
+          <Property Name="Result" Type="nvarchar" MaxLength="50" />
+          <Property Name="StandardReferenceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StandardReference">
+          <Key>
+            <PropertyRef Name="StandardReferenceID" />
+          </Key>
+          <Property Name="StandardReferenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Template">
           <Key>
             <PropertyRef Name="TemplateID" />
@@ -304,6 +322,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK reference_range_standard_reference">
+          <End Role="StandardReference" Type="Self.StandardReference" Multiplicity="1" />
+          <End Role="ReferenceRange" Type="Self.ReferenceRange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardReference">
+              <PropertyRef Name="StandardReferenceID" />
+            </Principal>
+            <Dependent Role="ReferenceRange">
+              <PropertyRef Name="StandardReferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK template_fields_template_template_fields">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -417,6 +447,8 @@
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHSEvent" EntityType="Self.PHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRegistration" EntityType="Self.PreRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferenceRange" EntityType="Self.ReferenceRange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardReference" EntityType="Self.StandardReference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
@@ -444,6 +476,10 @@
           <AssociationSet Name="FK participant_phs_event_phs_event" Association="Self.FK participant_phs_event_phs_event">
             <End Role="PHSEvent" EntitySet="PHSEvent" />
             <End Role="ParticipantPHSEvent" EntitySet="ParticipantPHSEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK reference_range_standard_reference" Association="Self.FK reference_range_standard_reference">
+            <End Role="StandardReference" EntitySet="StandardReference" />
+            <End Role="ReferenceRange" EntitySet="ReferenceRange" />
           </AssociationSet>
           <AssociationSet Name="FK template_fields_template_template_fields" Association="Self.FK template_fields_template_template_fields">
             <End Role="TemplateField" EntitySet="TemplateField" />
@@ -534,6 +570,12 @@
           <AssociationSet Name="TemplateTemplateField" Association="phsModel.TemplateTemplateField">
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
+          </AssociationSet>
+          <EntitySet Name="ReferenceRanges" EntityType="phsModel.ReferenceRange" />
+          <EntitySet Name="StandardReferences" EntityType="phsModel.StandardReference" />
+          <AssociationSet Name="FK_reference_range_standard_reference" Association="phsModel.FK_reference_range_standard_reference">
+            <End Role="StandardReference" EntitySet="StandardReferences" />
+            <End Role="ReferenceRange" EntitySet="ReferenceRanges" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AuditLog">
@@ -839,6 +881,38 @@
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
         </Association>
+        <EntityType Name="ReferenceRange">
+          <Key>
+            <PropertyRef Name="ReferenceRangeID" />
+          </Key>
+          <Property Name="ReferenceRangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinimumValue" Type="Double" Nullable="false" />
+          <Property Name="MaximumValue" Type="Double" Nullable="false" />
+          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
+        </EntityType>
+        <EntityType Name="StandardReference">
+          <Key>
+            <PropertyRef Name="StandardReferenceID" />
+          </Key>
+          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
+        </EntityType>
+        <Association Name="FK_reference_range_standard_reference">
+          <End Type="phsModel.StandardReference" Role="StandardReference" Multiplicity="1" />
+          <End Type="phsModel.ReferenceRange" Role="ReferenceRange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardReference">
+              <PropertyRef Name="StandardReferenceID" />
+            </Principal>
+            <Dependent Role="ReferenceRange">
+              <PropertyRef Name="StandardReferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1079,6 +1153,26 @@
               <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ReferenceRanges">
+            <EntityTypeMapping TypeName="phsModel.ReferenceRange">
+              <MappingFragment StoreEntitySet="ReferenceRange">
+                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ReferenceRangeID" ColumnName="ReferenceRangeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardReferences">
+            <EntityTypeMapping TypeName="phsModel.StandardReference">
+              <MappingFragment StoreEntitySet="StandardReference">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
