@@ -26,6 +26,8 @@ namespace PHS.Repository
             Modalities = new ModalityRepository(_context);
             Participant = new ParticipantRepository(_context);
             TemplateFieldValues = new TemplateFieldValueRepository(_context);
+            StandardReferences = new StandardReferenceRepository(_context);
+            ReferenceRanges = new ReferenceRangeRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -40,6 +42,10 @@ namespace PHS.Repository
         public IParticipantRepository Participant { get; private set; }
 
         public ITemplateFieldValueRepository TemplateFieldValues { get; private set; }
+
+        public IStandardReferenceRepository StandardReferences { get; private set; }
+
+        public IReferenceRangeRepository ReferenceRanges { get; private set; }
 
         public int Complete()
         {

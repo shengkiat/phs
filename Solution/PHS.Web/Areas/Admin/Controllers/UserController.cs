@@ -61,9 +61,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var getPerson = new PersonManager())
+            using (var personManager = new PersonManager())
             {
-                Person person = getPerson.GetPersonByPersonSid(userid, out message);
+                Person person = personManager.GetPersonByPersonSid(userid, out message);
                 if (person == null)
                 {
                     SetViewBagError(message);
@@ -75,7 +75,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                 SetBackURL("Index");
                 return View(person);
-            };
+            }
         }
 
         [HttpGet]
@@ -148,7 +148,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 }
                 //SetBackURL("Index");
                 return View(user);
-            };
+            }
         }
 
         [HttpPost]
@@ -208,7 +208,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 return RedirectToLogin();
             }
 
-            if(selectedUsers == null || selectedUsers.Length == 0)
+            if (selectedUsers == null || selectedUsers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
                 return RedirectToAction("Index");
@@ -238,7 +238,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                 SetTempDataMessage("Password has been reset to " + tempPW);
             }
-            else if(SubmitBtn == "Activate")
+            else if (SubmitBtn == "Activate")
             {
                 using (var personManager = new PersonManager())
                 {
@@ -274,6 +274,12 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                 SetTempDataMessage("Users are set Inactive!");
             }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Activate(DateTime startDate, DateTime endDate, string selUsers)
+        {
             return RedirectToAction("Index");
         }
     }

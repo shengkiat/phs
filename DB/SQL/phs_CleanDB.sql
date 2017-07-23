@@ -48,7 +48,13 @@ IF OBJECT_ID('dbo.Template', 'U') IS NOT NULL
   DROP TABLE [dbo].[Template]; 
   
 IF OBJECT_ID('dbo.Form', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[Form];   
+  DROP TABLE [dbo].[Form];
+
+IF OBJECT_ID('dbo.ReferenceRange', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[ReferenceRange];   
+  
+IF OBJECT_ID('dbo.StandardReference', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[StandardReference]; 
 
 IF OBJECT_ID('dbo.AuditLog', 'U') IS NOT NULL 
   DROP TABLE [dbo].[AuditLog]; 
@@ -256,6 +262,28 @@ CREATE TABLE [dbo].[Form](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[StandardReference](
+	[StandardReferenceID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_standard_reference] PRIMARY KEY CLUSTERED 
+(
+	[StandardReferenceID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[ReferenceRange](
+	[ReferenceRangeID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[MinimumValue] [float] NOT NULL,
+	[MaximumValue] [float] NOT NULL,
+	[Result] [nvarchar](50) NULL,
+	[StandardReferenceID] [int] NOT NULL,
+ CONSTRAINT [PK_reference_range] PRIMARY KEY CLUSTERED 
+(
+	[ReferenceRangeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 
 CREATE TABLE [dbo].[ParticipantPHSEvent](
 	[ParticipantID] [int] NOT NULL,
@@ -319,6 +347,11 @@ ALTER TABLE [dbo].[ParticipantPHSEvent]  WITH CHECK ADD  CONSTRAINT [FK particip
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
 ALTER TABLE [dbo].[ParticipantPHSEvent] CHECK CONSTRAINT [FK participant_phs_event_phs_event]
+GO
+ALTER TABLE [dbo].[ReferenceRange]  WITH CHECK ADD  CONSTRAINT [FK reference_range_standard_reference] FOREIGN KEY([StandardReferenceID])
+REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
+GO
+ALTER TABLE [dbo].[ReferenceRange] CHECK CONSTRAINT [FK reference_range_standard_reference]
 GO
 --------------------------Data--------------------- 
 
@@ -840,4 +873,48 @@ GO
 
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
+GO
+
+--- Standard Reference Sample  --
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
+GO
+
+--- Reference range Sample  --
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'BMI Normal', 18.5, 24.9, N'NORMAL', 3)
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
 GO

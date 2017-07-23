@@ -1,4 +1,10 @@
-﻿@model IEnumerable<PHS.DB.Person>
+﻿<head>
+    <link href="~/Content/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
+</head>
+
+@model IEnumerable<PHS.DB.Person>
 
 @{
     ViewBag.Title = "Index";
@@ -10,10 +16,9 @@
         display: inline-block;
     }
 </style>
-
+<h2>User Management</h2>
 @if (TempData["Message"] != null)
 {
-    //<p class="alert alert-success" id="successMessage">@TempData["Message"]</p>
     <div class="alert alert-success alert-dismissable fade in" id="successMessage">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
         @TempData["Message"]
@@ -44,11 +49,13 @@
         <li><input type="submit" class="form-control btn btn-default" name="dropdownselection" value="Inactivate"></li>
     </ul>
 </div>*@
+<input name="ActivateBtn" type="submit" class="btn btn-primary" value="Activate" onclick="opendatedialog()" />
+
 @using (Html.BeginForm("Action", "User", FormMethod.Post))
 {
     @Html.ActionLink("Create New", "CreateUser", "User", null, new { @class = "btn btn-primary" })
+    @*<input name="ActivateBtn" type="submit" class="btn btn-primary" value="Activate" onclick="opendatedialog('selectedUsers')" />*@
     <input name="SubmitBtn" type="submit" class="btn btn-primary" value="Reset Password" onclick = "return confirm('Are you sure you want to reset password');" />
-    <input name="SubmitBtn" type="submit" class="btn btn-primary" value="Activate" onclick = "return confirm('Are you sure you want to Activate user');" />
     <input name="SubmitBtn" type="submit" class="btn btn-primary" value="Inactivate" onclick = "return confirm('Are you sure you want to Inactivate user');" />
 
     if (Model !=null && Model.Count()> 0)
@@ -137,9 +144,23 @@
         </div>
     }
 }
-
+<div id="datepickerdialog" style="display:none">
+    <br />
+    <div class="form-group">
+        <label class="control-label col-md-4" for="EffectiveStartDate">Effective Start Date</label>
+        <div class="col-md-8">
+            <input class="form-control datepickerstart" id="EffectiveStartDate" name="EffectiveStartDate" type="text" value="">
+        </div>
+    </div><br><br>
+    <div class="form-group">
+        <label class="control-label col-md-4" for="EffectiveEndDate">Effective End Date</label>
+        <div class="col-md-8">
+            <input class="form-control datepickerend" id="EffectiveEndDate" name="EffectiveEndDate" type="text" value="">
+        </div>
+    </div>
+</div>
 <script>
-    $(function showDateselectionDialog() {
+    $(function () {
         $('.datepickerstart').datepicker(
             {
                 minDate: 0,
@@ -150,17 +171,27 @@
                 minDate: 0,
                 dateFormat: 'yy-mm-dd'
             }).datepicker("setDate", "2099/12/31");
-        $('.activecheckbox').change(function () {
-            if ($('.activecheckbox').prop('checked') == true) {
-                $(".datepickerstart").prop('disabled', false);
-                $(".datepickerend").prop('disabled', false);
-            }
-            else {
-                $(".datepickerstart").prop('disabled', true);
-                $(".datepickerend").prop('disabled', true);
+    });
+    function opendatedialog() {
+        $("#datepickerdialog").dialog({
+            title: window.opener.document.getElementId("checkboxid").value,
+            height: 300,
+            width: 500,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "OK": function () {
+                    var viewUrl = '@Url.Action("Activate", "User")';
+                    @*$.post('@Url.Action("Activate", "User", new { startDate = startDatestring })');*@
+                    $.post(viewUrl, { startDate: $('.datepickerstart').val(), endDate: $('.datepickerend').val(), selUsers: selectedUsers });
+                    $(this).dialog("close");
+                    return true;
+                },
+                "Cancel": function () { $(this).dialog("close"); return false; }
+            },
+            open: function () {
+                $(this).siblings('.ui-dialog-buttonpane').find("button:contains('OK')").focus();
             }
         });
-        $('.activecheckbox').prop('checked', true);
-        $('.activecheckbox').trigger('change');
-    });
+    }
 </script>

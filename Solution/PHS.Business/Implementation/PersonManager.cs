@@ -391,14 +391,6 @@ namespace PHS.Business.Implementation
             }
         }
 
-        /// <summary>
-        /// Will NOT check whether username exists
-        /// Username is not allowed to be changed
-        /// </summary>
-        /// <param name="loginPerson">Person performing the update</param>
-        /// <param name="person">Person to be updated</param>
-        /// <param name="message"></param>
-        /// <returns></returns>
         public bool UpdatePerson(Person loginPerson, Person person, out string message)
         {
             message = string.Empty;
@@ -510,7 +502,7 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("User Id");
+                message = Constants.OperationFailedDuringRetrievingValue("User username");
                 return true;
             }
         }

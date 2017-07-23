@@ -1,0 +1,70 @@
+﻿@model PHS.DB.ReferenceRange
+
+@{
+    ViewBag.Title = "Edit Reference Range";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Reference Range</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissable fade in" id="successMessage">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        @TempData["Message"]
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div style="color: red">@ViewBag.error</div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MinimumValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MinimumValue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MinimumValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaximumValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaximumValue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaximumValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Result, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Result, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Result, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div hidden="hidden">
+            @Html.EditorFor(model => model.ReferenceRangeID)
+            @Html.EditorFor(model => model.StandardReferenceID)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="BtnEdit" value="Save" class="button-common"
+                       formaction="EditReferenceRange" formmethod="post" />
+                <input type="submit" name="BtnCancel" value="Back" class="cancel button-common"
+                       formaction="Edit/@Model.StandardReferenceID" formmethod="get" />
+            </div>
+        </div>
+    </div>
+}

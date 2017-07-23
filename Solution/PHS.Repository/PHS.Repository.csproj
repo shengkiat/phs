@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="Context\EntityTrackingConfiguration.cs" />
     <Compile Include="Context\PHSContext.cs" />
+    <Compile Include="Interface\IReferenceRangeRepository.cs" />
+    <Compile Include="Interface\IStandardReferenceRepository.cs" />
     <Compile Include="Repository\FormRepository.cs" />
     <Compile Include="Interface\Core\IContext.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
@@ -71,6 +73,8 @@
     <Compile Include="Repository\Core\Repository.cs" />
     <Compile Include="Repository\ParticipantRepository.cs" />
     <Compile Include="Repository\EventRepository.cs" />
+    <Compile Include="Repository\ReferenceRangeRepository.cs" />
+    <Compile Include="Repository\StandardReferenceRepository.cs" />
     <Compile Include="Repository\TemplateFieldValueRepository.cs" />
     <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\ModalityRepository.cs" />

@@ -213,6 +213,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\StandardReferenceController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -400,6 +401,14 @@
     <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\UserDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\_ReferenceRangeTable.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\CreateReferenceRange.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\_ReferenceRangeTableEditDelete.cshtml" />
+    <Content Include="Areas\Admin\Views\StandardReference\EditReferenceRange.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
