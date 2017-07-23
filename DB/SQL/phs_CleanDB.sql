@@ -478,9 +478,13 @@ INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 1)
 GO
 INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 2)
 GO
-INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 2)
-
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 3)
 GO
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 2)
+GO
+INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 3)
+GO
+
 SET IDENTITY_INSERT [dbo].[Participant] OFF
 GO
 
@@ -565,6 +569,30 @@ GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 12)
 GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (2, 13)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 1)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 2)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 4)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 5)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 6)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 7)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 8)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 9)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 10)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 11)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 12)
+GO
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 13)
 GO
 
 ---  Forms Sample  --
