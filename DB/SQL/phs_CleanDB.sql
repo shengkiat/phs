@@ -995,3 +995,57 @@ GO
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
 GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (13, 6)
+GO
+
+GO
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
+GO
+
+--- Standard Reference Sample  --
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
+GO
+
+--- Reference range Sample  --
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'BMI Normal', 18.5, 24.9, N'NORMAL', 3)
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
+GO

@@ -179,7 +179,6 @@
           <Property Name="StandardReferenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-
         <EntityType Name="Template">
           <Key>
             <PropertyRef Name="TemplateID" />
@@ -447,6 +446,9 @@
           <EntitySet Name="ParticipantPHSEvent" EntityType="Self.ParticipantPHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHSEvent" EntityType="Self.PHSEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreRegistration" EntityType="Self.PreRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferenceRange" EntityType="Self.ReferenceRange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardReference" EntityType="Self.StandardReference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
