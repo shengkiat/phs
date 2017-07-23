@@ -185,7 +185,8 @@ namespace PHS.Business.Extensions
 
                             if (fieldType == "Day")
                             {
-                                return values[0];
+                                int dayValue = int.Parse(values[0]);
+                                return (dayValue < 10) ? ("0" + dayValue) : values[0];
                             }
 
                             else if (fieldType == "Month")

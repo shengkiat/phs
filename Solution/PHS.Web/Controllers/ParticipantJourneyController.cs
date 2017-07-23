@@ -226,13 +226,12 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public ActionResult InternalFillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
 
             using (var formManager = new FormAccessManager())
             {
-
                 var template = formManager.FindTemplate(model.TemplateID.Value);
 
                 var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);

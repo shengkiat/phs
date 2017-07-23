@@ -80,7 +80,7 @@
 <div class="form-page-container prepend-top span-26">
     <div class="center-column span-14" style="width:95%">
 
-        @using (Ajax.BeginForm("FillIn", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
+        @using (Ajax.BeginForm("InternalFillIn", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
         {
             <div id="message" class="clear"></div>
             @Html.WriteMessages()
