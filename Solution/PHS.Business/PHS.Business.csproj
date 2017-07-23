@@ -107,6 +107,8 @@
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseFormManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
+    <Compile Include="Implementation\FillIn\BaseFormFillIn.cs" />
+    <Compile Include="Implementation\FillIn\InternalFormFillIn.cs" />
     <Compile Include="Implementation\ModalityManager.cs" />
     <Compile Include="Implementation\EventManager.cs" />
     <Compile Include="Implementation\FormManager.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Implementation\PastParticipantJourneyManager.cs" />
     <Compile Include="Implementation\PersonManager.cs" />
     <Compile Include="Implementation\FormAccessManager.cs" />
+    <Compile Include="Implementation\FillIn\PublicFormFillIn.cs" />
     <Compile Include="Interface\IAddressManager.cs" />
     <Compile Include="Interface\IModalityManager.cs" />
     <Compile Include="Interface\IEventManager.cs" />
