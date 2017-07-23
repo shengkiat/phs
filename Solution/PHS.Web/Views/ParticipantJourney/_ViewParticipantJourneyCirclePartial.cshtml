@@ -1,6 +1,5 @@
-﻿@*@model List<PHS.Business.ViewModel.PatientJourney.ModalityCircleViewModel> *@
-@model ICollection<PHS.Business.ViewModel.PastParticipantJourney.PatientEventModalityViewModel>
-@using PHS.Business.ViewModel.PastParticipantJourney
+﻿@model ICollection<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
+@using PHS.Business.ViewModel.ParticipantJourney
 
 @using PHS.Business.Extensions
 @using GridMvc.Html
@@ -98,11 +97,7 @@
 
             var selectedModalityId = $(this).attr('id');
 
-            //var nric = "@HttpContext.Current.Request.QueryString["nric"]";
-            //var eventId = "@HttpContext.Current.Request.QueryString["eventId"]";
-
-
-            $("#ptForms").load("/phs/ParticipantJourney/RefreshModalityForms?selectedModalityId=" + selectedModalityId)
+            $("#ptForms").load("/phs/ParticipantJourney/RefreshViewParticipantJourneyForm?selectedModalityId=" + selectedModalityId)
             $(this).attr('class', 'round-button-selected');
 
 
@@ -121,77 +116,69 @@
     <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 }
 
-@using (Html.BeginForm())
-{
-
-
-}
-
-
-
-    <div style="text-align: center; width: 200px;" id="ptJourney">
-        @{
-            PatientEventModalityViewModel firstItem1 = Model.First();
-        }
-        @foreach (var element in Model)
+<div style="text-align: center; width: 200px;" id="ptJourney">
+    @{
+        ParticipantJourneyModalityCircleViewModel firstItem1 = Model.First();
+    }
+    @foreach (var element in Model)
+    {
+        if (!@element.Equals(firstItem1))
         {
-            if (!@element.Equals(firstItem1))
-            {
-                if (@element.IsActive)
-                {
-                    switch (@element.HasParent)
-                    {
-                        case true:
-                        <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;"/>
-                            break;
-
-                        case false:
-                        <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
-                            break;
-                    }
-                }
-            }
-
-            int selectedModalityId = int.Parse(TempData.Peek("SelectedModalityId").ToString());
-
             if (@element.IsActive)
             {
-                if (selectedModalityId == element.ModalityID)
+                switch (@element.HasParent)
                 {
-                    <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
-                        <img src="@element.IconPath" height="35" width="35"  />
-                        <br />
-                        @element.Name
-                    </button>
+                    case true:
+                    <img src="~/Content/images/Modality/connectline.png" height="30" width="30" style="vertical-align: top;"/>
+                        break;
 
-                    
+                    case false:
+                    <img src="~/Content/images/Modality/connectlineEmpty.png" height="30" width="30" style="vertical-align: top;" />
+                        break;
                 }
-
-                else if (element.isAllFormsCompleted())
-                {
-                    <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
-                        <img src="@element.IconPath" height="35" width="35" />
-                        <br />
-                        @element.Name
-                    </button>
-
-                    
-                }
-
-                else
-                {
-                    <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
-                        <img src="@element.IconPath" height="35" width="35" />
-                        <br />
-                        @element.Name
-                    </button>
-                }
-
-                <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
             }
         }
+
+        int selectedModalityId = int.Parse(TempData.Peek("SelectedModalityId").ToString());
+
+        if (@element.IsActive)
+        {
+            if (selectedModalityId == element.ModalityID)
+            {
+                <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35"  />
+                    <br />
+                    @element.Name
+                </button>
+
+                    
+            }
+
+            else if (element.isAllFormsCompleted())
+            {
+                <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
+
+                    
+            }
+
+            else
+            {
+                <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
+                    <img src="@element.IconPath" height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
+            }
+
+            <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
+        }
+    }
         
-    </div>
+</div>
 
 
 

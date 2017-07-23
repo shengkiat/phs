@@ -21,22 +21,22 @@ namespace PHS.Repository.Repository
 
         public Form GetForm(int key)
         {
-            return dbContext.Set<Form>().Where(u => u.FormID == key && u.IsActive == true).Include(x => x.Templates).FirstOrDefault();
+            return dbContext.Set<Form>().Where(u => u.FormID == key && u.IsActive == true).Include(x => x.Templates.Select(t => t.TemplateFields)).FirstOrDefault();
         }
 
         public Form GetForm(string slug)
         {
-            return dbContext.Set<Form>().Where(u => u.IsPublic == true && (slug.Equals(u.Slug))).FirstOrDefault();
+            return dbContext.Set<Form>().Where(u => u.IsPublic == true && u.IsActive == true && (slug.Equals(u.Slug))).FirstOrDefault();
         }
 
-        public Template GetTemplate(int key)
+        public Template GetTemplate(int templateId)
         {
-            return dbContext.Set<Template>().Where(u => u.TemplateID == key && u.IsActive == true).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
+            return dbContext.Set<Template>().Where(u => u.TemplateID == templateId && u.IsActive == true).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
         public Form GetPublicForm(string slug)
         {
-            return dbContext.Set<Form>().Where(u => u.IsPublic == true && slug.Equals(u.Slug)).Include(x => x.Templates).FirstOrDefault();
+            return dbContext.Set<Form>().Where(u => u.IsPublic == true && slug.Equals(u.Slug)).Include(x => x.Templates.Select(t=> t.TemplateFields)).FirstOrDefault();
         }
 
         public void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView)
@@ -82,7 +82,8 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow,
                     ImageBase64 = fieldView.ImageBase64,
                     MatrixRow = fieldView.MatrixRow,
-                    MatrixColumn = fieldView.MatrixColumn
+                    MatrixColumn = fieldView.MatrixColumn,
+                    PreRegistrationFieldName = fieldView.PreRegistrationFieldName
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -121,6 +122,7 @@ namespace PHS.Repository.Repository
                     fField.ImageBase64 = fieldView.ImageBase64;
                     fField.MatrixColumn = fieldView.MatrixColumn;
                     fField.MatrixRow = fieldView.MatrixRow;
+                    fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                 }
 
               //  this.SaveChanges();
@@ -230,7 +232,9 @@ namespace PHS.Repository.Repository
                     DateAdded = DateTime.UtcNow,
                     ImageBase64 = templateField1.ImageBase64,
                     MatrixRow = templateField1.MatrixRow,
-                    MatrixColumn = templateField1.MatrixColumn
+                    MatrixColumn = templateField1.MatrixColumn,
+                    PreRegistrationFieldName = templateField1.PreRegistrationFieldName
+                    
                 };
 
                 template.TemplateFields.Add(fField);
@@ -405,17 +409,12 @@ namespace PHS.Repository.Repository
         public List<Template> GetBaseTemplates()
         {
             var templateSet = this.dbContext.Set<Template>().ToList();
-           
-
             return templateSet;
         }
 
-
         public Form GetPreRegistrationForm(int year = -1)
         {
-            
-            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals("PRE-REGISTRATION")).Include(x => x.Templates).FirstOrDefault();
-
+            var form = this.dbContext.Set<Form>().Where(u => u.IsPublic && u.IsActive && u.PublicFormType.Equals(Constants.Public_Form_Type_PreRegistration)).Include(x => x.Templates).FirstOrDefault();
             return form;
         }
 

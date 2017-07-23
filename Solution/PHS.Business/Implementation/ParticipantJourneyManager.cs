@@ -1,11 +1,16 @@
-﻿using PHS.Business.Interface;
+﻿using PHS.Business.Common;
+using PHS.Business.Interface;
+using PHS.Business.ViewModel;
 using PHS.Business.ViewModel.ParticipantJourney;
+using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
@@ -21,35 +26,252 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = CreateUnitOfWork())
             {
                 ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
-                DateTime currentTime = DateTime.Now;
-                result.PHSEvents = unitOfWork.Events.GetAll();
-                //result.PHSEvents = unitOfWork.Events.GetAll().Where(e => e.IsActive == true && currentTime.Ticks > e.StartDT.Ticks && currentTime.Ticks < e.EndDT.Ticks);
+                //result.PHSEvents = unitOfWork.Events.GetAll();
+                result.PHSEvents = unitOfWork.Events.GetAllActiveEvents();
 
                 return result;
             }
         }
 
-        public ParticipantJourneySearchViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm)
+        public ParticipantJourneyViewModel RetrieveParticipantJourney(ParticipantJourneySearchViewModel psm, out string message, out MessageType messageType)
         {
+            message = string.Empty;
+            messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel result = null;
+
             if (psm == null)
             {
-                throw new Exception("Parameter cannot be null");
+                message = "Parameter cannot be null";
             }
 
-            if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                throw new Exception("Nric or PHSEventId cannot be null");
+                message = "Nric or PHSEventId cannot be null";
             }
 
-            using (var unitOfWork = CreateUnitOfWork())
+            else if (!NricChecker.IsNRICValid(psm.Nric))
             {
-                ParticipantJourneySearchViewModel result = new ParticipantJourneySearchViewModel();
-                DateTime currentTime = DateTime.Now;
-                result.PHSEvents = unitOfWork.Events.GetAll();
-                //result.PHSEvents = unitOfWork.Events.GetAll().Where(e => e.IsActive == true && currentTime.Ticks > e.StartDT.Ticks && currentTime.Ticks < e.EndDT.Ticks);
-
-                return result;
+                message = "Invalid Nric";
             }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
+
+                    if (phsEvent == null)
+                    {
+                        message = "Screening Event is not active";
+                    }
+
+                    else
+                    {
+                        Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
+
+                        if (participant != null)
+                        {
+                            result = new ParticipantJourneyViewModel(participant, psm.PHSEventId);
+                        }
+
+                        else
+                        {
+
+                            messageType = MessageType.PROMPT;
+
+                            PreRegistration preRegistration = unitOfWork.PreRegistrations.FindPreRegistration(p => p.Nric.Equals(psm.Nric));
+                            if (preRegistration == null)
+                            {
+                                message = "No registration record found. Do you want to register this Nric?";
+                            }
+
+                            else
+                            {
+                                message = "Do you want to register this Nric?";
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public ParticipantJourneyFormViewModel RetrieveParticipantJourneyForm(ParticipantJourneySearchViewModel psm, out string message)
+        {
+            message = string.Empty;
+
+            ParticipantJourneyFormViewModel result = null;
+
+            if (psm == null)
+            {
+                message = "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                message = "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
+
+                    if (participant != null)
+                    {
+                        result = new ParticipantJourneyFormViewModel(participant, psm.PHSEventId);
+                    }
+
+                    else
+                    {
+                        message = "No result found";
+                    }
+
+                }
+            }
+
+            return result;
+        }
+
+        public string RegisterParticipant(ParticipantJourneySearchViewModel psm)
+        {
+            string result = null;
+
+            if (psm == null)
+            {
+                return "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                return "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                return "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+
+                    PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
+
+                    if (phsEvent == null)
+                    {
+                        return "Screening Event is not active";
+                    }
+
+                    else
+                    {
+                        Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric);
+
+                        if (participant != null)
+                        {
+                            if (participant.PHSEvents.All(e => e.PHSEventID == psm.PHSEventId))
+                            {
+                                return "Invalid register participant";
+                            }
+                        }
+
+                        PreRegistration preRegistration = unitOfWork.PreRegistrations.FindPreRegistration(p => p.Nric.Equals(psm.Nric));
+
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            if (participant == null)
+                            {
+                                participant = new Participant()
+                                {
+                                    Nric = psm.Nric
+                                };
+
+                                copyPreRegistrationToParticipant(participant, preRegistration);
+                                unitOfWork.Participants.AddParticipantWithPHSEvent(participant, phsEvent);
+                            }
+
+                            else
+                            {
+                                copyPreRegistrationToParticipant(participant, preRegistration);
+                                unitOfWork.Participants.AddPHSEventToParticipant(participant, phsEvent);
+                            }
+
+                            foreach(var modality in phsEvent.Modalities)
+                            {
+                                foreach(var form in modality.Forms)
+                                {
+                                    ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
+                                    {
+                                        ParticipantID = participant.ParticipantID,
+                                        PHSEventID = phsEvent.PHSEventID,
+                                        FormID = form.FormID,
+                                        ModalityID = modality.ModalityID
+                                    };
+
+                                    participant.ParticipantJourneyModalities.Add(participantJourneyModality);
+                                }
+                            }
+
+                            unitOfWork.Complete();
+                            scope.Complete();
+
+                            result = "success";
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public ParticipantJourneyModality RetrieveParticipantJourneyModality(ParticipantJourneySearchViewModel psm, int formID, out string message)
+        {
+            message = string.Empty;
+
+            ParticipantJourneyModality result = null;
+
+            if (psm == null)
+            {
+                message = "Parameter cannot be null";
+            }
+
+            else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
+            {
+                message = "Nric or PHSEventId cannot be null";
+            }
+
+            else if (!NricChecker.IsNRICValid(psm.Nric))
+            {
+                message = "Invalid Nric";
+            }
+
+            else
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    result = unitOfWork.ParticipantJourneyModalities.Find(p => p.PHSEventID == psm.PHSEventId && p.FormID == formID && p.Participant.Nric.Equals(psm.Nric)).FirstOrDefault();
+                }
+            }
+
+            return result;
+        }
+
+        private void copyPreRegistrationToParticipant(Participant participant, PreRegistration preRegistration)
+        {
+            if (preRegistration != null)
+            {
+                Util.CopyNonNullProperty(preRegistration, participant);
+            }
+            
         }
     }
 }

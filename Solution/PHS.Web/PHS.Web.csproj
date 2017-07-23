@@ -225,7 +225,7 @@
     <Compile Include="Controllers\ModalityController.cs" />
     <Compile Include="Controllers\ParticipantJourneyController.cs" />
     <Compile Include="Controllers\PastParticipantJourneyController.cs" />
-    <Compile Include="Controllers\PublicFormController.cs" />
+    <Compile Include="Controllers\FormAccessController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -482,10 +482,10 @@
     <Content Include="Views\Shared\_MessageBoxPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Form\EditTemplate.cshtml" />
-    <Content Include="Views\PublicForm\SubmitConfirmation.cshtml" />
+    <Content Include="Views\FormAccess\SubmitConfirmation.cshtml" />
     <Content Include="Views\Form\ViewTemplate.cshtml" />
     <Content Include="Views\Form\PreviewTemplate.cshtml" />
-    <Content Include="Views\PublicForm\FillIn.cshtml" />
+    <Content Include="Views\FormAccess\FillIn.cshtml" />
     <Content Include="Views\FormExport\ViewEntries.cshtml" />
     <Content Include="Views\Form\_form-field-address-partial.cshtml" />
     <Content Include="Views\Form\_form-field-address-template.cshtml" />
@@ -522,7 +522,7 @@
     <Content Include="Views\Form\_FormEmbedPartial.cshtml" />
     <Content Include="Views\Form\_FormSubMenuPartial.cshtml" />
     <Content Include="Views\Form\_FormToolsMenuPartial.cshtml" />
-    <Content Include="Views\PublicForm\_SubmissionEmailPartial.cshtml" />
+    <Content Include="Views\FormAccess\_SubmissionEmailPartial.cshtml" />
     <Content Include="Views\Shared\_EmbedLayout.cshtml" />
     <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_LayoutForm.cshtml" />
@@ -550,27 +550,28 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
-    <Content Include="Views\PastParticipantJourney\JourneyModality.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_JourneyModalityCirclesPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_JourneyModalityFormsPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\ViewForm.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_MegaSortingStationPartial.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_SummaryPartial.cshtml" />
-    <Content Include="Views\PublicForm\PreRegistration.cshtml" />
+    <Content Include="Views\FormAccess\PreRegistration.cshtml" />
     <Content Include="Views\Form\_form-field-signature-partial.cshtml" />
     <Content Include="Views\Form\_form-field-signature-template.cshtml" />
     <Content Include="Views\Form\_form-field-sectioncollapse-template.cshtml" />
     <Content Include="Views\Form\_form-field-sectioncollapse-partial.cshtml" />
     <Content Include="Views\Form\Index.cshtml" />
-    <Content Include="Views\PublicForm\PublicFillIn.cshtml" />
+    <Content Include="Views\FormAccess\PublicFillIn.cshtml" />
     <Content Include="Views\Form\EditForm.cshtml" />
     <Content Include="Views\Form\CreateForm.cshtml" />
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
     <Content Include="Views\Shared\EditProfile.cshtml" />
-    <Content Include="Views\PastParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
+    <Content Include="Views\PastParticipantJourney\_SearchPastParticipantJourneyResultPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\Index.cshtml" />
     <Content Include="Views\ParticipantJourney\_SearchParticipantJourneyResultPartial.cshtml" />
+    <Content Include="Views\Form\EditModalityForm.cshtml" />
+    <Content Include="Views\ParticipantJourney\ViewParticipantJourney.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyCirclePartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyFormPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_MegaSortingStationPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_SummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_FillInPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

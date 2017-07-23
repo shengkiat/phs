@@ -1,10 +1,4 @@
-﻿@model ICollection<PHS.Business.ViewModel.PastParticipantJourney.PatientEventModalityViewModel>
-@using PHS.DB
-@using PHS.Business.ViewModel.ParticipantJourney
-
-@using PHS.Business.Extensions
-@using GridMvc.Html
-
+﻿@model ICollection<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
 
 @{
     ViewBag.Title = "Mega Sorting Station - Form A";
@@ -14,29 +8,29 @@
 
 <script>
     $(document).ready(function () {
-    $(".cbk").change(function () {
-        var select = "";
-        $("input[type = 'checkbox']").each(function () {
-            var c = $(this).is(":checked");
-            if (c) {
-                select = select + "1|";
+        $(".cbk").change(function () {
+            var select = "";
+            $("input[type = 'checkbox']").each(function () {
+                var c = $(this).is(":checked");
+                if (c) {
+                    select = select + "1|";
 
-            } else { 
-                select = select + "0|";
-            }
-        })
+                } else { 
+                    select = select + "0|";
+                }
+            })
         
-                $.ajax(
-                    {
-                        type: "GET",
-                        url: '@Url.Action("ActivateCirclesFromMSSS", "ParticipantJourney")', // Controller/View
-                        data: {'activateList': select},
-                        contentType: "application/json; charset=utf-8",
-                        success: function (resp) {
-                            window.parent.$('#ptJourney').html(resp);
-                            //$('#ptJourney').html(resp);
-                        }
-                    });
+            $.ajax(
+                {
+                    type: "GET",
+                    url: '@Url.Action("ActivateCirclesFromMSSS", "ParticipantJourney")', // Controller/View
+                    data: {'activateList': select},
+                    contentType: "application/json; charset=utf-8",
+                    success: function (resp) {
+                        window.parent.$('#ptJourney').html(resp);
+                        //$('#ptJourney').html(resp);
+                    }
+                });
 
         });
     });

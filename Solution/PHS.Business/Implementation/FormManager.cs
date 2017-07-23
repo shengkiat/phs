@@ -13,10 +13,12 @@ using System.Transactions;
 using System.Web.Mvc;
 using PHS.Common;
 using static PHS.Common.Constants;
+using PHS.DB.ViewModels;
+using System.Web;
 
 namespace PHS.Business.Implementation
 {
-    public class FormManager : BaseManager, IFormManager, IManagerFactoryBase<IFormManager>
+    public class FormManager : BaseFormManager, IFormManager, IManagerFactoryBase<IFormManager>
     {
         public IFormManager Create()
         {
@@ -126,44 +128,6 @@ namespace PHS.Business.Implementation
 
                 return templates;
             }
-        }
-
-        public Template FindPublicTemplate(string slug)
-        {
-            using (var unitOfWork = CreateUnitOfWork())
-            {
-                Form form = unitOfWork.FormRepository.GetPublicForm(slug);
-                if (form != null)
-                {
-                    return form.Templates.OrderBy(f => f.Version).First();
-                }
-                return null;
-            }
-        }
-
-        public Template FindPreRegistrationForm()
-        {
-            using (var unitOfWork = CreateUnitOfWork())
-            {
-                Form form = unitOfWork.FormRepository.GetPreRegistrationForm();
-                if (form != null)
-                {
-                    return form.Templates.OrderBy(f => f.Version).First();
-                }
-                return null;
-            }
-        }
-
-
-        public Template FindTemplate(int templateID)
-        {
-            Template template = null;
-            using (var unitOfWork = CreateUnitOfWork())
-            {
-                template = unitOfWork.FormRepository.GetTemplate(templateID);
-            }
-
-            return template;
         }
 
         public FormViewModel FindFormToEdit(int formID)
@@ -287,7 +251,8 @@ namespace PHS.Business.Implementation
                                     ValidFileExtensions = collection.FormFieldValue(domId, "ValidExtensions"),
                                     ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
-                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow")
+                                    MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
+                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName")
                                 };
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
@@ -474,91 +439,7 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
-        {
-            string result = null;
-            IList<string> errors = Enumerable.Empty<string>().ToList();
-            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
-
-            var template = FindTemplate(model.TemplateID.Value);
-
-            var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-            templateView.AssignInputValues(formCollection);
-           // this.InsertValuesIntoTempData(SubmitFields, formCollection);
-
-            if (templateView.Fields.Any())
-            {
-                // first validate fields
-                foreach (var field in templateView.Fields)
-                {
-                    if (!field.SubmittedValueIsValid(formCollection))
-                    {
-                        field.SetFieldErrors();
-                        errors.Add(field.Errors);
-                    }
-
-                    var value = field.SubmittedValue(formCollection);
-                    if (field.IsRequired && value.IsNullOrEmpty())
-                    {
-                        field.Errors = "{0} is a required field".FormatWith(field.Label);
-                        errors.Add(field.Errors);
-                    }
-                };
-
-                if (errors.Count == 0)
-                {
-                    //then insert values
-                    var entryId = Guid.NewGuid();
-
-                    using (var unitOfWork = CreateUnitOfWork())
-                    {
-                        using (TransactionScope scope = new TransactionScope())
-                        {
-                            foreach (var field in templateView.Fields)
-                            {
-                                var value = field.SubmittedValue(formCollection);
-
-                                //if it's a file, save it to hard drive
-                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                {
-                                    //var file = Request.Files[field.SubmittedFieldName()];
-                                    //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                    //if (fileValueObject != null)
-                                    //{
-                                    //    if (UtilityHelper.UseCloudStorage())
-                                    //    {
-                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                    //    }
-                                    //}
-                                }
-
-
-                                unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
-                            }
-
-                            unitOfWork.Complete();
-                            scope.Complete();
-
-                            result = "success";
-                        }
-                    }
-                }
-            }
-
-            if (errors.Count > 0)
-            {
-                result = errors.ToUnorderedList();
-            }
-            
-
-            return result;
-        }
-
+        
         public string InsertUploadDataToTemplate(byte[] data, int templateID)
         {
             Template template = new Template();
@@ -715,6 +596,182 @@ namespace PHS.Business.Implementation
                 return "";
             }
 
+        }
+
+        public List<ModalityForm> FindModalityForm(int modalityID)
+        {
+            ICollection<Form> formList;
+            Modality modality;
+            Boolean isPublicFacing = false;
+            
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {                    
+                    var forms = unitOfWork.FormRepository.GetAll().Where(f => f.IsActive == true);
+                    formList = (ICollection<Form>) forms;
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID); 
+
+                    if(modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        isPublicFacing = true; 
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
+
+            for (int i = 0; i < formList.Count; i ++)
+            {
+                ModalityForm modalityForm = new ModalityForm();
+                Boolean isSelected = false; 
+                for(int j = 0; j < modality.Forms.Count; j++)
+                {
+                    if (modality.Forms.ElementAt(j).FormID == formList.ElementAt(i).FormID)
+                    {
+                        isSelected = true;
+                        break;
+                    }
+                }
+
+                modalityForm.FormName = formList.ElementAt(i).Title;
+                modalityForm.FormID = formList.ElementAt(i).FormID;
+                modalityForm.IsSelected = isSelected;
+
+                if(isPublicFacing)
+                {
+
+                    modalityForm.publicURL = HttpContext.Current.Request.Url.AbsolutePath;
+
+
+                }
+
+                modalityFormList.Add(modalityForm); 
+            }
+
+            return modalityFormList; 
+        }
+
+        public void AddModalityForm(int formID, int modalityID, int eventID)
+        {
+            Form form; 
+            Modality modality;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID);
+                    modality.Forms.Add(form);
+
+                    if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        AddToPublicFacing(formID, eventID, "PRE-REGISTRATION");
+                    }
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+               
+            }
+        }
+
+        public void RemoveModalityForm(int formID, int modalityID, int eventID)
+        {
+            Form form;
+            Modality modality;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    modality = unitOfWork.Modalities.GetModalityByID(modalityID);
+
+                    modality.Forms.Remove(form);
+
+                    if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        RemoveFromPublicFacing(formID);
+                    }
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void AddToPublicFacing(int formID, int eventID, string publicFormType)
+        {
+            Form form;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+
+                    PHSEvent phsEvent = unitOfWork.Events.Get(eventID);
+
+                    string publicURL = phsEvent.Title.Replace(" ", "") + "_" + form.Title.Replace(" ", "").Substring(0, 6); 
+
+                    form.IsPublic = true;
+                    form.PublicFormType = publicFormType;
+                    form.Slug = publicURL;
+                                
+
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void RemoveFromPublicFacing(int formID)
+        {
+            Form form;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    form = unitOfWork.FormRepository.Get(formID);
+                    form.IsPublic = false;
+                    form.PublicFormType = null;
+                    form.Slug = null; 
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

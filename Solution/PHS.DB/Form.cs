@@ -17,6 +17,7 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Form()
         {
+            this.ParticipantJourneyModalities = new HashSet<ParticipantJourneyModality>();
             this.Templates = new HashSet<Template>();
             this.Modalities = new HashSet<Modality>();
         }
@@ -29,6 +30,8 @@ namespace PHS.DB
         public Nullable<System.DateTime> DateAdded { get; set; }
         public bool IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Template> Templates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

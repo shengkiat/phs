@@ -16,6 +16,7 @@ namespace PHS.Business.Implementation.Tests
     [TestClass()]
     public class FormManagerTests
     {
+        private FormAccessManager _publicFormManager;
         private FormManager _target;
         private IUnitOfWork _unitOfWork;
         private PHSContext _context;
@@ -184,34 +185,6 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void FillIn_SuccessWithHasSubmissions()
-        {
-            Template template;
-            TemplateViewModel templateViewModel;
-            CreateDefaultTemplateAndField(out template, out templateViewModel);
-
-            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
-            Assert.IsNotNull(templateViewModel.Fields);
-            Assert.AreEqual(1, templateViewModel.Fields.Count);
-
-            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
-            Assert.AreEqual(0, templateViewModel.Entries.Count);
-
-            FormCollection submissionCollection = new FormCollection();
-            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
-
-            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
-            submissionFields.Add("1", "1");
-
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
-            Assert.AreEqual(result, "success");
-
-            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
-
-            Assert.AreEqual(1, templateViewModel.Entries.Count);
-        }
-
-        [TestMethod()]
         public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
         {
             FormViewModel formViewModel = new FormViewModel();
@@ -245,7 +218,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
@@ -275,7 +248,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
@@ -331,7 +304,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel newTemplate = _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
@@ -361,7 +334,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             _target.FindTemplateToEdit(template.TemplateID); //copyTemplate
@@ -418,7 +391,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             string deleteResult = _target.DeleteFormAndTemplate(template.FormID);
@@ -476,60 +449,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(postExecuteResult.Count(), 0);
         }
 
-        [TestMethod()]
-        public void FindPublicTemplate_ShouldHaveRecordAfterCreate()
-        {
-            string slug = "test";
-            Template preExecuteResult = _target.FindPublicTemplate(slug);
-            Assert.IsNull(preExecuteResult);
-
-            FormViewModel formViewModel = new FormViewModel();
-            formViewModel.Slug = slug;
-            formViewModel.IsPublic = true;
-            formViewModel.PublicFormType = "TEST";
-
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
-
-            Template postExecuteResult = _target.FindPublicTemplate(slug);
-            Assert.IsNotNull(postExecuteResult);
-        }
-
-        [TestMethod()]
-        public void FindPublicTemplate_ShouldHaveNoRecordAfterCreateNonPublic()
-        {
-            string slug = "test";
-            Template preExecuteResult = _target.FindPublicTemplate(slug);
-            Assert.IsNull(preExecuteResult);
-
-            FormViewModel formViewModel = new FormViewModel();
-            formViewModel.IsPublic = false;
-            formViewModel.Slug = slug;
-
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
-
-            Template postExecuteResult = _target.FindPublicTemplate(slug);
-            Assert.IsNull(postExecuteResult);
-        }
-
-        [TestMethod()]
-        public void FindPreRegistrationForm_ShouldHaveRecord()
-        {
-            Template preExecuteResult = _target.FindPreRegistrationForm();
-            Assert.IsNull(preExecuteResult);
-
-            FormViewModel formViewModel = new FormViewModel();
-            formViewModel.IsPublic = true;
-            formViewModel.PublicFormType = "PRE-REGISTRATION";
-            formViewModel.Slug = "TEST";
-
-            Template template = _target.CreateNewFormAndTemplate(formViewModel);
-            Assert.IsNotNull(template);
-
-            Template postExecuteResult = _target.FindPreRegistrationForm();
-            Assert.IsNotNull(postExecuteResult);
-        }
+        
 
         [TestInitialize]
         public void SetupTest()
@@ -539,6 +459,7 @@ namespace PHS.Business.Implementation.Tests
             _unitOfWork = new MockUnitOfWork(_context);
 
             _target = new MockFormManager(_unitOfWork);
+            _publicFormManager = new MockPublicFormManager(_unitOfWork);
         }
 
         [TestCleanup]
@@ -547,10 +468,12 @@ namespace PHS.Business.Implementation.Tests
             // dispose of the database and connection
             _context.Dispose();
             _unitOfWork.Dispose();
+            _publicFormManager.Dispose();
             _target.Dispose();
 
             _unitOfWork = null;
             _context = null;
+            _publicFormManager = null;
             _target = null;
         }
 
@@ -600,6 +523,21 @@ namespace PHS.Business.Implementation.Tests
             private IUnitOfWork _unitOfWork;
 
             public MockFormManager(IUnitOfWork unitOfWork)
+            {
+                _unitOfWork = unitOfWork;
+            }
+
+            protected override IUnitOfWork CreateUnitOfWork()
+            {
+                return _unitOfWork;
+            }
+        }
+
+        private class MockPublicFormManager : FormAccessManager
+        {
+            private IUnitOfWork _unitOfWork;
+
+            public MockPublicFormManager(IUnitOfWork unitOfWork)
             {
                 _unitOfWork = unitOfWork;
             }

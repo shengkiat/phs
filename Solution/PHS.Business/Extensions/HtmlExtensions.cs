@@ -138,23 +138,25 @@ namespace PHS.Business.Extensions
 
                         AddressViewModel address = addressValue.FromJson<AddressViewModel>();
 
-                        if (fieldType == "Blk")
+                        if (address != null)
                         {
-                            return address.Blk;
+                            if (fieldType == "Blk")
+                            {
+                                return address.Blk;
+                            }
+                            else if (fieldType == "Unit")
+                            {
+                                return address.Unit;
+                            }
+                            else if (fieldType == "StreetAddress")
+                            {
+                                return address.StreetAddress;
+                            }
+                            else if (fieldType == "ZipCode")
+                            {
+                                return address.ZipCode;
+                            }
                         }
-                        else if (fieldType == "Unit")
-                        {
-                            return address.Unit;
-                        }
-                        else if (fieldType == "StreetAddress")
-                        {
-                            return address.StreetAddress;
-                        }
-                        else if (fieldType == "ZipCode")
-                        {
-                            return address.ZipCode;
-                        }
-
                         break;
 
                     case TemplateFieldType.BMI:
@@ -170,6 +172,37 @@ namespace PHS.Business.Extensions
                         else if (fieldType == "Height")
                         {
                             return bmi.Height;
+                        }
+
+                        break;
+
+                    case TemplateFieldType.BIRTHDAYPICKER:
+                        var birthdayValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+
+                        if (!string.IsNullOrEmpty(birthdayValue))
+                        {
+                            string[] values = birthdayValue.Split("/");
+
+                            if (fieldType == "Day")
+                            {
+                                int dayValue = int.Parse(values[0]);
+                                return (dayValue < 10) ? ("0" + dayValue) : values[0];
+                            }
+
+                            else if (fieldType == "Month")
+                            {
+                                return values[1];
+                            }
+
+                            else if (fieldType == "Year")
+                            {
+                                return values[2].Substring(0, 4);
+                            }
+                        }
+
+                        else
+                        {
+                            return "";
                         }
 
                         break;

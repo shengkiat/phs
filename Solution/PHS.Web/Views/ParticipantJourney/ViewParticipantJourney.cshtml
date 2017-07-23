@@ -1,4 +1,4 @@
-﻿@model PHS.Business.ViewModel.PastParticipantJourney.PatientEventViewModel
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyViewModel
 
 @using PHS.Business.Extensions
 @using GridMvc.Html
@@ -32,10 +32,10 @@
             <table  class="table">
                 <tr>
                     <td style="vertical-align:top; width:50px;">
-                        @Html.ActionLink("Back to Search", "SearchPatient")
-                        @Html.Partial("_JourneyModalityCirclesPartial", TempData.Peek("PatientEventModalityViewModel"))
+                        @Html.ActionLink("Back to Search", "Index")
+                        @Html.Partial("~/Views/ParticipantJourney/_ViewParticipantJourneyCirclePartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"))
                     </td>
-                    <td style="vertical-align:top">@Html.Partial("_JourneyModalityFormsPartial", Model)</td>
+                    <td style="vertical-align:top">@Html.Partial("~/Views/ParticipantJourney/_ViewParticipantJourneyFormPartial.cshtml", TempData.Peek("ParticipantJourneyFormViewModel"))</td>
                 </tr>
             </table>
 

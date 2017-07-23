@@ -7,40 +7,82 @@
 
     ViewBag.Title = Model.Title;
     Model.Embed = true;
-
-    if (Model.Embed)
-    {
-        Layout = "~/Views/Shared/_EmbedLayout.cshtml";
-    }
+    Layout = "~/Views/Shared/_EmbedLayout.cshtml";
 }
 @section headerScripts{
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.utils.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
 
-
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-common.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-interface.css")" rel="stylesheet" />
-    <link type="text/css" href="@Url.Content("~/Content/jquery.accordion.css")" rel="stylesheet" />
 
     @if (!Model.Theme.IsNullOrEmpty())
     {
         <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
     }
 
+    <script type="text/javascript">
+        function handleBeginSave() {
+            $('.save-button').attr("disabled", "disabled");
+            $('.save-button').addClass("disabled");
+
+            //$('#isAltered').val(0); // prevent autosave while save in progress
+        }
+
+        function enableSubmitButtons() {
+            $('.save-button').removeAttr("disabled", "disabled");
+            $('.save-button').removeClass("disabled");
+        }
+
+        function handleSaveCallback(content) {
+            //$('#IsAutoSave').val('false');
+
+            console.log(content.responseText);
+
+            var response = $.parseJSON(content.responseText);
+            if (response.success) {
+                if (!response.isautosave) {
+                    $U.writeSuccessToContainer($('#message'), response.message);
+                }
+
+                var select = "";
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: '@Url.Action("ActivateCirclesFromMSSS", "PatientJourney")', // Controller/View
+                        data: { 'activateList': select },
+                        contentType: "application/json; charset=utf-8",
+                        success: function (resp) {
+                            console.log("ActivateCirclesFromMSSS success from viewform");
+                            window.parent.$('#ptJourney').html(resp);
+                        }
+                    });
+
+
+                //bindFieldIds(response.fieldids);
+                //$('#isAltered').val(0);
+                //$('#autosave-container').hide();
+            } else {
+                if (!response.isautosave) {
+                    $U.writeErrorToContainer($('#message'), response.error)
+                }
+            }
+
+            enableSubmitButtons();
+        }
+
+    </script>
+
 }
 
 <div class="form-page-container prepend-top span-26">
     <div class="center-column span-14" style="width:95%">
-        @if (!Model.Embed)
-        {
-            <div class="inner-container">
-                @Html.RouteLink("Home", "form-home", null, new { @class = "image-icon-link home-icon-link" })
-            </div>
-        }
 
-        @using (Html.BeginForm("FillIn", "PublicForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Ajax.BeginForm("InternalFillIn", null, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spinner", OnBegin = "handleBeginSave", OnComplete = "handleSaveCallback" }, new { id = "main-form" }))
         {
+            <div id="message" class="clear"></div>
             @Html.WriteMessages()
             <ul id="drop-form" class="vertical-list edit-form drop-form-list entry-form-list">
                 @{
@@ -48,7 +90,7 @@
                     bool sectionCollapse = false;
 
                     <div data-accordion-group>
-                        
+
                         @foreach (var field in Model.Fields)
                         {
                             if (Model.IsQuestion)
@@ -108,7 +150,7 @@
                             &nbsp;
                         </label>
                         <div class="input">
-                            <input type="submit" class="blue" value="Submit" />
+                            <input type="submit" class="save-button blue" value="Submit" />
                         </div>
                     </li>
                 </ul>
@@ -120,14 +162,6 @@
     </div>
 
 </div>
-@section footerScripts{
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.accordion.js")"></script>
 
-    <script>
 
-                $('.accordion').accordion({
-                    "transitionSpeed": 400
-                });
 
-    </script>
-}

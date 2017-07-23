@@ -47,41 +47,36 @@ namespace PHS.Web.Controllers
             //}
 
             //Create default Modalities
-            List<Modality> modalities = BuildDefaultModalites();
-            PHSEvent phsEvent = new PHSEvent();
-            phsEvent.Modalities = modalities;
-            
+            PHSEvent phsEvent = buildDefaultEvent();
+
             return View(phsEvent);
         }
 
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "ID")]PHSEvent eventModel)
         {
-            if (ModelState.IsValid)
+            string message = string.Empty;
+
+            using (var eventManager = new EventManager())
             {
-                using (var eventManager = new EventManager())
+                //Person loginUser = GetLoginUser();
+                //if(loginUser != null)
+                //{
+                //    eventModel.CreatedBy = loginUser.PersonID;
+                //}
+                //else
+                //{
+                    eventModel.CreatedBy = "";
+                //}
+                eventModel.Modalities = BuildDefaultModalites();
+
+                bool isCreated = eventManager.NewEvent(eventModel, out message);
+
+                if(isCreated == false)
                 {
-                    //Person loginUser = GetLoginUser();
-                    //if(loginUser != null)
-                    //{
-                    //    eventModel.CreatedBy = loginUser.PersonID;
-                    //}
-                    //else
-                    //{
-                        eventModel.CreatedBy = "";
-                    //}
-                    eventModel.Modalities = BuildDefaultModalites();
-
-                    foreach (var newModality in eventModel.Modalities)
-                    {
-                        newModality.IsActive = true;
-                    }
-
-                    eventManager.NewEvent(eventModel);
+                    SetViewBagError(message);
+                    return View(eventModel);
                 }
-            }
-            else {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
             }
 
             return RedirectToAction("Index");
@@ -168,10 +163,38 @@ namespace PHS.Web.Controllers
             mHistoryTaking.Status = "Pending";
             modalities.Add(mHistoryTaking);
 
+            Modality miscForm = new Modality();
+            miscForm.Name = "Miscellaneous Forms";
+            miscForm.Position = 90;
+            miscForm.IconPath = "../../../Content/images/Modality/02historytaking.png";
+            miscForm.IsActive = true;
+            miscForm.IsVisible = true;
+            miscForm.IsMandatory = true;
+            miscForm.HasParent = true;
+            miscForm.Status = "Pending";
+            modalities.Add(miscForm);
+
+            Modality publicForm = new Modality();
+            publicForm.Name = "Public Forms";
+            publicForm.Position = 99;
+            publicForm.IconPath = "../../../Content/images/Modality/02historytaking.png";
+            publicForm.IsActive = true;
+            publicForm.IsVisible = false;
+            publicForm.IsMandatory = true;
+            publicForm.HasParent = false;
+            publicForm.Status = "Public";
+            modalities.Add(publicForm);
+
             return modalities; 
         }
 
-
+        private PHSEvent buildDefaultEvent()
+        {
+            List<Modality> modalities = BuildDefaultModalites();
+            PHSEvent phsEvent = new PHSEvent();
+            phsEvent.Modalities = modalities;
+            return phsEvent;
+        }
 
     }
 }
