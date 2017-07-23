@@ -176,23 +176,25 @@ namespace PHS.Web.Controllers
      
             List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
 
-            for(int i=0; i < modality.Forms.Count; i++)
-            {
-                ModalityForm modalityForm = new ModalityForm();
-                modalityForm.FormID = modality.Forms.ElementAt(i).FormID;
-                modalityForm.FormName = modality.Forms.ElementAt(i).Title;
-                modalityForm.IsSelected = true;
-                modalityForm.ModalityID = modality.ModalityID;
-                modalityForm.ModalityName = modality.Name;
-
-                if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+            if(modality.Forms != null) { 
+                for(int i=0; i < modality.Forms.Count; i++)
                 {
-                    Uri originalUri = System.Web.HttpContext.Current.Request.Url;         
-                    modalityForm.publicURL = originalUri.Authority + "/phs/public/" + modality.Forms.ElementAt(i).Slug;
+                    ModalityForm modalityForm = new ModalityForm();
+                    modalityForm.FormID = modality.Forms.ElementAt(i).FormID;
+                    modalityForm.FormName = modality.Forms.ElementAt(i).Title;
+                    modalityForm.IsSelected = true;
+                    modalityForm.ModalityID = modality.ModalityID;
+                    modalityForm.ModalityName = modality.Name;
 
+                    if (modality.Position.Equals(99) && modality.Status.Equals("Public"))
+                    {
+                        Uri originalUri = System.Web.HttpContext.Current.Request.Url;         
+                        modalityForm.publicURL = originalUri.Authority + "/phs/public/" + modality.Forms.ElementAt(i).Slug;
+
+                    }
+
+                    modalityFormList.Add(modalityForm); 
                 }
-
-                modalityFormList.Add(modalityForm); 
             }
 
             view.modalityFormList = modalityFormList; 
