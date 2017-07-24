@@ -394,7 +394,7 @@
                             new SelectListItem {Text = "GENDER", Value = "GENDER"}
                         };
 
-                        @Html.DropDownList("preregistrationfieldname", listItems, 
+                        @Html.DropDownList("preregistrationfieldname", listItems, string.Empty, 
                                         new Dictionary<string, object>
                                         {
                                             { "data-field-property", "preregistrationfieldname"},
@@ -408,6 +408,48 @@
                 </td>
             </tr>
             <!--// end PreRegistration Field Name Row -->
+
+            <!-- Registration Field Name Row -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        Registration Field Name
+                    </label>
+                </td>
+                <td class="input">
+
+                    @{
+
+                        var regListItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "NRIC", Value = "NRIC"},
+                            new SelectListItem {Text = "FULLNAME", Value = "FULLNAME"},
+                            new SelectListItem {Text = "SALUTATION", Value = "SALUTATION"},
+                            new SelectListItem {Text = "HOMENUMBER", Value = "HOMENUMBER"},
+                            new SelectListItem {Text = "MOBILENUMBER", Value = "MOBILENUMBER"},
+                            new SelectListItem {Text = "DATEOFBIRTH", Value = "DATEOFBIRTH"},
+                            new SelectListItem {Text = "CITIZENSHIP", Value = "CITIZENSHIP"},
+                            new SelectListItem {Text = "RACE", Value = "RACE"},
+                            new SelectListItem {Text = "LANGUAGE", Value = "LANGUAGE"},
+                            new SelectListItem {Text = "PREFEREDTIME", Value = "PREFEREDTIME"},
+                            new SelectListItem {Text = "ADDRESS", Value = "ADDRESS"},
+                            new SelectListItem {Text = "GENDER", Value = "GENDER"}
+                        };
+
+                        @Html.DropDownList("registrationfieldname", regListItems, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "registrationfieldname"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+
+
+                </td>
+            </tr>
+            <!--// end Registration Field Name Row -->
     </table> 
     </li>
 </ul>

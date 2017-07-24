@@ -252,7 +252,8 @@ namespace PHS.Business.Implementation
                                     ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
-                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName")
+                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
+                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName")
                                 };
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
