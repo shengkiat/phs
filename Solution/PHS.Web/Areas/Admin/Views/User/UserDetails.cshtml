@@ -98,11 +98,10 @@
                 @Html.DisplayFor(model => model.UpdatedDateTime)
             </dd>
         </dl>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="BtnCancel" value="Back" class="button-common cancel"
-                       formaction="Index" formmethod="get" />
+                @Html.ActionLink("Back", "Index", "User", null, new { @class = "btn btn-primary" })
             </div>
-        </div>
         </div>
 }

@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Extensions;
 using PHS.Business.Interface;
+using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
@@ -60,7 +61,8 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection
+            , String nric, String eventId, String modalityId)
         {
             string result = null;
             IList<string> errors = Enumerable.Empty<string>().ToList();
@@ -156,6 +158,32 @@ namespace PHS.Business.Implementation
                                 unitOfWork.PreRegistrations.Add(preRegistration);
                             }
 
+                            if ("Registration Form".Equals(template.Form.Title))
+                            {
+                                //update participant
+                                Participant participant = unitOfWork.Participants.FindParticipant(nric, int.Parse(eventId));
+                                if (participant != null)
+                                {
+                                    participant.FullName = getStringValue(values, Registration_Field_Name_FullName);
+                                    participant.ContactNumber = getStringValue(values, Registration_Field_Name_ContactNumber);
+                                    participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
+                                    participant.Language = getStringValue(values, Registration_Field_Name_Language);
+                                    participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
+
+                                    //Create ParticipantJourneyModality
+                                    ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
+                                    {
+                                        ParticipantID = participant.ParticipantID,
+                                        PHSEventID = int.Parse(eventId),
+                                        FormID = templateView.FormID,
+                                        ModalityID = int.Parse(modalityId)
+                                    };
+
+                                    //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
+
+                                    participant.ParticipantJourneyModalities.Add(participantJourneyModality);
+                                }
+                            }
 
                             unitOfWork.Complete();
                             scope.Complete();

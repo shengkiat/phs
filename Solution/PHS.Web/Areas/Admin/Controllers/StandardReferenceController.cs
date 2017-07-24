@@ -81,7 +81,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var standardReferenceManager = new StandardReferenceManager())
             {
-                var newStandardReference = standardReferenceManager.AddStandardReference(GetLoginUser(), standardReference, out message);
+                var newStandardReference = standardReferenceManager.AddStandardReference(standardReference, out message);
                 if (newStandardReference == null)
                 {
                     SetViewBagError(message);
@@ -133,7 +133,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var referenceRangeManager = new ReferenceRangeManager())
             {
-                var newReferenceRange = referenceRangeManager.AddReferenceRange(GetLoginUser(), referenceRange, out message);
+                var newReferenceRange = referenceRangeManager.AddReferenceRange(referenceRange, out message);
                 if (newReferenceRange == null)
                 {
                     SetViewBagError(message);
@@ -181,7 +181,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var standardReferenceManager = new StandardReferenceManager())
             {
-                if (standardReferenceManager.UpdateStandardReference(GetLoginUser(), standardReference, out message))
+                if (standardReferenceManager.UpdateStandardReference(standardReference, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("Standard Reference " + standardReference.Title + " has been updated"));
                     return RedirectToAction("Index");
@@ -224,7 +224,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var referenceRangeManager = new ReferenceRangeManager())
             {
-                if (referenceRangeManager.UpdateReferenceRange(GetLoginUser(), referenceRange, out message))
+                if (referenceRangeManager.UpdateReferenceRange(referenceRange, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("Reference Range " + referenceRange.Title + " has been updated"));
                     return RedirectToAction("Edit", new { id = referenceRange.StandardReferenceID });

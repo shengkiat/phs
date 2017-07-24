@@ -368,7 +368,7 @@ namespace PHS.Business.Implementation
             person = hashedUser;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -421,7 +421,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var personToUpdate = unitOfWork.Persons.Get(person.PersonID);
                     Util.CopyNonNullProperty(person, personToUpdate);
@@ -449,7 +449,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var person = unitOfWork.Persons.Get(personid);
 

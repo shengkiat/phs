@@ -48,7 +48,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public ReferenceRange AddReferenceRange(Person loginPerson, ReferenceRange referenceRange, out string message)
+        public ReferenceRange AddReferenceRange(ReferenceRange referenceRange, out string message)
         {
             message = string.Empty;
             if (referenceRange == null)
@@ -69,7 +69,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -89,7 +89,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool UpdateReferenceRange(Person loginPerson, ReferenceRange referenceRange, out string message)
+        public bool UpdateReferenceRange(ReferenceRange referenceRange, out string message)
         {
             message = string.Empty;
             if (referenceRange == null)
@@ -110,7 +110,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext(loginPerson)))
+                using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     var referenceRangeToUpdate = unitOfWork.ReferenceRanges.Get(referenceRange.ReferenceRangeID);
                     Util.CopyNonNullProperty(referenceRange, referenceRangeToUpdate);
