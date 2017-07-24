@@ -149,7 +149,8 @@ namespace PHS.Business.Implementation
                                 preRegistration.CreatedDateTime = DateTime.Now;
 
                                 preRegistration.Citizenship = getStringValue(values, PreRegistration_Field_Name_Citizenship);
-                                preRegistration.ContactNumber = getStringValue(values, PreRegistration_Field_Name_ContactNumber);
+                                preRegistration.HomeNumber = getStringValue(values, PreRegistration_Field_Name_HomeNumber);
+                                preRegistration.MobileNumber = getStringValue(values, PreRegistration_Field_Name_MobileNumber);
                                 preRegistration.DateOfBirth = getDateTimeValue(values, PreRegistration_Field_Name_DateOfBirth);
                                 preRegistration.Nric = getStringValue(values, PreRegistration_Field_Name_Nric);
                                 preRegistration.PreferedTime = getStringValue(values, PreRegistration_Field_Name_PreferedTime);

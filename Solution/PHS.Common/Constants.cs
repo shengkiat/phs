@@ -26,7 +26,8 @@ namespace PHS.Common
         public const string PreRegistration_Field_Name_Nric = "NRIC";
         public const string PreRegistration_Field_Name_FullName = "FULLNAME";
         public const string PreRegistration_Field_Name_Salutation = "SALUTATION";
-        public const string PreRegistration_Field_Name_ContactNumber = "CONTACTNUMBER";
+        public const string PreRegistration_Field_Name_HomeNumber = "HOMENUMBER";
+        public const string PreRegistration_Field_Name_MobileNumber = "MOBILENUMBER";
         public const string PreRegistration_Field_Name_DateOfBirth = "DATEOFBIRTH";
         public const string PreRegistration_Field_Name_Citizenship = "CITIZENSHIP";
         public const string PreRegistration_Field_Name_Race = "RACE";
