@@ -1,4 +1,5 @@
-﻿using PHS.DB.Attributes;
+﻿using Foolproof;
+using PHS.DB.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,6 +29,7 @@ namespace PHS.DB
 
             [Display(Name = "Effective End Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true, NullDisplayText = "-")]
+            [GreaterThanOrEqualTo("EffectiveStartDate")]
             [SkipTrackingAttribute]
             public DateTime? EffectiveEndDate { get; set; }
 

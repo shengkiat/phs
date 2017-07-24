@@ -1,4 +1,5 @@
-﻿using PHS.DB.Attributes;
+﻿using Foolproof;
+using PHS.DB.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,6 +22,7 @@ namespace PHS.DB
             public double MinimumValue { get; set; }
 
             [Required(ErrorMessage = "Please enter Maximum value")]
+            [GreaterThan("MinimumValue")]
             [Display(Name = "Maximum Value")]
             public double MaximumValue { get; set; }
 
