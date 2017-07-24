@@ -98,6 +98,7 @@
           <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
           <Property Name="FormID" Type="int" Nullable="false" />
+          <Property Name="TemplateID" Type="int" />
           <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ParticipantPHSEvent">
@@ -300,6 +301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK participant_journey_modality_template">
+          <End Role="Template" Type="Self.Template" Multiplicity="0..1" />
+          <End Role="ParticipantJourneyModality" Type="Self.ParticipantJourneyModality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="ParticipantJourneyModality">
+              <PropertyRef Name="TemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK participant_phs_event_participant">
           <End Role="Participant" Type="Self.Participant" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -473,6 +486,10 @@
             <End Role="PHSEvent" EntitySet="PHSEvent" />
             <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModality" />
           </AssociationSet>
+          <AssociationSet Name="FK participant_journey_modality_template" Association="Self.FK participant_journey_modality_template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModality" />
+          </AssociationSet>
           <AssociationSet Name="FK participant_phs_event_participant" Association="Self.FK participant_phs_event_participant">
             <End Role="Participant" EntitySet="Participant" />
             <End Role="ParticipantPHSEvent" EntitySet="ParticipantPHSEvent" />
@@ -555,6 +572,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_participant_journey_modality_phs_event" Association="phsModel.FK_participant_journey_modality_phs_event">
             <End Role="PHSEvent" EntitySet="PHSEvents" />
+            <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModalities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participant_journey_modality_template" Association="phsModel.FK_participant_journey_modality_template">
+            <End Role="Template" EntitySet="Templates" />
             <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModalities" />
           </AssociationSet>
           <AssociationSet Name="FK_reference_range_standard_reference" Association="phsModel.FK_reference_range_standard_reference">
@@ -667,11 +688,13 @@
           <Property Name="PHSEventID" Type="Int32" Nullable="false" />
           <Property Name="ModalityID" Type="Int32" Nullable="false" />
           <Property Name="FormID" Type="Int32" Nullable="false" />
+          <Property Name="TemplateID" Type="Int32" />
           <Property Name="EntryId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_participant_journey_modality_form" FromRole="ParticipantJourneyModality" ToRole="Form" />
           <NavigationProperty Name="Modality" Relationship="phsModel.FK_participant_journey_modality_modality" FromRole="ParticipantJourneyModality" ToRole="Modality" />
           <NavigationProperty Name="Participant" Relationship="phsModel.FK_participant_journey_modality_participant" FromRole="ParticipantJourneyModality" ToRole="Participant" />
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_participant_journey_modality_phs_event" FromRole="ParticipantJourneyModality" ToRole="PHSEvent" />
+          <NavigationProperty Name="Template" Relationship="phsModel.FK_participant_journey_modality_template" FromRole="ParticipantJourneyModality" ToRole="Template" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -768,6 +791,7 @@
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
           <Property Name="Version" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
+          <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_template" FromRole="Template" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.TemplateTemplateField" FromRole="Template" ToRole="TemplateField" />
         </EntityType>
         <EntityType Name="TemplateField">
@@ -876,6 +900,18 @@
             </Principal>
             <Dependent Role="ParticipantJourneyModality">
               <PropertyRef Name="PHSEventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participant_journey_modality_template">
+          <End Type="phsModel.Template" Role="Template" Multiplicity="0..1" />
+          <End Type="phsModel.ParticipantJourneyModality" Role="ParticipantJourneyModality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="ParticipantJourneyModality">
+              <PropertyRef Name="TemplateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1001,6 +1037,7 @@
             <EntityTypeMapping TypeName="phsModel.ParticipantJourneyModality">
               <MappingFragment StoreEntitySet="ParticipantJourneyModality">
                 <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
                 <ScalarProperty Name="FormID" ColumnName="FormID" />
                 <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />

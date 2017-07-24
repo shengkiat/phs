@@ -17,6 +17,7 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Template()
         {
+            this.ParticipantJourneyModalities = new HashSet<ParticipantJourneyModality>();
             this.TemplateFields = new HashSet<TemplateField>();
         }
     
@@ -33,6 +34,8 @@ namespace PHS.DB
         public int Version { get; set; }
     
         public virtual Form Form { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TemplateField> TemplateFields { get; set; }
     }

@@ -19,11 +19,13 @@ namespace PHS.DB
         public int PHSEventID { get; set; }
         public int ModalityID { get; set; }
         public int FormID { get; set; }
+        public Nullable<int> TemplateID { get; set; }
         public System.Guid EntryId { get; set; }
     
         public virtual Form Form { get; set; }
         public virtual Modality Modality { get; set; }
         public virtual Participant Participant { get; set; }
         public virtual PHSEvent PHSEvent { get; set; }
+        public virtual Template Template { get; set; }
     }
 }

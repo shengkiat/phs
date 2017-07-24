@@ -332,6 +332,7 @@ CREATE TABLE [dbo].[ParticipantJourneyModality](
 	[PHSEventID] [int] NOT NULL,
 	[ModalityID] [int] NOT NULL,
 	[FormID] [int] NOT NULL,
+	[TemplateID] [int] NULL,
 	[EntryId] [uniqueidentifier] NOT NULL
  CONSTRAINT [PK_participant_journey_modality] PRIMARY KEY CLUSTERED 
 (
@@ -412,6 +413,11 @@ ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_
 GO
 ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_modality] FOREIGN KEY([ModalityID])
 REFERENCES [dbo].[Modality] ([ModalityID])
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_modality]
+GO
+ALTER TABLE [dbo].[ParticipantJourneyModality]  WITH CHECK ADD  CONSTRAINT [FK participant_journey_modality_template] FOREIGN KEY([TemplateID])
+REFERENCES [dbo].[Template] ([TemplateID])
 GO
 ALTER TABLE [dbo].[ParticipantJourneyModality] CHECK CONSTRAINT [FK participant_journey_modality_modality]
 GO
@@ -1033,9 +1039,9 @@ INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (13, 6)
 GO
 
 GO
-INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
-INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
-INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 2, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 1, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 3, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 6, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
 GO
 
 --- Standard Reference Sample  --
