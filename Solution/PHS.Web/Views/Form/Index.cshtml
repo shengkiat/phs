@@ -17,7 +17,7 @@
        <img src="@Url.Content("~/Content/images/spacer.gif")" class="image-bg form-icon" alt="form icon" /><br />
 
        <h3 class="welcome-text">Welcome to the Form builder. You have not yet created any Forms. Click the button below to begin</h3>
-       <a href="@Url.Action("CreateForm", "Forms")" id="createForm" class="hyperlink-button black-button">Add Form</a>
+       <a href="@Url.Action("CreateForm", "Form")" id="createForm" class="hyperlink-button black-button">Add Form</a>
     </div>
 }
 else
@@ -29,13 +29,14 @@ else
       Form, or manage existing Forms from the table below.
     </div>
     <div class="add-form-button-container">
-        <a href="@Url.Action("CreateForm", "Forms")" id="createForm" class="hyperlink-button black-button">Add Form</a>
+        <a href="@Url.Action("CreateForm", "Form")" id="createForm" class="hyperlink-button black-button">Add Form</a>
     </div>
 
     @Html.Grid(Model.Forms).Columns(columns =>
     {
         columns.Add(c => c.Title).Titled("Title").Filterable(true);
         columns.Add(c => c.IsPublic).Titled("Is Public").Filterable(true);
+        columns.Add(c => c.InternalFormType).Titled("Internal Form Type").Filterable(true);
         columns.Add(c => c.Slug).Titled("Slug").Filterable(true);
         columns.Add(c => c.PublicFormType).Titled("Public Form Type").Filterable(true);
         columns.Add()

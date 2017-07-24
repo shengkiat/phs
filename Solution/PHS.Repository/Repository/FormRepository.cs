@@ -160,6 +160,7 @@ namespace PHS.Repository.Repository
 
             dbContext.Entry(form1).State = EntityState.Modified;
             form1.Title = formViewModel.Title;
+            form1.InternalFormType = formViewModel.InternalFormType;
             form1.IsPublic = formViewModel.IsPublic;
             form1.Slug = formViewModel.Slug;
             form1.PublicFormType = form1.PublicFormType;

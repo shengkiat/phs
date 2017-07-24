@@ -74,7 +74,7 @@
             <tr id="PublicType">
                 <td class="label">
                     <label class="label">
-                        Public Form Type
+                        Internal Form Type
                     </label>
                 </td>
                 <td class="input">
@@ -87,6 +87,27 @@
                         };
 
                         @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty, new { @disabled = "disabled" })
+                    }
+
+                </td>
+            </tr>
+
+            <tr id="InternalType">
+                <td class="label">
+                    <label class="label">
+                        Public Form Type
+                    </label>
+                </td>
+                <td class="input">
+                    @{
+
+                        var internalListItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "REGISTRATION", Value = "REG"},
+                            new SelectListItem {Text = "MEGA SORTING STATION", Value = "MEG"}
+                        };
+
+                        @Html.DropDownListFor(m => m.InternalFormType, internalListItems1, string.Empty, new { @disabled = "disabled" })
                     }
 
                 </td>

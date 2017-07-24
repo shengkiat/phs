@@ -34,7 +34,6 @@ namespace PHS.DB.ViewModels.Form
         public string PublicFormType { get; set; }
 
         [DisplayName("Internal Form Type")]
-        [RequiredIf("IsPublic == true", ErrorMessage = "Internal Form Type is required.")]
         public string InternalFormType { get; set; }
 
         [ScaffoldColumn(false)]

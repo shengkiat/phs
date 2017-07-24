@@ -375,6 +375,8 @@ namespace PHS.Business.Implementation
 
                 else
                 {
+                    formViewModel.InternalFormType = null;
+
                     Form form = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
                     if (form != null)
                     {
@@ -412,6 +414,8 @@ namespace PHS.Business.Implementation
 
                     else
                     {
+                        formViewModel.InternalFormType = null;
+
                         Form form1 = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
                         if (form1 != null && form1.FormID != formViewModel.FormID)
                         {

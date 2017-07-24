@@ -51,7 +51,7 @@
     </div>        
         <div class="inner-container clear-both">
             @Html.WriteMessages()<br />
-            @using (Html.BeginForm("ViewEntriesSubmit", "Forms", FormMethod.Post))
+            @using (Html.BeginForm("ViewEntriesSubmit", "Form", FormMethod.Post))
             {
                 if (Model.GroupedEntries.Count() > 0)
                 {

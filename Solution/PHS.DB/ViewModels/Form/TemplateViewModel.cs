@@ -28,6 +28,7 @@ namespace PHS.DB.ViewModels.Form
         public string Theme { get; set; }
         public bool Embed { get; set; }
         public bool IsPublic { get; set; }
+        public string InternalFormType { get; set; }
         public string PublicFormType { get; set; }
         public string Slug { get; set; }
         public bool IsQuestion { get; set; }
@@ -134,6 +135,7 @@ namespace PHS.DB.ViewModels.Form
 
                 Title = template1.Form.Title,
                 IsPublic = template1.Form.IsPublic,
+                InternalFormType = template1.Form.InternalFormType,
                 Slug = template1.Form.Slug,
                 PublicFormType = template1.Form.PublicFormType,
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
