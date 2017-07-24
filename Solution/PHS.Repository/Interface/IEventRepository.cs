@@ -8,6 +8,7 @@ namespace PHS.Repository.Interface
     {
         PHSEvent GetEvent(int id);
         IEnumerable<PHSEvent> GetAllActiveEvents();
+
     }
 
 }

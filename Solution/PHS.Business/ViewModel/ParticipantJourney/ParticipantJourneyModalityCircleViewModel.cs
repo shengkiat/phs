@@ -20,6 +20,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             IconPath = modality.IconPath;
             IsActive = modality.IsActive;
             IsVisible = modality.IsVisible;
+            IsMandatory = modality.IsMandatory;
+            Status = modality.Status;
             HasParent = modality.HasParent;
             Eligiblity = modality.Eligiblity;
             Labels = modality.Labels;
@@ -43,6 +45,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string IconPath { get; }
         public bool IsActive { get; set; }
         public bool IsVisible { get; set; }
+
+        public string Status { get; set; }
+
+        public bool IsMandatory { get; set; }
         public Nullable<bool> HasParent { get; }
         public string Eligiblity { get; }
         public Nullable<int> Labels { get; }

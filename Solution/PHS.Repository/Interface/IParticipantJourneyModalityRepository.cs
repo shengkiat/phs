@@ -13,5 +13,6 @@ namespace PHS.Repository.Interface
         ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId);
         void UpdateParticipantJourneyModalityEntryId(ParticipantJourneyModality participantJourneyModality, Guid entryId);
 
+        IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByParticipantEvent(string nric, int phsEventId);
     }
 }

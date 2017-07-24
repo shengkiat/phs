@@ -33,6 +33,11 @@ namespace PHS.Repository.Repository
             participantJourneyModality.EntryId = entryId;
         }
 
+        public IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByParticipantEvent(string nric, int phsEventId)
+        {
+            return Find(p => p.PHSEventID == phsEventId && p.Participant.Nric.Equals(nric));
+        }
+        
        
 
     }

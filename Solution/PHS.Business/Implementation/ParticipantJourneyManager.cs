@@ -8,6 +8,7 @@ using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -297,7 +298,9 @@ namespace PHS.Business.Implementation
             {
 
                 PHSEvent phsEvent = unitOfWork.Events.Get(psm.PHSEventId);
-                Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric); 
+                Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, phsEvent.PHSEventID);
+
+                IEnumerable<ParticipantJourneyModality> ptJourneyModalityItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByParticipantEvent(psm.Nric, phsEvent.PHSEventID);
 
                 ParticipantJourneyViewModel pjvm = new ParticipantJourneyViewModel(participant, psm.PHSEventId); 
 
@@ -305,14 +308,17 @@ namespace PHS.Business.Implementation
 
                 foreach(Modality modality in phsEvent.Modalities)
                 {
-                    foreach (ParticipantJourneyModality pjm in participant.ParticipantJourneyModalities)
+                    foreach (ParticipantJourneyModality pjm in ptJourneyModalityItems)
                     {
-                        if (modality.ModalityID == pjm.ModalityID && pjm.PHSEvent.Equals(phsEvent))
+                        if (modality.ModalityID == pjm.Modality.ModalityID && pjm.PHSEvent.Equals(phsEvent))
                         {
                             modality.IsActive = true; 
                         }
                     }
-                    pjmCircles.Add(copyToPJMCVM(pjvm, modality));
+                    if (modality.Status != "Public")
+                    {
+                        pjmCircles.Add(copyToPJMCVM(pjvm, modality));
+                    }
                 }
                 return pjmCircles;
             }           
@@ -323,6 +329,90 @@ namespace PHS.Business.Implementation
             ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality); 
 
             return pjmcvm; 
+        }
+
+
+        public string UpdateParticipantJourneyModalityFromMSS(ICollection<ParticipantJourneyModalityCircleViewModel> newPtJourneyModalityItems)
+        {
+            using(var unitOfWork = CreateUnitOfWork())
+            {
+                Participant participant = unitOfWork.Participants.FindParticipant(newPtJourneyModalityItems.First().Nric);
+                PHSEvent phsEvent = unitOfWork.Events.GetEvent(int.Parse(newPtJourneyModalityItems.First().EventId));
+
+                IEnumerable<ParticipantJourneyModality> oldPJMItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByParticipantEvent(newPtJourneyModalityItems.First().Nric, int.Parse(newPtJourneyModalityItems.First().EventId)); 
+
+                foreach (ParticipantJourneyModalityCircleViewModel newModalities in newPtJourneyModalityItems)
+                {
+                    Boolean oldModalityExists = false;
+                    int oldPJMId = 0; 
+
+                    foreach (ParticipantJourneyModality oldModalities in oldPJMItems)
+                    {
+                        if(newModalities.ModalityID == oldModalities.ModalityID)
+                        {
+                            oldModalityExists = true;
+                            oldPJMId = oldModalities.ParticipantJourneyModalityID;
+                        }
+                    }
+
+                    // to create new participantjourneymodality
+                    if (newModalities.IsActive && !oldModalityExists)
+                    {
+                        Modality modality = unitOfWork.Modalities.Get(newModalities.ModalityID);
+
+                        foreach(Form form in modality.Forms)
+                        {
+                            ParticipantJourneyModality newPJM = new ParticipantJourneyModality();
+                            newPJM.Participant = participant;
+                            newPJM.PHSEvent = phsEvent;
+                            newPJM.Modality = unitOfWork.Modalities.Get(newModalities.ModalityID);
+                            newPJM.Form = form; 
+                            unitOfWork.ParticipantJourneyModalities.Add(newPJM);
+                        }                        
+
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            unitOfWork.Complete();
+                            scope.Complete();
+                        }
+                    }
+
+                    // to delete old participantjourneymodality
+                    // todo: before delete, to check if there is exsiting form submission 
+                    if (!newModalities.IsActive && oldModalityExists)
+                    {
+                        Modality modality = unitOfWork.Modalities.Get(newModalities.ModalityID);
+
+                        foreach (Form form in modality.Forms)
+                        {
+                            ParticipantJourneyModality toRemovePJM = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(participant.Nric, phsEvent.PHSEventID, form.FormID);
+                            //toRemovePJM.Modality = null;
+                            //toRemovePJM.Form = null;
+                            //toRemovePJM.PHSEvent = null;
+                            //toRemovePJM.Participant = null;
+
+                            //using (TransactionScope scope = new TransactionScope())
+                            //{
+                            //    unitOfWork.Complete();
+                            //    scope.Complete();
+                            //}
+
+                            unitOfWork.ParticipantJourneyModalities.Remove(toRemovePJM);
+
+                            using (TransactionScope scope = new TransactionScope())
+                            {
+                                unitOfWork.Complete();
+                                scope.Complete();
+                            }
+                        }                    
+                        
+                    }                
+                    
+                }
+              
+
+                return "Updated Successfully"; 
+            }
         }
     }
 }
