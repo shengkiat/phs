@@ -99,7 +99,7 @@ namespace PHS.Web.Controllers
                 var template = formManager.FindTemplate(model.TemplateID.Value);
 
                 var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                string result = formManager.FillIn(SubmitFields, model, formCollection);
+                string result = formManager.FillIn(SubmitFields, model, formCollection, null, null, null);
 
                 if (result.Equals("success"))
                 {

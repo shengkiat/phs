@@ -235,7 +235,23 @@ namespace PHS.Web.Controllers
                 var template = formManager.FindTemplate(model.TemplateID.Value);
 
                 var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                string result = formManager.FillIn(SubmitFields, model, formCollection);
+
+                string nric = null;
+                string eventId = null;
+                string modalityId = null;
+                if(TempData.Peek("ParticipantJourneyFormViewModel") != null) { 
+                    ParticipantJourneyFormViewModel participantJourneyFormViewModel = (ParticipantJourneyFormViewModel)TempData.Peek("ParticipantJourneyFormViewModel");
+                    modalityId = participantJourneyFormViewModel.SelectedModalityId.ToString();
+                }
+
+                if(TempData.Peek("ParticipantJourneySearchViewModel") != null)
+                {
+                    ParticipantJourneySearchViewModel participantJourneySearchViewModel = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+                    eventId = participantJourneySearchViewModel.PHSEventId.ToString();
+                    nric = participantJourneySearchViewModel.Nric;
+                }
+
+                string result = formManager.FillIn(SubmitFields, model, formCollection, nric, eventId, modalityId);
 
                 if (result.Equals("success"))
                 {
