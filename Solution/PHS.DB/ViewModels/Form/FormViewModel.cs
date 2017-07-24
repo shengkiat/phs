@@ -33,6 +33,10 @@ namespace PHS.DB.ViewModels.Form
         [RequiredIf("IsPublic == true", ErrorMessage = "Public Form Type is required.")]
         public string PublicFormType { get; set; }
 
+        [DisplayName("Internal Form Type")]
+        [RequiredIf("IsPublic == true", ErrorMessage = "Internal Form Type is required.")]
+        public string InternalFormType { get; set; }
+
         [ScaffoldColumn(false)]
         public DateTime DateAdded { get; set; }
 
@@ -74,6 +78,7 @@ namespace PHS.DB.ViewModels.Form
                 Slug = form1.Slug,
                 IsPublic = form1.IsPublic,
                 PublicFormType = form1.PublicFormType,
+                InternalFormType = form1.InternalFormType,
                 DateAdded = form1.DateAdded.Value
             };
 

@@ -27,6 +27,7 @@ namespace PHS.DB
         public string Slug { get; set; }
         public bool IsPublic { get; set; }
         public string PublicFormType { get; set; }
+        public string InternalFormType { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public bool IsActive { get; set; }
     

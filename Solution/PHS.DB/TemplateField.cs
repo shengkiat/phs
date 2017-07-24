@@ -51,6 +51,7 @@ namespace PHS.DB
         public string MatrixRow { get; set; }
         public string MatrixColumn { get; set; }
         public string PreRegistrationFieldName { get; set; }
+        public string RegistrationFieldName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TemplateFieldValue> TemplateFieldValues { get; set; }

@@ -55,7 +55,7 @@ namespace PHS.Business.Implementation.Tests
             {
                 Nric = "S8250369B",
                 DateOfBirth = DateTime.Now,
-                ContactNumber = "88776655"
+                HomeNumber = "88776655"
             };
 
             _unitOfWork.Events.Add(phsEventOne);

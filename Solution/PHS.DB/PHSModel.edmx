@@ -36,6 +36,7 @@
           <Property Name="Slug" Type="nvarchar" MaxLength="50" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
+          <Property Name="InternalFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -79,7 +80,8 @@
           <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="HomeNumber" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Language" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar(max)" />
@@ -229,6 +231,7 @@
           <Property Name="MatrixRow" Type="varchar(max)" />
           <Property Name="MatrixColumn" Type="varchar(max)" />
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
+          <Property Name="RegistrationFieldName" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -601,6 +604,7 @@
           <Property Name="Slug" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InternalFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_form" FromRole="Form" ToRole="ParticipantJourneyModality" />
@@ -642,7 +646,8 @@
           <Property Name="ParticipantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HomeNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
           <Property Name="Language" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -777,6 +782,7 @@
           <Property Name="MatrixRow" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
         </EntityType>
@@ -939,6 +945,7 @@
               <MappingFragment StoreEntitySet="Form">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="InternalFormType" ColumnName="InternalFormType" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="Slug" ColumnName="Slug" />
@@ -980,7 +987,8 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Language" ColumnName="Language" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="HomeNumber" ColumnName="HomeNumber" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Nric" ColumnName="Nric" />
                 <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
@@ -1077,6 +1085,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
+                <ScalarProperty Name="RegistrationFieldName" ColumnName="RegistrationFieldName" />
                 <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />
                 <ScalarProperty Name="MatrixRow" ColumnName="MatrixRow" />

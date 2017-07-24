@@ -138,6 +138,7 @@ namespace PHS.Repository.Repository
                 Slug = formViewModel.Slug,
                 IsPublic = formViewModel.IsPublic,
                 PublicFormType = formViewModel.PublicFormType,
+                InternalFormType = formViewModel.InternalFormType,
                 DateAdded = DateTime.UtcNow,
                 IsActive = true
             };

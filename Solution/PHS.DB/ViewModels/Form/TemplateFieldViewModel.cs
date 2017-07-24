@@ -48,6 +48,7 @@ namespace PHS.DB.ViewModels.Form
         public string MatrixColumn { get; set; }
         public string EntryId { get; set; }
         public string PreRegistrationFieldName { get; set; }
+        public string RegistrationFieldName { get; set; }
         #endregion
 
         #region Public Members
@@ -99,8 +100,8 @@ namespace PHS.DB.ViewModels.Form
                     ImageBase64 = field.ImageBase64,
                     MatrixRow = field.MatrixRow,
                     MatrixColumn = field.MatrixColumn,
-                    PreRegistrationFieldName = field.PreRegistrationFieldName
-
+                    PreRegistrationFieldName = field.PreRegistrationFieldName,
+                    RegistrationFieldName = field.RegistrationFieldName
                 };
             }
 

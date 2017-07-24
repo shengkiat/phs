@@ -24,7 +24,8 @@ namespace PHS.DB
         public int ParticipantID { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
-        public string ContactNumber { get; set; }
+        public string HomeNumber { get; set; }
+        public string MobileNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Language { get; set; }
         public string Gender { get; set; }

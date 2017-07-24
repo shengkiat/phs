@@ -132,6 +132,11 @@ namespace PHS.Business.Implementation
                                     values.Add(field.PreRegistrationFieldName, value);
                                 }
 
+                                if (!string.IsNullOrEmpty(field.RegistrationFieldName))
+                                {
+                                    values.Add(field.RegistrationFieldName, value);
+                                }
+
 
                                 unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
                             }
@@ -165,7 +170,8 @@ namespace PHS.Business.Implementation
                                 if (participant != null)
                                 {
                                     participant.FullName = getStringValue(values, Registration_Field_Name_FullName);
-                                    participant.ContactNumber = getStringValue(values, Registration_Field_Name_ContactNumber);
+                                    participant.HomeNumber = getStringValue(values, Registration_Field_Name_HomeNumber);
+                                    participant.MobileNumber = getStringValue(values, Registration_Field_Name_MobileNumber);
                                     participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
                                     participant.Language = getStringValue(values, Registration_Field_Name_Language);
                                     participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
@@ -176,7 +182,8 @@ namespace PHS.Business.Implementation
                                         ParticipantID = participant.ParticipantID,
                                         PHSEventID = int.Parse(eventId),
                                         FormID = templateView.FormID,
-                                        ModalityID = int.Parse(modalityId)
+                                        ModalityID = int.Parse(modalityId),
+                                        EntryId = entryId
                                     };
 
                                     //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
