@@ -211,17 +211,20 @@ namespace PHS.Business.Implementation
 
                             foreach(var modality in phsEvent.Modalities)
                             {
-                                foreach(var form in modality.Forms)
+                                if (modality.IsMandatory)
                                 {
-                                    ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
+                                    foreach (var form in modality.Forms)
                                     {
-                                        ParticipantID = participant.ParticipantID,
-                                        PHSEventID = phsEvent.PHSEventID,
-                                        FormID = form.FormID,
-                                        ModalityID = modality.ModalityID
-                                    };
+                                        ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
+                                        {
+                                            ParticipantID = participant.ParticipantID,
+                                            PHSEventID = phsEvent.PHSEventID,
+                                            FormID = form.FormID,
+                                            ModalityID = modality.ModalityID
+                                        };
 
-                                    participant.ParticipantJourneyModalities.Add(participantJourneyModality);
+                                        participant.ParticipantJourneyModalities.Add(participantJourneyModality);
+                                    }
                                 }
                             }
 

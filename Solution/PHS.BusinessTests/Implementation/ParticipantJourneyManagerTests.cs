@@ -342,7 +342,8 @@ namespace PHS.Business.Implementation.Tests
 
             Modality modality = new Modality()
             {
-                Name = "Test Modality"
+                Name = "Test Modality",
+                IsMandatory = true
             };
 
             Form form = new Form
@@ -383,6 +384,82 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void RegisterParticipant_ParticipantJourneyModalityCreatedBasedOnMandatoryModality()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Modality modalityOne = new Modality()
+            {
+                Name = "Test Reg",
+                IsMandatory = true
+            };
+
+            Modality modalityTwo = new Modality()
+            {
+                Name = "Test Modality",
+                IsMandatory = false
+            };
+
+            Form formOne = new Form
+            {
+                Title = "Test reg form"
+            };
+
+            Form formTwo = new Form
+            {
+                Title = "Test form"
+            };
+
+            modalityOne.Forms.Add(formOne);
+            modalityTwo.Forms.Add(formTwo);
+
+            phsEvent.Modalities.Add(modalityOne);
+            phsEvent.Modalities.Add(modalityTwo);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            MessageType messageType = MessageType.ERROR;
+
+            ParticipantJourneyViewModel preResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNull(preResult);
+
+            string registerResult = _target.RegisterParticipant(psm);
+
+            Assert.AreEqual("success", registerResult);
+
+            ParticipantJourneyViewModel postResult = _target.RetrieveParticipantJourney(psm, out message, out messageType);
+            Assert.IsNotNull(postResult);
+            Assert.IsNotNull(postResult.Event);
+
+            Assert.IsNull(postResult.Gender);
+
+            var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
+            Assert.IsNotNull(pjmResult);
+            Assert.AreEqual(1, pjmResult.ParticipantID);
+            Assert.AreEqual(1, pjmResult.ModalityID);
+            Assert.AreEqual(1, pjmResult.PHSEventID);
+            Assert.AreEqual(1, pjmResult.FormID);
+
+            IEnumerable<ParticipantJourneyModality> particpantJourneyModalities = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByParticipantEvent("S8250369B", 1);
+            Assert.AreEqual(1, particpantJourneyModalities.Count());
+            Assert.AreEqual("Test Reg", particpantJourneyModalities.FirstOrDefault().Modality.Name);
+        }
+
+        [TestMethod()]
         public void RegisterParticipant_NewParticipantAndPHSEventWithPreRegistration()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
@@ -400,7 +477,8 @@ namespace PHS.Business.Implementation.Tests
 
             Modality modality = new Modality()
             {
-                Name = "Test Modality"
+                Name = "Test Modality",
+                IsMandatory = true
             };
 
             Form form = new Form
@@ -511,7 +589,8 @@ namespace PHS.Business.Implementation.Tests
 
             Modality modality = new Modality()
             {
-                Name = "Test Modality"
+                Name = "Test Modality",
+                IsMandatory = true
             };
 
             Form form = new Form
@@ -605,7 +684,8 @@ namespace PHS.Business.Implementation.Tests
 
             Modality modality = new Modality()
             {
-                Name = "Test Modality"
+                Name = "Test Modality",
+                IsMandatory = true
             };
 
             Form form = new Form
