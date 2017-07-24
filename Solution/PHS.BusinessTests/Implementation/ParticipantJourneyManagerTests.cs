@@ -893,6 +893,86 @@ namespace PHS.Business.Implementation.Tests
 
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(1, templateViewModel.Entries.Count);
+            Assert.AreEqual("HelloTest", templateViewModel.Entries.FirstOrDefault().Value);
+
+            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1);
+            Assert.IsNotNull(journeyModalityResult);
+            Assert.AreEqual(templateViewModel.Entries.FirstOrDefault().EntryId, journeyModalityResult.EntryId.ToString());
+        }
+
+        [TestMethod()]
+        public void InternalFillIn_UpdateValues()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+            TemplateViewModel templateViewModel = CreateFormAndTemplateWithSampleField();
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now,
+                HomeNumber = "88776655"
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                Title = "Test form"
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = psm.PHSEventId,
+                ModalityID = 1,
+                FormID = 1
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+
+            submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "Hello Test 2");
+
+            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+            Assert.AreEqual("Hello Test 2", templateViewModel.Entries.FirstOrDefault().Value);
 
             ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1);
             Assert.IsNotNull(journeyModalityResult);

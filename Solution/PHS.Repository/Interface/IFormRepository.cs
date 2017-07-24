@@ -23,6 +23,8 @@ namespace PHS.Repository.Interface
         IEnumerable<TemplateFieldValueViewModel> GetTemplateFieldValuesByForm(TemplateViewModel model);
         List<TemplateFieldValue> GetTemplateFieldValuesByTemplate(int templateId);
         void InsertTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId, string userId = "");
+        TemplateFieldValue GetTemplateFieldValue(TemplateFieldViewModel field, Guid entryId);
+        void UpdateTemplateFieldValue(TemplateFieldValue fieldValue, TemplateFieldViewModel field, string value, string userId = "");
         void DeleteEntries(IEnumerable<string> selectedEntries);
         List<FormViewModel> GetForms();
         List<TemplateViewModel> GetTemplates(int formId);

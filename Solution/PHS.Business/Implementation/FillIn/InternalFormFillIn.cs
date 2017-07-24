@@ -37,7 +37,17 @@ namespace PHS.Business.Implementation.FillIn
 
                 else
                 {
-                    //update template field value
+                    Guid existingEntryId = participantJourneyModality.EntryId;
+                    TemplateFieldValue fieldValue = UnitOfWork.FormRepository.GetTemplateFieldValue(field, existingEntryId);
+                    if (fieldValue != null)
+                    {
+                        UnitOfWork.FormRepository.UpdateTemplateFieldValue(fieldValue, field, value);
+                    }
+                    
+                    else
+                    {
+                        UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, existingEntryId);
+                    }
                 }
             }
 

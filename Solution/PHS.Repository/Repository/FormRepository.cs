@@ -344,6 +344,20 @@ namespace PHS.Repository.Repository
             }
         }
 
+        public TemplateFieldValue GetTemplateFieldValue(TemplateFieldViewModel field, Guid entryId)
+        {
+            return dbContext.Set<TemplateFieldValue>().Where(u => u.EntryId.Equals(entryId) && u.TemplateFieldID == field.TemplateFieldID).FirstOrDefault();
+        }
+
+        public void UpdateTemplateFieldValue(TemplateFieldValue fieldValue, TemplateFieldViewModel field, string value, string userId = "")
+        {
+            if (field.FieldType != Constants.TemplateFieldType.HEADER)
+            {
+                dbContext.Entry(fieldValue).State = EntityState.Modified;
+                fieldValue.Value = value;
+            }
+        }
+
         public void DeleteEntries(IEnumerable<string> selectedEntries)
         {
             var selectedGuids = selectedEntries.Select(se => new Guid(se));
