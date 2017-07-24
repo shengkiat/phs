@@ -600,7 +600,7 @@ namespace PHS.Business.Implementation
 
         public List<ModalityForm> FindModalityForm(int modalityID)
         {
-            ICollection<Form> formList;
+            IEnumerable<Form> formList;
             Modality modality;
             Boolean isPublicFacing = false;
             
@@ -609,7 +609,7 @@ namespace PHS.Business.Implementation
                 using (var unitOfWork = CreateUnitOfWork())
                 {                    
                     var forms = unitOfWork.FormRepository.GetAll().Where(f => f.IsActive == true);
-                    formList = (ICollection<Form>) forms;
+                    formList = (IEnumerable<Form>) forms;
                     modality = unitOfWork.Modalities.GetModalityByID(modalityID); 
 
                     if(modality.Position.Equals(99) && modality.Status.Equals("Public"))
@@ -625,21 +625,21 @@ namespace PHS.Business.Implementation
 
             List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
 
-            for (int i = 0; i < formList.Count; i ++)
+            foreach (Form form in formList)
             {
                 ModalityForm modalityForm = new ModalityForm();
                 Boolean isSelected = false; 
                 for(int j = 0; j < modality.Forms.Count; j++)
                 {
-                    if (modality.Forms.ElementAt(j).FormID == formList.ElementAt(i).FormID)
+                    if (modality.Forms.ElementAt(j).FormID == form.FormID)
                     {
                         isSelected = true;
                         break;
                     }
                 }
 
-                modalityForm.FormName = formList.ElementAt(i).Title;
-                modalityForm.FormID = formList.ElementAt(i).FormID;
+                modalityForm.FormName = form.Title;
+                modalityForm.FormID = form.FormID;
                 modalityForm.IsSelected = isSelected;
 
                 if(isPublicFacing)

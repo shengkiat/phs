@@ -129,10 +129,12 @@ namespace PHS.Web.Controllers
                 {
                     List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
 
-                    foreach (var modality in result.Event.Modalities)
-                    {
-                        participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
-                    }
+                    //foreach (var modality in result.Event.Modalities)
+                    //{
+                    //    participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
+                    //}
+
+                    participantJourneyModalityCircles = participantJourneyManager.GetParticipantMegaSortingStation(psm);
 
                     ParticipantJourneyFormViewModel participantJourneyformView = new ParticipantJourneyFormViewModel(result.Participant, psm.PHSEventId);
 
@@ -266,7 +268,7 @@ namespace PHS.Web.Controllers
                     TempData["success"] = templateView.ConfirmationMessage;
 
                     List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
-
+                    
                     foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
                     {
                         if (participantJourneyModalityCircle.isModalityFormsContain(templateView.FormID))
@@ -339,6 +341,11 @@ namespace PHS.Web.Controllers
                         modalityList.ElementAt(i).IsActive = false;
                     }
                 }
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                participantJourneyManager.UpdateParticipantJourneyModalityFromMSS(modalityList);
             }
 
             return PartialView("_ViewParticipantJourneyCirclePartial", modalityList);

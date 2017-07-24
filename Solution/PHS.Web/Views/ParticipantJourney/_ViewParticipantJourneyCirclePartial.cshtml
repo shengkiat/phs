@@ -122,9 +122,9 @@
     }
     @foreach (var element in Model)
     {
-        if (!@element.Equals(firstItem1))
+        if (!@element.Equals(firstItem1) && @element.Status != "Public")
         {
-            if (@element.IsActive)
+            if (@element.IsActive )
             {
                 switch (@element.HasParent)
                 {
@@ -141,7 +141,7 @@
 
         int selectedModalityId = int.Parse(TempData.Peek("SelectedModalityId").ToString());
 
-        if (@element.IsActive)
+        if (@element.IsActive && @element.Status != "Public")
         {
             if (selectedModalityId == element.ModalityID)
             {
