@@ -27,6 +27,10 @@
         <AssociationConnector Association="phsModel.ModalityForm" />
         <AssociationConnector Association="phsModel.ParticipantPHSEvent" />
         <AssociationConnector Association="phsModel.TemplateTemplateField" />
+        <EntityTypeShape EntityType="phsModel.ReferenceRange" Width="1.5" PointX="12.625" PointY="1" />
+        <EntityTypeShape EntityType="phsModel.StandardReference" Width="1.5" PointX="10.375" PointY="1.375" />
+        <AssociationConnector Association="phsModel.FK_reference_range_standard_reference" />
+        <AssociationConnector Association="phsModel.FK_reference_range_standard_reference" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -62,6 +62,8 @@ namespace PHS.Repository.Context
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
         public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<StandardReference> StandardReferences { get; set; }
+        public virtual DbSet<ReferenceRange> ReferenceRanges { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
 

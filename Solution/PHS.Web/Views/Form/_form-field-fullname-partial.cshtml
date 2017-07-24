@@ -6,15 +6,15 @@
 <div class="input">
   <ul class="horizontal-list three-field-row full-name-row">
   <li>
-  <input  id="SubmitFields[@Model.DomId].FirstName" name="SubmitFields[@Model.DomId].FirstName" type="text" value="@Html.GetTempFormValue(Model, "FirstName")" class="shorter-field title" /><br />
+  <input  id="SubmitFields[@Model.DomId].FirstName" name="SubmitFields[@Model.DomId].FirstName" type="text" value="@Html.GetSubmittedTextValue(Model, "FirstName")" class="shorter-field title" /><br />
   <span class="sub-label">First Name</span>
   </li>
   <li>
-  <input  id="SubmitFields[@Model.DomId].Initials" name="SubmitFields[@Model.DomId].Initials" type="text" value="@Html.GetTempFormValue(Model, "Initials")" class="mini-field title" maxlength="3" /><br />
+  <input  id="SubmitFields[@Model.DomId].Initials" name="SubmitFields[@Model.DomId].Initials" type="text" value="@Html.GetSubmittedTextValue(Model, "Initials")" class="mini-field title" maxlength="3" /><br />
     <span class="sub-label">Initials</span>
   </li>
   <li>
-  <input  id="SubmitFields[@Model.DomId].LastName" name="SubmitFields[@Model.DomId].LastName" type="text" value="@Html.GetTempFormValue(Model, "LastName")" class="shorter-field title" /><br />
+  <input  id="SubmitFields[@Model.DomId].LastName" name="SubmitFields[@Model.DomId].LastName" type="text" value="@Html.GetSubmittedTextValue(Model, "LastName")" class="shorter-field title" /><br />
    <span class="sub-label">Last Name</span>
   </li>
   </ul>

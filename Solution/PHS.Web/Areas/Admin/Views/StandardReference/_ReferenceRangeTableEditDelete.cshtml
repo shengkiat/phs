@@ -1,0 +1,78 @@
+﻿@model PHS.DB.StandardReference 
+    
+@if (Model.ReferenceRanges != null && Model.ReferenceRanges.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Minimum Value
+                    </th>
+                    <th>
+                        Maximum Value
+                    </th>
+                    <th>
+                        Result
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ReferenceRanges)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.MinimumValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.MaximumValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Result)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                " ",
+                                "EditReferenceRange",
+                                "StandardReference",
+                                new { referenceRangeID = item.ReferenceRangeID,
+                                    standardreferenceID = item.StandardReferenceID},
+                                new
+                                {
+                                    @class = "glyphicon glyphicon-edit"
+                                })
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                " ",
+                                "DeleteReferenceRange",
+                                "StandardReference",
+                                new
+                                {
+                                    referenceRangeID = item.ReferenceRangeID,
+                                    standardreferenceID = item.StandardReferenceID
+                                },
+                                new
+                                {
+                                    @onclick = "return confirm('Are you sure you want to delete this User');",
+                                    @class = "glyphicon glyphicon-trash"
+                                })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

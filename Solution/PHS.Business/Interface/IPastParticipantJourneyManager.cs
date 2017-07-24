@@ -12,6 +12,5 @@ namespace PHS.Business.Interface
     public interface IPastParticipantJourneyManager : IDisposable
     {
         IList<ParticipantJourneyViewModel> GetAllParticipantJourneyByNric(string nric, out string message);
-        PatientEventViewModel GetPatientEvent(string nric, string eventId, out string message);
     }
 }

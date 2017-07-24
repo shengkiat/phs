@@ -1,0 +1,75 @@
+﻿@model IEnumerable<PHS.DB.StandardReference>
+
+@{
+    ViewBag.Title = "Standard Reference Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Standard Reference Management</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissable fade in" id="successMessage">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        @TempData["Message"]
+    </div>
+}
+<div style="color: red">@ViewBag.error</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "StandardReference", null, new { @class = "btn btn-primary" })
+</p>
+
+@if (Model != null && Model.Count() > 0)
+{
+    @Html.AntiForgeryToken()
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Title, "Details", new { id = item.StandardReferenceID })
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                " ",
+                                "Edit",
+                                "StandardReference",
+                                new { id = item.StandardReferenceID },
+                                new
+                                {
+                                    @class = "glyphicon glyphicon-edit"
+                                })
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                " ",
+                                "Delete",
+                                "StandardReference",
+                                new { id = item.StandardReferenceID },
+                                new
+                                {
+                                    @onclick = "return confirm('Are you sure you want to delete this User');",
+                                    @class = "glyphicon glyphicon-trash"
+                                })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

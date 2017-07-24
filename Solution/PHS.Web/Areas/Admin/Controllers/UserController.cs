@@ -37,7 +37,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     if (searchBy == "UserId")
                     {
-                        users = personManager.GetPersonsByUserID(searchString, out message);
+                        users = personManager.GetPersonsByUserName(searchString, out message);
                     }
                     else
                     {
@@ -61,9 +61,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var getPerson = new PersonManager())
+            using (var personManager = new PersonManager())
             {
-                Person person = getPerson.GetPersonByPersonSid(userid, out message);
+                Person person = personManager.GetPersonByPersonSid(userid, out message);
                 if (person == null)
                 {
                     SetViewBagError(message);
@@ -72,10 +72,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     person.Password = string.Empty;
                 }
-
-                SetBackURL("Index");
                 return View(person);
-            };
+            }
         }
 
         [HttpGet]
@@ -106,8 +104,6 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var personManager = new PersonManager())
             {
-                //TODO remove hardcode
-                //person.Password = "12345";
                 string tempPassword = PasswordManager.GeneratePassword();
                 person.Password = tempPassword;
 
@@ -146,9 +142,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     user.Password = string.Empty;
                 }
-                //SetBackURL("Index");
                 return View(user);
-            };
+            }
         }
 
         [HttpPost]
@@ -201,79 +196,104 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Action(string SubmitBtn, string[] selectedUsers)
+        public ActionResult Activate(String[] selectedusers, DateTime startDate, DateTime endDate)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            if(selectedUsers == null || selectedUsers.Length == 0)
+            if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
                 return RedirectToAction("Index");
             }
 
             string message = string.Empty;
-            if (SubmitBtn == "Reset Password")
+            using (var personManager = new PersonManager())
             {
 
-                string tempPW = PasswordManager.GeneratePassword();
-
-                using (var personManager = new PersonManager())
+                foreach (var username in selectedusers)
                 {
-
-                    foreach (var username in selectedUsers)
+                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    user.IsActive = true;
+                    user.EffectiveStartDate = startDate;
+                    user.EffectiveEndDate = endDate;
+                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
                     {
-                        var user = personManager.GetPersonByUserName(username.ToString(), out message);
-                        string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
-                        user.Password = newPassHash;
-                        user.UsingTempPW = true;
-                        if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
-                        {
-                            SetViewBagError(message);
-                        }
+                        SetViewBagError(message);
                     }
                 }
-
-                SetTempDataMessage("Password has been reset to " + tempPW);
             }
-            else if(SubmitBtn == "Activate")
+
+            SetTempDataMessage("Users are set Active!");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Inactivate(String[] selectedusers)
+        {
+            if (!IsUserAuthenticated())
             {
-                using (var personManager = new PersonManager())
-                {
-
-                    foreach (var username in selectedUsers)
-                    {
-                        var user = personManager.GetPersonByUserName(username.ToString(), out message);
-                        user.IsActive = true;
-                        if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
-                        {
-                            SetViewBagError(message);
-                        }
-                    }
-                }
-
-                SetTempDataMessage("Users are set Active!");
+                return RedirectToLogin();
             }
-            else if (SubmitBtn == "Inactivate")
+
+            if (selectedusers == null || selectedusers.Length == 0)
             {
-                using (var personManager = new PersonManager())
-                {
+                SetTempDataMessage("No Selection made!");
+                return RedirectToAction("Index");
+            }
+            string message = string.Empty;
+            using (var personManager = new PersonManager())
+            {
 
-                    foreach (var username in selectedUsers)
+                foreach (var username in selectedusers)
+                {
+                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    user.IsActive = false;
+                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
                     {
-                        var user = personManager.GetPersonByUserName(username.ToString(), out message);
-                        user.IsActive = false;
-                        if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
-                        {
-                            SetViewBagError(message);
-                        }
+                        SetViewBagError(message);
                     }
                 }
-
-                SetTempDataMessage("Users are set Inactive!");
             }
+
+            SetTempDataMessage("Users are set Inactive!");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(String[] selectedusers)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            if (selectedusers == null || selectedusers.Length == 0)
+            {
+                SetTempDataMessage("No Selection made!");
+                return RedirectToAction("Index");
+            }
+
+            string message = string.Empty;
+            string tempPW = PasswordManager.GeneratePassword();
+
+            using (var personManager = new PersonManager())
+            {
+                foreach (var username in selectedusers)
+                {
+                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
+                    user.Password = newPassHash;
+                    user.UsingTempPW = true;
+                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
+                    {
+                        SetViewBagError(message);
+                    }
+                }
+            }
+            SetTempDataMessage("Password has been reset to " + tempPW);
             return RedirectToAction("Index");
         }
     }
