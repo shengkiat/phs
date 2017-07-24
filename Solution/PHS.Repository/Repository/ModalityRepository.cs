@@ -1,6 +1,7 @@
 ﻿using PHS.DB;
 using PHS.Repository.Interface;
 using PHS.Repository.Repository.Core;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -21,5 +22,6 @@ namespace PHS.Repository.Repository
         {
             return dbContext.Set<Modality>().Where(u => u.ModalityID == id && u.IsActive == true).Include(x => x.Forms).FirstOrDefault();
         }
+
     }
 }
