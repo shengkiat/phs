@@ -978,6 +978,7 @@ namespace PHS.Business.Implementation.Tests
             ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1, 1);
             Assert.IsNotNull(journeyModalityResult);
             Assert.AreEqual(templateViewModel.Entries.FirstOrDefault().EntryId, journeyModalityResult.EntryId.ToString());
+            Assert.AreEqual(1, journeyModalityResult.Template.TemplateID);
         }
 
         [TestMethod()]

@@ -22,7 +22,7 @@ namespace PHS.Repository.Repository
             return Find(p => p.PHSEventID == phsEventId && p.FormID == formId && p.ModalityID == modalityId && p.Participant.Nric.Equals(nric)).FirstOrDefault();
         }
 
-        public void UpdateParticipantJourneyModalityEntryId(ParticipantJourneyModality participantJourneyModality, Guid entryId)
+        public void UpdateParticipantJourneyModality(ParticipantJourneyModality participantJourneyModality, int templateId, Guid entryId)
         {
             if (participantJourneyModality == null)
             {
@@ -31,6 +31,7 @@ namespace PHS.Repository.Repository
 
             dbContext.Entry(participantJourneyModality).State = EntityState.Modified;
             participantJourneyModality.EntryId = entryId;
+            participantJourneyModality.TemplateID = templateId;
         }
 
         public IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByParticipantEvent(string nric, int phsEventId)

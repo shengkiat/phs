@@ -11,7 +11,7 @@ namespace PHS.Repository.Interface
     public interface IParticipantJourneyModalityRepository : IRepository<ParticipantJourneyModality>
     {
         ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId, int modalityId);
-        void UpdateParticipantJourneyModalityEntryId(ParticipantJourneyModality participantJourneyModality, Guid entryId);
+        void UpdateParticipantJourneyModality(ParticipantJourneyModality participantJourneyModality, int templateId, Guid entryId);
 
         IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByParticipantEvent(string nric, int phsEventId);
     }

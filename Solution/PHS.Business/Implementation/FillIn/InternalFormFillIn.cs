@@ -108,7 +108,7 @@ namespace PHS.Business.Implementation.FillIn
             {
                 if (participantJourneyModality.EntryId == Guid.Empty)
                 {
-                    UnitOfWork.ParticipantJourneyModalities.UpdateParticipantJourneyModalityEntryId(participantJourneyModality, entryId);
+                    UnitOfWork.ParticipantJourneyModalities.UpdateParticipantJourneyModality(participantJourneyModality, templateView.TemplateID.Value, entryId);
                 }
             }
 
