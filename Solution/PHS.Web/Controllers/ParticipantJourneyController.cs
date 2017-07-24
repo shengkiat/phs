@@ -194,10 +194,6 @@ namespace PHS.Web.Controllers
                     model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                     model.Embed = embed;
 
-                    if (model.Title.Equals("Mega Sorting Station"))
-                    {
-                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", TempData.Peek("ParticipantJourneyModalityCircleViewModel"));
-                    }
 
                     ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
 
@@ -206,8 +202,20 @@ namespace PHS.Web.Controllers
                         string message = string.Empty;
                         ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, out message);
 
+                        if (model.Title.Equals("Mega Sorting Station"))
+                        {
+                            List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm); 
+
+                            return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
+                        }
+
+
                         if (participantJourneyModality != null)
                         {
+                            // for mega sorting station
+   
+
+                            // to load non mega sorting station 
                             foreach (var field in model.Fields)
                             {
                                 field.EntryId = participantJourneyModality.EntryId.ToString();

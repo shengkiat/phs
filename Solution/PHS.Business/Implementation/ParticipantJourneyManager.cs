@@ -289,5 +289,40 @@ namespace PHS.Business.Implementation
             }
             
         }
+
+
+        public List<ParticipantJourneyModalityCircleViewModel> GetParticipantMegaSortingStation(ParticipantJourneySearchViewModel psm)
+        {
+            using(var unitOfWork = CreateUnitOfWork())
+            {
+
+                PHSEvent phsEvent = unitOfWork.Events.Get(psm.PHSEventId);
+                Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric); 
+
+                ParticipantJourneyViewModel pjvm = new ParticipantJourneyViewModel(participant, psm.PHSEventId); 
+
+                List<ParticipantJourneyModalityCircleViewModel> pjmCircles = new List<ParticipantJourneyModalityCircleViewModel>();
+
+                foreach(Modality modality in phsEvent.Modalities)
+                {
+                    foreach (ParticipantJourneyModality pjm in participant.ParticipantJourneyModalities)
+                    {
+                        if (modality.ModalityID == pjm.ModalityID && pjm.PHSEvent.Equals(phsEvent))
+                        {
+                            modality.IsActive = true; 
+                        }
+                    }
+                    pjmCircles.Add(copyToPJMCVM(pjvm, modality));
+                }
+                return pjmCircles;
+            }           
+        }
+
+        private ParticipantJourneyModalityCircleViewModel copyToPJMCVM (ParticipantJourneyViewModel pjvm, Modality modality)
+        {
+            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality); 
+
+            return pjmcvm; 
+        }
     }
 }

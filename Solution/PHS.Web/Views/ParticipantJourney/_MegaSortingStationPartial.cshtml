@@ -1,8 +1,10 @@
-﻿@model ICollection<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
+﻿@model List<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
 
 @{
     ViewBag.Title = "Mega Sorting Station - Form A";
 }
+
+<h1>@Model.Count</h1>
 
 <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"> </script>
 
