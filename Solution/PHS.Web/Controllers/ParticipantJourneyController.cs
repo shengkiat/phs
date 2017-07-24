@@ -202,7 +202,6 @@ namespace PHS.Web.Controllers
                     using (var participantJourneyManager = new ParticipantJourneyManager())
                     {
                         string message = string.Empty;
-                        ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, out message);
 
                         if ("MEG".Equals(model.InternalFormType))
                         {
@@ -211,6 +210,9 @@ namespace PHS.Web.Controllers
                             return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
                         }
 
+                        int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
+
+                        ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, selectedModalityId, out message);
 
                         if (participantJourneyModality != null)
                         {
@@ -240,28 +242,31 @@ namespace PHS.Web.Controllers
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
 
-            using (var formManager = new FormAccessManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                var template = formManager.FindTemplate(model.TemplateID.Value);
+                var template = participantJourneyManager.FindTemplate(model.TemplateID.Value);
 
                 var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
 
                 string nric = null;
                 string eventId = null;
-                string modalityId = null;
-                if(TempData.Peek("ParticipantJourneyFormViewModel") != null) { 
+                int modalityId = -1;
+
+                if(TempData.Peek("ParticipantJourneyFormViewModel") != null)
+                { 
                     ParticipantJourneyFormViewModel participantJourneyFormViewModel = (ParticipantJourneyFormViewModel)TempData.Peek("ParticipantJourneyFormViewModel");
-                    modalityId = participantJourneyFormViewModel.SelectedModalityId.ToString();
+                    modalityId = participantJourneyFormViewModel.SelectedModalityId;
                 }
 
-                if(TempData.Peek("ParticipantJourneySearchViewModel") != null)
+                ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+
+                if (psm != null)
                 {
-                    ParticipantJourneySearchViewModel participantJourneySearchViewModel = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
-                    eventId = participantJourneySearchViewModel.PHSEventId.ToString();
-                    nric = participantJourneySearchViewModel.Nric;
+                    eventId = psm.PHSEventId.ToString();
+                    nric = psm.Nric;
                 }
 
-                string result = formManager.FillIn(SubmitFields, model, formCollection, nric, eventId, modalityId);
+                string result = participantJourneyManager.InternalFillIn(psm, modalityId, SubmitFields, model, formCollection);
 
                 if (result.Equals("success"))
                 {

@@ -237,7 +237,7 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        public ParticipantJourneyModality RetrieveParticipantJourneyModality(ParticipantJourneySearchViewModel psm, int formID, out string message)
+        public ParticipantJourneyModality RetrieveParticipantJourneyModality(ParticipantJourneySearchViewModel psm, int formID, int modalityID, out string message)
         {
             message = string.Empty;
 
@@ -262,20 +262,20 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = CreateUnitOfWork())
                 {
-                    result = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formID);
+                    result = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formID, modalityID);
                 }
             }
 
             return result;
         }
 
-        public string InternalFillIn(ParticipantJourneySearchViewModel psm, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             var template = FindTemplate(model.TemplateID.Value);
 
             using (var unitOfWork = CreateUnitOfWork())
             {
-                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID))
+                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID, modalityId))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
@@ -385,7 +385,7 @@ namespace PHS.Business.Implementation
 
                         foreach (Form form in modality.Forms)
                         {
-                            ParticipantJourneyModality toRemovePJM = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(participant.Nric, phsEvent.PHSEventID, form.FormID);
+                            ParticipantJourneyModality toRemovePJM = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(participant.Nric, phsEvent.PHSEventID, form.FormID, modality.ModalityID);
                             //toRemovePJM.Modality = null;
                             //toRemovePJM.Form = null;
                             //toRemovePJM.PHSEvent = null;

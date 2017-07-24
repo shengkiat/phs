@@ -62,10 +62,9 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection
-            , String nric, String eventId, String modalityId)
+        public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            /*
+            
             var template = FindTemplate(model.TemplateID.Value);
 
             using (var unitOfWork = CreateUnitOfWork())
@@ -74,8 +73,9 @@ namespace PHS.Business.Implementation
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
-            }*/
+            }
 
+            /*
             string result = null;
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
@@ -220,7 +220,7 @@ namespace PHS.Business.Implementation
             }
 
 
-            return result;
+            return result;*/
         }
 
         private string getStringValue(IDictionary<string, object> values, string key)

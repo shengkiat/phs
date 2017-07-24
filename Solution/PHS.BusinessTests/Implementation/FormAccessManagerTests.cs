@@ -74,7 +74,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -117,7 +117,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -200,7 +200,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -241,7 +241,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -298,7 +298,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -334,7 +334,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             TemplateViewModel executeResult = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -371,7 +371,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
@@ -420,7 +420,7 @@ namespace PHS.BusinessTests.Implementation
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection, null, null, null);
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();

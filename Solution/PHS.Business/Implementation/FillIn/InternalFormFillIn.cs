@@ -18,11 +18,13 @@ namespace PHS.Business.Implementation.FillIn
     {
         private readonly ParticipantJourneySearchViewModel psm;
         private int formId;
+        private int modalityId;
 
-        public InternalFormFillIn(IUnitOfWork unitOfWork, ParticipantJourneySearchViewModel psm, int formId) : base(unitOfWork)
+        public InternalFormFillIn(IUnitOfWork unitOfWork, ParticipantJourneySearchViewModel psm, int formId, int modalityId) : base(unitOfWork)
         {
             this.psm = psm;
             this.formId = formId;
+            this.modalityId = modalityId;
         }
 
         protected override void HandleTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId)
@@ -118,7 +120,7 @@ namespace PHS.Business.Implementation.FillIn
 
         private ParticipantJourneyModality FindParticipantJourneyModality()
         {
-            return UnitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formId);
+            return UnitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formId, modalityId);
         }
     }
 }

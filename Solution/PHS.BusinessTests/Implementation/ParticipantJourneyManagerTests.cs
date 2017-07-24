@@ -715,7 +715,7 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+            _target.RetrieveParticipantJourneyModality(psm, formId, 1, out message);
 
             Assert.AreEqual("Invalid Nric", message);
         }
@@ -731,7 +731,7 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, 1, out message);
 
             Assert.IsNull(result);
         }
@@ -797,7 +797,7 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, out message);
+            ParticipantJourneyModality result = _target.RetrieveParticipantJourneyModality(psm, formId, 1, out message);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(entryId, result.EntryId);
@@ -819,7 +819,7 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            string result = _target.InternalFillIn(psm, 1, submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             Assert.Fail("Expecting exception");
@@ -888,14 +888,14 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            string result = _target.InternalFillIn(psm, 1, submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(1, templateViewModel.Entries.Count);
             Assert.AreEqual("HelloTest", templateViewModel.Entries.FirstOrDefault().Value);
 
-            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1);
+            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1, 1);
             Assert.IsNotNull(journeyModalityResult);
             Assert.AreEqual(templateViewModel.Entries.FirstOrDefault().EntryId, journeyModalityResult.EntryId.ToString());
         }
@@ -962,19 +962,19 @@ namespace PHS.Business.Implementation.Tests
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
 
-            _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            _target.InternalFillIn(psm, 1, submissionFields, templateViewModel, submissionCollection);
 
             submissionCollection = new FormCollection();
             submissionCollection.Add("SubmitFields[1].TextBox", "Hello Test 2");
 
-            string result = _target.InternalFillIn(psm, submissionFields, templateViewModel, submissionCollection);
+            string result = _target.InternalFillIn(psm, 1, submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(result, "success");
 
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(1, templateViewModel.Entries.Count);
             Assert.AreEqual("Hello Test 2", templateViewModel.Entries.FirstOrDefault().Value);
 
-            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1);
+            ParticipantJourneyModality journeyModalityResult = _unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality("S8250369B", 1, 1, 1);
             Assert.IsNotNull(journeyModalityResult);
             Assert.AreEqual(templateViewModel.Entries.FirstOrDefault().EntryId, journeyModalityResult.EntryId.ToString());
         }

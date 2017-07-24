@@ -17,9 +17,9 @@ namespace PHS.Repository.Repository
             
         }
 
-        public ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId)
+        public ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId, int modalityId)
         {
-            return Find(p => p.PHSEventID == phsEventId && p.FormID == formId && p.Participant.Nric.Equals(nric)).FirstOrDefault();
+            return Find(p => p.PHSEventID == phsEventId && p.FormID == formId && p.ModalityID == modalityId && p.Participant.Nric.Equals(nric)).FirstOrDefault();
         }
 
         public void UpdateParticipantJourneyModalityEntryId(ParticipantJourneyModality participantJourneyModality, Guid entryId)
