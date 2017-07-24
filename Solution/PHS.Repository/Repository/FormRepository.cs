@@ -83,7 +83,8 @@ namespace PHS.Repository.Repository
                     ImageBase64 = fieldView.ImageBase64,
                     MatrixRow = fieldView.MatrixRow,
                     MatrixColumn = fieldView.MatrixColumn,
-                    PreRegistrationFieldName = fieldView.PreRegistrationFieldName
+                    PreRegistrationFieldName = fieldView.PreRegistrationFieldName,
+                    RegistrationFieldName = fieldView.RegistrationFieldName
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -123,6 +124,7 @@ namespace PHS.Repository.Repository
                     fField.MatrixColumn = fieldView.MatrixColumn;
                     fField.MatrixRow = fieldView.MatrixRow;
                     fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
+                    fField.RegistrationFieldName = fieldView.RegistrationFieldName;
                 }
 
               //  this.SaveChanges();
@@ -138,6 +140,7 @@ namespace PHS.Repository.Repository
                 Slug = formViewModel.Slug,
                 IsPublic = formViewModel.IsPublic,
                 PublicFormType = formViewModel.PublicFormType,
+                InternalFormType = formViewModel.InternalFormType,
                 DateAdded = DateTime.UtcNow,
                 IsActive = true
             };
@@ -159,6 +162,7 @@ namespace PHS.Repository.Repository
 
             dbContext.Entry(form1).State = EntityState.Modified;
             form1.Title = formViewModel.Title;
+            form1.InternalFormType = formViewModel.InternalFormType;
             form1.IsPublic = formViewModel.IsPublic;
             form1.Slug = formViewModel.Slug;
             form1.PublicFormType = form1.PublicFormType;
@@ -233,8 +237,8 @@ namespace PHS.Repository.Repository
                     ImageBase64 = templateField1.ImageBase64,
                     MatrixRow = templateField1.MatrixRow,
                     MatrixColumn = templateField1.MatrixColumn,
-                    PreRegistrationFieldName = templateField1.PreRegistrationFieldName
-                    
+                    PreRegistrationFieldName = templateField1.PreRegistrationFieldName,
+                    RegistrationFieldName = templateField1.RegistrationFieldName
                 };
 
                 template.TemplateFields.Add(fField);

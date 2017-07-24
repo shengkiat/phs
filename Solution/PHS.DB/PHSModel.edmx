@@ -36,6 +36,7 @@
           <Property Name="Slug" Type="nvarchar" MaxLength="50" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="PublicFormType" Type="nvarchar" MaxLength="50" />
+          <Property Name="InternalFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -79,7 +80,8 @@
           <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="HomeNumber" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Language" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar(max)" />
@@ -151,7 +153,8 @@
           <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Salutation" Type="nvarchar" MaxLength="4" Nullable="false" />
-          <Property Name="ContactNumber" Type="nvarchar(max)" />
+          <Property Name="HomeNumber" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Citizenship" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Race" Type="nvarchar(max)" Nullable="false" />
@@ -229,6 +232,7 @@
           <Property Name="MatrixRow" Type="varchar(max)" />
           <Property Name="MatrixColumn" Type="varchar(max)" />
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
+          <Property Name="RegistrationFieldName" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -528,6 +532,8 @@
           <EntitySet Name="People" EntityType="phsModel.Person" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
           <EntitySet Name="PreRegistrations" EntityType="phsModel.PreRegistration" />
+          <EntitySet Name="ReferenceRanges" EntityType="phsModel.ReferenceRange" />
+          <EntitySet Name="StandardReferences" EntityType="phsModel.StandardReference" />
           <EntitySet Name="Templates" EntityType="phsModel.Template" />
           <EntitySet Name="TemplateFields" EntityType="phsModel.TemplateField" />
           <EntitySet Name="TemplateFieldValues" EntityType="phsModel.TemplateFieldValue" />
@@ -551,6 +557,10 @@
             <End Role="PHSEvent" EntitySet="PHSEvents" />
             <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModalities" />
           </AssociationSet>
+          <AssociationSet Name="FK_reference_range_standard_reference" Association="phsModel.FK_reference_range_standard_reference">
+            <End Role="StandardReference" EntitySet="StandardReferences" />
+            <End Role="ReferenceRange" EntitySet="ReferenceRanges" />
+          </AssociationSet>
           <AssociationSet Name="FK_template_field_values_template_fields" Association="phsModel.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="TemplateFieldValue" EntitySet="TemplateFieldValues" />
@@ -570,12 +580,6 @@
           <AssociationSet Name="TemplateTemplateField" Association="phsModel.TemplateTemplateField">
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
-          </AssociationSet>
-          <EntitySet Name="ReferenceRanges" EntityType="phsModel.ReferenceRange" />
-          <EntitySet Name="StandardReferences" EntityType="phsModel.StandardReference" />
-          <AssociationSet Name="FK_reference_range_standard_reference" Association="phsModel.FK_reference_range_standard_reference">
-            <End Role="StandardReference" EntitySet="StandardReferences" />
-            <End Role="ReferenceRange" EntitySet="ReferenceRanges" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AuditLog">
@@ -601,6 +605,7 @@
           <Property Name="Slug" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="PublicFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InternalFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_form" FromRole="Form" ToRole="ParticipantJourneyModality" />
@@ -642,7 +647,8 @@
           <Property Name="ParticipantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nric" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HomeNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
           <Property Name="Language" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -715,7 +721,8 @@
           <Property Name="EntryId" Type="Guid" Nullable="false" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Salutation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HomeNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
           <Property Name="Citizenship" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Race" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -724,6 +731,26 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="ReferenceRange">
+          <Key>
+            <PropertyRef Name="ReferenceRangeID" />
+          </Key>
+          <Property Name="ReferenceRangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinimumValue" Type="Double" Nullable="false" />
+          <Property Name="MaximumValue" Type="Double" Nullable="false" />
+          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
+        </EntityType>
+        <EntityType Name="StandardReference">
+          <Key>
+            <PropertyRef Name="StandardReferenceID" />
+          </Key>
+          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -777,6 +804,7 @@
           <Property Name="MatrixRow" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
         </EntityType>
@@ -851,6 +879,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_reference_range_standard_reference">
+          <End Type="phsModel.StandardReference" Role="StandardReference" Multiplicity="1" />
+          <End Type="phsModel.ReferenceRange" Role="ReferenceRange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardReference">
+              <PropertyRef Name="StandardReferenceID" />
+            </Principal>
+            <Dependent Role="ReferenceRange">
+              <PropertyRef Name="StandardReferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_template_field_values_template_fields">
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -881,38 +921,6 @@
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
         </Association>
-        <EntityType Name="ReferenceRange">
-          <Key>
-            <PropertyRef Name="ReferenceRangeID" />
-          </Key>
-          <Property Name="ReferenceRangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MinimumValue" Type="Double" Nullable="false" />
-          <Property Name="MaximumValue" Type="Double" Nullable="false" />
-          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
-        </EntityType>
-        <EntityType Name="StandardReference">
-          <Key>
-            <PropertyRef Name="StandardReferenceID" />
-          </Key>
-          <Property Name="StandardReferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
-        </EntityType>
-        <Association Name="FK_reference_range_standard_reference">
-          <End Type="phsModel.StandardReference" Role="StandardReference" Multiplicity="1" />
-          <End Type="phsModel.ReferenceRange" Role="ReferenceRange" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StandardReference">
-              <PropertyRef Name="StandardReferenceID" />
-            </Principal>
-            <Dependent Role="ReferenceRange">
-              <PropertyRef Name="StandardReferenceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -939,6 +947,7 @@
               <MappingFragment StoreEntitySet="Form">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="InternalFormType" ColumnName="InternalFormType" />
                 <ScalarProperty Name="PublicFormType" ColumnName="PublicFormType" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="Slug" ColumnName="Slug" />
@@ -980,7 +989,8 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Language" ColumnName="Language" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="HomeNumber" ColumnName="HomeNumber" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Nric" ColumnName="Nric" />
                 <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
@@ -1048,12 +1058,33 @@
                 <ScalarProperty Name="Race" ColumnName="Race" />
                 <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="HomeNumber" ColumnName="HomeNumber" />
                 <ScalarProperty Name="Salutation" ColumnName="Salutation" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="EntryId" ColumnName="EntryId" />
                 <ScalarProperty Name="Nric" ColumnName="Nric" />
                 <ScalarProperty Name="PreRegistrationID" ColumnName="PreRegistrationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferenceRanges">
+            <EntityTypeMapping TypeName="phsModel.ReferenceRange">
+              <MappingFragment StoreEntitySet="ReferenceRange">
+                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ReferenceRangeID" ColumnName="ReferenceRangeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardReferences">
+            <EntityTypeMapping TypeName="phsModel.StandardReference">
+              <MappingFragment StoreEntitySet="StandardReference">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1077,6 +1108,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
+                <ScalarProperty Name="RegistrationFieldName" ColumnName="RegistrationFieldName" />
                 <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />
                 <ScalarProperty Name="MatrixRow" ColumnName="MatrixRow" />
@@ -1153,26 +1185,6 @@
               <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="ReferenceRanges">
-            <EntityTypeMapping TypeName="phsModel.ReferenceRange">
-              <MappingFragment StoreEntitySet="ReferenceRange">
-                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
-                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ReferenceRangeID" ColumnName="ReferenceRangeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StandardReferences">
-            <EntityTypeMapping TypeName="phsModel.StandardReference">
-              <MappingFragment StoreEntitySet="StandardReference">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

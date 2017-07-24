@@ -252,7 +252,8 @@ namespace PHS.Business.Implementation
                                     ImageBase64 = collection.FormFieldValue(domId, "ImageBase64"),
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
-                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName")
+                                    PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
+                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName")
                                 };
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
@@ -375,6 +376,8 @@ namespace PHS.Business.Implementation
 
                 else
                 {
+                    formViewModel.InternalFormType = null;
+
                     Form form = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
                     if (form != null)
                     {
@@ -412,6 +415,8 @@ namespace PHS.Business.Implementation
 
                     else
                     {
+                        formViewModel.InternalFormType = null;
+
                         Form form1 = unitOfWork.FormRepository.GetForm(formViewModel.Slug);
                         if (form1 != null && form1.FormID != formViewModel.FormID)
                         {

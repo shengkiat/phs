@@ -20,9 +20,11 @@
         if ($("#IsPublic").val() == 'true') {
             $("#PublicFormType").show();
             $("#Slug").show();
+            $("#InternalFormType").hide();
         } else {
             $("#PublicFormType").hide();
             $("#Slug").hide();
+            $("#InternalFormType").show();
         }
 
         $("#IsPublic").on("change", function () {
@@ -30,9 +32,11 @@
             if ($(this).val() == 'true') {
                 $("#PublicFormType").show();
                 $("#Slug").show();
+                $("#InternalFormType").hide();
             } else {
                 $("#PublicFormType").hide();
                 $("#Slug").hide();
+                $("#InternalFormType").show();
             }
 
         });
@@ -72,6 +76,23 @@
 
                     @Html.DropDownListFor(m => m.IsPublic, listItems, string.Empty)
                     @Html.ValidationMessageFor(model => model.IsPublic, "", new { @class = "text-danger" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InternalFormType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+
+                    var internallistItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "REGISTRATION", Value = "REG"},
+                            new SelectListItem {Text = "MEGA SORTING STATION", Value = "MEG"}
+                        };
+
+                    @Html.DropDownListFor(m => m.InternalFormType, internallistItems1, string.Empty)
+                    @Html.ValidationMessageFor(model => model.InternalFormType, "", new { @class = "text-danger" })
                 }
             </div>
         </div>

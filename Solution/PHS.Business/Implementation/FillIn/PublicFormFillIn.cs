@@ -41,7 +41,8 @@ namespace PHS.Business.Implementation.FillIn
                 preRegistration.CreatedDateTime = DateTime.Now;
 
                 preRegistration.Citizenship = getStringValue(values, PreRegistration_Field_Name_Citizenship);
-                preRegistration.ContactNumber = getStringValue(values, PreRegistration_Field_Name_ContactNumber);
+                preRegistration.HomeNumber = getStringValue(values, PreRegistration_Field_Name_HomeNumber);
+                preRegistration.MobileNumber = getStringValue(values, PreRegistration_Field_Name_MobileNumber);
                 preRegistration.DateOfBirth = getDateTimeValue(values, PreRegistration_Field_Name_DateOfBirth);
                 preRegistration.Nric = getStringValue(values, PreRegistration_Field_Name_Nric);
                 preRegistration.PreferedTime = getStringValue(values, PreRegistration_Field_Name_PreferedTime);
@@ -56,26 +57,6 @@ namespace PHS.Business.Implementation.FillIn
             }
         }
 
-        private string getStringValue(IDictionary<string, object> values, string key)
-        {
-            string result = string.Empty;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = values[key].ToString();
-            }
-
-            return result;
-        }
-
-        private Nullable<System.DateTime> getDateTimeValue(IDictionary<string, object> values, string key)
-        {
-            Nullable<System.DateTime> result = null;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = Convert.ToDateTime(values[key].ToString());
-            }
-
-            return result;
-        }
+        
     }
 }

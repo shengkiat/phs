@@ -413,7 +413,7 @@ namespace PHS.Business.Implementation.Tests
                 Nric = "S8250369B",
                 Address = "Test Add",
                 Citizenship = "Singaporean",
-                ContactNumber = "12345678",
+                HomeNumber = "12345678",
                 FullName = "Tester",
                 Gender = "Male",
                 Salutation = "Mr",
@@ -429,7 +429,7 @@ namespace PHS.Business.Implementation.Tests
                 Nric = "S8250369B",
                 Address = "Test Add",
                 Citizenship = "Singaporean",
-                ContactNumber = "12345678",
+                HomeNumber = "12345678",
                 FullName = "Tester",
                 Gender = "Female",
                 Salutation = "Mr",
@@ -506,7 +506,7 @@ namespace PHS.Business.Implementation.Tests
             {
                 Nric = "S8250369B",
                 DateOfBirth = DateTime.Now,
-                ContactNumber = "88776655"
+                HomeNumber = "88776655"
             };
 
             Modality modality = new Modality()
@@ -546,7 +546,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult);
             Assert.IsNotNull(postResult.Event);
 
-            Assert.AreEqual("88776655", postResult.ContactNumber);
+            Assert.AreEqual("88776655", postResult.HomeNumber);
 
             var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
             Assert.IsNotNull(pjmResult);
@@ -585,7 +585,7 @@ namespace PHS.Business.Implementation.Tests
             {
                 Nric = "S8250369B",
                 DateOfBirth = DateTime.Now,
-                ContactNumber = "88776655"
+                HomeNumber = "88776655"
             };
 
             PreRegistration preRegistration = new PreRegistration()
@@ -593,7 +593,7 @@ namespace PHS.Business.Implementation.Tests
                 Nric = "S8250369B",
                 Address = "Test Add",
                 Citizenship = "Singaporean",
-                ContactNumber = "12345678",
+                HomeNumber = "12345678",
                 FullName = "Tester",
                 Gender = "Male",
                 Salutation = "Mr",
@@ -643,7 +643,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(postResult);
             Assert.IsNotNull(postResult.Event);
 
-            Assert.AreEqual("12345678", postResult.ContactNumber);
+            Assert.AreEqual("12345678", postResult.HomeNumber);
 
             var pjmResult = _unitOfWork.ParticipantJourneyModalities.Find(u => u.PHSEventID == postResult.Event.PHSEventID).FirstOrDefault();
             Assert.IsNotNull(pjmResult);
@@ -759,7 +759,7 @@ namespace PHS.Business.Implementation.Tests
             {
                 Nric = "S8250369B",
                 DateOfBirth = DateTime.Now,
-                ContactNumber = "88776655"
+                HomeNumber = "88776655"
             };
 
             Modality modality = new Modality()
@@ -847,7 +847,7 @@ namespace PHS.Business.Implementation.Tests
             {
                 Nric = "S8250369B",
                 DateOfBirth = DateTime.Now,
-                ContactNumber = "88776655"
+                HomeNumber = "88776655"
             };
 
             Modality modality = new Modality()

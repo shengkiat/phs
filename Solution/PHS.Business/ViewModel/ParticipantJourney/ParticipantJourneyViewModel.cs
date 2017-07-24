@@ -18,7 +18,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             FullName = participant.FullName;
             Nric = participant.Nric;
             Language = participant.Language;
-            ContactNumber = participant.ContactNumber;
+            HomeNumber = participant.HomeNumber;
+            MobileNumber = participant.MobileNumber;
             Gender = participant.Gender;
 
             if (participant.DateOfBirth != null)
@@ -41,7 +42,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string FullName { get; }
         public int Age { get; }
         public string Language { get; }
-        public string ContactNumber { get; }
+        public string HomeNumber { get; }
+        public string MobileNumber { get; }
         public string Gender { get; }
 
         

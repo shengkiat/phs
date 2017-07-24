@@ -204,7 +204,7 @@ namespace PHS.Web.Controllers
                         string message = string.Empty;
                         ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, out message);
 
-                        if (model.Title.Equals("Mega Sorting Station"))
+                        if ("MEG".Equals(model.InternalFormType))
                         {
                             List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm); 
 

@@ -709,6 +709,11 @@
                 
                 $('#preregistrationfieldname').val(value);
                 break;
+            case "registrationfieldname":
+                var value = targetContainer.find('#registrationfieldname-prop-' + domId).val();
+
+                $('#registrationfieldname').val(value);
+                break;
             case "matrixrow":
                 // value is row
                 // set value to column
@@ -838,6 +843,7 @@
                     "Help Txt: " + $('#helptext-prop-' + domid).val() + "\n" +
                     "Order: " + $('#order-prop-' + domid).val() + "\n" +
                     "PreRegistration Field Name: " + $('#preregistrationfieldname-prop-' + domid).val() + "\n" +
+                    "Registration Field Name: " + $('#registrationfieldname-prop-' + domid).val() + "\n" +
                     "ImageBase64: " + $('#image-prop-' + domid).val() + "\n";
 
         return props;

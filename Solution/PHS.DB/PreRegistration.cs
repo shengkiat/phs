@@ -19,7 +19,8 @@ namespace PHS.DB
         public System.Guid EntryId { get; set; }
         public string FullName { get; set; }
         public string Salutation { get; set; }
-        public string ContactNumber { get; set; }
+        public string HomeNumber { get; set; }
+        public string MobileNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Citizenship { get; set; }
         public string Race { get; set; }

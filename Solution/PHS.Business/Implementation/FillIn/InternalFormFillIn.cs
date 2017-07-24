@@ -9,6 +9,9 @@ using PHS.DB.ViewModels.Form;
 using System.Web.Mvc;
 using PHS.Business.ViewModel.ParticipantJourney;
 
+using PHS.Business.Extensions;
+using static PHS.Common.Constants;
+
 namespace PHS.Business.Implementation.FillIn
 {
     class InternalFormFillIn : BaseFormFillIn
@@ -47,6 +50,47 @@ namespace PHS.Business.Implementation.FillIn
 
         protected override void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId)
         {
+            IDictionary<string, object> values = new Dictionary<string, object>();
+
+            foreach (var field in templateView.Fields)
+            {
+                var value = field.SubmittedValue(formCollection);
+
+                if (!string.IsNullOrEmpty(field.RegistrationFieldName))
+                {
+                    values.Add(field.RegistrationFieldName, value);
+                }
+            }
+
+            if ("REG".Equals(template.Form.InternalFormType))
+            {
+                //update participant
+                Participant participant = UnitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
+                if (participant != null)
+                {
+                    participant.FullName = getStringValue(values, Registration_Field_Name_FullName);
+                    participant.HomeNumber = getStringValue(values, Registration_Field_Name_HomeNumber);
+                    participant.MobileNumber = getStringValue(values, Registration_Field_Name_MobileNumber);
+                    participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
+                    participant.Language = getStringValue(values, Registration_Field_Name_Language);
+                    participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
+
+                    //Create ParticipantJourneyModality
+                    /*ParticipantJourneyModality newParticipantJourneyModality = new ParticipantJourneyModality()
+                    {
+                        ParticipantID = participant.ParticipantID,
+                        PHSEventID = psm.PHSEventId,
+                        FormID = templateView.FormID,
+                        ModalityID = modalityId,
+                        EntryId = entryId
+                    };*/
+
+                    //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
+
+                    //participant.ParticipantJourneyModalities.Add(newParticipantJourneyModality);
+                }
+            }
+
             ParticipantJourneyModality participantJourneyModality = FindParticipantJourneyModality();
             if (participantJourneyModality != null)
             {
