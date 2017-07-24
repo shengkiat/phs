@@ -57,26 +57,6 @@ namespace PHS.Business.Implementation.FillIn
             }
         }
 
-        private string getStringValue(IDictionary<string, object> values, string key)
-        {
-            string result = string.Empty;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = values[key].ToString();
-            }
-
-            return result;
-        }
-
-        private Nullable<System.DateTime> getDateTimeValue(IDictionary<string, object> values, string key)
-        {
-            Nullable<System.DateTime> result = null;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = Convert.ToDateTime(values[key].ToString());
-            }
-
-            return result;
-        }
+        
     }
 }

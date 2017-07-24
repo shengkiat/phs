@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Extensions;
+using PHS.Business.Implementation.FillIn;
 using PHS.Business.Interface;
 using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
@@ -64,6 +65,17 @@ namespace PHS.Business.Implementation
         public string FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection
             , String nric, String eventId, String modalityId)
         {
+            /*
+            var template = FindTemplate(model.TemplateID.Value);
+
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                using (var fillIn = new PublicFormFillIn(unitOfWork))
+                {
+                    return fillIn.FillIn(SubmitFields, template, formCollection);
+                }
+            }*/
+
             string result = null;
             IList<string> errors = Enumerable.Empty<string>().ToList();
             //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
