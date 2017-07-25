@@ -6,6 +6,7 @@ using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
+using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -282,17 +283,17 @@ namespace PHS.Business.Implementation
 
                 if (participantJourneyModality != null)
                 {
-                    var template = participantJourneyModality.TemplateID.HasValue ? FindTemplate(participantJourneyModality.TemplateID.Value) : unitOfWork.FormRepository.GetTemplate(formID);
+                    var template = participantJourneyModality.TemplateID.HasValue ? unitOfWork.FormRepository.GetTemplate(participantJourneyModality.TemplateID.Value) : FindLatestTemplate(formID, unitOfWork);
 
                     if (template != null)
                     {
                         model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                         model.Embed = embed;
-                    }
 
-                    foreach (var field in model.Fields)
-                    {
-                        field.EntryId = participantJourneyModality.EntryId.ToString();
+                        foreach (var field in model.Fields)
+                        {
+                            field.EntryId = participantJourneyModality.EntryId.ToString();
+                        }
                     }
                 }
 
@@ -304,6 +305,17 @@ namespace PHS.Business.Implementation
                 return model;
                 
             }
+        }
+
+        private Template FindLatestTemplate(int formId, IUnitOfWork unitOfWork)
+        {
+            Form form = unitOfWork.FormRepository.GetForm(formId);
+            if (form != null)
+            {
+                return form.Templates.Where(t => t.IsActive == true).OrderByDescending(f => f.Version).First();
+            }
+            return null;
+            
         }
 
         public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
