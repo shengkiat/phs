@@ -215,20 +215,13 @@ namespace PHS.Business.Implementation
                                 {
                                     foreach (var form in modality.Forms)
                                     {
-                                        int templateId = 0;
-                                            using (var formManager = new FormAccessManager())
-                                        {
-                                            var template = formManager.FindLatestTemplate(form.FormID);
-                                            templateId = template.TemplateID;
-                                        }
-
+                                       
                                         ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
                                         {
                                             ParticipantID = participant.ParticipantID,
                                             PHSEventID = phsEvent.PHSEventID,
                                             FormID = form.FormID,
-                                            ModalityID = modality.ModalityID,
-                                            TemplateID = templateId
+                                            ModalityID = modality.ModalityID
                                         };
 
                                         participant.ParticipantJourneyModalities.Add(participantJourneyModality);

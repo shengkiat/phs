@@ -24,10 +24,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             HomeNumber = participant.HomeNumber;
             MobileNumber = participant.MobileNumber;
             Gender = participant.Gender;
-            DateOfBirth = participant.DateOfBirth.Value.ToString("dd MMM yyyy"); 
 
             if (participant.DateOfBirth != null)
             {
+                DateOfBirth = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
                 int now = int.Parse(Event.StartDT.ToString("yyyy"));
                 int dob = int.Parse(participant.DateOfBirth.Value.ToString("yyyy"));
                 Age = (now - dob);
