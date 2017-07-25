@@ -884,14 +884,13 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void FindTemplateToDisplay_FindLatestVersion()
+        public void FindTemplateToDisplay_LatestVersion()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
             psm.Nric = "S8250369B";
             psm.PHSEventId = 1;
 
             int formId = 1;
-            Guid entryId = new Guid();
 
             PHSEvent phsEvent = new PHSEvent()
             {
@@ -968,6 +967,95 @@ namespace PHS.Business.Implementation.Tests
             var templateResult =  _target.FindTemplate(result.TemplateID.Value);
 
             Assert.AreEqual(2, templateResult.Version);
+        }
+
+        [TestMethod()]
+        public void FindTemplateToDisplay_OlderVersionAfterSubmitBefore()
+        {
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
+            psm.Nric = "S8250369B";
+            psm.PHSEventId = 1;
+
+            int formId = 1;
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(-199),
+                IsActive = false
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B"
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Form form = new Form
+            {
+                IsActive = true,
+                Title = "Test form"
+            };
+
+            Template templateOne = new Template()
+            {
+                Status = Constants.TemplateStatus.DRAFT.ToString(),
+                IsActive = true,
+                Version = 1,
+                DateAdded = DateTime.Now
+            };
+
+            Template templateTwo = new Template()
+            {
+                Status = Constants.TemplateStatus.DRAFT.ToString(),
+                IsActive = true,
+                Version = 2,
+                DateAdded = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            form.Templates.Add(templateOne);
+            form.Templates.Add(templateTwo);
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Complete();
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = psm.PHSEventId,
+                ModalityID = 1,
+                FormID = formId,
+                TemplateID = 1
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.FindTemplateToDisplay(psm, formId, 1, false, out message);
+
+            Assert.IsNotNull(result);
+
+            var templateResult = _target.FindTemplate(result.TemplateID.Value);
+
+            Assert.AreEqual(1, templateResult.Version);
         }
 
 
