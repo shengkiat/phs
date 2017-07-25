@@ -273,6 +273,39 @@ namespace PHS.Business.Implementation
             return result;
         }
 
+        public TemplateViewModel FindTemplateToDisplay(ParticipantJourneySearchViewModel psm, int formID, int selectedModalityId, bool embed, out string message)
+        {
+            TemplateViewModel model = null;
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                ParticipantJourneyModality participantJourneyModality = RetrieveParticipantJourneyModality(psm, formID, selectedModalityId, out message);
+
+                if (participantJourneyModality != null)
+                {
+                    var template = participantJourneyModality.TemplateID.HasValue ? FindTemplate(participantJourneyModality.TemplateID.Value) : unitOfWork.FormRepository.GetTemplate(formID);
+
+                    if (template != null)
+                    {
+                        model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                        model.Embed = embed;
+                    }
+
+                    foreach (var field in model.Fields)
+                    {
+                        field.EntryId = participantJourneyModality.EntryId.ToString();
+                    }
+                }
+
+                else
+                {
+                    throw new Exception("No participantJourneyModality found");
+                }
+
+                return model;
+                
+            }
+        }
+
         public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             var template = FindTemplate(model.TemplateID.Value);

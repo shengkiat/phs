@@ -1039,6 +1039,7 @@ GO
 
 GO
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 1, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 8, N'00000000-0000-0000-0000-000000000000')
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 3, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 6, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
 GO

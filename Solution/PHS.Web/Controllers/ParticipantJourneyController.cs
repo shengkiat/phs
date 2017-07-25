@@ -185,54 +185,35 @@ namespace PHS.Web.Controllers
 
         public ActionResult InternalFillIn(int id, bool embed = false)
         {
-            using (var formManager = new FormAccessManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                TemplateViewModel model = null;
+                ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
 
-                var template = formManager.FindLatestTemplate(id);
-
-                if (template != null)
+                if (psm == null)
                 {
-                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                    model.Embed = embed;
-
-
-                    ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
-
-                    using (var participantJourneyManager = new ParticipantJourneyManager())
-                    {
-                        string message = string.Empty;
-
-                        if ("MEG".Equals(model.InternalFormType))
-                        {
-                            List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm); 
-
-                            return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
-                        }
-
-                        int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
-
-                        ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, selectedModalityId, out message);
-
-                        if (participantJourneyModality != null)
-                        {
-                            // for mega sorting station
-   
-
-                            // to load non mega sorting station 
-                            foreach (var field in model.Fields)
-                            {
-                                field.EntryId = participantJourneyModality.EntryId.ToString();
-                            }
-                        }
-                        
-                    }
-
-                    return View("_FillInPartial", model);
+                    return Redirect("Index");
                 }
+
+                string message = string.Empty;
+                int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
+                var result = participantJourneyManager.FindTemplateToDisplay(psm, id, selectedModalityId, embed, out message);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return RedirectToError("invalid id");
+                }
+
                 else
                 {
-                    return RedirectToError("invalid id");
+                    if ("MEG".Equals(result.InternalFormType))
+                    {
+                        List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm);
+
+                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
+                    }
+
+                    return View("_FillInPartial", result);
                 }
             }
         }
