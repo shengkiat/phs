@@ -144,7 +144,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult RefreshViewParticipantJourneyForm(string selectedModalityId)
+        public ActionResult RefreshViewParticipantJourneyForm(int selectedModalityId)
         {
             ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
 
@@ -168,7 +168,7 @@ namespace PHS.Web.Controllers
                 else
                 {
                     TempData["SelectedModalityId"] = selectedModalityId;
-                    result.SelectedModalityId = Int32.Parse(selectedModalityId);
+                    result.SelectedModalityId = selectedModalityId;
                 }
 
                 return PartialView("_ViewParticipantJourneyFormPartial", result);
