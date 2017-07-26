@@ -19,7 +19,7 @@ using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
-    public class ParticipantJourneyManager : BaseFormManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
+    public class ParticipantJourneyManager : BaseParticipantJourneyManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
     {
         public IParticipantJourneyManager Create()
         {
@@ -307,6 +307,19 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public Template FindTemplate(int templateID)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                return FindTemplate(templateID, unitOfWork);
+            }
+        }
+
+        private Template FindTemplate(int templateID, IUnitOfWork unitOfWork)
+        {
+            return unitOfWork.FormRepository.GetTemplate(templateID);
+        }
+
         private Template FindLatestTemplate(int formId, IUnitOfWork unitOfWork)
         {
             Form form = unitOfWork.FormRepository.GetForm(formId);
@@ -315,15 +328,15 @@ namespace PHS.Business.Implementation
                 return form.Templates.Where(t => t.IsActive == true).OrderByDescending(f => f.Version).First();
             }
             return null;
-            
         }
+
 
         public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            var template = FindTemplate(model.TemplateID.Value);
-
             using (var unitOfWork = CreateUnitOfWork())
             {
+                var template = FindTemplate(model.TemplateID.Value, unitOfWork);
+
                 using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID, modalityId))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
@@ -338,46 +351,6 @@ namespace PHS.Business.Implementation
                 Util.CopyNonNullProperty(preRegistration, participant);
             }
             
-        }
-
-
-        public List<ParticipantJourneyModalityCircleViewModel> GetParticipantMegaSortingStation(ParticipantJourneySearchViewModel psm)
-        {
-            using(var unitOfWork = CreateUnitOfWork())
-            {
-
-                PHSEvent phsEvent = unitOfWork.Events.Get(psm.PHSEventId);
-                Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, phsEvent.PHSEventID);
-
-                IEnumerable<ParticipantJourneyModality> ptJourneyModalityItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByParticipantEvent(psm.Nric, phsEvent.PHSEventID);
-
-                ParticipantJourneyViewModel pjvm = new ParticipantJourneyViewModel(participant, psm.PHSEventId); 
-
-                List<ParticipantJourneyModalityCircleViewModel> pjmCircles = new List<ParticipantJourneyModalityCircleViewModel>();
-
-                foreach(Modality modality in phsEvent.Modalities)
-                {
-                    foreach (ParticipantJourneyModality pjm in ptJourneyModalityItems)
-                    {
-                        if (modality.ModalityID == pjm.Modality.ModalityID && pjm.PHSEvent.Equals(phsEvent))
-                        {
-                            modality.IsActive = true; 
-                        }
-                    }
-                    if (modality.Status != "Public")
-                    {
-                        pjmCircles.Add(copyToPJMCVM(pjvm, modality));
-                    }
-                }
-                return pjmCircles;
-            }           
-        }
-
-        private ParticipantJourneyModalityCircleViewModel copyToPJMCVM (ParticipantJourneyViewModel pjvm, Modality modality)
-        {
-            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality); 
-
-            return pjmcvm; 
         }
 
 

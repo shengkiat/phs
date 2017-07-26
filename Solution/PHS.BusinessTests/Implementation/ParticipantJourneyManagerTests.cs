@@ -966,6 +966,7 @@ namespace PHS.Business.Implementation.Tests
 
             var templateResult =  _target.FindTemplate(result.TemplateID.Value);
 
+            Assert.IsNotNull(templateResult);
             Assert.AreEqual(2, templateResult.Version);
         }
 
@@ -1055,6 +1056,7 @@ namespace PHS.Business.Implementation.Tests
 
             var templateResult = _target.FindTemplate(result.TemplateID.Value);
 
+            Assert.IsNotNull(templateResult);
             Assert.AreEqual(1, templateResult.Version);
         }
 
