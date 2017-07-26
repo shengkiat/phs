@@ -337,7 +337,7 @@ namespace PHS.Business.Implementation
             {
                 var template = FindTemplate(model.TemplateID.Value, unitOfWork);
 
-                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID, modalityId))
+                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, template.FormID, modalityId))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
