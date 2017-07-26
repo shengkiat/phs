@@ -324,7 +324,7 @@ namespace PHS.Business.Implementation
 
             using (var unitOfWork = CreateUnitOfWork())
             {
-                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID, modalityId))
+                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, template.FormID, modalityId))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
