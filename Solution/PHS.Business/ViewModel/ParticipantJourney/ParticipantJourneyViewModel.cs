@@ -17,9 +17,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
             FullName = participant.FullName;
             Nric = participant.Nric;
-            // address 
-            // spoken language 
-            // preferred language 
+            Address = participant.Address;
+            PostalCode = participant.PostalCode;
+            Race = participant.Race;
+            Citizenship = participant.Citizenship;        
             Language = participant.Language;
             HomeNumber = participant.HomeNumber;
             MobileNumber = participant.MobileNumber;
@@ -42,14 +43,15 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public Participant Participant { get; }
         public string EventId { get { return Event.PHSEventID.ToString(); } }
         public string Address { get; }
-
+        public string PostalCode { get;  }
+        public string Race { get; }
+        public string Citizenship { get; }
         public string Nric { get; }
         public string FullName { get; }
         public int Age { get; }
 
         public string DateOfBirth { get; }
-        public string PreferredLanguage { get; }
-        public string SpokenLanguage { get; }
+
         public string Language { get; }
         public string HomeNumber { get; }
         public string MobileNumber { get; }

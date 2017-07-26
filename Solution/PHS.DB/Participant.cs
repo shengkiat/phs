@@ -29,6 +29,10 @@ namespace PHS.DB
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Language { get; set; }
         public string Gender { get; set; }
+        public string Address { get; set; }
+        public string PostalCode { get; set; }
+        public string Race { get; set; }
+        public string Citizenship { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
