@@ -168,6 +168,10 @@ CREATE TABLE [dbo].[Participant](
 	[DateOfBirth] [datetime] NULL,
 	[Language] [nvarchar](max) NULL,
 	[Gender] [nvarchar](max) NULL,
+	[Address] [nvarchar](max) NULL,
+	[PostalCode] [nvarchar](max) NULL,
+	[Race] [nvarchar](max) NULL,
+	[Citizenship] [nvarchar](max) NULL,
  CONSTRAINT [PK_Participant] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantID] ASC
@@ -504,7 +508,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Participant] ON 
 
 GO
-INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'81274563', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender], [Address], [PostalCode], [Race], [Citizenship]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'00000000', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English, Mandarin', N'Male', N'Blk 363 Clementi Ave 2 #04-425', N'120363', N'Chinese', N'Singapore Citizen')
 GO
 INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'69639756', N'81274563', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 

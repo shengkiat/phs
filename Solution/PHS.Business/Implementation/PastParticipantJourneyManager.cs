@@ -15,7 +15,7 @@ using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
-    public class PastParticipantJourneyManager : BaseManager, IPastParticipantJourneyManager, IManagerFactoryBase<IPastParticipantJourneyManager>
+    public class PastParticipantJourneyManager : BaseParticipantJourneyManager, IPastParticipantJourneyManager, IManagerFactoryBase<IPastParticipantJourneyManager>
     {
         public IPastParticipantJourneyManager Create()
         {

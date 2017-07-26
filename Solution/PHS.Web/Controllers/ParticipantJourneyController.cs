@@ -127,14 +127,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
-
-                    //foreach (var modality in result.Event.Modalities)
-                    //{
-                    //    participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
-                    //}
-
-                    participantJourneyModalityCircles = participantJourneyManager.GetParticipantMegaSortingStation(psm);
+                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = participantJourneyManager.GetParticipantMegaSortingStation(psm);
 
                     ParticipantJourneyFormViewModel participantJourneyformView = new ParticipantJourneyFormViewModel(result.Participant, psm.PHSEventId);
 
@@ -151,7 +144,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult RefreshViewParticipantJourneyForm(string selectedModalityId)
+        public ActionResult RefreshViewParticipantJourneyForm(int selectedModalityId)
         {
             ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
 
@@ -175,7 +168,7 @@ namespace PHS.Web.Controllers
                 else
                 {
                     TempData["SelectedModalityId"] = selectedModalityId;
-                    result.SelectedModalityId = Int32.Parse(selectedModalityId);
+                    result.SelectedModalityId = selectedModalityId;
                 }
 
                 return PartialView("_ViewParticipantJourneyFormPartial", result);
@@ -206,7 +199,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    if ("MEG".Equals(result.InternalFormType))
+                    if (Internal_Form_Type_MegaSortingStation.Equals(result.InternalFormType))
                     {
                         List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm);
 
