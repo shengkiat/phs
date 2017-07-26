@@ -1,4 +1,5 @@
-﻿using PHS.DB;
+﻿using PHS.Common;
+using PHS.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             modalityCompletedForms = new List<int>();
             foreach(var pjm in ParticipantJourneyModalitites)
             {
-                if ("MEG".Equals(pjm.Form.InternalFormType))
+                if (Constants.Internal_Form_Type_MegaSortingStation.Equals(pjm.Form.InternalFormType))
                 {
                     modalityCompletedForms.Add(pjm.FormID);
                 }

@@ -74,7 +74,7 @@ namespace PHS.Business.Implementation.FillIn
                 }
             }
 
-            if ("REG".Equals(template.Form.InternalFormType))
+            if (Internal_Form_Type_Registration.Equals(template.Form.InternalFormType))
             {
                 //update participant
                 Participant participant = UnitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);

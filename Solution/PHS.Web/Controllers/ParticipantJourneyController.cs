@@ -199,7 +199,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    if ("MEG".Equals(result.InternalFormType))
+                    if (Internal_Form_Type_MegaSortingStation.Equals(result.InternalFormType))
                     {
                         List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm);
 
