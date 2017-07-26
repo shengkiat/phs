@@ -26,25 +26,27 @@ namespace PHS.Business.Implementation
 
                 foreach (Modality modality in phsEvent.Modalities)
                 {
+                    IList<ParticipantJourneyModality> matchedPjms = new List<ParticipantJourneyModality>();
                     foreach (ParticipantJourneyModality pjm in ptJourneyModalityItems)
                     {
                         if (modality.ModalityID == pjm.Modality.ModalityID && pjm.PHSEvent.Equals(phsEvent))
                         {
+                            matchedPjms.Add(pjm);
                             modality.IsActive = true;
                         }
                     }
                     if (modality.Status != "Public")
                     {
-                        pjmCircles.Add(copyToPJMCVM(pjvm, modality));
+                        pjmCircles.Add(copyToPJMCVM(pjvm, modality, matchedPjms));
                     }
                 }
                 return pjmCircles;
             }
         }
 
-        private ParticipantJourneyModalityCircleViewModel copyToPJMCVM(ParticipantJourneyViewModel pjvm, Modality modality)
+        private ParticipantJourneyModalityCircleViewModel copyToPJMCVM(ParticipantJourneyViewModel pjvm, Modality modality, IList<ParticipantJourneyModality> matchedPjms)
         {
-            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality);
+            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality, matchedPjms);
 
             return pjmcvm;
         }

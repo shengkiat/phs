@@ -9,7 +9,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 {
     public class ParticipantJourneyModalityCircleViewModel
     {
-        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality)
+        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality, IList<ParticipantJourneyModality> ParticipantJourneyModalitites)
         {
             EventId = participantJourneyViewModel.EventId;
             Nric = participantJourneyViewModel.Nric;
@@ -34,6 +34,18 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             }
 
             modalityCompletedForms = new List<int>();
+            foreach(var pjm in ParticipantJourneyModalitites)
+            {
+                if ("MEG".Equals(pjm.Form.InternalFormType))
+                {
+                    modalityCompletedForms.Add(pjm.FormID);
+                }
+
+                else if (pjm.TemplateID.HasValue || pjm.EntryId != Guid.Empty)
+                {
+                    modalityCompletedForms.Add(pjm.FormID);
+                }
+            }
         }
 
         public string EventId { get; }
