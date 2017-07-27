@@ -189,6 +189,7 @@ CREATE TABLE [dbo].[PreRegistration](
 	[DateOfBirth] [datetime] NULL,
 	[Citizenship] [nvarchar](max) NOT NULL,
 	[Race] [nvarchar](max) NOT NULL,
+	[PostalCode] [nvarchar](max) NULL,
 	[Language] [nvarchar](max) NOT NULL,
 	[PreferedTime] [nvarchar](max) NOT NULL,
 	[Address] [nvarchar](max) NOT NULL,

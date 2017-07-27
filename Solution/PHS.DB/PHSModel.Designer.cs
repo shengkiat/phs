@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\SE Project Repository\PHS\phs\Solution\PHS.DB\PHSModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\benjaminng\Source\Repos\phs\Solution\PHS.DB\PHSModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -163,6 +163,7 @@
           <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Citizenship" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Race" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar(max)" />
           <Property Name="Language" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PreferedTime" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
@@ -762,6 +763,7 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReferenceRange">
           <Key>
@@ -1099,6 +1101,7 @@
           <EntitySetMapping Name="PreRegistrations">
             <EntityTypeMapping TypeName="phsModel.PreRegistration">
               <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
