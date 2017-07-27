@@ -51,7 +51,7 @@
                 $.ajax(
                     {
                         type: "GET",
-                        url: '@Url.Action("ActivateCirclesFromMSSS", "PatientJourney")', // Controller/View
+                        url: '@Url.Action("ActivateCirclesFromMSSS", "ParticipantJourney")', // Controller/View
                         data: { 'activateList': select },
                         contentType: "application/json; charset=utf-8",
                         success: function (resp) {
