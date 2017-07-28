@@ -116,6 +116,8 @@ namespace PHS.Web.Controllers
                         NotifyViaEmail(notificationView);
                     }
 
+                    RemoveValuesFromTempData(formCollection);
+
                     TempData["success"] = templateView.ConfirmationMessage;
                     return RedirectToRoute("form-submitconfirmation", new
                     {
@@ -259,6 +261,14 @@ namespace PHS.Web.Controllers
             foreach (var key in formCollection.AllKeys)
             {
                 ViewData[key.ToLower()] = formCollection[key];
+            }
+        }
+
+        private void RemoveValuesFromTempData(FormCollection formCollection)
+        {
+            foreach (var key in formCollection.AllKeys)
+            {
+                ViewData.Remove(key.ToLower());
             }
         }
 
