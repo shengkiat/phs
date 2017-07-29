@@ -62,6 +62,12 @@ namespace PHS.Business.Implementation.FillIn
                     preRegistration.PostalCode = address.ZipCode;
                 }
 
+                else
+                {
+                    preRegistration.Address = "";
+                    preRegistration.PostalCode = "";
+                }
+
                 UnitOfWork.PreRegistrations.Add(preRegistration);
             }
         }

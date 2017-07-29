@@ -24,11 +24,11 @@ namespace PHS.DB
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Citizenship { get; set; }
         public string Race { get; set; }
+        public string PostalCode { get; set; }
         public string Language { get; set; }
         public string PreferedTime { get; set; }
         public string Address { get; set; }
         public string Gender { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
-        public string PostalCode { get; set; }
     }
 }
