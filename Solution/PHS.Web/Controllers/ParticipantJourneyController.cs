@@ -206,6 +206,8 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
                     }
 
+
+
                     return View("_FillInPartial", result);
                 }
             }
@@ -214,7 +216,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult InternalFillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            InsertValuesIntoTempData(SubmitFields, formCollection);
+            InsertValuesIntoTempData(formCollection);
 
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
@@ -269,7 +271,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
+        private void InsertValuesIntoTempData(FormCollection formCollection)
         {
             foreach (var key in formCollection.AllKeys)
             {
