@@ -290,8 +290,20 @@ namespace PHS.Business.Implementation
                         model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
                         model.Embed = embed;
 
+                        bool valueRequiredForRegistration = false;
+
+                        if (Internal_Form_Type_Registration.Equals(model.InternalFormType))
+                        {
+                            if (participantJourneyModality.EntryId == Guid.Empty)
+                            {
+                                valueRequiredForRegistration = true;
+                            }
+                        }
+
                         foreach (var field in model.Fields)
                         {
+                            field.ParticipantNric = psm.Nric;
+                            field.IsValueRequiredForRegistration = valueRequiredForRegistration;
                             field.EntryId = participantJourneyModality.EntryId.ToString();
                         }
                     }
@@ -304,6 +316,14 @@ namespace PHS.Business.Implementation
 
                 return model;
                 
+            }
+        }
+
+        public Participant FindParticipant(string nric)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                return unitOfWork.Participants.FindParticipant(nric);
             }
         }
 

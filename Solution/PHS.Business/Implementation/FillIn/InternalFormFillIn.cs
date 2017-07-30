@@ -86,6 +86,9 @@ namespace PHS.Business.Implementation.FillIn
                     participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
                     participant.Language = getStringValue(values, Registration_Field_Name_Language);
                     participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
+                    participant.Address = getStringValue(values, Registration_Field_Name_Address);
+                    participant.Citizenship = getStringValue(values, Registration_Field_Name_Citizenship);
+                    participant.Race = getStringValue(values, Registration_Field_Name_Race);
 
                     //Create ParticipantJourneyModality
                     /*ParticipantJourneyModality newParticipantJourneyModality = new ParticipantJourneyModality()

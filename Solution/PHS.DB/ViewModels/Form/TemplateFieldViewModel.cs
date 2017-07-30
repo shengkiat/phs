@@ -47,6 +47,8 @@ namespace PHS.DB.ViewModels.Form
         public string MatrixRow { get; set; }
         public string MatrixColumn { get; set; }
         public string EntryId { get; set; }
+        public string ParticipantNric { get; set; }
+        public bool IsValueRequiredForRegistration { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
         #endregion

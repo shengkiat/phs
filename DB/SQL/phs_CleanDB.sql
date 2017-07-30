@@ -531,8 +531,6 @@ INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 3)
 GO
 INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 2)
 GO
-INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 3)
-GO
 
 SET IDENTITY_INSERT [dbo].[Participant] OFF
 GO

@@ -39,12 +39,17 @@ namespace PHS.Common
         public const string PreRegistration_Field_Name_Address = "ADDRESS";
         public const string PreRegistration_Field_Name_Gender = "GENDER";
 
+        public const string Registration_Field_Name_Nric = "NRIC";
         public const string Registration_Field_Name_FullName = "FULLNAME";
-        public const string Registration_Field_Name_DateOfBirth = "DATEOFBIRTH";
-        public const string Registration_Field_Name_Language = "LANGUAGE";
-        public const string Registration_Field_Name_Gender = "GENDER";
+        public const string Registration_Field_Name_Salutation = "SALUTATION";
         public const string Registration_Field_Name_HomeNumber = "HOMENUMBER";
         public const string Registration_Field_Name_MobileNumber = "MOBILENUMBER";
+        public const string Registration_Field_Name_DateOfBirth = "DATEOFBIRTH";
+        public const string Registration_Field_Name_Citizenship = "CITIZENSHIP";
+        public const string Registration_Field_Name_Race = "RACE";
+        public const string Registration_Field_Name_Language = "LANGUAGE";
+        public const string Registration_Field_Name_Address = "ADDRESS";
+        public const string Registration_Field_Name_Gender = "GENDER";
 
         public enum MessageType
         {
