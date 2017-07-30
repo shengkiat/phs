@@ -206,8 +206,6 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
                     }
 
-
-
                     return View("_FillInPartial", result);
                 }
             }
