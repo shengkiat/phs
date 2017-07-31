@@ -175,6 +175,31 @@ namespace PHS.Web.Controllers
             }
         }
 
+        public ActionResult RefreshViewParticipantJourneyParticipant()
+        {
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+
+            if (psm == null)
+            {
+                return Redirect("Index");
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return Redirect("Index");
+                }
+
+                return PartialView("_ViewParticipantJourneyParticipantPartial", result);
+            }
+        }
 
         public ActionResult InternalFillIn(int id, bool embed = false)
         {
