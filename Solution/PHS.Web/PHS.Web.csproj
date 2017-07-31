@@ -567,6 +567,7 @@
     <Content Include="Views\ParticipantJourney\_MegaSortingStationPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_SummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_FillInPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyParticipantPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
