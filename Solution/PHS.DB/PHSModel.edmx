@@ -80,6 +80,7 @@
           <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nric" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Salutation" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="HomeNumber" Type="nvarchar(max)" />
           <Property Name="MobileNumber" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="datetime" />
@@ -684,6 +685,7 @@
           <Property Name="Citizenship" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_participant" FromRole="Participant" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.ParticipantPHSEvent" FromRole="Participant" ToRole="PHSEvent" />
+          <Property Name="Salutation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ParticipantJourneyModality">
           <Key>
@@ -1032,6 +1034,7 @@
           <EntitySetMapping Name="Participants">
             <EntityTypeMapping TypeName="phsModel.Participant">
               <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="Salutation" ColumnName="Salutation" />
                 <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
                 <ScalarProperty Name="Race" ColumnName="Race" />
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />

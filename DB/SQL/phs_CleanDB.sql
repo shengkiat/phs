@@ -163,6 +163,7 @@ CREATE TABLE [dbo].[Participant](
 	[ParticipantID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NULL,
+	[Salutation] [nvarchar](4) NOT NULL,
 	[HomeNumber] [nvarchar](max) NULL,
 	[MobileNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
@@ -509,9 +510,9 @@ GO
 SET IDENTITY_INSERT [dbo].[Participant] ON 
 
 GO
-INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender], [Address], [PostalCode], [Race], [Citizenship]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'00000000', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English, Mandarin', N'Male', N'Blk 363 Clementi Ave 2 #04-425', N'120363', N'Chinese', N'Singapore Citizen')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [SALUTATION], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender], [Address], [PostalCode], [Race], [Citizenship]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'Mr', N'00000000', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English, Mandarin', N'Male', N'Blk 363 Clementi Ave 2 #04-425', N'120363', N'Chinese', N'Singapore Citizen')
 GO
-INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'69639756', N'81274563', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [SALUTATION], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'Mr', N'69639756', N'81274563', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 
 GO
 SET IDENTITY_INSERT [dbo].[Participant] OFF

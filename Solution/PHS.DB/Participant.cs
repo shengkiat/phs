@@ -33,6 +33,7 @@ namespace PHS.DB
         public string PostalCode { get; set; }
         public string Race { get; set; }
         public string Citizenship { get; set; }
+        public string Salutation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }

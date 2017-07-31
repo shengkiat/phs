@@ -89,6 +89,7 @@ namespace PHS.Business.Implementation.FillIn
                     participant.Address = getStringValue(values, Registration_Field_Name_Address);
                     participant.Citizenship = getStringValue(values, Registration_Field_Name_Citizenship);
                     participant.Race = getStringValue(values, Registration_Field_Name_Race);
+                    participant.Salutation = getStringValue(values, Registration_Field_Name_Salutation);
 
                     //Create ParticipantJourneyModality
                     /*ParticipantJourneyModality newParticipantJourneyModality = new ParticipantJourneyModality()
