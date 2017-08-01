@@ -90,20 +90,6 @@ namespace PHS.Business.Implementation.FillIn
                     participant.Citizenship = getStringValue(values, Registration_Field_Name_Citizenship);
                     participant.Race = getStringValue(values, Registration_Field_Name_Race);
                     participant.Salutation = getStringValue(values, Registration_Field_Name_Salutation);
-
-                    //Create ParticipantJourneyModality
-                    /*ParticipantJourneyModality newParticipantJourneyModality = new ParticipantJourneyModality()
-                    {
-                        ParticipantID = participant.ParticipantID,
-                        PHSEventID = psm.PHSEventId,
-                        FormID = templateView.FormID,
-                        ModalityID = modalityId,
-                        EntryId = entryId
-                    };*/
-
-                    //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
-
-                    //participant.ParticipantJourneyModalities.Add(newParticipantJourneyModality);
                 }
             }
 
