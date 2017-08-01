@@ -35,7 +35,7 @@ namespace PHS.DB.ViewModels.Form
 
         public string ConvertToOneLineAddress()
         {
-            return "Blk " + Blk + ", Unit " + Unit + ", Street" + StreetAddress;
+            return "Blk " + Blk + ", " + "Street " + StreetAddress + ", Unit " + Unit;
         }
 
     }
