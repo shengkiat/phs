@@ -376,9 +376,9 @@ namespace PHS.Business.Extensions
                 case Registration_Field_Name_Race:
                     result = participant.Race;
                     break;
-                //case Registration_Field_Name_Salutation:
-                   // result = participant.;
-                   // break;
+                case Registration_Field_Name_Salutation:
+                    result = participant.Salutation;
+                    break;
             }
 
             return result;
