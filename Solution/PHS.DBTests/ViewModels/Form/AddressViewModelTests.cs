@@ -23,5 +23,15 @@ namespace PHS.DB.ViewModels.Form.Tests
             };
             Assert.AreEqual("Blk 123, Street Jalan Jalan, Unit 11-11", address.ConvertToOneLineAddress());
         }
+
+        [TestMethod()]
+        public void InitializeTest()
+        {
+            AddressViewModel address = AddressViewModel.Initialize("Blk 123, Street Jalan Jalan, Unit 11-11");
+            Assert.AreEqual("123", address.Blk);
+            Assert.AreEqual("Jalan Jalan", address.StreetAddress);
+            Assert.AreEqual("11-11", address.Unit);
+            Assert.IsNull(address.ZipCode);
+        }
     }
 }
