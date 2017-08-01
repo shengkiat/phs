@@ -58,7 +58,7 @@ namespace PHS.Business.Implementation.FillIn
                 {
                     AddressViewModel address = addressValue.FromJson<AddressViewModel>();
 
-                    preRegistration.Address = address.Blk + " " + address.Unit + " " + address.StreetAddress;
+                    preRegistration.Address = address.ConvertToOneLineAddress();
                     preRegistration.PostalCode = address.ZipCode;
                 }
 

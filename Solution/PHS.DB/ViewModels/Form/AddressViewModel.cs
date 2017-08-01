@@ -24,5 +24,19 @@ namespace PHS.DB.ViewModels.Form
             return new AddressViewModel();
         }
 
+        public static AddressViewModel Initialize(string oneLineOfAddress)
+        {
+            AddressViewModel result = new AddressViewModel();
+
+
+
+            return result;
+        }
+
+        public string ConvertToOneLineAddress()
+        {
+            return "Blk " + Blk + ", Unit " + Unit + ", Street" + StreetAddress;
+        }
+
     }
 }

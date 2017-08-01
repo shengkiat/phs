@@ -86,10 +86,25 @@ namespace PHS.Business.Implementation.FillIn
                     participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
                     participant.Language = getStringValue(values, Registration_Field_Name_Language);
                     participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
-                    participant.Address = getStringValue(values, Registration_Field_Name_Address);
                     participant.Citizenship = getStringValue(values, Registration_Field_Name_Citizenship);
                     participant.Race = getStringValue(values, Registration_Field_Name_Race);
                     participant.Salutation = getStringValue(values, Registration_Field_Name_Salutation);
+
+                    string addressValue = getStringValue(values, Registration_Field_Name_Address);
+
+                    if (!string.IsNullOrEmpty(addressValue))
+                    {
+                        AddressViewModel address = addressValue.FromJson<AddressViewModel>();
+
+                        participant.Address = address.ConvertToOneLineAddress();
+                        participant.PostalCode = address.ZipCode;
+                    }
+
+                    else
+                    {
+                        participant.Address = "";
+                        participant.PostalCode = "";
+                    }
                 }
             }
 
