@@ -279,17 +279,19 @@ namespace PHS.Business.Extensions
                             {
                                 case TemplateFieldType.ADDRESS:
 
+                                    AddressViewModel addressViewModel = AddressViewModel.Initialize(participant.Address);
+
                                     if (fieldType == "Blk")
                                     {
-                                        return participant.Address;
+                                        return addressViewModel.Blk;
                                     }
                                     else if (fieldType == "Unit")
                                     {
-                                        return participant.Address;
+                                        return addressViewModel.Unit;
                                     }
                                     else if (fieldType == "StreetAddress")
                                     {
-                                        return participant.Address;
+                                        return addressViewModel.StreetAddress;
                                     }
                                     else if (fieldType == "ZipCode")
                                     {
