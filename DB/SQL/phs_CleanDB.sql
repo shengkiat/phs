@@ -163,7 +163,7 @@ CREATE TABLE [dbo].[Participant](
 	[ParticipantID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NULL,
-	[Salutation] [nvarchar](4) NOT NULL,
+	[Salutation] [nvarchar](4) NULL,
 	[HomeNumber] [nvarchar](max) NULL,
 	[MobileNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,

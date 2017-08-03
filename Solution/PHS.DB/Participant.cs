@@ -24,6 +24,7 @@ namespace PHS.DB
         public int ParticipantID { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
+        public string Salutation { get; set; }
         public string HomeNumber { get; set; }
         public string MobileNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
@@ -33,7 +34,6 @@ namespace PHS.DB
         public string PostalCode { get; set; }
         public string Race { get; set; }
         public string Citizenship { get; set; }
-        public string Salutation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
