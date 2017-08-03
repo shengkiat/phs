@@ -119,10 +119,11 @@ namespace PHS.Business.Implementation
                 message = "Nric or PHSEventId cannot be null";
             }
 
-            else if (!NricChecker.IsNRICValid(psm.Nric))
-            {
-                message = "Invalid Nric";
-            }
+            //todo: removed for data migration. to put back before live
+            //else if (!NricChecker.IsNRICValid(psm.Nric))
+            //{
+            //    message = "Invalid Nric";
+            //}
 
             else
             {
@@ -258,10 +259,11 @@ namespace PHS.Business.Implementation
                 message = "Nric or PHSEventId cannot be null";
             }
 
-            else if (!NricChecker.IsNRICValid(psm.Nric))
-            {
-                message = "Invalid Nric";
-            }
+            //todo: comment out for data migration. to put it back before going live
+            //else if (!NricChecker.IsNRICValid(psm.Nric))
+            //{
+            //    message = "Invalid Nric";
+            //}
 
             else
             {
