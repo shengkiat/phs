@@ -321,11 +321,15 @@
                                     <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
                                     <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
                                     <li id="menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "A" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
 
                                 }
                                 @if (@User.IsInRole("A") || @User.IsInRole("V") || @User.IsInRole("D"))
                                 {
+                                    if (@User.IsInRole("D"))
+                                    {
+                                    <li id="menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
+                                    }
                                     <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "A,V,D" }, new { @style = "color:white;" })</li>
                                 }
                             </ul>
