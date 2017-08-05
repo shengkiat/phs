@@ -124,6 +124,16 @@ namespace PHS.Business.Extensions
             return field.Mode == Constants.TemplateFieldMode.EDIT;
         }
 
+        public static bool IsReadOnlyMode(this TemplateFieldViewModel field)
+        {
+            return field.Mode == Constants.TemplateFieldMode.READONLY;
+        }
+
+        public static bool IsInputMode(this TemplateFieldViewModel field)
+        {
+            return field.Mode == Constants.TemplateFieldMode.INPUT;
+        }
+
         public static string ValidationId(this TemplateFieldViewModel field)
         {
             return "{0}-{1}".FormatWith(field.FieldType.ToString().ToLower(), field.TemplateFieldID.ToString());
