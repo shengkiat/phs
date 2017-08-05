@@ -51,6 +51,11 @@ namespace PHS.DB.ViewModels.Form
         public bool IsValueRequiredForRegistration { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
+
+        public int ReferenceFieldFormID { get; set; }
+        public int ReferenceFieldTemplateFieldID { get; set; }
+
+        public TemplateFieldViewModel ReferenceFieldViewModel;
         #endregion
 
         #region Public Members

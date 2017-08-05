@@ -20,6 +20,12 @@
         {
             <span class="field-validation-error">@Model.Errors</span>
         }
+
+        @if (!Model.IsEditMode() && Model.ReferenceFieldViewModel != null)
+        {
+            @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(Model.ReferenceFieldViewModel.FieldType.ToString().ToLower()), Model.ReferenceFieldViewModel)
+        }
+        
     </div>
 
     <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
