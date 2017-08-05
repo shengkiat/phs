@@ -960,7 +960,7 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            var result = _target.FindTemplateToDisplay(psm, formId, 1, false, out message);
+            var result = _target.FindTemplateToDisplay(psm, formId, 1, false, TemplateFieldMode.INPUT, out message);
 
             Assert.IsNotNull(result);
 
@@ -1050,7 +1050,7 @@ namespace PHS.Business.Implementation.Tests
 
             string message = string.Empty;
 
-            var result = _target.FindTemplateToDisplay(psm, formId, 1, false, out message);
+            var result = _target.FindTemplateToDisplay(psm, formId, 1, false, TemplateFieldMode.INPUT, out message);
 
             Assert.IsNotNull(result);
 

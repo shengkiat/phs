@@ -137,6 +137,7 @@ namespace PHS.Web.Controllers
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     TempData["ParticipantJourneyFormViewModel"] = participantJourneyformView;
                     TempData["SelectedModalityId"] = participantJourneyformView.SelectedModalityId;
+                    TempData["ViewParticipantJourneyType"] = Constants.TemplateFieldMode.INPUT;
 
                     return View(result);
 
@@ -214,7 +215,9 @@ namespace PHS.Web.Controllers
 
                 string message = string.Empty;
                 int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
-                var result = participantJourneyManager.FindTemplateToDisplay(psm, id, selectedModalityId, embed, out message);
+                TemplateFieldMode fieldMode = (TemplateFieldMode) TempData.Peek("ViewParticipantJourneyType");
+
+                var result = participantJourneyManager.FindTemplateToDisplay(psm, id, selectedModalityId, embed, fieldMode, out message);
 
                 if (result == null)
                 {

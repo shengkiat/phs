@@ -276,7 +276,7 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        public TemplateViewModel FindTemplateToDisplay(ParticipantJourneySearchViewModel psm, int formID, int selectedModalityId, bool embed, out string message)
+        public TemplateViewModel FindTemplateToDisplay(ParticipantJourneySearchViewModel psm, int formID, int selectedModalityId, bool embed, TemplateFieldMode fieldMode, out string message)
         {
             TemplateViewModel model = null;
             using (var unitOfWork = CreateUnitOfWork())
@@ -304,6 +304,7 @@ namespace PHS.Business.Implementation
 
                         foreach (var field in model.Fields)
                         {
+                            field.Mode = fieldMode;
                             field.ParticipantNric = psm.Nric;
                             field.IsValueRequiredForRegistration = valueRequiredForRegistration;
                             field.EntryId = participantJourneyModality.EntryId.ToString();

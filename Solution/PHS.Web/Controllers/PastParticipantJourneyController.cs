@@ -93,6 +93,7 @@ namespace PHS.Web.Controllers
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     TempData["ParticipantJourneyFormViewModel"] = participantJourneyformView;
                     TempData["SelectedModalityId"] = participantJourneyformView.SelectedModalityId;
+                    TempData["ViewParticipantJourneyType"] = Constants.TemplateFieldMode.READONLY;
 
                     return View("~/Views/ParticipantJourney/ViewParticipantJourney.cshtml", result);
 
