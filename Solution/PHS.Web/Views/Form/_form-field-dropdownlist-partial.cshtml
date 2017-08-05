@@ -7,12 +7,19 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var selectedAttribute = "";
+        var disabledAttribute = Model.IsReadOnlyMode() ? "disabled" : "";
+    }
+
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <select id="SubmitFields[@Model.DomId].DropDownList"
                 name="SubmitFields[@Model.DomId].DropDownList"
                 class="default"
+                @disabledAttribute
                 style="width: auto; max-width:80%;">
-            @{var selectedAttribute = "";}
+            
+
             @foreach (var option in Model.Options.Split(","))
             {
                 if (Html.IsAnyTempFormValueSelected(Model))

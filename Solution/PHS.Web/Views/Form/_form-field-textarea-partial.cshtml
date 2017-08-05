@@ -8,10 +8,15 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    }
+
     <div class="input" style="width: 90%; margin-left: 1cm;">
         <textarea style="min-height:100px; min-width:100px; max-width: 95%"
                   id="SubmitFields[@Model.DomId].TextArea"
                   name="SubmitFields[@Model.DomId].TextArea"
+                  @readonlyAttribute
                   type="text">@Html.GetSubmittedTextValue(Model)</textarea>
 
         @if (Model.IsEditMode())

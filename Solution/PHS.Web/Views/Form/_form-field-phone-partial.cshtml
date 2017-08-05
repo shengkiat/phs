@@ -3,7 +3,12 @@
 
 <label style="width: 30%; word-wrap: break-word"
        data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
+
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+    
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    }
 
     <div class="input" style="width: 50%;">
         <ul class="horizontal-list two-field-row entry-form-list">
@@ -11,6 +16,7 @@
             <li class="phone-number-item">
                 <input id="SubmitFields[@Model.DomId].Number"
                        name="SubmitFields[@Model.DomId].Number"
+                       @readonlyAttribute
                        value="@Html.GetSubmittedTextValue(Model, "Number")" type="text"
                        class="title shorter-field phone-number" /><br />
                 <span class="sub-label">Phone Number</span>

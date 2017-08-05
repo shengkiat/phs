@@ -5,6 +5,7 @@
     int columnCounter = 0;
     int rowCounter = 0;
     string checkedAttribute = "";
+    var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
     List<string> columnChoices = new List<string>();
 }
 
@@ -49,7 +50,8 @@
 
 
                         <td>
-                            <input name="SubmitFields[@Model.DomId].[@rowCounter].RadioButton" @checkedAttribute
+                            <input name="SubmitFields[@Model.DomId].[@rowCounter].RadioButton" 
+                                   @checkedAttribute @disabledAttribute
                                    value=@columnChoices[@i]
                                    type="radio" />
                         </td>

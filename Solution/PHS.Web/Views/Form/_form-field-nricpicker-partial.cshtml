@@ -10,9 +10,14 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    }
+
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <input id="SubmitFields[@Model.DomId].Nricpicker"
                name="SubmitFields[@Model.DomId].Nricpicker"
+               @readonlyAttribute
                value="@Html.GetSubmittedTextValue(Model, "Nricpicker")"
                type="text"
                style="width: 100px; height:20px;" maxlength="9"/>

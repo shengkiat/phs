@@ -9,6 +9,11 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+        var disabledAttribute = Model.IsReadOnlyMode() ? "disabled" : "";
+    }
+
     <div class="input" style="width: 90%; margin-left: 1cm;">
 
         <input id="SubmitFields[@Model.DomId].Signature"
@@ -20,9 +25,10 @@
             <div class="m-signature-pad--body">
                 <canvas style="border:1px solid #000000;"></canvas>
             </div>
+
             <div class="m-signature-pad--footer">
                 <div class="description">Sign above</div>
-                <button type="button" class="button clear" data-action="clear">Clear</button>
+                <button type="button" class="button clear" @disabledAttribute data-action="clear">Clear</button>
             </div>
         </div>
 
