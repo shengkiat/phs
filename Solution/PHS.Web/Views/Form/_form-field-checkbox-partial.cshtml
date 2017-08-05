@@ -9,7 +9,12 @@
 
     <div class="input" style="width: 90%; margin-left: 1cm;">
         <ul class="option-list vertical-list">
-            @{var checkedAttribute = "";}
+            @{
+                var checkedAttribute = "";
+                var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+                var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
+            }
+
             @foreach (var option in Model.Options.Split(","))
             {
                 <li>
@@ -29,7 +34,7 @@
 
                     <input id="SubmitFields[@Model.DomId].Checkbox"
                            name="SubmitFields[@Model.DomId].Checkbox"
-                           @checkedAttribute type="checkbox" value="@option" />
+                           @disabledAttribute @checkedAttribute type="checkbox" value="@option" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
             }
@@ -55,15 +60,15 @@
                     {
                         checkedAttribute = "";
                     }
-                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @checkedAttribute type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" placeholder="Others" value="@Html.GetTempFormValue(Model, "OthersOption")" />
+                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @disabledAttribute @checkedAttribute type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" placeholder="Others" value="@Html.GetTempFormValue(Model, "OthersOption")" />
                 </li>
             }
             else
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" type="checkbox" name="checkbox-@Model.DomId" style="display:none" value="OthersOption" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" style="display:none" placeholder="Others" />
+                    <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @disabledAttribute type="checkbox" name="checkbox-@Model.DomId" style="display:none" value="OthersOption" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" style="display:none" placeholder="Others" />
                 </li>
             }
         </ul>

@@ -45,6 +45,11 @@
        class="label editable">@Model.Label</label>
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+        var disabledAttribute = Model.IsReadOnlyMode() ? "disabled" : "";
+    }
+
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="vertical-list">
 
@@ -52,6 +57,7 @@
                 <input id="SubmitFields[@Model.DomId].Weight" 
                        name="SubmitFields[@Model.DomId].Weight" 
                        value="@Html.GetSubmittedTextValue(Model,"Weight")" 
+                       @readonlyAttribute
                        type="number" class="title" /><br />
                 <span class="sub-label">Weight (kg)</span>
             </li>
@@ -60,13 +66,14 @@
                 <input id="SubmitFields[@Model.DomId].Height" 
                        name="SubmitFields[@Model.DomId].Height" 
                        value="@Html.GetSubmittedTextValue(Model,"Height")" 
+                       @readonlyAttribute
                        type="number" class="title" /><br />
                 <span class="sub-label">Height (cm)</span>
             </li>
 
 
             <li>
-                <button type="button" id="btnBmiSubmit">Check</button>
+                <button type="button" id="btnBmiSubmit" @disabledAttribute>Check</button>
             </li>
 
             <li>

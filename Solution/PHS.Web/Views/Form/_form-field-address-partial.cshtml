@@ -47,6 +47,11 @@
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
+    @{
+        var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+        var disabledAttribute = Model.IsReadOnlyMode() ? "disabled" : "";
+    }
+
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <ul class="vertical-list">
  
@@ -54,18 +59,18 @@
             <li>
                 <ul class="two-field-row entry-form-list horizontal-list">
                     <li>
-                        <input id="SubmitFields[@Model.DomId].Blk" name="SubmitFields[@Model.DomId].Blk" type="text" value="@Html.GetSubmittedTextValue(Model, "Blk")" class="title shorter-field" /><br />
+                        <input id="SubmitFields[@Model.DomId].Blk" name="SubmitFields[@Model.DomId].Blk" @readonlyAttribute type="text" value="@Html.GetSubmittedTextValue(Model, "Blk")" class="title shorter-field" /><br />
                         <span class="sub-label">Blk/Hse No</span>
                     </li>
                     <li>
-                        <input id="SubmitFields[@Model.DomId].Unit" name="SubmitFields[@Model.DomId].Unit" type="text" value="@Html.GetSubmittedTextValue(Model,"Unit")" class="shorter-field title" /><br />
+                        <input id="SubmitFields[@Model.DomId].Unit" name="SubmitFields[@Model.DomId].Unit" @readonlyAttribute type="text" value="@Html.GetSubmittedTextValue(Model,"Unit")" class="shorter-field title" /><br />
                         <span class="sub-label">Unit</span>
                     </li>
                 </ul>
             </li>
 
             <li>
-                <input id="SubmitFields[@Model.DomId].StreetAddress" name="SubmitFields[@Model.DomId].StreetAddress" value="@Html.GetSubmittedTextValue(Model,"StreetAddress")" type="text" class="title" /><br />
+                <input id="SubmitFields[@Model.DomId].StreetAddress" name="SubmitFields[@Model.DomId].StreetAddress" @readonlyAttribute value="@Html.GetSubmittedTextValue(Model,"StreetAddress")" type="text" class="title" /><br />
                 <span class="sub-label">Street address</span>
             </li>
 
@@ -74,12 +79,12 @@
             <li>
                 <ul class="two-field-row horizontal-list entry-form-list">
                     <li>
-                        <input id="SubmitFields[@Model.DomId].ZipCode" name="SubmitFields[@Model.DomId].ZipCode" type="text" class="shorter-field title" value="@Html.GetSubmittedTextValue(Model,"ZipCode")" maxlength="6" /><br />
+                        <input id="SubmitFields[@Model.DomId].ZipCode" name="SubmitFields[@Model.DomId].ZipCode" @readonlyAttribute type="text" class="shorter-field title" value="@Html.GetSubmittedTextValue(Model,"ZipCode")" maxlength="6" /><br />
                         <span class="sub-label">zip code</span>
                     </li>
                     <li>
-                        <button type="button" id="btnAddressSubmit">Search</button>
-                        <label id="SubmitFields[@Model.DomId].Error"  style="color: red;"></label>
+                        <button type="button" id="btnAddressSubmit" @disabledAttribute>Search</button>
+                        <label id="SubmitFields[@Model.DomId].Error" style="color: red;"></label>
 
                     </li>
                 </ul>
@@ -95,12 +100,6 @@
             <span class="field-validation-error">@Model.Errors</span>
         }
     </div>
-
-
-
-
-
-
 
 
     <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">

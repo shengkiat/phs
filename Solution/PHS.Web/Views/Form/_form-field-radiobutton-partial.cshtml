@@ -11,6 +11,9 @@
         <ul class="option-list vertical-list">
             @{
                 var checkedAttribute = "";
+                var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+                var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
+
                 bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
                 bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
                 int counter = 0;
@@ -45,7 +48,7 @@
 
                     @{counter = counter + 1;}
 
-                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute
+                    <input name="SubmitFields[@Model.DomId].RadioButton" type="radio" @checkedAttribute @disabledAttribute
                            value="@option" name="radiogroup-@Model.DomId" />
                     <label style="display: block; margin-left: 20px; margin-top: -18px; word-wrap: break-word">@option</label>
                 </li>
@@ -73,15 +76,15 @@
                     {
                         checkedAttribute = "";
                     }
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" @checkedAttribute value="OthersOption" name="radiogroup-@Model.DomId" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" @disabledAttribute type="radio" @checkedAttribute value="OthersOption" name="radiogroup-@Model.DomId" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
                 </li>
             }
             else
             {
                 <li>
-                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" type="radio" value="OthersOption" name="radiogroup-@Model.DomId" style="display:none" />
-                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" type="text" value="@Model.OthersOption" style="display:none" placeholder="Others" />
+                    <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" @disabledAttribute type="radio" value="OthersOption" name="radiogroup-@Model.DomId" style="display:none" />
+                    <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" value="@Model.OthersOption" style="display:none" placeholder="Others" />
                 </li>
             }
         </ul>
