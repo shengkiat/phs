@@ -99,8 +99,7 @@ namespace PHS.Common
             NRICPICKER,
             DOCTORMEMO,
             SIGNATURE,
-            SECTIONCOLLAPSE,
-            REFERENCEFIELD
+            SECTIONCOLLAPSE
         }
 
         public static string OperationFailedDuringRetrievingValue(string value)
