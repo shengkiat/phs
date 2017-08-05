@@ -1,6 +1,7 @@
 ﻿@model PHS.DB.ViewModels.Form.FormViewModel
 
 @using PHS.Business.Extensions
+@using PHS.Common
 
 @{
     ViewBag.Title = "Create Form";
@@ -87,8 +88,8 @@
 
                     var internallistItems1 = new List<SelectListItem>()
                         {
-                            new SelectListItem {Text = "REGISTRATION", Value = "REG"},
-                            new SelectListItem {Text = "MEGA SORTING STATION", Value = "MEG"}
+                            new SelectListItem {Text = "REGISTRATION", Value = Constants.Internal_Form_Type_Registration},
+                            new SelectListItem {Text = "MEGA SORTING STATION", Value = Constants.Internal_Form_Type_MegaSortingStation}
                         };
 
                     @Html.DropDownListFor(m => m.InternalFormType, internallistItems1, string.Empty)
@@ -114,8 +115,8 @@
 
                     var listItems1 = new List<SelectListItem>()
                         {
-                            new SelectListItem {Text = "Pre Registration", Value = "PRE-REGISTRATION"},
-                            new SelectListItem {Text = "Out Reach", Value = "OUTREACH"}
+                            new SelectListItem {Text = "Pre Registration", Value = Constants.Public_Form_Type_PreRegistration},
+                            new SelectListItem {Text = "Out Reach", Value = Constants.Public_Form_Type_OutReach}
                         };
 
                     @Html.DropDownListFor(m => m.PublicFormType, listItems1, string.Empty)
