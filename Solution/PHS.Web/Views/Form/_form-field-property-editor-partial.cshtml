@@ -380,18 +380,18 @@
 
                         var listItems = new List<SelectListItem>()
                         {
-                            new SelectListItem {Text = "NRIC", Value = "NRIC"},
-                            new SelectListItem {Text = "FULLNAME", Value = "FULLNAME"},
-                            new SelectListItem {Text = "SALUTATION", Value = "SALUTATION"},
-                            new SelectListItem {Text = "HOMENUMBER", Value = "HOMENUMBER"},
-                            new SelectListItem {Text = "MOBILENUMBER", Value = "MOBILENUMBER"},
-                            new SelectListItem {Text = "DATEOFBIRTH", Value = "DATEOFBIRTH"},
-                            new SelectListItem {Text = "CITIZENSHIP", Value = "CITIZENSHIP"},
-                            new SelectListItem {Text = "RACE", Value = "RACE"},
-                            new SelectListItem {Text = "LANGUAGE", Value = "LANGUAGE"},
-                            new SelectListItem {Text = "PREFEREDTIME", Value = "PREFEREDTIME"},
-                            new SelectListItem {Text = "ADDRESS", Value = "ADDRESS"},
-                            new SelectListItem {Text = "GENDER", Value = "GENDER"}
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Nric, Value = Constants.PreRegistration_Field_Name_Nric},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_FullName, Value = Constants.PreRegistration_Field_Name_FullName},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Salutation, Value = Constants.PreRegistration_Field_Name_Salutation},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_HomeNumber, Value = Constants.PreRegistration_Field_Name_HomeNumber},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_MobileNumber, Value = Constants.PreRegistration_Field_Name_MobileNumber},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_DateOfBirth, Value = Constants.PreRegistration_Field_Name_DateOfBirth},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Citizenship, Value = Constants.PreRegistration_Field_Name_Citizenship},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Race, Value = Constants.PreRegistration_Field_Name_Race},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Language, Value = Constants.PreRegistration_Field_Name_Language},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Address, Value = Constants.PreRegistration_Field_Name_Address},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_Gender, Value = Constants.PreRegistration_Field_Name_Gender},
+                            new SelectListItem {Text = Constants.PreRegistration_Field_Name_PreferedTime, Value = Constants.PreRegistration_Field_Name_PreferedTime},
                         };
 
                         @Html.DropDownList("preregistrationfieldname", listItems, string.Empty, 
@@ -422,18 +422,17 @@
 
                         var regListItems = new List<SelectListItem>()
                         {
-                            new SelectListItem {Text = "NRIC", Value = "NRIC"},
-                            new SelectListItem {Text = "FULLNAME", Value = "FULLNAME"},
-                            new SelectListItem {Text = "SALUTATION", Value = "SALUTATION"},
-                            new SelectListItem {Text = "HOMENUMBER", Value = "HOMENUMBER"},
-                            new SelectListItem {Text = "MOBILENUMBER", Value = "MOBILENUMBER"},
-                            new SelectListItem {Text = "DATEOFBIRTH", Value = "DATEOFBIRTH"},
-                            new SelectListItem {Text = "CITIZENSHIP", Value = "CITIZENSHIP"},
-                            new SelectListItem {Text = "RACE", Value = "RACE"},
-                            new SelectListItem {Text = "LANGUAGE", Value = "LANGUAGE"},
-                            new SelectListItem {Text = "PREFEREDTIME", Value = "PREFEREDTIME"},
-                            new SelectListItem {Text = "ADDRESS", Value = "ADDRESS"},
-                            new SelectListItem {Text = "GENDER", Value = "GENDER"}
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Nric, Value = Constants.Registration_Field_Name_Nric},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_FullName, Value = Constants.Registration_Field_Name_FullName},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Salutation, Value = Constants.Registration_Field_Name_Salutation},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_HomeNumber, Value = Constants.Registration_Field_Name_HomeNumber},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_MobileNumber, Value = Constants.Registration_Field_Name_MobileNumber},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_DateOfBirth, Value = Constants.Registration_Field_Name_DateOfBirth},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Citizenship, Value = Constants.Registration_Field_Name_Citizenship},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Race, Value = Constants.Registration_Field_Name_Race},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Language, Value = Constants.Registration_Field_Name_Language},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Address, Value = Constants.Registration_Field_Name_Address},
+                            new SelectListItem {Text = Constants.Registration_Field_Name_Gender, Value = Constants.Registration_Field_Name_Gender}
                         };
 
                         @Html.DropDownList("registrationfieldname", regListItems, string.Empty,
