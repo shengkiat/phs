@@ -90,6 +90,7 @@ namespace PHS.Common
             CHECKBOX,
             H1,
             HEADER,
+            HEADERSUB,
             DROPDOWNLIST,
             FULLNAME,
             EMAIL,

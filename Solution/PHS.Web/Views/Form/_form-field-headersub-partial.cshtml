@@ -1,0 +1,10 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
+@using PHS.Business.Extensions
+
+<h3 data-sub-channel="sub-text-@Model.DomId" class="default editable" style="word-wrap:break-word;">@Model.Text</h3>
+
+@if (Model.IsEditMode())
+{
+    @Html.Partial("_form-field-properties-partial")
+    @Html.Partial("_form-field-settings-template")
+}
