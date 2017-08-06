@@ -29,16 +29,16 @@ namespace PHS.DB.ViewModels.Form
         {
             AddressViewModel result = new AddressViewModel();
 
-            result.Blk = getValue(oneLineOfAddress, "Blk ", ", Street ");
-            result.StreetAddress = getValue(oneLineOfAddress, ", Street ", ", Unit ");
-            result.Unit = Regex.Split(oneLineOfAddress, ", Unit ")[1];
+            result.Blk = getValue(oneLineOfAddress, "Blk: ", ", Street: ");
+            result.StreetAddress = getValue(oneLineOfAddress, ", Street: ", ", Unit: ");
+            result.Unit = Regex.Split(oneLineOfAddress, ", Unit: ")[1];
 
             return result;
         }
 
         public string ConvertToOneLineAddress()
         {
-            return "Blk " + Blk + ", Street " + StreetAddress + ", Unit " + Unit;
+            return "Blk: " + Blk + ", Street: " + StreetAddress + ", Unit: " + Unit;
         }
 
         private static string getValue(string stringmessage, string startWord, string endWord)
