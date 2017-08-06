@@ -256,7 +256,7 @@
           <Property Name="MatrixColumn" Type="varchar(max)" />
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
           <Property Name="RegistrationFieldName" Type="varchar(max)" />
-          <Property Name="IsSummaryField" Type="bit" Nullable="false" />
+          <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -963,7 +963,7 @@
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsSummaryField" Type="Boolean" Nullable="false" />
+          <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_template_field" FromRole="TemplateField" ToRole="Summary" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
@@ -1349,7 +1349,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
-                <ScalarProperty Name="IsSummaryField" ColumnName="IsSummaryField" />
+                <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
                 <ScalarProperty Name="RegistrationFieldName" ColumnName="RegistrationFieldName" />
                 <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />

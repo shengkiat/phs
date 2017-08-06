@@ -51,7 +51,7 @@ namespace PHS.DB.ViewModels.Form
         public bool IsValueRequiredForRegistration { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
-        public bool IsSummaryField { get; set; }
+        public string SummaryType { get; set; }
 
         #endregion
 
@@ -106,7 +106,7 @@ namespace PHS.DB.ViewModels.Form
                     MatrixColumn = field.MatrixColumn,
                     PreRegistrationFieldName = field.PreRegistrationFieldName,
                     RegistrationFieldName = field.RegistrationFieldName,
-                    IsSummaryField = field.IsSummaryField
+                    SummaryType = field.SummaryType
                 };
             }
 
