@@ -714,6 +714,11 @@
 
                 $('#registrationfieldname').val(value);
                 break;
+            case "summarytype":
+                var value = targetContainer.find('#summarytype-prop-' + domId).val();
+
+                $('#summarytype').val(value);
+                break;
             case "matrixrow":
                 // value is row
                 // set value to column

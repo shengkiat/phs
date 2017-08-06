@@ -267,7 +267,8 @@ namespace PHS.Business.Implementation
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
                                     PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
-                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName")
+                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName"),
+                                    SummaryType = collection.FormFieldValue(domId, "SummaryType")
                                 };
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())

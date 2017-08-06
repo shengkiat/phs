@@ -449,6 +449,38 @@
                 </td>
             </tr>
             <!--// end Registration Field Name Row -->
+
+            <!-- Summary Type Row --> 
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        Summary Type
+                    </label>
+                </td>
+                <td class="input">
+
+                    @{
+
+                        var summaryListItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "EVENT SUMMARY", Value = Constants.Summary_Type_Event},
+                            new SelectListItem {Text = "DOCTOR SUMMARY", Value = Constants.Summary_Type_Doctor}
+                        };
+
+                        @Html.DropDownList("summaryType", summaryListItems, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "summarytype"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+
+
+                </td>
+            </tr>
+            <!--// end Summary Type Row -->
     </table> 
     </li>
 </ul>

@@ -84,7 +84,8 @@ namespace PHS.Repository.Repository
                     MatrixRow = fieldView.MatrixRow,
                     MatrixColumn = fieldView.MatrixColumn,
                     PreRegistrationFieldName = fieldView.PreRegistrationFieldName,
-                    RegistrationFieldName = fieldView.RegistrationFieldName
+                    RegistrationFieldName = fieldView.RegistrationFieldName,
+                    SummaryType = fieldView.SummaryType
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -125,6 +126,7 @@ namespace PHS.Repository.Repository
                     fField.MatrixRow = fieldView.MatrixRow;
                     fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                     fField.RegistrationFieldName = fieldView.RegistrationFieldName;
+                    fField.SummaryType = fieldView.SummaryType;
                 }
 
               //  this.SaveChanges();
@@ -238,7 +240,8 @@ namespace PHS.Repository.Repository
                     MatrixRow = templateField1.MatrixRow,
                     MatrixColumn = templateField1.MatrixColumn,
                     PreRegistrationFieldName = templateField1.PreRegistrationFieldName,
-                    RegistrationFieldName = templateField1.RegistrationFieldName
+                    RegistrationFieldName = templateField1.RegistrationFieldName,
+                    SummaryType = templateField1.RegistrationFieldName
                 };
 
                 template.TemplateFields.Add(fField);
