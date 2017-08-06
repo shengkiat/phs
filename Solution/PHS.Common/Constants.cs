@@ -22,6 +22,7 @@ namespace PHS.Common
 
         public const string Internal_Form_Type_Registration = "REG";
         public const string Internal_Form_Type_MegaSortingStation = "MEG";
+        public const string Internal_Form_Type_EventSummary = "ESY";
 
         public const string Public_Form_Type_PreRegistration = "PRE-REGISTRATION";
         public const string Public_Form_Type_OutReach = "OUTREACH";
@@ -50,6 +51,9 @@ namespace PHS.Common
         public const string Registration_Field_Name_Language = "LANGUAGE";
         public const string Registration_Field_Name_Address = "ADDRESS";
         public const string Registration_Field_Name_Gender = "GENDER";
+
+        public const string Summary_Type_Event = "ESY";
+        public const string Summary_Type_Doctor = "DSY";
 
         public enum MessageType
         {

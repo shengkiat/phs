@@ -92,7 +92,8 @@
                     var internallistItems1 = new List<SelectListItem>()
                         {
                             new SelectListItem {Text = "REGISTRATION", Value = Constants.Internal_Form_Type_Registration},
-                            new SelectListItem {Text = "MEGA SORTING STATION", Value = Constants.Internal_Form_Type_MegaSortingStation}
+                            new SelectListItem {Text = "MEGA SORTING STATION", Value = Constants.Internal_Form_Type_MegaSortingStation},
+                            new SelectListItem {Text = "EVENT SUMMARY", Value = Constants.Internal_Form_Type_EventSummary}
                         };
 
                     @Html.DropDownListFor(m => m.InternalFormType, internallistItems1, string.Empty)
