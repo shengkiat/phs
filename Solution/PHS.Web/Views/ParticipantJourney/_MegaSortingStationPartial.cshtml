@@ -147,7 +147,17 @@
                         }
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = @disabledAttribute })
+
+                        @if (mode.IsReadOnlyMode())
+                        {
+                            @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = "disabled" })
+                        }
+
+                        else
+                        {
+                            @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number" })
+                        }
+                        
                     </td>
                 </tr>
 
