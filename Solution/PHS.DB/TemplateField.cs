@@ -53,6 +53,7 @@ namespace PHS.DB
         public string MatrixColumn { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
+        public string SummaryType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Summary> Summaries { get; set; }

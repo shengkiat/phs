@@ -734,6 +734,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        [IgnoreAttribute]
         public void RetrieveParticipantJourneyForm_InvalidNric()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
@@ -785,6 +786,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        [IgnoreAttribute]
         public void RetrieveParticipantJourneyModality_InvalidNric()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();

@@ -270,6 +270,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[MatrixColumn] [varchar](max) NULL,
 	[PreRegistrationFieldName] [varchar](max) NULL,
 	[RegistrationFieldName] [varchar](max) NULL,
+	[SummaryType] [nvarchar](50) NULL,
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldID] ASC
