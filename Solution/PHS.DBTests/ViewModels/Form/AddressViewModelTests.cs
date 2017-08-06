@@ -33,5 +33,15 @@ namespace PHS.DB.ViewModels.Form.Tests
             Assert.AreEqual("11-11", address.Unit);
             Assert.IsNull(address.ZipCode);
         }
+
+        [TestMethod()]
+        public void Initialize_InvalidScenarioTest()
+        {
+            AddressViewModel address = AddressViewModel.Initialize("Blk 363 Clementi Ave 2 #04-425");
+            Assert.IsNull(address.Blk);
+            Assert.AreEqual("Blk 363 Clementi Ave 2 #04-425", address.StreetAddress);
+            Assert.IsNull(address.Unit);
+            Assert.IsNull(address.ZipCode);
+        }
     }
 }

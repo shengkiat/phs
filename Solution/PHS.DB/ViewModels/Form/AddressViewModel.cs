@@ -31,7 +31,20 @@ namespace PHS.DB.ViewModels.Form
 
             result.Blk = getValue(oneLineOfAddress, "Blk: ", ", Street: ");
             result.StreetAddress = getValue(oneLineOfAddress, ", Street: ", ", Unit: ");
-            result.Unit = Regex.Split(oneLineOfAddress, ", Unit: ")[1];
+            string[] array = Regex.Split(oneLineOfAddress, ", Unit: ");
+
+            if (array.Length > 1)
+            {
+                result.Unit = array[1];
+            }
+
+            if (string.IsNullOrEmpty(result.Blk) 
+                && string.IsNullOrEmpty(result.Unit)
+                && string.IsNullOrEmpty(result.StreetAddress))
+            {
+                result.StreetAddress = oneLineOfAddress;
+            }
+            
 
             return result;
         }
@@ -46,7 +59,7 @@ namespace PHS.DB.ViewModels.Form
             int pFrom = stringmessage.IndexOf(startWord) + startWord.Length;
             int pTo = stringmessage.LastIndexOf(endWord);
 
-            return stringmessage.Substring(pFrom, pTo - pFrom);
+            return pFrom != -1 && pTo != -1 ? stringmessage.Substring(pFrom, pTo - pFrom) : null;
         }
 
     }
