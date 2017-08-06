@@ -1,8 +1,12 @@
 ﻿@model List<PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyModalityCircleViewModel>
 
+@using PHS.Common
+@using PHS.Business.Extensions
+
 @{
     ViewBag.Title = "Mega Sorting Station";
 }
+
 
 <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"> </script>
 
@@ -109,6 +113,14 @@
                     <b>No. of Labels</b>
                 </td>
             </tr>
+
+            @{
+                var mode = (Constants.TemplateFieldMode) TempData.Peek("ViewParticipantJourneyType");
+                var readonlyAttribute = mode.IsReadOnlyMode() ? "readonly" : "";
+                var disabledAttribute = mode.IsReadOnlyMode() ? "disabled" : "";
+            }
+
+
             @for (int i = 0; i < Model.Count; i++)
             {
                 <tr>
@@ -123,13 +135,19 @@
                         {
                             @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
                         }
+
+                        else if (mode.IsReadOnlyMode())
+                        {
+                            @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
+                        }
+
                         else
                         {
                             @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name });
                         }
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number" })
+                        @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = @disabledAttribute })
                     </td>
                 </tr>
 
@@ -144,6 +162,6 @@
         <b align="right">Number of Labels to be Printed:</b>
         <b align="center"><span id="sum">0</span></b>
     </div>
-    <input type="button" value="Print Labels" onclick="printLabels()" />
+    <input type="button" value="Print Labels" @disabledAttribute onclick="printLabels()" />
 }
 
