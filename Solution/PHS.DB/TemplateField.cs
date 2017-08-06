@@ -17,6 +17,7 @@ namespace PHS.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TemplateField()
         {
+            this.Summaries = new HashSet<Summary>();
             this.TemplateFieldValues = new HashSet<TemplateFieldValue>();
             this.Templates = new HashSet<Template>();
         }
@@ -53,6 +54,8 @@ namespace PHS.DB
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Summary> Summaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TemplateFieldValue> TemplateFieldValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

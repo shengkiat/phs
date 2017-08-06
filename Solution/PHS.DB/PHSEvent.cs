@@ -18,6 +18,7 @@ namespace PHS.DB
         public PHSEvent()
         {
             this.ParticipantJourneyModalities = new HashSet<ParticipantJourneyModality>();
+            this.Summaries = new HashSet<Summary>();
             this.Modalities = new HashSet<Modality>();
             this.Participants = new HashSet<Participant>();
         }
@@ -35,6 +36,8 @@ namespace PHS.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Summary> Summaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Modality> Modalities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

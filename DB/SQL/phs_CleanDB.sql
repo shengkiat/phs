@@ -349,6 +349,24 @@ CREATE TABLE [dbo].[ParticipantJourneyModality](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[Summary](
+	[SummaryID] [int] IDENTITY(1,1) NOT NULL,
+	[Label] [nvarchar](50) NULL,
+	[ParticipantID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
+	[ModalityID] [int] NOT NULL,
+	[TemplateFieldID] [int] NOT NULL,
+	[SummaryValue] [nvarchar](50) NULL,
+	[SummaryType] [nvarchar](50) NULL
+ CONSTRAINT [PK_summary] PRIMARY KEY CLUSTERED 
+(
+	[ParticipantID] ASC,
+	[PHSEventID] ASC,
+	[ModalityID] ASC,
+	[TemplateFieldID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
@@ -431,6 +449,26 @@ ALTER TABLE [dbo].[ReferenceRange]  WITH CHECK ADD  CONSTRAINT [FK reference_ran
 REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
 GO
 ALTER TABLE [dbo].[ReferenceRange] CHECK CONSTRAINT [FK reference_range_standard_reference]
+GO
+ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_phs_event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
+GO
+ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_phs_event]
+GO
+ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_participant] FOREIGN KEY([ParticipantID])
+REFERENCES [dbo].[Participant] ([ParticipantID])
+GO
+ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_participant]
+GO
+ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_modality] FOREIGN KEY([ModalityID])
+REFERENCES [dbo].[Modality] ([ModalityID])
+GO
+ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_modality]
+GO
+ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_template_field] FOREIGN KEY([TemplateFieldID])
+REFERENCES [dbo].[TemplateField] ([TemplateFieldID])
+GO
+ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_template_field]
 GO
 
 --------------------------Data--------------------- 
@@ -1091,3 +1129,10 @@ GO
 
 SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
 GO
+
+GO
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("Name", 1, 2, 1, 79, N'Test Name', N'ENT',)
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("Gender", 1, 2, 1, 80, N'Male', N'ENT',)
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("DOCTORMEMO", 1, 2, 9, 136, N'Memo Test', N'DOT',)
+GO
+
