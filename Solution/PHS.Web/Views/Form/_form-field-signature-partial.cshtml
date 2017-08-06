@@ -19,6 +19,8 @@
         <input id="SubmitFields[@Model.DomId].Signature"
                name="SubmitFields[@Model.DomId].Signature"
                type="hidden"
+               @readonlyAttribute
+               value="@Html.GetSubmittedTextValue(Model)"
                style="width: 100px; height:20px;" maxlength="9" />
 
         <div id="signature-pad" class="m-signature-pad">
@@ -85,6 +87,18 @@
 
     signaturePad = new SignaturePad(canvas);
     signaturePad.onEnd = signingEnd;
+
+    hiddenInput = document.getElementById("SubmitFields[@Model.DomId].Signature").value
+
+    if (hiddenInput) {
+        // Draws signature image from data URL
+        signaturePad.fromDataURL('data:image/png;base64,' + hiddenInput);
+    }
+
+    if (document.getElementById("SubmitFields[@Model.DomId].Signature").readOnly)
+    {
+        signaturePad.off();
+    }
 
     clearButton.addEventListener("click", function (event) {
         signaturePad.clear();
