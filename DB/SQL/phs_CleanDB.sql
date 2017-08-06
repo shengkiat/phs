@@ -1,6 +1,9 @@
 ﻿--------------------------Table Structure-----------------  
 USE [phs]
 
+IF OBJECT_ID('dbo.Summary', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Summary]; 
+
 IF OBJECT_ID('dbo.ParticipantJourneyModality', 'U') IS NOT NULL 
   DROP TABLE [dbo].[ParticipantJourneyModality]; 
 
@@ -1131,8 +1134,8 @@ SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
 GO
 
 GO
-INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("Name", 1, 2, 1, 79, N'Test Name', N'ENT',)
-INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("Gender", 1, 2, 1, 80, N'Male', N'ENT',)
-INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES ("DOCTORMEMO", 1, 2, 9, 136, N'Memo Test', N'DOT',)
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Name', 1, 2, 1, 79, N'Test Name', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Gender', 1, 2, 1, 80, N'Male', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'DOCTORMEMO', 1, 2, 9, 136, N'Memo Test', N'DSY')
 GO
 
