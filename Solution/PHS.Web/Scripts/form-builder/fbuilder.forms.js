@@ -84,7 +84,7 @@
             $(this).remove();
 
             if (fieldId) {
-                $.post('/Forms/deletetemplatefield', { eventid: evtId, fieldid: fieldId }, function () {
+                $.post('/FormAccess/deletetemplatefield', { eventid: evtId, fieldid: fieldId }, function () {
                     refreshForm();
                 });
             }

@@ -89,6 +89,22 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeleteTemplateField(int? fieldid)
+        {
+            if (fieldid.HasValue)
+            {
+                using (var formManager = new FormManager())
+                {
+                    formManager.DeleteTemplateField(fieldid.Value);
+                    return Json(new { success = true, message = "Field was deleted." });
+                }
+            }
+
+            return Json(new { success = false, message = "Unable to delete field." });
+        }
+
+
+        [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
