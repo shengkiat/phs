@@ -367,6 +367,52 @@
                 </td>
             </tr> 
 
+            <!-- ConditionCriteria Field Name Row -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        Condition Criteria
+                    </label>
+                </td>
+                <td class="input">
+
+                    @{
+
+                        var ConditionCriterialistItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "contains", Value = "=="},
+                            new SelectListItem {Text = "doesnotcontain", Value = "!="}
+                        };
+
+                        @Html.DropDownList("conditioncriteria", ConditionCriterialistItems, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "conditioncriteria"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+
+
+                </td>
+            </tr>
+            <!--// end ConditionCriteria Field Name Row -->
+
+            <!-- Options Condition -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        Condition Options
+                    </label>
+                </td>
+                <td class="input">
+                    <input type="text" value="" data-field-property="conditionoptions" class="is-publisher" />
+                </td>
+
+            </tr>
+            <!--//end Options Radio -->
+
             <!-- PreRegistration Field Name Row -->
             <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
                 <td class="label">
