@@ -236,6 +236,23 @@ namespace PHS.Business.Extensions
 
         }
 
+        public static bool IsDisplayField(this HtmlHelper helper, TemplateFieldViewModel model)
+        {
+            bool result = true;
+
+            if (model.ConditionTemplateFieldID.HasValue)
+            {
+                if (string.IsNullOrEmpty(model.EntryId) || model.EntryId.Equals(Guid.Empty.ToString()))
+                {
+                    result = false;
+                }
+
+                
+            }
+
+            return result;
+        }
+
         public static string GetTempFormValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
         {
             StringBuilder sb = new StringBuilder();

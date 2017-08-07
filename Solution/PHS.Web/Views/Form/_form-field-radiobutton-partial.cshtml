@@ -1,6 +1,21 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]').on("change", function () {
+
+            var selectedValue = this.value;
+
+            displayOrHide(this, selectedValue, @Model.DomId);
+
+        });
+    });
+
+</script>
+
 <div style="width: 90%; word-wrap: break-word; text-align: left;"
      data-sub-channel="sub-label-@Model.DomId"
      class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>

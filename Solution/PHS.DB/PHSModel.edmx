@@ -257,6 +257,9 @@
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
           <Property Name="RegistrationFieldName" Type="varchar(max)" />
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConditionTemplateFieldID" Type="int" />
+          <Property Name="ConditionCriteria" Type="varchar" MaxLength="50" />
+          <Property Name="ConditionOptions" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -496,6 +499,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_template_field_template_field">
+          <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="0..1" />
+          <End Role="TemplateField1" Type="Self.TemplateField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TemplateField">
+              <PropertyRef Name="TemplateFieldID" />
+            </Principal>
+            <Dependent Role="TemplateField1">
+              <PropertyRef Name="ConditionTemplateFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_template_field_values_template_fields">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -614,6 +629,10 @@
             <End Role="Modality" EntitySet="Modality" />
             <End Role="ModalityForm" EntitySet="ModalityForm" />
           </AssociationSet>
+          <AssociationSet Name="FK_template_field_template_field" Association="Self.FK_template_field_template_field">
+            <End Role="TemplateField" EntitySet="TemplateField" />
+            <End Role="TemplateField1" EntitySet="TemplateField" />
+          </AssociationSet>
           <AssociationSet Name="FK_template_field_values_template_fields" Association="Self.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateField" />
             <End Role="TemplateFieldValue" EntitySet="TemplateFieldValue" />
@@ -686,6 +705,10 @@
           <AssociationSet Name="FK_summary_template_field" Association="phsModel.FK_summary_template_field">
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Summary" EntitySet="Summaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_template_field_template_field" Association="phsModel.FK_template_field_template_field">
+            <End Role="TemplateField" EntitySet="TemplateFields" />
+            <End Role="TemplateField1" EntitySet="TemplateFields" />
           </AssociationSet>
           <AssociationSet Name="FK_template_field_values_template_fields" Association="phsModel.FK_template_field_values_template_fields">
             <End Role="TemplateField" EntitySet="TemplateFields" />
@@ -964,7 +987,12 @@
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConditionTemplateFieldID" Type="Int32" />
+          <Property Name="ConditionCriteria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConditionOptions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_template_field" FromRole="TemplateField" ToRole="Summary" />
+          <NavigationProperty Name="TemplateField1" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField" ToRole="TemplateField1" />
+          <NavigationProperty Name="TemplateField2" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField1" ToRole="TemplateField" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
         </EntityType>
@@ -1108,6 +1136,18 @@
             </Principal>
             <Dependent Role="Summary">
               <PropertyRef Name="TemplateFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_template_field_template_field">
+          <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="0..1" />
+          <End Type="phsModel.TemplateField" Role="TemplateField1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TemplateField">
+              <PropertyRef Name="TemplateFieldID" />
+            </Principal>
+            <Dependent Role="TemplateField1">
+              <PropertyRef Name="ConditionTemplateFieldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1349,6 +1389,9 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
+                <ScalarProperty Name="ConditionOptions" ColumnName="ConditionOptions" />
+                <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />
+                <ScalarProperty Name="ConditionTemplateFieldID" ColumnName="ConditionTemplateFieldID" />
                 <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
                 <ScalarProperty Name="RegistrationFieldName" ColumnName="RegistrationFieldName" />
                 <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />

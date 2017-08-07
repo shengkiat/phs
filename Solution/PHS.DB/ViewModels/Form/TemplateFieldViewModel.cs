@@ -53,6 +53,10 @@ namespace PHS.DB.ViewModels.Form
         public string RegistrationFieldName { get; set; }
         public string SummaryType { get; set; }
 
+        public int? ConditionTemplateFieldID { get; set; }
+        public string ConditionCriteria { get; set; }
+        public string ConditionOptions { get; set; }
+
         #endregion
 
         #region Public Members
@@ -106,7 +110,10 @@ namespace PHS.DB.ViewModels.Form
                     MatrixColumn = field.MatrixColumn,
                     PreRegistrationFieldName = field.PreRegistrationFieldName,
                     RegistrationFieldName = field.RegistrationFieldName,
-                    SummaryType = field.SummaryType
+                    SummaryType = field.SummaryType,
+                    ConditionCriteria = field.ConditionCriteria,
+                    ConditionOptions = field.ConditionOptions,
+                    ConditionTemplateFieldID = field.ConditionTemplateFieldID
                 };
             }
 
