@@ -6,7 +6,7 @@
     var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
 }
 
-<div id="mainfield-@Model.DomId" 
+<div id="mainfield-TextBox-@Model.DomId" 
      data-reference="@Model.ConditionTemplateFieldID" 
      data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
      @displayAttribute>
