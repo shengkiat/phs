@@ -85,7 +85,10 @@ namespace PHS.Repository.Repository
                     MatrixColumn = fieldView.MatrixColumn,
                     PreRegistrationFieldName = fieldView.PreRegistrationFieldName,
                     RegistrationFieldName = fieldView.RegistrationFieldName,
-                    SummaryType = fieldView.SummaryType
+                    SummaryType = fieldView.SummaryType,
+                    ConditionCriteria = fieldView.ConditionCriteria,
+                    ConditionOptions = fieldView.ConditionOptions,
+                    ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -127,6 +130,9 @@ namespace PHS.Repository.Repository
                     fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                     fField.RegistrationFieldName = fieldView.RegistrationFieldName;
                     fField.SummaryType = fieldView.SummaryType;
+                    fField.ConditionCriteria = fieldView.ConditionCriteria;
+                    fField.ConditionOptions = fieldView.ConditionOptions;
+                    fField.ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID;
                 }
 
               //  this.SaveChanges();
@@ -241,8 +247,11 @@ namespace PHS.Repository.Repository
                     MatrixColumn = templateField1.MatrixColumn,
                     PreRegistrationFieldName = templateField1.PreRegistrationFieldName,
                     RegistrationFieldName = templateField1.RegistrationFieldName,
-                    SummaryType = templateField1.RegistrationFieldName
-                };
+                    SummaryType = templateField1.RegistrationFieldName,
+                    ConditionCriteria = templateField1.ConditionCriteria,
+                    ConditionOptions = templateField1.ConditionOptions,
+                    ConditionTemplateFieldID = templateField1.ConditionTemplateFieldID
+            };
 
                 template.TemplateFields.Add(fField);
             }

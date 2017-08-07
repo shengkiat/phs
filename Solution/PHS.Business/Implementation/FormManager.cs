@@ -268,8 +268,17 @@ namespace PHS.Business.Implementation
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
                                     PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
                                     RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName"),
-                                    SummaryType = collection.FormFieldValue(domId, "SummaryType")
+                                    SummaryType = collection.FormFieldValue(domId, "SummaryType"),
+                                    ConditionCriteria = collection.FormFieldValue(domId, "ConditionCriteria"),
+                                    ConditionOptions = collection.FormFieldValue(domId, "ConditionOptions"),
                                 };
+
+                                var conditionTemplateFieldID = collection.FormFieldValue(domId, "ConditionTemplateFieldID");
+
+                                if (!string.IsNullOrEmpty(conditionTemplateFieldID))
+                                {
+                                    fieldView.ConditionTemplateFieldID = Convert.ToInt32(conditionTemplateFieldID);
+                                }
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
                                 {
