@@ -1,6 +1,25 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]').on("change", function () {
+
+            var allVals = [];
+            $('input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]:checked').each(function () {
+                allVals.push($(this).val());
+            });
+
+            displayOrHideFromCheckBox(this, allVals, @Model.DomId);
+
+
+        });
+    });
+
+</script>
+
 <label style="width: 90%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
        class="label editablewysiwyg">@Model.Label</label>
