@@ -1,6 +1,15 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
+<script type="text/javascript">
+
+    function displayOrHideFields(sel, conditionId) {
+
+        displayOrHide(sel, sel.value, conditionId);
+    }
+
+</script>
+
 <label style="width: 90%; word-wrap: break-word; text-align: left;"
        data-sub-channel="sub-label-@Model.DomId"
        class="label editable">@Model.Label</label>
@@ -13,12 +22,15 @@
     }
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
+
         <select id="SubmitFields[@Model.DomId].DropDownList"
                 name="SubmitFields[@Model.DomId].DropDownList"
                 class="default"
                 @disabledAttribute
+                onchange="displayOrHideFields(this, @Model.DomId);"
                 style="width: auto; max-width:80%;">
             
+            <option @selectedAttribute value="" />
 
             @foreach (var option in Model.Options.Split(","))
             {
