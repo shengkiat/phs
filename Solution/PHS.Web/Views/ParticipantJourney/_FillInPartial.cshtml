@@ -40,6 +40,8 @@
 
             console.log(content.responseText);
 
+            window.parent.$('html,body').scrollTop(0);
+
             var response = $.parseJSON(content.responseText);
             if (response.success) {
                 if (!response.isautosave) {
@@ -47,8 +49,6 @@
                 }
 
                 var select = "";
-
-                window.parent.$('html,body').scrollTop(0);
 
                 $.ajax(
                     {

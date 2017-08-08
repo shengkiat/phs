@@ -291,8 +291,8 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    TempData["error"] = result;
-                    return Json(new { success = false, error = "Unable to save form ", isautosave = false });
+                    //TempData["error"] = result;
+                    return Json(new { success = false, error = result, isautosave = false });
                 }
             }
         }
