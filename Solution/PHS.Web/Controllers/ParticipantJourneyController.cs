@@ -253,11 +253,9 @@ namespace PHS.Web.Controllers
                 string nric = null;
                 string eventId = null;
                 int modalityId = -1;
-
-                if(TempData.Peek("ParticipantJourneyFormViewModel") != null)
+                if (TempData.Peek("SelectedModalityId") != null)
                 { 
-                    ParticipantJourneyFormViewModel participantJourneyFormViewModel = (ParticipantJourneyFormViewModel)TempData.Peek("ParticipantJourneyFormViewModel");
-                    modalityId = participantJourneyFormViewModel.SelectedModalityId;
+                    modalityId = (int) TempData.Peek("SelectedModalityId");
                 }
 
                 ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
