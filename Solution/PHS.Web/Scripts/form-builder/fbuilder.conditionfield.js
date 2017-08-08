@@ -1,17 +1,21 @@
 ﻿function displayOrHide(inputOption, selectedValue, conditionId) {
 
-    $(inputOption).parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
+    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
         var criteria = $(this).attr('data-criteria');
         var options = $(this).attr('data-options');
 
-        if (selectedValue == "")
+        if (criteria == "" || options == "") {
+            $(this).attr('style', '');
+        }
+
+        else if (selectedValue == "")
         {
             $(this).attr('style', 'display:none;');
         }
 
         else if (criteria == "==") {
 
-            if (options.includes(selectedValue)) {
+            if (options.indexOf(selectedValue) > -1) {
                 $(this).attr('style', '');
             }
 
@@ -21,7 +25,7 @@
         }
 
         else if (criteria == "!=") {
-            if (options.includes(selectedValue)) {
+            if (options.indexOf(selectedValue) > -1) {
                 $(this).attr('style', 'display:none;');
             }
 
@@ -34,11 +38,15 @@
 
 function displayOrHideFromCheckBox(inputOption, selectedValue, conditionId) {
 
-    $(inputOption).parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
+    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
         var criteria = $(this).attr('data-criteria');
         var options = $(this).attr('data-options');
 
-        if (selectedValue == "") {
+        if (criteria == "" || options == "") {
+            $(this).attr('style', '');
+        }
+
+        else if (selectedValue == "") {
             $(this).attr('style', 'display:none;');
         }
 
@@ -46,7 +54,7 @@ function displayOrHideFromCheckBox(inputOption, selectedValue, conditionId) {
             var foundOption = false;
 
             $.each(selectedValue, function (i, val) {
-                if (!foundOption && options.includes(selectedValue[i]))
+                if (!foundOption && options.indexOf(selectedValue[i]) > -1)
                 {
                     foundOption = true;
                 }
@@ -65,7 +73,7 @@ function displayOrHideFromCheckBox(inputOption, selectedValue, conditionId) {
             var foundOption = false;
 
             $.each(selectedValue, function (i, val) {
-                if (!foundOption && options.includes(selectedValue[i])) {
+                if (!foundOption && options.indexOf(selectedValue[i]) > -1) {
                     foundOption = true;
                 }
             });
