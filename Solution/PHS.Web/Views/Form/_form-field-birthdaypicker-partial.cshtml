@@ -93,11 +93,18 @@
 
         $(document).ready(function () {
             $("select[name='SubmitFields[@Model.DomId].Year']").change(function () {
-                var currentYear = new Date().getFullYear();
                 var year = $('option:selected', this).text();
 
-                document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+                displayAge(year);
             });
+
+            var year = $('option:selected', "select[name='SubmitFields[@Model.DomId].Year']").text();
+            displayAge(year);
         });
+
+        function displayAge(year) {
+            var currentYear = new Date().getFullYear();
+            document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+        }
 
     </script>
