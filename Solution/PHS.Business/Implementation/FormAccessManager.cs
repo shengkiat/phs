@@ -91,7 +91,7 @@ namespace PHS.Business.Implementation
                         return null;
                     }
 
-                    var referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue < value && r.MaximumValue > value).FirstOrDefault();
+                    var referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue <= value && r.MaximumValue >= value).FirstOrDefault();
                     if (referenceRange == null)
                     {
                         message = "Unable to find reference range";
