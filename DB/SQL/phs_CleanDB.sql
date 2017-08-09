@@ -699,6 +699,53 @@ GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 13)
 GO
 
+--- Standard Reference Sample  --
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
+GO
+
+--- Reference range Sample  --
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'Underweight', 0, 18.4, N'NORMAL', 3)
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (6, N'Normal', 18.5, 24.9, N'NORMAL', 3)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (7, N'Overweight', 25, 29.9, N'NORMAL', 3)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (8, N'Obese', 30, 9999, N'NORMAL', 3)
+
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
+GO
+
 ---  Forms Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[Form] ON 
 INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (1, N'Registration Form', NULL, 0, NULL, N'REG', CAST(N'2017-02-19 09:15:43.527' AS DateTime), 1)
@@ -844,7 +891,7 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (136, N'<p><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Memo/Referral Letter</span></p>', N'Click to edit', N'DOCTORMEMO', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 2, 18, 100, N'', CAST(N'2017-03-26 05:46:36.860' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 3)
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (138, N'1st Systolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-03-26 05:50:25.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
@@ -1109,49 +1156,6 @@ INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], 
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 13, 6, NULL, N'00000000-0000-0000-0000-000000000000')
 GO
 
---- Standard Reference Sample  --
-
-SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
-GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
-GO
-
-GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
-GO
-
-GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
-GO
-
-SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
-GO
-
---- Reference range Sample  --
-SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'BMI Normal', 18.5, 24.9, N'NORMAL', 3)
-GO
-
-SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
-GO
 
 GO
 INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Name', 1, 2, 1, 79, N'Test Name', N'ESY')
