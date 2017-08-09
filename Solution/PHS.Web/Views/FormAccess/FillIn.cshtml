@@ -28,6 +28,18 @@
         <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
     }
 
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+
+                window.parent.$('html,body').scrollTop(0);
+
+            });
+        });
+
+    </script>
+
 }
 
 <div class="form-page-container prepend-top span-26">
@@ -108,7 +120,7 @@
                             &nbsp;
                         </label>
                         <div class="input">
-                            <input type="submit" class="blue" value="Submit" />
+                            <input id ="btnSubmit" type="submit" class="blue" value="Submit" />
                         </div>
                     </li>
                 </ul>
