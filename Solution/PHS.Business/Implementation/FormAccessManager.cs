@@ -76,6 +76,37 @@ namespace PHS.Business.Implementation
             }
         }
 
-        
+        public ReferenceRange GetReferenceRange(int standardReferenceID, double value, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    var standardReference = unitOfWork.StandardReferences.GetStandardReference(standardReferenceID);
+
+                    if (standardReference == null)
+                    {
+                        message = "Invalid Standard Reference ID";
+                        return null;
+                    }
+
+                    var referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue < value && r.MaximumValue > value).FirstOrDefault();
+                    if (referenceRange == null)
+                    {
+                        message = "Unable to find reference range";
+                        return null;
+                    }
+
+                    return referenceRange;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("Standard Reference by ID");
+                return null;
+            }
+        }
     }
 }
