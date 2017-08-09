@@ -25,7 +25,7 @@ namespace PHS.Repository.Interface.Core
 
         ITemplateFieldValueRepository TemplateFieldValues { get;  }
 
-
+        IStandardReferenceRepository StandardReferences { get; }
 
         int Complete();
 
