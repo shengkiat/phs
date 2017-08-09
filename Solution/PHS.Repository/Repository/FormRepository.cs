@@ -88,7 +88,8 @@ namespace PHS.Repository.Repository
                     SummaryType = fieldView.SummaryType,
                     ConditionCriteria = fieldView.ConditionCriteria,
                     ConditionOptions = fieldView.ConditionOptions,
-                    ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID
+                    ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID,
+                    StandardReferenceID = fieldView.StandardReferenceID
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -133,6 +134,7 @@ namespace PHS.Repository.Repository
                     fField.ConditionCriteria = fieldView.ConditionCriteria;
                     fField.ConditionOptions = fieldView.ConditionOptions;
                     fField.ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID;
+                    fField.StandardReferenceID = fieldView.StandardReferenceID;
                 }
 
               //  this.SaveChanges();
@@ -250,8 +252,9 @@ namespace PHS.Repository.Repository
                     SummaryType = templateField1.RegistrationFieldName,
                     ConditionCriteria = templateField1.ConditionCriteria,
                     ConditionOptions = templateField1.ConditionOptions,
-                    ConditionTemplateFieldID = templateField1.ConditionTemplateFieldID
-            };
+                    ConditionTemplateFieldID = templateField1.ConditionTemplateFieldID,
+                    StandardReferenceID = templateField1.StandardReferenceID
+                };
 
                 template.TemplateFields.Add(fField);
             }

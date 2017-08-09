@@ -57,6 +57,8 @@ namespace PHS.DB.ViewModels.Form
         public string ConditionCriteria { get; set; }
         public string ConditionOptions { get; set; }
 
+        public int? StandardReferenceID { get; set; }
+
         #endregion
 
         #region Public Members
@@ -113,7 +115,8 @@ namespace PHS.DB.ViewModels.Form
                     SummaryType = field.SummaryType,
                     ConditionCriteria = field.ConditionCriteria,
                     ConditionOptions = field.ConditionOptions,
-                    ConditionTemplateFieldID = field.ConditionTemplateFieldID
+                    ConditionTemplateFieldID = field.ConditionTemplateFieldID,
+                    StandardReferenceID = field.StandardReferenceID
                 };
             }
 

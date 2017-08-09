@@ -280,6 +280,13 @@ namespace PHS.Business.Implementation
                                     fieldView.ConditionTemplateFieldID = Convert.ToInt32(conditionTemplateFieldID);
                                 }
 
+                                var standardReferenceID = collection.FormFieldValue(domId, "StandardReferenceID");
+
+                                if (!string.IsNullOrEmpty(standardReferenceID))
+                                {
+                                    fieldView.StandardReferenceID = Convert.ToInt32(standardReferenceID);
+                                }
+
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
                                 {
                                     fieldView.TemplateFieldID = Convert.ToInt32(fieldId);

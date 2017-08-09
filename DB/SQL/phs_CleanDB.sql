@@ -274,6 +274,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[ConditionTemplateFieldID] [int] NULL,
 	[ConditionCriteria] [varchar](50) NULL,
 	[ConditionOptions] [nvarchar](50) NULL,
+	[StandardReferenceID] [int] NULL,
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldID] ASC
@@ -405,6 +406,11 @@ ALTER TABLE [dbo].[TemplateField]  WITH CHECK ADD  CONSTRAINT [FK_template_field
 REFERENCES [dbo].[TemplateField] ([TemplateFieldId])
 GO
 ALTER TABLE [dbo].[TemplateField] CHECK CONSTRAINT [FK_template_field_template_field]
+GO
+ALTER TABLE [dbo].[TemplateField]  WITH CHECK ADD  CONSTRAINT [FK_template_field_standard_reference] FOREIGN KEY([StandardReferenceID])
+REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
+GO
+ALTER TABLE [dbo].[TemplateField] CHECK CONSTRAINT [FK_template_field_standard_reference]
 GO
 ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_form] FOREIGN KEY([FormID])
 REFERENCES [dbo].[Form] ([FormID])

@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="53">
-        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="1.5" PointY="29.625" />
-        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="phsModel.Participant" Width="1.5" PointX="1.5" PointY="24.75" />
-        <EntityTypeShape EntityType="phsModel.ParticipantJourneyModality" Width="1.5" PointX="8.25" PointY="5" />
-        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="5.75" PointY="9.75" />
-        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="1.5" PointY="19.875" />
-        <EntityTypeShape EntityType="phsModel.PreRegistration" Width="1.5" PointX="7.75" PointY="9.75" />
-        <EntityTypeShape EntityType="phsModel.ReferenceRange" Width="1.5" PointX="5" PointY="1" />
-        <EntityTypeShape EntityType="phsModel.StandardReference" Width="1.5" PointX="2.75" PointY="1.375" />
-        <EntityTypeShape EntityType="phsModel.Summary" Width="1.5" PointX="3" PointY="5" />
-        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="6" PointY="4.875" />
-        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="0.75" PointY="2.375" />
-        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="3" PointY="14.125" />
+      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="45">
+        <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="3.75" PointY="21" />
+        <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="phsModel.Modality" Width="1.5" PointX="6" PointY="23" />
+        <EntityTypeShape EntityType="phsModel.Participant" Width="1.5" PointX="1.5" PointY="24.875" />
+        <EntityTypeShape EntityType="phsModel.ParticipantJourneyModality" Width="1.5" PointX="10.5" PointY="8.375" />
+        <EntityTypeShape EntityType="phsModel.Person" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.PHSEvent" Width="1.5" PointX="3.75" PointY="25.125" />
+        <EntityTypeShape EntityType="phsModel.PreRegistration" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="phsModel.ReferenceRange" Width="1.5" PointX="3" PointY="2.375" />
+        <EntityTypeShape EntityType="phsModel.StandardReference" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="phsModel.Summary" Width="1.5" PointX="8.25" PointY="8.375" />
+        <EntityTypeShape EntityType="phsModel.Template" Width="1.5" PointX="5.25" PointY="8.125" />
+        <EntityTypeShape EntityType="phsModel.TemplateField" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="phsModel.TemplateFieldValue" Width="1.5" PointX="5.25" PointY="17.375" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_form" />
         <AssociationConnector Association="phsModel.FK_Form_Template" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_modality" />
@@ -30,6 +30,7 @@
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_template" />
         <AssociationConnector Association="phsModel.FK_summary_phs_event" />
         <AssociationConnector Association="phsModel.FK_reference_range_standard_reference" />
+        <AssociationConnector Association="phsModel.FK_template_field_standard_reference" />
         <AssociationConnector Association="phsModel.FK_summary_template_field" />
         <AssociationConnector Association="phsModel.FK_template_field_template_field" />
         <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />

@@ -58,7 +58,9 @@ namespace PHS.DB
         public Nullable<int> ConditionTemplateFieldID { get; set; }
         public string ConditionCriteria { get; set; }
         public string ConditionOptions { get; set; }
+        public Nullable<int> StandardReferenceID { get; set; }
     
+        public virtual StandardReference StandardReference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Summary> Summaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
