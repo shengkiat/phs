@@ -1,8 +1,9 @@
 ﻿
-@using PHS.DB
-@using PHS.Business.ViewModel.PastParticipantJourney
+@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyFormViewModel
 
 @using PHS.Business.Extensions
+@using PHS.DB
+@using System.Collections.Generic;
 @using GridMvc.Html
 
 
@@ -23,7 +24,15 @@
         <br />
         <ul class="vertical-list">
 
+            @foreach (var summary in Model.GetEventSummaries())
+            {
+                <li style="margin-bottom: 1em;">
+                    <B>@summary.Label</B> <br />
+                    <span class="LabelForsub-label">@summary.SummaryValue</span>
+                </li>
+            }
 
+            <!-- 
             <li>
                 <input value="60" type="text"  class="title" readonly /><br />
                 <span class="sub-label">Weight (kg)</span>
@@ -93,6 +102,8 @@
                 <br />
                 <label>Recommended for:</label>
             </li>
+
+            -->
 
         </ul>
     </div>
