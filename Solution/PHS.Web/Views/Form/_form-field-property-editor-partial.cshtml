@@ -381,6 +381,26 @@
                 </td>
             </tr> 
 
+            <!-- StandardReferenceID -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox bmi">
+                <td class="label">
+                    <label class="label">
+                        Standard Reference
+                    </label>
+                </td>
+                <td class="input">
+                    @Html.DropDownList("standardreferenceid", new SelectList(UtilityHelper.StandardReference(), "Value", "Text"),
+                                        string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "standardreferenceid"},
+                                            { "class","is-publisher"}
+
+                                         })
+                </td>
+            </tr>
+            <!--//StandardReferenceID required -->
+
             <!-- Condition Field Id -->
             <tr class="textbox textarea dropdownlist radiobutton checkbox">
                 <td class="label">

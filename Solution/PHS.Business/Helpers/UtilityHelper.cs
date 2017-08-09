@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using PHS.Common;
+using PHS.Business.Implementation;
 
 namespace PHS.Business.Helpers
 {
@@ -22,6 +23,17 @@ namespace PHS.Business.Helpers
         public static IEnumerable<SelectListItem> NumberRange(int minimum, int maximum)
         {
             return Enumerable.Range(minimum, (maximum - minimum) + 1).Reverse().Select(v => new SelectListItem { Value = v.ToString(), Text = v.ToString() });
+        }
+
+        public static IEnumerable<SelectListItem> StandardReference()
+        {
+            using (var standardReferenceManager = new StandardReferenceManager())
+            {
+                string message = string.Empty;
+                var standardReferences = standardReferenceManager.GetAllStandardReferences(out message);
+                return standardReferences.Select(v => new SelectListItem { Value = v.StandardReferenceID.ToString(), Text = v.Title });
+            }
+                
         }
 
         public static IEnumerable<SelectListItem> ThemeFolderList()
