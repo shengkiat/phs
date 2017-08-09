@@ -270,8 +270,7 @@ namespace PHS.Web.Controllers
 
                 if (result.Equals("success"))
                 {
-                    TempData["success"] = templateView.ConfirmationMessage;
-
+                   
                     List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
                     
                     foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
@@ -283,7 +282,7 @@ namespace PHS.Web.Controllers
                     }
 
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
-
+                    //TempData["success"] = templateView.ConfirmationMessage;
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                 }
 
