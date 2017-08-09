@@ -272,6 +272,25 @@ namespace PHS.Web.Controllers
             }
         }
 
+        public ActionResult GetReferenceRange(int standardReferenceId, double value)
+        {
+            string message = string.Empty;
+            using (var standardReferenceManager = new StandardReferenceManager())
+            {
+                var standardReference = standardReferenceManager.GetStandardReferenceByID(standardReferenceId, out message);
+
+                if (standardReference == null)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = "Invalid" });
+                }
+
+                var referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue < value && r.MaximumValue > value).FirstOrDefault();
+
+                return Json(new { Status = referenceRange.Title, Color = "" });
+            }
+        }
+
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
         {
             foreach (var key in formCollection.AllKeys)
