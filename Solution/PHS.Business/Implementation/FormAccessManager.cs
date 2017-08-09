@@ -104,7 +104,7 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Standard Reference by ID");
+                message = Constants.OperationFailedDuringRetrievingValue("GetReferenceRange");
                 return null;
             }
         }
