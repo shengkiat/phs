@@ -242,12 +242,18 @@ namespace PHS.Business.Extensions
 
             if (model.ConditionTemplateFieldID.HasValue)
             {
-                if (string.IsNullOrEmpty(model.EntryId) || model.EntryId.Equals(Guid.Empty.ToString()))
+                if (string.IsNullOrEmpty(model.ConditionCriteria) || string.IsNullOrEmpty(model.ConditionOptions))
+                {
+                    result = true;
+                }
+
+                else if (string.IsNullOrEmpty(model.EntryId) || model.EntryId.Equals(Guid.Empty.ToString()))
                 {
                     result = false;
                 }
 
-                
+
+
             }
 
             return result;
