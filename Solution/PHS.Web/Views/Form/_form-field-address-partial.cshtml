@@ -19,7 +19,7 @@
             };
 
             $.ajax({
-                url: "/FormAccess/GetAddressByZipCode",
+                url: "@Url.Action("GetAddressByZipCode", "FormAccess")",
                 type: "POST",
             data: JSON.stringify(jsonObject),
             contentType: "application/json; charset=utf-8",

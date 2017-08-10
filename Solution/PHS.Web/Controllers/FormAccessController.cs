@@ -307,11 +307,6 @@ namespace PHS.Web.Controllers
 
         public ActionResult GenerateDoctorMemo(string text)
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToError("Unauthorized access");
-            }
-
             if (text == null)
             {
                 text = "";
@@ -341,11 +336,6 @@ namespace PHS.Web.Controllers
         [HttpGet]
         public ActionResult DownloadDoctorMemo(string fileGuid, string fileName)
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToError("Unauthorized access");
-            }
-
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];

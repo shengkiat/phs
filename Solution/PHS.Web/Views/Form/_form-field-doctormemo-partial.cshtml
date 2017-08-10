@@ -13,9 +13,9 @@
             var jsonObject = {
                 "text": doctorText
             };
-
+            
             $.ajax({
-                url: "/FormAccess/GenerateDoctorMemo",
+                url: "@Url.Action("GenerateDoctorMemo", "FormAccess")",
                 type: "POST",
                 data: JSON.stringify(jsonObject),
                 cache: false,
@@ -27,7 +27,7 @@
                 },
                 success: function (response) {
 
-                    window.location = '/FormAccess/DownloadDoctorMemo?fileGuid=' + response.FileGuid
+                    window.location = '@Url.Action("DownloadDoctorMemo", "FormAccess")?fileGuid=' + response.FileGuid
                                       + '&filename=' + response.FileName;
                 }
             });
@@ -55,6 +55,7 @@
                   type="text">@Html.GetSubmittedTextValue(Model)</textarea>
         <br />
         <button type="button" id="btnGenerateDoctorMemo">Download Memo</button>
+        <label id="SubmitFields[@Model.DomId].Error" style="color: red;"></label>
 
         @if (Model.IsEditMode())
         {
