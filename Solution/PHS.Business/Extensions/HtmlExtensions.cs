@@ -251,9 +251,40 @@ namespace PHS.Business.Extensions
                 {
                     result = false;
                 }
+                /*
+                else
+                {
+                    TemplateFieldViewModel conditionTemplateFieldViewModel = null;
 
+                    string conditionTemplateFieldValue = GetSubmittedTextValue(helper, conditionTemplateFieldViewModel);
 
+                    if (model.ConditionCriteria.Equals("=="))
+                    {
 
+                        if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                        {
+                            result = true;
+                        }
+
+                        else
+                        {
+                            result = false;
+                        }
+                    }
+
+                    else if (model.ConditionCriteria.Equals("!="))
+                    {
+                        if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                        {
+                            result = false;
+                        }
+
+                        else
+                        {
+                            result = true;
+                        }
+                    }
+                }*/
             }
 
             return result;
