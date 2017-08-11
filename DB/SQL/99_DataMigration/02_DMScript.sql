@@ -300,17 +300,17 @@ select @formDiabetesMellitus = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formDiabetesMellitus)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formDiabetesMellitus,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formDiabetesMellitus,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull([Diabetes Mellitus], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formDiabetesMellitus,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formDiabetesMellitus,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull([Diabetes Mellitus], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formDiabetesMellitus,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formDiabetesMellitus,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull([Diabetes Mellitus], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -321,17 +321,17 @@ select @formHyperLipid = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formHyperLipid)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHyperLipid,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formHyperLipid,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Hyperlipidaemia, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHyperLipid,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formHyperLipid,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Hyperlipidaemia, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHyperLipid,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formHyperLipid,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Hyperlipidaemia, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -343,17 +343,17 @@ select @formhypertension = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formhypertension)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formhypertension,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formhypertension,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Hypertension, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formhypertension,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formhypertension,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Hypertension, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formhypertension,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formhypertension,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Hypertension, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -366,17 +366,17 @@ select @formHeartDisease = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formHeartDisease)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHeartDisease,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formHeartDisease,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull([Heart Disease], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHeartDisease,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formHeartDisease,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull([Heart Disease], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formHeartDisease,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formHeartDisease,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull([Heart Disease], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -387,17 +387,17 @@ select @formStroke = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formStroke)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formStroke,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formStroke,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Stroke, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formStroke,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formStroke,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Stroke, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formStroke,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formStroke,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Stroke, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -408,17 +408,17 @@ select @formAsthma = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formAsthma)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formAsthma,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formAsthma,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Asthma, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formAsthma,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formAsthma,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Asthma, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formAsthma,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formAsthma,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Asthma, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -429,17 +429,17 @@ select @formCOPD = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formCOPD)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCOPD,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formCOPD,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(COPD, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCOPD,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formCOPD,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(COPD, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCOPD,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formCOPD,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(COPD, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -450,17 +450,17 @@ select @formothers1 = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formothers1)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formothers1,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formothers1,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Others1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formothers1,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formothers1,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Others1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formothers1,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formothers1,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Others1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -472,17 +472,17 @@ select @formElaboration1 = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formElaboration1)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration1,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formElaboration1,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration1,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formElaboration1,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration1,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formElaboration1,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration1, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -493,17 +493,17 @@ select @formColorectal = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formColorectal)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formColorectal,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formColorectal,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Colorectal, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formColorectal,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formColorectal,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Colorectal, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formColorectal,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formColorectal,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Colorectal, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -514,17 +514,17 @@ select @formBreast = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formBreast)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formBreast,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formBreast,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Breast, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formBreast,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formBreast,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Breast, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formBreast,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formBreast,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Breast, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -535,17 +535,17 @@ select @formCervical = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formCervical)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCervical,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formCervical,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Cervical, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCervical,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formCervical,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Cervical, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formCervical,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formCervical,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Cervical, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -556,17 +556,17 @@ select @formOthers2 = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formOthers2)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOthers2,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formOthers2,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Others2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOthers2,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formOthers2,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Others2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOthers2,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formOthers2,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Others2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -577,17 +577,17 @@ select @formElaboration2 = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formElaboration2)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration2,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formElaboration2,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration2,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formElaboration2,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formElaboration2,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formElaboration2,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull(Elaboration2, ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -598,17 +598,17 @@ select @formOnRegularFollowUp = IDENT_CURRENT('phs.dbo.TemplateField')
 insert phs.dbo.TemplateTemplateField values (@templateID_PersonalMedHist, @formOnRegularFollowUp)
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOnRegularFollowUp,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
+select @formOnRegularFollowUp,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier)
 , isnull([On Regular Follow-up?], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOnRegularFollowUp,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
+select @formOnRegularFollowUp,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier)
 , isnull([On Regular Follow-up?], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 
 insert into phs.dbo.TemplateFieldValue ([templatefieldid], [EntryId], [value], [DateAdded])  
-select @formOnRegularFollowUp,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
+select @formOnRegularFollowUp,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier)
 , isnull([On Regular Follow-up?], ''), GETDATE()  from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
@@ -1250,15 +1250,15 @@ from Participant pt left join phs.dbo.Participant ptNEW on
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
 insert into phs.dbo.ParticipantJourneyModality (ParticipantID, PHSEventID, ModalityID, FormID, TemplateID, EntryId) 
-select ptnew.ParticipantID, @yearEventID2014, @yearModalityID2014, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((100001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier) 
+select ptnew.ParticipantID, @yearEventID2014, @yearModalityID2014, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((10001 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2014) as varbinary(32)) as uniqueidentifier) 
 from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2014
 insert into phs.dbo.ParticipantJourneyModality (ParticipantID, PHSEventID, ModalityID, FormID, TemplateID, EntryId) 
-select ptnew.ParticipantID, @yearEventID2015, @yearModalityID2015, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((100002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier) 
+select ptnew.ParticipantID, @yearEventID2015, @yearModalityID2015, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((10002 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2015) as varbinary(32)) as uniqueidentifier) 
 from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2015
 insert into phs.dbo.ParticipantJourneyModality (ParticipantID, PHSEventID, ModalityID, FormID, TemplateID, EntryId) 
-select ptnew.ParticipantID, @yearEventID2016, @yearModalityID2016, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((100003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier) 
+select ptnew.ParticipantID, @yearEventID2016, @yearModalityID2016, @formID_PersonalMedHist, @templateID_PersonalMedHist,  cast(cast(((10003 + ptnew.ParticipantID) * @templateID_PersonalMedHist * @year2016) as varbinary(32)) as uniqueidentifier) 
 from Participant pt left join phs.dbo.Participant ptNEW on 
 pt.NRIC = ptNEW.Nric where pt.[Year of Visit] = @year2016
 
