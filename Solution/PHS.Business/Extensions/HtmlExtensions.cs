@@ -515,7 +515,7 @@ namespace PHS.Business.Extensions
             string[] options = selectedValue.Split(",");
             foreach (string option in options)
             {
-                if (value == option)
+                if (value.Trim() == option.Trim())
                 {
                     return true;
                 }
@@ -562,7 +562,7 @@ namespace PHS.Business.Extensions
 
             string[] options = selectedValue.Split(",");
 
-            if (value == options[index])
+            if (value.Trim() == options[index].Trim())
             {
                 return true;
             }
