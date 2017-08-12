@@ -487,7 +487,17 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(postExecuteResult.Count(), 0);
         }
 
-        
+        [TestMethod()]
+        public void FindTemplateField_Success()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            var postExecuteResult = _target.FindTemplateField(1);
+            Assert.IsNotNull(postExecuteResult);
+        }
+
 
         [TestInitialize]
         public void SetupTest()

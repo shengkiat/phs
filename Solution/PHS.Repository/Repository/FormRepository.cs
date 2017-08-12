@@ -34,6 +34,11 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Template>().Where(u => u.TemplateID == templateId && u.IsActive == true).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
+        public TemplateField GetTemplateField(int templateFieldId)
+        {
+            return dbContext.Set<TemplateField>().Where(u => u.TemplateFieldID == templateFieldId).FirstOrDefault();
+        }
+
         public Form GetPublicForm(string slug)
         {
             return dbContext.Set<Form>().Where(u => u.IsPublic == true && slug.Equals(u.Slug)).Include(x => x.Templates.Select(t=> t.TemplateFields)).FirstOrDefault();

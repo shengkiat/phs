@@ -251,40 +251,50 @@ namespace PHS.Business.Extensions
                 {
                     result = false;
                 }
-                /*
+                
                 else
                 {
-                    TemplateFieldViewModel conditionTemplateFieldViewModel = null;
-
-                    string conditionTemplateFieldValue = GetSubmittedTextValue(helper, conditionTemplateFieldViewModel);
-
-                    if (model.ConditionCriteria.Equals("=="))
+                    using (var formManager = new FormManager())
                     {
+                        TemplateFieldViewModel conditionTemplateFieldViewModel = formManager.FindTemplateField(model.ConditionTemplateFieldID.Value);
 
-                        if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                        if (conditionTemplateFieldViewModel != null)
                         {
-                            result = true;
-                        }
 
-                        else
-                        {
-                            result = false;
+                            conditionTemplateFieldViewModel.EntryId = model.EntryId;
+
+                            string conditionTemplateFieldValue = GetSubmittedTextValue(helper, conditionTemplateFieldViewModel);
+
+                            if (model.ConditionCriteria.Equals("=="))
+                            {
+
+                                if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                                {
+                                    result = true;
+                                }
+
+                                else
+                                {
+                                    result = false;
+                                }
+                            }
+
+                            else if (model.ConditionCriteria.Equals("!="))
+                            {
+                                if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                                {
+                                    result = false;
+                                }
+
+                                else
+                                {
+                                    result = true;
+                                }
+                            }
                         }
+                        
                     }
-
-                    else if (model.ConditionCriteria.Equals("!="))
-                    {
-                        if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
-                        {
-                            result = false;
-                        }
-
-                        else
-                        {
-                            result = true;
-                        }
-                    }
-                }*/
+                }
             }
 
             return result;

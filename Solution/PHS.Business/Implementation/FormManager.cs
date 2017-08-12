@@ -809,5 +809,20 @@ namespace PHS.Business.Implementation
 
             }
         }
+
+        public TemplateFieldViewModel FindTemplateField(int templateFieldID)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                TemplateField templateField = unitOfWork.FormRepository.GetTemplateField(templateFieldID);
+
+                if (templateField == null)
+                {
+                    return null;
+                }
+
+                return TemplateFieldViewModel.CreateFromObject(templateField);
+            }
+        }
     }
 }
