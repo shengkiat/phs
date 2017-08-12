@@ -170,7 +170,17 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    return View(model1);
+
+                    if (model1.TemplateID == id)
+                    {
+                        return View(model1);
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("editTemplate", new { id = model1.TemplateID });
+                    }
+                    
                 }
 
             }
