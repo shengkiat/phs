@@ -25,13 +25,11 @@ namespace PHS.DB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
         public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
-        public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
         public virtual DbSet<PreRegistration> PreRegistrations { get; set; }
         public virtual DbSet<ReferenceRange> ReferenceRanges { get; set; }
@@ -39,5 +37,7 @@ namespace PHS.DB
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }
+        public virtual DbSet<PHSUser> PHSUsers { get; set; }
+        public virtual DbSet<AuditLog> AuditLogs { get; set; }
     }
 }

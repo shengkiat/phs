@@ -108,9 +108,6 @@
     <Compile Include="ParticipantJourneyModality.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>PHSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="PHSEvent.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
@@ -128,6 +125,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PHSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="PHSUser.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PreRegistration.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
@@ -163,7 +163,7 @@
     <Compile Include="ViewModels\Form\NotificationEmailViewModel.cs" />
     <Compile Include="ViewModels\Form\SortFieldViewModel.cs" />
     <Compile Include="ViewModels\ModalityForm.cs" />
-    <Compile Include="ViewModels\Person.cs" />
+    <Compile Include="ViewModels\PHSUser.cs" />
     <Compile Include="ViewModels\ReferenceRange.cs" />
     <Compile Include="ViewModels\StandardReference.cs" />
   </ItemGroup>

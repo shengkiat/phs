@@ -15,7 +15,7 @@ namespace PHS.DB
     public partial class AuditLog
     {
         public int AuditLogID { get; set; }
-        public int PersonID { get; set; }
+        public int PHSUserID { get; set; }
         public System.DateTime AuditDateTime { get; set; }
         public string AuditState { get; set; }
         public string TableName { get; set; }

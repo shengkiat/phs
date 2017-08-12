@@ -18,7 +18,7 @@ using static PHS.Common.Constants;
 
 namespace PHS.Web.Controllers
 {
-    [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code + Constants.User_Role_Volunteer_Code)]
+    [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_CommitteeMember_Code + Constants.User_Role_Volunteer_Code)]
     public class ParticipantJourneyController : BaseController
     {
         // GET: ParticipantJourney

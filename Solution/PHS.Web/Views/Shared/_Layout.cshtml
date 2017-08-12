@@ -6,12 +6,12 @@
 @{
     var menus = new[]
                 {
-                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="A"  },
-                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="A"  },
-                   new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="A"  },
-                   new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="A"  },
-                   new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="A,V,D"  },
-                   new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="A"  },
+                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="Committee Member"  },
+                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="Committee Member"  },
+                   new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="Committee Member"  },
+                   new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="Committee Member"  },
+                   new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="Committee Member,Volunteer,Doctor"  },
+                   new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="Committee Member"  },
 
                 };
 }
@@ -322,7 +322,7 @@
     <div class="area"></div>
 @if (HttpContext.Current.Session["LoginUser"] != null)
 {
-    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+    var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
     var links = from item in menus
                 where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Any(x => role.Equals(x))
@@ -370,7 +370,7 @@
 
                     @if (HttpContext.Current.Session["LoginUser"] != null)
                     {
-                        var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+                        var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
                         var links = from item in menus
                                     where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                     .Any(x => role.Equals(x))

@@ -26,7 +26,7 @@ using System.Web.UI.WebControls;
 namespace PHS.Web.Controllers
 {
     [ValidateInput(false)]
-    [CustomAuthorize(Roles = Constants.User_Role_Admin_Code)]
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class FormController : BaseController
     {
 

@@ -13,11 +13,16 @@ using PHS.Common;
 
 namespace PHS.Business.Implementation
 {
-    public class PersonManager : BaseManager, IPersonManager, IManagerFactoryBase<IPersonManager>
+    public class UserManager : BaseManager, IUserManager, IManagerFactoryBase<IUserManager>
     {
-        public bool ChangePassword(Person user, string oldPass, string newPass, string newPassConfirm, out string message)
+        public IUserManager Create()
         {
-            if (user == null || user.PersonID == 0 || string.IsNullOrEmpty(user.Username))
+            return new UserManager();
+        }
+
+        public bool ChangePassword(PHSUser user, string oldPass, string newPass, string newPassConfirm, out string message)
+        {
+            if (user == null || user.PHSUserID == 0 || string.IsNullOrEmpty(user.Username))
             {
                 message = "Cannot find user";
                 return false;
@@ -59,9 +64,9 @@ namespace PHS.Business.Implementation
             {
                 try
                 {
-                    unitOfWork.Persons.Get(user.PersonID).Password = newPassHash;
-                    unitOfWork.Persons.Get(user.PersonID).UsingTempPW = false;
-                    unitOfWork.Persons.Get(user.PersonID).UpdatedDateTime = DateTime.Now;
+                    unitOfWork.Users.Get(user.PHSUserID).Password = newPassHash;
+                    unitOfWork.Users.Get(user.PHSUserID).UsingTempPW = false;
+                    unitOfWork.Users.Get(user.PHSUserID).UpdatedDateTime = DateTime.Now;
                     unitOfWork.Complete();
                     return true;
                 }
@@ -74,19 +79,9 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public IPersonManager Create()
+        public PHSUser IsAuthenticated(string userName, string password, out string message)
         {
-            return new PersonManager();
-        }
-
-        public Person IsAuthenticated(Person user, out string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Person IsAuthenticated(string userName, string password, out string message)
-        {
-            Person authenticatedUser = null;
+            PHSUser authenticatedUser = null;
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(userName.Trim()) || string.IsNullOrEmpty(password.Trim()))
             {
                 message = "Please enter Username and Password";
@@ -96,7 +91,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus).FirstOrDefault();
+                    var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus).FirstOrDefault();
 
                     if (user != null)
                     {
@@ -129,7 +124,7 @@ namespace PHS.Business.Implementation
                                 message = string.Empty;
                                 break;
 
-                            case Constants.User_Role_Admin_Code:
+                            case Constants.User_Role_CommitteeMember_Code:
                                 authenticatedUser = user;
                                 message = string.Empty;
                                 break;
@@ -157,34 +152,26 @@ namespace PHS.Business.Implementation
         }
 
         #region Search
-        public IList<Person> GetAllPersons(out string message)
+        public IList<PHSUser> GetAllUsers(out string message)
         {
             message = string.Empty;
-            List<Person> list = new List<Person>();
+            List<PHSUser> list = new List<PHSUser>();
 
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var persons = unitOfWork.Persons.GetAll();
-                    if (persons == null || persons.Count() == 0)
+                    var users = unitOfWork.Users.GetAll().Where(e => e.DeleteStatus == false);
+                    if (users == null || users.Count() == 0)
                     {
                         message = Constants.ThereIsNoValueFound("User");
                         return null;
                     }
 
-                    foreach (var person in persons)
+                    foreach (var user in users)
                     {
-                        if (!person.DeleteStatus)
-                        {
-                            person.IsActive = GetCurrentActiveStatus(person);
-                            list.Add(person);
-                        }
-                    }
-                    if (list.Count == 0)
-                    {
-                        message = Constants.ThereIsNoValueFound("User");
-                        return null;
+                        user.IsActive = GetCurrentActiveStatus(user);
+                        list.Add(user);
                     }
                     message = string.Empty;
                     return list;
@@ -198,35 +185,34 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Person GetPersonByPersonSid(int personSid, out string message)
+        public PHSUser GetUserByID(int userID, out string message)
         {
             message = string.Empty;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    //var person = unitOfWork.Persons.Get(personSid);
-                    var person = unitOfWork.Persons.Find(u => u.PersonID.Equals(personSid) && !u.DeleteStatus).First();
+                    var user = unitOfWork.Users.Find(u => u.PHSUserID.Equals(userID) && !u.DeleteStatus).First();
 
-                    if (person == null)
+                    if (user == null)
                     {
                         message = "Invalid User Id";
                         return null;
                     }
 
                     message = string.Empty;
-                    return person;
+                    return user;
                 }
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by personSid");
+                message = Constants.OperationFailedDuringRetrievingValue("User by ID");
                 return null;
             }
         }
 
-        public Person GetPersonByUserName(string userName, out string message)
+        public PHSUser GetUserByUserName(string userName, out string message)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
@@ -237,12 +223,12 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus);
+                    var users = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
                         message = string.Empty;
-                        return users.ToList()[0];
+                        return users.FirstOrDefault();
                     }
                     else
                     {
@@ -254,14 +240,13 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Username");
+                message = Constants.OperationFailedDuringRetrievingValue("User by Full Username");
                 return null;
             }
         }
 
-        public IList<Person> GetPersonsByUserName(string userName, out string message)
+        public IList<PHSUser> GetUsersByUserName(string userName, out string message)
         {
-            IList<Person> persons = null;
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
                 message = "User Name is empty!";
@@ -271,33 +256,30 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.Username.Contains(userName) && !u.DeleteStatus);
+                    var users = unitOfWork.Users.Find(u => u.Username.Contains(userName) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
                         message = string.Empty;
-                        persons = users.ToList();
-
-                        return persons;
+                        return users.ToList();
                     }
                     else
                     {
                         message = "User not found!";
-                        return persons;
+                        return null;
                     }
                 }
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by Username");
-                return persons;
+                message = Constants.OperationFailedDuringRetrievingValue("User by Username");
+                return null;
             }
         }
 
-        public IList<Person> GetPersonsByFullName(string fullName, out string message)
+        public IList<PHSUser> GetUsersByFullName(string fullName, out string message)
         {
-            IList<Person> persons = null;
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(fullName.Trim()))
             {
                 message = "Name is empty!";
@@ -307,27 +289,25 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var users = unitOfWork.Persons.Find(u => u.FullName.Contains(fullName) && !u.DeleteStatus);
+                    var users = unitOfWork.Users.Find(u => u.FullName.Contains(fullName) && !u.DeleteStatus);
 
                     if (users != null && users.Any())
                     {
                         message = string.Empty;
-                        persons = users.ToList();
-
-                        return persons;
+                        return users.ToList();
                     }
                     else
                     {
                         message = "User not found!";
-                        return persons;
+                        return null;
                     }
                 }
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue("Person by Full Name");
-                return persons;
+                message = Constants.OperationFailedDuringRetrievingValue("User by Full Name");
+                return null;
             }
         }
         #endregion
@@ -336,85 +316,84 @@ namespace PHS.Business.Implementation
          *Will check username
          *If username exists, will return null and username already exists message 
         */
-        public Person AddPerson(Person loginPerson, Person person, out string message)
+        public bool AddUser(PHSUser loginUser, PHSUser user, out string message)
         {
             message = string.Empty;
-            if (person == null)
+            if (user == null)
             {
                 message = Constants.PleaseFillInAllRequiredFields();
-                return null;
+                return false;
             }
-            if (string.IsNullOrEmpty(person.Username) || string.IsNullOrEmpty(person.Username.Trim()))
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Username.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
-                return null;
+                return false;
             }
-            if (UserNameExists(person.Username, person.PersonID, out message))
+            if (UserNameExists(user.Username, user.PHSUserID, out message))
             {
                 message = "Username already exists";
-                return null;
+                return false;
             }
-            if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
+            if (string.IsNullOrEmpty(user.FullName) || string.IsNullOrEmpty(user.FullName.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
-                //message = Constants.PleaseEnterValue(Constants.FullName);
-                return null;
+                return false;
             }
-            var hashedUser = GenerateHashedUser(person, out message);
+            var hashedUser = GenerateHashedUser(user, out message);
             if (hashedUser == null)
             {
-                return null;
+                return false;
             }
-            person = hashedUser;
+            user = hashedUser;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        person.CreatedDateTime = DateTime.Now;
-                        person.CreatedBy = loginPerson.Username;
-                        person.UsingTempPW = true;
-                        unitOfWork.Persons.Add(person);
+                        user.CreatedDateTime = DateTime.Now;
+                        user.CreatedBy = loginUser.Username;
+                        user.UsingTempPW = true;
+                        unitOfWork.Users.Add(user);
                         unitOfWork.Complete();
                         scope.Complete();
                     }
                     message = string.Empty;
-                    return person;
+                    return true;
                 }
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringAddingValue("Person");
-                return null;
+                message = Constants.OperationFailedDuringAddingValue("Useruse");
+                return false;
             }
         }
 
-        public bool UpdatePerson(Person loginPerson, Person person, out string message)
+        public bool UpdateUser(PHSUser loginUser, PHSUser user, out string message)
         {
             message = string.Empty;
-            if (person == null)
+            if (user == null)
             {
                 message = Constants.PleaseFillInAllRequiredFields();
                 return false;
             }
-            if (string.IsNullOrEmpty(person.Username) || string.IsNullOrEmpty(person.Username.Trim()))
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Username.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
                 return false;
             }
-            if (UserNameExists(person.Username, person.PersonID, out message))
+            if (UserNameExists(user.Username, user.PHSUserID, out message))
             {
                 message = "Username already exists";
                 return false;
             }
-            if (string.IsNullOrEmpty(person.FullName) || string.IsNullOrEmpty(person.FullName.Trim()))
+            if (string.IsNullOrEmpty(user.FullName) || string.IsNullOrEmpty(user.FullName.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
                 return false;
             }
-            if (string.IsNullOrEmpty(person.Role) || string.IsNullOrEmpty(person.Role.Trim()))
+            if (string.IsNullOrEmpty(user.Role) || string.IsNullOrEmpty(user.Role.Trim()))
             {
                 message = Constants.PleaseFillInAllRequiredFields();
                 return false;
@@ -423,10 +402,10 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var personToUpdate = unitOfWork.Persons.Get(person.PersonID);
-                    Util.CopyNonNullProperty(person, personToUpdate);
-                    personToUpdate.UpdatedDateTime = DateTime.Now;
-                    personToUpdate.UpdatedBy = loginPerson.Username;
+                    var userToUpdate = unitOfWork.Users.Get(user.PHSUserID);
+                    Util.CopyNonNullProperty(user, userToUpdate);
+                    userToUpdate.UpdatedDateTime = DateTime.Now;
+                    userToUpdate.UpdatedBy = loginUser.Username;
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.Complete();
@@ -439,28 +418,26 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringUpdatingValue("Person");
+                message = Constants.OperationFailedDuringUpdatingValue("User");
                 return false;
             }
         }
 
-        public bool DeletePerson(Person loginPerson,int personid, out string message)
+        public bool DeleteUser(int userID, out string message)
         {
             message = string.Empty;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var person = unitOfWork.Persons.Get(personid);
+                    var user = unitOfWork.Users.Get(userID);
 
-                    if (person == null)
+                    if (user == null)
                     {
                         message = "Invalid User Id";
                         return false;
                     }
-                    person.UpdatedDateTime = DateTime.Now;
-                    person.UpdatedBy = loginPerson.Username;
-                    person.DeleteStatus = true;
+                    user.DeleteStatus = true;
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.Complete();
@@ -473,12 +450,12 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = "Operation failed during deleting user";
+                message = Constants.OperationFailedDuringDeletingValue("User");
                 return false;
             }
         }
 
-        public bool UserNameExists(string userName, int personSId, out string message)
+        public bool UserNameExists(string userName, int userID, out string message)
         {
             if (string.IsNullOrEmpty(userName))
             {
@@ -489,7 +466,7 @@ namespace PHS.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new PHSContext()))
                 {
-                    var user = unitOfWork.Persons.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.PersonID != personSId).FirstOrDefault();
+                    var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.PHSUserID != userID).FirstOrDefault();
                     if (user != null)
                     {
                         message = Constants.ValueAlreadyExists(userName);
@@ -507,19 +484,19 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public Person GenerateHashedUser(Person person, out string message)
+        public PHSUser GenerateHashedUser(PHSUser user, out string message)
         {
-            if (person == null)
+            if (user == null)
             {
                 message = Constants.ValueIsEmpty("User");
                 return null;
             }
-            if (string.IsNullOrEmpty(person.Username))
+            if (string.IsNullOrEmpty(user.Username))
             {
                 message = Constants.ValueIsEmpty("User Id");
                 return null;
             }
-            if (string.IsNullOrEmpty(person.Password))
+            if (string.IsNullOrEmpty(user.Password))
             {
                 message = Constants.ValueIsEmpty("Password");
                 return null;
@@ -527,36 +504,32 @@ namespace PHS.Business.Implementation
 
             try
             {
-                person.PasswordSalt = PasswordManager.GenerateSalt();
-                person.Password = PasswordManager.CreateHash(person.Password, person.PasswordSalt);
+                user.PasswordSalt = PasswordManager.GenerateSalt();
+                user.Password = PasswordManager.CreateHash(user.Password, user.PasswordSalt);
                 message = string.Empty;
-                return person;
+                return user;
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringAddingValue("Person");
+                message = Constants.OperationFailedDuringAddingValue("User");
                 return null;
             }
 
         }
 
-        public bool GetCurrentActiveStatus(Person person)
+        public bool GetCurrentActiveStatus(PHSUser user)
         {
-            if (person == null)
+            if (user == null)
             {
                 return false;
             }
 
-            if(person.IsActive)
+            if(user.IsActive)
             {
-                if(DateTime.Now >= person.EffectiveStartDate && DateTime.Now <=person.EffectiveEndDate)
+                if(DateTime.Now >= user.EffectiveStartDate && DateTime.Now <= user.EffectiveEndDate)
                 {
                     return true;
-                }
-                else
-                {
-                    return false;
                 }
             }
             return false;

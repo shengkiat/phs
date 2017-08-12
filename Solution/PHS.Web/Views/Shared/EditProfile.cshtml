@@ -1,4 +1,4 @@
-﻿@model PHS.DB.Person
+﻿@model PHS.DB.PHSUser
 @{
     ViewBag.Title = "Edit Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,7 +37,7 @@
 
         <div hidden="hidden">
             @Html.EditorFor(model => model.Username)
-            @Html.EditorFor(model => model.PersonID)
+            @Html.EditorFor(model => model.PHSUserID)
             @Html.EditorFor(model => model.Role)
             @Html.EditorFor(model => model.IsActive)
             @Html.EditorFor(model => model.CreatedDateTime)

@@ -83,21 +83,6 @@ namespace PHS.Web.Controllers
             ViewBagError = null;
             ViewBagMessage = null;
         }
-
-        //public void SetError(string error)
-        //{
-        //    TempDataError = error;
-        //    ViewBagError = error;
-        //    TempDataMessage = null;
-        //    ViewBagMessage = null;
-        //}
-        //public void SetMessage(string message)
-        //{
-        //    TempDataMessage = message;
-        //    ViewBagMessage = message;
-        //    TempDataError = null;
-        //    ViewBagError = null;
-        //}
         #endregion
 
         #region Redirection
@@ -122,7 +107,7 @@ namespace PHS.Web.Controllers
                 case Common.Constants.User_Role_Doctor_Code:
                     return Redirect("~/doctor");
                     
-                case Common.Constants.User_Role_Admin_Code:
+                case Common.Constants.User_Role_CommitteeMember_Code:
                     return Redirect("~/admin/user");
                    
                 case Common.Constants.User_Role_Volunteer_Code:
@@ -161,16 +146,16 @@ namespace PHS.Web.Controllers
             }
             return true;
         }
-        public Person GetLoginUser()
+        public PHSUser GetLoginUser()
         {
             if (TempData.Peek(UserSessionParam) == null)
             {
                 if (Session == null || Session[UserSessionParam] == null)
                     return null;
 
-                return Session[UserSessionParam] as Person;
+                return Session[UserSessionParam] as PHSUser;
             }
-            return TempData.Peek(UserSessionParam) as Person;
+            return TempData.Peek(UserSessionParam) as PHSUser;
         }
 
         public string GetLoginUserRole()
@@ -180,18 +165,18 @@ namespace PHS.Web.Controllers
                 if (Session == null || Session[UserSessionParam] == null)
                     return null;
 
-                return (Session[UserSessionParam] as Person).Role;
+                return (Session[UserSessionParam] as PHSUser).Role;
             }
-            return (TempData.Peek(UserSessionParam) as Person).Role;
+            return (TempData.Peek(UserSessionParam) as PHSUser).Role;
         }
 
         List<Claim> claims = new List<Claim>();
         ClaimsIdentity identity;
-        public void LogUserIn(Person user)
+        public void LogUserIn(PHSUser user)
         {
             try
             {
-                claims.Add(new Claim(ClaimTypes.PrimarySid, user.PersonID.ToString()));
+                claims.Add(new Claim(ClaimTypes.PrimarySid, user.PHSUserID.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Username));
                 claims.Add(new Claim(ClaimTypes.Role, user.Role));
@@ -249,23 +234,22 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProfile(Person person)
+        public ActionResult EditProfile(PHSUser user)
         {
-            var user = GetLoginUser();
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
             string message = string.Empty;
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                if (personManager.UpdatePerson(GetLoginUser(), person, out message))
+                if (userManager.UpdateUser(GetLoginUser(), user, out message))
                 {
                     return RedirectToHome();
                 }
                 SetViewBagError(message);
-                return View(person);
+                return View(user);
             }
         }
         public ActionResult ChangePassword()
@@ -282,16 +266,15 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult ChangePassword(string oldPass, string newPass, string newPassConfirm)
         {
-            var user = GetLoginUser();
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
             string message = string.Empty;
-            using (var userManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                if (!userManager.ChangePassword(user, oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
+                if (!userManager.ChangePassword(GetLoginUser(), oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
                 {
                     SetViewBagError(message);
                     return View();

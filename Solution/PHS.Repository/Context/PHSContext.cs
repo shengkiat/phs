@@ -17,7 +17,7 @@ namespace PHS.Repository.Context
 {
     public class PHSContext : DbContext, IContext
     {
-        private Person person;
+        private PHSUser user;
         private List<AuditLog> result = new List<AuditLog>();
         private List<DbEntityEntry> addEntries = new List<DbEntityEntry>();
 
@@ -41,9 +41,9 @@ namespace PHS.Repository.Context
             // ObjectContext.SavingChanges += OnSavingChanges;
         }
 
-        public PHSContext(Person person) : this()
+        public PHSContext(PHSUser user) : this()
         {
-            this.person = person;
+            this.user = user;
         }
 
         public ObjectContext ObjectContext
@@ -61,7 +61,7 @@ namespace PHS.Repository.Context
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
-        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<PHSUser> People { get; set; }
         public virtual DbSet<StandardReference> StandardReferences { get; set; }
         public virtual DbSet<ReferenceRange> ReferenceRanges { get; set; }
         public virtual DbSet<PHSEvent> PHSEvents { get; set; }
@@ -172,7 +172,7 @@ namespace PHS.Repository.Context
 
         void OnSavingChanges(object sender, EventArgs e)
         {
-            if (IsAuditEnabled && person != null)
+            if (IsAuditEnabled && user != null)
             {
 
 
@@ -267,7 +267,7 @@ namespace PHS.Repository.Context
                     }
                             result.Add(new AuditLog()
                             {
-                                PersonID = person.PersonID,
+                                PHSUserID = user.PHSUserID,
                                 AuditDateTime = auditTime,
                                 AuditState = AuditState.Added.ToString(),
                                 TableName = tableName,
@@ -318,7 +318,7 @@ namespace PHS.Repository.Context
                     {
                         result.Add(new AuditLog()
                         {
-                            PersonID = person.PersonID,
+                            PHSUserID = user.PHSUserID,
                             AuditDateTime = auditTime,
                             AuditState = AuditState.Modified.ToString(),
                             TableName = tableName,

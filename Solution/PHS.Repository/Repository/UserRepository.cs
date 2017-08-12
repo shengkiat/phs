@@ -5,9 +5,9 @@ using PHS.Repository.Repository.Core;
 
 namespace PHS.Repository.Repository
 {
-    public class PersonRepository : Repository<Person>, IPersonRepository
+    public class UserRepository : Repository<PHSUser>, IUserRepository
     {
-        public PersonRepository(PHSContext context) : base(context)
+        public UserRepository(PHSContext context) : base(context)
         {
         }
     }

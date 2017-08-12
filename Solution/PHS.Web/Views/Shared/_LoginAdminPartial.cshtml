@@ -10,7 +10,7 @@
     using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
 
-        var tempUser = TempData.Peek(BaseController.UserSessionParam) as Person;
+        var tempUser = TempData.Peek(BaseController.UserSessionParam) as PHSUser;
         var userName = string.Empty;
         if(tempUser != null)
         {

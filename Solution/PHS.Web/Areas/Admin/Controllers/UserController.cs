@@ -25,9 +25,9 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                var users = personManager.GetAllPersons(out message);
+                var users = userManager.GetAllUsers(out message);
                 GetErrorAneMessage();
                 if (users == null)
                 {
@@ -37,11 +37,11 @@ namespace PHS.Web.Areas.Admin.Controllers
                 {
                     if (searchBy == "UserId")
                     {
-                        users = personManager.GetPersonsByUserName(searchString, out message);
+                        users = userManager.GetUsersByUserName(searchString, out message);
                     }
                     else
                     {
-                        users = personManager.GetPersonsByFullName(searchString, out message);
+                        users = userManager.GetUsersByFullName(searchString, out message);
                     }
 
                     GetErrorAneMessage();
@@ -53,7 +53,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         // GET: /Admin/UserDetails
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult UserDetails(int userid = 0)
+        public ActionResult UserDetails(int userID = 0)
         {
             if (!IsUserAuthenticated())
             {
@@ -61,18 +61,18 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                Person person = personManager.GetPersonByPersonSid(userid, out message);
-                if (person == null)
+                PHSUser user = userManager.GetUserByID(userID, out message);
+                if (user == null)
                 {
                     SetViewBagError(message);
                 }
                 else
                 {
-                    person.Password = string.Empty;
+                    user.Password = string.Empty;
                 }
-                return View(person);
+                return View(user);
             }
         }
 
@@ -91,7 +91,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult CreateUser(Person person)
+        public ActionResult CreateUser(PHSUser user)
         {
             if (!IsUserAuthenticated())
             {
@@ -102,12 +102,12 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
                 string tempPassword = PasswordManager.GeneratePassword();
-                person.Password = tempPassword;
+                user.Password = tempPassword;
 
-                var newUser = personManager.AddPerson(GetLoginUser(), person, out message);
+                var newUser = userManager.AddUser(GetLoginUser(), user, out message);
                 if (newUser == null)
                 {
                     SetViewBagError(message);
@@ -115,7 +115,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                     return View();
                 }
 
-                SetTempDataMessage(person.Username + " has been created successfully with password " + tempPassword);
+                SetTempDataMessage(user.Username + " has been created successfully with password " + tempPassword);
                 SetBackURL("Index");
                 return RedirectToAction("Index");
             }
@@ -123,7 +123,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult EditUser(int userid = 0)
+        public ActionResult EditUser(int userID = 0)
         {
             if (!IsUserAuthenticated())
             {
@@ -131,9 +131,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                var user = personManager.GetPersonByPersonSid(userid, out message);
+                var user = userManager.GetUserByID(userID, out message);
                 if (user == null)
                 {
                     SetViewBagError(message);
@@ -149,7 +149,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult EditUser(Person person)
+        public ActionResult EditUser(PHSUser user)
         {
             if (!IsUserAuthenticated())
             {
@@ -157,9 +157,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                if (personManager.UpdatePerson(GetLoginUser(), person, out message))
+                if (userManager.UpdateUser(GetLoginUser(), user, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("User has been updated"));
                     return RedirectToAction("Index");
@@ -168,13 +168,13 @@ namespace PHS.Web.Areas.Admin.Controllers
                 SetViewBagError(message);
                 SetBackURL("Index");
 
-                return View(person);
+                return View(user);
             }
         }
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult DeleteUser(int userid = 0)
+        public ActionResult DeleteUser(int userID = 0)
         {
             if (!IsUserAuthenticated())
             {
@@ -182,9 +182,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
-                if (personManager.DeletePerson(GetLoginUser(), userid, out message))
+                if (userManager.DeleteUser(userID, out message))
                 {
                     SetTempDataMessage(Constants.ValueSuccessfuly("User has been deleted"));
                     return RedirectToAction("Index");
@@ -210,16 +210,16 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
 
                 foreach (var username in selectedusers)
                 {
-                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    var user = userManager.GetUserByUserName(username.ToString(), out message);
                     user.IsActive = true;
                     user.EffectiveStartDate = startDate;
                     user.EffectiveEndDate = endDate;
-                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
+                    if (!userManager.UpdateUser(GetLoginUser(), user, out message))
                     {
                         SetViewBagError(message);
                     }
@@ -244,14 +244,14 @@ namespace PHS.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             string message = string.Empty;
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
 
                 foreach (var username in selectedusers)
                 {
-                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    var user = userManager.GetUserByUserName(username.ToString(), out message);
                     user.IsActive = false;
-                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
+                    if (!userManager.UpdateUser(GetLoginUser(), user, out message))
                     {
                         SetViewBagError(message);
                     }
@@ -279,15 +279,15 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             string tempPW = PasswordManager.GeneratePassword();
 
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
                 foreach (var username in selectedusers)
                 {
-                    var user = personManager.GetPersonByUserName(username.ToString(), out message);
+                    var user = userManager.GetUserByUserName(username.ToString(), out message);
                     string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
                     user.Password = newPassHash;
                     user.UsingTempPW = true;
-                    if (!personManager.UpdatePerson(GetLoginUser(), user, out message))
+                    if (!userManager.UpdateUser(GetLoginUser(), user, out message))
                     {
                         SetViewBagError(message);
                     }

@@ -32,13 +32,13 @@ namespace PHS.Web.Controllers
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult Login(Person person)
+        public ActionResult Login(PHSUser user)
         {
             ActionResult result = View();
-            using (var personManager = new PersonManager())
+            using (var userManager = new UserManager())
             {
                 string message = string.Empty;
-                var authenticatedUser = personManager.IsAuthenticated(person.Username, person.Password, out message);
+                var authenticatedUser = userManager.IsAuthenticated(user.Username, user.Password, out message);
                 if (authenticatedUser != null)
                 {
                     LogUserIn(authenticatedUser);
@@ -48,7 +48,7 @@ namespace PHS.Web.Controllers
                     }
                     switch (GetLoginUserRole())
                     {
-                        case Constants.User_Role_Admin_Code:
+                        case Constants.User_Role_CommitteeMember_Code:
                             result = Redirect("~/Admin/User");
                             break;
                         case Constants.User_Role_Doctor_Code:
@@ -70,7 +70,5 @@ namespace PHS.Web.Controllers
             LogUserOut();
             return RedirectToLogin();
         }
-
-
     }
 }

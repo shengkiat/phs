@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace PHS.DB
 {
     [TrackChangesAttribute]
-    [MetadataType(typeof(PersonMetadata))]
-    public partial class Person
+    [MetadataType(typeof(PHSUserMetadata))]
+    public partial class PHSUser
     {
-        public class PersonMetadata
+        public class PHSUserMetadata
         {
             [Required(ErrorMessage = "Please enter User Name")]
             [Display(Name = "User Name")]

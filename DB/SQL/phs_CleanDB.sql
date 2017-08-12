@@ -1,11 +1,12 @@
 ﻿--------------------------Table Structure-----------------  
 USE [phs]
+DROP TABLE [dbo].[Person];
 
 IF OBJECT_ID('dbo.ParticipantJourneyModality', 'U') IS NOT NULL 
   DROP TABLE [dbo].[ParticipantJourneyModality]; 
 
-IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[Person]; 
+IF OBJECT_ID('dbo.PHSUser', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[PHSUser]; 
   
 IF OBJECT_ID('dbo.FormFieldValue', 'U') IS NOT NULL 
   DROP TABLE [dbo].[FormFieldValue]; 
@@ -66,7 +67,7 @@ IF OBJECT_ID('dbo.AuditLog', 'U') IS NOT NULL
   
 CREATE TABLE [dbo].[AuditLog](
 	[AuditLogID] [int] IDENTITY(1,1) NOT NULL,
-	[PersonID] [int] NOT NULL,
+	[PHSUserID] [int] NOT NULL,
 	[AuditDateTime] [datetime2](7) NOT NULL,
 	[AuditState] [nchar](10) NOT NULL,
 	[TableName] [nchar](100) NOT NULL,
@@ -80,15 +81,15 @@ CREATE TABLE [dbo].[AuditLog](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
   
-CREATE TABLE [dbo].[Person](
-	[PersonID] [int] IDENTITY(1,1) NOT NULL,
+CREATE TABLE [dbo].[PHSUser](
+	[PHSUserID] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [nvarchar](max) NOT NULL,
 	[Password] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[EffectiveStartDate] [datetime2](7) NULL,
 	[EffectiveEndDate] [datetime2](7) NULL,
-	[Role] [char](1) NOT NULL,
+	[Role] [nvarchar](max) NOT NULL,
 	[ContactNumber] [nvarchar](max) NULL,
 	[PasswordSalt] [nvarchar](max) NOT NULL,
 	[CreatedBy] [nvarchar](max) NULL,
@@ -97,9 +98,9 @@ CREATE TABLE [dbo].[Person](
 	[UpdatedDateTime] [datetime2](7) NULL,
 	[UsingTempPW] [bit] NOT NULL,
 	[DeleteStatus] [bit] NOT NULL,
- CONSTRAINT [PK__Person__CA1E5D78BB4E2436] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_PHSUser] PRIMARY KEY CLUSTERED 
 (
-	[PersonID] ASC
+	[PHSUserID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 )
 
@@ -430,57 +431,57 @@ GO
 --------------------------Data--------------------- 
 
 
----  [dbo].[Person]  --
-DELETE FROM  [dbo].[Person] 
+---  [dbo].[PHSUser]  --
+DELETE FROM  [dbo].[PHSUser] 
 GO
 
 GO
-SET IDENTITY_INSERT [dbo].[Person] ON 
+SET IDENTITY_INSERT [dbo].[PHSUser] ON 
 
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (1, N'Admin1', N'WG7qLtt1uUZI8IS49HuPRMXk14RdyGCE', N'Super Admin', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'A', NULL, N'f+3W4Sgya5jto3JLOKiwC3TJtOPs7yhC', NULL, CAST(N'2016-04-13 23:15:17.5270000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (1, N'Admin1', N'WG7qLtt1uUZI8IS49HuPRMXk14RdyGCE', N'Super Admin', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Committee Member', NULL, N'f+3W4Sgya5jto3JLOKiwC3TJtOPs7yhC', NULL, CAST(N'2016-04-13 23:15:17.5270000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (2, N'Volunteer1', N't5bahHgyfjMDi7jcwE7zz+CUTW6E8VZw', N'Kent White', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ', NULL, CAST(N'2016-04-13 23:17:34.0000000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (2, N'Volunteer1', N't5bahHgyfjMDi7jcwE7zz+CUTW6E8VZw', N'Kent White', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ', NULL, CAST(N'2016-04-13 23:17:34.0000000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (3, N'Volunteer2', N'xk/xDrqvUTmp//xjd2VaxtsT0uJf9nDj', N'Eric Johnson', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ', NULL, CAST(N'2016-04-13 23:17:41.9100000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (3, N'Volunteer2', N'xk/xDrqvUTmp//xjd2VaxtsT0uJf9nDj', N'Eric Johnson', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ', NULL, CAST(N'2016-04-13 23:17:41.9100000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (4, N'Volunteer3', N'oa2koZYg8TLrW4qUfykT7ilKoTgL4lEy', N'Tom Cruise', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ', NULL, CAST(N'2016-04-13 23:18:59.8830000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (4, N'Volunteer3', N'oa2koZYg8TLrW4qUfykT7ilKoTgL4lEy', N'Tom Cruise', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ', NULL, CAST(N'2016-04-13 23:18:59.8830000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (5, N'Volunteer4', N'TFQv51wShe7p5Mxinu6wEm66j7eK8AmT', N'Walker Smith', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (5, N'Volunteer4', N'TFQv51wShe7p5Mxinu6wEm66j7eK8AmT', N'Walker Smith', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (6, N'Volunteer5', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', N'Celestino Douglas', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (6, N'Volunteer5', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', N'Celestino Douglas', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (7, N'Volunteer6', N'6yG3xPGAdpnlCy1UlodH4GGhNw5yEX08', N'Alexandros Hafiz', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (7, N'Volunteer6', N'6yG3xPGAdpnlCy1UlodH4GGhNw5yEX08', N'Alexandros Hafiz', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (8, N'Volunteer7', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', N'Dimas Channing', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (8, N'Volunteer7', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', N'Dimas Channing', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (9, N'Volunteer8', N'm9Z8my2Kx0tAaEpWOJ3CDki2oua8bDgO', N'Codie Lucinda', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (9, N'Volunteer8', N'm9Z8my2Kx0tAaEpWOJ3CDki2oua8bDgO', N'Codie Lucinda', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (10, N'Volunteer9', N'KUlleZSbFADpi8n+M7pIOlCmhEZYJnR6', N'Torger Kayleen', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'VJkbnSovc1BtPy04RybAo8B8sAAwTn2J ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (10, N'Volunteer9', N'KUlleZSbFADpi8n+M7pIOlCmhEZYJnR6', N'Torger Kayleen', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'VJkbnSovc1BtPy04RybAo8B8sAAwTn2J ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (11, N'Volunteer10', N'MWM6zwwL1eeZxfZ3XjUeWYHWkbLM0A4C', N'Filippa Cynbel', 0, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'V', NULL, N'cZZ7m8Sj5pv4Ag7hP8ot9ZqDCHbrOooI ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (11, N'Volunteer10', N'MWM6zwwL1eeZxfZ3XjUeWYHWkbLM0A4C', N'Filippa Cynbel', 0, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Volunteer', NULL, N'cZZ7m8Sj5pv4Ag7hP8ot9ZqDCHbrOooI ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (12, N'Doctor1', N'QV7JswCtrAikzyagdRArK41ZR7CHuqf7', N'Adil Hayati', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'KrTW84isQkhtiMQxzbwLKfIsLmOhobSY ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (12, N'Doctor1', N'QV7JswCtrAikzyagdRArK41ZR7CHuqf7', N'Adil Hayati', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'KrTW84isQkhtiMQxzbwLKfIsLmOhobSY ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (13, N'Doctor2', N'+iFZH18HLlJnGWWOWsanO5fxhVgHKIp3', N'Mette Iris', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'HKjH9qgCG1tyVMVcEIJXdxtxJ5bXYufr ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (13, N'Doctor2', N'+iFZH18HLlJnGWWOWsanO5fxhVgHKIp3', N'Mette Iris', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'HKjH9qgCG1tyVMVcEIJXdxtxJ5bXYufr ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (14, N'Doctor3', N'bV2Wt4MR/iKklHcxNfEl5YJd6gtwqZiH', N'Amelia Funanya', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'8YQJqFAV9xUWwHiXfODFuhuDTS5ukQwt ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (14, N'Doctor3', N'bV2Wt4MR/iKklHcxNfEl5YJd6gtwqZiH', N'Amelia Funanya', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'8YQJqFAV9xUWwHiXfODFuhuDTS5ukQwt ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (15, N'Doctor4', N'B2Cw0JIvHX5auHKvd+qJawpAh0xEZFJR', N'Jurgen Sofia', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'yKV616WHc2i8rUKGMXMhskBWkWXm4AQC ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (15, N'Doctor4', N'B2Cw0JIvHX5auHKvd+qJawpAh0xEZFJR', N'Jurgen Sofia', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'yKV616WHc2i8rUKGMXMhskBWkWXm4AQC ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (16, N'Doctor5', N'cP/4dmCYJMfCqT8zEEWCecJLZQzYVqc4', N'Athena Herbert', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'7bDVnI3WlC1q2ApB+ASvPHsZwKjkvBzZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (16, N'Doctor5', N'cP/4dmCYJMfCqT8zEEWCecJLZQzYVqc4', N'Athena Herbert', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'7bDVnI3WlC1q2ApB+ASvPHsZwKjkvBzZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (17, N'Doctor6', N'eO060WBvNSFuNE2ZE3HU0yGjqQOK3+yf', N'Chrissy Ambre', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'4c08nVFZyiI73vZd9P7bEuBvpvHJhYZO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (17, N'Doctor6', N'eO060WBvNSFuNE2ZE3HU0yGjqQOK3+yf', N'Chrissy Ambre', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'4c08nVFZyiI73vZd9P7bEuBvpvHJhYZO ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (18, N'Doctor7', N'p4ZhdGoLJKQW8sscjoP+Vkcg/F679pAH', N'Faddei Kir', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'FHBd7pjdeFwdNJaRJPzxdfpg/zXWChDx ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (18, N'Doctor7', N'p4ZhdGoLJKQW8sscjoP+Vkcg/F679pAH', N'Faddei Kir', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'FHBd7pjdeFwdNJaRJPzxdfpg/zXWChDx ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (19, N'Doctor8', N'GucDVKmV2/8cVDywlKRr4g++4/OpJksc', N'Sima Folke', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'qDzmSff2D9K2BlhQYrZ6YfGB1BETav+j ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (19, N'Doctor8', N'GucDVKmV2/8cVDywlKRr4g++4/OpJksc', N'Sima Folke', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'qDzmSff2D9K2BlhQYrZ6YfGB1BETav+j ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (20, N'Doctor9', N'8KJLSQXv5bURV8U2ZU+rAI54+w7A9xYI', N'Wendelin Jaci', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'zK1HYfERIWKCtu3djAlZD8SheRXI7w6B ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (20, N'Doctor9', N'8KJLSQXv5bURV8U2ZU+rAI54+w7A9xYI', N'Wendelin Jaci', 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'zK1HYfERIWKCtu3djAlZD8SheRXI7w6B ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-INSERT [dbo].[Person] ([PersonID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (21, N'Doctor10', N'czIthJ583ZfkcszEIEfEK+q2pWDq3ofB', N'Valencia Demeter', 0, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'D', NULL, N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
+INSERT [dbo].[PHSUser] ([PHSUserID], [Username], [Password], [FullName], [IsActive], [EffectiveStartDate], [EffectiveEndDate], [Role], [ContactNumber], [PasswordSalt], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime], [UsingTempPW], [DeleteStatus]) VALUES (21, N'Doctor10', N'czIthJ583ZfkcszEIEfEK+q2pWDq3ofB', N'Valencia Demeter', 0, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), N'Doctor', NULL, N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ', NULL, CAST(N'2016-04-13 23:21:00.9330000' AS DateTime2), NULL, NULL, 0, 0)
 GO
-SET IDENTITY_INSERT [dbo].[Person] OFF
+SET IDENTITY_INSERT [dbo].[PHSUser] OFF
 GO
 
 ---  Events Sample  --

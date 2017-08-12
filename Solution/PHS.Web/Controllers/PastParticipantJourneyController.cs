@@ -19,7 +19,7 @@ namespace PHS.Web.Controllers
     using Business.ViewModel.ParticipantJourney;
     using static Common.Constants;
 
-    [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_Admin_Code )]
+    [CustomAuthorize(Roles = Constants.User_Role_Doctor_Code + Constants.User_Role_CommitteeMember_Code)]
     public class PastParticipantJourneyController : BaseController
     {
         public ActionResult Index()

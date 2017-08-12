@@ -8,7 +8,7 @@ namespace PHS.Repository.Interface.Core
     {
         bool EnableAuditLog { get; set; }
 
-        IPersonRepository Persons { get; }
+        IUserRepository Users { get; }
         IMasterAddressRepository MasterAddress { get; }
 
         IFormRepository FormRepository { get; }
