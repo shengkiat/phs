@@ -2,6 +2,9 @@
 USE [phs]
 DROP TABLE [dbo].[Person];
 
+IF OBJECT_ID('dbo.Summary', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Summary]; 
+
 IF OBJECT_ID('dbo.ParticipantJourneyModality', 'U') IS NOT NULL 
   DROP TABLE [dbo].[ParticipantJourneyModality]; 
 
@@ -164,11 +167,16 @@ CREATE TABLE [dbo].[Participant](
 	[ParticipantID] [int] IDENTITY(1,1) NOT NULL,
 	[Nric] [nvarchar](max) NOT NULL,
 	[FullName] [nvarchar](max) NULL,
+	[Salutation] [nvarchar](4) NULL,
 	[HomeNumber] [nvarchar](max) NULL,
 	[MobileNumber] [nvarchar](max) NULL,
 	[DateOfBirth] [datetime] NULL,
 	[Language] [nvarchar](max) NULL,
 	[Gender] [nvarchar](max) NULL,
+	[Address] [nvarchar](max) NULL,
+	[PostalCode] [nvarchar](max) NULL,
+	[Race] [nvarchar](max) NULL,
+	[Citizenship] [nvarchar](max) NULL,
  CONSTRAINT [PK_Participant] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantID] ASC
@@ -186,6 +194,7 @@ CREATE TABLE [dbo].[PreRegistration](
 	[DateOfBirth] [datetime] NULL,
 	[Citizenship] [nvarchar](max) NOT NULL,
 	[Race] [nvarchar](max) NOT NULL,
+	[PostalCode] [nvarchar](max) NULL,
 	[Language] [nvarchar](max) NOT NULL,
 	[PreferedTime] [nvarchar](max) NOT NULL,
 	[Address] [nvarchar](max) NOT NULL,
@@ -262,6 +271,11 @@ CREATE TABLE [dbo].[TemplateField](
 	[MatrixColumn] [varchar](max) NULL,
 	[PreRegistrationFieldName] [varchar](max) NULL,
 	[RegistrationFieldName] [varchar](max) NULL,
+	[SummaryType] [nvarchar](50) NULL,
+	[ConditionTemplateFieldID] [int] NULL,
+	[ConditionCriteria] [varchar](50) NULL,
+	[ConditionOptions] [nvarchar](50) NULL,
+	[StandardReferenceID] [int] NULL,
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldID] ASC
@@ -344,6 +358,24 @@ CREATE TABLE [dbo].[ParticipantJourneyModality](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[Summary](
+	[SummaryID] [int] IDENTITY(1,1) NOT NULL,
+	[Label] [nvarchar](50) NULL,
+	[ParticipantID] [int] NOT NULL,
+	[PHSEventID] [int] NOT NULL,
+	[ModalityID] [int] NOT NULL,
+	[TemplateFieldID] [int] NOT NULL,
+	[SummaryValue] [nvarchar](50) NULL,
+	[SummaryType] [nvarchar](50) NULL
+ CONSTRAINT [PK_summary] PRIMARY KEY CLUSTERED 
+(
+	[ParticipantID] ASC,
+	[PHSEventID] ASC,
+	[ModalityID] ASC,
+	[TemplateFieldID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
@@ -370,6 +402,16 @@ ALTER TABLE [dbo].[TemplateTemplateField]  WITH CHECK ADD  CONSTRAINT [FK_templa
 REFERENCES [dbo].[Template] ([TemplateId])
 GO
 ALTER TABLE [dbo].[TemplateTemplateField] CHECK CONSTRAINT [FK_template_fields]
+GO
+ALTER TABLE [dbo].[TemplateField]  WITH CHECK ADD  CONSTRAINT [FK_template_field_template_field] FOREIGN KEY([ConditionTemplateFieldId])
+REFERENCES [dbo].[TemplateField] ([TemplateFieldId])
+GO
+ALTER TABLE [dbo].[TemplateField] CHECK CONSTRAINT [FK_template_field_template_field]
+GO
+ALTER TABLE [dbo].[TemplateField]  WITH CHECK ADD  CONSTRAINT [FK_template_field_standard_reference] FOREIGN KEY([StandardReferenceID])
+REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
+GO
+ALTER TABLE [dbo].[TemplateField] CHECK CONSTRAINT [FK_template_field_standard_reference]
 GO
 ALTER TABLE [dbo].[ModalityForm]  WITH CHECK ADD  CONSTRAINT [FK_ModalityForm_form] FOREIGN KEY([FormID])
 REFERENCES [dbo].[Form] ([FormID])
@@ -525,9 +567,9 @@ GO
 SET IDENTITY_INSERT [dbo].[Participant] ON 
 
 GO
-INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'81274563', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [SALUTATION], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender], [Address], [PostalCode], [Race], [Citizenship]) VALUES (1, N'S8250369B', N'Lawrence Fay DDS', N'Mr', N'00000000', N'81274563', CAST(N'1982-04-13 10:00:00.527' AS DateTime), N'English, Mandarin', N'Male', N'Blk 363 Clementi Ave 2 #04-425', N'120363', N'Chinese', N'Singapore Citizen')
 GO
-INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'69639756', N'81274563', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
+INSERT [dbo].[Participant] ([ParticipantID], [Nric], [FullName], [SALUTATION], [HomeNumber], [MobileNumber], [DateOfBirth], [Language], [Gender]) VALUES (2, N'S7931278I', N'Maxwell Schulist', N'Mr', N'69639756', N'81274563', CAST(N'1979-02-13 10:00:00.527' AS DateTime), N'English', N'Male')
 
 GO
 SET IDENTITY_INSERT [dbo].[Participant] OFF
@@ -546,8 +588,6 @@ GO
 INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (1, 3)
 GO
 INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 2)
-GO
-INSERT [dbo].[ParticipantPHSEvent] ([ParticipantID], [PHSEventID]) VALUES (2, 3)
 GO
 
 SET IDENTITY_INSERT [dbo].[Participant] OFF
@@ -660,6 +700,53 @@ GO
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (3, 13)
 GO
 
+--- Standard Reference Sample  --
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
+GO
+
+SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
+GO
+
+--- Reference range Sample  --
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'Underweight', 0, 18.4, N'NORMAL', 3)
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (6, N'Normal', 18.5, 24.9, N'NORMAL', 3)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (7, N'Overweight', 25, 29.9, N'NORMAL', 3)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (8, N'Obese', 30, 9999, N'NORMAL', 3)
+
+SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
+GO
+
 ---  Forms Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[Form] ON 
 INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (1, N'Registration Form', NULL, 0, NULL, N'REG', CAST(N'2017-02-19 09:15:43.527' AS DateTime), 1)
@@ -716,17 +803,17 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (80, N'Gender 性别', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Male,Female', N'', 5, 1, 18, 100, N'', CAST(N'2017-03-05 08:23:27.447' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'GENDER')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (81, N'Salutation', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Mr,Ms,Mrs,Dr', N'', 6, 2, 18, 100, N'', CAST(N'2017-03-05 08:23:57.467' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (81, N'Salutation', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Mr,Ms,Mrs,Dr', N'', 6, 2, 18, 100, N'', CAST(N'2017-03-05 08:23:57.467' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'SALUTATION')
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (82, N'Date of Birth 生日', N'Click to edit', N'BIRTHDAYPICKER', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 7, 3, 18, 100, N'', CAST(N'2017-03-05 08:24:42.453' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'DATEOFBIRTH')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (83, N'Citizenship 国籍', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Singapore Citizen 新加坡公民,Singapore Permanent Resident (PR) 新加坡永久居民', N'', 8, 4, 18, 100, N'', CAST(N'2017-03-05 08:25:27.453' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (83, N'Citizenship 国籍', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Singapore Citizen 新加坡公民,Singapore Permanent Resident (PR) 新加坡永久居民', N'', 8, 4, 18, 100, N'', CAST(N'2017-03-05 08:25:27.453' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'CITIZENSHIP')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (84, N'Race 种族', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Chinese,Malay,Indian,Others', N'', 9, 5, 18, 100, N'', CAST(N'2017-03-05 08:25:57.457' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (84, N'Race 种族', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Chinese,Malay,Indian,Others', N'', 9, 5, 18, 100, N'', CAST(N'2017-03-05 08:25:57.457' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'RACE')
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (85, N'Language spoken by participant?', N'Click to edit', N'CHECKBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'English,Mandarin,Malay,Tamil,Others', N'', 10, 6, 18, 100, N'', CAST(N'2017-03-05 08:26:57.483' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'LANGUAGE')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (86, N'Address', N'Click to edit', N'ADDRESS', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 11, 7, 18, 100, N'', CAST(N'2017-03-05 08:27:42.463' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (86, N'Address', N'Click to edit', N'ADDRESS', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 11, 7, 18, 100, N'', CAST(N'2017-03-05 08:27:42.463' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'ADDRESS')
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (87, N'Housing Type 住宿', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'HDB Rental Flat,1-Room HDB Flat,2-Room HDB Flat,3-Room HDB Flat,4-Room HDB Flat,5-Room HDB Flat,Executive Flats,Condominium / Private Flats,Landed Property', N'', 12, 8, 18, 100, N'', CAST(N'2017-03-05 08:28:12.463' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
@@ -777,7 +864,6 @@ GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (119, N'Are you currently smoking?', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Yes,No', N'', 7, 5, 18, 100, N'', CAST(N'2017-03-08 13:58:39.320' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', NULL, NULL, N'', N'')
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (120, N'Number of Pack Years:
-
 Pack Years = (Number of sticks per day / 20 ) x Number of years smoking', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 8, 6, 18, 100, N'', CAST(N'2017-03-08 14:00:09.327' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', NULL, NULL, N'', N'')
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (121, N'<p>Have you smoked before?</p>', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Yes,No', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-08 14:00:39.313' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', NULL, NULL, N'', N'')
@@ -806,7 +892,7 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (136, N'<p><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Memo/Referral Letter</span></p>', N'Click to edit', N'DOCTORMEMO', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 2, 18, 100, N'', CAST(N'2017-03-26 05:46:36.860' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 3)
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (138, N'1st Systolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-03-26 05:50:25.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
@@ -1059,52 +1145,24 @@ GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (13, 6)
 GO
 
-GO
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 1, 1, 1, N'0d925b5a-c6f0-45d9-ba08-fe4840fe7aea')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [EntryId]) VALUES (1, 2, 1, 8, N'00000000-0000-0000-0000-000000000000')
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 3, 3, N'4e19b13c-8c4c-48e8-8489-f3b43a461d46')
 INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 2, 2, 6, 6, N'c36dc1a4-8566-4710-a22f-5410adb4efe3')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 1, 1, NULL, N'00000000-0000-0000-0000-000000000000')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 1, 8, NULL, N'00000000-0000-0000-0000-000000000000')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 2, 3, NULL, N'00000000-0000-0000-0000-000000000000')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 2, 6, NULL, N'00000000-0000-0000-0000-000000000000')
+INSERT [phs].[dbo].[ParticipantJourneyModality] ([ParticipantID], [PHSEventID], [ModalityID], [FormID], [TemplateID], [EntryId]) VALUES (1, 3, 13, 6, NULL, N'00000000-0000-0000-0000-000000000000')
 GO
 
---- Standard Reference Sample  --
-
-SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
-GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
-GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Name', 1, 2, 1, 79, N'Test Name', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Gender', 1, 2, 1, 80, N'Male', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'DOCTORMEMO', 1, 2, 9, 136, N'Memo Test', N'DSY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Name', 1, 3, 1, 79, N'Test Name', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'Gender', 1, 3, 1, 80, N'Male', N'ESY')
+INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityID], [TemplateFieldID], [SummaryValue], [SummaryType]) VALUES (N'DOCTORMEMO', 1, 3, 9, 136, N'Memo Test', N'DSY')
 GO
 
-GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
-GO
-
-SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
-GO
-
---- Reference range Sample  --
-SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'BMI Normal', 18.5, 24.9, N'NORMAL', 3)
-GO
-
-SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
-GO
