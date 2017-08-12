@@ -23,5 +23,10 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Modality>().Where(u => u.ModalityID == id && u.IsActive == true).Include(x => x.Forms).FirstOrDefault();
         }
 
+        public IEnumerable<Modality> GetModalityByFormID(int formId)
+        {
+            return dbContext.Set<Modality>().Where(u => u.Forms.Any(f => f.FormID == formId)).Include(x => x.Forms);
+        }
+
     }
 }

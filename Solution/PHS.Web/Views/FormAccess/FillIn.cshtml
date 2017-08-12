@@ -17,7 +17,7 @@
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.utils.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.global.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.layout.js")"></script>
-
+    <script type="text/javascript" src="@Url.Content("~/scripts/form-builder/fbuilder.conditionfield.js")"></script>
 
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-common.css")" rel="stylesheet" />
     <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-interface.css")" rel="stylesheet" />
@@ -27,6 +27,18 @@
     {
         <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet" />
     }
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+
+                window.parent.$('html,body').scrollTop(0);
+
+            });
+        });
+
+    </script>
 
 }
 
@@ -108,7 +120,7 @@
                             &nbsp;
                         </label>
                         <div class="input">
-                            <input type="submit" class="blue" value="Submit" />
+                            <input id ="btnSubmit" type="submit" class="blue" value="Submit" />
                         </div>
                     </li>
                 </ul>

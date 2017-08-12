@@ -1,19 +1,47 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
-<label style="width: 90%; word-wrap: break-word; text-align: left;"
-       data-sub-channel="sub-label-@Model.DomId"
-       class="label editable">@Model.Label</label>
+<script type="text/javascript">
 
-    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+    function displayOrHideFields(sel, conditionId) {
 
-    <div class="input" style="width: 70%; margin-left: 1cm;">
-        <select id="SubmitFields[@Model.DomId].DropDownList"
-                name="SubmitFields[@Model.DomId].DropDownList"
-                class="default"
-                style="width: auto; max-width:80%;">
-            @{var selectedAttribute = "";}
-            @foreach (var option in Model.Options.Split(","))
+        displayOrHide(sel, sel.value, conditionId);
+    }
+
+</script>
+
+@{
+    var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
+}
+
+<div id="mainfield-DropDownList-@Model.DomId"
+     data-reference="@Model.ConditionTemplateFieldID"
+     data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     @displayAttribute>
+
+    <label style="width: 90%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-@Model.DomId"
+           class="label editable">@Model.Label</label>
+
+        <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+        @{
+            var selectedAttribute = "";
+            var disabledAttribute = Model.IsReadOnlyMode() ? "disabled" : "";
+        }
+
+        <div class="input" style="width: 70%; margin-left: 1cm;">
+
+            <select id="SubmitFields[@Model.DomId].DropDownList"
+                    name="SubmitFields[@Model.DomId].DropDownList"
+                    class="default"
+                    @disabledAttribute
+                    onchange="displayOrHideFields(this, @Model.DomId);"
+                    style="width: auto; max-width:80%;">
+
+                <option @selectedAttribute value="" />
+
+                @foreach (var option in Model.Options.Split(","))
             {
                 if (Html.IsAnyTempFormValueSelected(Model))
                 {
@@ -35,24 +63,25 @@
                 }
 
                 <option @selectedAttribute value="@option">@option</option>
+                }
+            </select>
+            @if (Model.IsEditMode())
+            {
+                @Html.Partial("_form-field-properties-partial", Model)
             }
-        </select>
+
+            @if (!Model.Errors.IsNullOrEmpty())
+            {
+                <span class="field-validation-error">@Model.Errors</span>
+            }
+        </div>
+        <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+            <img src="@Html.SpacerImage()" alt="help" />
+        </a>
+
         @if (Model.IsEditMode())
         {
-            @Html.Partial("_form-field-properties-partial", Model)
+            @Html.Partial("_form-field-settings-template")
         }
 
-        @if (!Model.Errors.IsNullOrEmpty())
-        {
-            <span class="field-validation-error">@Model.Errors</span>
-        }
-    </div>
-    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
-        <img src="@Html.SpacerImage()" alt="help" />
-    </a>
-
-    @if (Model.IsEditMode())
-    {
-        @Html.Partial("_form-field-settings-template")
-    }
-
+</div>

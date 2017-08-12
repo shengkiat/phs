@@ -15,6 +15,7 @@ using PHS.Common;
 using static PHS.Common.Constants;
 using PHS.DB.ViewModels;
 using System.Web;
+using System.Collections;
 
 namespace PHS.Business.Implementation
 {
@@ -62,47 +63,60 @@ namespace PHS.Business.Implementation
 
                 if (form != null)
                 {
-                    var formView = FormViewModel.CreateFromObject(form);
 
-                    List<TemplateViewModel> templates = null;
+                    IEnumerable<Modality> modalities = unitOfWork.Modalities.GetModalityByFormID(formId);
 
-                    templates = FindAllTemplatesByFormId(formId);
-
-                    foreach (var templateView in templates)
+                    if (modalities != null && !modalities.Any())
                     {
-                        templateView.Entries = HasSubmissions(templateView).ToList();
-                        if (templateView.Entries.Any())
-                        {
-                            result = "Unable to delete - Templates must have no entries to be able to be deleted";
-                        }
-                    }
+                        var formView = FormViewModel.CreateFromObject(form);
 
-                    if (result.IsNullOrEmpty())
-                    {
-                        try
+                        List<TemplateViewModel> templates = null;
+
+                        templates = FindAllTemplatesByFormId(formId);
+
+                        foreach (var templateView in templates)
                         {
-                            using (TransactionScope scope = new TransactionScope())
+                            templateView.Entries = HasSubmissions(templateView).ToList();
+                            if (templateView.Entries.Any())
                             {
-                                foreach (var templateView in templates)
+                                result = "Unable to delete - Templates must have no entries to be able to be deleted";
+                            }
+                        }
+
+                        if (result.IsNullOrEmpty())
+                        {
+                            try
+                            {
+                                using (TransactionScope scope = new TransactionScope())
                                 {
-                                    unitOfWork.FormRepository.DeleteTemplate(templateView.TemplateID.Value);
+                                    foreach (var templateView in templates)
+                                    {
+                                        unitOfWork.FormRepository.DeleteTemplate(templateView.TemplateID.Value);
+                                    }
+
+                                    unitOfWork.FormRepository.DeleteForm(formId);
+
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+
+                                    result = "success";
                                 }
 
-                                unitOfWork.FormRepository.DeleteForm(formId);
 
-                                unitOfWork.Complete();
-                                scope.Complete();
-
-                                result = "success";
                             }
-
-
-                        }
-                        catch
-                        {
-                            result = "Unable to delete form - there is an error deleting the form and template";
+                            catch
+                            {
+                                result = "Unable to delete form - there is an error deleting the form and template";
+                            }
                         }
                     }
+
+                    else
+                    {
+                        result = "Unable to delete - Form is already attached to a modality";
+                    }
+
+                    
                 }
 
                 else
@@ -253,8 +267,25 @@ namespace PHS.Business.Implementation
                                     MatrixColumn = collection.FormFieldValue(domId, "MatrixColumn"),
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
                                     PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
-                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName")
+                                    RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName"),
+                                    SummaryType = collection.FormFieldValue(domId, "SummaryType"),
+                                    ConditionCriteria = collection.FormFieldValue(domId, "ConditionCriteria"),
+                                    ConditionOptions = collection.FormFieldValue(domId, "ConditionOptions"),
                                 };
+
+                                var conditionTemplateFieldID = collection.FormFieldValue(domId, "ConditionTemplateFieldID");
+
+                                if (!string.IsNullOrEmpty(conditionTemplateFieldID))
+                                {
+                                    fieldView.ConditionTemplateFieldID = Convert.ToInt32(conditionTemplateFieldID);
+                                }
+
+                                var standardReferenceID = collection.FormFieldValue(domId, "StandardReferenceID");
+
+                                if (!string.IsNullOrEmpty(standardReferenceID))
+                                {
+                                    fieldView.StandardReferenceID = Convert.ToInt32(standardReferenceID);
+                                }
 
                                 if (!fieldId.IsNullOrEmpty() && fieldId.IsInteger())
                                 {
@@ -776,6 +807,21 @@ namespace PHS.Business.Implementation
             catch
             {
 
+            }
+        }
+
+        public TemplateFieldViewModel FindTemplateField(int templateFieldID)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                TemplateField templateField = unitOfWork.FormRepository.GetTemplateField(templateFieldID);
+
+                if (templateField == null)
+                {
+                    return null;
+                }
+
+                return TemplateFieldViewModel.CreateFromObject(templateField);
             }
         }
     }

@@ -18,20 +18,28 @@ namespace PHS.DB
         public Participant()
         {
             this.ParticipantJourneyModalities = new HashSet<ParticipantJourneyModality>();
+            this.Summaries = new HashSet<Summary>();
             this.PHSEvents = new HashSet<PHSEvent>();
         }
     
         public int ParticipantID { get; set; }
         public string Nric { get; set; }
         public string FullName { get; set; }
+        public string Salutation { get; set; }
         public string HomeNumber { get; set; }
         public string MobileNumber { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Language { get; set; }
         public string Gender { get; set; }
+        public string Address { get; set; }
+        public string PostalCode { get; set; }
+        public string Race { get; set; }
+        public string Citizenship { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Summary> Summaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHSEvent> PHSEvents { get; set; }
     }

@@ -2,45 +2,6 @@
 @using PHS.Common
 @using PHS.Business.Extensions
 
-
-<script type="text/javascript">
-
-
-    $(document).ready(function () {
-        $("#btnAddressSubmit").click(function () {
-
-            var zip = document.getElementById('zipcode').value
-            alert(zip);
-
-
-            var jsonObject = {
-                "Name": "Rami",
-                "Roles": [{ "RoleName": "Admin", "Description": "Admin Role" }, { "RoleName": "User", "Description": "User Role" }]
-            };
-
-            $.ajax({
-                url: "@Url.Action("AddUser")",
-                type: "POST",
-                data: JSON.stringify(jsonObject),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                error: function (response) {
-                    alert(response.responseText);
-
-                },
-                success: function (response) {
-
-                    document.getElementById("StreetAddress").value = response.Blk;
-
-                }
-            });
-
-        });
-    });
-
-</script>
-
-
 <script id="form-field-address-template" type="text/x-jquery-tmpl">
     <label style="width: 90%; word-wrap: break-word; text-align: left;"
            data-sub-channel="sub-label-${id}" class="label editable">

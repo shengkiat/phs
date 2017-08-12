@@ -433,6 +433,114 @@ namespace PHS.BusinessTests.Implementation
             Assert.AreEqual("HelloTest", preRegistrationResult.FullName);
         }
 
+        [TestMethod()]
+        public void GetReferenceRange_MinValueSuccess()
+        {
+            StandardReference standardReference = new StandardReference()
+            {
+                Title = "Test"
+            };
+
+            ReferenceRange referenceRangeOne = new ReferenceRange()
+            {
+                Title = "Underweight",
+                MinimumValue = 0,
+                MaximumValue = 18.4,
+                Result = "NORMAL"
+            };
+
+            _unitOfWork.StandardReferences.Add(standardReference);
+
+            _unitOfWork.Complete();
+
+            standardReference.ReferenceRanges.Add(referenceRangeOne);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            ReferenceRange result = _target.GetReferenceRange(1, 0, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Underweight", result.Title);
+        }
+
+        [TestMethod()]
+        public void GetReferenceRange_MaximumValueSuccess()
+        {
+            StandardReference standardReference = new StandardReference()
+            {
+                Title = "Test"
+            };
+
+            ReferenceRange referenceRangeOne = new ReferenceRange()
+            {
+                Title = "Underweight",
+                MinimumValue = 0,
+                MaximumValue = 18.4,
+                Result = "NORMAL"
+            };
+
+            ReferenceRange referenceRangetwo = new ReferenceRange()
+            {
+                Title = "Normal",
+                MinimumValue = 18.5,
+                MaximumValue = 24.9,
+                Result = "NORMAL"
+            };
+
+            _unitOfWork.StandardReferences.Add(standardReference);
+
+            _unitOfWork.Complete();
+
+            standardReference.ReferenceRanges.Add(referenceRangeOne);
+            standardReference.ReferenceRanges.Add(referenceRangetwo);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            ReferenceRange result = _target.GetReferenceRange(1, 18.4, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Underweight", result.Title);
+        }
+
+        [TestMethod()]
+        public void GetReferenceRange_NoMatch()
+        {
+            StandardReference standardReference = new StandardReference()
+            {
+                Title = "Test"
+            };
+
+            ReferenceRange referenceRangeOne = new ReferenceRange()
+            {
+                Title = "Underweight",
+                MinimumValue = 0,
+                MaximumValue = 18.4,
+                Result = "NORMAL"
+            };
+
+            ReferenceRange referenceRangetwo = new ReferenceRange()
+            {
+                Title = "Normal",
+                MinimumValue = 18.5,
+                MaximumValue = 24.9,
+                Result = "NORMAL"
+            };
+
+            _unitOfWork.StandardReferences.Add(standardReference);
+
+            _unitOfWork.Complete();
+
+            standardReference.ReferenceRanges.Add(referenceRangeOne);
+            standardReference.ReferenceRanges.Add(referenceRangetwo);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+            ReferenceRange result = _target.GetReferenceRange(1, 25.0, out message);
+            Assert.IsNull(result);
+            Assert.AreEqual("Unable to find reference range", message);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {

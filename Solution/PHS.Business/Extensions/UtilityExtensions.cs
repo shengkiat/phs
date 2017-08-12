@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using static PHS.Common.Constants;
 
 namespace PHS.Business.Extensions
 {
@@ -122,6 +123,20 @@ namespace PHS.Business.Extensions
         public static bool IsEditMode(this TemplateFieldViewModel field)
         {
             return field.Mode == Constants.TemplateFieldMode.EDIT;
+        }
+
+        public static bool IsReadOnlyMode(this TemplateFieldViewModel field)
+        {
+            return field.Mode == Constants.TemplateFieldMode.READONLY;
+        }
+
+        public static bool IsInputMode(this TemplateFieldViewModel field)
+        {
+            return field.Mode == Constants.TemplateFieldMode.INPUT;
+        }
+        public static bool IsReadOnlyMode(this TemplateFieldMode mode)
+        {
+            return TemplateFieldMode.READONLY == mode;
         }
 
         public static string ValidationId(this TemplateFieldViewModel field)

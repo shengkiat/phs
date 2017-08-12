@@ -10,7 +10,9 @@ Accounts
 6. Username: Volunteer1 Password: 1qazxsw2!@QW
 
 NRICS to test
-1. S8250369B
+1. S8250369B 
+2. S7931278I(no 2017 event record)
+3. S6991068H(clean nric)
 
 Example URL  
 http://localhost:49972/forms  

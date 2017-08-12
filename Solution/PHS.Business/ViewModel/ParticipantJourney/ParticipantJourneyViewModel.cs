@@ -17,6 +17,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
             FullName = participant.FullName;
             Nric = participant.Nric;
+            Address = participant.Address;
+            PostalCode = participant.PostalCode;
+            Race = participant.Race;
+            Citizenship = participant.Citizenship;        
             Language = participant.Language;
             HomeNumber = participant.HomeNumber;
             MobileNumber = participant.MobileNumber;
@@ -24,6 +28,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
             if (participant.DateOfBirth != null)
             {
+                DateOfBirth = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
                 int now = int.Parse(Event.StartDT.ToString("yyyy"));
                 int dob = int.Parse(participant.DateOfBirth.Value.ToString("yyyy"));
                 Age = (now - dob);
@@ -37,10 +42,16 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public PHSEvent Event { get; }
         public Participant Participant { get; }
         public string EventId { get { return Event.PHSEventID.ToString(); } }
-
+        public string Address { get; }
+        public string PostalCode { get;  }
+        public string Race { get; }
+        public string Citizenship { get; }
         public string Nric { get; }
         public string FullName { get; }
         public int Age { get; }
+
+        public string DateOfBirth { get; }
+
         public string Language { get; }
         public string HomeNumber { get; }
         public string MobileNumber { get; }

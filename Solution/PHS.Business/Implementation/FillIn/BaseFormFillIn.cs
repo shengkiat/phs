@@ -122,7 +122,11 @@ namespace PHS.Business.Implementation.FillIn
             Nullable<System.DateTime> result = null;
             if (values.ContainsKey(key) && values[key] != null)
             {
-                result = Convert.ToDateTime(values[key].ToString());
+                string dateValue = values[key].ToString();
+                if (!string.IsNullOrEmpty(dateValue))
+                {
+                    result = Convert.ToDateTime(dateValue);
+                }
             }
 
             return result;

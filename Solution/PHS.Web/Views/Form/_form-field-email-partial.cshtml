@@ -2,9 +2,16 @@
 @using PHS.Business.Extensions
 
 <label style="width: 30%; word-wrap: break-word" data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
+
 <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+@{
+    var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+}
+
 <div class="input">
-    <input id="SubmitFields[@Model.DomId].Email" name="SubmitFields[@Model.DomId].Email" type="text" value="@Html.GetSubmittedTextValue(Model)" maxlength="@Model.MaxCharacters" title="eg. someone@example.com" class="title watermarked" />
+    <input id="SubmitFields[@Model.DomId].Email" name="SubmitFields[@Model.DomId].Email" @readonlyAttribute type="text" value="@Html.GetSubmittedTextValue(Model)" maxlength="@Model.MaxCharacters" title="eg. someone@example.com" class="title watermarked" />
+    
     @if (Model.IsEditMode())
     {
         @Html.Partial("_form-field-properties-partial", Model)

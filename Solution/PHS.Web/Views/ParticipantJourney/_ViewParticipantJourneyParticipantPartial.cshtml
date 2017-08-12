@@ -1,0 +1,28 @@
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyViewModel
+@using PHS.Business.ViewModel.ParticipantJourney
+
+@using PHS.Business.Extensions
+
+<div id="ptParticipant">
+    <table class="table">
+        <tr>
+            <td colspan="2"><h4>@Model.FullName (@Model.Nric)</h4></td>
+            <td><b>Gender: </b>@Model.Gender</td>
+        </tr>
+        <tr>
+            <td><b>Age: </b>@Model.Age (DOB: @Model.DateOfBirth) </td>
+            <td><b>Race: </b>@Model.Race  </td>
+            <td><b>Citizenship: </b>@Model.Citizenship</td>
+        </tr>
+        <tr>
+            <td><b>Language: </b>@Model.Language</td>
+            <td><b>Home Number: </b>@Model.HomeNumber</td>
+            <td><b>Handphone Number: </b>@Model.MobileNumber</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Address: </b>@Model.Address</td>
+            <td><b>Postal Code: </b>@Model.PostalCode</td>
+        </tr>
+    </table>
+    <h4>@Model.Event.Title</h4>
+</div>

@@ -20,10 +20,16 @@
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_form" />
         <AssociationConnector Association="phsModel.FK_Form_Template" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_modality" />
+        <AssociationConnector Association="phsModel.FK_summary_modality" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_participant" />
+        <AssociationConnector Association="phsModel.FK_summary_participant" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_phs_event" />
         <AssociationConnector Association="phsModel.FK_participant_journey_modality_template" />
+        <AssociationConnector Association="phsModel.FK_summary_phs_event" />
         <AssociationConnector Association="phsModel.FK_reference_range_standard_reference" />
+        <AssociationConnector Association="phsModel.FK_template_field_standard_reference" />
+        <AssociationConnector Association="phsModel.FK_summary_template_field" />
+        <AssociationConnector Association="phsModel.FK_template_field_template_field" />
         <AssociationConnector Association="phsModel.FK_template_field_values_template_fields" />
         <AssociationConnector Association="phsModel.EventModality" />
         <AssociationConnector Association="phsModel.ModalityForm" />

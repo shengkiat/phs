@@ -84,7 +84,7 @@
             $(this).remove();
 
             if (fieldId) {
-                $.post('/Forms/deletetemplatefield', { eventid: evtId, fieldid: fieldId }, function () {
+                $.post('/FormAccess/deletetemplatefield', { eventid: evtId, fieldid: fieldId }, function () {
                     refreshForm();
                 });
             }
@@ -713,6 +713,11 @@
                 var value = targetContainer.find('#registrationfieldname-prop-' + domId).val();
 
                 $('#registrationfieldname').val(value);
+                break;
+            case "summarytype":
+                var value = targetContainer.find('#summarytype-prop-' + domId).val();
+
+                $('#summarytype').val(value);
                 break;
             case "matrixrow":
                 // value is row

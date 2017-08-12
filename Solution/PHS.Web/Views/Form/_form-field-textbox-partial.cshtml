@@ -1,40 +1,58 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
-<label style="width: 70%; word-wrap: break-word; text-align: left;"
-       data-sub-channel="sub-label-@Model.DomId"
-       class="label editable">@Model.Label</label>
+@{
+    var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
+}
 
-    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+<div id="mainfield-TextBox-@Model.DomId" 
+     data-reference="@Model.ConditionTemplateFieldID" 
+     data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     @displayAttribute>
 
-    <div class="input" style="width: 70%;  margin-left: 1cm;">
-        <input id="SubmitFields[@Model.DomId].TextBox" name="SubmitFields[@Model.DomId].TextBox"
-               type="text" value="@Html.GetSubmittedTextValue(Model)" 
-               title="@Model.Hint"
-               maxlength="@Model.MaxCharacters"
-               class="title watermarked"
-               style="width: 95%;" />
+    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-@Model.DomId"
+           class="label editable">@Model.Label</label>
 
-        @if (Model.IsEditMode())
-        {
-            @Html.Partial("_form-field-properties-partial", Model)
-        }
-        else
-        {
+        <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-        }
-        @if (!Model.Errors.IsNullOrEmpty())
-        {
-            <span class="field-validation-error">@Model.Errors</span>
-        }
-    </div>
+            <div class="input" style="width: 70%;  margin-left: 1cm;">
+                <input id="SubmitFields[@Model.DomId].TextBox" name="SubmitFields[@Model.DomId].TextBox"
+                       type="text" value="@Html.GetSubmittedTextValue(Model)"
+                       title="@Model.Hint"
+                       maxlength="@Model.MaxCharacters"
+                       class="title watermarked"
+                       @readonlyAttribute
+                       style="width: 95%;" />
 
-    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
-        <img src="@Html.SpacerImage()" alt="help" />
-    </a>
+                @if (Model.IsEditMode())
+                {
+                    @Html.Partial("_form-field-properties-partial", Model)
+                }
+                else
+                {
 
-    @if (Model.IsEditMode())
-    {
-        @Html.Partial("_form-field-settings-template")
-    }
+                }
+                @if (!Model.Errors.IsNullOrEmpty())
+                {
+                    <span class="field-validation-error">@Model.Errors</span>
+                }
+            </div>
+
+            <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+                <img src="@Html.SpacerImage()" alt="help" />
+            </a>
+
+            @if (Model.IsEditMode())
+            {
+                @Html.Partial("_form-field-settings-template")
+            }
+</div>
+
+
+
+    
+
+    
 

@@ -107,6 +107,7 @@
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseFormManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
+    <Compile Include="Implementation\BaseParticipantJourneyManager.cs" />
     <Compile Include="Implementation\ReferenceRangeManager.cs" />
     <Compile Include="Implementation\StandardReferenceManager.cs" />
     <Compile Include="Implementation\FillIn\BaseFormFillIn.cs" />

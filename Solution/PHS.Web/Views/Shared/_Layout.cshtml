@@ -3,18 +3,20 @@
 @using PHS.Business.Extensions
 @using PHS.DB
 
-@{
-    var menus = new[]
-                {
-                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="Committee Member"  },
-                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="Committee Member"  },
-                   new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="Committee Member"  },
-                   new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="Committee Member"  },
-                   new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="Committee Member,Volunteer,Doctor"  },
-                   new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="Committee Member"  },
 
-                };
-}
+@*@{
+        var menus = new[]
+                    {
+                       new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="A"  },
+                       new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="A"  },
+                       new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="A"  },
+                       new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="A"  },
+                       new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="A,V,D"  },
+                       new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="A"  },
+
+                    };
+    }*@
+
 
 <!DOCTYPE html>
 <html>
@@ -43,16 +45,16 @@
             display: table;
         }
 
-        .menu {
+        /*.menu {
             width: 20%;
             padding-top: 35px;
-        }
+        }*/
 
         .content {
             width: 80%;
         }
 
-        .menu ul {
+        /*.menu ul {
             list-style-type: none;
             margin: 0;
             padding-left: 20%;
@@ -63,12 +65,11 @@
             margin-bottom: 8px;
             color: #ffffff;
             font-size: 1.4em;
-        }
+        }*/
 
         #colorstrip {
             width: 100%;
             border-style: none;
-
         }
 
 
@@ -108,7 +109,7 @@
             transition: width .05s linear;
             -webkit-transform: translateZ(0) scale(1,1);
             z-index: 1000;
-            color:black
+            color: black
         }
 
             .main-menu > ul {
@@ -198,6 +199,35 @@
             height: 80%;
         }
 
+        #menu-ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #337ab7;
+        }
+
+        #menu-li {
+            float: left;
+            border-right: 1px solid #bbb;
+        }
+
+            #menu-li:last-child {
+                border-right: none;
+            }
+
+            #menu-li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 8px 10px;
+                text-decoration: none;
+            }
+
+                #menu-li a:hover:not(.active) {
+                    background-color: #111;
+                }
+
     </style>
 
     <meta charset="utf-8" />
@@ -233,9 +263,9 @@
     <script type="text/javascript" src="@Url.Content("~/scripts/css_browser_selector.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/scripts/bootstrap-datetimepicker.js")"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
     <!--Css
     <link type="text/css" href="/Content/css/reset.css" rel="stylesheet" />-->
@@ -263,66 +293,93 @@
 
 </head>
 <body class="@Html.GetContextCssClass()" style="padding-top: 0px;padding-bottom: 0px;">
-    <div class="header" style="height: 136px;">
+    <div class="header" style="height: 150px;">
         <img src="~/Content/images/logo.gif" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 15px;" />
         <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
         <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
         @if (HttpContext.Current.Session["LoginUser"] != null)
         {
-                    <div class="dropdown pull-right" style="position: absolute; top: 102px;right: 100px;">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            @User.Identity.Name
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Edit Profile", "EditProfile", new { area = "", controller = "Home" })</li>
-                            <li>@Html.ActionLink("Change Password", "ChangePassword", new { area = "", controller = "Home" })</li>
-                            <li class="divider"></li>
-                            <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
-                        </ul>
+            <div class="dropdown pull-right" style="position: absolute; top: 90px;right: 100px;">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    @User.Identity.Name
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Edit Profile", "EditProfile", new { area = "", controller = "Home" })</li>
+                    <li>@Html.ActionLink("Change Password", "ChangePassword", new { area = "", controller = "Home" })</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
+                </ul>
+            </div>
+
+                    <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
+
+                            <ul id="menu-ul">
+                                @if (@User.IsInRole("A"))
+                                {
+                                    <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "A" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
+                                    <li id="menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "A" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
+
+                                }
+                                @if (@User.IsInRole("A") || @User.IsInRole("V") || @User.IsInRole("D"))
+                                {
+                                    if (@User.IsInRole("D"))
+                                    {
+                                    <li id="menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
+                                    }
+                                    <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "A,V,D" }, new { @style = "color:white;" })</li>
+                                }
+                            </ul>
+
                     </div>
         }
+
+
     </div>
-        @*<div class="navbar-default" style="background: #aaa;color:black;">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
 
-                        </ul>
-                        @{
+    @*<div class="navbar-default" style="background: #aaa;color:black;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("PHS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", onclick = "javascrip:return false;" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
 
-                            string url = Request.Path;
-                            if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                @Html.Partial("_LoginAdminPartial")
-                            }
-                            else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                @Html.Partial("_LoginInstructorPartial")
-                            }
-                            else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                @Html.Partial("_LoginStudentPartial")
-                            }
+                    </ul>
+                    @{
 
-
+                        string url = Request.Path;
+                        if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginAdminPartial")
+                        }
+                        else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginInstructorPartial")
+                        }
+                        else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            @Html.Partial("_LoginStudentPartial")
                         }
 
-                    </div>
+
+                    }
+
                 </div>
-            </div>*@
+            </div>
+        </div>*@
     <div class="area"></div>
 @if (HttpContext.Current.Session["LoginUser"] != null)
 {
-    var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
+    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
     var links = from item in menus
                 where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Any(x => role.Equals(x))
@@ -337,40 +394,40 @@
                             <i class="fa fa-home fa-2x"></i>
                             <span class="nav-text">
 
-                            </span>
-                        </a>
-                    </li>
-                            
-                    @foreach (var link in links)
-                    {
-                        <li>
-                            <i class="fa fa-home fa-2x"></i>
-                            <span class="nav-text">
-                                @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
-                            </span>
-                        </li>
-                    }
-                    <li>
-                        <i class="fa fa-home fa-2x"></i>
-                        <span class="nav-text">
-                            @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </a>
-    </nav>
-}
+                                    </span>
+                                </a>
+                            </li>
 
-        <!-- Sidebar -->
-        <div class="clearfix">
-            <!--
-            <div class="column menu">
-                <ul>
+                            @foreach (var link in links)
+                            {
+                                <li>
+                                    <i class="fa fa-home fa-2x"></i>
+                                    <span class="nav-text">
+                                        @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
+                                    </span>
+                                </li>
+                            }
+                            <li>
+                                <i class="fa fa-home fa-2x"></i>
+                                <span class="nav-text">
+                                    @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+            </nav>*@
+    }
+
+    <!-- Sidebar -->
+    <div class="clearfix">
+        <!--
+        <div class="column menu">
+            <ul>
 
                     @if (HttpContext.Current.Session["LoginUser"] != null)
                     {
-                        var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
+                        var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
                         var links = from item in menus
                                     where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                     .Any(x => role.Equals(x))
@@ -380,42 +437,42 @@
                             <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
                         }
 
-                        <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
-                    }
-                </ul>
-            </div>
-                -->
-
-            <div class="column content" style="margin:0 auto;">
-                <!-- /#sidebar-wrapper -->
-                <div id="page-body" class="container body-content panel-body" style="min-height:800px;min-width: 1130px">
-
-                    @RenderBody()
-                    <hr />
-
-                </div>
-
-                @if (!String.IsNullOrEmpty(ViewBag.BackURL))
-            {
-                    <div class="container">
-                        <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
-                    </div>
+                    <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
                 }
-                <br />
+            </ul>
+        </div>
+            -->
+
+        <div style="align-content:center">
+    <!-- /#sidebar-wrapper -->
+            <div id="page-body" class="container body-content panel-body" style="min-height:800px;min-width: 1200px">
+
+                @RenderBody()
+                <hr />
+
             </div>
-        </div>
 
-        <div class="footer" style="text-align: center;">
-            <p>&copy; @DateTime.Now.Year - Public Health Service</p>
+            @if (!String.IsNullOrEmpty(ViewBag.BackURL))
+            {
+                <div class="container">
+                    <a href="@ViewBag.BackURL" class="navbar-nav">Back To List</a>
+                </div>
+            }
+            <br />
         </div>
+    </div>
 
-        @RenderSection("footerScripts", false)
-        <script type="text/javascript">
+    <div class="footer" style="text-align: center;">
+        <p>&copy; @DateTime.Now.Year - Public Health Service</p>
+    </div>
+
+    @RenderSection("footerScripts", false)
+    <script type="text/javascript">
             $(document).ready(function () {
                 global.init();
                 @RenderSection("initializers", false)
             });
-        </script>
+    </script>
 
 </body>
 </html>

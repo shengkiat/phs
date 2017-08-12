@@ -6,6 +6,7 @@ using PHS.Business.ViewModel.ParticipantJourney;
 using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
+using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,7 @@ using static PHS.Common.Constants;
 
 namespace PHS.Business.Implementation
 {
-    public class ParticipantJourneyManager : BaseFormManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
+    public class ParticipantJourneyManager : BaseParticipantJourneyManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
     {
         public IParticipantJourneyManager Create()
         {
@@ -118,10 +119,11 @@ namespace PHS.Business.Implementation
                 message = "Nric or PHSEventId cannot be null";
             }
 
-            else if (!NricChecker.IsNRICValid(psm.Nric))
-            {
-                message = "Invalid Nric";
-            }
+            //todo: removed for data migration. to put back before live
+            //else if (!NricChecker.IsNRICValid(psm.Nric))
+            //{
+            //    message = "Invalid Nric";
+            //}
 
             else
             {
@@ -169,7 +171,7 @@ namespace PHS.Business.Implementation
                 using (var unitOfWork = CreateUnitOfWork())
                 {
 
-                    PHSEvent phsEvent = unitOfWork.Events.GetAllActiveEvents().Where(e => e.PHSEventID == psm.PHSEventId).FirstOrDefault();
+                    PHSEvent phsEvent = unitOfWork.Events.GetEventWithModalityForm(psm.PHSEventId);
 
                     if (phsEvent == null)
                     {
@@ -215,6 +217,7 @@ namespace PHS.Business.Implementation
                                 {
                                     foreach (var form in modality.Forms)
                                     {
+                                       
                                         ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
                                         {
                                             ParticipantID = participant.ParticipantID,
@@ -256,10 +259,11 @@ namespace PHS.Business.Implementation
                 message = "Nric or PHSEventId cannot be null";
             }
 
-            else if (!NricChecker.IsNRICValid(psm.Nric))
-            {
-                message = "Invalid Nric";
-            }
+            //todo: comment out for data migration. to put it back before going live
+            //else if (!NricChecker.IsNRICValid(psm.Nric))
+            //{
+            //    message = "Invalid Nric";
+            //}
 
             else
             {
@@ -272,13 +276,91 @@ namespace PHS.Business.Implementation
             return result;
         }
 
-        public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        public TemplateViewModel FindTemplateToDisplay(ParticipantJourneySearchViewModel psm, int formID, int selectedModalityId, bool embed, TemplateFieldMode fieldMode, out string message)
         {
-            var template = FindTemplate(model.TemplateID.Value);
-
+            TemplateViewModel model = null;
             using (var unitOfWork = CreateUnitOfWork())
             {
-                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, model.FormID, modalityId))
+                ParticipantJourneyModality participantJourneyModality = RetrieveParticipantJourneyModality(psm, formID, selectedModalityId, out message);
+
+                if (participantJourneyModality != null)
+                {
+                    var template = participantJourneyModality.TemplateID.HasValue ? unitOfWork.FormRepository.GetTemplate(participantJourneyModality.TemplateID.Value) : FindLatestTemplate(formID, unitOfWork);
+
+                    if (template != null)
+                    {
+                        model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
+                        model.Embed = embed;
+
+                        bool valueRequiredForRegistration = false;
+
+                        if (Internal_Form_Type_Registration.Equals(model.InternalFormType))
+                        {
+                            if (participantJourneyModality.EntryId == Guid.Empty)
+                            {
+                                valueRequiredForRegistration = true;
+                            }
+                        }
+
+                        foreach (var field in model.Fields)
+                        {
+                            field.Mode = fieldMode;
+                            field.ParticipantNric = psm.Nric;
+                            field.IsValueRequiredForRegistration = valueRequiredForRegistration;
+                            field.EntryId = participantJourneyModality.EntryId.ToString();
+                        }
+                    }
+                }
+
+                else
+                {
+                    throw new Exception("No participantJourneyModality found");
+                }
+
+                return model;
+                
+            }
+        }
+
+        public Participant FindParticipant(string nric)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                return unitOfWork.Participants.FindParticipant(nric);
+            }
+        }
+
+        public Template FindTemplate(int templateID)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                return FindTemplate(templateID, unitOfWork);
+            }
+        }
+
+        private Template FindTemplate(int templateID, IUnitOfWork unitOfWork)
+        {
+            return unitOfWork.FormRepository.GetTemplate(templateID);
+        }
+
+        private Template FindLatestTemplate(int formId, IUnitOfWork unitOfWork)
+        {
+            Form form = unitOfWork.FormRepository.GetForm(formId);
+            if (form != null)
+            {
+                return form.Templates.Where(t => t.IsActive == true).OrderByDescending(f => f.Version).First();
+            }
+            return null;
+        }
+
+
+        public string InternalFillIn(ParticipantJourneySearchViewModel psm, int modalityId, IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var template = FindTemplate(model.TemplateID.Value, unitOfWork);
+
+                using (var fillIn = new InternalFormFillIn(unitOfWork, psm, template.FormID, modalityId))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
@@ -292,46 +374,6 @@ namespace PHS.Business.Implementation
                 Util.CopyNonNullProperty(preRegistration, participant);
             }
             
-        }
-
-
-        public List<ParticipantJourneyModalityCircleViewModel> GetParticipantMegaSortingStation(ParticipantJourneySearchViewModel psm)
-        {
-            using(var unitOfWork = CreateUnitOfWork())
-            {
-
-                PHSEvent phsEvent = unitOfWork.Events.Get(psm.PHSEventId);
-                Participant participant = unitOfWork.Participants.FindParticipant(psm.Nric, phsEvent.PHSEventID);
-
-                IEnumerable<ParticipantJourneyModality> ptJourneyModalityItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByParticipantEvent(psm.Nric, phsEvent.PHSEventID);
-
-                ParticipantJourneyViewModel pjvm = new ParticipantJourneyViewModel(participant, psm.PHSEventId); 
-
-                List<ParticipantJourneyModalityCircleViewModel> pjmCircles = new List<ParticipantJourneyModalityCircleViewModel>();
-
-                foreach(Modality modality in phsEvent.Modalities)
-                {
-                    foreach (ParticipantJourneyModality pjm in ptJourneyModalityItems)
-                    {
-                        if (modality.ModalityID == pjm.Modality.ModalityID && pjm.PHSEvent.Equals(phsEvent))
-                        {
-                            modality.IsActive = true; 
-                        }
-                    }
-                    if (modality.Status != "Public")
-                    {
-                        pjmCircles.Add(copyToPJMCVM(pjvm, modality));
-                    }
-                }
-                return pjmCircles;
-            }           
-        }
-
-        private ParticipantJourneyModalityCircleViewModel copyToPJMCVM (ParticipantJourneyViewModel pjvm, Modality modality)
-        {
-            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality); 
-
-            return pjmcvm; 
         }
 
 

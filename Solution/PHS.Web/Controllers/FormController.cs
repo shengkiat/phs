@@ -170,7 +170,17 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    return View(model1);
+
+                    if (model1.TemplateID == id)
+                    {
+                        return View(model1);
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("editTemplate", new { id = model1.TemplateID });
+                    }
+                    
                 }
 
             }
@@ -238,22 +248,6 @@ namespace PHS.Web.Controllers
 
             }
         }
-
-        [HttpPost]
-        public ActionResult DeleteTemplateField(int? fieldid)
-        {
-            if (fieldid.HasValue)
-            {
-                using (var formManager = new FormManager())
-                {
-                    formManager.DeleteTemplateField(fieldid.Value);
-                    return Json(new { success = true, message = "Field was deleted." });
-                }
-            }
-
-            return Json(new { success = false, message = "Unable to delete field." });
-        }
-
 
         public ActionResult TogglePublish(bool toOn, int id)
         {

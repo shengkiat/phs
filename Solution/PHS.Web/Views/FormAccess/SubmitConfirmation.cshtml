@@ -19,6 +19,12 @@
     {
         <link type="text/css" href="/Content/css/form-builder/themes/@Model.Theme/styles.css" rel="stylesheet"  />    
     } 
+
+    <script>
+        $(document).ready(function () {
+            window.parent.$('html,body').scrollTop(0);
+        });
+    </script>
 }
 
 <div class="form-page-container confirmation-page-container prepend-top span-26">        
@@ -29,8 +35,6 @@
             <br />        
         <div class="inner-container">
         @Html.WriteMessages()
-        <br />
-        <a href="javascript:history.go(-1);">Click Here</a> to go back
         </div>    
    
 </div>

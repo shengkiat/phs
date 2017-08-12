@@ -74,178 +74,39 @@ namespace PHS.Business.Implementation
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }
             }
+        }
 
-            /*
-            string result = null;
-            IList<string> errors = Enumerable.Empty<string>().ToList();
-            //var formObj = this._formRepo.GetByPrimaryKey(model.Id.Value);
-
-            var template = FindTemplate(model.TemplateID.Value);
-
-            var templateView = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-            templateView.AssignInputValues(formCollection);
-            // this.InsertValuesIntoTempData(SubmitFields, formCollection);
-
-            if (templateView.Fields.Any())
+        public ReferenceRange GetReferenceRange(int standardReferenceID, double value, out string message)
+        {
+            message = string.Empty;
+            try
             {
-                // first validate fields
-                foreach (var field in templateView.Fields)
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    if (!field.SubmittedValueIsValid(formCollection))
+                    var standardReference = unitOfWork.StandardReferences.GetStandardReference(standardReferenceID);
+
+                    if (standardReference == null)
                     {
-                        field.SetFieldErrors();
-                        errors.Add(field.Errors);
+                        message = "Invalid Standard Reference ID";
+                        return null;
                     }
 
-                    var value = field.SubmittedValue(formCollection);
-                    if (field.IsRequired && value.IsNullOrEmpty())
+                    var referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue <= value && r.MaximumValue >= value).FirstOrDefault();
+                    if (referenceRange == null)
                     {
-                        field.Errors = "{0} is a required field".FormatWith(field.Label);
-                        errors.Add(field.Errors);
+                        message = "Unable to find reference range";
+                        return null;
                     }
-                };
 
-                if (errors.Count == 0)
-                {
-                    //then insert values
-                    var entryId = Guid.NewGuid();
-
-                    using (var unitOfWork = CreateUnitOfWork())
-                    {
-                        using (TransactionScope scope = new TransactionScope())
-                        {
-                            IDictionary<string, object> values = new Dictionary<string, object>();
-
-                            foreach (var field in templateView.Fields)
-                            {
-                                var value = field.SubmittedValue(formCollection);
-
-                                //if it's a file, save it to hard drive
-                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                {
-                                    //var file = Request.Files[field.SubmittedFieldName()];
-                                    //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                    //if (fileValueObject != null)
-                                    //{
-                                    //    if (UtilityHelper.UseCloudStorage())
-                                    //    {
-                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                    //    }
-                                    //}
-                                }
-
-                                if (!string.IsNullOrEmpty(field.PreRegistrationFieldName))
-                                {
-                                    values.Add(field.PreRegistrationFieldName, value);
-                                }
-
-                                if (!string.IsNullOrEmpty(field.RegistrationFieldName))
-                                {
-                                    values.Add(field.RegistrationFieldName, value);
-                                }
-
-
-                                unitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
-                            }
-
-                            if (Public_Form_Type_PreRegistration.Equals(template.Form.PublicFormType))
-                            {
-                                PreRegistration preRegistration = new PreRegistration();
-
-                                preRegistration.EntryId = entryId;
-                                preRegistration.CreatedDateTime = DateTime.Now;
-
-                                preRegistration.Citizenship = getStringValue(values, PreRegistration_Field_Name_Citizenship);
-                                preRegistration.HomeNumber = getStringValue(values, PreRegistration_Field_Name_HomeNumber);
-                                preRegistration.MobileNumber = getStringValue(values, PreRegistration_Field_Name_MobileNumber);
-                                preRegistration.DateOfBirth = getDateTimeValue(values, PreRegistration_Field_Name_DateOfBirth);
-                                preRegistration.Nric = getStringValue(values, PreRegistration_Field_Name_Nric);
-                                preRegistration.PreferedTime = getStringValue(values, PreRegistration_Field_Name_PreferedTime);
-                                preRegistration.Race = getStringValue(values, PreRegistration_Field_Name_Race);
-                                preRegistration.Salutation = getStringValue(values, PreRegistration_Field_Name_Salutation);
-                                preRegistration.Address = getStringValue(values, PreRegistration_Field_Name_Address);
-                                preRegistration.Language = getStringValue(values, PreRegistration_Field_Name_Language);
-                                preRegistration.FullName = getStringValue(values, PreRegistration_Field_Name_FullName);
-                                preRegistration.Gender = getStringValue(values, PreRegistration_Field_Name_Gender);
-
-                                unitOfWork.PreRegistrations.Add(preRegistration);
-                            }
-
-                            if ("Registration Form".Equals(template.Form.Title))
-                            {
-                                //update participant
-                                Participant participant = unitOfWork.Participants.FindParticipant(nric, int.Parse(eventId));
-                                if (participant != null)
-                                {
-                                    participant.FullName = getStringValue(values, Registration_Field_Name_FullName);
-                                    participant.HomeNumber = getStringValue(values, Registration_Field_Name_HomeNumber);
-                                    participant.MobileNumber = getStringValue(values, Registration_Field_Name_MobileNumber);
-                                    participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
-                                    participant.Language = getStringValue(values, Registration_Field_Name_Language);
-                                    participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
-
-                                    //Create ParticipantJourneyModality
-                                    ParticipantJourneyModality participantJourneyModality = new ParticipantJourneyModality()
-                                    {
-                                        ParticipantID = participant.ParticipantID,
-                                        PHSEventID = int.Parse(eventId),
-                                        FormID = templateView.FormID,
-                                        ModalityID = int.Parse(modalityId),
-                                        EntryId = entryId
-                                    };
-
-                                    //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
-
-                                    participant.ParticipantJourneyModalities.Add(participantJourneyModality);
-                                }
-                            }
-
-                            unitOfWork.Complete();
-                            scope.Complete();
-
-                            result = "success";
-                        }
-                    }
+                    return referenceRange;
                 }
             }
-
-            if (errors.Count > 0)
+            catch (Exception ex)
             {
-                result = errors.ToUnorderedList();
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("GetReferenceRange");
+                return null;
             }
-
-
-            return result;*/
         }
-
-        private string getStringValue(IDictionary<string, object> values, string key)
-        {
-            string result = string.Empty;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = values[key].ToString();
-            }
-
-            return result;
-        }
-
-        private Nullable<System.DateTime> getDateTimeValue(IDictionary<string, object> values, string key)
-        {
-            Nullable<System.DateTime> result = null;
-            if (values.ContainsKey(key) && values[key] != null)
-            {
-                result = Convert.ToDateTime(values[key].ToString());
-            }
-
-            return result;
-        }
-
-
-
     }
 }

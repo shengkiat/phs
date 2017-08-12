@@ -18,6 +18,7 @@ namespace PHS.DB
         public StandardReference()
         {
             this.ReferenceRanges = new HashSet<ReferenceRange>();
+            this.TemplateFields = new HashSet<TemplateField>();
         }
     
         public int StandardReferenceID { get; set; }
@@ -25,5 +26,7 @@ namespace PHS.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenceRange> ReferenceRanges { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TemplateField> TemplateFields { get; set; }
     }
 }

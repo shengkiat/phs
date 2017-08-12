@@ -89,6 +89,22 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeleteTemplateField(int? fieldid)
+        {
+            if (fieldid.HasValue)
+            {
+                using (var formManager = new FormManager())
+                {
+                    formManager.DeleteTemplateField(fieldid.Value);
+                    return Json(new { success = true, message = "Field was deleted." });
+                }
+            }
+
+            return Json(new { success = false, message = "Unable to delete field." });
+        }
+
+
+        [HttpPost]
         public ActionResult FillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
@@ -115,6 +131,8 @@ namespace PHS.Web.Controllers
 
                         NotifyViaEmail(notificationView);
                     }
+
+                    RemoveValuesFromTempData(formCollection);
 
                     TempData["success"] = templateView.ConfirmationMessage;
                     return RedirectToRoute("form-submitconfirmation", new
@@ -254,6 +272,23 @@ namespace PHS.Web.Controllers
             }
         }
 
+        public ActionResult GetReferenceRange(int standardReferenceId, double value)
+        {
+            string message = string.Empty;
+            using (var formAccessManager = new FormAccessManager())
+            {
+                var referenceRange = formAccessManager.GetReferenceRange(standardReferenceId, value, out message);
+
+                if (referenceRange == null)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
+                }
+
+                return Json(new { Status = referenceRange.Title, Color = "" });
+            }
+        }
+
         private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
         {
             foreach (var key in formCollection.AllKeys)
@@ -262,13 +297,16 @@ namespace PHS.Web.Controllers
             }
         }
 
+        private void RemoveValuesFromTempData(FormCollection formCollection)
+        {
+            foreach (var key in formCollection.AllKeys)
+            {
+                ViewData.Remove(key.ToLower());
+            }
+        }
+
         public ActionResult GenerateDoctorMemo(string text)
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToError("Unauthorized access");
-            }
-
             if (text == null)
             {
                 text = "";
@@ -298,11 +336,6 @@ namespace PHS.Web.Controllers
         [HttpGet]
         public ActionResult DownloadDoctorMemo(string fileGuid, string fileName)
         {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToError("Unauthorized access");
-            }
-
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];

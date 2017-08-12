@@ -22,6 +22,7 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
+        [IgnoreAttribute]
         public void GetAllParticipantJourneyByNric_InvalidNric()
         {
             string message = string.Empty;
@@ -78,6 +79,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        [IgnoreAttribute]
         public void RetrievePastParticipantJourney_InvalidNric()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();

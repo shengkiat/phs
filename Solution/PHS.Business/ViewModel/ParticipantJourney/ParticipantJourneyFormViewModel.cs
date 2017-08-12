@@ -12,10 +12,13 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
         public ParticipantJourneyFormViewModel(Participant participant, int PHSEventId)
         {
+            Participant = participant;
             Event = participant.PHSEvents.Where(e => e.PHSEventID == PHSEventId).FirstOrDefault();
         }
 
         private PHSEvent Event { get; }
+
+        private Participant Participant { get; }
 
         public int SelectedModalityId { get; set; }
 
@@ -44,6 +47,22 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                     result = modality.Name.Equals("Summary");
                 }
             }
+            return result;
+        }
+
+        public List<Summary> GetEventSummaries()
+        {
+            List<Summary> result = new List<Summary>();
+
+            foreach (var summary in Participant.Summaries)
+            {
+                if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                    && summary.SummaryType.Equals("ESY"))
+                {
+                    result.Add(summary);
+                }
+            }
+
             return result;
         }
     }

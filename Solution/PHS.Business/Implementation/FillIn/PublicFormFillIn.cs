@@ -48,10 +48,25 @@ namespace PHS.Business.Implementation.FillIn
                 preRegistration.PreferedTime = getStringValue(values, PreRegistration_Field_Name_PreferedTime);
                 preRegistration.Race = getStringValue(values, PreRegistration_Field_Name_Race);
                 preRegistration.Salutation = getStringValue(values, PreRegistration_Field_Name_Salutation);
-                preRegistration.Address = getStringValue(values, PreRegistration_Field_Name_Address);
                 preRegistration.Language = getStringValue(values, PreRegistration_Field_Name_Language);
                 preRegistration.FullName = getStringValue(values, PreRegistration_Field_Name_FullName);
                 preRegistration.Gender = getStringValue(values, PreRegistration_Field_Name_Gender);
+
+                string addressValue = getStringValue(values, PreRegistration_Field_Name_Address);
+
+                if (!string.IsNullOrEmpty(addressValue))
+                {
+                    AddressViewModel address = addressValue.FromJson<AddressViewModel>();
+
+                    preRegistration.Address = address.ConvertToOneLineAddress();
+                    preRegistration.PostalCode = address.ZipCode;
+                }
+
+                else
+                {
+                    preRegistration.Address = "";
+                    preRegistration.PostalCode = "";
+                }
 
                 UnitOfWork.PreRegistrations.Add(preRegistration);
             }

@@ -34,6 +34,11 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Template>().Where(u => u.TemplateID == templateId && u.IsActive == true).Include(x => x.Form).Include(x => x.TemplateFields).FirstOrDefault();
         }
 
+        public TemplateField GetTemplateField(int templateFieldId)
+        {
+            return dbContext.Set<TemplateField>().Where(u => u.TemplateFieldID == templateFieldId).FirstOrDefault();
+        }
+
         public Form GetPublicForm(string slug)
         {
             return dbContext.Set<Form>().Where(u => u.IsPublic == true && slug.Equals(u.Slug)).Include(x => x.Templates.Select(t=> t.TemplateFields)).FirstOrDefault();
@@ -84,7 +89,12 @@ namespace PHS.Repository.Repository
                     MatrixRow = fieldView.MatrixRow,
                     MatrixColumn = fieldView.MatrixColumn,
                     PreRegistrationFieldName = fieldView.PreRegistrationFieldName,
-                    RegistrationFieldName = fieldView.RegistrationFieldName
+                    RegistrationFieldName = fieldView.RegistrationFieldName,
+                    SummaryType = fieldView.SummaryType,
+                    ConditionCriteria = fieldView.ConditionCriteria,
+                    ConditionOptions = fieldView.ConditionOptions,
+                    ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID,
+                    StandardReferenceID = fieldView.StandardReferenceID
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -125,6 +135,11 @@ namespace PHS.Repository.Repository
                     fField.MatrixRow = fieldView.MatrixRow;
                     fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                     fField.RegistrationFieldName = fieldView.RegistrationFieldName;
+                    fField.SummaryType = fieldView.SummaryType;
+                    fField.ConditionCriteria = fieldView.ConditionCriteria;
+                    fField.ConditionOptions = fieldView.ConditionOptions;
+                    fField.ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID;
+                    fField.StandardReferenceID = fieldView.StandardReferenceID;
                 }
 
               //  this.SaveChanges();
@@ -238,7 +253,12 @@ namespace PHS.Repository.Repository
                     MatrixRow = templateField1.MatrixRow,
                     MatrixColumn = templateField1.MatrixColumn,
                     PreRegistrationFieldName = templateField1.PreRegistrationFieldName,
-                    RegistrationFieldName = templateField1.RegistrationFieldName
+                    RegistrationFieldName = templateField1.RegistrationFieldName,
+                    SummaryType = templateField1.RegistrationFieldName,
+                    ConditionCriteria = templateField1.ConditionCriteria,
+                    ConditionOptions = templateField1.ConditionOptions,
+                    ConditionTemplateFieldID = templateField1.ConditionTemplateFieldID,
+                    StandardReferenceID = templateField1.StandardReferenceID
                 };
 
                 template.TemplateFields.Add(fField);

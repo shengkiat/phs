@@ -47,8 +47,18 @@ namespace PHS.DB.ViewModels.Form
         public string MatrixRow { get; set; }
         public string MatrixColumn { get; set; }
         public string EntryId { get; set; }
+        public string ParticipantNric { get; set; }
+        public bool IsValueRequiredForRegistration { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
+        public string SummaryType { get; set; }
+
+        public int? ConditionTemplateFieldID { get; set; }
+        public string ConditionCriteria { get; set; }
+        public string ConditionOptions { get; set; }
+
+        public int? StandardReferenceID { get; set; }
+
         #endregion
 
         #region Public Members
@@ -101,7 +111,12 @@ namespace PHS.DB.ViewModels.Form
                     MatrixRow = field.MatrixRow,
                     MatrixColumn = field.MatrixColumn,
                     PreRegistrationFieldName = field.PreRegistrationFieldName,
-                    RegistrationFieldName = field.RegistrationFieldName
+                    RegistrationFieldName = field.RegistrationFieldName,
+                    SummaryType = field.SummaryType,
+                    ConditionCriteria = field.ConditionCriteria,
+                    ConditionOptions = field.ConditionOptions,
+                    ConditionTemplateFieldID = field.ConditionTemplateFieldID,
+                    StandardReferenceID = field.StandardReferenceID
                 };
             }
 

@@ -364,7 +364,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void DeleteFormAndTemplate_ReturnError()
+        public void DeleteFormAndTemplate_ReturnInvalidIdError()
         {
             string deleteResult = _target.DeleteFormAndTemplate(-1);
             Assert.AreEqual(deleteResult, "Unable to delete form - invalid id");
@@ -396,6 +396,44 @@ namespace PHS.Business.Implementation.Tests
 
             string deleteResult = _target.DeleteFormAndTemplate(template.FormID);
             Assert.AreEqual(deleteResult, "Unable to delete - Templates must have no entries to be able to be deleted");
+        }
+
+        [TestMethod()]
+        public void DeleteFormAndTemplate_UnableToDeleteWhenAttachedToModality()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality",
+                IsMandatory = true
+            };
+
+            Form form = _unitOfWork.FormRepository.Find(f=>f.FormID == template.FormID).FirstOrDefault();
+
+            Assert.IsNotNull(form);
+
+            modality.Forms.Add(form);
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string deleteResult = _target.DeleteFormAndTemplate(template.FormID);
+            Assert.AreEqual("Unable to delete - Form is already attached to a modality", deleteResult);
         }
 
         [TestMethod()]
@@ -449,7 +487,17 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(postExecuteResult.Count(), 0);
         }
 
-        
+        [TestMethod()]
+        public void FindTemplateField_Success()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateDefaultTemplateAndField(out template, out templateViewModel);
+
+            var postExecuteResult = _target.FindTemplateField(1);
+            Assert.IsNotNull(postExecuteResult);
+        }
+
 
         [TestInitialize]
         public void SetupTest()

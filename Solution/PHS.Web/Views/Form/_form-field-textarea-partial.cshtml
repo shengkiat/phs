@@ -2,36 +2,49 @@
 
 @using PHS.Business.Extensions
 
-<div style="width: 90%; word-wrap: break-word; text-align: left;"
-       data-sub-channel="sub-label-@Model.DomId"
-       class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
+@{
+    var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
+}
 
-    <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+<div id="mainfield-TextArea-@Model.DomId"
+     data-reference="@Model.ConditionTemplateFieldID"
+     data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     @displayAttribute>
 
-    <div class="input" style="width: 90%; margin-left: 1cm;">
-        <textarea style="min-height:100px; min-width:100px; max-width: 95%"
-                  id="SubmitFields[@Model.DomId].TextArea"
-                  name="SubmitFields[@Model.DomId].TextArea"
-                  type="text">@Html.GetSubmittedTextValue(Model)</textarea>
+    <div style="width: 90%; word-wrap: break-word; text-align: left;"
+         data-sub-channel="sub-label-@Model.DomId"
+         class="label editablewysiwyg">@Html.Raw(@Model.Label)</div>
 
-        @if (Model.IsEditMode())
-        {
-            @Html.Partial("_form-field-properties-partial", Model)
-        }
+        <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
-        @if (!Model.Errors.IsNullOrEmpty())
-        {
-            <span class="field-validation-error">@Model.Errors</span>
-        }
-    </div>
+        <div class="input" style="width: 90%; margin-left: 1cm;">
+            <textarea style="min-height:100px; min-width:100px; max-width: 95%"
+                      id="SubmitFields[@Model.DomId].TextArea"
+                      name="SubmitFields[@Model.DomId].TextArea"
+                      @readonlyAttribute
+                      type="text">
+                @Html.GetSubmittedTextValue(Model)
+                </textarea>
 
-    <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
-        <img src="@Html.SpacerImage()" alt="help" />
-    </a>
+                @if (Model.IsEditMode())
+                {
+                    @Html.Partial("_form-field-properties-partial", Model)
+                }
 
-    @if (Model.IsEditMode())
-    {
-        @Html.Partial("_form-field-settings-template")
-    }
+                @if (!Model.Errors.IsNullOrEmpty())
+                {
+                    <span class="field-validation-error">@Model.Errors</span>
+                }
+            </div>
 
+            <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+                <img src="@Html.SpacerImage()" alt="help" />
+            </a>
+
+            @if (Model.IsEditMode())
+            {
+                @Html.Partial("_form-field-settings-template")
+            }
+</div>
 

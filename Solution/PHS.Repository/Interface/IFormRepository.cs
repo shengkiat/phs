@@ -13,6 +13,7 @@ namespace PHS.Repository.Interface
         Form GetForm(string slug);
         Form GetPublicForm(string slug);
         Template GetTemplate(int key);
+        TemplateField GetTemplateField(int templateFieldId);
         void UpdateTemplateField(Template template1, TemplateFieldViewModel fieldView);
         Form CreateNewForm(FormViewModel formViewModel);
         void UpdateForm(FormViewModel formViewModel, Form form1);

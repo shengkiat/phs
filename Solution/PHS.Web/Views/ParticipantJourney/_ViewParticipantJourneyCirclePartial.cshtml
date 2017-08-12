@@ -143,10 +143,18 @@
 
         if (@element.IsActive && @element.Status != "Public")
         {
+
+
+          string imagePath = element.IconPath;
+    
+                imagePath = imagePath.Replace("../../../", "/phs/");
+
+
+
             if (selectedModalityId == element.ModalityID)
             {
                 <button name="buttons" value="@element.Name" class="round-button round-button-selected" id="@element.ModalityID">
-                    <img src="@element.IconPath" height="35" width="35"  />
+                    <img src=@imagePath height="35" width="35"  />
                     <br />
                     @element.Name
                 </button>
@@ -157,7 +165,7 @@
             else if (element.isAllFormsCompleted())
             {
                 <button name="buttons" value="@element.Name" class="round-button round-button-completed" id="@element.ModalityID">
-                    <img src="@element.IconPath" height="35" width="35" />
+                    <img src=@imagePath height="35" width="35" />
                     <br />
                     @element.Name
                 </button>
@@ -168,7 +176,7 @@
             else
             {
                 <button name="buttons" value="@element.Name" class="round-button" id="@element.ModalityID">
-                    <img src="@element.IconPath" height="35" width="35" />
+                    <img src=@imagePath height="35" width="35" />
                     <br />
                     @element.Name
                 </button>

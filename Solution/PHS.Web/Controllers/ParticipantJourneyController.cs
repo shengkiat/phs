@@ -127,14 +127,7 @@ namespace PHS.Web.Controllers
 
                 else
                 {
-                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = new List<ParticipantJourneyModalityCircleViewModel>();
-
-                    //foreach (var modality in result.Event.Modalities)
-                    //{
-                    //    participantJourneyModalityCircles.Add(new ParticipantJourneyModalityCircleViewModel(result, modality));
-                    //}
-
-                    participantJourneyModalityCircles = participantJourneyManager.GetParticipantMegaSortingStation(psm);
+                    List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = participantJourneyManager.GetParticipantMegaSortingStation(psm);
 
                     ParticipantJourneyFormViewModel participantJourneyformView = new ParticipantJourneyFormViewModel(result.Participant, psm.PHSEventId);
 
@@ -144,6 +137,7 @@ namespace PHS.Web.Controllers
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     TempData["ParticipantJourneyFormViewModel"] = participantJourneyformView;
                     TempData["SelectedModalityId"] = participantJourneyformView.SelectedModalityId;
+                    TempData["ViewParticipantJourneyType"] = Constants.TemplateFieldMode.INPUT;
 
                     return View(result);
 
@@ -151,7 +145,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult RefreshViewParticipantJourneyForm(string selectedModalityId)
+        public ActionResult RefreshViewParticipantJourneyForm(int selectedModalityId)
         {
             ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
 
@@ -175,64 +169,72 @@ namespace PHS.Web.Controllers
                 else
                 {
                     TempData["SelectedModalityId"] = selectedModalityId;
-                    result.SelectedModalityId = Int32.Parse(selectedModalityId);
+                    result.SelectedModalityId = selectedModalityId;
                 }
 
                 return PartialView("_ViewParticipantJourneyFormPartial", result);
             }
         }
 
+        public ActionResult RefreshViewParticipantJourneyParticipant()
+        {
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+
+            if (psm == null)
+            {
+                return Redirect("Index");
+            }
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return Redirect("Index");
+                }
+
+                return PartialView("_ViewParticipantJourneyParticipantPartial", result);
+            }
+        }
 
         public ActionResult InternalFillIn(int id, bool embed = false)
         {
-            using (var formManager = new FormAccessManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager())
             {
-                TemplateViewModel model = null;
+                ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
 
-                var template = formManager.FindLatestTemplate(id);
-
-                if (template != null)
+                if (psm == null)
                 {
-                    model = TemplateViewModel.CreateFromObject(template, Constants.TemplateFieldMode.INPUT);
-                    model.Embed = embed;
-
-
-                    ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel) TempData.Peek("ParticipantJourneySearchViewModel");
-
-                    using (var participantJourneyManager = new ParticipantJourneyManager())
-                    {
-                        string message = string.Empty;
-
-                        if ("MEG".Equals(model.InternalFormType))
-                        {
-                            List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm); 
-
-                            return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
-                        }
-
-                        int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
-
-                        ParticipantJourneyModality participantJourneyModality = participantJourneyManager.RetrieveParticipantJourneyModality(psm, id, selectedModalityId, out message);
-
-                        if (participantJourneyModality != null)
-                        {
-                            // for mega sorting station
-   
-
-                            // to load non mega sorting station 
-                            foreach (var field in model.Fields)
-                            {
-                                field.EntryId = participantJourneyModality.EntryId.ToString();
-                            }
-                        }
-                        
-                    }
-
-                    return View("_FillInPartial", model);
+                    return Redirect("Index");
                 }
+
+                string message = string.Empty;
+                int selectedModalityId = (int)TempData.Peek("SelectedModalityId");
+                TemplateFieldMode fieldMode = (TemplateFieldMode) TempData.Peek("ViewParticipantJourneyType");
+
+                var result = participantJourneyManager.FindTemplateToDisplay(psm, id, selectedModalityId, embed, fieldMode, out message);
+
+                if (result == null)
+                {
+                    SetViewBagError(message);
+                    return RedirectToError("invalid id");
+                }
+
                 else
                 {
-                    return RedirectToError("invalid id");
+                    if (Internal_Form_Type_MegaSortingStation.Equals(result.InternalFormType))
+                    {
+                        List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm);
+
+                        return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
+                    }
+
+                    return View("_FillInPartial", result);
                 }
             }
         }
@@ -240,7 +242,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult InternalFillIn(IDictionary<string, string> SubmitFields, TemplateViewModel model, FormCollection formCollection)
         {
-            InsertValuesIntoTempData(SubmitFields, formCollection);
+            InsertValuesIntoTempData(formCollection);
 
             using (var participantJourneyManager = new ParticipantJourneyManager())
             {
@@ -251,11 +253,9 @@ namespace PHS.Web.Controllers
                 string nric = null;
                 string eventId = null;
                 int modalityId = -1;
-
-                if(TempData.Peek("ParticipantJourneyFormViewModel") != null)
+                if (TempData.Peek("SelectedModalityId") != null)
                 { 
-                    ParticipantJourneyFormViewModel participantJourneyFormViewModel = (ParticipantJourneyFormViewModel)TempData.Peek("ParticipantJourneyFormViewModel");
-                    modalityId = participantJourneyFormViewModel.SelectedModalityId;
+                    modalityId = (int) TempData.Peek("SelectedModalityId");
                 }
 
                 ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
@@ -270,8 +270,7 @@ namespace PHS.Web.Controllers
 
                 if (result.Equals("success"))
                 {
-                    TempData["success"] = templateView.ConfirmationMessage;
-
+                   
                     List<ParticipantJourneyModalityCircleViewModel> participantJourneyModalityCircles = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
                     
                     foreach (var participantJourneyModalityCircle in participantJourneyModalityCircles)
@@ -283,19 +282,19 @@ namespace PHS.Web.Controllers
                     }
 
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
-
+                    //TempData["success"] = templateView.ConfirmationMessage;
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                 }
 
                 else
                 {
-                    TempData["error"] = result;
-                    return Json(new { success = false, error = "Unable to save form ", isautosave = false });
+                    //TempData["error"] = result;
+                    return Json(new { success = false, error = result, isautosave = false });
                 }
             }
         }
 
-        private void InsertValuesIntoTempData(IDictionary<string, string> submittedValues, FormCollection formCollection)
+        private void InsertValuesIntoTempData(FormCollection formCollection)
         {
             foreach (var key in formCollection.AllKeys)
             {

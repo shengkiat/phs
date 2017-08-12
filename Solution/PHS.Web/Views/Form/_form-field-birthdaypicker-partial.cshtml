@@ -15,15 +15,44 @@
             <li>
                 <ul class="horizontal-list three-field-row">
                     <li>
-                        @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field" })<br />
+
+                        @if (Model.IsReadOnlyMode())
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field", @disabled = "disabled" })
+                        }
+
+                        else
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field"})
+                        }
+
+                        <br />
                         <span class="sub-label">Month</span>
                     </li>
                     <li>
-                        @Html.DropDownList("SubmitFields[{0}].Day".FormatWith(Model.DomId), new SelectList(ItemListHelper.Days().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Day")), new { @class = "shorter-field" })<br />
+                        @if (Model.IsReadOnlyMode())
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Day".FormatWith(Model.DomId), new SelectList(ItemListHelper.Days().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Day")), new { @class = "shorter-field", @disabled = "disabled" })
+                        }
+
+                        else
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Day".FormatWith(Model.DomId), new SelectList(ItemListHelper.Days().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Day")), new { @class = "shorter-field"})
+                        }
+                        <br />
                         <span class="sub-label">Day</span>
                     </li>
                     <li>
-                        @Html.DropDownList("SubmitFields[{0}].Year".FormatWith(Model.DomId), new SelectList(ItemListHelper.BirthYears(Model.MinimumAge.Value, Model.MaximumAge.Value).InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Year")), new { @class = "shorter-field birth-year" })<br />
+                        @if (Model.IsReadOnlyMode())
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Year".FormatWith(Model.DomId), new SelectList(ItemListHelper.BirthYears(Model.MinimumAge.Value, Model.MaximumAge.Value).InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Year")), new { @class = "shorter-field birth-year", @disabled = "disabled" })
+                        }
+
+                        else
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Year".FormatWith(Model.DomId), new SelectList(ItemListHelper.BirthYears(Model.MinimumAge.Value, Model.MaximumAge.Value).InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Year")), new { @class = "shorter-field birth-year"})
+                        }
+                        <br />
                         <span class="sub-label">Year</span>
                     </li>
                 </ul>
@@ -64,11 +93,18 @@
 
         $(document).ready(function () {
             $("select[name='SubmitFields[@Model.DomId].Year']").change(function () {
-                var currentYear = new Date().getFullYear();
                 var year = $('option:selected', this).text();
 
-                document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+                displayAge(year);
             });
+
+            var year = $('option:selected', "select[name='SubmitFields[@Model.DomId].Year']").text();
+            displayAge(year);
         });
+
+        function displayAge(year) {
+            var currentYear = new Date().getFullYear();
+            document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+        }
 
     </script>

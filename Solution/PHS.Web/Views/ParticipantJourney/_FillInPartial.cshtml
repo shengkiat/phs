@@ -40,6 +40,8 @@
 
             console.log(content.responseText);
 
+            window.parent.$('html,body').scrollTop(0);
+
             var response = $.parseJSON(content.responseText);
             if (response.success) {
                 if (!response.isautosave) {
@@ -51,7 +53,7 @@
                 $.ajax(
                     {
                         type: "GET",
-                        url: '@Url.Action("ActivateCirclesFromMSSS", "PatientJourney")', // Controller/View
+                        url: '@Url.Action("ActivateCirclesFromMSSS", "ParticipantJourney")', // Controller/View
                         data: { 'activateList': select },
                         contentType: "application/json; charset=utf-8",
                         success: function (resp) {
@@ -60,6 +62,16 @@
                         }
                     });
 
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: '@Url.Action("RefreshViewParticipantJourneyParticipant", "ParticipantJourney")', // Controller/View
+                        contentType: "application/json; charset=utf-8",
+                        success: function (resp) {
+                            console.log("RefreshViewParticipantJourneyParticipant success from viewform");
+                            window.parent.$('#ptParticipant').html(resp);
+                        }
+                    });
 
                 //bindFieldIds(response.fieldids);
                 //$('#isAltered').val(0);

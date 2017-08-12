@@ -74,7 +74,7 @@ namespace PHS.Business.Implementation.FillIn
                 }
             }
 
-            if ("REG".Equals(template.Form.InternalFormType))
+            if (Internal_Form_Type_Registration.Equals(template.Form.InternalFormType))
             {
                 //update participant
                 Participant participant = UnitOfWork.Participants.FindParticipant(psm.Nric, psm.PHSEventId);
@@ -86,20 +86,25 @@ namespace PHS.Business.Implementation.FillIn
                     participant.DateOfBirth = getDateTimeValue(values, Registration_Field_Name_DateOfBirth);
                     participant.Language = getStringValue(values, Registration_Field_Name_Language);
                     participant.Gender = getStringValue(values, Registration_Field_Name_Gender);
+                    participant.Citizenship = getStringValue(values, Registration_Field_Name_Citizenship);
+                    participant.Race = getStringValue(values, Registration_Field_Name_Race);
+                    participant.Salutation = getStringValue(values, Registration_Field_Name_Salutation);
 
-                    //Create ParticipantJourneyModality
-                    /*ParticipantJourneyModality newParticipantJourneyModality = new ParticipantJourneyModality()
+                    string addressValue = getStringValue(values, Registration_Field_Name_Address);
+
+                    if (!string.IsNullOrEmpty(addressValue))
                     {
-                        ParticipantID = participant.ParticipantID,
-                        PHSEventID = psm.PHSEventId,
-                        FormID = templateView.FormID,
-                        ModalityID = modalityId,
-                        EntryId = entryId
-                    };*/
+                        AddressViewModel address = addressValue.FromJson<AddressViewModel>();
 
-                    //unitOfWork.ParticipantJourneyModalities.Add(participantJourneyModality);
+                        participant.Address = address.ConvertToOneLineAddress();
+                        participant.PostalCode = address.ZipCode;
+                    }
 
-                    //participant.ParticipantJourneyModalities.Add(newParticipantJourneyModality);
+                    else
+                    {
+                        participant.Address = "";
+                        participant.PostalCode = "";
+                    }
                 }
             }
 

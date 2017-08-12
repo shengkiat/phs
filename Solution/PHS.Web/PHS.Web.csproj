@@ -418,6 +418,7 @@
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\farbtastic.js" />
+    <Content Include="Scripts\form-builder\fbuilder.conditionfield.js" />
     <Content Include="Scripts\form-builder\fbuilder.entries.js" />
     <Content Include="Scripts\form-builder\fbuilder.forms.js" />
     <Content Include="Scripts\form-builder\fbuilder.global.js" />
@@ -567,6 +568,9 @@
     <Content Include="Views\ParticipantJourney\_MegaSortingStationPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_SummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_FillInPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ViewParticipantJourneyParticipantPartial.cshtml" />
+    <Content Include="Views\Form\_form-field-headersub-partial.cshtml" />
+    <Content Include="Views\Form\_form-field-headersub-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

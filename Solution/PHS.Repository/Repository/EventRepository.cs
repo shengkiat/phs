@@ -19,6 +19,11 @@ namespace PHS.Repository.Repository
             return dbContext.Set<PHSEvent>().Where(u => u.PHSEventID == id && u.IsActive == true).Include(x => x.Modalities).Include(x => x.Participants).FirstOrDefault();
         }
 
+        public PHSEvent GetEventWithModalityForm(int id)
+        {
+            return dbContext.Set<PHSEvent>().Where(u => u.PHSEventID == id && u.IsActive == true).Include(x => x.Participants).Include(x => x.Modalities.Select(y => y.Forms)).FirstOrDefault();
+        }
+
         public IEnumerable<PHSEvent> GetAllActiveEvents()
         {
             DateTime currentTime = DateTime.Now;
