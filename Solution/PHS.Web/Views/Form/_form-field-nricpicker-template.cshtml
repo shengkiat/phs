@@ -15,22 +15,6 @@
         <input id="field-${id}" type="text" style="width: 100px; height:20px; " 
                 maxlength="9" />
 
-
-        @*<ul class="horizontal-list three-field-row">
-            <li>
-                <select>
-                    <option>S</option>
-                </select>
-            </li>
-
-            <li>
-                <input id="field-${id}" type="text" style="width: 100px; height:20px; " onkeypress='return event.charCode >= 48 && event.charCode <= 57'  maxlength="7"  />
-            </li>
-
-            <li>
-                @Html.DropDownList("lastdigit-${id}", ItemListHelper.NricLastDigit().InsertAtStart(""), new { @class = "shorter-field birth-year" })<br />             
-            </li>
-        </ul>*@
         @Html.Partial("_form-field-properties")
     </div>
     <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
