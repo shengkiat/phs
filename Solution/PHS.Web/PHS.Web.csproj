@@ -507,8 +507,8 @@
     <Content Include="Views\Form\_form-field-phone-partial.cshtml" />
     <Content Include="Views\Form\_form-field-phone-template.cshtml" />
     <Content Include="Views\Form\_form-field-prompt-template.cshtml" />
-    <Content Include="Views\Form\_form-field-properties-partial.cshtml" />
-    <Content Include="Views\Form\_form-field-properties.cshtml" />
+    <Content Include="Views\Form\_FormFieldPropertiesPartial.cshtml" />
+    <Content Include="Views\Form\_FormFieldPropertiesTemplatePartial.cshtml" />
     <Content Include="Views\Form\_FormFieldPropertyEditorPartial.cshtml" />
     <Content Include="Views\Form\_form-field-radiobutton-partial.cshtml" />
     <Content Include="Views\Form\_form-field-radiobutton-template.cshtml" />

@@ -13,7 +13,7 @@
     <input id="SubmitFields[@Model.DomId].Filepicker" name="SubmitFields[@Model.DomId].Filepicker" @readonlyAttribute type="file" value="@Html.GetSubmittedTextValue(Model)" class="title"  />
     @if (Model.IsEditMode())
     {
-    @Html.Partial("_form-field-properties-partial", Model)
+    @Html.Partial("_FormFieldPropertiesPartial", Model)
     }
 
     @if (!Model.Errors.IsNullOrEmpty())

@@ -9,7 +9,7 @@
     <input id="SubmitFields[@Model.DomId].TextBox" name="SubmitFields[@Model.DomId].TextBox" type="text" value="@Html.GetSubmittedTextValue(Model)" title="@Model.Hint" maxlength="@Model.MaxCharacters" class="title watermarked" />
     @if (Model.IsEditMode())
     {
-        @Html.Partial("_form-field-properties-partial", Model)
+        @Html.Partial("_FormFieldPropertiesPartial", Model)
     }
 
     @if (!Model.Errors.IsNullOrEmpty())
