@@ -116,10 +116,25 @@ namespace PHS.Business.Implementation.FillIn
                     UnitOfWork.ParticipantJourneyModalities.UpdateParticipantJourneyModality(participantJourneyModality, templateView.TemplateID.Value, entryId);
                 }
             }
-
             else
             {
                 throw new Exception("No participantJourneyModality found");
+            }
+
+            foreach (var field in templateView.Fields)
+            {
+                if (field.SummaryType != null && field.SummaryType.Length > 0)
+                {
+                    Summary summary = new Summary();
+                    summary.Label = field.Label;
+                    summary.ModalityID = participantJourneyModality.ModalityID;
+                    summary.ParticipantID = participantJourneyModality.ParticipantID;
+                    summary.PHSEventID = participantJourneyModality.PHSEventID;
+                    summary.SummaryType = field.SummaryType;
+                    summary.SummaryValue = field.InputValue;
+                    summary.TemplateFieldID = (int)field.TemplateFieldID;
+                    UnitOfWork.Summaries.Add(summary);
+                }
             }
         }
 

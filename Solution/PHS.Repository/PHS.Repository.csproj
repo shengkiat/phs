@@ -56,6 +56,7 @@
     <Compile Include="Context\PHSContext.cs" />
     <Compile Include="Interface\IParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IPreRegistrationRepository.cs" />
+    <Compile Include="Interface\ISummaryRepository.cs" />
     <Compile Include="Repository\ParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IReferenceRangeRepository.cs" />
     <Compile Include="Interface\IStandardReferenceRepository.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Repository\PreRegistrationRepository.cs" />
     <Compile Include="Repository\ReferenceRangeRepository.cs" />
     <Compile Include="Repository\StandardReferenceRepository.cs" />
+    <Compile Include="Repository\SummaryRepository.cs" />
     <Compile Include="Repository\TemplateFieldValueRepository.cs" />
     <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\ModalityRepository.cs" />

@@ -30,7 +30,7 @@ namespace PHS.Repository
             ParticipantJourneyModalities = new ParticipantJourneyModalityRepository(_context);
             StandardReferences = new StandardReferenceRepository(_context);
             ReferenceRanges = new ReferenceRangeRepository(_context);
-
+            Summaries = new SummaryRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -53,6 +53,8 @@ namespace PHS.Repository
         public IStandardReferenceRepository StandardReferences { get; private set; }
 
         public IReferenceRangeRepository ReferenceRanges { get; private set; }
+
+        public ISummaryRepository Summaries { get; private set; }
 
         public int Complete()
         {

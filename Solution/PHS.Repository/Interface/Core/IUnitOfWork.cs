@@ -27,6 +27,8 @@ namespace PHS.Repository.Interface.Core
 
         IStandardReferenceRepository StandardReferences { get; }
 
+        ISummaryRepository Summaries { get; }
+
         int Complete();
 
  
