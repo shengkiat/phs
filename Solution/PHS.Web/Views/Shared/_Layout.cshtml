@@ -7,12 +7,12 @@
 @*@{
         var menus = new[]
                     {
-                       new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="A"  },
-                       new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="A"  },
-                       new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="A"  },
-                       new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="A"  },
-                       new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="A,V,D"  },
-                       new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="A"  },
+                       new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="Committee Member"  },
+                       new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="Committee Member"  },
+                       new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="Committee Member"  },
+                       new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="Committee Member"  },
+                       new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="Committee Member,Volunteer,Doctor"  },
+                       new { LinkText="Standard Reference", ActionName="Index",ControllerName="StandardReference",Area="Admin",Roles="Committee Member"  },
 
                     };
     }*@
@@ -315,18 +315,18 @@
                     <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
 
                             <ul id="menu-ul">
-                                @if (@User.IsInRole("A"))
+                                @if (@User.IsInRole("Committee Member"))
                                 {
-                                    <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "A" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "A" }, new { @style = "color:white;" })</li>
-                                    <li id="menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "A" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                                    <li id="menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
 
                                 }
-                                @if (@User.IsInRole("A") || @User.IsInRole("V") || @User.IsInRole("D"))
+                                @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
                                 {
-                                    if (@User.IsInRole("D"))
+                                    if (@User.IsInRole("Doctor"))
                                     {
                                     <li id="menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
                                     }
@@ -379,7 +379,7 @@
     <div class="area"></div>
 @if (HttpContext.Current.Session["LoginUser"] != null)
 {
-    var role = (HttpContext.Current.Session["LoginUser"] as Person).Role;
+    var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
     @*var links = from item in menus
                 where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Any(x => role.Equals(x))
