@@ -19,7 +19,7 @@
     @if (Model.IsEditMode())
     {
         <img id="ImageView -@Model.DomId" src=@Model.ImageBase64 >
-        @Html.Partial("_form-field-properties-partial", Model)
+        @Html.Partial("_FormFieldPropertiesPartial", Model)
     }
     else
     {
@@ -38,7 +38,7 @@
 
 @if (Model.IsEditMode())
 {
-    @Html.Partial("_form-field-settings-template")
+    @Html.Partial("_FormFieldSettingsPartial")
 }
 
 <script>

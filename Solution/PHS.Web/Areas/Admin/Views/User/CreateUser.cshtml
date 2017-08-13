@@ -3,7 +3,7 @@
     <script src="~/Scripts/jquery-1.7.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
 </head>
-    @model PHS.DB.Person
+    @model PHS.DB.PHSUser
 
     @{
         ViewBag.Title = "Create User";
@@ -50,13 +50,13 @@
                 @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Role, "V", new { @checked = "checked" }) Volunteer
+                        @Html.RadioButtonFor(model => model.Role, "Volunteer", new { @checked = "checked" }) Volunteer
                     </div>
                     <div class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Role, "D") Doctor
+                        @Html.RadioButtonFor(model => model.Role, "Doctor") Doctor
                     </div>
                     <div class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Role, "A") Admin
+                        @Html.RadioButtonFor(model => model.Role, "Committee Member") Committee Member
                     </div>
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>

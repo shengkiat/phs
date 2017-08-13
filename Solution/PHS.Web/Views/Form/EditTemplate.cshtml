@@ -80,10 +80,10 @@
         <div class="right-column span-7 last">
             @Html.Tip("Active fields on your form can be edited in the box below.", "tip wide-tip")<br />
             <div id="form-property-container">
-                @Html.Partial("_form-property-editor-partial")
+                @Html.Partial("_FormPropertyEditorPartial")
             </div>
             <div id="field-property-container" class="hide">
-                @Html.Partial("_form-field-property-editor-partial")
+                @Html.Partial("_FormFieldPropertyEditorPartial")
             </div>
 
         </div>
@@ -98,7 +98,7 @@
 <div id="autosave-container" class="autosave-container rounded-5 shadow-2 hide">
     @Html.Spinner("auto-save", false)&nbsp;&nbsp;Auto-saving
 </div>
-@Html.Partial("_formEmbedPartial")
+@Html.Partial("_FormEmbedPartial")
 
 
 <!--Register tools here-->

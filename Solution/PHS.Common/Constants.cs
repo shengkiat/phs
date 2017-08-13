@@ -8,9 +8,9 @@ namespace PHS.Common
 {
     public class Constants
     {
-        public const string User_Role_Doctor_Code = "D";
-        public const string User_Role_Volunteer_Code = "V";
-        public const string User_Role_Admin_Code = "A";
+        public const string User_Role_Doctor_Code = "Doctor";
+        public const string User_Role_Volunteer_Code = "Volunteer";
+        public const string User_Role_CommitteeMember_Code = "Committee Member";
 
         public const string Admin = "Admin";
 
@@ -135,6 +135,11 @@ namespace PHS.Common
         public static string OperationFailedDuringUpdatingValue(string value)
         {
             return "Operation failed during updating " + value + ". Please contact system admin";
+        }
+
+        public static string OperationFailedDuringDeletingValue(string value)
+        {
+            return "Operation failed during deleting " + value + ". Please contact system admin";
         }
 
         public static string ValueSuccessfuly(string value)

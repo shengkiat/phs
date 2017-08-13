@@ -13,10 +13,10 @@ namespace PHS.Web.Filter
     {
         Entities context = new Entities(); // my entity  
         private string allowedroles;
-        public Person user { get; set; }
+        public PHSUser user { get; set; }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            user = httpContext.Session[BaseController.UserSessionParam] as Person;
+            user = httpContext.Session[BaseController.UserSessionParam] as PHSUser;
 
             if (user == null)
             {

@@ -12,7 +12,7 @@ namespace PHS.Business.ViewModel
     {
         public string SearchBy { get; set; }
         public string Content { get; set; }
-        public IList<Person> persons { get; set; }
+        public IList<PHSUser> users { get; set; }
         public string SearchButton { get; set; }
     }
 }

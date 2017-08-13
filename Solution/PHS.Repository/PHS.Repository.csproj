@@ -72,7 +72,7 @@
     <Compile Include="Interface\ITemplateFieldValueRepository.cs" />
     <Compile Include="Interface\IMasterAddressRepository.cs" />
     <Compile Include="Interface\IModalityRepository.cs" />
-    <Compile Include="Interface\IPersonRepository.cs" />
+    <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Core\Repository.cs" />
     <Compile Include="Repository\ParticipantRepository.cs" />
@@ -84,7 +84,7 @@
     <Compile Include="Repository\TemplateFieldValueRepository.cs" />
     <Compile Include="Repository\MasterAddressRepository.cs" />
     <Compile Include="Repository\ModalityRepository.cs" />
-    <Compile Include="Repository\PersonRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

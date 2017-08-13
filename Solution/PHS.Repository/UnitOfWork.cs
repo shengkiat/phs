@@ -19,7 +19,7 @@ namespace PHS.Repository
             _context = context;
         
 
-            Persons = new PersonRepository(_context);
+            Users = new UserRepository(_context);
             MasterAddress = new MasterAddressRepository(_context);
             FormRepository = new FormRepository(_context);
             Events = new EventRepository(_context);
@@ -33,7 +33,7 @@ namespace PHS.Repository
             Summaries = new SummaryRepository(_context);
         }
 
-        public IPersonRepository Persons { get; private set; }
+        public IUserRepository Users { get; private set; }
         public IMasterAddressRepository MasterAddress { get; private set; }
 
         public IFormRepository FormRepository { get; private set; }

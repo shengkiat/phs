@@ -117,7 +117,7 @@
     <Compile Include="Implementation\FormManager.cs" />
     <Compile Include="Implementation\ParticipantJourneyManager.cs" />
     <Compile Include="Implementation\PastParticipantJourneyManager.cs" />
-    <Compile Include="Implementation\PersonManager.cs" />
+    <Compile Include="Implementation\UserManager.cs" />
     <Compile Include="Implementation\FormAccessManager.cs" />
     <Compile Include="Implementation\FillIn\PublicFormFillIn.cs" />
     <Compile Include="Interface\IAddressManager.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Interface\IManagerFactoryBase.cs" />
     <Compile Include="Interface\IParticipantJourneyManager.cs" />
     <Compile Include="Interface\IPastParticipantJourneyManager.cs" />
-    <Compile Include="Interface\IPersonManager.cs" />
+    <Compile Include="Interface\IUserManager.cs" />
     <Compile Include="Interface\IFormAccessManager.cs" />
     <Compile Include="Interface\IReferenceRangeManger.cs" />
     <Compile Include="Interface\IStandardReferenceManager.cs" />
