@@ -41,11 +41,13 @@ namespace PHS.Web.Controllers
                 var authenticatedUser = userManager.IsAuthenticated(user.Username, user.Password, out message);
                 if (authenticatedUser != null)
                 {
-                    LogUserIn(authenticatedUser);
                     if (authenticatedUser.UsingTempPW)
                     {
+                        authenticatedUser.Role = String.Empty;
+                        LogUserIn(authenticatedUser);
                         return RedirectToAction("ChangePassword");
                     }
+                    LogUserIn(authenticatedUser);
                     switch (GetLoginUserRole())
                     {
                         case Constants.User_Role_CommitteeMember_Code:

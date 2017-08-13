@@ -294,7 +294,8 @@
         <img src="~/Content/images/logo.gif" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 15px;" />
         <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
         <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
-        @if (HttpContext.Current.Session["LoginUser"] != null)
+        @if (HttpContext.Current.Session["LoginUser"] != null &&
+            (HttpContext.Current.Session["LoginUser"] as PHSUser).Role != null)
         {
             <div class="dropdown pull-right" style="position: absolute; top: 90px;right: 100px;">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
@@ -309,29 +310,26 @@
                 </ul>
             </div>
 
-                    <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
-
-                            <ul id="menu-ul">
-                                @if (@User.IsInRole("Committee Member"))
-                                {
-                                    <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                                    <li id="menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                                    <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
-
-                                }
-                                @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
-                                {
-                                    if (@User.IsInRole("Doctor"))
-                                    {
-                                    <li id="menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "A, D" }, new { @style = "color:white;" })</li>
-                                    }
-                                    <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "A,V,D" }, new { @style = "color:white;" })</li>
-                                }
-                            </ul>
-
-                    </div>
+            <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
+                <ul id="menu-ul">
+                    @if (@User.IsInRole("Committee Member"))
+                    {
+                        <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                    }
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
+                    {
+                        if (@User.IsInRole("Doctor"))
+                        {
+                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                        }
+                        <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "Committee Member, Volunteer, Doctor" }, new { @style = "color:white;" })</li>
+                    }
+                </ul>
+            </div>
         }
 
 
