@@ -28,7 +28,7 @@
 
                 @if (Model.IsEditMode())
                 {
-                    @Html.Partial("_form-field-properties-partial", Model)
+                    @Html.Partial("_FormFieldPropertiesPartial", Model)
                 }
                 else
                 {
@@ -46,7 +46,7 @@
 
             @if (Model.IsEditMode())
             {
-                @Html.Partial("_form-field-settings-template")
+                @Html.Partial("_FormFieldSettingsPartial")
             }
 </div>
 

@@ -12,10 +12,10 @@
 
     <div class="input" style="width: 70%; margin-left: 1cm;">
         <textarea id="field-${id}" type="text" ></textarea>
-        @Html.Partial("_form-field-properties")
+        @Html.Partial("_FormFieldPropertiesTemplatePartial")
     </div>
     <a href="javascript:void(0);" class="help-icon-1 help-icon hide w-tip">
         <img src="@Html.SpacerImage()" alt="help" />
     </a>
-    @Html.Partial("_form-field-settings-template")
+    @Html.Partial("_FormFieldSettingsPartial")
 </script>

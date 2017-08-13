@@ -4,6 +4,6 @@
 <h2 data-sub-channel="sub-text-@Model.DomId" class="default editable" style="word-wrap:break-word;">@Model.Text</h2>
 @if (Model.IsEditMode())
 {
-@Html.Partial("_form-field-properties-partial")
-@Html.Partial("_form-field-settings-template")
+@Html.Partial("_FormFieldPropertiesPartial")
+@Html.Partial("_FormFieldSettingsPartial")
 }
