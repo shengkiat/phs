@@ -23,6 +23,8 @@ namespace PHS.Common
         public const string Internal_Form_Type_Registration = "REG";
         public const string Internal_Form_Type_MegaSortingStation = "MEG";
         public const string Internal_Form_Type_EventSummary = "ESY";
+        public const string Internal_Form_Type_DoctorySummary = "DSY";
+        public const string Internal_Form_Type_AllSummary = "SUM";
 
         public const string Public_Form_Type_PreRegistration = "PRE-REGISTRATION";
         public const string Public_Form_Type_OutReach = "OUTREACH";
@@ -54,6 +56,7 @@ namespace PHS.Common
 
         public const string Summary_Type_Event = "ESY";
         public const string Summary_Type_Doctor = "DSY";
+        public const string Summary_Type_All = "SUM";
 
         public enum MessageType
         {
