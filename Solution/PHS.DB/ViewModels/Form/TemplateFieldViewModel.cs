@@ -51,6 +51,7 @@ namespace PHS.DB.ViewModels.Form
         public bool IsValueRequiredForRegistration { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
+        public string SummaryFieldName { get; set; }
         public string SummaryType { get; set; }
 
         public int? ConditionTemplateFieldID { get; set; }
@@ -112,6 +113,7 @@ namespace PHS.DB.ViewModels.Form
                     MatrixColumn = field.MatrixColumn,
                     PreRegistrationFieldName = field.PreRegistrationFieldName,
                     RegistrationFieldName = field.RegistrationFieldName,
+                    SummaryFieldName = field.SummaryFieldName,
                     SummaryType = field.SummaryType,
                     ConditionCriteria = field.ConditionCriteria,
                     ConditionOptions = field.ConditionOptions,

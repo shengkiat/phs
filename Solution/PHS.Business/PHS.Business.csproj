@@ -103,6 +103,7 @@
     <Compile Include="Extensions\UtilityExtensions.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
     <Compile Include="Helpers\ItemListHelper.cs" />
+    <Compile Include="Helpers\SummaryHelper.cs" />
     <Compile Include="Helpers\UtilityHelper.cs" />
     <Compile Include="Implementation\AddressManager.cs" />
     <Compile Include="Implementation\BaseFormManager.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyViewModel.cs" />
     <Compile Include="ViewModel\PastParticipantJourney\PastParticipantJourneySearchViewModel.cs" />
+    <Compile Include="ViewModel\SummaryCategory\SummaryCategoryViewModel.cs" />
     <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>
   <ItemGroup>

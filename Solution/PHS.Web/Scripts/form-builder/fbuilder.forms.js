@@ -714,6 +714,11 @@
 
                 $('#registrationfieldname').val(value);
                 break;
+            case "summaryfieldname":
+                var value = targetContainer.find('#summaryfieldname-prop-' + domId).val();
+
+                $('#summaryfieldname').val(value);
+                break;
             case "summarytype":
                 var value = targetContainer.find('#summarytype-prop-' + domId).val();
 
@@ -849,6 +854,7 @@
                     "Order: " + $('#order-prop-' + domid).val() + "\n" +
                     "PreRegistration Field Name: " + $('#preregistrationfieldname-prop-' + domid).val() + "\n" +
                     "Registration Field Name: " + $('#registrationfieldname-prop-' + domid).val() + "\n" +
+                    "Summary Field Name: " + $('#summaryfieldname-prop-' + domid).val() + "\n" +
                     "ImageBase64: " + $('#image-prop-' + domid).val() + "\n";
 
         return props;

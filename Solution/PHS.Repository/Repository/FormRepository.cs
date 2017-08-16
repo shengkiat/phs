@@ -90,6 +90,7 @@ namespace PHS.Repository.Repository
                     MatrixColumn = fieldView.MatrixColumn,
                     PreRegistrationFieldName = fieldView.PreRegistrationFieldName,
                     RegistrationFieldName = fieldView.RegistrationFieldName,
+                    SummaryFieldName = fieldView.SummaryFieldName,
                     SummaryType = fieldView.SummaryType,
                     ConditionCriteria = fieldView.ConditionCriteria,
                     ConditionOptions = fieldView.ConditionOptions,
@@ -135,6 +136,7 @@ namespace PHS.Repository.Repository
                     fField.MatrixRow = fieldView.MatrixRow;
                     fField.PreRegistrationFieldName = fieldView.PreRegistrationFieldName;
                     fField.RegistrationFieldName = fieldView.RegistrationFieldName;
+                    fField.SummaryFieldName = fieldView.SummaryFieldName;
                     fField.SummaryType = fieldView.SummaryType;
                     fField.ConditionCriteria = fieldView.ConditionCriteria;
                     fField.ConditionOptions = fieldView.ConditionOptions;
@@ -254,7 +256,8 @@ namespace PHS.Repository.Repository
                     MatrixColumn = templateField1.MatrixColumn,
                     PreRegistrationFieldName = templateField1.PreRegistrationFieldName,
                     RegistrationFieldName = templateField1.RegistrationFieldName,
-                    SummaryType = templateField1.RegistrationFieldName,
+                    SummaryFieldName = templateField1.SummaryFieldName,
+                    SummaryType = templateField1.SummaryType,
                     ConditionCriteria = templateField1.ConditionCriteria,
                     ConditionOptions = templateField1.ConditionOptions,
                     ConditionTemplateFieldID = templateField1.ConditionTemplateFieldID,

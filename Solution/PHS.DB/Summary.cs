@@ -20,6 +20,7 @@ namespace PHS.DB
         public int PHSEventID { get; set; }
         public int ModalityID { get; set; }
         public int TemplateFieldID { get; set; }
+        public string SummaryLabel { get; set; }
         public string SummaryValue { get; set; }
         public string SummaryType { get; set; }
     

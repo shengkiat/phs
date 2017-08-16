@@ -1,4 +1,7 @@
-﻿using PHS.DB;
+﻿using PHS.Business.Helpers;
+using PHS.Business.ViewModel.SummaryCategory;
+using PHS.Common;
+using PHS.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +53,34 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             return result;
         }
 
+        public List<SummaryCategoryViewModel> GetEventSummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetEventSummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Event) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if(SummaryHelper.IsFieldNameAndCategoryFoundInEventSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddEventSummary(summary);
+                        }    
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public List<Summary> GetEventSummaries()
         {
             List<Summary> result = new List<Summary>();
@@ -57,7 +88,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             foreach (var summary in Participant.Summaries)
             {
                 if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
-                    && summary.SummaryType.Equals("ESY"))
+                    && (summary.SummaryType.Equals(Constants.Summary_Type_Event) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                 {
                     result.Add(summary);
                 }

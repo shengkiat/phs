@@ -202,7 +202,8 @@
           <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
           <Property Name="TemplateFieldID" Type="int" Nullable="false" />
-          <Property Name="SummaryValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="SummaryLabel" Type="nvarchar(max)" />
+          <Property Name="SummaryValue" Type="nvarchar(max)" />
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Template">
@@ -256,6 +257,7 @@
           <Property Name="MatrixColumn" Type="varchar(max)" />
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
           <Property Name="RegistrationFieldName" Type="varchar(max)" />
+          <Property Name="SummaryFieldName" Type="varchar(max)" />
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
           <Property Name="ConditionTemplateFieldID" Type="int" />
           <Property Name="ConditionCriteria" Type="varchar" MaxLength="50" />
@@ -749,7 +751,7 @@
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
           </AssociationSet>
-          <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
+		            <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
           <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
         </EntityContainer>
         <EntityType Name="Form">
@@ -912,7 +914,8 @@
           <Property Name="PHSEventID" Type="Int32" Nullable="false" />
           <Property Name="ModalityID" Type="Int32" Nullable="false" />
           <Property Name="TemplateFieldID" Type="Int32" Nullable="false" />
-          <Property Name="SummaryValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryLabel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Modality" Relationship="phsModel.FK_summary_modality" FromRole="Summary" ToRole="Modality" />
           <NavigationProperty Name="Participant" Relationship="phsModel.FK_summary_participant" FromRole="Summary" ToRole="Participant" />
@@ -973,6 +976,7 @@
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ConditionTemplateFieldID" Type="Int32" />
           <Property Name="ConditionCriteria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1182,7 +1186,7 @@
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
         </Association>
-        <EntityType Name="PHSUser">
+		<EntityType Name="PHSUser">
           <Key>
             <PropertyRef Name="PHSUserID" />
           </Key>
@@ -1359,6 +1363,7 @@
               <MappingFragment StoreEntitySet="Summary">
                 <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
                 <ScalarProperty Name="SummaryValue" ColumnName="SummaryValue" />
+                <ScalarProperty Name="SummaryLabel" ColumnName="SummaryLabel" />
                 <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
                 <ScalarProperty Name="ModalityID" ColumnName="ModalityID" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
@@ -1393,6 +1398,7 @@
                 <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />
                 <ScalarProperty Name="ConditionTemplateFieldID" ColumnName="ConditionTemplateFieldID" />
                 <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
+                <ScalarProperty Name="SummaryFieldName" ColumnName="SummaryFieldName" />
                 <ScalarProperty Name="RegistrationFieldName" ColumnName="RegistrationFieldName" />
                 <ScalarProperty Name="PreRegistrationFieldName" ColumnName="PreRegistrationFieldName" />
                 <ScalarProperty Name="MatrixColumn" ColumnName="MatrixColumn" />
