@@ -544,6 +544,43 @@
             </tr>
             <!--// end Registration Field Name Row -->
 
+            <!-- Summary Field Name Row -->
+            <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
+                <td class="label">
+                    <label class="label">
+                        Summary Field Name
+                    </label>
+                </td>
+                <td class="input">
+
+                    @{
+
+                        var summaryFieldListItems = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = Constants.Summary_Field_Name_CurrentlySmoke, Value = Constants.Summary_Field_Name_CurrentlySmoke},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_SmokeBefore, Value = Constants.Summary_Field_Name_SmokeBefore},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_PastMedicalHistory, Value = Constants.Summary_Field_Name_PastMedicalHistory},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_FamilyHistory, Value = Constants.Summary_Field_Name_FamilyHistory},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_PersonalCancerHistory, Value = Constants.Summary_Field_Name_PersonalCancerHistory},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_FamilyCancerHistory, Value = Constants.Summary_Field_Name_FamilyCancerHistory},
+                            new SelectListItem {Text = Constants.Summary_Field_Name_NoOfPackYear, Value = Constants.Summary_Field_Name_NoOfPackYear}
+                        };
+
+                        @Html.DropDownList("summaryfieldname", summaryFieldListItems, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "summaryfieldname"},
+                                            { "class","is-publisher"}
+
+                                         })
+                    }
+
+
+
+                </td>
+            </tr>
+            <!--// end Summary Field Name Row -->
+
             <!-- Summary Type Row --> 
             <tr class="textbox textarea dropdownlist radiobutton checkbox fullname email address phone birthdaypicker nricpicker">
                 <td class="label">

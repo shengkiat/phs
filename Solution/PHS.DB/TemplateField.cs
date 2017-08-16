@@ -54,6 +54,7 @@ namespace PHS.DB
         public string MatrixColumn { get; set; }
         public string PreRegistrationFieldName { get; set; }
         public string RegistrationFieldName { get; set; }
+        public string SummaryFieldName { get; set; }
         public string SummaryType { get; set; }
         public Nullable<int> ConditionTemplateFieldID { get; set; }
         public string ConditionCriteria { get; set; }

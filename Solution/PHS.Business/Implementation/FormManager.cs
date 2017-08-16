@@ -268,6 +268,7 @@ namespace PHS.Business.Implementation
                                     MatrixRow = collection.FormFieldValue(domId, "MatrixRow"),
                                     PreRegistrationFieldName = collection.FormFieldValue(domId, "PreRegistrationFieldName"),
                                     RegistrationFieldName = collection.FormFieldValue(domId, "RegistrationFieldName"),
+                                    SummaryFieldName = collection.FormFieldValue(domId, "SummaryFieldName"),
                                     SummaryType = collection.FormFieldValue(domId, "SummaryType"),
                                     ConditionCriteria = collection.FormFieldValue(domId, "ConditionCriteria"),
                                     ConditionOptions = collection.FormFieldValue(domId, "ConditionOptions"),

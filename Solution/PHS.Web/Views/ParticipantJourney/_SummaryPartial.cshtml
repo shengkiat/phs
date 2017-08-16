@@ -22,17 +22,83 @@
 {
     <div>
         <br />
-        <ul class="vertical-list">
 
-            @foreach (var summary in Model.GetEventSummaries())
-            {
-                <li style="margin-bottom: 1em;">
-                    <B>@summary.Label</B> <br />
-                    <span class="LabelForsub-label">@summary.SummaryValue</span>
-                </li>
-            }
+        <div class="panel-group">
+        @foreach (var summaryCategory in Model.GetEventSummaryCategories())
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">@summaryCategory.SummaryCategoryName</div>
+                <div class="panel-body">
+                    <ul class="vertical-list">
+                        @foreach (var summary in summaryCategory.EventSummaries)
+                        {
+                            <li style="margin-bottom: 1em;">
+                                @summary.SummaryLabel<br />
+                                <span class="LabelForsub-label">@summary.SummaryValue</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
 
-            <!--
+<!-- 
+            <div class="panel panel-default">
+                <div class="panel-heading">Cardiovascular Health</div>
+                <div class="panel-body">
+                    <ul class="vertical-list">
+                        <li style="margin-bottom: 1em;">
+                            Average Reading (average of all available readings) <br />
+                            <span class="LabelForsub-label">140/90 mmHg</span>
+                        </li>
+
+                        <li style="margin-bottom: 1em;">
+                            Is the participant currently smoking? <br />
+                            <span class="LabelForsub-label">Yes</span>
+                        </li>
+
+                        <li style="margin-bottom: 1em;">
+                            What are the participant's past medical conditions? (Please select all that applies) <br />
+                            <span class="LabelForsub-label">Hypertension 高血压</span>
+                        </li>
+
+                        <li style="margin-bottom: 1em;">
+                            Is there positive family history (AMONG FIRST DEGREE RELATIVES) for the following medical conditions? <br />
+                            <span class="LabelForsub-label">Diabetes Mellitus 糖尿病</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Obesity, Metabolic Syndrome & Diabetes</div>
+                <div class="panel-body">
+                    <ul class="vertical-list">
+                        <li style="margin-bottom: 1em;">
+                            BMI <br />
+                            <span class="LabelForsub-label">22</span>
+                        </li>
+
+                        <li style="margin-bottom: 1em;">
+                            What are the participant's past medical conditions? (Please select all that applies) <br />
+                            <span class="LabelForsub-label">Hyperlipidemia 高血脂／高胆固醇</span>
+                        </li>
+
+                        <li style="margin-bottom: 1em;">
+                            Is there positive family history (AMONG FIRST DEGREE RELATIVES) for the following medical conditions? <br />
+                            <span class="LabelForsub-label">Diabetes Mellitus 糖尿病</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Panel Header</div>
+                <div class="panel-body">Panel Content</div>
+            </div>
+    -->
+        </div>
+
+  <!--      <ul class="vertical-list">
+            
             <li>
                 <input value="60" type="text"  class="title" readonly /><br />
                 <span class="sub-label">Weight (kg)</span>
@@ -103,9 +169,9 @@
                 <label>Recommended for:</label>
             </li>
 
-            -->
+            
 
-        </ul>
+        </ul> -->
     </div>
 }
 

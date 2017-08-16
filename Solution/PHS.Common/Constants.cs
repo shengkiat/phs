@@ -54,6 +54,23 @@ namespace PHS.Common
         public const string Registration_Field_Name_Address = "ADDRESS";
         public const string Registration_Field_Name_Gender = "GENDER";
 
+        public const string Summary_Field_Name_CurrentlySmoke = "CURRENTLY_SMOKE";
+        public const string Summary_Field_Name_SmokeBefore = "SMOKE_BEFORE";
+        public const string Summary_Field_Name_PastMedicalHistory = "PAST_MEDICAL_HISTORY";
+        public const string Summary_Field_Name_FamilyHistory = "FAMILY_HISTORY";
+        public const string Summary_Field_Name_PersonalCancerHistory = "PERSONAL_CANCER_HISTORY";
+        public const string Summary_Field_Name_FamilyCancerHistory = "FAMILY_CANCER_HISTORY";
+        public const string Summary_Field_Name_NoOfPackYear = "NO_OF_PACK_YEAR";
+
+        public const string Summary_Category_Label_Name_CardiovascularHealth = "Cardiovascular Health";
+        public const string Summary_Category_Label_Name_Obesity = "Obesity, Metabolic Syndrome & Diabetes";
+        public const string Summary_Category_Label_Name_GastrointestinalHealth = "Gastrointestinal Health";
+        public const string Summary_Category_Label_Name_LifestyleChoices = "Lifestyle Choices";
+        public const string Summary_Category_Label_Name_GeriatricsAndMentalHealth = "Geriatrics and Mental Health";
+        public const string Summary_Category_Label_Name_RenalHealth = "Renal Health";
+        public const string Summary_Category_Label_Name_Cancers = "Cancers";
+        public const string Summary_Category_Label_Name_SocialSupport = "Social Support";
+
         public const string Summary_Type_Event = "ESY";
         public const string Summary_Type_Doctor = "DSY";
         public const string Summary_Type_All = "SUM";
