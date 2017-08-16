@@ -1,6 +1,55 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var value = document.getElementById('SubmitFields[@Model.DomId].TextBox').value
+        displayRiskStatus(value, @Model.DomId);
+
+    });
+
+    function displayRiskStatus(value, fieldId) {
+        if (value.match(/^[0-9]+\.[0-9]+$/) != null) {
+            //var standardReferenceID = document.getElementById('SubmitFields[@Model.DomId].StandardReferenceId').value
+            var standardReferenceID = 3
+            if (standardReferenceID != "")
+            {
+                var jsonObject = {
+                    "standardReferenceId": standardReferenceID,
+                    "value": value
+                };
+
+                $.ajax({
+                    url: "@Url.Action("GetReferenceRange", "FormAccess")",
+                    type: "POST",
+                    data: JSON.stringify(jsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    error: function (response) {
+                        document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = response.Error;
+                    },
+                    success: function (response) {
+                        document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = response.Status + fieldId;
+                        //document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = response.Color;
+                    }
+                });
+            }
+            else
+            {
+                document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = "No Reference Linked";
+            }
+
+        }
+        else {
+            document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = "Not a number";
+        }
+    }
+
+</script>
+
+
 @{
     var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
     var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
@@ -25,6 +74,14 @@
                        class="title watermarked"
                        @readonlyAttribute
                        style="width: 95%;" />
+
+                <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+                
+                <input id="SubmitFields[@Model.DomId].StandardReferenceId"
+                        name="SubmitFields[@Model.DomId].StandardReferenceId"
+                        type="hidden"
+                        value="@Model.StandardReferenceID"
+                        style="width: 100px; height:20px;" maxlength="9" />
 
                 @if (Model.IsEditMode())
                 {
