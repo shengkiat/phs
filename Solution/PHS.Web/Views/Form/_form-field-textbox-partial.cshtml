@@ -11,7 +11,7 @@
     });
 
     function displayRiskStatus(value, fieldId) {
-        if (value.match(/^[0-9]+\.[0-9]+$/) != null) {
+        if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
             //var standardReferenceID = document.getElementById('SubmitFields[@Model.DomId].StandardReferenceId').value
             var standardReferenceID = 3
             if (standardReferenceID != "")
@@ -28,22 +28,22 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     error: function (response) {
-                        document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = response.Error;
+                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
                     },
                     success: function (response) {
-                        document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = response.Status + fieldId;
-                        //document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = response.Color;
+                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
+                        //document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = response.Color;
                     }
                 });
             }
-            else
+            else // todo : remove this only for debugging
             {
-                document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = "No Reference Linked";
+                document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = "No Reference Linked";
             }
 
         }
-        else {
-            document.getElementById("SubmitFields[@Model.DomId].RiskStatus").innerHTML = "Not a number";
+        else { // todo : remove this only for debugging
+            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = "Not a number";
         }
     }
 
