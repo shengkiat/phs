@@ -28,7 +28,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
 
         public void AddDoctorSummary(Summary summary)
         {
-            if (SummaryHelper.IsFieldNameAndCategoryFoundInEventSummaryMap(SummaryCategoryName, summary.Label))
+            if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(SummaryCategoryName, summary.Label))
             {
                 DoctorSummaries.Add(summary);
             }

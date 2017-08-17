@@ -234,6 +234,12 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_MegaSortingStationPartial.cshtml", pjmcyvmItems);
                     }
 
+                    if (Internal_Form_Type_DoctorySummary.Equals(result.InternalFormType))
+                    {
+
+                        return PartialView("~/Views/ParticipantJourney/_DoctorSummaryPartial.cshtml", TempData.Peek("ParticipantJourneyFormViewModel"));
+                    }
+
                     return View("_FillInPartial", result);
                 }
             }

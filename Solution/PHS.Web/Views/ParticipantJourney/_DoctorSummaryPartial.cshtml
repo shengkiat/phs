@@ -1,0 +1,51 @@
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyFormViewModel
+
+@using PHS.Business.Extensions
+@using PHS.DB
+@using System.Collections.Generic;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "_DoctorSummaryPartial";
+}
+
+<style>
+    input {
+        border: 0;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    <div>
+        <br />
+
+        <div class="panel-group">
+            @if (Model != null)
+            {
+                foreach (var summaryCategory in Model.GetDoctorSummaryCategories())
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@summaryCategory.SummaryCategoryName</div>
+                        <div class="panel-body">
+                            <ul class="vertical-list">
+                                @foreach (var summary in summaryCategory.DoctorSummaries)
+                                {
+                                    <li style="margin-bottom: 1em;">
+                                        @summary.SummaryLabel<br />
+                                        <span class="LabelForsub-label">@summary.SummaryValue</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+    </div>
+}
+

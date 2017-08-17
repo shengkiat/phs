@@ -767,6 +767,8 @@ INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormTyp
 GO
 INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (8, N'Mega Sorting Station', NULL, 0, NULL,  N'MEG', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 1)
 GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (9, N'Doctor Summary', NULL, 0, NULL,  N'DSY', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 1)
+GO
 SET IDENTITY_INSERT [phs].[dbo].[Form] OFF
 GO
 
@@ -788,6 +790,8 @@ GO
 INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) VALUES (7, 7, N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, 1)
 GO
 INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) VALUES (8, 8, N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, 1)
+GO
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) VALUES (9, 9, N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, 1)
 GO
 SET IDENTITY_INSERT [phs].[dbo].[Template] OFF
 
@@ -1141,6 +1145,10 @@ GO
 
 GO
 INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 5)
+GO
+
+GO
+INSERT [phs].[dbo].[ModalityForm] ([ModalityID], [FormID]) VALUES (9, 9)
 GO
 
 GO

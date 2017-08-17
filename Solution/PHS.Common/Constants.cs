@@ -62,6 +62,7 @@ namespace PHS.Common
         public const string Summary_Field_Name_FamilyCancerHistory = "FAMILY_CANCER_HISTORY";
         public const string Summary_Field_Name_NoOfPackYear = "NO_OF_PACK_YEAR";
 
+        //Event Summary Category
         public const string Summary_Category_Label_Name_CardiovascularHealth = "Cardiovascular Health";
         public const string Summary_Category_Label_Name_Obesity = "Obesity, Metabolic Syndrome & Diabetes";
         public const string Summary_Category_Label_Name_GastrointestinalHealth = "Gastrointestinal Health";
@@ -71,6 +72,10 @@ namespace PHS.Common
         public const string Summary_Category_Label_Name_Cancers = "Cancers";
         public const string Summary_Category_Label_Name_SocialSupport = "Social Support";
 
+        //Doctor Summary Category
+        public const string Summary_Category_Label_Name_MedicalHistory = "Medical History";
+        public const string Summary_Category_Label_Name_SmokingAndAlcoholUse = "Smoking and Alcohol Use";
+        
         public const string Summary_Type_Event = "ESY";
         public const string Summary_Type_Doctor = "DSY";
         public const string Summary_Type_All = "SUM";

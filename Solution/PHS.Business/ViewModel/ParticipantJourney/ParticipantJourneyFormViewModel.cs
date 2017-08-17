@@ -81,16 +81,28 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             return result;
         }
 
-        public List<Summary> GetEventSummaries()
+        public List<SummaryCategoryViewModel> GetDoctorSummaryCategories()
         {
-            List<Summary> result = new List<Summary>();
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
 
-            foreach (var summary in Participant.Summaries)
+            foreach (var summaryCategoryName in SummaryHelper.GetDoctorSummaryCategoryNameList())
             {
-                if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
-                    && (summary.SummaryType.Equals(Constants.Summary_Type_Event) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
                 {
-                    result.Add(summary);
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddDoctorSummary(summary);
+                        }
+                    }
                 }
             }
 
