@@ -12,8 +12,7 @@
 
     function displayRiskStatus(value, fieldId) {
         if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
-            //var standardReferenceID = document.getElementById('SubmitFields[@Model.DomId].StandardReferenceId').value
-            var standardReferenceID = 3
+            var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].RiskStatus").value
             if (standardReferenceID != "")
             {
                 var jsonObject = {
@@ -36,14 +35,6 @@
                     }
                 });
             }
-            else // todo : remove this only for debugging
-            {
-                document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = "No Reference Linked";
-            }
-
-        }
-        else { // todo : remove this only for debugging
-            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = "Not a number";
         }
     }
 
