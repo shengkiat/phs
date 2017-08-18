@@ -1,6 +1,7 @@
 ﻿--------------------------Table Structure-----------------  
 USE [phs]
-DROP TABLE [dbo].[Person];
+IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[Person];
 
 IF OBJECT_ID('dbo.Summary', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Summary]; 
