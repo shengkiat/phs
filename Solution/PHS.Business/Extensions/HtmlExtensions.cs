@@ -522,6 +522,11 @@ namespace PHS.Business.Extensions
                 return false;
             }
 
+            else if (value.Equals("OthersOption"))
+            {
+                return true;
+            }
+
             string[] options = selectedValue.Split(",");
             foreach (string option in options)
             {

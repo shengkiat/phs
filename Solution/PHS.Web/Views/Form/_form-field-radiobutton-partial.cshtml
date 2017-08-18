@@ -96,12 +96,8 @@
                         {
                             checkedAttribute = "checked=\"checked\"";
                         }
-                        else
-                        {
-                            checkedAttribute = "";
-                        }
                         <input name="SubmitFields[@Model.DomId].RadioButton" id="SubmitFields[@Model.DomId].RadioOthersOption" @disabledAttribute type="radio" @checkedAttribute value="OthersOption" name="radiogroup-@Model.DomId" />
-                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" value="@Html.GetTempFormValue(Model, "OthersOption")" placeholder="Others" />
+                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" value="@Html.GetSubmittedTextValue(Model)" placeholder="Others" />
                     </li>
                 }
                 else
