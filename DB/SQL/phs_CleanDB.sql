@@ -706,15 +706,19 @@ GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'BP ')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'Systolic Blood Pressure ')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Sugar')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Diastolic Blood Pressure ')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'BMI')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'Sugar')
+GO
+
+GO
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (4, N'BMI')
 GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
@@ -722,29 +726,62 @@ GO
 
 --- Reference range Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
-
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP NORMAL RANGE', 90, 120, N'NORMAL', 1)
-GO
-
-GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Diastolic BP NORMAL RANGE', 60, 80, N'NORMAL', 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (1, N'Systolic BP Low Range', 70, 89, N'LOW', 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Fasting Sugar Normal Range BP', 70, 100, N'NORMAL', 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (2, N'Systolic BP Normal Range', 90, 119, N'IDEAL', 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Postmeal Sugar Normal Range BP', 70, 140, N'NORMAL', 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (3, N'Systolic BP Prehypertension Range', 120, 139, N'PRE-HIGH', 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'Underweight', 0, 18.4, N'NORMAL', 3)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (4, N'Systolic BP Stage1 Hypertension Range', 140, 159, N'STAGE1 HIGH', 1)
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (6, N'Normal', 18.5, 24.9, N'NORMAL', 3)
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (7, N'Overweight', 25, 29.9, N'NORMAL', 3)
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (8, N'Obese', 30, 9999, N'NORMAL', 3)
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (5, N'Systolic BP Stage2 Hypertension Range', 160, 190, N'STAGE2 HIGH', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (6, N'Diastolic BP Low Range', 40, 59, N'LOW', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (7, N'Diastolic BP Normal Range', 60, 79, N'IDEAL', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (8, N'Diastolic BP Prehypertension Range', 80, 89, N'PRE-HIGH', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (9, N'Diastolic BP Stage1 Hypertension Range', 90, 99, N'STAGE1 HIGH', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (10, N'Diastolic BP Stage2 Hypertension Range', 100, 150, N'STAGE2 HIGH', 2)
+GO
+
+
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (11, N'Fasting Sugar Normal Range BP', 70, 100, N'IDEAL', 3)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (12, N'Postmeal Sugar Normal Range BP', 70, 140, N'IDEAL', 3)
+GO
+
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (13, N'Underweight', 0, 18.4, N'UNDERWEIGHT', 4)
+GO
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (14, N'Normal', 18.5, 24.9, N'IDEAL', 4)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (15, N'Overweight', 25, 29.9, N'OVERWEIGHT', 4)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [StandardReferenceID]) VALUES (16, N'Obese', 30, 9999, N'OBESE', 4)
 
 SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
 GO
@@ -898,7 +935,7 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (136, N'<p><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Memo/Referral Letter</span></p>', N'Click to edit', N'DOCTORMEMO', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 2, 18, 100, N'', CAST(N'2017-03-26 05:46:36.860' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 3)
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (137, N'BMI', N'Click to edit', N'BMI', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 1, 0, 18, 100, N'', CAST(N'2017-03-26 05:48:10.863' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 4)
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (138, N'1st Systolic Reading', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(N'2017-03-26 05:50:25.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
@@ -912,9 +949,9 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (143, N'3rd Systolic Reading (if needed)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 8, 5, 18, 100, N'', CAST(N'2017-03-26 05:51:40.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (144, N'Average Diastolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 7, 8, 18, 100, N'', CAST(N'2017-03-26 05:51:40.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (144, N'Average Diastolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 7, 8, 18, 100, N'', CAST(N'2017-03-26 05:51:40.873' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 2)
 GO
-INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (145, N'Average Systolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-26 05:51:55.867' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [StandardReferenceID]) VALUES (145, N'Average Systolic Reading (of all readings)', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 9, 7, 18, 100, N'', CAST(N'2017-03-26 05:51:55.867' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', 1)
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (147, N'<p><b>Compliance to Personal Data Protection Act (PDPA)</b><br>I hereby give my consent to the Public Health Service Executive Committee to collect my personal information for the purpose of recruitment for the Public Health Service (hereby called “PHS”) and its related events, and to contact me via calls, SMS, text messages or emails regarding the event and follow-up process. Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify a member of the PHS Executive Committee at ask.phs@gmail.com in writing. We will then remove your personal information from our database. Please allow 3 business days for your withdrawal of consent to take effect. All personal information will be kept confidential, will only be disseminated to members of the PHS Executive Committee, and will be strictly used by these parties for the purposes stated.</p>', N'Click to edit', N'RADIOBUTTON', 1, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Yes', N'', 11, 10, 18, 100, N'', CAST(N'2017-04-01 15:11:40.763' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO

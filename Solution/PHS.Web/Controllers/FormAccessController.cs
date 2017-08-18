@@ -285,7 +285,7 @@ namespace PHS.Web.Controllers
                     return Json(new { Error = message });
                 }
 
-                return Json(new { Status = referenceRange.Title, Color = "" });
+                return Json(new { Status = referenceRange.Result, Color = "" });
             }
         }
 
