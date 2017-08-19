@@ -382,6 +382,41 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FillIn_SuccessWithBirthdayPicker()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Day", "18");
+            submissionCollection.Add("SubmitFields[1].Month", "7");
+            submissionCollection.Add("SubmitFields[1].Year", "2017");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            TemplateFieldValueViewModel templateFieldValue = templateViewModel.Entries.FirstOrDefault();
+            Assert.AreEqual("18/7/2017 12:00:00 AM", templateFieldValue.Value);
+        }
+
+        [TestMethod()]
         public void FillIn_SuccessForPreRegistrationForm()
         {
             FormViewModel formViewModel = new FormViewModel()
@@ -577,6 +612,21 @@ namespace PHS.BusinessTests.Implementation
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
             CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+        }
+
+        private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, out Template template, out TemplateViewModel templateViewModel)
+        {
+
+            template = _formManager.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, fieldType.ToString(), out fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
