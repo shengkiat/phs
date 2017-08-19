@@ -401,7 +401,7 @@ namespace PHS.BusinessTests.Implementation
 
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
-            CeateFieldForm(1, out fieldCollection, out fields);
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
 
             fieldCollection.Add("Fields[1].PreRegistrationFieldName", Constants.PreRegistration_Field_Name_FullName);
 
@@ -576,17 +576,17 @@ namespace PHS.BusinessTests.Implementation
 
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
-            CeateFieldForm(1, out fieldCollection, out fields);
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
 
-        private FormCollection CeateFieldForm(int id, out FormCollection fieldCollection, out IDictionary<string, string> fields)
+        private FormCollection CeateFieldForm(int id, string fieldType, out FormCollection fieldCollection, out IDictionary<string, string> fields)
         {
             fieldCollection = new FormCollection();
 
             //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
+            fieldCollection.Add("Fields[1].FieldType", fieldType);
             fieldCollection.Add("Fields[1].MaxCharacters", "200");
             fieldCollection.Add("Fields[1].IsRequired", "false");
             fieldCollection.Add("Fields[1].AddOthersOption", "false");
