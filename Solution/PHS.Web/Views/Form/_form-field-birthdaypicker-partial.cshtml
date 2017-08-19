@@ -14,21 +14,7 @@
         <ul class="vertical-list">
             <li>
                 <ul class="horizontal-list three-field-row">
-                    <li>
-
-                        @if (Model.IsReadOnlyMode())
-                        {
-                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field", @disabled = "disabled" })
-                        }
-
-                        else
-                        {
-                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field"})
-                        }
-
-                        <br />
-                        <span class="sub-label">Month</span>
-                    </li>
+                    
                     <li>
                         @if (Model.IsReadOnlyMode())
                         {
@@ -42,6 +28,23 @@
                         <br />
                         <span class="sub-label">Day</span>
                     </li>
+
+                    <li>
+
+                        @if (Model.IsReadOnlyMode())
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field", @disabled = "disabled" })
+                        }
+
+                        else
+                        {
+                            @Html.DropDownList("SubmitFields[{0}].Month".FormatWith(Model.DomId), new SelectList(ItemListHelper.Months().InsertAtStart(""), "Value", "Text", Html.GetSubmittedTextValue(Model, "Month")), new { @class = "shorter-field" })
+                        }
+
+                        <br />
+                        <span class="sub-label">Month</span>
+                    </li>
+
                     <li>
                         @if (Model.IsReadOnlyMode())
                         {
