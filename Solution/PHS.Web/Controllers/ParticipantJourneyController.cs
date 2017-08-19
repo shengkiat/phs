@@ -236,8 +236,8 @@ namespace PHS.Web.Controllers
 
                     if (Internal_Form_Type_DoctorySummary.Equals(result.InternalFormType))
                     {
-
-                        return PartialView("~/Views/ParticipantJourney/_DoctorSummaryPartial.cshtml", TempData.Peek("ParticipantJourneyFormViewModel"));
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message); 
+                        return PartialView("~/Views/ParticipantJourney/_DoctorSummaryPartial.cshtml", pjfvm);
                     }
 
                     return View("_FillInPartial", result);

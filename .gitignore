@@ -1,3 +1,15 @@
 Solution/PHS.Web/Views/Forms/_form-field-radiobutton-partial.cshtml
 Solution/PHS.Web/Web.config
 Solution/PHS.Web/Web.config
+Solution/PHS.DB/App.Config
+Solution/PHS.Web/Web.config
+Solution/PHS.DB/App.Config
+Solution/PHS.Web/Web.config
+Solution/PHS.Web/Properties/PublishProfiles/IIS.pubxml
+Solution/PHS.Web/Views/PastParticipantJourney/Index.cshtml
+Solution/PHS.DB/App.Config
+Solution/PHS.Web/Properties/PublishProfiles/IIS.pubxml
+Solution/PHS.Web/Views/PastParticipantJourney/Index.cshtml
+Solution/PHS.Web/Web.config
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite

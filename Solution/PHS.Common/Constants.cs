@@ -57,10 +57,19 @@ namespace PHS.Common
         public const string Summary_Field_Name_CurrentlySmoke = "CURRENTLY_SMOKE";
         public const string Summary_Field_Name_SmokeBefore = "SMOKE_BEFORE";
         public const string Summary_Field_Name_PastMedicalHistory = "PAST_MEDICAL_HISTORY";
+        public const string Summary_Field_Name_PMHX = "PMHX";
         public const string Summary_Field_Name_FamilyHistory = "FAMILY_HISTORY";
+        public const string Summary_Field_Name_FamilyHistory_MedCond = "FAM_HISTORY_MEDCOND";
+        public const string Summary_Field_Name_FamilyHistory_Cancer = "FAM_HISTORY_CANCER";
+
         public const string Summary_Field_Name_PersonalCancerHistory = "PERSONAL_CANCER_HISTORY";
         public const string Summary_Field_Name_FamilyCancerHistory = "FAMILY_CANCER_HISTORY";
         public const string Summary_Field_Name_NoOfPackYear = "NO_OF_PACK_YEAR";
+
+        public const string Summary_Field_Name_Ref_Health = "REF_FROM_HEALTH";
+        public const string Summary_Field_Name_Ref_SysReview = "REF_FROM_SYSREVIEW";
+        public const string Summary_Field_Name_Ref_SocialHistory = "REF_FROM_SOCIALHEALTH";
+        public const string Summary_Field_Name_Ref_FINHEALTH = "REF_FROM_FINHEALTH";
 
         //Event Summary Category
         public const string Summary_Category_Label_Name_CardiovascularHealth = "Cardiovascular Health";
@@ -75,7 +84,8 @@ namespace PHS.Common
         //Doctor Summary Category
         public const string Summary_Category_Label_Name_MedicalHistory = "Medical History";
         public const string Summary_Category_Label_Name_SmokingAndAlcoholUse = "Smoking and Alcohol Use";
-        
+        public const string Summary_Category_Label_Name_ReferredFrom = "Referred From";
+
         public const string Summary_Type_Event = "ESY";
         public const string Summary_Type_Doctor = "DSY";
         public const string Summary_Type_All = "SUM";

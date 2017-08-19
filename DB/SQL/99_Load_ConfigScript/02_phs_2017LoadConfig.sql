@@ -105,6 +105,8 @@ update DataCollection set [Type ] = 'BIRTHDAYPICKER' where [Type ] in ('DateTime
 update DataCollection set Modality = 'Geriatrics' where Modality = 'Geri'
 update DataCollection set Modality = 'Hx Taking' where Modality = 'History Taking'
 update DataCollection set Modality = 'Public Forms' where Modality = 'Public'
+update DataCollection set AddOthersOption = 0 where AddOthersOption is null 
+update DataCollection set [Type ] = 'SIGNATURE' where [Type ] = 'Signature'
 
 update DataCollection set [Type ] = 'RADIOBUTTON' where [Type ] in ('DROPDOWNLIST')
 
@@ -158,8 +160,8 @@ begin
 			select @fieldIDCount = count(1) from #temp1
 
 			
-INSERT into phs.[dbo].[TemplateField] ([Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge],[MaximumAge],[HelpText],[DateAdded],[MaxFilesizeInKb],[ValidFileExtensions],[MinFilesizeInKb],[ImageBase64],[MatrixRow],[MatrixColumn],[PreRegistrationFieldName],[RegistrationFieldName]) 
-select [Label Text], [Label Text], [Type],Mandatory, 50, '','','','','option1',0,null,20,20,
+INSERT into phs.[dbo].[TemplateField] ([Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge],[MaximumAge],[HelpText],[DateAdded],[MaxFilesizeInKb],[ValidFileExtensions],[MinFilesizeInKb],[ImageBase64],[MatrixRow],[MatrixColumn],[PreRegistrationFieldName],[RegistrationFieldName],[SummaryFieldName],[AddOthersOption],SummaryType) 
+select [Label Text], [Label Text], [Type],Mandatory, 50, '','','','','option1',0,20,20,
 case when [value 1] is null then '' else [value 1] end +
 case when [value 2] is null then '' else ',' + [value 2] end +  
 case when [value 3] is null then '' else ',' + [value 3] end +
@@ -171,7 +173,7 @@ case when [value 8] is null then '' else ',' + [value 8] end +
 case when [value 9] is null then '' else ',' + [value 9] end +
 case when [value 10] is null then '' else ',' + [value 10] end +
 case when [value 11] is null then '' else ',' + [value 11] end,
-'', ROW_NUMBER() over (order by id),ROW_NUMBER() over (order by id),18,100,'',getdate(),5000, '.jpg,.png,.gif,.pdf,.bmp,.zip', 10, '', '', '', PreRegistrationFieldName, RegistrationFieldName from #temp1
+'', ROW_NUMBER() over (order by id),ROW_NUMBER() over (order by id),18,100,'',getdate(),5000, '.jpg,.png,.gif,.pdf,.bmp,.zip', 10, '', '', '', PreRegistrationFieldName, RegistrationFieldName, [Summary Field], [AddOthersOption], SummaryType  from #temp1
 
 
 			insert phs.dbo.ModalityForm values (@modalityID, @formID) 
@@ -202,8 +204,21 @@ end
 close modalityList
 deallocate modalityList 
 
-update phs.dbo.Form set InternalFormType = 'REG' where Title = 'Registration Form' 
+update phs.dbo.Form set InternalFormType = 'REG' where Title = '1. Registration Form' 
 update phs.dbo.Form set PublicFormType = 'PRE-REGISTRATION', IsPublic = 1, Slug = 'phs2017' where DateAdded > (GETDATE() - 1) and title = 'Pre-Registration Form'
 
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Summary Form', null, 0, null, 'SUM', GETDATE(), 1)
+declare @FormSum as int
+select @FormSum = IDENT_CURRENT('phs.dbo.Form')
 
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Doctor Summary Form', null, 0, null, 'DSY', GETDATE(), 1)
+declare @FormDocSum as int
+select @FormDocSum = IDENT_CURRENT('phs.dbo.Form')
 
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])
+     VALUES (@ModSummary, @FormSum)
+
+--INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormDocSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 

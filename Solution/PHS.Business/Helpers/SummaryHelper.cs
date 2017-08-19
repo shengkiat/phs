@@ -38,22 +38,35 @@ namespace PHS.Business.Helpers
 
         static List<string> DoctorSummaryCategoryNameList = new List<string>()
         {
+            Constants.Summary_Category_Label_Name_ReferredFrom,
             Constants.Summary_Category_Label_Name_MedicalHistory,
             Constants.Summary_Category_Label_Name_SmokingAndAlcoholUse
+
         };
 
         static Dictionary<string, List<string>> DoctorSummaryLabelMap = new Dictionary<string, List<string>> {
-            { Constants.Summary_Category_Label_Name_MedicalHistory, new List<string> {
-                Constants.Summary_Field_Name_PastMedicalHistory,
+            { Constants.Summary_Category_Label_Name_ReferredFrom, new List<string> {
+                
                 Constants.Summary_Field_Name_PersonalCancerHistory,
                 Constants.Summary_Field_Name_FamilyHistory,
-                Constants.Summary_Field_Name_FamilyCancerHistory
+                Constants.Summary_Field_Name_FamilyCancerHistory,
+                Constants.Summary_Field_Name_Ref_FINHEALTH
             }},
+            { Constants.Summary_Category_Label_Name_MedicalHistory, new List<string> {
+                Constants.Summary_Field_Name_PastMedicalHistory,
+                Constants.Summary_Field_Name_PMHX,
+                Constants.Summary_Field_Name_FamilyHistory_MedCond,
+                Constants.Summary_Field_Name_FamilyHistory_Cancer
+
+    }
+},
             { Constants.Summary_Category_Label_Name_SmokingAndAlcoholUse, new List<string> {
                 Constants.Summary_Field_Name_CurrentlySmoke,
                 Constants.Summary_Field_Name_NoOfPackYear,
                 Constants.Summary_Field_Name_SmokeBefore
-            }}
+            }
+
+            }
         };
 
         public static bool IsFieldNameAndCategoryFoundInEventSummaryMap(String summaryCategory, String fieldName) {
