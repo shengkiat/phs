@@ -93,6 +93,11 @@
     if (hiddenInput) {
         // Draws signature image from data URL
         signaturePad.fromDataURL('data:image/png;base64,' + hiddenInput);
+        var delay = 1000;
+        setTimeout(function () {
+            // your code
+            signaturePad.fromDataURL('data:image/png;base64,' + hiddenInput);
+        }, delay);
     }
 
     if (document.getElementById("SubmitFields[@Model.DomId].Signature").readOnly)
