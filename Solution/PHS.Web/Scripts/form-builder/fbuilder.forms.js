@@ -864,7 +864,9 @@
     function handleSaveCallback(content) {
         $('#IsAutoSave').val('false');
 
-        console.log(content.responseText);
+        //console.log(content.responseText);
+
+        window.parent.$('html,body').scrollTop(0);
 
         var response = $.parseJSON(content.responseText);
         if (response.success) {
