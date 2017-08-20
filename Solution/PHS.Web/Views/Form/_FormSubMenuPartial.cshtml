@@ -25,9 +25,17 @@
         
             <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = false, id = Model.TemplateID })" class="image-icon-link crossbox-icon-link">
                 <span>Unpublish</span></a></li>
-        }
-        else
-        {
+         }
+         else
+         {
+            <li class="preview-item">
+                <a href="@Url.FormPreviewUrl(Model)" target="_blank" class="image-icon-link preview-icon-link">
+                    <span>
+                        Preview
+                    </span>
+                </a>
+            </li>
+
             <li class="publish-item @Model.Fields.Any().OutputIfFalse("hide")"><a href="@Url.Action("TogglePublish", new { toOn = true, id = Model.TemplateID })" class="image-icon-link speaker-icon-link">
                 <span>Publish</span></a></li>
         }

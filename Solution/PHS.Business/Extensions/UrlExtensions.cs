@@ -23,7 +23,7 @@ namespace PHS.Business.Extensions
         public static string FormPreviewUrl(this UrlHelper helper, TemplateViewModel model)
         {
 
-            return helper.RouteUrl("form-preview", new { id = model.TemplateID });
+            return helper.RouteUrl("form-previewtemplate", new { id = model.TemplateID });
 
         }
 
