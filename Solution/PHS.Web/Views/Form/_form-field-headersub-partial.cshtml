@@ -1,7 +1,8 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
-<h3 data-sub-channel="sub-text-@Model.DomId" class="default editable" style="word-wrap:break-word;">@Model.Text</h3>
+<h3 data-sub-channel="sub-text-@Model.DomId" 
+    class="default editablewysiwyg" style="word-wrap:break-word;">@Html.Raw(@Model.Label)</h3>
 
 @if (Model.IsEditMode())
 {

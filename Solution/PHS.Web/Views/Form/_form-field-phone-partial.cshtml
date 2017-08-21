@@ -2,7 +2,8 @@
 @using PHS.Business.Extensions
 
 <label style="width: 30%; word-wrap: break-word"
-       data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
+       data-sub-channel="sub-label-@Model.DomId" 
+       class="label editablewysiwyg">@Html.Raw(@Model.Label)</label>
 
     <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
     

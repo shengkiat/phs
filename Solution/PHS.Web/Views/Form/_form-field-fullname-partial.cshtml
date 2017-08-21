@@ -1,7 +1,9 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
 
-<label data-sub-channel="sub-label-@Model.DomId" class="label editable">@Model.Label</label>
+<label data-sub-channel="sub-label-@Model.DomId" 
+       class="label editablewysiwyg">@Html.Raw(@Model.Label)</label>
+
 <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 <div class="input">
     <ul class="horizontal-list three-field-row full-name-row">

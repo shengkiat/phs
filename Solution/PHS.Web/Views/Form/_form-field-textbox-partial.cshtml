@@ -53,7 +53,7 @@
 
     <label style="width: 70%; word-wrap: break-word; text-align: left;"
            data-sub-channel="sub-label-@Model.DomId"
-           class="label editable">@Model.Label</label>
+           class="label editablewysiwyg">@Html.Raw(@Model.Label)</label>
 
         <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
 
