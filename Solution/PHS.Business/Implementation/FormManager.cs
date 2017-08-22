@@ -68,8 +68,6 @@ namespace PHS.Business.Implementation
 
                     if (modalities != null && !modalities.Any())
                     {
-                        var formView = FormViewModel.CreateFromObject(form);
-
                         List<TemplateViewModel> templates = null;
 
                         templates = FindAllTemplatesByFormId(formId);

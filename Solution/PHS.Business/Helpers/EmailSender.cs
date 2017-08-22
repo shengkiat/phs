@@ -10,8 +10,8 @@ namespace PHS.Business.Common
     {
         private readonly string _templateDirectory;
         private readonly bool _enableSsl;
-        public bool _flagEmail;
-        public string _flagReason;
+        private bool _flagEmail;
+        private string _flagReason;
 
         public EmailSender(string templateDirectory, bool enableSsl)
         {

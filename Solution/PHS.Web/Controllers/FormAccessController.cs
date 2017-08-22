@@ -193,12 +193,6 @@ namespace PHS.Web.Controllers
             }
         }
 
-
-        private void SaveImageToCloud(HttpPostedFileBase file, string fileName)
-        {
-
-        }
-
         //public FileStreamResult GetFileFromDisk(int valueId)
         //{
         //    FileValueObject obj = _formRepo.GetFileFieldValue(valueId);
