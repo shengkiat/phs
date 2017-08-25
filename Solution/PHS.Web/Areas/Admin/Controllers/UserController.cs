@@ -107,8 +107,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                 string tempPassword = PasswordManager.GeneratePassword();
                 user.Password = tempPassword;
 
-                var newUser = userManager.AddUser(GetLoginUser(), user, out message);
-                if (newUser == null)
+                var newUserCreated = userManager.AddUser(GetLoginUser(), user, out message);
+                if (!newUserCreated)
                 {
                     SetViewBagError(message);
                     SetBackURL("Index");
