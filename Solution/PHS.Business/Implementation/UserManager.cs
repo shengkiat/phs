@@ -60,7 +60,7 @@ namespace PHS.Business.Implementation
             }
             string newPassHash = PasswordManager.CreateHash(newPass, user.PasswordSalt);
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 try
                 {
@@ -221,7 +221,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var users = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus);
 
@@ -347,7 +347,7 @@ namespace PHS.Business.Implementation
             user = hashedUser;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
