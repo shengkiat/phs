@@ -22,14 +22,8 @@ namespace PHS.Business.Implementation.Tests
         private IUnitOfWork _unitOfWork;
         private PHSContext _context;
 
-        //[TestMethod()]
-        public void ChangePasswordTest()
-        {
-            Assert.Fail();
-        }
-
         [TestMethod()]
-        public void AddUserTest_success()
+        public void AddUserTest_Success()
         {
             string username = "tester";
 
@@ -45,14 +39,14 @@ namespace PHS.Business.Implementation.Tests
 
             };
 
-            PHSUser loginuser = new PHSUser()
+            PHSUser tempUser = new PHSUser()
             {
                 Username = "login user"
             };
 
             string message = string.Empty;
 
-            bool saveResult = _target.AddUser(loginuser, user, out message);
+            bool saveResult = _target.AddUser(tempUser, user, out message);
             Assert.IsTrue(saveResult);
             Assert.AreEqual(string.Empty, message);
 
@@ -62,7 +56,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void IsAuthenticatedTest()
+        public void IsAuthenticatedTest_Success()
         {
             string username = "tester";
             string password = "abcde12345";
@@ -79,20 +73,63 @@ namespace PHS.Business.Implementation.Tests
 
             };
 
-            PHSUser loginuser = new PHSUser()
+            PHSUser tempUser = new PHSUser()
             {
                 Username = "login user"
             };
 
             string message = string.Empty;
 
-            bool saveResult = _target.AddUser(loginuser, user, out message);
+            bool saveResult = _target.AddUser(tempUser, user, out message);
             Assert.IsTrue(saveResult);
             Assert.AreEqual(string.Empty, message);
 
             PHSUser expectedResult = _target.IsAuthenticated(username, password, out message);
             Assert.IsNotNull(expectedResult);
             Assert.AreEqual("tester 123", expectedResult.FullName);
+        }
+
+
+        [TestMethod()]
+        public void ChangePasswordTest_Success()
+        {
+            string username = "tester";
+            string password = "abcde12345";
+
+            PHSUser user = new PHSUser()
+            {
+                Username = username,
+                FullName = "tester 123",
+                Password = password,
+                IsActive = true,
+                EffectiveStartDate = DateTime.Now,
+                EffectiveEndDate = DateTime.Now.AddDays(1),
+                Role = Constants.User_Role_Volunteer_Code
+
+            };
+
+            PHSUser tempUser = new PHSUser()
+            {
+                Username = "login user"
+            };
+
+            string message = string.Empty;
+
+            bool saveResult = _target.AddUser(tempUser, user, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            PHSUser loginUser = _target.IsAuthenticated(username, password, out message);
+            Assert.IsNotNull(loginUser);
+
+            string newPassword = "Aabbccdd@1122";
+
+            bool changeResult = _target.ChangePassword(loginUser, password, newPassword, newPassword, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            loginUser = _target.IsAuthenticated(username, newPassword, out message);
+            Assert.IsNotNull(loginUser);
         }
 
         [TestInitialize]
