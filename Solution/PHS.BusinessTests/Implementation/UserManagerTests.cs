@@ -121,11 +121,57 @@ namespace PHS.Business.Implementation.Tests
 
             PHSUser loginUser = _target.IsAuthenticated(username, password, out message);
             Assert.IsNotNull(loginUser);
+            Assert.IsTrue(loginUser.UsingTempPW);
 
             string newPassword = "Aabbccdd@1122";
 
             bool changeResult = _target.ChangePassword(loginUser, password, newPassword, newPassword, out message);
+            Assert.IsTrue(changeResult);
+            Assert.AreEqual(string.Empty, message);
+
+            loginUser = _target.IsAuthenticated(username, newPassword, out message);
+            Assert.IsNotNull(loginUser);
+            Assert.IsFalse(loginUser.UsingTempPW);
+        }
+
+        [TestMethod()]
+        public void ResetPasswordTest()
+        {
+            string username = "tester";
+            string password = "abcde12345";
+
+            PHSUser user = new PHSUser()
+            {
+                Username = username,
+                FullName = "tester 123",
+                Password = password,
+                IsActive = true,
+                EffectiveStartDate = DateTime.Now,
+                EffectiveEndDate = DateTime.Now.AddDays(1),
+                Role = Constants.User_Role_Volunteer_Code
+
+            };
+
+            PHSUser tempUser = new PHSUser()
+            {
+                Username = "login user"
+            };
+
+            string message = string.Empty;
+
+            bool saveResult = _target.AddUser(tempUser, user, out message);
             Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            PHSUser loginUser = _target.IsAuthenticated(username, password, out message);
+            Assert.IsNotNull(loginUser);
+
+            string newPassword = "Aabbccdd@1122";
+            string[] selectedUsers = new string[1];
+            selectedUsers[0] = username;
+
+            bool resetResult = _target.ResetPassword(tempUser, selectedUsers, newPassword, out message);
+            Assert.IsTrue(resetResult);
             Assert.AreEqual(string.Empty, message);
 
             loginUser = _target.IsAuthenticated(username, newPassword, out message);
@@ -169,5 +215,7 @@ namespace PHS.Business.Implementation.Tests
                 return _unitOfWork;
             }
         }
+
+
     }
 }

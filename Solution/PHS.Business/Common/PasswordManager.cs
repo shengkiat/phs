@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web.Security;
@@ -21,12 +23,36 @@ namespace PHS.Business.Common
             return Convert.ToBase64String(salt);
         }
 
-        public static string CreateHash(string passwordStr, string saltStr)
+        public static SecureString CreateHash(string passwordStr, string saltStr)
         {
             // Hash the password and encode the parameters
             byte[] salt = Convert.FromBase64String(saltStr);
             byte[] hash = PBKDF2(passwordStr, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
-            return Convert.ToBase64String(hash);
+
+            var securePassword = new SecureString();
+
+            foreach (char c in Convert.ToBase64String(hash))
+            {
+                securePassword.AppendChar(c);
+            }
+                
+
+            securePassword.MakeReadOnly();
+            return securePassword;
+        }
+
+        public static string SecureStringToString(SecureString value)
+        {
+            IntPtr valuePtr = IntPtr.Zero;
+            try
+            {
+                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
+                return Marshal.PtrToStringUni(valuePtr);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
+            }
         }
 
         public static bool ValidatePassword(string password, string correctHash, string correctSalt)
