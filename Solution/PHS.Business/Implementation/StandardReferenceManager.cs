@@ -25,7 +25,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var standardreferences = unitOfWork.StandardReferences.GetAll().ToList();
                     message = string.Empty;
@@ -44,7 +44,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var standardReference = unitOfWork.StandardReferences.GetStandardReference(id);
 
@@ -87,7 +87,7 @@ namespace PHS.Business.Implementation
             
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -122,13 +122,13 @@ namespace PHS.Business.Implementation
             }
             if (StandardReferenceExists(standardReference.Title, standardReference.StandardReferenceID, out message))
             {
-                message = "standard Reference Title already exists";
+                message = "Standard Reference Title already exists";
                 return false;
             }
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var standardReferenceToUpdate = unitOfWork.StandardReferences.GetStandardReference(standardReference.StandardReferenceID);
                     Util.CopyNonNullProperty(standardReference, standardReferenceToUpdate);
@@ -154,13 +154,13 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var standardReference = unitOfWork.StandardReferences.GetStandardReference(id);
 
                     if (standardReference == null)
                     {
-                        message = "Invalid Standard Reference ID";
+                        message = "Standard Reference not found";
                         return false;
                     }
                     using (TransactionScope scope = new TransactionScope())
@@ -209,7 +209,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var standardReference = unitOfWork.StandardReferences.Find(u => u.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase) && u.StandardReferenceID != standardReferenceID).FirstOrDefault();
                     if (standardReference != null)

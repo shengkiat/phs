@@ -904,9 +904,9 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockUserManager(IUnitOfWork _unitOfWork)
+            public MockUserManager(IUnitOfWork unitOfWork)
             {
-                this._unitOfWork = _unitOfWork;
+                _unitOfWork = unitOfWork;
             }
 
             protected override IUnitOfWork CreateUnitOfWork()
