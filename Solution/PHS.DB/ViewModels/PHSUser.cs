@@ -19,6 +19,9 @@ namespace PHS.DB
             [Display(Name = "Full Name")]
             public string FullName { get; set; }
 
+            [Required(ErrorMessage = "Please enter Role")]
+            public string Role { get; set; }
+
             [Display(Name = "Active")]
             public bool IsActive { get; set; }
 

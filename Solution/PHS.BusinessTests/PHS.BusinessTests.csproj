@@ -80,6 +80,7 @@
     <Compile Include="Implementation\ParticipantJourneyManagerTests.cs" />
     <Compile Include="Implementation\PastParticipantJourneyManagerTests.cs" />
     <Compile Include="Implementation\FormAccessManagerTests.cs" />
+    <Compile Include="Implementation\UserManagerTest.cs" />
     <Compile Include="MockUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -60,7 +60,7 @@ namespace PHS.Business.Implementation
             }
             string newPassHash = PasswordManager.CreateHash(newPass, user.PasswordSalt);
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 try
                 {
@@ -89,7 +89,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus).FirstOrDefault();
 
@@ -116,14 +116,9 @@ namespace PHS.Business.Implementation
                         switch (user.Role)
                         {
                             case Constants.User_Role_Doctor_Code:
-                                authenticatedUser = user;
-                                message = string.Empty;
-                                break;
+                                
                             case Constants.User_Role_Volunteer_Code:
-                                authenticatedUser = user;
-                                message = string.Empty;
-                                break;
-
+                                
                             case Constants.User_Role_CommitteeMember_Code:
                                 authenticatedUser = user;
                                 message = string.Empty;
@@ -159,7 +154,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var users = unitOfWork.Users.GetAll().Where(e => e.DeleteStatus == false);
                     if (users == null || users.Count() == 0)
@@ -190,18 +185,20 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    var user = unitOfWork.Users.Find(u => u.PHSUserID.Equals(userID) && !u.DeleteStatus).First();
+                    var user = unitOfWork.Users.Find(u => u.PHSUserID.Equals(userID) && !u.DeleteStatus);
 
-                    if (user == null)
+                    if (user != null && user.Any())
                     {
-                        message = "Invalid User Id";
+                        message = string.Empty;
+                        return user.FirstOrDefault();
+                    }
+                    else
+                    {
+                        message = "User not found.";
                         return null;
                     }
-
-                    message = string.Empty;
-                    return user;
                 }
             }
             catch (Exception ex)
@@ -216,12 +213,12 @@ namespace PHS.Business.Implementation
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
-                message = "User Name is empty!";
+                message = "User Name is empty.";
                 return null;
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var users = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteStatus);
 
@@ -232,7 +229,7 @@ namespace PHS.Business.Implementation
                     }
                     else
                     {
-                        message = "User not found!";
+                        message = "User not found.";
                         return null;
                     }
                 }
@@ -249,12 +246,12 @@ namespace PHS.Business.Implementation
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userName.Trim()))
             {
-                message = "User Name is empty!";
+                message = "User Name is empty.";
                 return null;
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var users = unitOfWork.Users.Find(u => u.Username.Contains(userName) && !u.DeleteStatus);
 
@@ -265,7 +262,7 @@ namespace PHS.Business.Implementation
                     }
                     else
                     {
-                        message = "User not found!";
+                        message = "User not found.";
                         return null;
                     }
                 }
@@ -282,12 +279,12 @@ namespace PHS.Business.Implementation
         {
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(fullName.Trim()))
             {
-                message = "Name is empty!";
+                message = "Name is empty.";
                 return null;
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var users = unitOfWork.Users.Find(u => u.FullName.Contains(fullName) && !u.DeleteStatus);
 
@@ -298,7 +295,7 @@ namespace PHS.Business.Implementation
                     }
                     else
                     {
-                        message = "User not found!";
+                        message = "User not found.";
                         return null;
                     }
                 }
@@ -339,6 +336,12 @@ namespace PHS.Business.Implementation
                 message = Constants.PleaseFillInAllRequiredFields();
                 return false;
             }
+            if (string.IsNullOrEmpty(user.Role) || string.IsNullOrEmpty(user.Role.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return false;
+            }
+
             var hashedUser = GenerateHashedUser(user, out message);
             if (hashedUser == null)
             {
@@ -347,7 +350,7 @@ namespace PHS.Business.Implementation
             user = hashedUser;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -365,7 +368,7 @@ namespace PHS.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringAddingValue("Useruse");
+                message = Constants.OperationFailedDuringAddingValue("User");
                 return false;
             }
         }
@@ -400,7 +403,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var userToUpdate = unitOfWork.Users.Get(user.PHSUserID);
                     Util.CopyNonNullProperty(user, userToUpdate);
@@ -428,13 +431,13 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var user = unitOfWork.Users.Get(userID);
 
                     if (user == null)
                     {
-                        message = "Invalid User Id";
+                        message = "User not found.";
                         return false;
                     }
                     user.DeleteStatus = true;
@@ -464,7 +467,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.PHSUserID != userID).FirstOrDefault();
                     if (user != null)
