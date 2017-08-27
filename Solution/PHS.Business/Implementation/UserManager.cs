@@ -10,6 +10,7 @@ using PHS.Repository;
 using PHS.Repository.Context;
 using PHS.Business.Common;
 using PHS.Common;
+using System.Security;
 
 namespace PHS.Business.Implementation
 {
@@ -58,13 +59,14 @@ namespace PHS.Business.Implementation
                 message = "Invalid Password";
                 return false;
             }
-            string newPassHash = PasswordManager.CreateHash(newPass, user.PasswordSalt);
+
+            SecureString newPassHash = PasswordManager.CreateHash(newPass, user.PasswordSalt);
 
             using (var unitOfWork = CreateUnitOfWork())
             {
                 try
                 {
-                    unitOfWork.Users.Get(user.PHSUserID).Password = newPassHash;
+                    unitOfWork.Users.Get(user.PHSUserID).Password = PasswordManager.SecureStringToString(newPassHash);
                     unitOfWork.Users.Get(user.PHSUserID).UsingTempPW = false;
                     unitOfWork.Users.Get(user.PHSUserID).UpdatedDateTime = DateTime.Now;
                     unitOfWork.Complete();
@@ -472,8 +474,8 @@ namespace PHS.Business.Implementation
                     foreach (var username in selectedusers)
                     {
                         var user = GetUserByUserName(username.ToString(), out message);
-                        string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
-                        user.Password = newPassHash;
+                        SecureString newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
+                        user.Password = PasswordManager.SecureStringToString(newPassHash);
                         user.UsingTempPW = true;
                         user.UpdatedDateTime = DateTime.Now;
                         user.UpdatedBy = loginUser.Username;
@@ -538,7 +540,7 @@ namespace PHS.Business.Implementation
             try
             {
                 user.PasswordSalt = PasswordManager.GenerateSalt();
-                user.Password = PasswordManager.CreateHash(user.Password, user.PasswordSalt);
+                user.Password = PasswordManager.SecureStringToString(PasswordManager.CreateHash(user.Password, user.PasswordSalt));
                 message = string.Empty;
                 return user;
             }
