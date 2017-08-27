@@ -187,7 +187,8 @@
             var noticeEl = $("<div class='success'>" + message + "</div>");
             noticeEl.appendTo(instructions);
         }).delay(950).queue(function () {
-            window.location = window.location
+            //window.location = window.location
+            window.location.reload();
         });
     },
 
