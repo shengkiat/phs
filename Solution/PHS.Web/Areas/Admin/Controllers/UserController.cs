@@ -281,18 +281,13 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var userManager = new UserManager())
             {
-                foreach (var username in selectedusers)
+                bool isResetPassword = userManager.ResetPassword(GetLoginUser(), selectedusers, tempPW, out message);
+                if (!isResetPassword)
                 {
-                    var user = userManager.GetUserByUserName(username.ToString(), out message);
-                    string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
-                    user.Password = newPassHash;
-                    user.UsingTempPW = true;
-                    if (!userManager.UpdateUser(GetLoginUser(), user, out message))
-                    {
-                        SetViewBagError(message);
-                    }
+                    SetViewBagError(message);
                 }
             }
+
             SetTempDataMessage("Password has been reset to " + tempPW);
             return RedirectToAction("Index");
         }

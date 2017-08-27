@@ -455,6 +455,39 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public bool ResetPassword(PHSUser loginUser, String[] selectedusers, string tempPW, out string message)
+        {
+            message = string.Empty;
+
+            if (selectedusers == null || selectedusers.Length == 0)
+            {
+                message = "No Selection made!";
+                return false;
+            }
+
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    foreach (var username in selectedusers)
+                    {
+                        var user = GetUserByUserName(username.ToString(), out message);
+                        string newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
+                        user.Password = newPassHash;
+                        user.UsingTempPW = true;
+                        user.UpdatedDateTime = DateTime.Now;
+                        user.UpdatedBy = loginUser.Username;
+                    }
+
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+
+            return true;
+
+        }
+
         public bool UserNameExists(string userName, int userID, out string message)
         {
             if (string.IsNullOrEmpty(userName))
