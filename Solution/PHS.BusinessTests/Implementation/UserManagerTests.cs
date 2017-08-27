@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PHS.Business.Common;
 using PHS.Business.Implementation;
 using PHS.BusinessTests;
+using PHS.Common;
 using PHS.DB;
 using PHS.Repository.Context;
 using PHS.Repository.Interface.Core;
@@ -36,8 +37,12 @@ namespace PHS.Business.Implementation.Tests
             {
                 Username = username,
                 FullName = "tester 123",
-                Password = PasswordManager.GeneratePassword()
-            
+                Password = PasswordManager.GeneratePassword(),
+                IsActive = true,
+                EffectiveStartDate = DateTime.Now,
+                EffectiveEndDate = DateTime.Now.AddDays(1),
+                Role = Constants.User_Role_Volunteer_Code
+
             };
 
             PHSUser loginuser = new PHSUser()
@@ -54,6 +59,40 @@ namespace PHS.Business.Implementation.Tests
             PHSUser expectedResult = _target.GetUserByUserName(username, out message);
             Assert.IsNotNull(expectedResult);
             Assert.IsNotNull(expectedResult.PasswordSalt);
+        }
+
+        [TestMethod()]
+        public void IsAuthenticatedTest()
+        {
+            string username = "tester";
+            string password = "abcde12345";
+
+            PHSUser user = new PHSUser()
+            {
+                Username = username,
+                FullName = "tester 123",
+                Password = password,
+                IsActive = true,
+                EffectiveStartDate = DateTime.Now,
+                EffectiveEndDate = DateTime.Now.AddDays(1),
+                Role = Constants.User_Role_Volunteer_Code
+
+            };
+
+            PHSUser loginuser = new PHSUser()
+            {
+                Username = "login user"
+            };
+
+            string message = string.Empty;
+
+            bool saveResult = _target.AddUser(loginuser, user, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            PHSUser expectedResult = _target.IsAuthenticated(username, password, out message);
+            Assert.IsNotNull(expectedResult);
+            Assert.AreEqual("tester 123", expectedResult.FullName);
         }
 
         [TestInitialize]
