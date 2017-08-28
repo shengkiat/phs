@@ -93,7 +93,7 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        public void ResetPasswordTest()
+        public void ResetPasswordTest_Success()
         {
             string username = "tester";
             string password = "abcde12345";
