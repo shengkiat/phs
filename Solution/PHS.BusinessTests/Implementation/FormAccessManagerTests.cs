@@ -382,7 +382,7 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
-        public void FillIn_SuccessWithBirthdayPicker()
+        public void FillIn_SuccessWithBirthdayPickerSingleDigitMonth()
         {
             Template template;
             TemplateViewModel templateViewModel;
@@ -414,6 +414,41 @@ namespace PHS.BusinessTests.Implementation
 
             TemplateFieldValueViewModel templateFieldValue = templateViewModel.Entries.FirstOrDefault();
             Assert.AreEqual("18/7/2017 12:00:00 AM", templateFieldValue.Value);
+        }
+
+        [TestMethod()]
+        public void FillIn_SuccessWithBirthdayPickerDoubleDigitMonth()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Day", "09");
+            submissionCollection.Add("SubmitFields[1].Month", "11");
+            submissionCollection.Add("SubmitFields[1].Year", "2017");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            TemplateFieldValueViewModel templateFieldValue = templateViewModel.Entries.FirstOrDefault();
+            Assert.AreEqual("09/11/2017 12:00:00 AM", templateFieldValue.Value);
         }
 
         [TestMethod()]
