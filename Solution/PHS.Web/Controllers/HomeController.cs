@@ -32,7 +32,7 @@ namespace PHS.Web.Controllers
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult Login(PHSUser user)
+        public ActionResult Login([Bind(Include = "Username,Password")] PHSUser user)
         {
             ActionResult result = View();
             using (var userManager = new UserManager())
