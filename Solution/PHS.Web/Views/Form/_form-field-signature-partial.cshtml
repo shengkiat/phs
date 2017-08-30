@@ -70,9 +70,15 @@
         // some browsers report devicePixelRatio as less than 1
         // and only part of the canvas is cleared then.
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
+
+        canvas.width = 304;
+        canvas.height = 154;
+
+        //canvas.width = canvas.offsetWidth * ratio;
+        //canvas.height = canvas.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
+        //console.log("canvas.width: " + canvas.width);
+        //console.log("canvas.height: " + canvas.height);
     }
 
     function signingEnd() {
