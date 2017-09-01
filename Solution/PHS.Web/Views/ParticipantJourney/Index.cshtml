@@ -17,10 +17,9 @@
     <div class="form-horizontal">
         <div class="form-group">
 
-            <h3>Active Events</h3>
-
-            @if (Model != null)
+            @if (Model != null && Model.PHSEvents.Count() > 0)
             {
+                <h3>Live Events</h3>
 
                 @Html.Grid(Model.PHSEvents).Named("eventGrid").Columns(columns =>
                 {
@@ -36,26 +35,41 @@
 
         </div>
 
-        <div class="form-group">
-            <div class="text-center">
-                <div>
+        @if (Model != null && Model.PHSEvents.Count() > 0)
+        {
 
-                    Nric:
-                    @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+            <div class="form-group">
+                <div class="text-center">
+                    <div>
 
-                    <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
-                           formaction="SearchParticipantJourney" formmethod="post" />
+                        Nric:
+                        @Html.EditorFor(m => m.Nric, new { htmlAttributes = new { @autocomplete = "off" } })
+
+                        <input type="submit" name="BtnSearch" value="Search" class="button-common" style="border-radius: 17px;"
+                               formaction="SearchParticipantJourney" formmethod="post" />
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="results">
-            @{Html.RenderPartial("_SearchParticipantJourneyResultPartial");}
-        </div>
+            <div id="results">
+                @{Html.RenderPartial("_SearchParticipantJourneyResultPartial");}
+            </div>
+        }
 
-        
-        
-        
+        else 
+        {
+            <div class="form-group">
+                <div class="text-center">
+                    <div>
+                        <h3>Currently there are no live events</h3>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
     </div>
 }
 
