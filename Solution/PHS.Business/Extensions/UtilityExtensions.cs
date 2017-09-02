@@ -517,11 +517,11 @@ namespace PHS.Business.Extensions
                     else
                     {
                         var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
-                        var format = new string[] { "M-dd-yyyy" };
+                        //var format = new string[] { "M-dd-yyyy" };
                         DateTime date;
                         if (DateTime.TryParseExact(dateValue, "M-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out date))
                         {
-                            value = date.ToString();
+                            value = date.ToString("dd/M/yyyy hh:mm:ss tt");
                         }
                         else
                         {

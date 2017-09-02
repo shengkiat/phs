@@ -91,7 +91,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult CreateUser(PHSUser user)
+        public ActionResult CreateUser([Bind(Include = "Username,FullName,ContactNumber,Role,IsActive,EffectiveStartDate,EffectiveEndDate")] PHSUser user)
         {
             if (!IsUserAuthenticated())
             {
