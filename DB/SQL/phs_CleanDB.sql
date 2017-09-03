@@ -256,7 +256,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[OthersOption] [nvarchar](50) NULL,
 	[Columns] [int] NULL,
 	[Rows] [int] NULL,
-	[Options] [nvarchar](300) NULL,
+	[Options] [nvarchar](2000) NULL,
 	[Validation] [varchar](50) NULL,
 	[DomId] [int] NULL CONSTRAINT [DF_template_fields_DomId]  DEFAULT ((0)),
 	[Order] [int] NULL CONSTRAINT [DF_template_fields_Order]  DEFAULT ((0)),
