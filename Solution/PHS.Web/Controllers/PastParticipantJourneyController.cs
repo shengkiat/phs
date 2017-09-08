@@ -63,6 +63,7 @@ namespace PHS.Web.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult ViewPastParticipantJourney(ParticipantJourneySearchViewModel psm)
         {
             if (psm == null)

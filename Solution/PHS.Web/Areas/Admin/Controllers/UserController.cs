@@ -172,8 +172,6 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        [HttpGet]
-        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult DeleteUser(int userID = 0)
         {
             if (!IsUserAuthenticated())

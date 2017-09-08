@@ -235,7 +235,6 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/StandardReference/Delete/5
-        [HttpGet]
         public ActionResult Delete(int id = 0)
         {
             if (!IsUserAuthenticated())
@@ -259,7 +258,6 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/StandardReference/DeleteReferenceRange/5
-        [HttpGet]
         public ActionResult DeleteReferenceRange(int referenceRangeID = 0, int standardreferenceID = 0)
         {
             if (!IsUserAuthenticated())
