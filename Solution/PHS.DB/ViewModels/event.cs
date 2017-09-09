@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PHS.DB.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PHS.DB
 {
+    [TrackChangesAttribute]
     [MetadataType(typeof(EventMetadata))]
     public partial class PHSEvent
     {
