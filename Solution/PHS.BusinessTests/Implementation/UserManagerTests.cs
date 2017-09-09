@@ -119,7 +119,7 @@ namespace PHS.Business.Implementation.Tests
             PHSUser loginUser = _target.IsAuthenticated(username, stuff, out message);
             Assert.IsNotNull(loginUser);
 
-            string newPassword = "Aabbccdd@1122";
+            string newPassword = PasswordManager.GeneratePassword();
             string[] selectedUsers = new string[1];
             selectedUsers[0] = username;
 
