@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using PHS.Business.Extensions;
 using PHS.Business.ViewModel.ParticipantJourney;
 using static PHS.Common.Constants;
+using PHS.Business.Helpers;
 
 namespace PHS.Web.Controllers
 {
@@ -363,16 +364,16 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<EVENT>>", result.Event.Title + " " + result.Event.Venue);
                 doc.ReplaceText("<<CURRENT_DATE>>", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                doc.ReplaceText("<<NAME>>", result.FullName);
-                doc.ReplaceText("<<NRIC>>", result.Nric);
-                doc.ReplaceText("<<GENDER>>", result.Gender);
-                doc.ReplaceText("<<DOB>>", result.DateOfBirth);
-                doc.ReplaceText("<<RACE>>", result.Race);
-                doc.ReplaceText("<<HOME>>", result.HomeNumber);
-                doc.ReplaceText("<<HP>>", result.MobileNumber);
-                doc.ReplaceText("<<ADD>>", result.Address);
+                doc.ReplaceText("<<NAME>>", UtilityHelper.GetString(result.FullName).Limit(100));
+                doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
+                doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
+                doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
+                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race));
+                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber));
+                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
+                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
                 //doc.ReplaceText("<<UNIT>>", result.un);
-                doc.ReplaceText("<<LANG>>", result.Language);
+                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
 
                 var ms = new MemoryStream();
                 doc.SaveAs(ms);
