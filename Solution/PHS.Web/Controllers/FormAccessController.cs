@@ -14,6 +14,7 @@ using PHS.Business.Extensions;
 using PHS.Business.ViewModel.ParticipantJourney;
 using static PHS.Common.Constants;
 using PHS.Business.Helpers;
+using PHS.DB;
 
 namespace PHS.Web.Controllers
 {
@@ -313,8 +314,11 @@ namespace PHS.Web.Controllers
 
             // Load template into memory
             var doc = DocX.Load(templatePath);
+            
+            doc.ReplaceText("<<Replaced>>", text);
 
-            doc.ReplaceText("Replaced", text);
+            PHSUser loginUser = GetLoginUser();
+            doc.ReplaceText("<<NAME>>", loginUser.FullName);
 
             var ms = new MemoryStream();
             doc.SaveAs(ms);
