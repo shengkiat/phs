@@ -106,8 +106,11 @@
         });
 
         function displayAge(year) {
-            var currentYear = new Date().getFullYear();
-            document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+            if (year > 0) {
+                var currentYear = new Date().getFullYear();
+                document.getElementById("SubmitFields[@Model.DomId].Age").innerHTML = currentYear - year;
+            }
+            
         }
 
     </script>
