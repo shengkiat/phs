@@ -5,10 +5,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var weight = document.getElementById('SubmitFields[@Model.DomId].Weight').value
-        var height = document.getElementById('SubmitFields[@Model.DomId].Height').value
-
-        displayBMI(weight, height, false);
+        calculateBMI();
 
     });
 
