@@ -335,7 +335,7 @@ CREATE TABLE [dbo].[ReferenceRange](
 	[MinimumValue] [float] NOT NULL,
 	[MaximumValue] [float] NOT NULL,
 	[Result] [nvarchar](50) NULL,
-	[Highlight] [bit] NULL,
+	[Highlight] [bit] NOT NULL,
 	[StandardReferenceID] [int] NOT NULL,
  CONSTRAINT [PK_reference_range] PRIMARY KEY CLUSTERED 
 (
