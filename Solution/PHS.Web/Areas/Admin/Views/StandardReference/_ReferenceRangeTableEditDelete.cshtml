@@ -19,6 +19,9 @@
                         Result
                     </th>
                     <th>
+                        Highlight Result
+                    </th>
+                    <th>
                         Edit
                     </th>
                     <th>
@@ -41,6 +44,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(model => item.Result)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Highlight)
                         </td>
                         <td>
                             @Html.ActionLink(
@@ -66,7 +72,7 @@
                                 },
                                 new
                                 {
-                                    @onclick = "return confirm('Are you sure you want to delete this User');",
+                                    @onclick = "return confirm('Are you sure you want to delete this Reference Range');",
                                     @class = "glyphicon glyphicon-trash"
                                 })
                         </td>

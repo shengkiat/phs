@@ -841,8 +841,6 @@ namespace PHS.Business.Implementation.Tests
 
             user.EffectiveStartDate = DateTime.Now.AddDays(-1);
             user.EffectiveEndDate = DateTime.Now.AddDays(1);
-           // user.EffectiveStartDate = Convert.ToDateTime("08/01/2017");
-          //  user.EffectiveEndDate = Convert.ToDateTime("09/01/2017");
 
             var success = _target.AddUser(_loginuser, user, out message);
             Assert.IsTrue(success);
@@ -907,9 +905,9 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockUserManager(IUnitOfWork _unitOfWork)
+            public MockUserManager(IUnitOfWork unitOfWork)
             {
-                this._unitOfWork = _unitOfWork;
+                _unitOfWork = unitOfWork;
             }
 
             protected override IUnitOfWork CreateUnitOfWork()

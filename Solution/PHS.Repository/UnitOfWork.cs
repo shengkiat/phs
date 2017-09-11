@@ -34,6 +34,7 @@ namespace PHS.Repository
         }
 
         public IUserRepository Users { get; private set; }
+
         public IMasterAddressRepository MasterAddress { get; private set; }
 
         public IFormRepository FormRepository { get; private set; }

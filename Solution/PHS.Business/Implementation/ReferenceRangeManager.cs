@@ -26,7 +26,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var referenceRange = unitOfWork.ReferenceRanges.Get(id);
 
@@ -69,7 +69,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -110,7 +110,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var referenceRangeToUpdate = unitOfWork.ReferenceRanges.Get(referenceRange.ReferenceRangeID);
                     Util.CopyNonNullProperty(referenceRange, referenceRangeToUpdate);
@@ -136,7 +136,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var referenceRange = unitOfWork.ReferenceRanges.Get(id);
 
@@ -173,7 +173,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var referenceRange = unitOfWork.ReferenceRanges.Find(u => u.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase) && u.ReferenceRangeID != referenceRangeID).FirstOrDefault();
                     if (referenceRange != null)

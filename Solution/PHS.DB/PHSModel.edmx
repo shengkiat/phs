@@ -180,6 +180,7 @@
           <Property Name="MinimumValue" Type="float" Nullable="false" />
           <Property Name="MaximumValue" Type="float" Nullable="false" />
           <Property Name="Result" Type="nvarchar" MaxLength="50" />
+          <Property Name="Highlight" Type="bit" Nullable="false" />
           <Property Name="StandardReferenceID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="StandardReference">
@@ -241,7 +242,7 @@
           <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
           <Property Name="Columns" Type="int" />
           <Property Name="Rows" Type="int" />
-          <Property Name="Options" Type="nvarchar" MaxLength="300" />
+          <Property Name="Options" Type="nvarchar" MaxLength="2000" />
           <Property Name="Validation" Type="varchar" MaxLength="50" />
           <Property Name="DomId" Type="int" />
           <Property Name="Order" Type="int" />
@@ -891,6 +892,7 @@
           <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
+          <Property Name="Highlight" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="StandardReference">
           <Key>
@@ -960,7 +962,7 @@
           <Property Name="OthersOption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Columns" Type="Int32" />
           <Property Name="Rows" Type="Int32" />
-          <Property Name="Options" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Options" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Validation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DomId" Type="Int32" />
           <Property Name="Order" Type="Int32" />
@@ -1341,6 +1343,7 @@
           <EntitySetMapping Name="ReferenceRanges">
             <EntityTypeMapping TypeName="phsModel.ReferenceRange">
               <MappingFragment StoreEntitySet="ReferenceRange">
+                <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />

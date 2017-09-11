@@ -31,8 +31,9 @@
                     },
                     success: function (response) {
                         document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
-                        //document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = response.Color;
-                    }
+                        if (response.Highlight) {
+                            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = "red";
+                        }                    }
                 });
             }
         }

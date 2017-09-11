@@ -9,6 +9,7 @@ namespace PHS.Repository.Interface.Core
         bool EnableAuditLog { get; set; }
 
         IUserRepository Users { get; }
+
         IMasterAddressRepository MasterAddress { get; }
 
         IFormRepository FormRepository { get; }
@@ -26,6 +27,8 @@ namespace PHS.Repository.Interface.Core
         ITemplateFieldValueRepository TemplateFieldValues { get;  }
 
         IStandardReferenceRepository StandardReferences { get; }
+
+        IReferenceRangeRepository ReferenceRanges { get; }
 
         ISummaryRepository Summaries { get; }
 

@@ -42,7 +42,9 @@
                     },
                     success: function (response) {
                         document.getElementById("SubmitFields[@Model.DomId].BMIStatus").innerHTML = response.Status;
-                        //document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = response.Color;
+                        if (response.Highlight) {
+                            document.getElementById("SubmitFields[@Model.DomId].BMIStatus").style.color = "red";
+                        }
                     }
                 });
             }
