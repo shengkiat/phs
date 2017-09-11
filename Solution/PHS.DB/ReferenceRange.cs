@@ -20,6 +20,7 @@ namespace PHS.DB
         public double MaximumValue { get; set; }
         public string Result { get; set; }
         public int StandardReferenceID { get; set; }
+        public bool Highlight { get; set; }
     
         public virtual StandardReference StandardReference { get; set; }
     }

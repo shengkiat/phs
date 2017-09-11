@@ -214,7 +214,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditReferenceRange([Bind(Include = "StandardReferenceID,ReferenceRangeID,Title,MinimumValue,MaximumValue,Result")] ReferenceRange referenceRange)
+        public ActionResult EditReferenceRange([Bind(Include = "StandardReferenceID,ReferenceRangeID,Title,MinimumValue,MaximumValue,Result,Highlight")] ReferenceRange referenceRange)
         {
             if (!IsUserAuthenticated())
             {
