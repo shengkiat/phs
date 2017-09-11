@@ -216,6 +216,7 @@ namespace PHS.Common
         {
             TEXTBOX,
             TEXTAREA,
+            TEXTBOXNUMBER,
             RADIOBUTTON,
             PASSWORD,
             CHECKBOX,

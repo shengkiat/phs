@@ -574,6 +574,8 @@
     <Content Include="Views\Form\_form-field-headersub-template.cshtml" />
     <Content Include="Views\ParticipantJourney\_DoctorSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_PTSummaryPartial.cshtml" />
+    <Content Include="Views\Form\_form-field-textboxnumber-partial.cshtml" />
+    <Content Include="Views\Form\_form-field-textboxnumber-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

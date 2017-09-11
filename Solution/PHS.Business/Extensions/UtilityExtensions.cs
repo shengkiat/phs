@@ -161,6 +161,14 @@ namespace PHS.Business.Extensions
             string value = "";
             switch (field.FieldType)
             {
+                case Constants.TemplateFieldType.TEXTBOXNUMBER:
+                    string textnumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    if (string.IsNullOrEmpty(textnumber))
+                    {
+                        return true;
+                    }
+                    return textnumber.IsNumeric();
+
                 case Constants.TemplateFieldType.NRICPICKER:
                     string icNumber = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     // string icFirstDigit = form.SubmittedFieldValue(field.DomId, "FirstDigit");
@@ -577,6 +585,9 @@ namespace PHS.Business.Extensions
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
                 case Constants.TemplateFieldType.TEXTBOX:
+                    value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    break;
+                case Constants.TemplateFieldType.TEXTBOXNUMBER:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
                 case Constants.TemplateFieldType.SIGNATURE:

@@ -21,19 +21,20 @@
             $.ajax({
                 url: "@Url.Action("GetAddressByZipCode", "FormAccess")",
                 type: "POST",
-            data: JSON.stringify(jsonObject),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            error: function (response) {
+                data: JSON.stringify(jsonObject),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
 
-                document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
-            },
-            success: function (response) {
-                document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = "";
-                document.getElementById("SubmitFields[@Model.DomId].StreetAddress").value = response.Street;
-                document.getElementById("SubmitFields[@Model.DomId].Blk").value = response.Blk;
-            }
-        });
+                    document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = response.Error;
+                },
+                success: function (response) {
+                    document.getElementById("SubmitFields[@Model.DomId].Error").innerHTML = "";
+                    document.getElementById("SubmitFields[@Model.DomId].StreetAddress").value = response.Street;
+                    document.getElementById("SubmitFields[@Model.DomId].Blk").value = response.Blk;
+                }
+            });
 
         });
     });
