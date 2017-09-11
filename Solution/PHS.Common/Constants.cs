@@ -179,6 +179,12 @@ namespace PHS.Common
         public const string Summary_Type_All = "SUM";
         public const string Summary_Type_PT = "SUM_PT";
 
+        public const string Summary_Type_Cog2nd = "COG2ND";
+        public const string Summary_Type_PTConsult = "PTCONSULT";
+        public const string Summary_Type_OTConsult = "OTCONSULT";
+        public const string Summary_Type_Exhibition = "EXHIBITION";
+        public const string Summary_Type_SocialSup = "SOCIALSUP"; 
+
 
         public enum MessageType
         {

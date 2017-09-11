@@ -107,13 +107,14 @@ update DataCollection set Modality = 'Hx Taking' where Modality = 'History Takin
 update DataCollection set Modality = 'Public Forms' where Modality = 'Public'
 update DataCollection set AddOthersOption = 0 where AddOthersOption is null 
 update DataCollection set [Type ] = 'SIGNATURE' where [Type ] = 'Signature'
-
 update DataCollection set [Type ] = 'RADIOBUTTON' where [Type ] in ('DROPDOWNLIST')
-
 update DataCollection set [Type ] = 'HEADER' where [Type ] = 'Big Label'
 update DataCollection set [Type ] = 'HEADERSUB' where [Type ] = 'Small Label'
 update DataCollection set [Type ] = 'IMAGE' where [Type ] = 'Image'
 update DataCollection set [Type ] = 'TEXTAREA' where [Type ] = 'Text Area'
+
+update DataCollection set Mandatory = 0 where [Type ] = 'HEADER'
+update DataCollection set Mandatory = 0 where [Type ] = 'HEADERSUB'
 
 declare @modality varchar(100)
 declare @form varchar(100)

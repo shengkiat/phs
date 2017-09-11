@@ -103,7 +103,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 foreach (var summary in Participant.Summaries)
                 {
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
-                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_PT) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_Cog2nd) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
