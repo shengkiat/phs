@@ -52,7 +52,7 @@ namespace PHS.Business.Implementation
 
             else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                message = "Nric or PHSEventId cannot be null";
+                message = "Please enter valid NRIC and select Live Event";
             }
 
             else if (!NricChecker.IsNRICValid(psm.Nric))
@@ -116,7 +116,7 @@ namespace PHS.Business.Implementation
 
             else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                message = "Nric or PHSEventId cannot be null";
+                message = "Please enter valid NRIC and select Live Event";
             }
 
             //todo: removed for data migration. to put back before live
@@ -158,7 +158,7 @@ namespace PHS.Business.Implementation
 
             else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                return "Nric or PHSEventId cannot be null";
+                return "Please enter valid NRIC and select Live Event";
             }
 
             else if (!NricChecker.IsNRICValid(psm.Nric))
@@ -256,7 +256,7 @@ namespace PHS.Business.Implementation
 
             else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                message = "Nric or PHSEventId cannot be null";
+                message = "Please enter valid NRIC and select Live Event";
             }
 
             //todo: comment out for data migration. to put it back before going live

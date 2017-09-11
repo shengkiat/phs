@@ -104,7 +104,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(PHSEvent eventModel)
+        public ActionResult Edit([Bind(Include = "PHSEventID,Title,Venue,StartDT,EndDT")] PHSEvent eventModel)
         {
             using (var eventManager = new EventManager())
             {

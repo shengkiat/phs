@@ -149,7 +149,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult EditUser(PHSUser user)
+        public ActionResult EditUser([Bind(Include = "Username,FullName,ContactNumber,Role,IsActive,EffectiveStartDate,EffectiveEndDate,PHSUserID,CreatedDateTime")] PHSUser user)
         {
             if (!IsUserAuthenticated())
             {
@@ -172,8 +172,6 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        [HttpGet]
-        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult DeleteUser(int userID = 0)
         {
             if (!IsUserAuthenticated())

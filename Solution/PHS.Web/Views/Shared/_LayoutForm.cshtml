@@ -3,55 +3,43 @@
 @using PHS.Business.Extensions
 @using PHS.DB
 
-@{
-    var menus = new[]
-                {
-                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Area="Admin",Roles="Committee Member"  },
-                   new { LinkText="Event Management", ActionName="Index",ControllerName="Event",Area="",Roles="Committee Member"  },
-                   new { LinkText="Form Management", ActionName="Index",ControllerName="Form",Area="",Roles="Committee Member"  },
-                   new { LinkText="Past Event", ActionName="Index",ControllerName="PastParticipantJourney",Area="",Roles="Committee Member"  },
-                   new { LinkText="Event Helper", ActionName="Index",ControllerName="ParticipantJourney",Area="",Roles="Committee Member,Volunteer,Doctor"  },
-
-                };
-}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <style>
-            * {
-                box-sizing: border-box;
-                font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
-            }
+                * {
+                    box-sizing: border-box;
+                    font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
+                }
 
-            .header, .footer {
-                background: #ACD8E0;
-                color: black;
-                box-shadow: 2px 2px 2px gray;
-            }
+                .header, .footer {
+                    background: #ACD8E0;
+                    color: black;
+                    box-shadow: 2px 2px 2px gray;
+                }
 
-            .column {
-                <!--
-                float: left;
-                -->
-            }
+                .column {
+                    <!--
+                    float: left;
+                    -->
+                }
 
-            .clearfix::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
+                .clearfix::after {
+                    content: "";
+                    clear: both;
+                    display: table;
+                }
 
-            .menu {
+                /*.menu {
                 width: 20%;
                 padding-top: 35px;
-            }
+            }*/
 
-            .content {
-                width: 80%;
-            }
+                .content {
+                    width: 80%;
+                }
 
-            .menu ul {
+                /*.menu ul {
                 list-style-type: none;
                 margin: 0;
                 padding-left: 20%;
@@ -62,143 +50,176 @@
                 margin-bottom: 8px;
                 color: #ffffff;
                 font-size: 1.4em;
-            }
+            }*/
 
-            #colorstrip {
-                width: 100%;
-                border-style: none;
-            }
-
-
-
-
-            .fa-2x {
-                font-size: 2em;
-            }
-
-            .fa {
-                position: relative;
-                display: table-cell;
-                width: 60px;
-                height: 36px;
-                text-align: center;
-                vertical-align: middle;
-                font-size: 20px;
-            }
-
-
-            .main-menu:hover, nav.main-menu.expanded {
-                width: 200px;
-                overflow: visible;
-            }
-
-            .main-menu {
-                background: #fbfbfb;
-                border-right: 1px solid #e5e5e5;
-                position: absolute;
-                top: 20%;
-                bottom: 0;
-                height: 80%;
-                left: 0;
-                width: 20px;
-                overflow: hidden;
-                -webkit-transition: width .05s linear;
-                transition: width .05s linear;
-                -webkit-transform: translateZ(0) scale(1,1);
-                z-index: 1000;
-                color: black;
-            }
-
-                .main-menu > ul {
-                    margin: 7px 0;
+                #colorstrip {
+                    width: 100%;
+                    border-style: none;
                 }
 
-                .main-menu li {
-                    position: relative;
-                    display: block;
-                    width: 250px;
+
+
+
+                .fa-2x {
+                    font-size: 2em;
                 }
 
-                    .main-menu li > a {
-                        position: relative;
-                        display: table;
-                        border-collapse: collapse;
-                        border-spacing: 0;
-                        color: #999;
-                        font-family: arial;
-                        font-size: 14px;
-                        text-decoration: none;
-                        -webkit-transform: translateZ(0) scale(1,1);
-                        -webkit-transition: all .1s linear;
-                        transition: all .1s linear;
-                    }
-
-                .main-menu .nav-icon {
+                .fa {
                     position: relative;
                     display: table-cell;
                     width: 60px;
                     height: 36px;
                     text-align: center;
                     vertical-align: middle;
-                    font-size: 18px;
+                    font-size: 20px;
                 }
 
-                .main-menu .nav-text {
-                    position: relative;
-                    display: table-cell;
-                    vertical-align: middle;
-                    width: 190px;
-                    font-family: 'Titillium Web', sans-serif;
-                }
 
-                .main-menu > ul.logout {
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                }
-
-            .no-touch .scrollable.hover {
-                overflow-y: hidden;
-            }
-
-                .no-touch .scrollable.hover:hover {
-                    overflow-y: auto;
+                .main-menu:hover, nav.main-menu.expanded {
+                    width: 200px;
                     overflow: visible;
                 }
 
-            a:hover, a:focus {
-                text-decoration: none;
-            }
+                .main-menu {
+                    background: #fbfbfb;
+                    border-right: 1px solid #e5e5e5;
+                    position: absolute;
+                    top: 20%;
+                    bottom: 0;
+                    height: 80%;
+                    left: 0;
+                    width: 20px;
+                    overflow: hidden;
+                    -webkit-transition: width .05s linear;
+                    transition: width .05s linear;
+                    -webkit-transform: translateZ(0) scale(1,1);
+                    z-index: 1000;
+                    color: black;
+                }
 
-            nav {
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                -o-user-select: none;
-                user-select: none;
-            }
+                    .main-menu > ul {
+                        margin: 7px 0;
+                    }
 
-                nav ul, nav li {
-                    outline: 0;
+                    .main-menu li {
+                        position: relative;
+                        display: block;
+                        width: 250px;
+                    }
+
+                        .main-menu li > a {
+                            position: relative;
+                            display: table;
+                            border-collapse: collapse;
+                            border-spacing: 0;
+                            color: #999;
+                            font-family: arial;
+                            font-size: 14px;
+                            text-decoration: none;
+                            -webkit-transform: translateZ(0) scale(1,1);
+                            -webkit-transition: all .1s linear;
+                            transition: all .1s linear;
+                        }
+
+                    .main-menu .nav-icon {
+                        position: relative;
+                        display: table-cell;
+                        width: 60px;
+                        height: 36px;
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 18px;
+                    }
+
+                    .main-menu .nav-text {
+                        position: relative;
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 190px;
+                        font-family: 'Titillium Web', sans-serif;
+                    }
+
+                    .main-menu > ul.logout {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                    }
+
+                .no-touch .scrollable.hover {
+                    overflow-y: hidden;
+                }
+
+                    .no-touch .scrollable.hover:hover {
+                        overflow-y: auto;
+                        overflow: visible;
+                    }
+
+                a:hover, a:focus {
+                    text-decoration: none;
+                }
+
+                nav {
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    -o-user-select: none;
+                    user-select: none;
+                }
+
+                    nav ul, nav li {
+                        outline: 0;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .main-menu li:hover > a, nav.main-menu li.active > a, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, .no-touch .dashboard-page nav.dashboard-menu ul li:hover a, .dashboard-page nav.dashboard-menu ul li.active a {
+                        color: #fff;
+                        background-color: black;
+                    }
+
+                .area {
+                    float: left;
+                    background: black;
+                    width: 100%;
+                    height: 80%;
+                }
+
+                #menu-ul {
+                    list-style-type: none;
                     margin: 0;
                     padding: 0;
+                    overflow: hidden;
+                    background-color: #337ab7;
                 }
 
-                .main-menu li:hover > a, nav.main-menu li.active > a, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, .no-touch .dashboard-page nav.dashboard-menu ul li:hover a, .dashboard-page nav.dashboard-menu ul li.active a {
-                    color: #fff;
-                    background-color: black;
+                #menu-li {
+                    float: left;
+                    border-right: 1px solid #bbb;
                 }
 
-            .area {
-                float: left;
-                background: black;
-                width: 100%;
-                height: 80%;
-            }
+                    #menu-li:last-child {
+                        border-right: none;
+                    }
+
+                    #menu-li a {
+                        display: block;
+                        color: white;
+                        text-align: center;
+                        padding: 8px 10px;
+                        text-decoration: none;
+                    }
+
+                        #menu-li a:hover:not(.active) {
+                            background-color: #111;
+                        }
+
+
+
         </style>
 
         <meta charset="utf-8" />
         <title>@ViewBag.Title - Drag N' Drop FormBuilder</title>
+
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />          
         <!--javascripts-->
@@ -233,84 +254,63 @@
         <link type="text/css" href="@Url.Content("~/Content/css/plugins/jquery.jcrop.css")" rel="stylesheet"  />
         <link type="text/css" href="@Url.Content("~/Content/css/form-builder/Forms-sprites.css")" rel="stylesheet"  />          
         @RenderSection("headerScripts", false)
+
+
     </head>
     <body class="@Html.GetContextCssClass()">      
-        <div class="header" style="height: 136px;">
+        <div class="header" style="height: 150px;">
             <img src="~/Content/images/logo.gif" alt="logo" style="position: absolute;width:350px;height:134px;padding-left: 100px;padding-top: 15px;" />
             <div id="colorstrip" style="height: 12px; background-color: #181C86;"></div>
             <div id="colorstrip" style="height: 7px; background-color: #FF9900;"></div>
-        </div>  
+            @if (HttpContext.Current.Session["LoginUser"] != null &&
+                (HttpContext.Current.Session["LoginUser"] as PHSUser).Role != null)
+            {
+                <div class="dropdown pull-right" style="position: absolute; top: 90px;right: 100px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        @User.Identity.Name
+                        <span class="caret"></span>
+                    </button>
+                    <!--
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Edit Profile", "EditProfile", new { area = "", controller = "Home" })</li>
+                        <li>@Html.ActionLink("Change Password", "ChangePassword", new { area = "", controller = "Home" })</li>
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
+                    </ul>
+                        -->
+                </div>
+
+                <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
+                    <ul id="menu-ul">
+                        @if (@User.IsInRole("Committee Member"))
+                        {
+                            <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                            <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                            <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                            <li id = "menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                            <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                        }
+                        @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
+                        {
+                            if (@User.IsInRole("Doctor"))
+                            {
+                            <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                            }
+                            <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "Committee Member, Volunteer, Doctor" }, new { @style = "color:white;" })</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+
+        </div>
         <div id="page-body">
             @RenderBody()
         </div>    
 
-        <nav class="main-menu">
-            <a href="#">
-                <i class="fa fa-home fa-2x"></i>
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-home fa-2x"></i>
-                                <span class="nav-text">
+        
 
-                                </span>
-                            </a>
-                        </li>
-
-                        @if (HttpContext.Current.Session["LoginUser"] != null)
-                        {
-                            var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
-                            var links = from item in menus
-                                        where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                        .Any(x => role.Equals(x))
-                                        select item;
-                            foreach (var link in links)
-                            {
-                                <li>
-                                    <i class="fa fa-home fa-2x"></i>
-                                    <span class="nav-text">
-                                        @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })
-                                    </span>
-                                </li>
-
-                            }
-                            <li>
-                                <i class="fa fa-home fa-2x"></i>
-                                <span class="nav-text">
-                                    @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })
-                                </span>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </a>
-        </nav>
-
-        <!-- Sidebar -->
-        <div class="clearfix">
-            <!--
-        <div class="column menu">
-            <ul>
-
-                @if (HttpContext.Current.Session["LoginUser"] != null)
-                {
-                    var role = (HttpContext.Current.Session["LoginUser"] as PHSUser).Role;
-                    var links = from item in menus
-                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                .Any(x => role.Equals(x))
-                                select item;
-                    foreach (var link in links)
-                    {
-                        <li> @Html.ActionLink(link.LinkText, link.ActionName, new { area = link.Area, controller = link.ControllerName })</li>
-                    }
-
-                    <li> @Html.ActionLink("Logout", "LogOff", new { area = "", controller = "Home" })</li>
-                }
-            </ul>
-        </div>
-            -->
-
+     
             <div class="column content" style="margin:0 auto;">
                 <!-- /#sidebar-wrapper -->
 
@@ -322,7 +322,6 @@
                 }
                 <br />
             </div>
-        </div>
 
         <div class="footer" style="text-align: center;">
             <p>&copy; @DateTime.Now.Year - Public Health Service</p>

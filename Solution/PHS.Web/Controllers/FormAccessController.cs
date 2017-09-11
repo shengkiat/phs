@@ -12,6 +12,9 @@ using System.Web;
 using System.Web.Mvc;
 using PHS.Business.Extensions;
 using PHS.Business.ViewModel.ParticipantJourney;
+using static PHS.Common.Constants;
+using PHS.Business.Helpers;
+using PHS.DB;
 
 namespace PHS.Web.Controllers
 {
@@ -311,8 +314,11 @@ namespace PHS.Web.Controllers
 
             // Load template into memory
             var doc = DocX.Load(templatePath);
+            
+            doc.ReplaceText("<<Replaced>>", text);
 
-            doc.ReplaceText("Replaced", text);
+            PHSUser loginUser = GetLoginUser();
+            doc.ReplaceText("<<NAME>>", loginUser.FullName);
 
             var ms = new MemoryStream();
             doc.SaveAs(ms);
@@ -329,6 +335,82 @@ namespace PHS.Web.Controllers
 
         [HttpGet]
         public ActionResult DownloadDoctorMemo(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
+            }
+        }
+
+        public ActionResult GenerateLabel()
+        {
+            string templatePath = Server.MapPath("~/App_Data/Label.docx");
+            
+            // Load template into memory
+            var doc = DocX.Load(templatePath);
+
+            ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+
+            using (var participantJourneyManager = new ParticipantJourneyManager())
+            {
+                string message = string.Empty;
+                MessageType messageType = MessageType.ERROR;
+
+                ParticipantJourneyViewModel result = participantJourneyManager.RetrieveParticipantJourney(psm, out message, out messageType);
+
+                doc.ReplaceText("<<EVENT>>", result.Event.Title + " " + result.Event.Venue);
+                doc.ReplaceText("<<CURRENT_DATE>>", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+
+                doc.ReplaceText("<<NAME>>", UtilityHelper.GetString(result.FullName).Limit(100));
+                doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
+                doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
+                doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
+                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race));
+                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber));
+                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
+                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
+                //doc.ReplaceText("<<UNIT>>", result.un);
+                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
+
+                var ms = new MemoryStream();
+                doc.SaveAs(ms);
+                ms.Position = 0;
+                byte[] fileBytes = ms.ToArray();
+
+                String guid = Guid.NewGuid().ToString();
+                TempData[guid] = fileBytes;
+
+                return new JsonResult()
+                {
+                    Data = new { FileGuid = guid, FileName = psm.Nric + ".docx" }
+                };
+
+                /*Document docTest = new Document();
+                docTest.LoadFromStream(ms, FileFormat.Docx);
+
+                MemoryStream stream = new MemoryStream();
+                docTest.SaveToStream(stream, FileFormat.PDF);
+
+                stream.Flush(); //Always catches me out
+                stream.Position = 0; //Not sure if this is required
+
+                //return File(stream, "application/pdf");
+                Response.AppendHeader("Content-Disposition", "inline; filename=name.pdf");
+                return new FileContentResult(stream.ToArray(), "application/pdf");
+                */
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DownloadLabel(string fileGuid, string fileName)
         {
             if (TempData[fileGuid] != null)
             {

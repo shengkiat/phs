@@ -2,6 +2,7 @@
 
 @using PHS.Common
 @using PHS.Business.Extensions
+@using PHS.Business.ViewModel.ParticipantJourney
 
 @{
     ViewBag.Title = "Mega Sorting Station";
@@ -89,6 +90,20 @@
 
     function printLabels() {
         alert("Printing " + document.getElementById("sum").innerText + " Labels");
+
+        $.ajax({
+            url: "@Url.Action("GenerateLabel", "FormAccess")",
+            type: "POST",
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            error: function (response) {
+                alert("Unable to print label");
+            },
+            success: function (response) {
+                window.location = '@Url.Action("DownloadLabel", "FormAccess")?fileGuid=' + response.FileGuid
+                                       + '&filename=' + response.FileName;
+            }
+        });
     }
 
 </script>
@@ -100,6 +115,7 @@
     <h2>Mega Sorting Station</h2>
 
     <div>
+
         <table id="tableFormA" class="table">
             <tr>
                 <td></td>

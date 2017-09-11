@@ -97,7 +97,7 @@ namespace PHS.Business.Implementation
 
             else if (string.IsNullOrEmpty(psm.Nric) || psm.PHSEventId == 0)
             {
-                message = "Nric or PHSEventId cannot be null";
+                message = "Please enter valid NRIC and select an Event";
             }
 
             // todo: this is removed for data migration purposes. to be added in before go live

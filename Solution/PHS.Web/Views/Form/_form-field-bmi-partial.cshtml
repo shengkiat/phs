@@ -5,20 +5,16 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#btnBmiSubmit").click(function () {
+        calculateBMI();
 
-            var weight = document.getElementById('SubmitFields[@Model.DomId].Weight').value
-            var height = document.getElementById('SubmitFields[@Model.DomId].Height').value
+    });
 
-            displayBMI(weight, height, true);
-        });
-
+    function calculateBMI() {
         var weight = document.getElementById('SubmitFields[@Model.DomId].Weight').value
         var height = document.getElementById('SubmitFields[@Model.DomId].Height').value
 
-        displayBMI(weight, height, false);
-
-    });
+        displayBMI(weight, height, true);
+    }
 
     function displayBMI(weight, height, displayAlert) {
         if (weight > 0 && height > 0) {
@@ -56,9 +52,6 @@
             }
 
         }
-        else if (displayAlert) {
-            alert("Please Fill in everything correctly")
-        }
     }
 
 </script>
@@ -83,6 +76,7 @@
                        name="SubmitFields[@Model.DomId].Weight" 
                        value="@Html.GetSubmittedTextValue(Model,"Weight")" 
                        @readonlyAttribute
+                       onchange="calculateBMI()" 
                        type="number" class="title" /><br />
                 <span class="sub-label">Weight (kg)</span>
             </li>
@@ -92,13 +86,9 @@
                        name="SubmitFields[@Model.DomId].Height" 
                        value="@Html.GetSubmittedTextValue(Model,"Height")" 
                        @readonlyAttribute
+                       onchange="calculateBMI()" 
                        type="number" class="title" /><br />
                 <span class="sub-label">Height (cm)</span>
-            </li>
-
-
-            <li>
-                <button type="button" id="btnBmiSubmit" @disabledAttribute>Check</button>
             </li>
 
             <li>

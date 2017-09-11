@@ -171,7 +171,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(StandardReference standardReference)
+        public ActionResult Edit([Bind(Include = "StandardReferenceID,Title")] StandardReference standardReference)
         {
             if (!IsUserAuthenticated())
             {
@@ -214,7 +214,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditReferenceRange(ReferenceRange referenceRange)
+        public ActionResult EditReferenceRange([Bind(Include = "StandardReferenceID,ReferenceRangeID,Title,MinimumValue,MaximumValue,Result")] ReferenceRange referenceRange)
         {
             if (!IsUserAuthenticated())
             {
@@ -235,7 +235,6 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/StandardReference/Delete/5
-        [HttpGet]
         public ActionResult Delete(int id = 0)
         {
             if (!IsUserAuthenticated())
@@ -259,7 +258,6 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/StandardReference/DeleteReferenceRange/5
-        [HttpGet]
         public ActionResult DeleteReferenceRange(int referenceRangeID = 0, int standardreferenceID = 0)
         {
             if (!IsUserAuthenticated())

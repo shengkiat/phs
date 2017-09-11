@@ -408,6 +408,7 @@
     <Content Include="Areas\Admin\Views\StandardReference\CreateReferenceRange.cshtml" />
     <Content Include="Areas\Admin\Views\StandardReference\_ReferenceRangeTableEditDelete.cshtml" />
     <Content Include="Areas\Admin\Views\StandardReference\EditReferenceRange.cshtml" />
+    <Content Include="App_Data\Label.docx" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
