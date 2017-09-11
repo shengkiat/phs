@@ -43,6 +43,17 @@ namespace PHS.Common
         public const string PreRegistration_Field_Name_Address = "ADDRESS";
         public const string PreRegistration_Field_Name_Gender = "GENDER";
 
+        public const string PreRegistration_Field_Name_Opt1 = "OPTION1";
+        public const string PreRegistration_Field_Name_Opt2 = "OPTION2";
+        public const string PreRegistration_Field_Name_Opt3 = "OPTION3";
+        public const string PreRegistration_Field_Name_Opt4 = "OPTION4";
+        public const string PreRegistration_Field_Name_Opt5 = "OPTION5";
+        public const string PreRegistration_Field_Name_Opt6 = "OPTION6";
+        public const string PreRegistration_Field_Name_Opt7 = "OPTION7";
+        public const string PreRegistration_Field_Name_Opt8 = "OPTION8";
+        public const string PreRegistration_Field_Name_Opt9 = "OPTION9";
+        public const string PreRegistration_Field_Name_Opt10 = "OPTION10";
+
         public const string Registration_Field_Name_Nric = "NRIC";
         public const string Registration_Field_Name_FullName = "FULLNAME";
         public const string Registration_Field_Name_Salutation = "SALUTATION";
@@ -54,6 +65,17 @@ namespace PHS.Common
         public const string Registration_Field_Name_Language = "LANGUAGE";
         public const string Registration_Field_Name_Address = "ADDRESS";
         public const string Registration_Field_Name_Gender = "GENDER";
+
+        public const string Registration_Field_Name_Opt1 = "OPTION1";
+        public const string Registration_Field_Name_Opt2 = "OPTION2";
+        public const string Registration_Field_Name_Opt3 = "OPTION3";
+        public const string Registration_Field_Name_Opt4 = "OPTION4";
+        public const string Registration_Field_Name_Opt5 = "OPTION5";
+        public const string Registration_Field_Name_Opt6 = "OPTION6";
+        public const string Registration_Field_Name_Opt7 = "OPTION7";
+        public const string Registration_Field_Name_Opt8 = "OPTION8";
+        public const string Registration_Field_Name_Opt9 = "OPTION9";
+        public const string Registration_Field_Name_Opt10 = "OPTION10";
 
         public const string Summary_Field_Name_CurrentlySmoke = "CURRENTLY_SMOKE";
         public const string Summary_Field_Name_SmokeBefore = "SMOKE_BEFORE";
