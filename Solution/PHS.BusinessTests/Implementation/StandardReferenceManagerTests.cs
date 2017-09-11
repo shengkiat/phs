@@ -191,6 +191,21 @@ namespace PHS.BusinessTests.Implementation
                 Title = "testStdReferenceTitle"
             };
 
+            //ReferenceRange refrange1 = new ReferenceRange()
+            //{
+            //    Title = "normal",
+            //    MinimumValue = 20,
+            //    MaximumValue = 120,
+            //    Result = "normal"
+            //};
+            //ReferenceRange refrange2 = new ReferenceRange()
+            //{
+            //    Title = "normal",
+            //    MinimumValue = 20,
+            //    MaximumValue = 120,
+            //    Result = "normal"
+            //};
+
             var saveResult = _target.AddStandardReference(stdReference, out message);
             Assert.IsNotNull(saveResult);
             Assert.AreEqual(string.Empty, message);
