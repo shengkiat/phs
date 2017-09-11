@@ -240,6 +240,12 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_DoctorSummaryPartial.cshtml", pjfvm);
                     }
 
+                    if (Internal_Form_Type_PTSummary.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_PTSummaryPartial.cshtml", pjfvm);
+                    }
+
                     return View("_FillInPartial", result);
                 }
             }

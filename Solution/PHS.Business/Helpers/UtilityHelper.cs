@@ -82,5 +82,10 @@ namespace PHS.Business.Helpers
             return fileStream;
         }
 
+        public static string GetString(string str)
+        {
+            return String.IsNullOrEmpty(str) ? "" : str;
+        }
+
     }
 }

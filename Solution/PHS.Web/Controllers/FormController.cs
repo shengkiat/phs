@@ -187,7 +187,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateTemplate(bool isAutoSave, TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
+        public ActionResult UpdateTemplate(bool isAutoSave, [Bind(Include = "TemplateID,NotificationEmail,Status,ConfirmationMessage,Theme,IsQuestion")]TemplateViewModel model, FormCollection collection, IDictionary<string, string> Fields)
         {
 
             if (!model.TemplateID.HasValue)

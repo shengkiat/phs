@@ -28,7 +28,7 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchPastParticipantJourney(PastParticipantJourneySearchViewModel psm)
+        public ActionResult SearchPastParticipantJourney([Bind(Include = "Nric")] PastParticipantJourneySearchViewModel psm)
         {
 
             if (psm == null)
@@ -63,7 +63,8 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult ViewPastParticipantJourney(ParticipantJourneySearchViewModel psm)
+        [HttpPost]
+        public ActionResult ViewPastParticipantJourney([Bind(Include = "Nric,PHSEventId")] ParticipantJourneySearchViewModel psm)
         {
             if (psm == null)
             {

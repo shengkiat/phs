@@ -31,7 +31,11 @@ namespace PHS.Business.Common
 
             var securePassword = new SecureString();
 
-            foreach (char c in Convert.ToBase64String(hash))
+            char[] encodedChars = new char[1023];
+
+            Convert.ToBase64CharArray(hash, 0, hash.Length, encodedChars, 0);
+
+            foreach (char c in encodedChars)
             {
                 securePassword.AppendChar(c);
             }

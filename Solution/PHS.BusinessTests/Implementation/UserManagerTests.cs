@@ -27,13 +27,13 @@ namespace PHS.Business.Implementation.Tests
         public void IsAuthenticatedTest_Success()
         {
             string username = "tester";
-            string password = "abcde12345";
+            string stuff = "abcde12345";
 
             PHSUser user = new PHSUser()
             {
                 Username = username,
                 FullName = "tester 123",
-                Password = password,
+                Password = stuff,
                 IsActive = true,
                 EffectiveStartDate = DateTime.Now,
                 EffectiveEndDate = DateTime.Now.AddDays(1),
@@ -47,7 +47,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsTrue(saveResult);
             Assert.AreEqual(string.Empty, message);
 
-            PHSUser expectedResult = _target.IsAuthenticated(username, password, out message);
+            PHSUser expectedResult = _target.IsAuthenticated(username, stuff, out message);
             Assert.IsNotNull(expectedResult);
             Assert.AreEqual("tester 123", expectedResult.FullName);
         }
@@ -57,13 +57,13 @@ namespace PHS.Business.Implementation.Tests
         public void ChangePasswordTest_Success()
         {
             string username = "tester";
-            string password = "abcde12345";
+            string stuff = "abcde12345";
 
             PHSUser user = new PHSUser()
             {
                 Username = username,
                 FullName = "tester 123",
-                Password = password,
+                Password = stuff,
                 IsActive = true,
                 EffectiveStartDate = DateTime.Now,
                 EffectiveEndDate = DateTime.Now.AddDays(1),
@@ -77,13 +77,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsTrue(saveResult);
             Assert.AreEqual(string.Empty, message);
 
-            PHSUser loginUser = _target.IsAuthenticated(username, password, out message);
+            PHSUser loginUser = _target.IsAuthenticated(username, stuff, out message);
             Assert.IsNotNull(loginUser);
             Assert.IsTrue(loginUser.UsingTempPW);
 
             string newPassword = "Aabbccdd@1122";
 
-            bool changeResult = _target.ChangePassword(loginUser, password, newPassword, newPassword, out message);
+            bool changeResult = _target.ChangePassword(loginUser, stuff, newPassword, newPassword, out message);
             Assert.IsTrue(changeResult);
             Assert.AreEqual(string.Empty, message);
 
@@ -96,13 +96,13 @@ namespace PHS.Business.Implementation.Tests
         public void ResetPasswordTest_Success()
         {
             string username = "tester";
-            string password = "abcde12345";
+            string stuff = "abcde12345";
 
             PHSUser user = new PHSUser()
             {
                 Username = username,
                 FullName = "tester 123",
-                Password = password,
+                Password = stuff,
                 IsActive = true,
                 EffectiveStartDate = DateTime.Now,
                 EffectiveEndDate = DateTime.Now.AddDays(1),
@@ -116,10 +116,10 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsTrue(saveResult);
             Assert.AreEqual(string.Empty, message);
 
-            PHSUser loginUser = _target.IsAuthenticated(username, password, out message);
+            PHSUser loginUser = _target.IsAuthenticated(username, stuff, out message);
             Assert.IsNotNull(loginUser);
 
-            string newPassword = "Aabbccdd@1122";
+            string newPassword = PasswordManager.GeneratePassword();
             string[] selectedUsers = new string[1];
             selectedUsers[0] = username;
 
