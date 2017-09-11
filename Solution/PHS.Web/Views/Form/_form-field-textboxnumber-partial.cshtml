@@ -1,0 +1,106 @@
+﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
+@using PHS.Business.Extensions
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var value = document.getElementById('SubmitFields[@Model.DomId].TextBox').value
+        displayRiskStatus(value, @Model.DomId);
+
+    });
+
+    function displayRiskStatus(value, fieldId) {
+        if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
+            var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
+            if (standardReferenceID != "")
+            {
+                var jsonObject = {
+                    "standardReferenceId": standardReferenceID,
+                    "value": value
+                };
+
+                $.ajax({
+                    url: "@Url.Action("GetReferenceRange", "FormAccess")",
+                    type: "POST",
+                    data: JSON.stringify(jsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    error: function (response) {
+                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
+                    },
+                    success: function (response) {
+                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
+                        //document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = response.Color;
+                    }
+                });
+            }
+        }
+    }
+
+</script>
+
+
+@{
+    var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
+    var displayAttribute = (Model.IsEditMode() || Html.IsDisplayField(Model)) ? "" : "style=display:none;";
+}
+
+<div id="mainfield-TextBoxNumber-@Model.DomId" 
+     data-reference="@Model.ConditionTemplateFieldID" 
+     data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     @displayAttribute>
+
+    <label style="width: 70%; word-wrap: break-word; text-align: left;"
+           data-sub-channel="sub-label-@Model.DomId"
+           class="label editablewysiwyg">@Html.Raw(@Model.Label)</label>
+
+        <span class="required @Model.IsRequired.OutputIfTrue("visible","hidden")">*</span>
+
+            <div class="input" style="width: 70%;  margin-left: 1cm;">
+                <input id="SubmitFields[@Model.DomId].TextBoxNumber" name="SubmitFields[@Model.DomId].TextBoxNumber"
+                       type="number" value="@Html.GetSubmittedTextValue(Model)"
+                       title="@Model.Hint"
+                       maxlength="@Model.MaxCharacters"
+                       class="title watermarked"
+                       @readonlyAttribute
+                       style="width: 95%;" />
+
+                <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+                
+                <input id="SubmitFields[@Model.DomId].StandardReferenceId"
+                        name="SubmitFields[@Model.DomId].StandardReferenceId"
+                        type="hidden"
+                        value="@Model.StandardReferenceID"
+                        style="width: 100px; height:20px;" maxlength="9" />
+
+                @if (Model.IsEditMode())
+                {
+                    @Html.Partial("_FormFieldPropertiesPartial", Model)
+                }
+                else
+                {
+
+                }
+                @if (!Model.Errors.IsNullOrEmpty())
+                {
+                    <span class="field-validation-error">@Model.Errors</span>
+                }
+            </div>
+
+            <a href="javascript:void(0);" title="@Model.HelpText" class="help-icon-1 help-icon @Model.HelpText.OutputIfIs("", "hide") w-tip">
+                <img src="@Html.SpacerImage()" alt="help" />
+            </a>
+
+            @if (Model.IsEditMode())
+            {
+                @Html.Partial("_FormFieldSettingsPartial")
+            }
+</div>
+
+
+
+    
+
+    
+

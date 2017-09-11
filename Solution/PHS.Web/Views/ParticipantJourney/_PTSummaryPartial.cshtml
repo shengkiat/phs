@@ -24,14 +24,18 @@
         <div class="panel-group">
             @if (Model != null)
             {
+     
+           
                 foreach (var summaryCategory in Model.GetDoctorSummaryCategories())
                 {
-                    if (summaryCategory.SummaryCategoryName.Equals("PT Consult"))
-                    {
+
                     <div class="panel panel-default">
                         <div class="panel-heading">@summaryCategory.SummaryCategoryName</div>
                         <div class="panel-body">
                             <ul class="vertical-list">
+                                <b>@summaryCategory.PTSummaries.Capacity</b>
+                                <b>@summaryCategory.EventSummaries.Count</b>
+                           
                                 @foreach (var summary in summaryCategory.DoctorSummaries)
                                 {
                                     <li style="margin-bottom: 1em;">
@@ -42,7 +46,7 @@
                             </ul>
                         </div>                        
                     </div>
-                    }
+               
                 }
 
             }
