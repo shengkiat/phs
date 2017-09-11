@@ -163,6 +163,11 @@ namespace PHS.Business.Implementation
                         message = "Standard Reference not found";
                         return false;
                     }
+                    if(standardReference.TemplateFields.Any())
+                    {
+                        message = "Standard Reference linked to template.";
+                        return false;
+                    }
                     using (TransactionScope scope = new TransactionScope())
                     {
                         List<ReferenceRange> referenceRangesToDelete = new List<ReferenceRange>();

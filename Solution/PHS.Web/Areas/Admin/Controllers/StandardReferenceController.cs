@@ -137,7 +137,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 if (newReferenceRange == null)
                 {
                     SetViewBagError(message);
-                    return View();
+                    return View(referenceRange);
                 }
 
                 SetTempDataMessage(Constants.ValueSuccessfuly("Reference Range " + newReferenceRange.Title + " has been added"));
