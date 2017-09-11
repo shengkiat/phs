@@ -81,6 +81,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             return result;
         }
 
+        // being used for PT Summary
         public List<SummaryCategoryViewModel> GetDoctorSummaryCategories()
         {
             List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
@@ -91,12 +92,18 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 result.Add(sumCategoryViewMode);
             }
 
+            foreach (var summaryCategoryName in SummaryHelper.GetPTSummaryCatgoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
             foreach (var sumCategoryViewModel in result)
             {
                 foreach (var summary in Participant.Summaries)
                 {
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
-                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_PT) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -108,5 +115,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
             return result;
         }
+
+       
     }
 }

@@ -16,6 +16,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
             SummaryCategoryName = summaryCategory;
             EventSummaries = new List<Summary>();
             DoctorSummaries = new List<Summary>();
+            PTSummaries = new List<Summary>();
         }
 
         public void AddEventSummary(Summary summary)
@@ -34,11 +35,21 @@ namespace PHS.Business.ViewModel.SummaryCategory
             }
         }
 
+        public void AddPTSummary (Summary summary)
+        {
+            if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(SummaryCategoryName, summary.Label))
+            {
+                PTSummaries.Add(summary);
+            }
+        }
+
         public String SummaryCategoryName { get; }
 
         public List<Summary> EventSummaries { get; }
 
         public List<Summary> DoctorSummaries { get; }
+
+        public List<Summary> PTSummaries { get; }
     }
 
 }

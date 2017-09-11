@@ -200,6 +200,16 @@ CREATE TABLE [dbo].[PreRegistration](
 	[PreferedTime] [nvarchar](max) NOT NULL,
 	[Address] [nvarchar](max) NOT NULL,
 	[Gender] [nvarchar](max) NOT NULL,
+	[OPTION1] [nvarchar](max) NOT NULL,
+	[OPTION2] [nvarchar](max) NOT NULL,
+	[OPTION3] [nvarchar](max) NOT NULL,
+	[OPTION4] [nvarchar](max) NOT NULL,
+	[OPTION5] [nvarchar](max) NOT NULL,
+	[OPTION6] [nvarchar](max) NOT NULL,
+	[OPTION7] [nvarchar](max) NOT NULL,
+	[OPTION8] [nvarchar](max) NOT NULL,
+	[OPTION9] [nvarchar](max) NOT NULL,
+	[OPTION10] [nvarchar](max) NOT NULL,
 	[CreatedDateTime] [datetime2](7) NOT NULL,
  CONSTRAINT [PK_PreRegistration] PRIMARY KEY CLUSTERED 
 (
