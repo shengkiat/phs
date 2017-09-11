@@ -24,6 +24,7 @@ namespace PHS.Common
         public const string Internal_Form_Type_MegaSortingStation = "MEG";
         public const string Internal_Form_Type_EventSummary = "ESY";
         public const string Internal_Form_Type_DoctorySummary = "DSY";
+        public const string Internal_Form_Type_Cog2Summary = "COG2";
         public const string Internal_Form_Type_PTSummary = "SUM_PT";
         public const string Internal_Form_Type_AllSummary = "SUM";
 
@@ -179,7 +180,7 @@ namespace PHS.Common
         public const string Summary_Type_All = "SUM";
         public const string Summary_Type_PT = "SUM_PT";
 
-        public const string Summary_Type_Cog2nd = "COG2ND";
+        public const string Summary_Type_Cog2 = "COG2";
         public const string Summary_Type_PTConsult = "PTCONSULT";
         public const string Summary_Type_OTConsult = "OTCONSULT";
         public const string Summary_Type_Exhibition = "EXHIBITION";

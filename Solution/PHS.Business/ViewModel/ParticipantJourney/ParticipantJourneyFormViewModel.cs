@@ -103,7 +103,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 foreach (var summary in Participant.Summaries)
                 {
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
-                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_Cog2nd) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -116,6 +116,33 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             return result;
         }
 
-       
+
+        public List<SummaryCategoryViewModel> GetCog2SummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetCog2SummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Cog2) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.Cog2SummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddCog2Summary(summary);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

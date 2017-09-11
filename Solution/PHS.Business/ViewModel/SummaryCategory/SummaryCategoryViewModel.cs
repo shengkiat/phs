@@ -17,6 +17,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
             EventSummaries = new List<Summary>();
             DoctorSummaries = new List<Summary>();
             PTSummaries = new List<Summary>();
+            Cog2Summaries = new List<Summary>();
         }
 
         public void AddEventSummary(Summary summary)
@@ -43,6 +44,14 @@ namespace PHS.Business.ViewModel.SummaryCategory
             }
         }
 
+        public void AddCog2Summary(Summary summary)
+        {
+            if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.Cog2SummaryLabelMap, SummaryCategoryName, summary.Label))
+            {
+                Cog2Summaries.Add(summary);
+            }
+        }
+
         public String SummaryCategoryName { get; }
 
         public List<Summary> EventSummaries { get; }
@@ -50,6 +59,8 @@ namespace PHS.Business.ViewModel.SummaryCategory
         public List<Summary> DoctorSummaries { get; }
 
         public List<Summary> PTSummaries { get; }
+
+        public List<Summary> Cog2Summaries { get; }
     }
 
 }

@@ -36,6 +36,7 @@ namespace PHS.Business.Helpers
             }}
         };
 
+
         static List<string> DoctorSummaryCategoryNameList = new List<string>()
         {
             Constants.Summary_Category_Label_Name_ReferredFrom,
@@ -51,10 +52,22 @@ namespace PHS.Business.Helpers
             Constants.Summary_Category_Label_Name_PTConsult
         }; 
 
-        static List<string> Cog2ndCategoryNameList = new List<string>()
+        static List<string> Cog2SummaryCategoryNameList = new List<string>()
         {
             Constants.Summary_Category_Label_Name_Cog2nd_AMT,
             Constants.Summary_Category_Label_Name_Cog2nd_EBAS
+        };
+
+        public static Dictionary<string, List<string>> Cog2SummaryLabelMap = new Dictionary<string, List<string>> {
+            { Constants.Summary_Category_Label_Name_Cog2nd_AMT, new List<string> {
+                Constants.Summary_Field_Name_Cog2nd_AMT_Ref,
+                Constants.Summary_Field_Name_Cog2nd_AMT_TotalScore
+            }},
+            { Constants.Summary_Category_Label_Name_Cog2nd_EBAS, new List<string> {
+                Constants.Summary_Field_Name_Cog2nd_EBAS_Ref,
+                Constants.Summary_Field_Name_Cog2nd_EBAS_TotalScore
+
+            }}
         };
 
         static Dictionary<string, List<String>> PTConsultSummaryLabelMap = new Dictionary<string, List<string>>
@@ -157,6 +170,21 @@ namespace PHS.Business.Helpers
             return Result;
         }
 
+        public static bool IsFieldNameAndCategoryFoundInSummaryMap(Dictionary<string, List<string>> summaryLabelMap, String summaryCategory, String fieldName)
+        {
+            bool Result = false;
+            if (summaryLabelMap.ContainsKey(summaryCategory))
+            {
+                List<string> SummaryFieldNameList = summaryLabelMap[summaryCategory];
+                if (SummaryFieldNameList.Contains(fieldName))
+                {
+                    Result = true;
+                }
+            }
+
+            return Result;
+        }
+
         public static List<string> GetEventSummaryCategoryNameList()
         {
             return EventSummaryCategoryNameList;
@@ -170,6 +198,11 @@ namespace PHS.Business.Helpers
         public static List<String> GetPTSummaryCatgoryNameList()
         {
             return PTSummaryCategoryNameList; 
+        }
+
+        public static List<String> GetCog2SummaryCategoryNameList()
+        {
+            return Cog2SummaryCategoryNameList;
         }
     }
 }
