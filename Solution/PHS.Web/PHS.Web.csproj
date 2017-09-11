@@ -577,6 +577,10 @@
     <Content Include="Views\Form\_form-field-textboxnumber-partial.cshtml" />
     <Content Include="Views\Form\_form-field-textboxnumber-template.cshtml" />
     <Content Include="Views\ParticipantJourney\_Cog2SummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_PTConsultSummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_OTConsultSummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_ExhibitionSummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_SocialSuportSummaryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

@@ -222,18 +222,51 @@ declare @FormDocSum as int
 select @FormDocSum = IDENT_CURRENT('phs.dbo.Form')
 
 INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
-VALUES ('PT Summary Form', null, 0, null, 'SUM_PT', GETDATE(), 1)
+VALUES ('Cognitive 2nd Tier Summary Form', null, 0, null, 'COG2', GETDATE(), 1)
+declare @FormCog2Sum as int
+select @FormCog2Sum = IDENT_CURRENT('phs.dbo.Form')
+
+INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
+VALUES (@FormCog2Sum, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
+
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Summary for PT Consult', null, 0, null, 'PTSUM', GETDATE(), 1)
 declare @FormPTSum as int
 select @FormPTSum = IDENT_CURRENT('phs.dbo.Form')
 
 INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
 VALUES (@FormPTSum, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
 
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Summary for OT Consult', null, 0, null, 'OTSUM', GETDATE(), 1)
+declare @FormOTSum as int
+select @FormOTSum = IDENT_CURRENT('phs.dbo.Form')
+
+INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
+VALUES (@FormOTSum, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
+
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Exhibition Summary', null, 0, null, 'EXHIBITION', GETDATE(), 1)
+declare @FormExhibition as int
+select @FormExhibition = IDENT_CURRENT('phs.dbo.Form')
+
+INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
+VALUES (@FormExhibition, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
+
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('Social Support', null, 0, null, 'SOCIALSUP', GETDATE(), 1)
+declare @FormSocialSup as int
+select @FormSocialSup = IDENT_CURRENT('phs.dbo.Form')
+
+INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
+VALUES (@FormSocialSup, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
 
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormSum)
-
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])
-     VALUES (@ModDoc, @FormPTSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormPTSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormOTSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormCog2Sum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormExhibition)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormSocialSup)
 
 --INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormDocSum)
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 

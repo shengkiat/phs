@@ -81,18 +81,12 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             return result;
         }
 
-        // being used for PT Summary
+
         public List<SummaryCategoryViewModel> GetDoctorSummaryCategories()
         {
             List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
 
             foreach (var summaryCategoryName in SummaryHelper.GetDoctorSummaryCategoryNameList())
-            {
-                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
-                result.Add(sumCategoryViewMode);
-            }
-
-            foreach (var summaryCategoryName in SummaryHelper.GetPTSummaryCatgoryNameList())
             {
                 SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
                 result.Add(sumCategoryViewMode);
@@ -105,7 +99,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
                         && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
-                        if (SummaryHelper.IsFieldNameAndCategoryFoundInDoctorSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.DoctorSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
                             sumCategoryViewModel.AddDoctorSummary(summary);
                         }
@@ -142,6 +136,116 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 }
             }
 
+            return result;
+        }
+
+        public List<SummaryCategoryViewModel> GetPTSummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetPTSummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_PTSummary) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.PTConsultSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddPTSummary(summary);
+                        }
+                    }
+                }
+            }
+
+
+            return result;
+        }
+
+        public List<SummaryCategoryViewModel> GetOTSummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetOTSummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_OTSummary) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.OTConsultSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddOTSummary(summary);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<SummaryCategoryViewModel> GetExhibitionSummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetExhibitionSummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Exhibition) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.ExhibitionSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddExhibitionSummary(summary);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<SummaryCategoryViewModel> GetSocialSuppSummaryCategories()
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            foreach (var summaryCategoryName in SummaryHelper.GetSocialSuppSummaryCategoryNameList())
+            {
+                SummaryCategoryViewModel sumCategoryViewMode = new SummaryCategoryViewModel(summaryCategoryName);
+                result.Add(sumCategoryViewMode);
+            }
+
+            foreach (var sumCategoryViewModel in result)
+            {
+                foreach (var summary in Participant.Summaries)
+                {
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_SocialSup) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
+                    {
+                        if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.SocialSupportSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        {
+                            sumCategoryViewModel.AddSocialSuppSummary(summary);
+                        }
+                    }
+                }
+            }
             return result;
         }
     }

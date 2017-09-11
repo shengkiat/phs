@@ -240,16 +240,40 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_DoctorSummaryPartial.cshtml", pjfvm);
                     }
 
-                    if (Internal_Form_Type_PTSummary.Equals(result.InternalFormType))
-                    {
-                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
-                        return PartialView("~/Views/ParticipantJourney/_PTSummaryPartial.cshtml", pjfvm);
-                    }
+                    //if (Internal_Form_Type_PTSummary.Equals(result.InternalFormType))
+                    //{
+                    //    ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                    //    return PartialView("~/Views/ParticipantJourney/_PTSummaryPartial.cshtml", pjfvm);
+                    //}
 
                     if (Internal_Form_Type_Cog2Summary.Equals(result.InternalFormType))
                     {
                         ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
                         return PartialView("~/Views/ParticipantJourney/_Cog2SummaryPartial.cshtml", pjfvm);
+                    }
+
+                    if (Internal_Form_Type_PTSummary.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_PTConsultSummaryPartial.cshtml", pjfvm);
+                    }
+
+                    if (Internal_Form_Type_OTSummary.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_OTConsultSummaryPartial.cshtml", pjfvm);
+                    }
+
+                    if (Internal_Form_Type_Exhibition.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_ExhibitionSummaryPartial.cshtml", pjfvm);
+                    }
+
+                    if (Internal_Form_Type_SocialSupSummary.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_SocialSuportSummaryPartial.cshtml", pjfvm);
                     }
 
                     return View("_FillInPartial", result);

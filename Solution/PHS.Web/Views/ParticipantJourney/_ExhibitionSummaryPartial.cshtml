@@ -6,7 +6,7 @@
 @using GridMvc.Html
 
 @{
-    ViewBag.Title = "_Cog2SummaryPartial";
+    ViewBag.Title = "_ExhibitionSummaryPartial";
 }
 
 <style>
@@ -24,13 +24,13 @@
         <div class="panel-group">
             @if (Model != null)
             {
-                foreach (var summaryCategory in Model.GetCog2SummaryCategories())
+                foreach (var summaryCategory in Model.GetExhibitionSummaryCategories())
                 {
                     <div class="panel panel-default">
                         <div class="panel-heading">@summaryCategory.SummaryCategoryName</div>
                         <div class="panel-body">
                             <ul class="vertical-list">
-                                @foreach (var summary in summaryCategory.Cog2Summaries)
+                                @foreach (var summary in summaryCategory.ExhibitionSummaries)
                                 {
                                     <li style="margin-bottom: 1em;">
                                         <b>@summary.SummaryLabel</b><br />
