@@ -100,15 +100,15 @@
                 @{
                     int counter = 1;
                     bool sectionCollapse = false;
-
+         
                     <div data-accordion-group>
 
                         @foreach (var field in Model.Fields)
                         {
                             if (Model.IsQuestion)
                             {
-                                <li>
-                                    <label class="dynamic">@String.Format("Q{0}", counter)</label>
+                    <li>
+                    <label class="dynamic">@String.Format("Q{0}", counter)</label>
                                 </li>
                             }
 
@@ -120,13 +120,13 @@
                                 }
                                 sectionCollapse = true;
                                 @Html.Raw("<div class=\"accordion\" data-accordion>");
-                                <div data-control>@field.Label</div>
+                    <div data-control>@field.Label</div>
                             }
 
                             else if (sectionCollapse)
                             {
-                                <div data-content>
-                                    <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                    <div data-content>
+                    <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
                                         @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
                                     </li>
                                 </div>
@@ -135,7 +135,7 @@
 
                             else
                             {
-                                <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()">
+                    <li id="drop-item-@field.DomId" class="drop-item ui-droppable" data-dom-id="@field.DomId" data-control-type="@field.FieldType.ToString().ToLower()" >
                                     @Html.Partial("~/Views/Form/_form-field-{0}-partial.cshtml".FormatWith(field.FieldType.ToString().ToLower()), field)
                                 </li>
                             }
@@ -151,6 +151,7 @@
                         }
 
                     </div>
+         
                 }
             </ul>
 

@@ -110,7 +110,10 @@ update DataCollection set [Type ] = 'SIGNATURE' where [Type ] = 'Signature'
 
 update DataCollection set [Type ] = 'RADIOBUTTON' where [Type ] in ('DROPDOWNLIST')
 
-
+update DataCollection set [Type ] = 'HEADER' where [Type ] = 'Big Label'
+update DataCollection set [Type ] = 'HEADERSUB' where [Type ] = 'Small Label'
+update DataCollection set [Type ] = 'IMAGE' where [Type ] = 'Image'
+update DataCollection set [Type ] = 'TEXTAREA' where [Type ] = 'Text Area'
 
 declare @modality varchar(100)
 declare @form varchar(100)
@@ -162,7 +165,7 @@ begin
 			
 INSERT into phs.[dbo].[TemplateField] ([Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge],[MaximumAge],[HelpText],[DateAdded],[MaxFilesizeInKb],[ValidFileExtensions],[MinFilesizeInKb],[ImageBase64],[MatrixRow],[MatrixColumn],[PreRegistrationFieldName],[RegistrationFieldName],[SummaryFieldName],[AddOthersOption],SummaryType) 
 select [Label Text], [Label Text], [Type],Mandatory, 50, '','','','','option1',0,20,20,
-case when [value 1] is null then '' else [value 1] end +
+substring(case when [value 1] is null then '' else [value 1] end +
 case when [value 2] is null then '' else ',' + [value 2] end +  
 case when [value 3] is null then '' else ',' + [value 3] end +
 case when [value 4] is null then '' else ',' + [value 4] end +
@@ -172,7 +175,7 @@ case when [value 7] is null then '' else ',' + [value 7] end +
 case when [value 8] is null then '' else ',' + [value 8] end +
 case when [value 9] is null then '' else ',' + [value 9] end +
 case when [value 10] is null then '' else ',' + [value 10] end +
-case when [value 11] is null then '' else ',' + [value 11] end,
+case when [value 11] is null then '' else ',' + [value 11] end, 0 , 1999),
 '', ROW_NUMBER() over (order by id),ROW_NUMBER() over (order by id),18,100,'',getdate(),5000, '.jpg,.png,.gif,.pdf,.bmp,.zip', 10, '', '', '', PreRegistrationFieldName, RegistrationFieldName, [Summary Field], [AddOthersOption], SummaryType  from #temp1
 
 
@@ -204,7 +207,7 @@ end
 close modalityList
 deallocate modalityList 
 
-update phs.dbo.Form set InternalFormType = 'REG' where Title = '1. Registration Form' 
+update phs.dbo.Form set InternalFormType = 'REG' where Title = 'Registration Form' 
 update phs.dbo.Form set PublicFormType = 'PRE-REGISTRATION', IsPublic = 1, Slug = 'phs2017' where DateAdded > (GETDATE() - 1) and title = 'Pre-Registration Form'
 
 INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
@@ -217,8 +220,24 @@ VALUES ('Doctor Summary Form', null, 0, null, 'DSY', GETDATE(), 1)
 declare @FormDocSum as int
 select @FormDocSum = IDENT_CURRENT('phs.dbo.Form')
 
+INSERT INTO phs.[dbo].[Form] ([Title],[Slug],[IsPublic],[PublicFormType],[InternalFormType],[DateAdded],[IsActive])
+VALUES ('PT Summary Form', null, 0, null, 'SUM_PT', GETDATE(), 1)
+declare @FormPTSum as int
+select @FormPTSum = IDENT_CURRENT('phs.dbo.Form')
+
+INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
+VALUES (@FormPTSum, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
+
+
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormSum)
+
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])
-     VALUES (@ModSummary, @FormSum)
+     VALUES (@ModDoc, @FormPTSum)
 
 --INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormDocSum)
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 
+
+use phs
+ALTER TABLE [dbo].[TemplateTemplateField]  WITH CHECK ADD  CONSTRAINT [FK template_fields_template_template_fields] FOREIGN KEY([TemplateFieldId])
+REFERENCES [dbo].[TemplateField] ([TemplateFieldID])
+ON DELETE CASCADE

@@ -572,6 +572,7 @@
     <Content Include="Views\Form\_form-field-headersub-partial.cshtml" />
     <Content Include="Views\Form\_form-field-headersub-template.cshtml" />
     <Content Include="Views\ParticipantJourney\_DoctorSummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_PTSummaryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
