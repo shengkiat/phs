@@ -92,10 +92,9 @@ namespace PHS.Business.Common
             return Regex.IsMatch(plainPassword, regexPattern);
         }
 
-        public static string GeneratePassword()
+        public static string Generate()
         {
-            string password = Membership.GeneratePassword(12, 2);
-            return password;
+            return Membership.GeneratePassword(12, 2);
         }
     }
 }

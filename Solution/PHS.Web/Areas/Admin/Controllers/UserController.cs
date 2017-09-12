@@ -104,7 +104,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var userManager = new UserManager())
             {
-                string tempPassword = PasswordManager.GeneratePassword();
+                string tempPassword = PasswordManager.Generate();
                 user.Password = tempPassword;
 
                 var newUserCreated = userManager.AddUser(GetLoginUser(), user, out message);
@@ -275,7 +275,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            string tempPW = PasswordManager.GeneratePassword();
+            string tempPW = PasswordManager.Generate();
 
             using (var userManager = new UserManager())
             {
