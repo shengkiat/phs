@@ -1,7 +1,4 @@
-﻿
-
-
-use [phs]
+﻿use [phs]
 
 declare @eventID as int 
 select @eventID = PHSEventID from PHSEvent where Title like '%2017%'
@@ -51,7 +48,7 @@ declare @ModDoc as int
 select @ModDoc = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'Oral Health', 7, N'../../../Content/images/PHS2017/08_Oral.png', 0, 0, 0, 0, N'Pending', '≥ 40 years old', 0)
+VALUES (N'Oral Health', 7, N'../../../Content/images/PHS2017/08_Oral.png', 0, 0, 0, 0, N'Pending', '>= 40 years old', 0)
 declare @ModOral as int
 select @ModOral = IDENT_CURRENT('phs.dbo.Modality')
 
@@ -115,6 +112,11 @@ update DataCollection set [Type ] = 'TEXTAREA' where [Type ] = 'Text Area'
 
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADER'
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADERSUB'
+
+update DataCollection set [Label Text] = '4. Illnesses: For 11 illnesses, participants are asked, “Did a doctor ever tell you that you have [illness]?” 
+The illnesses include hypertension, diabetes, cancer (other than a minor skin cancer), chronic lung disease, heart attack, congestive heart failure, angina, asthma, arthritis, stroke, and kidney disease.
+The total illnesses (0–11) are recorded as 
+0–4 = 0 and 5–11 = 1.' where id = 184
 
 declare @modality varchar(100)
 declare @form varchar(100)
@@ -261,12 +263,12 @@ select @FormSocialSup = IDENT_CURRENT('phs.dbo.Form')
 INSERT phs.[dbo].[Template] ([FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) 
 VALUES (@FormSocialSup, N'DRAFT', N'Thank you for signing up', getdate(), NULL, NULL, 1, NULL, 0, 1)
 
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormSum)
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormPTSum)
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormOTSum)
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormCog2Sum)
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormExhibition)
-INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModDoc, @FormSocialSup)
+-- INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormPTSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModSummary, @FormOTSum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModSummary, @FormCog2Sum)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModExhibit, @FormExhibition)
+INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModSummary, @FormSocialSup)
 
 --INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormDocSum)
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 
@@ -275,3 +277,6 @@ use phs
 ALTER TABLE [dbo].[TemplateTemplateField]  WITH CHECK ADD  CONSTRAINT [FK template_fields_template_template_fields] FOREIGN KEY([TemplateFieldId])
 REFERENCES [dbo].[TemplateField] ([TemplateFieldID])
 ON DELETE CASCADE
+
+update TemplateField set label = REPLACE(label, char(10),'<br/>') where label LIKE '%' + CHAR(10) + '%' OR label LIKE '%' + CHAR(13) + '%'
+update TemplateField set text = REPLACE(text, char(10),'<br/>') where text LIKE '%' + CHAR(10) + '%' OR text LIKE '%' + CHAR(13) + '%'

@@ -43,13 +43,13 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public bool isSummarySelected()
         {
             bool result = false;
-            foreach (var modality in Event.Modalities)
-            {
-                if (modality.ModalityID.Equals(SelectedModalityId))
-                {
-                    result = modality.Name.Equals("Summary");
-                }
-            }
+            //foreach (var modality in Event.Modalities)
+            //{
+            //    if (modality.ModalityID.Equals(SelectedModalityId))
+            //    {
+            //        result = modality.Name.Equals("Summary");
+            //    }
+            //}
             return result;
         }
 
