@@ -246,12 +246,19 @@ namespace PHS.Web.Controllers
 
         public ActionResult GetAddressByZipCode(string zipcode)
         {
-            int postalCode = 0;
+            //int postalCode = 0;
 
-            if (!Int32.TryParse(zipcode, out postalCode))
+           /* if (!Int32.TryParse(zipcode, out postalCode))
             {
                 // not int
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Error = "Invalid" });
+            }
+            */
+
+            if (string.IsNullOrEmpty(zipcode))
+            {
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
                 return Json(new { Error = "Invalid" });
             }
 
@@ -261,7 +268,7 @@ namespace PHS.Web.Controllers
 
                 if (address == null)
                 {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    Response.StatusCode = (int)HttpStatusCode.NotFound;
                     return Json(new { Error = "Invalid" });
                 }
 
