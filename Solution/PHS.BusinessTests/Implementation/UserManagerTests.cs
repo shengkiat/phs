@@ -81,13 +81,13 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(loginUser);
             Assert.IsTrue(loginUser.UsingTempPW);
 
-            string newPassword = "Aabbccdd@1122";
+            string newStuff = "Aabbccdd@1122";
 
-            bool changeResult = _target.ChangePassword(loginUser, stuff, newPassword, newPassword, out message);
+            bool changeResult = _target.ChangePassword(loginUser, stuff, newStuff, newStuff, out message);
             Assert.IsTrue(changeResult);
             Assert.AreEqual(string.Empty, message);
 
-            loginUser = _target.IsAuthenticated(username, newPassword, out message);
+            loginUser = _target.IsAuthenticated(username, newStuff, out message);
             Assert.IsNotNull(loginUser);
             Assert.IsFalse(loginUser.UsingTempPW);
         }
