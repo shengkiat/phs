@@ -11,7 +11,6 @@ namespace PHS.DB
     {
         public class EventMetadata
         {
-
             public int PHSEventID { get; set; }
 
             [Required(ErrorMessage = "Please enter the title for the event")]
