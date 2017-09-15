@@ -99,29 +99,6 @@ namespace PHS.Business.Implementation
                     }
                 }
 
-                // Comment out original
-
-                //foreach (var field in form.GroupedEntries.FirstOrDefault())
-                //{
-                //    if (field.FieldType != Constants.FieldType.HEADER)
-                //    {
-                //        var colName = field.FieldLabel;
-                //        if (columnNames.Any(cn => cn.IsTheSameAs(colName)))
-                //        {
-                //            int colNumber = 1;
-                //            do
-                //            {
-                //                colName = string.Format("{0} ({1})", colName, colNumber);
-                //                colNumber++;
-
-                //            } while (columnNames.Any(cn => cn.IsTheSameAs(colName)));
-                //        }
-                //        columnNames.Add(colName);
-                //        dt.Columns.Add(new DataColumn(colName));
-                //    }
-                //    columnCount++;
-                //}
-
                 dt.Columns.Add(new DataColumn("Submitted On"));
 
                 foreach (var group in template.GroupedEntries)
