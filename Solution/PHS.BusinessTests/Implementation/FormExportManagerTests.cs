@@ -28,11 +28,11 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void CreateFormEntriesDataTableTest()
+        public void CreateFormEntriesDataTableTest_BirthdayPicker()
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, "enter your birthday", out template, out templateViewModel);
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
@@ -57,10 +57,16 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-
-
             DataTable result = _target.CreateFormEntriesDataTable(model);
             Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Columns.Count);
+            DataColumn column = result.Columns[0];
+            Assert.AreEqual("enter your birthday", column.ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            DataRow row = result.Rows[0];
+            Assert.AreEqual("18 Jul 2017", row["enter your birthday"]);
         }
 
         [TestInitialize]
@@ -102,12 +108,12 @@ namespace PHS.Business.Implementation.Tests
 
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
-            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), "Click to edit test", out fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
 
-        private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, out Template template, out TemplateViewModel templateViewModel)
+        private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, string label, out Template template, out TemplateViewModel templateViewModel)
         {
 
             template = _formManager.CreateNewFormAndTemplate(formViewModel);
@@ -117,12 +123,12 @@ namespace PHS.Business.Implementation.Tests
 
             FormCollection fieldCollection;
             IDictionary<string, string> fields;
-            CeateFieldForm(1, fieldType.ToString(), out fieldCollection, out fields);
+            CeateFieldForm(1, fieldType.ToString(), label, out fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
 
-        private FormCollection CeateFieldForm(int id, string fieldType, out FormCollection fieldCollection, out IDictionary<string, string> fields)
+        private FormCollection CeateFieldForm(int id, string fieldType, string label, out FormCollection fieldCollection, out IDictionary<string, string> fields)
         {
             fieldCollection = new FormCollection();
 
@@ -134,7 +140,7 @@ namespace PHS.Business.Implementation.Tests
             fieldCollection.Add("Fields[1].MinimumAge", "18");
             fieldCollection.Add("Fields[1].MaximumAge", "100");
             fieldCollection.Add("Fields[1].Text", "");
-            fieldCollection.Add("Fields[1].Label", "Click to edit");
+            fieldCollection.Add("Fields[1].Label", label);
             fieldCollection.Add("Fields[1].HoverText", "");
             fieldCollection.Add("Fields[1].SubLabel", "");
             fieldCollection.Add("Fields[1].HelpText", "");

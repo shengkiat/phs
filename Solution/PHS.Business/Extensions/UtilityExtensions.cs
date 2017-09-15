@@ -288,7 +288,7 @@ namespace PHS.Business.Extensions
                     DateTime dateVal;
                     if (!string.IsNullOrEmpty(value.Value) && DateTime.TryParse(value.Value, out dateVal))
                     {
-                        return dateVal.ToString("dddd, MMMM dd, yyyy");
+                        return dateVal.ToString("dd MMM yyyy");
                     }
                     return value.Value.ToString("--");
                 case Constants.TemplateFieldType.ADDRESS:
