@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PHS.Business.Implementation
@@ -83,7 +84,7 @@ namespace PHS.Business.Implementation
                     }
                     else
                     {
-                        var colName = field.Label;
+                        var colName = StripHTML(field.Label);
 
                         if (dt.Columns.Contains(colName))
                         {
@@ -170,6 +171,11 @@ namespace PHS.Business.Implementation
             dv.Sort = GenerateSorting(sortFields);
 
             return dv.ToTable();
+        }
+
+        private string StripHTML(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
 
         private string GenerateSorting(List<SortFieldViewModel> sortFields)

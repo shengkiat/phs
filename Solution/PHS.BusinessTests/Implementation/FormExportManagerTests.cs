@@ -112,6 +112,46 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("28.72", result.Rows[0]["BMI"]);
         }
 
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_RemoveWYSIWYG()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "<p>hello</p><p>this is for <b>testing </b>mah</p>", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Columns.Count);
+            DataColumn column = result.Columns[0];
+            Assert.AreEqual("hellothis is for testing mah", column.ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            DataRow row = result.Rows[0];
+            Assert.AreEqual("HelloTest", row["hellothis is for testing mah"]);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
