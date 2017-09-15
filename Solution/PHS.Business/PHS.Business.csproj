@@ -137,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Event\ModalityEventViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityFormViewModel.cs" />
+    <Compile Include="ViewModel\FormExport\FormExportViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyFormViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyModalityCircleViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />

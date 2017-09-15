@@ -54,8 +54,6 @@ namespace PHS.DB.ViewModels.Form
                
             }
         }
-        public List<SortFieldViewModel> SortFields { get; set; }
-        public List<CriteriaFieldViewModel> CriteriaFields { get; set; }
 
         public bool HasTheme
         {
@@ -82,9 +80,7 @@ namespace PHS.DB.ViewModels.Form
                 NotificationEmail = "",
                 IsPublic = false,
                 IsQuestion = false,
-                Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
-                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
-                CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
+                Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList()
             };
 
             return templateView;
@@ -137,9 +133,7 @@ namespace PHS.DB.ViewModels.Form
                 IsPublic = template1.Form.IsPublic,
                 InternalFormType = template1.Form.InternalFormType,
                 Slug = template1.Form.Slug,
-                PublicFormType = template1.Form.PublicFormType,
-                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
-                CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
+                PublicFormType = template1.Form.PublicFormType
             };
 
             return templateView;
@@ -156,9 +150,7 @@ namespace PHS.DB.ViewModels.Form
                 Fields = Enumerable.Empty<TemplateFieldViewModel>().ToList(),
                 IsPublic = false,
                 IsQuestion = false,
-                NotificationEmail = "",
-                SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
-                CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList()
+                NotificationEmail = ""
             };
 
             return templateView;

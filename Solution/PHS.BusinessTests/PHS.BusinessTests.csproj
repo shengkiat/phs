@@ -76,6 +76,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Implementation\FormExportManagerTests.cs" />
     <Compile Include="Implementation\FormManagerTests.cs" />
     <Compile Include="Implementation\ParticipantJourneyManagerTests.cs" />
     <Compile Include="Implementation\PastParticipantJourneyManagerTests.cs" />

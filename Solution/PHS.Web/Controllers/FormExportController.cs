@@ -2,6 +2,7 @@
 using PHS.Business.Common;
 using PHS.Business.Extensions;
 using PHS.Business.Implementation;
+using PHS.Business.ViewModel.FormExport;
 using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
@@ -43,15 +44,15 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, TemplateViewModel model, FormCollection collection)
+        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormExportViewModel model, FormCollection collection)
         {
             //Console.Write(submitButton);
 
             switch (submitButton)
             {
-                case "Delete Selected":
+                //case "Delete Selected":
                     // delegate sending to another controller action
-                    return DeleteEntries(selectedEntries, model);
+                    //return DeleteEntries(selectedEntries, model);
                 case "Export to Excel":
                     // call another action to perform the cancellation
                     return ExportToExcel(model, collection);
@@ -62,6 +63,7 @@ namespace PHS.Web.Controllers
             }
         }
 
+        /*
         [HttpPost]
         public ActionResult DeleteEntries(IEnumerable<string> selectedEntries, TemplateViewModel model)
         {
@@ -91,6 +93,7 @@ namespace PHS.Web.Controllers
             return RedirectToRoute("form-entries", new { templateid = model.TemplateID.Value });
 
         }
+        */
 
         public ActionResult ViewEntries(int templateId)
         {
@@ -194,9 +197,9 @@ namespace PHS.Web.Controllers
             return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
 
-        public ActionResult ExportToExcel(TemplateViewModel model, FormCollection collection)
+        public ActionResult ExportToExcel(FormExportViewModel model, FormCollection collection)
         {
-            int formId = model.TemplateID.Value;
+            int formId = model.FormID.Value;
 
             using (var formExportManager = new FormExportManager())
             {

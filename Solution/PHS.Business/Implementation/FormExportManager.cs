@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Extensions;
 using PHS.Business.Interface;
+using PHS.Business.ViewModel.FormExport;
 using PHS.Common;
 using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
@@ -19,171 +20,177 @@ namespace PHS.Business.Implementation
             return new FormExportManager();
         }
 
-        public DataTable CreateFormEntriesDataTable(TemplateViewModel model)
+        public DataTable CreateFormEntriesDataTable(FormExportViewModel model)
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
-                var template = FindTemplate(model.TemplateID.Value);
-                // var form = this._formRepo.GetForm(formId);
-                var templateView = TemplateViewModel.CreateFromObject(template);
+                var form = unitOfWork.FormRepository.GetForm(model.FormID.Value);
 
-                // formView.Entries = formManager.HasSubmissions(formView).ToList();
-                templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
+                IList<TemplateViewModel> templateViews = new List<TemplateViewModel>();
 
-                templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
+                foreach(var template in form.Templates)
+                {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+                    templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
 
-                return CreateFormEntriesDataTable(templateView, model.SortFields, model.CriteriaFields);
+                    templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
+
+                    templateViews.Add(templateView);
+                }
+                
+                return CreateFormEntriesDataTable(model.Title, templateViews, model.SortFields, model.CriteriaFields);
             }
         }
 
-        private DataTable CreateFormEntriesDataTable(TemplateViewModel template, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
+        private DataTable CreateFormEntriesDataTable(string title, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
-            var dt = new DataTable(template.Title);
-            List<string> columnNames = new List<string>();
+            var dt = new DataTable(title);
+            HashSet<string> columnNames = new HashSet<string>();
             int columnCount = 0;
 
-            //TODO - Format Export Forms Data for BMI and Address
-            foreach (var field in template.Fields)
+            foreach(var template in templateViews)
             {
-
-                if (field.FieldType == Constants.TemplateFieldType.MATRIX)
+                //TODO - Format Export Forms Data for BMI and Address
+                foreach (var field in template.Fields)
                 {
-                    string[] rows = field.MatrixRow.Split(",");
-                    foreach (string row in rows)
+
+                    if (field.FieldType == Constants.TemplateFieldType.MATRIX)
                     {
-                        dt.Columns.Add(new DataColumn(row));
+                        string[] rows = field.MatrixRow.Split(",");
+                        foreach (string row in rows)
+                        {
+                            dt.Columns.Add(new DataColumn(row));
+
+                            columnCount++;
+                        }
+                    }
+                    else if (field.FieldType == Constants.TemplateFieldType.ADDRESS)
+                    {
+                        dt.Columns.Add(new DataColumn("Blk"));
+                        dt.Columns.Add(new DataColumn("Unit"));
+                        dt.Columns.Add(new DataColumn("Street Address"));
+                        dt.Columns.Add(new DataColumn("ZipCode"));
+
+                        columnCount += 4;
+
+                    }
+                    else if (field.FieldType == Constants.TemplateFieldType.BMI)
+                    {
+                        dt.Columns.Add(new DataColumn("Weight"));
+                        dt.Columns.Add(new DataColumn("Height"));
+                        dt.Columns.Add(new DataColumn("BMI"));
+
+                        columnCount += 3;
+                    }
+                    else
+                    {
+                        var colName = field.Label;
+
+                        if (dt.Columns.Contains(colName))
+                        {
+                            dt.Columns.Add(new DataColumn(columnCount + ": " + colName));
+                        }
+                        else
+                        {
+                            dt.Columns.Add(new DataColumn(colName));
+                        }
 
                         columnCount++;
                     }
                 }
-                else if (field.FieldType == Constants.TemplateFieldType.ADDRESS)
+
+                // Comment out original
+
+                //foreach (var field in form.GroupedEntries.FirstOrDefault())
+                //{
+                //    if (field.FieldType != Constants.FieldType.HEADER)
+                //    {
+                //        var colName = field.FieldLabel;
+                //        if (columnNames.Any(cn => cn.IsTheSameAs(colName)))
+                //        {
+                //            int colNumber = 1;
+                //            do
+                //            {
+                //                colName = string.Format("{0} ({1})", colName, colNumber);
+                //                colNumber++;
+
+                //            } while (columnNames.Any(cn => cn.IsTheSameAs(colName)));
+                //        }
+                //        columnNames.Add(colName);
+                //        dt.Columns.Add(new DataColumn(colName));
+                //    }
+                //    columnCount++;
+                //}
+
+                dt.Columns.Add(new DataColumn("Submitted On"));
+
+                foreach (var group in template.GroupedEntries)
                 {
-                    dt.Columns.Add(new DataColumn("Blk"));
-                    dt.Columns.Add(new DataColumn("Unit"));
-                    dt.Columns.Add(new DataColumn("Street Address"));
-                    dt.Columns.Add(new DataColumn("ZipCode"));
+                    DataRow row = dt.NewRow();
+                    var fieldAddedOn = group.FirstOrDefault().DateAdded;
+                    int columnIndex = 0;
 
-                    columnCount += 4;
-
-                }
-                else if (field.FieldType == Constants.TemplateFieldType.BMI)
-                {
-                    dt.Columns.Add(new DataColumn("Weight"));
-                    dt.Columns.Add(new DataColumn("Height"));
-                    dt.Columns.Add(new DataColumn("BMI"));
-
-                    columnCount += 3;
-                }
-                else
-                {
-                    var colName = field.Label;
-
-                    if (dt.Columns.Contains(colName))
+                    foreach (var entry in group)
                     {
-                        dt.Columns.Add(new DataColumn(columnCount + ": " + colName));
-                    }
-                    else
-                    {
-                        dt.Columns.Add(new DataColumn(colName));
-                    }
-
-                    columnCount++;
-                }
-            }
-
-            // Comment out original
-
-            //foreach (var field in form.GroupedEntries.FirstOrDefault())
-            //{
-            //    if (field.FieldType != Constants.FieldType.HEADER)
-            //    {
-            //        var colName = field.FieldLabel;
-            //        if (columnNames.Any(cn => cn.IsTheSameAs(colName)))
-            //        {
-            //            int colNumber = 1;
-            //            do
-            //            {
-            //                colName = string.Format("{0} ({1})", colName, colNumber);
-            //                colNumber++;
-
-            //            } while (columnNames.Any(cn => cn.IsTheSameAs(colName)));
-            //        }
-            //        columnNames.Add(colName);
-            //        dt.Columns.Add(new DataColumn(colName));
-            //    }
-            //    columnCount++;
-            //}
-
-            dt.Columns.Add(new DataColumn("Submitted On"));
-
-            foreach (var group in template.GroupedEntries)
-            {
-                DataRow row = dt.NewRow();
-                var fieldAddedOn = group.FirstOrDefault().DateAdded;
-                int columnIndex = 0;
-
-                foreach (var entry in group)
-                {
-                    // for (columnIndex = 0; columnIndex < columnCount; )
-                    //  {
-                    if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
-                    {
-                        var matrixField = entry.Value;
-
-                        string[] submissions = matrixField.Split(",");
-                        foreach (string submitValue in submissions)
+                        // for (columnIndex = 0; columnIndex < columnCount; )
+                        //  {
+                        if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
                         {
-                            row[columnIndex] = submitValue;
+                            var matrixField = entry.Value;
+
+                            string[] submissions = matrixField.Split(",");
+                            foreach (string submitValue in submissions)
+                            {
+                                row[columnIndex] = submitValue;
+                                columnIndex++;
+                            }
+
+                            columnIndex--;
+                        }
+                        else if (entry.FieldType == Constants.TemplateFieldType.ADDRESS)
+                        {
+                            var addressField = entry.Value;
+
+                            AddressViewModel address = addressField.FromJson<AddressViewModel>();
+
+                            row[columnIndex] = address.Blk;
+                            row[columnIndex + 1] = address.Unit;
+                            row[columnIndex + 2] = address.StreetAddress;
+                            row[columnIndex + 3] = address.ZipCode;
+
+                            columnIndex += 4;
+                        }
+                        else if (entry.FieldType == Constants.TemplateFieldType.BMI)
+                        {
+                            var bmiField = entry.Value;
+
+                            BMIViewModel bmi = bmiField.FromJson<BMIViewModel>();
+
+                            row[columnIndex] = bmi.Weight;
+                            row[columnIndex + 1] = bmi.Height;
+                            row[columnIndex + 2] = bmi.BodyMassIndex;
+
+                            columnIndex += 3;
+                        }
+                        else if (columnIndex < group.Count())
+                        {
+                            var field = group.ElementAt(columnIndex);
+                            row[columnIndex] = field.Format(true);
                             columnIndex++;
                         }
+                        else
+                        {
 
-                        columnIndex--;
+                            row[columnIndex] = entry.Value;
+                            columnIndex++;
+                        }
+                        // }
                     }
-                    else if (entry.FieldType == Constants.TemplateFieldType.ADDRESS)
-                    {
-                        var addressField = entry.Value;
 
-                        AddressViewModel address = addressField.FromJson<AddressViewModel>();
-
-                        row[columnIndex] = address.Blk;
-                        row[columnIndex + 1] = address.Unit;
-                        row[columnIndex + 2] = address.StreetAddress;
-                        row[columnIndex + 3] = address.ZipCode;
-
-                        columnIndex += 4;
-                    }
-                    else if (entry.FieldType == Constants.TemplateFieldType.BMI)
-                    {
-                        var bmiField = entry.Value;
-
-                        BMIViewModel bmi = bmiField.FromJson<BMIViewModel>();
-
-                        row[columnIndex] = bmi.Weight;
-                        row[columnIndex + 1] = bmi.Height;
-                        row[columnIndex + 2] = bmi.BodyMassIndex;
-
-                        columnIndex += 3;
-                    }
-                    else if (columnIndex < group.Count())
-                    {
-                        var field = group.ElementAt(columnIndex);
-                        row[columnIndex] = field.Format(true);
-                        columnIndex++;
-                    }
-                    else
-                    {
-
-                        row[columnIndex] = entry.Value;
-                        columnIndex++;
-                    }
-                    // }
+                    row[columnIndex] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
+                    dt.Rows.Add(row);
                 }
-
-                row[columnIndex] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
-                dt.Rows.Add(row);
             }
-
-
 
             DataView dv = new DataView(dt);
             dv.RowFilter = GenerateFlitering(criteriaFields);
