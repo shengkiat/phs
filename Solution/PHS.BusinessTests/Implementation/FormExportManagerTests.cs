@@ -69,6 +69,49 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("18 Jul 2017", row["enter your birthday"]);
         }
 
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_Bmi()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BMI, "bmi entered please", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Weight", "83");
+            submissionCollection.Add("SubmitFields[1].Height", "170");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(4, result.Columns.Count);
+            Assert.AreEqual("Weight", result.Columns[0].ColumnName);
+            Assert.AreEqual("Height", result.Columns[1].ColumnName);
+            Assert.AreEqual("BMI", result.Columns[2].ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("83", result.Rows[0]["Weight"]);
+            Assert.AreEqual("170", result.Rows[0]["Height"]);
+            Assert.AreEqual("28.72", result.Rows[0]["BMI"]);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
