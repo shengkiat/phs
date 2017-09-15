@@ -50,7 +50,6 @@ namespace PHS.Business.Implementation
 
             foreach(var template in templateViews)
             {
-                //TODO - Format Export Forms Data for BMI and Address
                 foreach (var field in template.Fields)
                 {
 
@@ -109,8 +108,6 @@ namespace PHS.Business.Implementation
 
                     foreach (var entry in group)
                     {
-                        // for (columnIndex = 0; columnIndex < columnCount; )
-                        //  {
                         if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
                         {
                             var matrixField = entry.Value;
@@ -161,7 +158,6 @@ namespace PHS.Business.Implementation
                             row[columnIndex] = entry.Value;
                             columnIndex++;
                         }
-                        // }
                     }
 
                     row[columnIndex] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
