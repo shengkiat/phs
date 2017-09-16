@@ -190,6 +190,55 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("ZXY HelloTest", row["this is for testing"]);
         }
 
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_Filtering()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
+
+            Dictionary<string, string> criteriaValue = new Dictionary<string, string>();
+            criteriaValue.Add("this is for testing", "ABC");
+
+            CriteriaFieldViewModel criteriaFieldViewModel = new CriteriaFieldViewModel()
+            {
+                FieldLabel = "this is for testing",
+                CriteriaLogic = "contains",
+                CriteriaValue = criteriaValue
+            };
+
+            var criteriaFields = new List<CriteriaFieldViewModel>();
+            criteriaFields.Add(criteriaFieldViewModel);
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1,
+                CriteriaFields = criteriaFields
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Columns.Count);
+            DataColumn column = result.Columns[0];
+            Assert.AreEqual("this is for testing", column.ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            DataRow row = result.Rows[0];
+            Assert.AreEqual("ABC HelloTest", row["this is for testing"]);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
