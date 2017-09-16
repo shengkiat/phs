@@ -85,14 +85,14 @@
                             checkedAttribute = "checked=\"checked\"";
                         }
                         <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @disabledAttribute @checkedAttribute type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
-                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute @checkedAttribute type="text" placeholder="Others" value="@Html.GetSubmittedTextValue(Model)" />
+                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute @checkedAttribute type="text" placeholder="@Model.OthersPlaceHolder" value="@Html.GetSubmittedTextValue(Model)" />
                     </li>
                 }
                 else
                 {
                     <li>
                         <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @disabledAttribute type="checkbox" name="checkbox-@Model.DomId" style="display:none" value="OthersOption" />
-                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" style="display:none" placeholder="Others" />
+                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute type="text" style="display:none" placeholder="@Model.OthersPlaceHolder" />
                     </li>
                 }
             </ul>
