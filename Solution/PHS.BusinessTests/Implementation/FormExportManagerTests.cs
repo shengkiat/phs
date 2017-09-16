@@ -28,6 +28,53 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
+        public void CreateFormEntriesDataTableTest_Address()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.ADDRESS, "Address", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Blk", "777");
+            submissionCollection.Add("SubmitFields[1].Unit", "04-55");
+            submissionCollection.Add("SubmitFields[1].StreetAddress", "NUS ISS");
+            submissionCollection.Add("SubmitFields[1].ZipCode", "123456");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(5, result.Columns.Count);
+            Assert.AreEqual("Blk", result.Columns[0].ColumnName);
+            Assert.AreEqual("Unit", result.Columns[1].ColumnName);
+            Assert.AreEqual("Street Address", result.Columns[2].ColumnName);
+            Assert.AreEqual("ZipCode", result.Columns[3].ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("777", result.Rows[0]["Blk"]);
+            Assert.AreEqual("04-55", result.Rows[0]["Unit"]);
+            Assert.AreEqual("NUS ISS", result.Rows[0]["Street Address"]);
+            Assert.AreEqual("123456", result.Rows[0]["ZipCode"]);
+        }
+
+        [TestMethod()]
         public void CreateFormEntriesDataTableTest_BirthdayPicker()
         {
             Template template;
