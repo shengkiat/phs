@@ -39,7 +39,7 @@
                     var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
 
                     bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
-                    bool checkFirst = string.IsNullOrEmpty(Model.SelectedOption) && !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+                    bool checkFirst = !string.IsNullOrEmpty(Model.SelectedOption) || Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
                     int counter = 0;
                 }
 
