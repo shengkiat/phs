@@ -99,7 +99,7 @@ namespace PHS.DB.ViewModels.Form
                     SelectedOption = field.SelectedOption,
                     AddOthersOption = field.AddOthersOption.Value,
                     OthersOption = field.OthersOption,
-                    OthersPlaceHolder = field.OthersPlaceHolder.Equals("") ? "Others" : field.OthersPlaceHolder,
+                    OthersPlaceHolder = string.IsNullOrEmpty(field.OthersPlaceHolder) ? "Others" : field.OthersPlaceHolder,
                     HelpText = field.HelpText,
                     Validation = field.Validation,
                     Order = field.Order.Value,
