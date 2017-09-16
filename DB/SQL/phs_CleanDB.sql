@@ -818,6 +818,7 @@ INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormTyp
 GO
 INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (9, N'Doctor Summary', NULL, 0, NULL,  N'DSY', CAST(N'2017-04-05 18:47:55.413' AS DateTime), 1)
 GO
+INSERT [phs].[dbo].[Form] ([FormID], [Title], [Slug], [IsPublic], [PublicFormType], [InternalFormType], [DateAdded], [IsActive]) VALUES (11, N'form condition', NULL, 0, NULL, NULL, CAST(0x0000A7F0009274FA AS DateTime), 1)
 SET IDENTITY_INSERT [phs].[dbo].[Form] OFF
 GO
 
@@ -842,6 +843,7 @@ INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Status], [ConfirmationMe
 GO
 INSERT [phs].[dbo].[Template] ([TemplateID], [FormId], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) VALUES (9, 9, N'DRAFT', N'Thank you for signing up', CAST(N'2017-04-05 18:47:55.413' AS DateTime), NULL, NULL, 1, NULL, 0, 1)
 GO
+INSERT [phs].[dbo].[Template] ([TemplateID], [FormID], [Status], [ConfirmationMessage], [DateAdded], [Theme], [NotificationEmail], [IsActive], [EventID], [IsQuestion], [Version]) VALUES (12, 11, N'DRAFT', N'Thank you for signing up', CAST(0x0000A7F000927504 AS DateTime), NULL, NULL, 1, NULL, 0, 1)
 SET IDENTITY_INSERT [phs].[dbo].[Template] OFF
 
 GO
@@ -979,6 +981,10 @@ INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [
 GO
 INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName]) VALUES (155, N'<p>Sex</p>', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'Male,Female', N'', 5, 4, 18, 100, N'', CAST(N'2017-04-05 19:17:29.333' AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'')
 GO
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [SummaryFieldName], [SummaryType], [ConditionTemplateFieldID], [ConditionCriteria], [ConditionOptions], [StandardReferenceID]) VALUES (158, N'Click to edit', N'Click to edit', N'RADIOBUTTON', 0, 50, N'', N'', N'', N'', N'', 0, NULL, 20, 20, N'option1,option2,option3', N'', 1, 0, 18, 100, N'', CAST(0x0000A7F000928860 AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', N'', N'', NULL, N'', N'', NULL)
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [SummaryFieldName], [SummaryType], [ConditionTemplateFieldID], [ConditionCriteria], [ConditionOptions], [StandardReferenceID]) VALUES (159, N'for option 1', N'Click to edit', N'TEXTBOX', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 2, 1, 18, 100, N'', CAST(0x0000A7F0009299EB AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', N'', N'', 158, N'==', N'option1', NULL)
+INSERT [dbo].[TemplateField] ([TemplateFieldID], [Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [AddOthersOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge], [MaximumAge], [HelpText], [DateAdded], [MaxFilesizeInKb], [ValidFileExtensions], [MinFilesizeInKb], [ImageBase64], [MatrixRow], [MatrixColumn], [PreRegistrationFieldName], [RegistrationFieldName], [SummaryFieldName], [SummaryType], [ConditionTemplateFieldID], [ConditionCriteria], [ConditionOptions], [StandardReferenceID]) VALUES (160, N'non option 1', N'Click to edit', N'DROPDOWNLIST', 0, 50, N'', N'', N'', N'', N'option1', 0, NULL, 20, 20, N'option1,option2', N'', 3, 2, 18, 100, N'', CAST(0x0000A7F00093336C AS DateTime), 5000, N'.jpg,.png,.gif,.pdf,.bmp,.zip', 10, N'', N'', N'', N'', N'', N'', N'', 158, N'!=', N'option1', NULL)
+
 SET IDENTITY_INSERT [dbo].[TemplateField] OFF
 GO
 
@@ -1094,6 +1100,9 @@ INSERT [dbo].[TemplateTemplateField] ([TemplateID], [TemplateFieldID]) VALUES (7
 GO
 INSERT [dbo].[TemplateTemplateField] ([TemplateID], [TemplateFieldID]) VALUES (7, 155)
 GO
+INSERT [dbo].[TemplateTemplateField] ([TemplateID], [TemplateFieldID]) VALUES (12, 158)
+INSERT [dbo].[TemplateTemplateField] ([TemplateID], [TemplateFieldID]) VALUES (12, 159)
+INSERT [dbo].[TemplateTemplateField] ([TemplateID], [TemplateFieldID]) VALUES (12, 160)
 SET IDENTITY_INSERT [dbo].[TemplateFieldValue] ON 
 
 GO
