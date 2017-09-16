@@ -5,6 +5,7 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using System.Text;
+using System;
 
 namespace PHS.Business.Extensions
 {
@@ -196,6 +197,11 @@ namespace PHS.Business.Extensions
             }
 
             return elseOutput;
+        }
+
+        public static string StripHTML(this string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
 
         public static string Pluralize(this string singular, int count)

@@ -84,7 +84,7 @@ namespace PHS.Business.Implementation
                     }
                     else
                     {
-                        var colName = StripHTML(field.Label);
+                        var colName = field.Label.StripHTML();
 
                         if (dt.Columns.Contains(colName))
                         {
@@ -171,11 +171,6 @@ namespace PHS.Business.Implementation
             dv.Sort = GenerateSorting(sortFields);
 
             return dv.ToTable();
-        }
-
-        private string StripHTML(string input)
-        {
-            return Regex.Replace(input, "<.*?>", String.Empty);
         }
 
         private string GenerateSorting(List<SortFieldViewModel> sortFields)
