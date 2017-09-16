@@ -169,6 +169,16 @@
           <Property Name="PreferedTime" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION1" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION2" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION3" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION4" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION5" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION6" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION7" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION8" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION9" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OPTION10" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="ReferenceRange">
@@ -240,6 +250,7 @@
           <Property Name="SelectedOption" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AddOthersOption" Type="bit" />
           <Property Name="OthersOption" Type="nvarchar" MaxLength="50" />
+          <Property Name="OthersPlaceHolder" Type="nvarchar" MaxLength="150" />
           <Property Name="Columns" Type="int" />
           <Property Name="Rows" Type="int" />
           <Property Name="Options" Type="nvarchar" MaxLength="2000" />
@@ -880,6 +891,16 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="OPTION1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION3" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION4" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION5" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION6" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION7" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION8" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION9" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION10" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReferenceRange">
           <Key>
@@ -990,6 +1011,7 @@
           <NavigationProperty Name="TemplateField2" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField1" ToRole="TemplateField" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
+          <Property Name="OthersPlaceHolder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -1321,6 +1343,16 @@
           <EntitySetMapping Name="PreRegistrations">
             <EntityTypeMapping TypeName="phsModel.PreRegistration">
               <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="OPTION10" ColumnName="OPTION10" />
+                <ScalarProperty Name="OPTION9" ColumnName="OPTION9" />
+                <ScalarProperty Name="OPTION8" ColumnName="OPTION8" />
+                <ScalarProperty Name="OPTION7" ColumnName="OPTION7" />
+                <ScalarProperty Name="OPTION6" ColumnName="OPTION6" />
+                <ScalarProperty Name="OPTION5" ColumnName="OPTION5" />
+                <ScalarProperty Name="OPTION4" ColumnName="OPTION4" />
+                <ScalarProperty Name="OPTION3" ColumnName="OPTION3" />
+                <ScalarProperty Name="OPTION2" ColumnName="OPTION2" />
+                <ScalarProperty Name="OPTION1" ColumnName="OPTION1" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1396,6 +1428,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
+                <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="ConditionOptions" ColumnName="ConditionOptions" />
                 <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />

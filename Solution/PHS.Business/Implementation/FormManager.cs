@@ -247,6 +247,7 @@ namespace PHS.Business.Implementation
                                     SelectedOption = collection.FormFieldValue(domId, "SelectedOption"),
                                     AddOthersOption = collection.FormFieldValue(domId, "AddOthersOption").IsBool(),
                                     OthersOption = collection.FormFieldValue(domId, "OthersOption"),
+                                    OthersPlaceHolder = collection.FormFieldValue(domId, "OthersPlaceHolder"),
                                     HoverText = collection.FormFieldValue(domId, "HoverText"),
                                     Hint = collection.FormFieldValue(domId, "Hint"),
                                     MinimumAge = minAge,

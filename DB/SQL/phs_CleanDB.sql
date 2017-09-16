@@ -264,6 +264,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[SelectedOption] [nvarchar](50) NOT NULL,
 	[AddOthersOption] [bit] NULL DEFAULT ((0)),
 	[OthersOption] [nvarchar](50) NULL,
+	[OthersPlaceHolder] [nvarchar](150) NULL,
 	[Columns] [int] NULL,
 	[Rows] [int] NULL,
 	[Options] [nvarchar](2000) NULL,

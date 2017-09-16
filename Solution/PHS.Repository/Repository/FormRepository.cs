@@ -76,6 +76,7 @@ namespace PHS.Repository.Repository
                     SelectedOption = fieldView.SelectedOption,
                     AddOthersOption = fieldView.AddOthersOption,
                     OthersOption = fieldView.OthersOption,
+                    OthersPlaceHolder = fieldView.OthersPlaceHolder,
                     HelpText = fieldView.HelpText.Trim(),
                     Validation = fieldView.Validation,
                     Order = fieldView.Order,
@@ -123,6 +124,7 @@ namespace PHS.Repository.Repository
                     fField.SelectedOption = fieldView.SelectedOption;
                     fField.AddOthersOption = fieldView.AddOthersOption;
                     fField.OthersOption = fieldView.OthersOption;
+                    fField.OthersPlaceHolder = fieldView.OthersPlaceHolder;
                     fField.HelpText = fieldView.HelpText.Trim();
                     fField.Validation = fieldView.Validation;
                     fField.Order = fieldView.Order;
@@ -242,6 +244,7 @@ namespace PHS.Repository.Repository
                     SelectedOption = templateField1.SelectedOption,
                     AddOthersOption = templateField1.AddOthersOption,
                     OthersOption = templateField1.OthersOption,
+                    OthersPlaceHolder = templateField1.OthersPlaceHolder,
                     HelpText = templateField1.HelpText.Trim(),
                     Validation = templateField1.Validation,
                     Order = templateField1.Order,

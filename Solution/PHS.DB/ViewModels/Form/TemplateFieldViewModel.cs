@@ -29,6 +29,7 @@ namespace PHS.DB.ViewModels.Form
         public string SelectedOption { get; set; }
         public bool AddOthersOption { get; set; }
         public string OthersOption { get; set; }
+        public string OthersPlaceHolder { get; set; }
         public string Validation { get; set; }
         public int Order { get; set; }
         public DateTime DateAdded { get; set; }
@@ -98,6 +99,7 @@ namespace PHS.DB.ViewModels.Form
                     SelectedOption = field.SelectedOption,
                     AddOthersOption = field.AddOthersOption.Value,
                     OthersOption = field.OthersOption,
+                    OthersPlaceHolder = field.OthersPlaceHolder,
                     HelpText = field.HelpText,
                     Validation = field.Validation,
                     Order = field.Order.Value,
