@@ -126,14 +126,7 @@ namespace PHS.Business.Implementation.Tests
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(0, templateViewModel.Entries.Count);
 
-            FormCollection submissionCollection = new FormCollection();
-            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
-
-            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
-            submissionFields.Add("1", "1");
-
-            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
-            Assert.AreEqual(fillinResult, "success");
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "HelloTest");
 
             FormExportViewModel model = new FormExportViewModel()
             {
@@ -150,6 +143,51 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, result.Rows.Count);
             DataRow row = result.Rows[0];
             Assert.AreEqual("HelloTest", row["hellothis is for testing mah"]);
+        }
+
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_Sorting()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
+            fillin(templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
+
+            SortFieldViewModel sortFieldViewModel = new SortFieldViewModel()
+            {
+                FieldLabel = "this is for testing",
+                SortOrder = "DESC"
+            };
+
+            var SortFieldViewModels = new List<SortFieldViewModel>();
+            SortFieldViewModels.Add(sortFieldViewModel);
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1,
+                SortFields = SortFieldViewModels
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Columns.Count);
+            DataColumn column = result.Columns[0];
+            Assert.AreEqual("this is for testing", column.ColumnName);
+
+            Assert.AreEqual(3, result.Rows.Count);
+            DataRow row = result.Rows[0];
+            Assert.AreEqual("ZXY HelloTest", row["this is for testing"]);
         }
 
         [TestInitialize]
@@ -233,6 +271,19 @@ namespace PHS.Business.Implementation.Tests
             fields.Add("1", "1");
 
             return fieldCollection;
+        }
+
+        private void fillin(TemplateViewModel templateViewModel, string inputText, string value)
+        {
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add(inputText, value);
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
         }
 
         private class MockFormExportManager : FormExportManager
