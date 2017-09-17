@@ -135,6 +135,8 @@
     <Compile Include="Interface\IReferenceRangeManger.cs" />
     <Compile Include="Interface\IStandardReferenceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\FormExport\CriteriaFieldViewModel.cs" />
+    <Compile Include="ViewModel\FormExport\CriteriaSubFieldViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityEventViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityFormViewModel.cs" />
     <Compile Include="ViewModel\FormExport\FormExportViewModel.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyViewModel.cs" />
     <Compile Include="ViewModel\PastParticipantJourney\PastParticipantJourneySearchViewModel.cs" />
+    <Compile Include="ViewModel\FormExport\SortFieldViewModel.cs" />
     <Compile Include="ViewModel\SummaryCategory\SummaryCategoryViewModel.cs" />
     <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>

@@ -155,8 +155,6 @@
     <Compile Include="ViewModels\eventIndexdata.cs" />
     <Compile Include="ViewModels\Form\AddressViewModel.cs" />
     <Compile Include="ViewModels\Form\BMIViewModel.cs" />
-    <Compile Include="ViewModels\Form\CriteriaFieldViewModel.cs" />
-    <Compile Include="ViewModels\Form\CriteriaSubFieldViewModel.cs" />
     <Compile Include="ViewModels\Form\FormCollectionViewModel.cs" />
     <Compile Include="ViewModels\Form\TemplateCollectionViewModel.cs" />
     <Compile Include="ViewModels\Form\TemplateFieldValueViewModel.cs" />
@@ -164,7 +162,6 @@
     <Compile Include="ViewModels\Form\FormViewModel.cs" />
     <Compile Include="ViewModels\Form\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Form\NotificationEmailViewModel.cs" />
-    <Compile Include="ViewModels\Form\SortFieldViewModel.cs" />
     <Compile Include="ViewModels\ModalityForm.cs" />
     <Compile Include="ViewModels\PHSUser.cs" />
     <Compile Include="ViewModels\ReferenceRange.cs" />

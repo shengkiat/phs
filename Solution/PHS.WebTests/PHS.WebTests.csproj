@@ -60,6 +60,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PHS.Business\PHS.Business.csproj">
+      <Project>{12D719FA-52AF-4E43-A31A-5CEF1F0AC537}</Project>
+      <Name>PHS.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PHS.DB\PHS.DB.csproj">
       <Project>{9f19487d-f572-41c3-910c-aedb45b511d1}</Project>
       <Name>PHS.DB</Name>

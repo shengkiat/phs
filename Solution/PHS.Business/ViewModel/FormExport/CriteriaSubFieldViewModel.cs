@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PHS.DB.ViewModels.Form;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PHS.DB.ViewModels.Form
+namespace PHS.Business.ViewModel.FormExport
 {
     public class CriteriaSubFieldViewModel
     {
