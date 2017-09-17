@@ -46,13 +46,14 @@ namespace PHS.Business.Implementation
         private DataTable CreateFormEntriesDataTable(string title, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
             var dt = new DataTable(title);
-            HashSet<string> columnNames = new HashSet<string>();
+            IDictionary<int, int> fieldIdColumnMapping = new System.Collections.Generic.Dictionary<int, int>();
             int columnCount = 0;
 
             foreach(var template in templateViews)
             {
-                foreach (var field in template.Fields)
+                foreach (var field in template.Fields.OrderBy(f=> f.TemplateFieldID))
                 {
+                    fieldIdColumnMapping.Add(field.TemplateFieldID.Value, columnCount);
 
                     if (field.FieldType == Constants.TemplateFieldType.MATRIX)
                     {
@@ -107,11 +108,12 @@ namespace PHS.Business.Implementation
                 foreach (var group in template.GroupedEntries)
                 {
                     DataRow row = dt.NewRow();
-                    var fieldAddedOn = group.FirstOrDefault().DateAdded;
-                    int columnIndex = 0;
 
-                    foreach (var entry in group)
+                    foreach (var entry in group.OrderBy(f => f.TemplateFieldID))
                     {
+
+                        int columnIndex = fieldIdColumnMapping[entry.TemplateFieldID];
+
                         if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
                         {
                             var matrixField = entry.Value;
@@ -135,8 +137,6 @@ namespace PHS.Business.Implementation
                             row[columnIndex + 1] = address.Unit;
                             row[columnIndex + 2] = address.StreetAddress;
                             row[columnIndex + 3] = address.ZipCode;
-
-                            columnIndex += 4;
                         }
                         else if (entry.FieldType == Constants.TemplateFieldType.BMI)
                         {
@@ -147,23 +147,19 @@ namespace PHS.Business.Implementation
                             row[columnIndex] = bmi.Weight;
                             row[columnIndex + 1] = bmi.Height;
                             row[columnIndex + 2] = bmi.BodyMassIndex;
-
-                            columnIndex += 3;
                         }
                         else if (columnIndex < group.Count())
                         {
                             var field = group.ElementAt(columnIndex);
                             row[columnIndex] = field.Format(true);
-                            columnIndex++;
                         }
                         else
                         {
-
                             row[columnIndex] = entry.Value;
-                            columnIndex++;
                         }
                     }
 
+                    var fieldAddedOn = group.FirstOrDefault().DateAdded;
                     row[dt.Columns.Count-1] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
                     dt.Rows.Add(row);
                 }

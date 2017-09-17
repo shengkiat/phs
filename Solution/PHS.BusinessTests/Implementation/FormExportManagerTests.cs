@@ -287,8 +287,8 @@ namespace PHS.Business.Implementation.Tests
         }
 
 
-        //[TestMethod()]
-        public void CreateFormEntriesDataTableTest_Version()
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_VersionWithOneComponent()
         {
             Template template;
             TemplateViewModel templateViewModel;
