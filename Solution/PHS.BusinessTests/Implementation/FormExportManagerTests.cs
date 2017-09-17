@@ -173,7 +173,7 @@ namespace PHS.Business.Implementation.Tests
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(0, templateViewModel.Entries.Count);
 
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "HelloTest");
 
             FormExportViewModel model = new FormExportViewModel()
             {
@@ -206,9 +206,9 @@ namespace PHS.Business.Implementation.Tests
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(0, templateViewModel.Entries.Count);
 
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
 
             SortFieldViewModel sortFieldViewModel = new SortFieldViewModel()
             {
@@ -251,9 +251,9 @@ namespace PHS.Business.Implementation.Tests
             templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
             Assert.AreEqual(0, templateViewModel.Entries.Count);
 
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
-            fillin(templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
 
             Dictionary<string, string> criteriaValue = new Dictionary<string, string>();
             criteriaValue.Add("this is for testing", "ABC");
@@ -284,6 +284,55 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, result.Rows.Count);
             DataRow row = result.Rows[0];
             Assert.AreEqual("ABC HelloTest", row["this is for testing"]);
+        }
+
+
+        //[TestMethod()]
+        public void CreateFormEntriesDataTableTest_Version()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+
+            UpdateByAddingTemplateField(template, 2, Constants.TemplateFieldType.TEXTBOX, "this is for another testing", out templateViewModel);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "i am second");
+            submissionCollection.Add("SubmitFields[2].TextBox", "i am second HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+            submissionFields.Add("2", "2");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(4, result.Columns.Count);
+            Assert.AreEqual("this is for testing", result.Columns[0].ColumnName);
+            Assert.AreEqual("1: this is for testing", result.Columns[1].ColumnName);
+            Assert.AreEqual("this is for another testing", result.Columns[2].ColumnName);
+
+            Assert.AreEqual(2, result.Rows.Count);
+            Assert.AreEqual("ABC HelloTest", result.Rows[0]["this is for testing"]);
+            Assert.AreEqual("i am second", result.Rows[1]["1: this is for testing"]);
+            Assert.AreEqual("i am second HelloTest", result.Rows[1]["this is for another testing"]);
         }
 
         [TestInitialize]
@@ -330,6 +379,17 @@ namespace PHS.Business.Implementation.Tests
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
 
+        private void UpdateByAddingTemplateField(Template template, int id, Constants.TemplateFieldType fieldType, string label, out TemplateViewModel templateViewModel)
+        {
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(id, fieldType.ToString(), label, out fieldCollection, out fields);
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+        }
+
         private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, string label, out Template template, out TemplateViewModel templateViewModel)
         {
 
@@ -349,34 +409,33 @@ namespace PHS.Business.Implementation.Tests
         {
             fieldCollection = new FormCollection();
 
-            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            fieldCollection.Add("Fields[1].FieldType", fieldType);
-            fieldCollection.Add("Fields[1].MaxCharacters", "200");
-            fieldCollection.Add("Fields[1].IsRequired", "false");
-            fieldCollection.Add("Fields[1].AddOthersOption", "false");
-            fieldCollection.Add("Fields[1].MinimumAge", "18");
-            fieldCollection.Add("Fields[1].MaximumAge", "100");
-            fieldCollection.Add("Fields[1].Text", "");
-            fieldCollection.Add("Fields[1].Label", label);
-            fieldCollection.Add("Fields[1].HoverText", "");
-            fieldCollection.Add("Fields[1].SubLabel", "");
-            fieldCollection.Add("Fields[1].HelpText", "");
-            fieldCollection.Add("Fields[1].Hint", "");
+            fieldCollection.Add("Fields[" + id + "].FieldType", fieldType);
+            fieldCollection.Add("Fields[" + id + "].MaxCharacters", "200");
+            fieldCollection.Add("Fields[" + id + "].IsRequired", "false");
+            fieldCollection.Add("Fields[" + id + "].AddOthersOption", "false");
+            fieldCollection.Add("Fields[" + id + "].MinimumAge", "18");
+            fieldCollection.Add("Fields[" + id + "].MaximumAge", "100");
+            fieldCollection.Add("Fields[" + id + "].Text", "");
+            fieldCollection.Add("Fields[" + id + "].Label", label);
+            fieldCollection.Add("Fields[" + id + "].HoverText", "");
+            fieldCollection.Add("Fields[" + id + "].SubLabel", "");
+            fieldCollection.Add("Fields[" + id + "].HelpText", "");
+            fieldCollection.Add("Fields[" + id + "].Hint", "");
 
             fields = new System.Collections.Generic.Dictionary<string, string>();
-            fields.Add("1", "1");
+            fields.Add("" + id, "" + id);
 
             return fieldCollection;
         }
 
-        private void fillin(TemplateViewModel templateViewModel, string inputText, string value)
+        private void fillin(string id, TemplateViewModel templateViewModel, string inputText, string value)
         {
 
             FormCollection submissionCollection = new FormCollection();
             submissionCollection.Add(inputText, value);
 
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
-            submissionFields.Add("1", "1");
+            submissionFields.Add(id, id);
 
             string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
             Assert.AreEqual(fillinResult, "success");

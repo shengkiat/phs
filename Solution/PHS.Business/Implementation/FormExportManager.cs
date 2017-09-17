@@ -98,9 +98,12 @@ namespace PHS.Business.Implementation
                         columnCount++;
                     }
                 }
+            }
 
-                dt.Columns.Add(new DataColumn("Submitted On"));
+            dt.Columns.Add(new DataColumn("Submitted On"));
 
+            foreach (var template in templateViews)
+            {
                 foreach (var group in template.GroupedEntries)
                 {
                     DataRow row = dt.NewRow();
@@ -161,7 +164,7 @@ namespace PHS.Business.Implementation
                         }
                     }
 
-                    row[columnIndex] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
+                    row[dt.Columns.Count-1] = fieldAddedOn.ToString("yyyy-MM-dd HH:mm");
                     dt.Rows.Add(row);
                 }
             }
