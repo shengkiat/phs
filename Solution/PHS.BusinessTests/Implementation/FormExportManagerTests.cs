@@ -335,6 +335,78 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("i am second HelloTest", result.Rows[1]["this is for another testing"]);
         }
 
+        [TestMethod()]
+        public void CreateFormEntriesDataTableTest_VersionWithAdvancedComponent()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BMI, "bmi entered please", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Weight", "83");
+            submissionCollection.Add("SubmitFields[1].Height", "170");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            UpdateByAddingTemplateField(template, 2, Constants.TemplateFieldType.TEXTBOX, "this is for another testing", out templateViewModel);
+
+            submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].Weight", "120");
+            submissionCollection.Add("SubmitFields[1].Height", "190");
+            submissionCollection.Add("SubmitFields[2].TextBox", "i am second HelloTest");
+
+            submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+            submissionFields.Add("2", "2");
+
+            fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(8, result.Columns.Count);
+            Assert.AreEqual("Weight", result.Columns[0].ColumnName);
+            Assert.AreEqual("Height", result.Columns[1].ColumnName);
+            Assert.AreEqual("BMI", result.Columns[2].ColumnName);
+            Assert.AreEqual("3: Weight", result.Columns[3].ColumnName);
+            Assert.AreEqual("3: Height", result.Columns[4].ColumnName);
+            Assert.AreEqual("3: BMI", result.Columns[5].ColumnName);
+            Assert.AreEqual("this is for another testing", result.Columns[6].ColumnName);
+
+            Assert.AreEqual(2, result.Rows.Count);
+            Assert.AreEqual("83", result.Rows[0]["Weight"]);
+            Assert.AreEqual("170", result.Rows[0]["Height"]);
+            Assert.AreEqual("28.72", result.Rows[0]["BMI"]);
+            Assert.AreEqual("120", result.Rows[1]["3: Weight"]);
+            Assert.AreEqual("190", result.Rows[1]["3: Height"]);
+            Assert.AreEqual("33.24", result.Rows[1]["3: BMI"]);
+            Assert.AreEqual("i am second HelloTest", result.Rows[1]["this is for another testing"]);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {

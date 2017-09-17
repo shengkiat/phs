@@ -60,26 +60,37 @@ namespace PHS.Business.Implementation
                         string[] rows = field.MatrixRow.Split(",");
                         foreach (string row in rows)
                         {
-                            dt.Columns.Add(new DataColumn(row));
+                            AddColumn(dt, row, columnCount);
+
+                            //dt.Columns.Add(new DataColumn(row));
 
                             columnCount++;
                         }
                     }
                     else if (field.FieldType == Constants.TemplateFieldType.ADDRESS)
                     {
-                        dt.Columns.Add(new DataColumn("Blk"));
-                        dt.Columns.Add(new DataColumn("Unit"));
-                        dt.Columns.Add(new DataColumn("Street Address"));
-                        dt.Columns.Add(new DataColumn("ZipCode"));
+                        AddColumn(dt, "Blk", columnCount);
+                        AddColumn(dt, "Unit", columnCount);
+                        AddColumn(dt, "Street Address", columnCount);
+                        AddColumn(dt, "ZipCode", columnCount);
+
+                        //dt.Columns.Add(new DataColumn("Blk"));
+                        //dt.Columns.Add(new DataColumn("Unit"));
+                        //dt.Columns.Add(new DataColumn("Street Address"));
+                        //dt.Columns.Add(new DataColumn("ZipCode"));
 
                         columnCount += 4;
 
                     }
                     else if (field.FieldType == Constants.TemplateFieldType.BMI)
                     {
-                        dt.Columns.Add(new DataColumn("Weight"));
-                        dt.Columns.Add(new DataColumn("Height"));
-                        dt.Columns.Add(new DataColumn("BMI"));
+                        AddColumn(dt, "Weight", columnCount);
+                        AddColumn(dt, "Height", columnCount);
+                        AddColumn(dt, "BMI", columnCount);
+
+                        //dt.Columns.Add(new DataColumn("Weight"));
+                        //dt.Columns.Add(new DataColumn("Height"));
+                        //dt.Columns.Add(new DataColumn("BMI"));
 
                         columnCount += 3;
                     }
@@ -87,14 +98,7 @@ namespace PHS.Business.Implementation
                     {
                         var colName = field.Label.StripHTML();
 
-                        if (dt.Columns.Contains(colName))
-                        {
-                            dt.Columns.Add(new DataColumn(columnCount + ": " + colName));
-                        }
-                        else
-                        {
-                            dt.Columns.Add(new DataColumn(colName));
-                        }
+                        AddColumn(dt, colName, columnCount);
 
                         columnCount++;
                     }
@@ -148,14 +152,17 @@ namespace PHS.Business.Implementation
                             row[columnIndex + 1] = bmi.Height;
                             row[columnIndex + 2] = bmi.BodyMassIndex;
                         }
+                        /*
                         else if (columnIndex < group.Count())
                         {
                             var field = group.ElementAt(columnIndex);
                             row[columnIndex] = field.Format(true);
                         }
+                        */
                         else
                         {
-                            row[columnIndex] = entry.Value;
+                            //row[columnIndex] = entry.Value;
+                            row[columnIndex] = entry.Format(true);
                         }
                     }
 
@@ -170,6 +177,18 @@ namespace PHS.Business.Implementation
             dv.Sort = GenerateSorting(sortFields);
 
             return dv.ToTable();
+        }
+
+        private void AddColumn(DataTable dt, string colName, int columnCount)
+        {
+            if (dt.Columns.Contains(colName))
+            {
+                dt.Columns.Add(new DataColumn(columnCount + ": " + colName));
+            }
+            else
+            {
+                dt.Columns.Add(new DataColumn(colName));
+            }
         }
 
         private string GenerateSorting(List<SortFieldViewModel> sortFields)
