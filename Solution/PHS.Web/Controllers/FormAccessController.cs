@@ -15,6 +15,7 @@ using PHS.Business.ViewModel.ParticipantJourney;
 using static PHS.Common.Constants;
 using PHS.Business.Helpers;
 using PHS.DB;
+using Spire.Doc;
 
 namespace PHS.Web.Controllers
 {
@@ -393,13 +394,14 @@ namespace PHS.Web.Controllers
 
                 String guid = Guid.NewGuid().ToString();
                 TempData[guid] = fileBytes;
-
+                /*
                 return new JsonResult()
                 {
                     Data = new { FileGuid = guid, FileName = psm.Nric + ".docx" }
                 };
+                */
 
-                /*Document docTest = new Document();
+                Document docTest = new Document();
                 docTest.LoadFromStream(ms, FileFormat.Docx);
 
                 MemoryStream stream = new MemoryStream();
@@ -408,6 +410,14 @@ namespace PHS.Web.Controllers
                 stream.Flush(); //Always catches me out
                 stream.Position = 0; //Not sure if this is required
 
+                TempData[guid] = stream.ToArray();
+
+                return new JsonResult()
+                {
+                    Data = new { FileGuid = guid, FileName = psm.Nric + ".pdf" }
+                };
+
+                /*
                 //return File(stream, "application/pdf");
                 Response.AppendHeader("Content-Disposition", "inline; filename=name.pdf");
                 return new FileContentResult(stream.ToArray(), "application/pdf");
@@ -422,7 +432,8 @@ namespace PHS.Web.Controllers
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];
-                return File(data, "application/vnd.ms-excel", fileName);
+                return File(data, "application/pdf", fileName);
+                //return File(data, "application/vnd.ms-excel", fileName);
             }
             else
             {
