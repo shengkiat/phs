@@ -80,9 +80,14 @@
                     //add only if the value is number
                     if (!isNaN(this.value) && this.value.length != 0) {
                         sum += parseFloat(this.value);
+                        
                     }
-                });
+                }).removeAttr("disabled");
+    
             }
+
+  
+            
         });
 
 
@@ -90,7 +95,7 @@
     }
 
     function printLabels() {
-        alert("Printing " + document.getElementById("sum").innerText + " Labels");
+        alert("Please print " + document.getElementById("sum").innerText + " Labels");
 
         $.ajax({
             url: "@Url.Action("GenerateLabel", "FormAccess")",
@@ -146,7 +151,7 @@
                         <br />
                         <img src="@Model.ElementAt(i).IconPath" height="40" width="40" />
                     </td>
-                    <td style="white-space: pre; " > @Model.ElementAt(i).Eligiblity</td>
+                    <td style="white-space: pre; " > @Html.Raw(@Model.ElementAt(i).Eligiblity)</td>
                     <td>
                         @if (Model.ElementAt(i).IsMandatory == true)
                         {
@@ -165,14 +170,15 @@
                     </td>
                     <td>
 
-                        @if (mode.IsReadOnlyMode())
+                        @if (!Model.ElementAt(i).IsActive)
                         {
-                            @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = "disabled" })
+                           @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = "disabled" })
                         }
 
                         else
                         {
                             @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number" })
+
                         }
                         
                     </td>

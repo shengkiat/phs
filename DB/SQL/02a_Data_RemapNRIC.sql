@@ -1,3 +1,4 @@
+use phs
 update participant set nric = 'S1388570B' where nric =	'38478D'
 update participant set nric = 'S5039208B' where nric =	'39615C'
 update participant set nric = 'S7320443G' where nric =	'41796J'

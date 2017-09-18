@@ -13,7 +13,7 @@ select @ModReg = IDENT_CURRENT('phs.dbo.Modality')
 insert ModalityForm values(@ModReg, 8)
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'Phlebotomy', 1, N'../../../Content/images/PHS2017/02_Phlebotomy.png', 0, 0, 0, 0, N'Pending', 'Fasted for >= 10h
+VALUES (N'Phlebotomy', 1, N'../../../Content/images/PHS2017/02_Phlebotomy.png', 0, 0, 0, 0, N'Pending', 'Fasted for &ge; 10h
 Have not done glucose/lipids test in past 1 year
 Not diagnosed with HLD/DM', 3)
 declare @ModPhlebo as int
@@ -25,7 +25,7 @@ declare @ModHx as int
 select @ModHx = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'FIT', 3, N'../../../Content/images/PHS2017/04_FIT.png', 0, 0, 0, 0, N'Pending', '>= 50 years old
+VALUES (N'FIT', 3, N'../../../Content/images/PHS2017/04_FIT.png', 0, 0, 0, 0, N'Pending', '&ge; 50 years old
 Have not done FIT in the past 1 year
 Have not done colonoscopy in the past 5 years
 Not diagnosed with colorectal cancer', 3)
@@ -33,12 +33,12 @@ declare @ModFIT as int
 select @ModFIT = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'WCE', 4, N'../../../Content/images/PHS2017/05_WCE.png', 0, 0, 0, 0, N'Pending', 'Female >= 40 years old', 0)
+VALUES (N'WCE', 4, N'../../../Content/images/PHS2017/05_WCE.png', 0, 0, 0, 0, N'Pending', 'Female &ge; 40 years old', 0)
 declare @ModWCE as int
 select @ModWCE = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'Geriatrics', 5, N'../../../Content/images/PHS2017/06_Geri.png', 0, 0, 0, 0, N'Pending', '>= 60 years old', 0)
+VALUES (N'Geriatrics', 5, N'../../../Content/images/PHS2017/06_Geri.png', 0, 0, 0, 0, N'Pending', '&ge; 60 years old', 0)
 declare @ModGeri as int
 select @ModGeri = IDENT_CURRENT('phs.dbo.Modality')
 
@@ -48,7 +48,7 @@ declare @ModDoc as int
 select @ModDoc = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'Oral Health', 7, N'../../../Content/images/PHS2017/08_Oral.png', 0, 0, 0, 0, N'Pending', '>= 40 years old', 0)
+VALUES (N'Oral Health', 7, N'../../../Content/images/PHS2017/08_Oral.png', 0, 0, 0, 0, N'Pending', '&ge; 40 years old', 0)
 declare @ModOral as int
 select @ModOral = IDENT_CURRENT('phs.dbo.Modality')
 
@@ -63,10 +63,17 @@ VALUES (N'Exhibition', 9, N'../../../Content/images/PHS2017/10_Exhibit.png', 0, 
 declare @ModExhibit as int
 select @ModExhibit = IDENT_CURRENT('phs.dbo.Modality')
 
+
+
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
 VALUES (N'Summary', 10, N'../../../Content/images/PHS2017/11_Tele.png', 1, 1, 1, 0, N'Pending', NULL, 0)
 declare @ModSummary as int
 select @ModSummary = IDENT_CURRENT('phs.dbo.Modality')
+
+INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
+VALUES (N'Social Support', 10, N'../../../Content/images/PHS2017/11_SocialSupport.png', 0, 0, 0, 0, N'Pending', NULL, 0)
+declare @ModSocialSupport as int
+select @ModSocialSupport = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
 VALUES (N'Public Forms', 99, N'../../../Content/images/PHS2017/.png', 1, 1, 1, 0, N'Public', NULL, 0)
@@ -84,6 +91,7 @@ INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @Mod
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModQuest)
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModExhibit)
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModSummary)
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModSocialSupport)
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModPublic)
 
 use [phsDataLoading]
@@ -113,10 +121,6 @@ update DataCollection set [Type ] = 'TEXTAREA' where [Type ] = 'Text Area'
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADER'
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADERSUB'
 
-update DataCollection set [Label Text] = '4. Illnesses: For 11 illnesses, participants are asked, “Did a doctor ever tell you that you have [illness]?” 
-The illnesses include hypertension, diabetes, cancer (other than a minor skin cancer), chronic lung disease, heart attack, congestive heart failure, angina, asthma, arthritis, stroke, and kidney disease.
-The total illnesses (0–11) are recorded as 
-0–4 = 0 and 5–11 = 1.' where id = 184
 
 declare @modality varchar(100)
 declare @form varchar(100)
@@ -166,7 +170,7 @@ begin
 			select @fieldIDCount = count(1) from #temp1
 
 			
-INSERT into phs.[dbo].[TemplateField] ([Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge],[MaximumAge],[HelpText],[DateAdded],[MaxFilesizeInKb],[ValidFileExtensions],[MinFilesizeInKb],[ImageBase64],[MatrixRow],[MatrixColumn],[PreRegistrationFieldName],[RegistrationFieldName],[SummaryFieldName],[AddOthersOption],SummaryType) 
+INSERT into phs.[dbo].[TemplateField] ([Label], [Text], [FieldType], [IsRequired], [MaxChars], [HoverText], [Hint], [SubLabel], [Size], [SelectedOption], [OthersOption], [Columns], [Rows], [Options], [Validation], [DomId], [Order], [MinimumAge],[MaximumAge],[HelpText],[DateAdded],[MaxFilesizeInKb],[ValidFileExtensions],[MinFilesizeInKb],[ImageBase64],[MatrixRow],[MatrixColumn],[PreRegistrationFieldName],[RegistrationFieldName],[SummaryFieldName],[AddOthersOption],OthersPlaceHolder,SummaryType) 
 select [Label Text], [Label Text], [Type],Mandatory, 50, '','','','','option1',0,20,20,
 substring(case when [value 1] is null then '' else [value 1] end +
 case when [value 2] is null then '' else ',' + [value 2] end +  
@@ -179,7 +183,7 @@ case when [value 8] is null then '' else ',' + [value 8] end +
 case when [value 9] is null then '' else ',' + [value 9] end +
 case when [value 10] is null then '' else ',' + [value 10] end +
 case when [value 11] is null then '' else ',' + [value 11] end, 0 , 1999),
-'', ROW_NUMBER() over (order by id),ROW_NUMBER() over (order by id),18,100,'',getdate(),5000, '.jpg,.png,.gif,.pdf,.bmp,.zip', 10, '', '', '', PreRegistrationFieldName, RegistrationFieldName, [Summary Field], [AddOthersOption], SummaryType  from #temp1
+'', ROW_NUMBER() over (order by id),ROW_NUMBER() over (order by id),18,100,'',getdate(),5000, '.jpg,.png,.gif,.pdf,.bmp,.zip', 10, '', '', '', PreRegistrationFieldName, RegistrationFieldName, [Summary Field], [AddOthersOption],OtherOptionsLabel, SummaryType  from #temp1
 
 
 			insert phs.dbo.ModalityForm values (@modalityID, @formID) 
@@ -280,3 +284,7 @@ ON DELETE CASCADE
 
 update TemplateField set label = REPLACE(label, char(10),'<br/>') where label LIKE '%' + CHAR(10) + '%' OR label LIKE '%' + CHAR(13) + '%'
 update TemplateField set text = REPLACE(text, char(10),'<br/>') where text LIKE '%' + CHAR(10) + '%' OR text LIKE '%' + CHAR(13) + '%'
+
+
+
+
