@@ -17,7 +17,7 @@ namespace PHS.Business.Helpers
             Constants.Summary_Category_Label_Name_Cancers
         };
 
-        static Dictionary<string, List<string>> EventSummaryLabelMap = new Dictionary<string, List<string>> {
+        public static Dictionary<string, List<string>> EventSummaryLabelMap = new Dictionary<string, List<string>> {
             { Constants.Summary_Category_Label_Name_CardiovascularHealth, new List<string> {
                 Constants.Summary_Field_Name_CurrentlySmoke,
                 Constants.Summary_Field_Name_FamilyHistory,
@@ -471,18 +471,18 @@ namespace PHS.Business.Helpers
             }},
         };
 
-        public static bool IsFieldNameAndCategoryFoundInEventSummaryMap(String summaryCategory, String fieldName) {
-            bool Result = false;
-            if (EventSummaryLabelMap.ContainsKey(summaryCategory))
-            {
-                List<string> SummaryFieldNameList = EventSummaryLabelMap[summaryCategory];
-                if (SummaryFieldNameList.Contains(fieldName)){
-                    Result = true;
-                }
-            }
+        //public static bool IsFieldNameAndCategoryFoundInEventSummaryMap(String summaryCategory, String fieldName) {
+        //    bool Result = false;
+        //    if (EventSummaryLabelMap.ContainsKey(summaryCategory))
+        //    {
+        //        List<string> SummaryFieldNameList = EventSummaryLabelMap[summaryCategory];
+        //        if (SummaryFieldNameList.Contains(fieldName)){
+        //            Result = true;
+        //        }
+        //    }
 
-            return Result;
-        }
+        //    return Result;
+        //}
 
         //public static bool IsFieldNameAndCategoryFoundInDoctorSummaryMap(String summaryCategory, String fieldName)
         //{

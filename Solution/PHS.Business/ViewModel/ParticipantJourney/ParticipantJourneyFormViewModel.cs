@@ -69,7 +69,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 {
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
                     {
-                        if(SummaryHelper.IsFieldNameAndCategoryFoundInEventSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        if(SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.EventSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
                             sumCategoryViewModel.AddEventSummary(summary);
                         }    

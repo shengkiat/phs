@@ -159,40 +159,6 @@ namespace PHS.Business.Implementation.FillIn
             }
         }
 
-        private String GetLabelTextBySummaryTypeAndSummaryLabel(String sType, String sLabel)
-        {
-            String labelText = null;
-
-            Dictionary<string, List<string>> eventSummaryLabelMap = new Dictionary<string, List<string>> {
-                { Constants.Summary_Category_Label_Name_CardiovascularHealth, new List<string> {
-                    Constants.Summary_Field_Name_CurrentlySmoke,
-                    Constants.Summary_Field_Name_FamilyHistory,
-                    Constants.Summary_Field_Name_PastMedicalHistory
-                }},
-                { Constants.Summary_Category_Label_Name_Obesity, new List<string> {
-                    Constants.Summary_Field_Name_PastMedicalHistory,
-                    Constants.Summary_Field_Name_FamilyHistory
-                }},
-                { Constants.Summary_Category_Label_Name_LifestyleChoices, new List<string> {
-                    Constants.Summary_Field_Name_CurrentlySmoke
-                }},
-                { Constants.Summary_Category_Label_Name_Cancers, new List<string> {
-                    Constants.Summary_Field_Name_PersonalCancerHistory,
-                    Constants.Summary_Field_Name_FamilyHistory
-                }}
-            };
-
-            if(sType.Equals(Constants.Summary_Type_Event) || sType.Equals(Constants.Summary_Type_All))
-            {
-                //labelText = 
-
-            }
-
-
-
-            return labelText;
-        }
-
         private ParticipantJourneyModality FindParticipantJourneyModality()
         {
             return UnitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(psm.Nric, psm.PHSEventId, formId, modalityId);
