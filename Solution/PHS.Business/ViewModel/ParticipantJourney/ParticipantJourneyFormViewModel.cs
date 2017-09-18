@@ -67,9 +67,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Event) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
-                        if(SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.EventSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
+                        if(SummaryHelper.IsFieldNameAndCategoryFoundInEventSummaryMap(sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
                             sumCategoryViewModel.AddEventSummary(summary);
                         }    
@@ -95,7 +96,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Doctor) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.DoctorSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -123,7 +125,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Cog2) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.Cog2SummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -150,7 +153,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_PTSummary) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.PTConsultSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -178,7 +182,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_OTSummary) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.OTConsultSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -204,7 +209,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_Exhibition) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.ExhibitionSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {
@@ -230,7 +236,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 foreach (var summary in Participant.Summaries)
                 {
-                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                    if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID)
+                        && (summary.SummaryType.Equals(Constants.Summary_Type_SocialSup) || summary.SummaryType.Equals(Constants.Summary_Type_All)))
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.SocialSupportSummaryLabelMap, sumCategoryViewModel.SummaryCategoryName, summary.Label))
                         {

@@ -25,7 +25,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
 
         public void AddEventSummary(Summary summary)
         {
-            if(SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(SummaryHelper.EventSummaryLabelMap, SummaryCategoryName, summary.Label))
+            if(SummaryHelper.IsFieldNameAndCategoryFoundInEventSummaryMap(SummaryCategoryName, summary.Label))
             {
                 EventSummaries.Add(summary);
             }

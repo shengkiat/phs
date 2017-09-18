@@ -18,7 +18,6 @@ namespace PHS.DB
         public StandardReference()
         {
             this.ReferenceRanges = new HashSet<ReferenceRange>();
-            this.Summaries = new HashSet<Summary>();
             this.TemplateFields = new HashSet<TemplateField>();
         }
     
@@ -27,8 +26,6 @@ namespace PHS.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenceRange> ReferenceRanges { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Summary> Summaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TemplateField> TemplateFields { get; set; }
     }

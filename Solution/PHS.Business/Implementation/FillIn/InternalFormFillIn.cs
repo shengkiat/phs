@@ -127,36 +127,52 @@ namespace PHS.Business.Implementation.FillIn
                 if (field.SummaryFieldName != null && field.SummaryFieldName.Length >0
                         && field.SummaryType != null && field.SummaryType.Length > 0)
                 {
-                    Summary summary = null;
-                    summary = UnitOfWork.Summaries.FindSummary(participantJourneyModality.PHSEventID,
-                        participantJourneyModality.ParticipantID,
-                        participantJourneyModality.ModalityID, (int)field.TemplateFieldID);
-                    if (summary == null)
-                    {
-                        summary = new Summary();
-                        summary.Label = field.SummaryFieldName;
-                        summary.ModalityID = participantJourneyModality.ModalityID;
-                        summary.ParticipantID = participantJourneyModality.ParticipantID;
-                        summary.PHSEventID = participantJourneyModality.PHSEventID;
-                        summary.SummaryType = field.SummaryType;
-                        summary.SummaryLabel = field.Label;
-                        summary.SummaryValue = field.InputValue;
-                        summary.TemplateFieldID = (int)field.TemplateFieldID;
-                        summary.StandardReferenceID = field.StandardReferenceID;
-
-                        UnitOfWork.Summaries.Add(summary);
-                    }
-                    else
-                    {
-                        summary.Label = field.SummaryFieldName;
-                        summary.SummaryType = field.SummaryType;
-                        summary.SummaryLabel = field.Label;
-                        summary.SummaryValue = field.InputValue;
-                        summary.StandardReferenceID = field.StandardReferenceID;
-                    }
-                    
+                    Summary summary = new Summary();
+                    summary.Label = field.SummaryFieldName;
+                    summary.ModalityID = participantJourneyModality.ModalityID;
+                    summary.ParticipantID = participantJourneyModality.ParticipantID;
+                    summary.PHSEventID = participantJourneyModality.PHSEventID;
+                    summary.SummaryType = field.SummaryType;
+                    summary.SummaryLabel = field.Label;
+                    summary.SummaryValue = field.InputValue;
+                    summary.TemplateFieldID = (int)field.TemplateFieldID;
+                    UnitOfWork.Summaries.Add(summary);
                 }
             }
+        }
+
+        private String GetLabelTextBySummaryTypeAndSummaryLabel(String sType, String sLabel)
+        {
+            String labelText = null;
+
+            Dictionary<string, List<string>> eventSummaryLabelMap = new Dictionary<string, List<string>> {
+                { Constants.Summary_Category_Label_Name_CardiovascularHealth, new List<string> {
+                    Constants.Summary_Field_Name_CurrentlySmoke,
+                    Constants.Summary_Field_Name_FamilyHistory,
+                    Constants.Summary_Field_Name_PastMedicalHistory
+                }},
+                { Constants.Summary_Category_Label_Name_Obesity, new List<string> {
+                    Constants.Summary_Field_Name_PastMedicalHistory,
+                    Constants.Summary_Field_Name_FamilyHistory
+                }},
+                { Constants.Summary_Category_Label_Name_LifestyleChoices, new List<string> {
+                    Constants.Summary_Field_Name_CurrentlySmoke
+                }},
+                { Constants.Summary_Category_Label_Name_Cancers, new List<string> {
+                    Constants.Summary_Field_Name_PersonalCancerHistory,
+                    Constants.Summary_Field_Name_FamilyHistory
+                }}
+            };
+
+            if(sType.Equals(Constants.Summary_Type_Event) || sType.Equals(Constants.Summary_Type_All))
+            {
+                //labelText = 
+
+            }
+
+
+
+            return labelText;
         }
 
         private ParticipantJourneyModality FindParticipantJourneyModality()

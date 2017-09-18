@@ -23,12 +23,10 @@ namespace PHS.DB
         public string SummaryLabel { get; set; }
         public string SummaryValue { get; set; }
         public string SummaryType { get; set; }
-        public Nullable<int> StandardReferenceID { get; set; }
     
         public virtual Modality Modality { get; set; }
         public virtual Participant Participant { get; set; }
         public virtual PHSEvent PHSEvent { get; set; }
-        public virtual StandardReference StandardReference { get; set; }
         public virtual TemplateField TemplateField { get; set; }
     }
 }

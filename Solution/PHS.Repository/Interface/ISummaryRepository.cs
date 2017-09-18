@@ -10,7 +10,5 @@ namespace PHS.Repository.Interface
 {
     public interface ISummaryRepository : IRepository<Summary>
     {
-        Summary FindSummary(int phsEventId, int participantID, int modalityID, int templateFieldID);
     }
-    
 }
