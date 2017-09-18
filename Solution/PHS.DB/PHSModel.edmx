@@ -216,6 +216,7 @@
           <Property Name="SummaryLabel" Type="nvarchar(max)" />
           <Property Name="SummaryValue" Type="nvarchar(max)" />
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
+          <Property Name="StandardReferenceID" Type="int" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -428,6 +429,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK summary_standard_reference">
+          <End Role="StandardReference" Type="Self.StandardReference" Multiplicity="0..1" />
+          <End Role="Summary" Type="Self.Summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardReference">
+              <PropertyRef Name="StandardReferenceID" />
+            </Principal>
+            <Dependent Role="Summary">
+              <PropertyRef Name="StandardReferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK summary_template_field">
           <End Role="TemplateField" Type="Self.TemplateField" Multiplicity="1" />
           <End Role="Summary" Type="Self.Summary" Multiplicity="*" />
@@ -628,6 +641,10 @@
             <End Role="PHSEvent" EntitySet="PHSEvent" />
             <End Role="Summary" EntitySet="Summary" />
           </AssociationSet>
+          <AssociationSet Name="FK summary_standard_reference" Association="Self.FK summary_standard_reference">
+            <End Role="StandardReference" EntitySet="StandardReference" />
+            <End Role="Summary" EntitySet="Summary" />
+          </AssociationSet>
           <AssociationSet Name="FK summary_template_field" Association="Self.FK summary_template_field">
             <End Role="TemplateField" EntitySet="TemplateField" />
             <End Role="Summary" EntitySet="Summary" />
@@ -731,6 +748,10 @@
             <End Role="StandardReference" EntitySet="StandardReferences" />
             <End Role="ReferenceRange" EntitySet="ReferenceRanges" />
           </AssociationSet>
+          <AssociationSet Name="FK_summary_standard_reference" Association="phsModel.FK_summary_standard_reference">
+            <End Role="StandardReference" EntitySet="StandardReferences" />
+            <End Role="Summary" EntitySet="Summaries" />
+          </AssociationSet>
           <AssociationSet Name="FK_template_field_standard_reference" Association="phsModel.FK_template_field_standard_reference">
             <End Role="StandardReference" EntitySet="StandardReferences" />
             <End Role="TemplateField" EntitySet="TemplateFields" />
@@ -763,7 +784,7 @@
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
           </AssociationSet>
-		            <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
+		  <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
           <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
         </EntityContainer>
         <EntityType Name="Form">
@@ -890,7 +911,7 @@
           <Property Name="PreferedTime" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+		  <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="OPTION1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION3" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -901,6 +922,7 @@
           <Property Name="OPTION8" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION9" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION10" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="ReferenceRange">
           <Key>
@@ -913,7 +935,7 @@
           <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
-          <Property Name="Highlight" Type="Boolean" Nullable="false" />
+		  <Property Name="Highlight" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="StandardReference">
           <Key>
@@ -922,6 +944,7 @@
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
+          <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_standard_reference" FromRole="StandardReference" ToRole="Summary" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.FK_template_field_standard_reference" FromRole="StandardReference" ToRole="TemplateField" />
         </EntityType>
         <EntityType Name="Summary">
@@ -940,9 +963,11 @@
           <Property Name="SummaryLabel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SummaryValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StandardReferenceID" Type="Int32" />
           <NavigationProperty Name="Modality" Relationship="phsModel.FK_summary_modality" FromRole="Summary" ToRole="Modality" />
           <NavigationProperty Name="Participant" Relationship="phsModel.FK_summary_participant" FromRole="Summary" ToRole="Participant" />
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_summary_phs_event" FromRole="Summary" ToRole="PHSEvent" />
+          <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_summary_standard_reference" FromRole="Summary" ToRole="StandardReference" />
           <NavigationProperty Name="TemplateField" Relationship="phsModel.FK_summary_template_field" FromRole="Summary" ToRole="TemplateField" />
         </EntityType>
         <EntityType Name="Template">
@@ -1011,7 +1036,7 @@
           <NavigationProperty Name="TemplateField2" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField1" ToRole="TemplateField" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
-          <Property Name="OthersPlaceHolder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+		  <Property Name="OthersPlaceHolder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -1140,6 +1165,18 @@
               <PropertyRef Name="StandardReferenceID" />
             </Principal>
             <Dependent Role="ReferenceRange">
+              <PropertyRef Name="StandardReferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_summary_standard_reference">
+          <End Type="phsModel.StandardReference" Role="StandardReference" Multiplicity="0..1" />
+          <End Type="phsModel.Summary" Role="Summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardReference">
+              <PropertyRef Name="StandardReferenceID" />
+            </Principal>
+            <Dependent Role="Summary">
               <PropertyRef Name="StandardReferenceID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1353,7 +1390,7 @@
                 <ScalarProperty Name="OPTION3" ColumnName="OPTION3" />
                 <ScalarProperty Name="OPTION2" ColumnName="OPTION2" />
                 <ScalarProperty Name="OPTION1" ColumnName="OPTION1" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+				<ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PreferedTime" ColumnName="PreferedTime" />
@@ -1375,7 +1412,7 @@
           <EntitySetMapping Name="ReferenceRanges">
             <EntityTypeMapping TypeName="phsModel.ReferenceRange">
               <MappingFragment StoreEntitySet="ReferenceRange">
-                <ScalarProperty Name="Highlight" ColumnName="Highlight" />
+			    <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
@@ -1396,6 +1433,7 @@
           <EntitySetMapping Name="Summaries">
             <EntityTypeMapping TypeName="phsModel.Summary">
               <MappingFragment StoreEntitySet="Summary">
+                <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
                 <ScalarProperty Name="SummaryValue" ColumnName="SummaryValue" />
                 <ScalarProperty Name="SummaryLabel" ColumnName="SummaryLabel" />
@@ -1428,7 +1466,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
-                <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
+			    <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="ConditionOptions" ColumnName="ConditionOptions" />
                 <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />
@@ -1512,7 +1550,7 @@
               <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="PHSUsers">
+		  <EntitySetMapping Name="PHSUsers">
             <EntityTypeMapping TypeName="phsModel.PHSUser">
               <MappingFragment StoreEntitySet="PHSUser">
                 <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />

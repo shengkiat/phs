@@ -127,16 +127,34 @@ namespace PHS.Business.Implementation.FillIn
                 if (field.SummaryFieldName != null && field.SummaryFieldName.Length >0
                         && field.SummaryType != null && field.SummaryType.Length > 0)
                 {
-                    Summary summary = new Summary();
-                    summary.Label = field.SummaryFieldName;
-                    summary.ModalityID = participantJourneyModality.ModalityID;
-                    summary.ParticipantID = participantJourneyModality.ParticipantID;
-                    summary.PHSEventID = participantJourneyModality.PHSEventID;
-                    summary.SummaryType = field.SummaryType;
-                    summary.SummaryLabel = field.Label;
-                    summary.SummaryValue = field.InputValue;
-                    summary.TemplateFieldID = (int)field.TemplateFieldID;
-                    UnitOfWork.Summaries.Add(summary);
+                    Summary summary = null;
+                    summary = UnitOfWork.Summaries.FindSummary(participantJourneyModality.PHSEventID,
+                        participantJourneyModality.ParticipantID,
+                        participantJourneyModality.ModalityID, (int)field.TemplateFieldID);
+                    if (summary == null)
+                    {
+                        summary = new Summary();
+                        summary.Label = field.SummaryFieldName;
+                        summary.ModalityID = participantJourneyModality.ModalityID;
+                        summary.ParticipantID = participantJourneyModality.ParticipantID;
+                        summary.PHSEventID = participantJourneyModality.PHSEventID;
+                        summary.SummaryType = field.SummaryType;
+                        summary.SummaryLabel = field.Label;
+                        summary.SummaryValue = field.InputValue;
+                        summary.TemplateFieldID = (int)field.TemplateFieldID;
+                        summary.StandardReferenceID = field.StandardReferenceID;
+
+                        UnitOfWork.Summaries.Add(summary);
+                    }
+                    else
+                    {
+                        summary.Label = field.SummaryFieldName;
+                        summary.SummaryType = field.SummaryType;
+                        summary.SummaryLabel = field.Label;
+                        summary.SummaryValue = field.InputValue;
+                        summary.StandardReferenceID = field.StandardReferenceID;
+                    }
+                    
                 }
             }
         }
