@@ -922,7 +922,6 @@
           <Property Name="OPTION8" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION9" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION10" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="ReferenceRange">
           <Key>
