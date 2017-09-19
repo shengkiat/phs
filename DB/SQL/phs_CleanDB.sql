@@ -381,7 +381,8 @@ CREATE TABLE [dbo].[Summary](
 	[TemplateFieldID] [int] NOT NULL,
 	[SummaryLabel] [nvarchar](MAX) NULL,
 	[SummaryValue] [nvarchar](MAX) NULL,
-	[SummaryType] [nvarchar](50) NULL
+	[SummaryType] [nvarchar](50) NULL,
+	[StandardReferenceID] [int] NULL
  CONSTRAINT [PK_summary] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantID] ASC,
@@ -503,6 +504,11 @@ ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_template_fie
 REFERENCES [dbo].[TemplateField] ([TemplateFieldID])
 GO
 ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_template_field]
+GO
+ALTER TABLE [dbo].[Summary]  WITH CHECK ADD  CONSTRAINT [FK summary_standard_reference] FOREIGN KEY([StandardReferenceID])
+REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
+GO
+ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_standard_reference]
 GO
 
 --------------------------Data--------------------- 
