@@ -11,5 +11,7 @@ namespace PHS.Repository.Interface
         Modality GetActiveModalityByID(int id);
 
         IEnumerable<Modality> GetModalityByFormID(int formId);
+
+        IEnumerable<Modality> GetModalityByEventID(int eventId);
     }
 }

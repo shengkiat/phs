@@ -28,5 +28,9 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Modality>().Where(u => u.Forms.Any(f => f.FormID == formId)).Include(x => x.Forms);
         }
 
+        public IEnumerable<Modality> GetModalityByEventID(int eventId)
+        {
+            return dbContext.Set<Modality>().Where(u => u.PHSEvents.Any(f => f.PHSEventID == eventId)).Include(x => x.Forms);
+        }
     }
 }
