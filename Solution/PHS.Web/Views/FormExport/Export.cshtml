@@ -1,4 +1,4 @@
-﻿@model PHS.DB.ViewModels.Form.TemplateViewModel
+﻿@model PHS.Business.ViewModel.FormExport.FormExportViewModel
 
 @using PHS.Common
 @using PHS.Business.Extensions
@@ -43,28 +43,20 @@
 </script>
 
 <div class="form-page-container prepend-top span-26">        
-    <div class="inner-container">
-        @Html.RouteLink("Home", "form-home",null, new{@class="image-icon-link home-icon-link"})<br />
-        <h2 class="form-title">
-            @Model.Title</h2>
-        <small>(@Model.GroupedEntries.Count() Entries Submitted)</small>        
-    </div>        
+    
         <div class="inner-container clear-both">
             @Html.WriteMessages()<br />
             @using (Html.BeginForm("ViewEntriesSubmit", "Form", FormMethod.Post))
             {
-                if (Model.GroupedEntries.Count() > 0)
-                {
+                //<input id="templateId" type="hidden" value="@Model.TemplateID" />
 
-                    <input id="templateId" type="hidden" value="@Model.TemplateID" />
+                <ul class="horizontal-list form-actions-list">
+                    <li>
+                        @Html.DropDownList("FormID", new SelectList(Model.Forms, "FormID", "Title", string.Empty))
+                        <input type="submit" name="submitButton" class="green" value="Export to Excel" />
+                    </li>
 
-                    <ul class="horizontal-list form-actions-list">
-                        <li>
-                            <input type="submit" name="submitButton" class="red" value="Delete Selected" />
-                            <input type="submit" name="submitButton" class="green" value="Export to Excel" />
-                        </li>
-                    
-                    </ul>
+                </ul>
                     <div class="sort-container">
                         <ul class="horizontal-list form-actions-list">
                             <li>
@@ -97,20 +89,12 @@
                                 {
                                     Html.RenderPartial("_ViewEntriesCriteriaPartial", crtieriaField);
                                 }
-                                
+
                             </tbody>
                         </table>
                     </div>
-                
-                    
-                    
-                }
-                else
-                { 
-                    <div class="notice">
-                        No entries have been submitted</div>
-                }
-                @Html.HiddenFor(m => m.TemplateID);
+
+               // @Html.HiddenFor(m => m.TemplateID);
             }            
         </div>   
         

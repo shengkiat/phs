@@ -2,6 +2,7 @@
 using PHS.Business.Interface;
 using PHS.Business.ViewModel.FormExport;
 using PHS.Common;
+using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using System;
@@ -19,6 +20,33 @@ namespace PHS.Business.Implementation
         public IFormExportManager Create()
         {
             return new FormExportManager();
+        }
+
+        public FormExportViewModel RetrieveAllForms(int eventId, out string message)
+        {
+            message = string.Empty;
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                FormExportViewModel result = FormExportViewModel.CreateFromObject();
+                IEnumerable<Modality> modalities = unitOfWork.Modalities.GetModalityByEventID(eventId);
+                if (modalities != null)
+                {
+                    foreach(var modality in modalities)
+                    {
+                        foreach(var form in modality.Forms)
+                        {
+                            result.Forms.Add(FormViewModel.CreateFromObject(form));
+                        }
+                    }
+                }
+
+                else
+                {
+                    message = "No Modality found";
+                }
+
+                return result;
+            }
         }
 
         public DataTable CreateFormEntriesDataTable(FormExportViewModel model)

@@ -37,12 +37,6 @@ namespace PHS.Web.Controllers
             this._formRepo = formRepo;
         }
 
-        // GET: FormExport
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormExportViewModel model, FormCollection collection)
         {
@@ -95,18 +89,25 @@ namespace PHS.Web.Controllers
         }
         */
 
-        public ActionResult ViewEntries(int templateId)
+        public ActionResult Export(int eventid)
         {
-            // var form = this._formRepo.GetByPrimaryKey(formId);
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
 
-            var template = this._formRepo.GetTemplate(templateId);
+            using (var formExportManager = new FormExportManager())
+            {
+                string message = string.Empty;
 
-            var templateView = TemplateViewModel.CreateFromObject(template);
+                FormExportViewModel formExportViewModel = formExportManager.RetrieveAllForms(eventid, out message);
+                if (formExportViewModel == null)
+                {
+                    SetViewBagError(message);
+                }
 
-            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
-            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-            return View(templateView);
+                return View(formExportViewModel);
+            };
         }
 
         public ActionResult AddNewSortEntries(string templateId)

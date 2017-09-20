@@ -498,7 +498,7 @@
     <Content Include="Views\Form\ViewTemplate.cshtml" />
     <Content Include="Views\Form\PreviewTemplate.cshtml" />
     <Content Include="Views\FormAccess\FillIn.cshtml" />
-    <Content Include="Views\FormExport\ViewEntries.cshtml" />
+    <Content Include="Views\FormExport\Export.cshtml" />
     <Content Include="Views\Form\_form-field-address-partial.cshtml" />
     <Content Include="Views\Form\_form-field-address-template.cshtml" />
     <Content Include="Views\Form\_form-field-birthdaypicker-partial.cshtml" />
