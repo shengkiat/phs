@@ -70,7 +70,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title")] StandardReference standardReference)
+        public ActionResult Create([Bind(Include = "Title,DataType")] StandardReference standardReference)
         {
             if (!IsUserAuthenticated())
             {
@@ -171,7 +171,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StandardReferenceID,Title")] StandardReference standardReference)
+        public ActionResult Edit([Bind(Include = "StandardReferenceID,Title,DataType")] StandardReference standardReference)
         {
             if (!IsUserAuthenticated())
             {
@@ -214,7 +214,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditReferenceRange([Bind(Include = "StandardReferenceID,ReferenceRangeID,Title,MinimumValue,MaximumValue,Result,Highlight")] ReferenceRange referenceRange)
+        public ActionResult EditReferenceRange([Bind(Include = "StandardReferenceID,ReferenceRangeID,Title,MinimumValue,MaximumValue,StringValue,Result,Highlight")] ReferenceRange referenceRange)
         {
             if (!IsUserAuthenticated())
             {

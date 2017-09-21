@@ -11,8 +11,9 @@
     });
 
     function displayRiskStatus(value, fieldId) {
-        if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
+        if(value != "") {
             var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
+
             if (standardReferenceID != "")
             {
                 var jsonObject = {
@@ -33,7 +34,8 @@
                         document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
                         if (response.Highlight) {
                             document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = "red";
-                        }                    }
+                        }
+                    }
                 });
             }
         }

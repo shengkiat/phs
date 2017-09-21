@@ -277,12 +277,12 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult GetReferenceRange(int standardReferenceId, double value)
+        public ActionResult GetReferenceRange(int standardReferenceId, string value)
         {
             string message = string.Empty;
-            using (var formAccessManager = new FormAccessManager())
+            using (var stdReferenceManager = new StandardReferenceManager())
             {
-                var referenceRange = formAccessManager.GetReferenceRange(standardReferenceId, value, out message);
+                var referenceRange = stdReferenceManager.GetReferenceRange(standardReferenceId, value, out message);
 
                 if (referenceRange == null)
                 {

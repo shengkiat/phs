@@ -84,7 +84,7 @@ namespace PHS.Business.Implementation
                 message = "Standard Reference already exists";
                 return null;
             }
-            
+
             try
             {
                 using (var unitOfWork = CreateUnitOfWork())
@@ -163,7 +163,7 @@ namespace PHS.Business.Implementation
                         message = "Standard Reference not found";
                         return false;
                     }
-                    if(standardReference.TemplateFields.Any())
+                    if (standardReference.TemplateFields.Any())
                     {
                         message = "Standard Reference linked to template.";
                         return false;
@@ -231,6 +231,47 @@ namespace PHS.Business.Implementation
                 ExceptionLog(ex);
                 message = Constants.OperationFailedDuringRetrievingValue("Standard Reference Title");
                 return true;
+            }
+        }
+
+        public ReferenceRange GetReferenceRange(int standardReferenceID, string value, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    var standardReference = unitOfWork.StandardReferences.GetStandardReference(standardReferenceID);
+
+                    if (standardReference == null)
+                    {
+                        message = "Invalid Standard Reference ID";
+                        return null;
+                    }
+                    ReferenceRange referenceRange = null;
+
+                    if (standardReference.DataType == "Number") {
+                        double inputValue;
+                        if(double.TryParse(value, out inputValue)) {
+                            referenceRange = standardReference.ReferenceRanges.Where(r => r.MinimumValue <= inputValue && r.MaximumValue >= inputValue).FirstOrDefault();
+                        }
+                        else {
+                            message = "Incompatible Standard reference Data type";
+                            return null;
+                        }
+                    }
+                    else if(standardReference.DataType == "String")
+                    {
+                        referenceRange = standardReference.ReferenceRanges.Where(r => r.StringValue == value).FirstOrDefault();
+                    }
+                    return referenceRange;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue("GetReferenceRange");
+                return null;
             }
         }
     }

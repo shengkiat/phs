@@ -324,6 +324,7 @@ CREATE TABLE [dbo].[Form](
 CREATE TABLE [dbo].[StandardReference](
 	[StandardReferenceID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
+	[DataType] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_standard_reference] PRIMARY KEY CLUSTERED 
 (
 	[StandardReferenceID] ASC
@@ -333,9 +334,10 @@ CREATE TABLE [dbo].[StandardReference](
 CREATE TABLE [dbo].[ReferenceRange](
 	[ReferenceRangeID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[MinimumValue] [float] NOT NULL,
-	[MaximumValue] [float] NOT NULL,
-	[Result] [nvarchar](50) NULL,
+	[MinimumValue] [float] NULL,
+	[MaximumValue] [float] NULL,
+	[StringValue] [nvarchar](max) NULL,
+	[Result] [nvarchar](max) NULL,
 	[Highlight] [bit] NOT NULL,
 	[StandardReferenceID] [int] NOT NULL,
  CONSTRAINT [PK_reference_range] PRIMARY KEY CLUSTERED 
@@ -725,19 +727,19 @@ GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'Systolic Blood Pressure ')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (1, N'Systolic Blood Pressure ', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Diastolic Blood Pressure ')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (2, N'Diastolic Blood Pressure ', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'Sugar')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (3, N'Sugar', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (4, N'BMI')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (4, N'BMI', N'Number')
 GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
