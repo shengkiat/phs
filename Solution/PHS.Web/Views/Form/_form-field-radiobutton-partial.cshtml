@@ -10,41 +10,11 @@
             var selectedValue = this.value;
 
             displayOrHide(this, selectedValue, @Model.DomId);
-            displayRiskStatus(selectedValue, @Model.DomId);
 
         });
+        var value = $("input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]:checked").val();
+        displayRiskStatus(value, @Model.DomId);
     });
-
-    function displayRiskStatus(value, fieldId) {
-        if(value != "") {
-            var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
-
-            if (standardReferenceID != "") {
-                var jsonObject = {
-                    "standardReferenceId": standardReferenceID,
-                    "value": value
-                };
-
-                $.ajax({
-                    url: "@Url.Action("GetReferenceRange", "FormAccess")",
-                    type: "POST",
-                    data: JSON.stringify(jsonObject),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    error: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
-                    },
-                    success: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
-                        if (response.Highlight) {
-                            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = "red";
-                        }
-                    }
-                });
-            }
-        }
-    }
-
 </script>
 
 @{

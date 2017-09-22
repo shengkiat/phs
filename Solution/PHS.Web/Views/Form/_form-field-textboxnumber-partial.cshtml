@@ -4,41 +4,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        var value = document.getElementById('SubmitFields[@Model.DomId].TextBox').value
+        var value = document.getElementById('SubmitFields[@Model.DomId].TextBoxNumber').value
         displayRiskStatus(value, @Model.DomId);
-
     });
-
-    function displayRiskStatus(value, fieldId) {
-        if(value != "") {
-            var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
-
-            if (standardReferenceID != "") {
-                var jsonObject = {
-                    "standardReferenceId": standardReferenceID,
-                    "value": value
-                };
-
-                $.ajax({
-                    url: "@Url.Action("GetReferenceRange", "FormAccess")",
-                    type: "POST",
-                    data: JSON.stringify(jsonObject),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    error: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
-                    },
-                    success: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
-                        if (response.Highlight) {
-                            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = "red";
-                        }
-                    }
-                });
-            }
-        }
-    }
 
 </script>
 

@@ -262,7 +262,7 @@ namespace PHS.Business.Implementation
                     }
                     else if(standardReference.DataType == "String")
                     {
-                        referenceRange = standardReference.ReferenceRanges.Where(r => r.StringValue == value).FirstOrDefault();
+                        referenceRange = standardReference.ReferenceRanges.Where(r => r.StringValue.Equals(value, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                     }
                     return referenceRange;
                 }
