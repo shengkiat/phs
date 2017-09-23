@@ -7,9 +7,22 @@
 
         $('input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]').on("change", function () {
 
-            var selectedValue = this.value;
+            var radios = document.getElementsByName('SubmitFields[@Model.DomId].RadioButton');
 
-            displayOrHide(this, selectedValue, @Model.DomId);
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    //alert(radios[i].value);
+
+                    var selectedValue = radios[i].value;
+
+                    displayOrHide(this, selectedValue, @Model.TemplateFieldID);
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+
 
         });
     });
