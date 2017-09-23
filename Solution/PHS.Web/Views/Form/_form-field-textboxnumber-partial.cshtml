@@ -5,7 +5,7 @@
 
     $(document).ready(function () {
         var value = document.getElementById('SubmitFields[@Model.DomId].TextBoxNumber').value
-        displayRiskStatus(value, @Model.DomId);
+        displayStandardReferenceResult(value, @Model.DomId);
     });
 
 </script>
@@ -36,7 +36,7 @@
                        @readonlyAttribute
                        style="width: 95%;" />
 
-                <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+                <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
                 
                 <input id="SubmitFields[@Model.DomId].StandardReferenceId"
                         name="SubmitFields[@Model.DomId].StandardReferenceId"

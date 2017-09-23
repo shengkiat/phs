@@ -13,7 +13,7 @@
 
         });
         var value = $("input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]:checked").val();
-        displayRiskStatus(value, @Model.DomId);
+        displayStandardReferenceResult(value, @Model.DomId);
     });
 </script>
 
@@ -109,7 +109,7 @@
                     </li>
                 }
             </ul>
-            <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+            <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
 
             <input id="SubmitFields[@Model.DomId].StandardReferenceId"
                    name="SubmitFields[@Model.DomId].StandardReferenceId"

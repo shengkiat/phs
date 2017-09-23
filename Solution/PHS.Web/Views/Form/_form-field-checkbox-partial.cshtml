@@ -13,9 +13,9 @@
             });
 
             displayOrHideFromCheckBox(this, allVals, @Model.DomId);
-
-
         });
+        var value = $("input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]:checked").val();
+        displayStandardReferenceResult(value, @Model.DomId);
     });
 
 </script>
@@ -96,6 +96,13 @@
                     </li>
                 }
             </ul>
+            <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
+
+            <input id="SubmitFields[@Model.DomId].StandardReferenceId"
+                   name="SubmitFields[@Model.DomId].StandardReferenceId"
+                   type="hidden"
+                   value="@Model.StandardReferenceID"
+                   style="width: 100px; height:20px;" maxlength="9" />
             @if (Model.IsEditMode())
             {
                 @Html.Partial("_FormFieldPropertiesPartial", Model)
