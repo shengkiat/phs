@@ -552,7 +552,7 @@ namespace PHS.BusinessTests.Implementation
 
             Assert.AreEqual("Yes", templateViewModel.Entries[0].Value);
             Assert.AreEqual("Testing 123", templateViewModel.Entries[1].Value);
-            Assert.AreEqual(null, templateViewModel.Entries[1].Value);
+            Assert.AreEqual(null, templateViewModel.Entries[2].Value);
         }
 
         [TestMethod()]
@@ -784,6 +784,7 @@ namespace PHS.BusinessTests.Implementation
             fieldCollection.Add("Fields[" + id + "].SubLabel", "");
             fieldCollection.Add("Fields[" + id + "].HelpText", "");
             fieldCollection.Add("Fields[" + id + "].Hint", "");
+            fieldCollection.Add("Fields[" + id + "].Order", "" + id);
 
             fields = new System.Collections.Generic.Dictionary<string, string>();
             fields.Add("" + id, "" + id);
