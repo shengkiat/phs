@@ -55,9 +55,12 @@ namespace PHS.Business.Implementation
         {
             var sortFieldViewModel = new SortFieldViewModel();
             sortFieldViewModel.SortFields = new List<SelectListItem>();
+            int columnCount = 0;
 
             using (var unitOfWork = CreateUnitOfWork())
             {
+                IDictionary<string, string> fieldColumnMapping = new System.Collections.Generic.Dictionary<string, string>();
+
                 var form = unitOfWork.FormRepository.GetForm(formId);
 
                 foreach(var template in form.Templates)
@@ -66,21 +69,31 @@ namespace PHS.Business.Implementation
                     templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
                     templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
-                    foreach (var s in templateView.Fields)
+                    foreach (var s in templateView.Fields.OrderBy(f => f.TemplateFieldID))
                     {
+                        string label = s.Label;
+                        if (fieldColumnMapping.ContainsKey(label))
+                        {
+                            label = columnCount + ": " + label;
+                        }
+
+                        fieldColumnMapping.Add(label, label);
+
                         sortFieldViewModel.SortFields.Add(new SelectListItem
                         {
-                            Text = s.Label.StripHTML().Limit(100),
+                            Text = label.StripHTML().Limit(100),
                             Value = "" + s.TemplateFieldID.Value
                         });
-                    }
 
-                    sortFieldViewModel.SortFields.Add(new SelectListItem
-                    {
-                        Text = "Submitted On",
-                        Value = "Submitted On"
-                    });
+                        columnCount++;
+                    }
                 }
+
+                sortFieldViewModel.SortFields.Add(new SelectListItem
+                {
+                    Text = "Submitted On",
+                    Value = "Submitted On"
+                });
             }
 
             return sortFieldViewModel;
@@ -90,9 +103,12 @@ namespace PHS.Business.Implementation
         {
             var criteriaFieldViewModel = new CriteriaFieldViewModel();
             criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
+            int columnCount = 0;
 
             using (var unitOfWork = CreateUnitOfWork())
             {
+                IDictionary<string, string> fieldColumnMapping = new System.Collections.Generic.Dictionary<string, string>();
+
                 var form = unitOfWork.FormRepository.GetForm(formId);
 
                 foreach (var template in form.Templates)
@@ -105,21 +121,31 @@ namespace PHS.Business.Implementation
                     criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
                     criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
 
-                    foreach (var s in templateView.Fields)
+                    foreach (var s in templateView.Fields.OrderBy(f => f.TemplateFieldID))
                     {
+                        string label = s.Label;
+                        if (fieldColumnMapping.ContainsKey(label))
+                        {
+                            label = columnCount + ": " + label;
+                        }
+
+                        fieldColumnMapping.Add(label, label);
+
                         criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                         {
-                            Text = s.Label.StripHTML().Limit(100),
+                            Text = label.StripHTML().Limit(100),
                             Value = "" + s.TemplateFieldID.Value
                         });
-                    }
 
-                    criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
-                    {
-                        Text = "Submitted On",
-                        Value = "Submitted On"
-                    });
+                        columnCount++;
+                    }
                 }
+
+                criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
+                {
+                    Text = "Submitted On",
+                    Value = "Submitted On"
+                });
             }
 
             return criteriaFieldViewModel;
