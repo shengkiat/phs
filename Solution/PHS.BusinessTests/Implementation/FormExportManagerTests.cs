@@ -58,7 +58,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            var result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(5, result.Columns.Count);
@@ -104,7 +104,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(2, result.Columns.Count);
@@ -145,7 +145,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(4, result.Columns.Count);
@@ -180,7 +180,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(2, result.Columns.Count);
@@ -225,7 +225,7 @@ namespace PHS.Business.Implementation.Tests
                 SortFields = SortFieldViewModels
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(2, result.Columns.Count);
@@ -274,7 +274,7 @@ namespace PHS.Business.Implementation.Tests
                 CriteriaFields = criteriaFields
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(2, result.Columns.Count);
@@ -321,7 +321,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(4, result.Columns.Count);
@@ -385,7 +385,7 @@ namespace PHS.Business.Implementation.Tests
                 FormID = 1
             };
 
-            DataTable result = _target.CreateFormEntriesDataTable(model);
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
             Assert.AreEqual(8, result.Columns.Count);

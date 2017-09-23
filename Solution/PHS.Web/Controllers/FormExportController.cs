@@ -25,25 +25,7 @@ namespace PHS.Web.Controllers
     public class FormExportController : BaseController
     {
 
-        [HttpPost]
-        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormExportViewModel model, FormCollection collection)
-        {
-            //Console.Write(submitButton);
-
-            switch (submitButton)
-            {
-                //case "Delete Selected":
-                    // delegate sending to another controller action
-                    //return DeleteEntries(selectedEntries, model);
-                case "Export to Excel":
-                    // call another action to perform the cancellation
-                    return ExportToExcel(model, collection);
-                default:
-                    // If they've submitted the form without a submitButton, 
-                    // just return the view again.
-                    return View();
-            }
-        }
+        
 
         /*
         [HttpPost]
@@ -98,6 +80,30 @@ namespace PHS.Web.Controllers
             };
         }
 
+        [HttpPost]
+        public ActionResult Export(FormExportViewModel model, FormCollection collection)
+        {
+            using (var formExportManager = new FormExportManager())
+            {
+                var formExportResult = formExportManager.CreateFormEntriesDataTable(model);
+
+                var gridView = new GridView();
+                gridView.DataSource = formExportResult.ValuesDataTable;
+                gridView.DataBind();
+
+                Response.ClearContent();
+                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(formExportResult.Title.ToSlug()));
+                Response.ContentType = "application/vnd.ms-excel";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new HtmlTextWriter(sw);
+                gridView.RenderControl(htw);
+                Response.Write(sw.ToString());
+                Response.End();
+            }
+
+            return RedirectToRoute("form-export", new { eventId = model.EventID });
+        }
+
         public ActionResult AddNewSortEntries(string formId)
         {
             using (var formExportManager = new FormExportManager())
@@ -122,29 +128,7 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public ActionResult ExportToExcel(FormExportViewModel model, FormCollection collection)
-        {
-            int formId = model.FormID.Value;
-
-            using (var formExportManager = new FormExportManager())
-            {
-                var gridView = new GridView();
-                gridView.DataSource = formExportManager.CreateFormEntriesDataTable(model);
-                gridView.DataBind();
-
-                Response.ClearContent();
-                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(model.Title.ToSlug()));
-                Response.ContentType = "application/vnd.ms-excel";
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter htw = new HtmlTextWriter(sw);
-                gridView.RenderControl(htw);
-                Response.Write(sw.ToString());
-                Response.End();
-            }
-
-            return RedirectToRoute("form-entries", new { formid = formId });
-
-        }
+        
 
         
     }

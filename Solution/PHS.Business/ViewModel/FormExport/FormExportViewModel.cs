@@ -10,17 +10,18 @@ namespace PHS.Business.ViewModel.FormExport
 {
     public class FormExportViewModel
     {
+        public int? EventID { get; set; }
         public int? FormID { get; set; }
-        public string Title { get; set; }
         public List<FormViewModel> Forms { get; set; }
         public List<SortFieldViewModel> SortFields { get; set; }
         public List<CriteriaFieldViewModel> CriteriaFields { get; set; }
 
 
-        public static FormExportViewModel Initialize()
+        public static FormExportViewModel Initialize(int eventId)
         {
             var view = new FormExportViewModel
             {
+                EventID = eventId,
                 SortFields = Enumerable.Empty<SortFieldViewModel>().ToList(),
                 CriteriaFields = Enumerable.Empty<CriteriaFieldViewModel>().ToList(),
                 Forms = Enumerable.Empty<FormViewModel>().ToList()
@@ -29,9 +30,9 @@ namespace PHS.Business.ViewModel.FormExport
             return view;
         }
 
-        public static FormExportViewModel CreateFromObject()
+        public static FormExportViewModel CreateFromObject(int eventId)
         {
-            return FormExportViewModel.Initialize();
+            return FormExportViewModel.Initialize(eventId);
         }
     }
 }

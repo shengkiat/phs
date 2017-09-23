@@ -29,7 +29,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             using (var unitOfWork = CreateUnitOfWork())
             {
-                FormExportViewModel result = FormExportViewModel.CreateFromObject();
+                FormExportViewModel result = FormExportViewModel.CreateFromObject(eventId);
                 IEnumerable<Modality> modalities = unitOfWork.Modalities.GetModalityByEventID(eventId);
                 if (modalities != null)
                 {
@@ -163,7 +163,7 @@ namespace PHS.Business.Implementation
             return values;
         }
 
-        public DataTable CreateFormEntriesDataTable(FormExportViewModel model)
+        public FormExportResultViewModel CreateFormEntriesDataTable(FormExportViewModel model)
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
@@ -180,8 +180,12 @@ namespace PHS.Business.Implementation
 
                     templateViews.Add(templateView);
                 }
-                
-                return CreateFormEntriesDataTable(model.Title, templateViews, model.SortFields, model.CriteriaFields);
+
+                FormExportResultViewModel result = new FormExportResultViewModel();
+                result.ValuesDataTable = CreateFormEntriesDataTable(form.Title, templateViews, model.SortFields, model.CriteriaFields);
+                result.Title = form.Title;
+
+                return result;
             }
         }
 
@@ -279,10 +283,13 @@ namespace PHS.Business.Implementation
 
                             AddressViewModel address = addressField.FromJson<AddressViewModel>();
 
-                            row[columnIndex] = address.Blk;
-                            row[columnIndex + 1] = address.Unit;
-                            row[columnIndex + 2] = address.StreetAddress;
-                            row[columnIndex + 3] = address.ZipCode;
+                            if (address != null)
+                            {
+                                row[columnIndex] = address.Blk;
+                                row[columnIndex + 1] = address.Unit;
+                                row[columnIndex + 2] = address.StreetAddress;
+                                row[columnIndex + 3] = address.ZipCode;
+                            }
                         }
                         else if (entry.FieldType == Constants.TemplateFieldType.BMI)
                         {
@@ -290,9 +297,13 @@ namespace PHS.Business.Implementation
 
                             BMIViewModel bmi = bmiField.FromJson<BMIViewModel>();
 
-                            row[columnIndex] = bmi.Weight;
-                            row[columnIndex + 1] = bmi.Height;
-                            row[columnIndex + 2] = bmi.BodyMassIndex;
+                            if (bmi != null)
+                            {
+                                row[columnIndex] = bmi.Weight;
+                                row[columnIndex + 1] = bmi.Height;
+                                row[columnIndex + 2] = bmi.BodyMassIndex;
+                            }
+                            
                         }
                         /*
                         else if (columnIndex < group.Count())
