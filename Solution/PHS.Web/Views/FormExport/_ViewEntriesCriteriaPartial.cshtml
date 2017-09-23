@@ -19,7 +19,7 @@
 
         @{
             <div style="float:left;">
-                @Html.DropDownListFor(m => m.FieldLabel, Model.FieldLabels, String.Empty, new {@id ="criteriaField", @onchange = "myFunction(this)" })
+                @Html.DropDownListFor(m => m.TemplateFieldID, Model.FieldLabels, String.Empty, new {@id ="criteriaField", @onchange = "myFunction(this)" })
             </div>
 
             var criteriaLogFields = new List<SelectListItem>()
@@ -54,7 +54,7 @@
 
                         foreach (var formField in Model.Fields)
                         {
-                            if (formField.Label.Equals(field.FieldLabel))
+                            if (formField.TemplateFieldID.Equals(field.TemplateFieldID))
                             {
                                 foreach (var option in formField.Options.Split(","))
                                 {
@@ -68,13 +68,13 @@
                             }
                         }
 
-                        @Html.DropDownListFor(m => m.CriteriaValue[@field.FieldLabel], optionFields, String.Empty, new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                        @Html.DropDownListFor(m => m.CriteriaValue[@field.TemplateFieldID.ToString()], optionFields, String.Empty, new { @id = "criteria[" + @field.TemplateFieldID + "]", @style = "display:none;" })
 
                     }
 
                     else
                     {
-                        @Html.TextBoxFor(m => m.CriteriaValue[@field.FieldLabel], new { @id = "criteria[" + @field.FieldLabel + "]", @style = "display:none;" })
+                        @Html.TextBoxFor(m => m.CriteriaValue[@field.TemplateFieldID.ToString()], new { @id = "criteria[" + @field.TemplateFieldID + "]", @style = "display:none;" })
                     }
                 }
 

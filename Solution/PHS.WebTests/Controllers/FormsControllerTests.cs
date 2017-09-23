@@ -85,9 +85,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "eq";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
@@ -106,16 +106,16 @@ namespace PHS.Web.Controllers.Tests
             record.CriteriaValue = new Dictionary<string, string>();
             record.CriteriaSubFields = new List<CriteriaSubFieldViewModel>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "neq";
-            record.CriteriaValue[record.FieldLabel] = "FIRSTCOL";
+            record.CriteriaValue[record.TemplateFieldID] = "FIRSTCOL";
 
             CriteriaSubFieldViewModel subRecord = new CriteriaSubFieldViewModel();
             subRecord.CriteriaValue = new Dictionary<string, string>();
 
             subRecord.OperatorLogic = "and";
             subRecord.CriteriaLogic = "gt";
-            subRecord.CriteriaValue[record.FieldLabel] = "SECCOL";
+            subRecord.CriteriaValue[record.TemplateFieldID] = "SECCOL";
 
             record.CriteriaSubFields.Add(subRecord);
 
@@ -136,27 +136,27 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel recordOne = new CriteriaFieldViewModel();
             recordOne.CriteriaValue = new Dictionary<string, string>();
 
-            recordOne.FieldLabel = "FIRST COL";
+            recordOne.TemplateFieldID = "FIRST COL";
             recordOne.CriteriaLogic = "gte";
-            recordOne.CriteriaValue[recordOne.FieldLabel] = "FIRSTVAL";
+            recordOne.CriteriaValue[recordOne.TemplateFieldID] = "FIRSTVAL";
 
             fields.Add(recordOne);
 
             CriteriaFieldViewModel recordTwo = new CriteriaFieldViewModel();
             recordTwo.CriteriaValue = new Dictionary<string, string>();
 
-            recordTwo.FieldLabel = "SEC COL";
+            recordTwo.TemplateFieldID = "SEC COL";
             recordTwo.CriteriaLogic = "lt";
-            recordTwo.CriteriaValue[recordTwo.FieldLabel] = "SECVAL";
+            recordTwo.CriteriaValue[recordTwo.TemplateFieldID] = "SECVAL";
 
             fields.Add(recordTwo);
 
             CriteriaFieldViewModel recordThree = new CriteriaFieldViewModel();
             recordThree.CriteriaValue = new Dictionary<string, string>();
 
-            recordThree.FieldLabel = "THIRD COL";
+            recordThree.TemplateFieldID = "THIRD COL";
             recordThree.CriteriaLogic = "lte";
-            recordThree.CriteriaValue[recordThree.FieldLabel] = "THIRDVAL";
+            recordThree.CriteriaValue[recordThree.TemplateFieldID] = "THIRDVAL";
 
             fields.Add(recordThree);
 
@@ -175,9 +175,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "startswith";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
@@ -195,9 +195,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "endswith";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
@@ -215,9 +215,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "contains";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
@@ -235,9 +235,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "doesnotcontain";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });
@@ -255,9 +255,9 @@ namespace PHS.Web.Controllers.Tests
             CriteriaFieldViewModel record = new CriteriaFieldViewModel();
             record.CriteriaValue = new Dictionary<string, string>();
 
-            record.FieldLabel = "TWO COL";
+            record.TemplateFieldID = "TWO COL";
             record.CriteriaLogic = "in";
-            record.CriteriaValue[record.FieldLabel] = "TEST";
+            record.CriteriaValue[record.TemplateFieldID] = "TEST";
             fields.Add(record);
 
             var retVal = obj.Invoke("GenerateFlitering", new object[] { fields });

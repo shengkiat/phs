@@ -105,12 +105,12 @@ namespace PHS.Business.Implementation
                     criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
                     criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
 
-                    foreach (var s in templateView.GroupedEntries.First())
+                    foreach (var s in templateView.Fields)
                     {
                         criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                         {
-                            Text = s.FieldLabel.StripHTML().Limit(100),
-                            Value = s.FieldLabel
+                            Text = s.Label.StripHTML().Limit(100),
+                            Value = "" + s.TemplateFieldID.Value
                         });
                     }
 
@@ -357,7 +357,7 @@ namespace PHS.Business.Implementation
                         var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(sortFieldViewModel.TemplateFieldID));
                         if (templateField != null)
                         {
-                            var sortF = templateField.Label;
+                            var sortF = templateField.Label.StripHTML();
                             var sortO = sortFieldViewModel.SortOrder;
                             if (!string.IsNullOrEmpty(sortF) && !string.IsNullOrEmpty(sortO))
                             {
@@ -382,22 +382,28 @@ namespace PHS.Business.Implementation
 
             if (criteriaFields != null)
             {
-                foreach (var criteriaField in criteriaFields)
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    if (!String.IsNullOrEmpty(criteriaField.FieldLabel)
-                        && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
-                        && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.FieldLabel]))
+                    foreach (var criteriaField in criteriaFields)
                     {
-                        result += string.Format(" OR [{0}] {1}", criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.FieldLabel]));
-                        if (criteriaField.CriteriaSubFields != null)
+                        if (!String.IsNullOrEmpty(criteriaField.TemplateFieldID)
+                            && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
+                            && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.TemplateFieldID]))
                         {
-                            foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
+                            var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(criteriaField.TemplateFieldID));
+                            if (templateField != null)
                             {
-                                result += string.Format(" {0} [{1}] {2}", criteriaSubField.OperatorLogic, criteriaField.FieldLabel, getConvertedCriteriaValue(criteriaSubField.CriteriaLogic, criteriaSubField.CriteriaValue[criteriaField.FieldLabel]));
+                                result += string.Format(" OR [{0}] {1}", templateField.Label.StripHTML(), getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.TemplateFieldID]));
+                                if (criteriaField.CriteriaSubFields != null)
+                                {
+                                    foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
+                                    {
+                                        result += string.Format(" {0} [{1}] {2}", criteriaSubField.OperatorLogic, templateField.Label.StripHTML(), getConvertedCriteriaValue(criteriaSubField.CriteriaLogic, criteriaSubField.CriteriaValue[criteriaField.TemplateFieldID]));
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
             }
 

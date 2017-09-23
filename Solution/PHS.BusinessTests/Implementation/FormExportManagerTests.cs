@@ -256,11 +256,11 @@ namespace PHS.Business.Implementation.Tests
             fillin("1", templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
 
             Dictionary<string, string> criteriaValue = new Dictionary<string, string>();
-            criteriaValue.Add("this is for testing", "ABC");
+            criteriaValue.Add("1", "ABC");
 
             CriteriaFieldViewModel criteriaFieldViewModel = new CriteriaFieldViewModel()
             {
-                FieldLabel = "this is for testing",
+                TemplateFieldID = "1",
                 CriteriaLogic = "contains",
                 CriteriaValue = criteriaValue
             };
