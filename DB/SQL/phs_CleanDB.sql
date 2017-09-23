@@ -324,6 +324,7 @@ CREATE TABLE [dbo].[Form](
 CREATE TABLE [dbo].[StandardReference](
 	[StandardReferenceID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
+	[DataType] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_standard_reference] PRIMARY KEY CLUSTERED 
 (
 	[StandardReferenceID] ASC
@@ -333,9 +334,10 @@ CREATE TABLE [dbo].[StandardReference](
 CREATE TABLE [dbo].[ReferenceRange](
 	[ReferenceRangeID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[MinimumValue] [float] NOT NULL,
-	[MaximumValue] [float] NOT NULL,
-	[Result] [nvarchar](50) NULL,
+	[MinimumValue] [float] NULL,
+	[MaximumValue] [float] NULL,
+	[StringValue] [nvarchar](max) NULL,
+	[Result] [nvarchar](max) NULL,
 	[Highlight] [bit] NOT NULL,
 	[StandardReferenceID] [int] NOT NULL,
  CONSTRAINT [PK_reference_range] PRIMARY KEY CLUSTERED 
@@ -577,7 +579,7 @@ INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [Is
 GO
 INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (2, N'2016 - Event', CAST(N'2016-04-13 10:00:00.5270000' AS DateTime2), CAST(N'2016-04-14 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (3, N'2017 - Event', CAST(N'2017-07-12 10:00:00.5270000' AS DateTime2), CAST(N'2017-09-30 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
+INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (3, N'PHS 2017 - Jurong', CAST(N'2017-07-12 10:00:00.5270000' AS DateTime2), CAST(N'2017-09-30 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[PHSEvent] OFF
 GO
@@ -725,19 +727,19 @@ GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] ON
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (1, N'Systolic Blood Pressure ')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (1, N'Systolic Blood Pressure ', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (2, N'Diastolic Blood Pressure ')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (2, N'Diastolic Blood Pressure ', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (3, N'Sugar')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (3, N'Sugar', N'Number')
 GO
 
 GO
-INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title]) VALUES (4, N'BMI')
+INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (4, N'BMI', N'Number')
 GO
 
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF

@@ -1,6 +1,7 @@
 ﻿function displayOrHide(inputOption, selectedValue, conditionId) {
 
-    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
+    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference=" + conditionId + "]").each(function () {
+        var referenceConditionId = $(this).attr('data-reference');
         var criteria = $(this).attr('data-criteria');
         var options = $(this).attr('data-options');
 
@@ -38,7 +39,7 @@
 
 function displayOrHideFromCheckBox(inputOption, selectedValue, conditionId) {
 
-    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference]=" + conditionId).each(function () {
+    $(inputOption).parent().parent().parent().parent().parent().parent().find("[data-reference=" + conditionId + "]").each(function () {
         var criteria = $(this).attr('data-criteria');
         var options = $(this).attr('data-options');
 

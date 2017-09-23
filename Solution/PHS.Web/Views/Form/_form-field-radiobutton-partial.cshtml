@@ -7,13 +7,27 @@
 
         $('input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]').on("change", function () {
 
-            var selectedValue = this.value;
+            var radios = document.getElementsByName('SubmitFields[@Model.DomId].RadioButton');
 
-            displayOrHide(this, selectedValue, @Model.DomId);
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    //alert(radios[i].value);
+
+                    var selectedValue = radios[i].value;
+
+                    displayOrHide(this, selectedValue, @Model.TemplateFieldID);
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+
 
         });
+        var value = $("input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]:checked").val();
+        displayStandardReferenceResult(value, @Model.DomId);
     });
-
 </script>
 
 @{
@@ -108,6 +122,14 @@
                     </li>
                 }
             </ul>
+            <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
+
+            <input id="SubmitFields[@Model.DomId].StandardReferenceId"
+                   name="SubmitFields[@Model.DomId].StandardReferenceId"
+                   type="hidden"
+                   value="@Model.StandardReferenceID"
+                   style="width: 100px; height:20px;" maxlength="9" />
+
             @if (Model.IsEditMode())
             {
                 @Html.Partial("_FormFieldPropertiesPartial", Model)

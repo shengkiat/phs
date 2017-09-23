@@ -16,11 +16,12 @@ namespace PHS.DB
     {
         public int ReferenceRangeID { get; set; }
         public string Title { get; set; }
-        public double MinimumValue { get; set; }
-        public double MaximumValue { get; set; }
+        public Nullable<double> MinimumValue { get; set; }
+        public Nullable<double> MaximumValue { get; set; }
         public string Result { get; set; }
         public int StandardReferenceID { get; set; }
         public bool Highlight { get; set; }
+        public string StringValue { get; set; }
     
         public virtual StandardReference StandardReference { get; set; }
     }

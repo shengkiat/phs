@@ -40,8 +40,6 @@ namespace PHS.Business.Helpers
         static List<string> DoctorSummaryCategoryNameList = new List<string>()
         {
             Constants.Summary_Category_Label_Name_DoctorConsult_ReasonForReferral,
-            Constants.Summary_Category_Label_Name_DoctorConsult_HealthConcerns,
-            Constants.Summary_Category_Label_Name_DoctorConsult_ReferralSummary,
             Constants.Summary_Category_Label_Name_DoctorConsult_BloodPressure,
             Constants.Summary_Category_Label_Name_DoctorConsult_BMI,
             Constants.Summary_Category_Label_Name_DoctorConsult_Phleblotomy,
@@ -50,9 +48,9 @@ namespace PHS.Business.Helpers
             Constants.Summary_Category_Label_Name_DoctorConsult_UrinaryIncon,
             Constants.Summary_Category_Label_Name_DoctorConsult_MentalHealth,
             Constants.Summary_Category_Label_Name_DoctorConsult_AMT,
-            Constants.Summary_Category_Label_Name_DoctorConsult_PTMemo, 
-            Constants.Summary_Category_Label_Name_DoctorConsult_OTMemo
-
+            Constants.Summary_Category_Label_Name_DoctorConsult_PTMemo,
+            Constants.Summary_Category_Label_Name_DoctorConsult_OTMemo,
+            Constants.Summary_Category_Label_Name_DoctorConsult_Vision
         };
 
         static List<string> PTSummaryCategoryNameList = new List<string>()
@@ -67,8 +65,10 @@ namespace PHS.Business.Helpers
 
         static List<string> OTSummaryCategoryNameList = new List<string>()
         {
+            Constants.Summary_Category_Label_Name_OTConsult,
+            Constants.Summary_Category_Label_Name_OTConsult_Vision,
             Constants.Summary_Category_Label_Name_OTConsult_Questionnaire,
-            Constants.Summary_Category_Label_Name_OTConsult_SPPB_Result,
+            Constants.Summary_Category_Label_Name_PTCon_SPPB_Result,
             Constants.Summary_Category_Label_Name_OTConsult_TUG_Result
         };
 
@@ -97,377 +97,317 @@ namespace PHS.Business.Helpers
 
         public static Dictionary<string, List<string>> Cog2SummaryLabelMap = new Dictionary<string, List<string>> {
             { Constants.Summary_Category_Label_Name_Cog2nd_AMT, new List<string> {
-                Constants.Summary_Field_Name_Cog2nd_AMT_Ref,
-                Constants.Summary_Field_Name_Cog2nd_AMT_TotalScore,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result1,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result2,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result3,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result4,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result5,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result6,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result7,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result8,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result9,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result10,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result11,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result12,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result13,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result14,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result15,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result16,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result17,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result18,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result19,
-                Constants.Summary_Field_Name_Cog2nd_AMT_Result20
+                Constants.Summary_Field_Name_Geri_Field0,
+                Constants.Summary_Field_Name_Geri_Field1,
+                Constants.Summary_Field_Name_Geri_Field2,
+                Constants.Summary_Field_Name_Geri_Field3,
+                Constants.Summary_Field_Name_Geri_Field4,
+                Constants.Summary_Field_Name_Geri_Field5,
+                Constants.Summary_Field_Name_Geri_Field6,
+                Constants.Summary_Field_Name_Geri_Field7,
+                Constants.Summary_Field_Name_Geri_Field8,
+                Constants.Summary_Field_Name_Geri_Field9,
+                Constants.Summary_Field_Name_Geri_Field10,
+                Constants.Summary_Field_Name_Geri_Field11,
+                Constants.Summary_Field_Name_Geri_Field12,
+                Constants.Summary_Field_Name_Geri_Field13,
+                Constants.Summary_Field_Name_Geri_Field14,
+                Constants.Summary_Field_Name_Geri_Field15,
+                Constants.Summary_Field_Name_Geri_Field16                
             }},
             { Constants.Summary_Category_Label_Name_Cog2nd_EBAS, new List<string> {
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Ref,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_TotalScore,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result1,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result2,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result3,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result4,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result5,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result6,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result7,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result8,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result9,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result10,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result11,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result12,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result13,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result14,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result15,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result16,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result17,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result18,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result19,
-                Constants.Summary_Field_Name_Cog2nd_EBAS_Result20
-
+                Constants.Summary_Field_Name_Geri_Field17,
+                Constants.Summary_Field_Name_Geri_Field18,
+                Constants.Summary_Field_Name_Geri_Field19,
+                Constants.Summary_Field_Name_Geri_Field20,
+                Constants.Summary_Field_Name_Geri_Field21,
+                Constants.Summary_Field_Name_Geri_Field22,
+                Constants.Summary_Field_Name_Geri_Field23,
+                Constants.Summary_Field_Name_Geri_Field24,
+                Constants.Summary_Field_Name_Geri_Field25,
+                Constants.Summary_Field_Name_Geri_Field26,
+                Constants.Summary_Field_Name_Geri_Field27,
+                Constants.Summary_Field_Name_Geri_Field28,
+                Constants.Summary_Field_Name_Geri_Field29,
+                Constants.Summary_Field_Name_Geri_Field30,
+                Constants.Summary_Field_Name_Geri_Field31,
+                Constants.Summary_Field_Name_Geri_Field32
             }}
         };
 
         public static Dictionary<string, List<String>> PTConsultSummaryLabelMap = new Dictionary<string, List<string>> {
+            { Constants.Summary_Category_Label_Name_PTConsult, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field108,
+                Constants.Summary_Field_Name_Geri_Field109,
+                Constants.Summary_Field_Name_Geri_Field110,
+                Constants.Summary_Field_Name_Geri_Field111
+            }},
             { Constants.Summary_Category_Label_Name_PTCon_ParQ_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_ParQ_Result,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result1,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result2,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result3,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result4,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result5,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result6,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result7,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result8,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result9,
-                Constants.Summary_Field_Name_PTCon_ParQ_Result10,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result,
-                Constants.Summary_Field_Name_PTCon_Frail_Result,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result,
-                Constants.Summary_Field_Name_PTCon_TUG_Result
+                Constants.Summary_Field_Name_Geri_Field43,
+                Constants.Summary_Field_Name_Geri_Field44,
+                Constants.Summary_Field_Name_Geri_Field45,
+                Constants.Summary_Field_Name_Geri_Field46,
+                Constants.Summary_Field_Name_Geri_Field47,
+                Constants.Summary_Field_Name_Geri_Field48,
+                Constants.Summary_Field_Name_Geri_Field49,
+                Constants.Summary_Field_Name_Geri_Field50,
+                Constants.Summary_Field_Name_Geri_Field51
     }},
              { Constants.Summary_Category_Label_Name_PTCon_PhysAct_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result1,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result2,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result3,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result4,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result5,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result6,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result7,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result8,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result9,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result10,
-                Constants.Summary_Field_Name_PTCon_PhysAct_Result,
-                Constants.Summary_Field_Name_PTCon_Frail_Result,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result,
-                Constants.Summary_Field_Name_PTCon_TUG_Result
+                Constants.Summary_Field_Name_Geri_Field52,
+                Constants.Summary_Field_Name_Geri_Field53,
+                Constants.Summary_Field_Name_Geri_Field54,
+                Constants.Summary_Field_Name_Geri_Field55,
+                Constants.Summary_Field_Name_Geri_Field56,
+                Constants.Summary_Field_Name_Geri_Field57,
+                Constants.Summary_Field_Name_Geri_Field58,
+                Constants.Summary_Field_Name_Geri_Field59
     }},
              { Constants.Summary_Category_Label_Name_PTCon_Frail_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_Frail_Result,
-                Constants.Summary_Field_Name_PTCon_Frail_Result1,
-                Constants.Summary_Field_Name_PTCon_Frail_Result2,
-                Constants.Summary_Field_Name_PTCon_Frail_Result3,
-                Constants.Summary_Field_Name_PTCon_Frail_Result4,
-                Constants.Summary_Field_Name_PTCon_Frail_Result5,
-                Constants.Summary_Field_Name_PTCon_Frail_Result6,
-                Constants.Summary_Field_Name_PTCon_Frail_Result7,
-                Constants.Summary_Field_Name_PTCon_Frail_Result8,
-                Constants.Summary_Field_Name_PTCon_Frail_Result9,
-                Constants.Summary_Field_Name_PTCon_Frail_Result10
+                Constants.Summary_Field_Name_Geri_Field60,
+                Constants.Summary_Field_Name_Geri_Field61,
+                Constants.Summary_Field_Name_Geri_Field62,
+                Constants.Summary_Field_Name_Geri_Field63,
+                Constants.Summary_Field_Name_Geri_Field64,
+                Constants.Summary_Field_Name_Geri_Field65,
+                Constants.Summary_Field_Name_Geri_Field66,
+                Constants.Summary_Field_Name_Geri_Field67,
+                Constants.Summary_Field_Name_Geri_Field68,
+                Constants.Summary_Field_Name_Geri_Field69,
+                Constants.Summary_Field_Name_Geri_Field70
     }},
              { Constants.Summary_Category_Label_Name_PTCon_SPPB_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_SPPB_Result,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result1,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result2,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result3,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result4,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result5,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result6,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result7,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result8,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result9,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result10
+                Constants.Summary_Field_Name_Geri_Field85,
+                Constants.Summary_Field_Name_Geri_Field86,
+                Constants.Summary_Field_Name_Geri_Field87,
+                Constants.Summary_Field_Name_Geri_Field88,
+                Constants.Summary_Field_Name_Geri_Field89,
+                Constants.Summary_Field_Name_Geri_Field90,
+                Constants.Summary_Field_Name_Geri_Field91,
+                Constants.Summary_Field_Name_Geri_Field92,
+                Constants.Summary_Field_Name_Geri_Field93,
+                Constants.Summary_Field_Name_Geri_Field94,
+                Constants.Summary_Field_Name_Geri_Field95,
+                Constants.Summary_Field_Name_Geri_Field96,
+                Constants.Summary_Field_Name_Geri_Field97,
+                Constants.Summary_Field_Name_Geri_Field98,
+                Constants.Summary_Field_Name_Geri_Field99,
+                Constants.Summary_Field_Name_Geri_Field100
     }},
              { Constants.Summary_Category_Label_Name_PTCon_TUG_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_TUG_Result,
-                Constants.Summary_Field_Name_PTCon_TUG_Result1,
-                Constants.Summary_Field_Name_PTCon_TUG_Result2,
-                Constants.Summary_Field_Name_PTCon_TUG_Result3,
-                Constants.Summary_Field_Name_PTCon_TUG_Result4,
-                Constants.Summary_Field_Name_PTCon_TUG_Result5,
-                Constants.Summary_Field_Name_PTCon_TUG_Result6,
-                Constants.Summary_Field_Name_PTCon_TUG_Result7,
-                Constants.Summary_Field_Name_PTCon_TUG_Result8,
-                Constants.Summary_Field_Name_PTCon_TUG_Result9,
-                Constants.Summary_Field_Name_PTCon_TUG_Result10
+                Constants.Summary_Field_Name_Geri_Field101,
+                Constants.Summary_Field_Name_Geri_Field102,
+                Constants.Summary_Field_Name_Geri_Field103,
+                Constants.Summary_Field_Name_Geri_Field104,
+                Constants.Summary_Field_Name_Geri_Field105,
+                Constants.Summary_Field_Name_Geri_Field106,
+                Constants.Summary_Field_Name_Geri_Field107
     }}
 
         };
 
         public static Dictionary<string, List<String>> OTConsultSummaryLabelMap = new Dictionary<string, List<string>> {
+            {Constants.Summary_Category_Label_Name_OTConsult, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field114,
+                Constants.Summary_Field_Name_Geri_Field115,
+                Constants.Summary_Field_Name_Geri_Field116,
+                Constants.Summary_Field_Name_Geri_Field117
+            }},
+            { Constants.Summary_Category_Label_Name_OTConsult_Vision, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field33,
+                Constants.Summary_Field_Name_Geri_Field34,
+                Constants.Summary_Field_Name_Geri_Field35,
+                Constants.Summary_Field_Name_Geri_Field36,
+                Constants.Summary_Field_Name_Geri_Field37,
+                Constants.Summary_Field_Name_Geri_Field38,
+                Constants.Summary_Field_Name_Geri_Field39,
+                Constants.Summary_Field_Name_Geri_Field40,
+                Constants.Summary_Field_Name_Geri_Field41,
+                Constants.Summary_Field_Name_Geri_Field42
+            }},
             { Constants.Summary_Category_Label_Name_OTConsult_Questionnaire, new List<string> {
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result1,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result2,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result3,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result4,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result5,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result6,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result7,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result8,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result9,
-                Constants.Summary_Field_Name_OTCon_Questionnaire_Result10
+                Constants.Summary_Field_Name_Geri_Field71,
+                Constants.Summary_Field_Name_Geri_Field72,
+                Constants.Summary_Field_Name_Geri_Field73,
+                Constants.Summary_Field_Name_Geri_Field74,
+                Constants.Summary_Field_Name_Geri_Field75,
+                Constants.Summary_Field_Name_Geri_Field76,
+                Constants.Summary_Field_Name_Geri_Field77,
+                Constants.Summary_Field_Name_Geri_Field78,
+                Constants.Summary_Field_Name_Geri_Field79,
+                Constants.Summary_Field_Name_Geri_Field80,
+                Constants.Summary_Field_Name_Geri_Field81,
+                Constants.Summary_Field_Name_Geri_Field82,
+                Constants.Summary_Field_Name_Geri_Field83,
+                Constants.Summary_Field_Name_Geri_Field84
     }},
-            
+
              { Constants.Summary_Category_Label_Name_PTCon_SPPB_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_SPPB_Result,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result1,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result2,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result3,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result4,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result5,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result6,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result7,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result8,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result9,
-                Constants.Summary_Field_Name_PTCon_SPPB_Result10
+                Constants.Summary_Field_Name_Geri_Field85,
+                Constants.Summary_Field_Name_Geri_Field86,
+                Constants.Summary_Field_Name_Geri_Field87,
+                Constants.Summary_Field_Name_Geri_Field88,
+                Constants.Summary_Field_Name_Geri_Field89,
+                Constants.Summary_Field_Name_Geri_Field90,
+                Constants.Summary_Field_Name_Geri_Field91,
+                Constants.Summary_Field_Name_Geri_Field92,
+                Constants.Summary_Field_Name_Geri_Field93,
+                Constants.Summary_Field_Name_Geri_Field94,
+                Constants.Summary_Field_Name_Geri_Field95,
+                Constants.Summary_Field_Name_Geri_Field96,
+                Constants.Summary_Field_Name_Geri_Field97,
+                Constants.Summary_Field_Name_Geri_Field98,
+                Constants.Summary_Field_Name_Geri_Field99,
+                Constants.Summary_Field_Name_Geri_Field100
     }},
              { Constants.Summary_Category_Label_Name_PTCon_TUG_Result, new List<string> {
-                Constants.Summary_Field_Name_PTCon_TUG_Result,
-                Constants.Summary_Field_Name_PTCon_TUG_Result1,
-                Constants.Summary_Field_Name_PTCon_TUG_Result2,
-                Constants.Summary_Field_Name_PTCon_TUG_Result3,
-                Constants.Summary_Field_Name_PTCon_TUG_Result4,
-                Constants.Summary_Field_Name_PTCon_TUG_Result5,
-                Constants.Summary_Field_Name_PTCon_TUG_Result6,
-                Constants.Summary_Field_Name_PTCon_TUG_Result7,
-                Constants.Summary_Field_Name_PTCon_TUG_Result8,
-                Constants.Summary_Field_Name_PTCon_TUG_Result9,
-                Constants.Summary_Field_Name_PTCon_TUG_Result10
+                Constants.Summary_Field_Name_Geri_Field101,
+                Constants.Summary_Field_Name_Geri_Field102,
+                Constants.Summary_Field_Name_Geri_Field103,
+                Constants.Summary_Field_Name_Geri_Field104,
+                Constants.Summary_Field_Name_Geri_Field105,
+                Constants.Summary_Field_Name_Geri_Field106,
+                Constants.Summary_Field_Name_Geri_Field107
     }}
 
         };
 
         public static Dictionary<string, List<String>> ExhibitionSummaryLabelMap = new Dictionary<string, List<string>> {
             { Constants.Summary_Category_Label_Name_Exhibition_Cardio, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result1,
-                Constants.Summary_Field_Name_Exhibition_Result2,
-                Constants.Summary_Field_Name_Exhibition_Result3,
-                Constants.Summary_Field_Name_Exhibition_Result4,
-                Constants.Summary_Field_Name_Exhibition_Result5
+                Constants.Summary_Field_Name_HxTaking_Field0,
+                Constants.Summary_Field_Name_HxTaking_Field1,
+                Constants.Summary_Field_Name_HxTaking_Field2,
+                Constants.Summary_Field_Name_HxTaking_Field3,
+                Constants.Summary_Field_Name_HxTaking_Field4
     }},
 
              { Constants.Summary_Category_Label_Name_Exhibition_Obesity, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result6,
-                Constants.Summary_Field_Name_Exhibition_Result7,
-                Constants.Summary_Field_Name_Exhibition_Result8,
-                Constants.Summary_Field_Name_Exhibition_Result9,
-                Constants.Summary_Field_Name_Exhibition_Result10,
+                Constants.Summary_Field_Name_HxTaking_Field5,
+                Constants.Summary_Field_Name_HxTaking_Field3,
+                Constants.Summary_Field_Name_HxTaking_Field4
     }},
              { Constants.Summary_Category_Label_Name_Exhibition_Gastrio, new List<string> {
 
     }},
             { Constants.Summary_Category_Label_Name_Exhibition_Lifestyle, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result11,
-                Constants.Summary_Field_Name_Exhibition_Result12,
-                Constants.Summary_Field_Name_Exhibition_Result13,
-                Constants.Summary_Field_Name_Exhibition_Result14,
-                Constants.Summary_Field_Name_Exhibition_Result15,
+                Constants.Summary_Field_Name_HxTaking_Field2,
+                Constants.Summary_Field_Name_HxTaking_Field6
     }},
             { Constants.Summary_Category_Label_Name_Exhibition_Geri, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result16,
-                Constants.Summary_Field_Name_Exhibition_Result17,
-                Constants.Summary_Field_Name_Exhibition_Result18,
-                Constants.Summary_Field_Name_Exhibition_Result19,
-                Constants.Summary_Field_Name_Exhibition_Result20
+                Constants.Summary_Field_Name_Geri_Field13,
+                Constants.Summary_Field_Name_Geri_Field27,
+                Constants.Summary_Field_Name_Geri_Field36,
+                Constants.Summary_Field_Name_Geri_Field37,
+                Constants.Summary_Field_Name_Reg_Field0
     }},
             { Constants.Summary_Category_Label_Name_Exhibition_Renal, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result21,
-                Constants.Summary_Field_Name_Exhibition_Result22,
-                Constants.Summary_Field_Name_Exhibition_Result23
+                Constants.Summary_Field_Name_HxTaking_Field7
     }},
             { Constants.Summary_Category_Label_Name_Exhibition_Cancer, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result24,
-                Constants.Summary_Field_Name_Exhibition_Result25,
-                Constants.Summary_Field_Name_Exhibition_Result26
+                Constants.Summary_Field_Name_HxTaking_Field8,
+                Constants.Summary_Field_Name_HxTaking_Field9
     }},
             { Constants.Summary_Category_Label_Name_Exhibition_SocialSupp, new List<string> {
-                Constants.Summary_Field_Name_Exhibition_Result27,
-                Constants.Summary_Field_Name_Exhibition_Result28,
-                Constants.Summary_Field_Name_Exhibition_Result29
+                Constants.Summary_Field_Name_HxTaking_Field10,
+                Constants.Summary_Field_Name_SocialSupport_Field0,
+                Constants.Summary_Field_Name_SocialSupport_Field1,
+                Constants.Summary_Field_Name_SocialSupport_Field2,
+                Constants.Summary_Field_Name_SocialSupport_Field3
     }},
 
         };
 
         public static Dictionary<string, List<String>> SocialSupportSummaryLabelMap = new Dictionary<string, List<string>> {
             { Constants.Summary_Category_Label_Name_SocialSupp_CHAS, new List<string> {
-                Constants.Sumamry_Field_Name_SocialSupp_Result1
+                Constants.Summary_Field_Name_Reg_Field1,
+                Constants.Summary_Field_Name_Reg_Field2,
+                Constants.Summary_Field_Name_Reg_Field3,
+                Constants.Summary_Field_Name_Reg_Field4,
+                Constants.Summary_Field_Name_Reg_Field5,
+                Constants.Summary_Field_Name_Reg_Field6,
+                Constants.Summary_Field_Name_Reg_Field7,
+                Constants.Summary_Field_Name_HxTaking_Field11
     }},          
 
         };
 
         public static Dictionary<string, List<string>> DoctorSummaryLabelMap = new Dictionary<string, List<string>> {
             { Constants.Summary_Category_Label_Name_DoctorConsult_ReasonForReferral, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_ReferredTo1,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo2,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo3,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo4,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo5,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo6,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo7,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo8,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo9,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo10,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo11,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo12,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo13,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo14,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo15,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo16,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo17,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo18,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo19,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo20,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo21,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo22,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo23,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo24,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo25,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo26,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo27,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo28,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo29,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo30,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo31,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo32,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo33,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo34,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo35,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo36,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo37,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo38,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo39,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo40,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo41,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo42,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo43,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo44,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo45,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo46,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo47,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo48,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo49,
-                Constants.Summary_Field_Name_DocConsult_ReferredTo50
-            }},            
-
-            { Constants.Summary_Category_Label_Name_DoctorConsult_HealthConcerns, new List<string> {
-
-                Constants.Summary_Field_Name_DocConsult_Result1,
-                Constants.Summary_Field_Name_DocConsult_Result2,
-                Constants.Summary_Field_Name_DocConsult_Result3,
-                Constants.Summary_Field_Name_DocConsult_Result4,
-                Constants.Summary_Field_Name_DocConsult_Result5
-            }},
-            { Constants.Summary_Category_Label_Name_DoctorConsult_ReferralSummary, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result6,
-                Constants.Summary_Field_Name_DocConsult_Result7,
-                Constants.Summary_Field_Name_DocConsult_Result8,
-                Constants.Summary_Field_Name_DocConsult_Result9,
-                Constants.Summary_Field_Name_DocConsult_Result10
+               Constants.Summary_Field_Name_HxTaking_Field6,
+               Constants.Summary_Field_Name_HxTaking_Field7,
+               Constants.Summary_Field_Name_HxTaking_Field8
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_BloodPressure, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result11,
-                Constants.Summary_Field_Name_DocConsult_Result12,
-                Constants.Summary_Field_Name_DocConsult_Result13,
-                Constants.Summary_Field_Name_DocConsult_Result14,
-                Constants.Summary_Field_Name_DocConsult_Result15
-
-    }},
+                Constants.Summary_Field_Name_HxTaking_Field0,
+                Constants.Summary_Field_Name_HxTaking_Field1
+            }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_BMI, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result16,
-                Constants.Summary_Field_Name_DocConsult_Result17,
-                Constants.Summary_Field_Name_DocConsult_Result18,
-                Constants.Summary_Field_Name_DocConsult_Result19,
-                Constants.Summary_Field_Name_DocConsult_Result20
+                Constants.Summary_Field_Name_HxTaking_Field5
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_Phleblotomy, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result21
+                Constants.Summary_Field_Name_Phlebo_Field0,
+                Constants.Summary_Field_Name_Phlebo_Field1
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_MedHistory, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result22,
-                Constants.Summary_Field_Name_DocConsult_Result23,
-                Constants.Summary_Field_Name_DocConsult_Result24,
-                Constants.Summary_Field_Name_DocConsult_Result25,
-                Constants.Summary_Field_Name_DocConsult_Result26,
-                Constants.Summary_Field_Name_DocConsult_Result27,
-                Constants.Summary_Field_Name_DocConsult_Result28,
-                Constants.Summary_Field_Name_DocConsult_Result29,
-                Constants.Summary_Field_Name_DocConsult_Result30
-
+                Constants.Summary_Field_Name_HxTaking_Field3,
+                Constants.Summary_Field_Name_HxTaking_Field12,
+                Constants.Summary_Field_Name_HxTaking_Field8,
+                Constants.Summary_Field_Name_HxTaking_Field4,
+                Constants.Summary_Field_Name_HxTaking_Field9,
+                Constants.Summary_Field_Name_HxTaking_Field13
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_SocHistory, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result31,
-                Constants.Summary_Field_Name_DocConsult_Result32,
-                Constants.Summary_Field_Name_DocConsult_Result33,
-                Constants.Summary_Field_Name_DocConsult_Result34,
-                Constants.Summary_Field_Name_DocConsult_Result35,
-                Constants.Summary_Field_Name_DocConsult_Result36,
-                Constants.Summary_Field_Name_DocConsult_Result37,
-                Constants.Summary_Field_Name_DocConsult_Result38,
-                Constants.Summary_Field_Name_DocConsult_Result39,
-                Constants.Summary_Field_Name_DocConsult_Result40
+                Constants.Summary_Field_Name_HxTaking_Field2,
+                Constants.Summary_Field_Name_HxTaking_Field16,
+                Constants.Summary_Field_Name_HxTaking_Field17,
+                Constants.Summary_Field_Name_HxTaking_Field14,
+                Constants.Summary_Field_Name_HxTaking_Field15,
+                Constants.Summary_Field_Name_HxTaking_Field6,
+                Constants.Summary_Field_Name_HxTaking_Field18,
+                Constants.Summary_Field_Name_HxTaking_Field19
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_UrinaryIncon, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result41
+                Constants.Summary_Field_Name_HxTaking_Field7
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_MentalHealth, new List<string> {
-                
+
             }},
-            { Constants.Summary_Category_Label_Name_DoctorConsult_AMT, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result42,
-                Constants.Summary_Field_Name_DocConsult_Result43,
-                Constants.Summary_Field_Name_DocConsult_Result44,
-                Constants.Summary_Field_Name_DocConsult_Result45,
-                Constants.Summary_Field_Name_DocConsult_Result46,
-                Constants.Summary_Field_Name_DocConsult_Result47,
-                Constants.Summary_Field_Name_DocConsult_Result48,
-                Constants.Summary_Field_Name_DocConsult_Result49,
-                Constants.Summary_Field_Name_DocConsult_Result50,
-                Constants.Summary_Field_Name_DocConsult_Result51
+            { Constants.Summary_Category_Label_Name_Cog2nd_AMT, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field0,
+                Constants.Summary_Field_Name_Geri_Field1,
+                Constants.Summary_Field_Name_Geri_Field2,
+                Constants.Summary_Field_Name_Geri_Field3,
+                Constants.Summary_Field_Name_Geri_Field4,
+                Constants.Summary_Field_Name_Geri_Field5,
+                Constants.Summary_Field_Name_Geri_Field6,
+                Constants.Summary_Field_Name_Geri_Field7,
+                Constants.Summary_Field_Name_Geri_Field8,
+                Constants.Summary_Field_Name_Geri_Field9,
+                Constants.Summary_Field_Name_Geri_Field10,
+                Constants.Summary_Field_Name_Geri_Field11,
+                Constants.Summary_Field_Name_Geri_Field12,
+                Constants.Summary_Field_Name_Geri_Field13,
+                Constants.Summary_Field_Name_Geri_Field14,
+                Constants.Summary_Field_Name_Geri_Field15,
+                Constants.Summary_Field_Name_Geri_Field16
             }},
-            { Constants.Summary_Category_Label_Name_DoctorConsult_PTMemo, new List<string> {
-                Constants.Summary_Field_Name_DocConsult_Result52,
-                Constants.Summary_Field_Name_DocConsult_Result53,
-                Constants.Summary_Field_Name_DocConsult_Result54,
-                Constants.Summary_Field_Name_DocConsult_Result55,
-                Constants.Summary_Field_Name_DocConsult_Result56,
+             { Constants.Summary_Category_Label_Name_DoctorConsult_PTMemo, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field109
             }},
             { Constants.Summary_Category_Label_Name_DoctorConsult_OTMemo, new List<string> {
-
-                Constants.Summary_Field_Name_DocConsult_Result57,
-                Constants.Summary_Field_Name_DocConsult_Result58,
-                Constants.Summary_Field_Name_DocConsult_Result59,
-                Constants.Summary_Field_Name_DocConsult_Result60,
-                Constants.Summary_Field_Name_DocConsult_Result61
+                Constants.Summary_Field_Name_Geri_Field115
+            }},
+            { Constants.Summary_Category_Label_Name_DoctorConsult_Vision, new List<string> {
+                Constants.Summary_Field_Name_Geri_Field33,
+                Constants.Summary_Field_Name_Geri_Field34,
+                Constants.Summary_Field_Name_Geri_Field35,
+                Constants.Summary_Field_Name_Geri_Field36,
+                Constants.Summary_Field_Name_Geri_Field37,
+                Constants.Summary_Field_Name_Geri_Field38,
+                Constants.Summary_Field_Name_Geri_Field39,
+                Constants.Summary_Field_Name_Geri_Field40,
+                Constants.Summary_Field_Name_Geri_Field41,
+                Constants.Summary_Field_Name_Geri_Field42
             }},
         };
 

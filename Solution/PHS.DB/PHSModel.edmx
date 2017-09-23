@@ -187,9 +187,10 @@
           </Key>
           <Property Name="ReferenceRangeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MinimumValue" Type="float" Nullable="false" />
-          <Property Name="MaximumValue" Type="float" Nullable="false" />
-          <Property Name="Result" Type="nvarchar" MaxLength="50" />
+          <Property Name="MinimumValue" Type="float" />
+          <Property Name="MaximumValue" Type="float" />
+          <Property Name="StringValue" Type="nvarchar(max)" />
+          <Property Name="Result" Type="nvarchar(max)" />
           <Property Name="Highlight" Type="bit" Nullable="false" />
           <Property Name="StandardReferenceID" Type="int" Nullable="false" />
         </EntityType>
@@ -199,6 +200,7 @@
           </Key>
           <Property Name="StandardReferenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DataType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Summary">
           <Key>
@@ -942,12 +944,13 @@
           </Key>
           <Property Name="ReferenceRangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MinimumValue" Type="Double" Nullable="false" />
-          <Property Name="MaximumValue" Type="Double" Nullable="false" />
-          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinimumValue" Type="Double" />
+          <Property Name="MaximumValue" Type="Double" />
+          <Property Name="Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
 		  <Property Name="Highlight" Type="Boolean" Nullable="false" />
+          <Property Name="StringValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StandardReference">
           <Key>
@@ -958,6 +961,7 @@
           <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_standard_reference" FromRole="StandardReference" ToRole="Summary" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.FK_template_field_standard_reference" FromRole="StandardReference" ToRole="TemplateField" />
+          <Property Name="DataType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Summary">
           <Key>
@@ -1435,7 +1439,8 @@
           <EntitySetMapping Name="ReferenceRanges">
             <EntityTypeMapping TypeName="phsModel.ReferenceRange">
               <MappingFragment StoreEntitySet="ReferenceRange">
-			  <ScalarProperty Name="Highlight" ColumnName="Highlight" />
+			    <ScalarProperty Name="StringValue" ColumnName="StringValue" />
+                <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
@@ -1448,6 +1453,7 @@
           <EntitySetMapping Name="StandardReferences">
             <EntityTypeMapping TypeName="phsModel.StandardReference">
               <MappingFragment StoreEntitySet="StandardReference">
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
               </MappingFragment>

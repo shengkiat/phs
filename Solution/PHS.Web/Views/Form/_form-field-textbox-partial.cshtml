@@ -6,13 +6,14 @@
     $(document).ready(function () {
 
         var value = document.getElementById('SubmitFields[@Model.DomId].TextBox').value
-        displayRiskStatus(value, @Model.DomId);
+        displayStandardReferenceResult(value, @Model.DomId);
 
     });
 
-    function displayRiskStatus(value, fieldId) {
-        if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
+    function displayStandardReferenceResult(value, fieldId) {
+        if(value != "") {
             var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
+
             if (standardReferenceID != "")
             {
                 var jsonObject = {
@@ -27,13 +28,14 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     error: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
+                        document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").innerHTML = response.Error;
                     },
                     success: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
+                        document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").innerHTML = response.Status;
                         if (response.Highlight) {
-                            document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = "red";
-                        }                    }
+                            document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").style.color = "red";
+                        }
+                    }
                 });
             }
         }
@@ -67,7 +69,7 @@
                        @readonlyAttribute
                        style="width: 95%;" />
 
-                <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+                <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
                 
                 <input id="SubmitFields[@Model.DomId].StandardReferenceId"
                         name="SubmitFields[@Model.DomId].StandardReferenceId"

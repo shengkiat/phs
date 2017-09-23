@@ -17,12 +17,10 @@ namespace PHS.DB
             [Display(Name = "Title")]
             public string Title { get; set; }
 
-            [Required(ErrorMessage = "Please enter Minimum value")]
             [Display(Name = "Minimum Value")]
             public double MinimumValue { get; set; }
 
-            [Required(ErrorMessage = "Please enter Maximum value")]
-            [GreaterThan("MinimumValue")]
+            [GreaterThanOrEqualTo("MinimumValue")]
             [Display(Name = "Maximum Value")]
             public double MaximumValue { get; set; }
 

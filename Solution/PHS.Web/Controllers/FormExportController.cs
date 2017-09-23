@@ -24,38 +24,8 @@ namespace PHS.Web.Controllers
 {
     public class FormExportController : BaseController
     {
-        private FormRepository _formRepo { get; set; }
 
-        public FormExportController()
-            : this(new FormRepository(new PHSContext()))
-        {
-
-        }
-
-        public FormExportController(FormRepository formRepo)
-        {
-            this._formRepo = formRepo;
-        }
-
-        [HttpPost]
-        public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormExportViewModel model, FormCollection collection)
-        {
-            //Console.Write(submitButton);
-
-            switch (submitButton)
-            {
-                //case "Delete Selected":
-                    // delegate sending to another controller action
-                    //return DeleteEntries(selectedEntries, model);
-                case "Export to Excel":
-                    // call another action to perform the cancellation
-                    return ExportToExcel(model, collection);
-                default:
-                    // If they've submitted the form without a submitButton, 
-                    // just return the view again.
-                    return View();
-            }
-        }
+        
 
         /*
         [HttpPost]
@@ -110,106 +80,19 @@ namespace PHS.Web.Controllers
             };
         }
 
-        public ActionResult AddNewSortEntries(string templateId)
+        [HttpPost]
+        public ActionResult Export(FormExportViewModel model, FormCollection collection)
         {
-            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
-
-            var templateView = TemplateViewModel.CreateFromObject(template);
-
-            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
-            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-            var sortFieldViewModel = new SortFieldViewModel();
-
-            sortFieldViewModel.SortFields = new List<SelectListItem>();
-
-            foreach (var s in templateView.GroupedEntries.First())
-            {
-                sortFieldViewModel.SortFields.Add(new SelectListItem
-                {
-                    Text = s.FieldLabel.Limit(100),
-                    Value = s.FieldLabel
-                });
-            }
-
-            sortFieldViewModel.SortFields.Add(new SelectListItem
-            {
-                Text = "Submitted On",
-                Value = "Submitted On"
-            });
-
-            return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
-        }
-
-        public ActionResult AddNewCriteriaEntries(string templateId)
-        {
-            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
-
-            var templateView = TemplateViewModel.CreateFromObject(template);
-
-            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
-            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-            var criteriaFieldViewModel = new CriteriaFieldViewModel();
-            criteriaFieldViewModel.Fields = templateView.Fields;
-            criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
-            criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
-
-            criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
-
-            foreach (var s in templateView.GroupedEntries.First())
-            {
-                criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
-                {
-                    Text = s.FieldLabel.Limit(100),
-                    Value = s.FieldLabel
-                });
-            }
-
-            criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
-            {
-                Text = "Submitted On",
-                Value = "Submitted On"
-            });
-
-            return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
-        }
-
-        public ActionResult AddNewCriteriaSubEntries(string templateId)
-        {
-            var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
-
-            using (var formManager = new FormManager())
-            {
-                var template = formManager.FindTemplate(Int32.Parse(templateId));
-
-                //  var form = this._formRepo.GetForm(Int32.Parse(formId));
-
-                var templateView = TemplateViewModel.CreateFromObject(template);
-
-                templateView.Entries = formManager.HasSubmissions(templateView).ToList();
-                // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-
-                templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-                criteriaSubFieldViewModel.Fields = templateView.Fields;
-                criteriaSubFieldViewModel.GroupedEntries = templateView.GroupedEntries;
-            }
-            return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
-        }
-
-        public ActionResult ExportToExcel(FormExportViewModel model, FormCollection collection)
-        {
-            int formId = model.FormID.Value;
-
             using (var formExportManager = new FormExportManager())
             {
+                var formExportResult = formExportManager.CreateFormEntriesDataTable(model);
+
                 var gridView = new GridView();
-                gridView.DataSource = formExportManager.CreateFormEntriesDataTable(model);
+                gridView.DataSource = formExportResult.ValuesDataTable;
                 gridView.DataBind();
 
                 Response.ClearContent();
-                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(model.Title.ToSlug()));
+                Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(formExportResult.Title.ToSlug()));
                 Response.ContentType = "application/vnd.ms-excel";
                 StringWriter sw = new StringWriter();
                 HtmlTextWriter htw = new HtmlTextWriter(sw);
@@ -218,9 +101,34 @@ namespace PHS.Web.Controllers
                 Response.End();
             }
 
-            return RedirectToRoute("form-entries", new { formid = formId });
-
+            return RedirectToRoute("form-export", new { eventId = model.EventID });
         }
+
+        public ActionResult AddNewSortEntries(string formId)
+        {
+            using (var formExportManager = new FormExportManager())
+            {
+                return PartialView("_ViewEntriesSortPartial", formExportManager.AddNewSortEntries(Int32.Parse(formId)));
+            }
+        }
+
+        public ActionResult AddNewCriteriaEntries(string formId)
+        {
+            using (var formExportManager = new FormExportManager())
+            {
+                return PartialView("_ViewEntriesCriteriaPartial", formExportManager.AddNewCriteriaEntries(Int32.Parse(formId)));
+            }
+        }
+
+        public ActionResult AddNewCriteriaSubEntries(string formId)
+        {
+            using (var formExportManager = new FormExportManager())
+            {
+                return PartialView("_ViewEntriesCriteriaSubPartial", formExportManager.AddNewCriteriaSubEntries(Int32.Parse(formId)));
+            }
+        }
+
+        
 
         
     }

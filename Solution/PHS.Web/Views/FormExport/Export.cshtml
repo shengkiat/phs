@@ -46,9 +46,9 @@
     
         <div class="inner-container clear-both">
             @Html.WriteMessages()<br />
-            @using (Html.BeginForm("ViewEntriesSubmit", "Form", FormMethod.Post))
+            @using (Html.BeginForm("Export", "FormExport", FormMethod.Post))
             {
-                //<input id="templateId" type="hidden" value="@Model.TemplateID" />
+                <input id="eventId" type="hidden" value="@Model.EventID" />
 
                 <ul class="horizontal-list form-actions-list">
                     <li>

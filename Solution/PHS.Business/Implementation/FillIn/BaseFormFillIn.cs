@@ -37,8 +37,10 @@ namespace PHS.Business.Implementation.FillIn
 
             if (templateView.Fields.Any())
             {
+                IDictionary<int, string> submissionFields = new System.Collections.Generic.Dictionary<int, string>();
+
                 // first validate fields
-                foreach (var field in templateView.Fields)
+                foreach (var field in templateView.Fields.OrderBy(f=>f.TemplateFieldID))
                 {
                     if (!field.SubmittedValueIsValid(formCollection))
                     {
@@ -49,8 +51,25 @@ namespace PHS.Business.Implementation.FillIn
                     var value = field.SubmittedValue(formCollection);
                     if (field.IsRequired && value.IsNullOrEmpty())
                     {
-                        field.Errors = "{0} is a required field".FormatWith(field.Label);
-                        errors.Add(field.Errors);
+                        if (field.ConditionTemplateFieldID.HasValue)
+                        {
+                            if (isConditionalFieldRequired(field, submissionFields))
+                            {
+                                field.Errors = "{0} is a required field".FormatWith(field.Label);
+                                errors.Add(field.Errors);
+                            }
+                        }
+
+                        else
+                        {
+                            field.Errors = "{0} is a required field".FormatWith(field.Label);
+                            errors.Add(field.Errors);
+                        }
+                    }
+
+                    else
+                    {
+                        submissionFields.Add(field.TemplateFieldID.Value, value);
                     }
                 };
 
@@ -61,7 +80,7 @@ namespace PHS.Business.Implementation.FillIn
 
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        foreach (var field in templateView.Fields)
+                        foreach (var field in templateView.Fields.OrderBy(f => f.TemplateFieldID))
                         {
                             var value = field.SubmittedValue(formCollection);
 
@@ -102,6 +121,42 @@ namespace PHS.Business.Implementation.FillIn
                 result = errors.ToUnorderedList();
             }
 
+
+            return result;
+        }
+
+        private bool isConditionalFieldRequired(TemplateFieldViewModel field, IDictionary<int, string> submissionFields)
+        {
+            bool result = false;
+            if (submissionFields.ContainsKey(field.ConditionTemplateFieldID.Value))
+            {
+                string enteredValue = submissionFields[field.ConditionTemplateFieldID.Value];
+                if (field.ConditionCriteria.Equals("=="))
+                {
+                    if (field.ConditionOptions.Contains(enteredValue))
+                    {
+                        result = true;
+                    }
+
+                    else
+                    {
+                        result = false;
+                    }
+                }
+
+                else if (field.ConditionCriteria.Equals("!="))
+                {
+                    if (field.ConditionOptions.Contains(enteredValue))
+                    {
+                        result = false;
+                    }
+
+                    else
+                    {
+                        result = true;
+                    }
+                }
+            }
 
             return result;
         }

@@ -102,10 +102,10 @@ namespace PHS.Web
 
             // view template entries
             routes.MapRoute(
-               "form-entries",
-               "Form/entries/{formid}",
-               new { controller = "Form", action = "ViewEntries", formId = UrlParameter.Optional },
-               new { formId = @"\d+" }
+               "form-export",
+               "FormExport/export/{eventId}",
+               new { controller = "FormExport", action = "Export", eventId = UrlParameter.Optional },
+               new { eventId = @"\d+" }
             );
 
             // delete template

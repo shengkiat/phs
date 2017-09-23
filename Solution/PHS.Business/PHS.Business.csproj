@@ -141,6 +141,7 @@
     <Compile Include="ViewModel\FormExport\CriteriaSubFieldViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityEventViewModel.cs" />
     <Compile Include="ViewModel\Event\ModalityFormViewModel.cs" />
+    <Compile Include="ViewModel\FormExport\FormExportResultViewModel.cs" />
     <Compile Include="ViewModel\FormExport\FormExportViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyFormViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyModalityCircleViewModel.cs" />

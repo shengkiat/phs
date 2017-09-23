@@ -4,6 +4,7 @@
 @using PHS.DB
 @using System.Collections.Generic;
 @using GridMvc.Html
+@using System.Text.RegularExpressions
 
 @{
     ViewBag.Title = "_PTConsultSummaryPartial";
@@ -32,7 +33,7 @@
                                 @foreach (var summary in summaryCategory.PTSummaries)
                                 {
                                     <li style="margin-bottom: 1em;">
-                                        <b>@summary.SummaryLabel</b><br />
+                                        <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
                                         <span class="LabelForsub-label">@summary.SummaryValue</span>
                                     </li>
                                 }

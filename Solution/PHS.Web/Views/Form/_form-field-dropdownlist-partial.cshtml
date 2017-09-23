@@ -2,12 +2,15 @@
 @using PHS.Business.Extensions
 
 <script type="text/javascript">
+$(document).ready(function () {
+    var value = document.getElementById('SubmitFields[@Model.DomId].DropDownList').value
+        displayStandardReferenceResult(value, @Model.DomId);
+    });
 
     function displayOrHideFields(sel, conditionId) {
 
         displayOrHide(sel, sel.value, conditionId);
     }
-
 </script>
 
 @{
@@ -36,7 +39,7 @@
                     name="SubmitFields[@Model.DomId].DropDownList"
                     class="default"
                     @disabledAttribute
-                    onchange="displayOrHideFields(this, @Model.DomId);"
+                    onchange="displayOrHideFields(this, @Model.TemplateFieldID);"
                     style="width: auto; max-width:80%;">
 
                 <option @selectedAttribute value="" />
@@ -65,6 +68,13 @@
                 <option @selectedAttribute value="@option">@option</option>
                 }
             </select>
+            <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
+
+            <input id="SubmitFields[@Model.DomId].StandardReferenceId"
+                   name="SubmitFields[@Model.DomId].StandardReferenceId"
+                   type="hidden"
+                   value="@Model.StandardReferenceID"
+                   style="width: 100px; height:20px;" maxlength="9" />
             @if (Model.IsEditMode())
             {
                 @Html.Partial("_FormFieldPropertiesPartial", Model)
