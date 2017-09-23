@@ -43,38 +43,41 @@
 
 
             <div id="tdCriteriaFields" style="float:left;">
-                @foreach (var field in Model.GroupedEntries.First())
+                @if (Model.GroupedEntries.Count() > 0)
                 {
-                    if (field.FieldType == Constants.TemplateFieldType.CHECKBOX
-                        || field.FieldType == Constants.TemplateFieldType.RADIOBUTTON
-                        || field.FieldType == Constants.TemplateFieldType.DROPDOWNLIST)
+                    foreach (var field in Model.GroupedEntries.First())
                     {
-
-                        var optionFields = new List<SelectListItem>();
-
-                        foreach (var formField in Model.Fields)
+                        if (field.FieldType == Constants.TemplateFieldType.CHECKBOX
+                            || field.FieldType == Constants.TemplateFieldType.RADIOBUTTON
+                            || field.FieldType == Constants.TemplateFieldType.DROPDOWNLIST)
                         {
-                            if (formField.TemplateFieldID.Equals(field.TemplateFieldID))
-                            {
-                                foreach (var option in formField.Options.Split(","))
-                                {
-                                    optionFields.Add(new SelectListItem { Text = @option, Value = @option });
-                                }
 
-                                if (formField.AddOthersOption)
+                            var optionFields = new List<SelectListItem>();
+
+                            foreach (var formField in Model.Fields)
+                            {
+                                if (formField.TemplateFieldID.Equals(field.TemplateFieldID))
                                 {
-                                    optionFields.Add(new SelectListItem { Text = "Others", Value = "Others" });
+                                    foreach (var option in formField.Options.Split(","))
+                                    {
+                                        optionFields.Add(new SelectListItem { Text = @option, Value = @option });
+                                    }
+
+                                    if (formField.AddOthersOption)
+                                    {
+                                        optionFields.Add(new SelectListItem { Text = "Others", Value = "Others" });
+                                    }
                                 }
                             }
-                        }
 
                         @Html.DropDownListFor(m => m.CriteriaValue[@field.TemplateFieldID.ToString()], optionFields, String.Empty, new { @id = "criteria[" + @field.TemplateFieldID + "]", @style = "display:none;" })
 
-                    }
+                        }
 
-                    else
-                    {
+                        else
+                        {
                         @Html.TextBoxFor(m => m.CriteriaValue[@field.TemplateFieldID.ToString()], new { @id = "criteria[" + @field.TemplateFieldID + "]", @style = "display:none;" })
+                        }
                     }
                 }
 
