@@ -452,6 +452,110 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FillIn_ErrorWithRequiredField()
+        {
+            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection = new FormCollection();
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+
+            fieldCollection.Set("Fields[" + 1 + "].IsRequired", "true");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", null);
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual("<ul><li>Click to edit is a required field</li></ul>", result);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+        }
+
+        [TestMethod()]
+        public void FillIn_NotSelectedConditionFieldWithRequiredShouldBeSave()
+        {
+            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection = new FormCollection();
+            IDictionary<string, string> fields;
+
+            CeateFieldForm(1, Constants.TemplateFieldType.RADIOBUTTON.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 1 + "].Label", "Radio Button");
+            fieldCollection.Set("Fields[" + 1 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 1 + "].Options", "Yes,No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(2, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 2 + "].Label", "Radio Button Yes");
+            fieldCollection.Set("Fields[" + 2 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionTemplateFieldID", "1");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionOptions", "Yes");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(3, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 3 + "].Label", "Radio Button No");
+            fieldCollection.Set("Fields[" + 3 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionTemplateFieldID", "1");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionOptions", "No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(3, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].RadioButton", "Yes");
+            submissionCollection.Add("SubmitFields[2].TextBox", "Testing 123");
+            submissionCollection.Add("SubmitFields[3].TextBox", null);
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+            submissionFields.Add("2", "3");
+            submissionFields.Add("3", "3");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual("success", result);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Assert.AreEqual(3, templateViewModel.Entries.Count);
+
+            Assert.AreEqual("Yes", templateViewModel.Entries[0].Value);
+            Assert.AreEqual("Testing 123", templateViewModel.Entries[1].Value);
+            Assert.AreEqual(null, templateViewModel.Entries[1].Value);
+        }
+
+        [TestMethod()]
         public void FillIn_SuccessForPreRegistrationForm()
         {
             FormViewModel formViewModel = new FormViewModel()
@@ -469,9 +573,9 @@ namespace PHS.BusinessTests.Implementation
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
 
-            FormCollection fieldCollection;
+            FormCollection fieldCollection = new FormCollection();
             IDictionary<string, string> fields;
-            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
 
             fieldCollection.Add("Fields[1].PreRegistrationFieldName", Constants.PreRegistration_Field_Name_FullName);
 
@@ -644,9 +748,9 @@ namespace PHS.BusinessTests.Implementation
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
 
-            FormCollection fieldCollection;
+            FormCollection fieldCollection = new FormCollection();
             IDictionary<string, string> fields;
-            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), out fieldCollection, out fields);
+            CeateFieldForm(1, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
@@ -659,33 +763,30 @@ namespace PHS.BusinessTests.Implementation
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
 
-            FormCollection fieldCollection;
+            FormCollection fieldCollection = new FormCollection();
             IDictionary<string, string> fields;
-            CeateFieldForm(1, fieldType.ToString(), out fieldCollection, out fields);
+            CeateFieldForm(1, fieldType.ToString(), fieldCollection, out fields);
 
             _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
         }
 
-        private FormCollection CeateFieldForm(int id, string fieldType, out FormCollection fieldCollection, out IDictionary<string, string> fields)
+        private FormCollection CeateFieldForm(int id, string fieldType, FormCollection fieldCollection, out IDictionary<string, string> fields)
         {
-            fieldCollection = new FormCollection();
-
-            //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            fieldCollection.Add("Fields[1].FieldType", fieldType);
-            fieldCollection.Add("Fields[1].MaxCharacters", "200");
-            fieldCollection.Add("Fields[1].IsRequired", "false");
-            fieldCollection.Add("Fields[1].AddOthersOption", "false");
-            fieldCollection.Add("Fields[1].MinimumAge", "18");
-            fieldCollection.Add("Fields[1].MaximumAge", "100");
-            fieldCollection.Add("Fields[1].Text", "");
-            fieldCollection.Add("Fields[1].Label", "Click to edit");
-            fieldCollection.Add("Fields[1].HoverText", "");
-            fieldCollection.Add("Fields[1].SubLabel", "");
-            fieldCollection.Add("Fields[1].HelpText", "");
-            fieldCollection.Add("Fields[1].Hint", "");
+            fieldCollection.Add("Fields[" + id + "].FieldType", fieldType);
+            fieldCollection.Add("Fields[" + id + "].MaxCharacters", "200");
+            fieldCollection.Add("Fields[" + id + "].IsRequired", "false");
+            fieldCollection.Add("Fields[" + id + "].AddOthersOption", "false");
+            fieldCollection.Add("Fields[" + id + "].MinimumAge", "18");
+            fieldCollection.Add("Fields[" + id + "].MaximumAge", "100");
+            fieldCollection.Add("Fields[" + id + "].Text", "");
+            fieldCollection.Add("Fields[" + id + "].Label", "Click to edit");
+            fieldCollection.Add("Fields[" + id + "].HoverText", "");
+            fieldCollection.Add("Fields[" + id + "].SubLabel", "");
+            fieldCollection.Add("Fields[" + id + "].HelpText", "");
+            fieldCollection.Add("Fields[" + id + "].Hint", "");
 
             fields = new System.Collections.Generic.Dictionary<string, string>();
-            fields.Add("1", "1");
+            fields.Add("" + id, "" + id);
 
             return fieldCollection;
         }
