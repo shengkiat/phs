@@ -24,18 +24,6 @@ namespace PHS.Web.Controllers
 {
     public class FormExportController : BaseController
     {
-        private FormRepository _formRepo { get; set; }
-
-        public FormExportController()
-            : this(new FormRepository(new PHSContext()))
-        {
-
-        }
-
-        public FormExportController(FormRepository formRepo)
-        {
-            this._formRepo = formRepo;
-        }
 
         [HttpPost]
         public ActionResult ViewEntriesSubmit(string submitButton, IEnumerable<string> selectedEntries, FormExportViewModel model, FormCollection collection)
@@ -110,92 +98,28 @@ namespace PHS.Web.Controllers
             };
         }
 
-        public ActionResult AddNewSortEntries(string templateId)
+        public ActionResult AddNewSortEntries(string formId)
         {
-            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
-
-            var templateView = TemplateViewModel.CreateFromObject(template);
-
-            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
-            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-            var sortFieldViewModel = new SortFieldViewModel();
-
-            sortFieldViewModel.SortFields = new List<SelectListItem>();
-
-            foreach (var s in templateView.GroupedEntries.First())
+            using (var formExportManager = new FormExportManager())
             {
-                sortFieldViewModel.SortFields.Add(new SelectListItem
-                {
-                    Text = s.FieldLabel.Limit(100),
-                    Value = s.FieldLabel
-                });
+                return PartialView("_ViewEntriesSortPartial", formExportManager.AddNewSortEntries(Int32.Parse(formId)));
             }
-
-            sortFieldViewModel.SortFields.Add(new SelectListItem
-            {
-                Text = "Submitted On",
-                Value = "Submitted On"
-            });
-
-            return PartialView("_ViewEntriesSortPartial", sortFieldViewModel);
         }
 
-        public ActionResult AddNewCriteriaEntries(string templateId)
+        public ActionResult AddNewCriteriaEntries(string formId)
         {
-            var template = this._formRepo.GetTemplate(Int32.Parse(templateId));
-
-            var templateView = TemplateViewModel.CreateFromObject(template);
-
-            templateView.Entries = this._formRepo.GetTemplateFieldValuesByForm(templateView).ToList();
-            templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-            var criteriaFieldViewModel = new CriteriaFieldViewModel();
-            criteriaFieldViewModel.Fields = templateView.Fields;
-            criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
-            criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
-
-            criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
-
-            foreach (var s in templateView.GroupedEntries.First())
+            using (var formExportManager = new FormExportManager())
             {
-                criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
-                {
-                    Text = s.FieldLabel.Limit(100),
-                    Value = s.FieldLabel
-                });
+                return PartialView("_ViewEntriesCriteriaPartial", formExportManager.AddNewCriteriaEntries(Int32.Parse(formId)));
             }
-
-            criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
-            {
-                Text = "Submitted On",
-                Value = "Submitted On"
-            });
-
-            return PartialView("_ViewEntriesCriteriaPartial", criteriaFieldViewModel);
         }
 
-        public ActionResult AddNewCriteriaSubEntries(string templateId)
+        public ActionResult AddNewCriteriaSubEntries(string formId)
         {
-            var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
-
-            using (var formManager = new FormManager())
+            using (var formExportManager = new FormExportManager())
             {
-                var template = formManager.FindTemplate(Int32.Parse(templateId));
-
-                //  var form = this._formRepo.GetForm(Int32.Parse(formId));
-
-                var templateView = TemplateViewModel.CreateFromObject(template);
-
-                templateView.Entries = formManager.HasSubmissions(templateView).ToList();
-                // formView.Entries = this._formRepo.GetRegistrantsByForm(formView).ToList();
-
-                templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
-
-                criteriaSubFieldViewModel.Fields = templateView.Fields;
-                criteriaSubFieldViewModel.GroupedEntries = templateView.GroupedEntries;
+                return PartialView("_ViewEntriesCriteriaSubPartial", formExportManager.AddNewCriteriaSubEntries(Int32.Parse(formId)));
             }
-            return PartialView("_ViewEntriesCriteriaSubPartial", criteriaSubFieldViewModel);
         }
 
         public ActionResult ExportToExcel(FormExportViewModel model, FormCollection collection)

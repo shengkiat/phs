@@ -5,6 +5,7 @@ using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
+using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PHS.Business.Implementation
 {
@@ -47,6 +49,118 @@ namespace PHS.Business.Implementation
 
                 return result;
             }
+        }
+
+        public SortFieldViewModel AddNewSortEntries(int formId)
+        {
+            var sortFieldViewModel = new SortFieldViewModel();
+            sortFieldViewModel.SortFields = new List<SelectListItem>();
+
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+
+                foreach(var template in form.Templates)
+                {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+                    templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
+                    templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
+
+                    foreach (var s in templateView.GroupedEntries.First())
+                    {
+                        sortFieldViewModel.SortFields.Add(new SelectListItem
+                        {
+                            Text = s.FieldLabel.Limit(100),
+                            Value = s.FieldLabel
+                        });
+                    }
+
+                    sortFieldViewModel.SortFields.Add(new SelectListItem
+                    {
+                        Text = "Submitted On",
+                        Value = "Submitted On"
+                    });
+                }
+            }
+
+            return sortFieldViewModel;
+        }
+
+        public CriteriaFieldViewModel AddNewCriteriaEntries(int formId)
+        {
+            var criteriaFieldViewModel = new CriteriaFieldViewModel();
+            criteriaFieldViewModel.FieldLabels = new List<SelectListItem>();
+
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+
+                foreach (var template in form.Templates)
+                {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+                    templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
+                    templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
+
+                    criteriaFieldViewModel.Fields = templateView.Fields;
+                    criteriaFieldViewModel.GroupedEntries = templateView.GroupedEntries;
+                    criteriaFieldViewModel.CriteriaSubFields = Enumerable.Empty<CriteriaSubFieldViewModel>().ToList();
+
+                    foreach (var s in templateView.GroupedEntries.First())
+                    {
+                        criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
+                        {
+                            Text = s.FieldLabel.Limit(100),
+                            Value = s.FieldLabel
+                        });
+                    }
+
+                    criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
+                    {
+                        Text = "Submitted On",
+                        Value = "Submitted On"
+                    });
+                }
+            }
+
+            return criteriaFieldViewModel;
+        }
+
+        public CriteriaSubFieldViewModel AddNewCriteriaSubEntries(int formId)
+        {
+            var criteriaSubFieldViewModel = new CriteriaSubFieldViewModel();
+
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var form = unitOfWork.FormRepository.GetForm(formId);
+
+                foreach (var template in form.Templates)
+                {
+                    var templateView = TemplateViewModel.CreateFromObject(template);
+
+                    templateView.Entries = HasSubmissions(unitOfWork, templateView).ToList();
+
+                    templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
+
+                    criteriaSubFieldViewModel.Fields = templateView.Fields;
+                    criteriaSubFieldViewModel.GroupedEntries = templateView.GroupedEntries;
+                }
+            }
+
+            return criteriaSubFieldViewModel;
+        }
+
+        private IEnumerable<TemplateFieldValueViewModel> HasSubmissions(IUnitOfWork unitOfWork, TemplateViewModel model)
+        {
+            var fieldValues = unitOfWork.FormRepository.GetTemplateFieldValuesByTemplate(model.TemplateID.Value);
+            var values = fieldValues
+                            .Select((fv) =>
+                            {
+                                return TemplateFieldValueViewModel.CreateFromObject(fv);
+                            })
+                            .OrderBy(f => f.FieldOrder)
+                            .ThenByDescending(f => f.DateAdded);
+
+            return values;
         }
 
         public DataTable CreateFormEntriesDataTable(FormExportViewModel model)
