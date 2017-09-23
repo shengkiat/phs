@@ -418,6 +418,9 @@ namespace PHS.Business.Implementation
 
         private string getConvertedCriteriaValue(string criteriaLogic, string value)
         {
+
+            string replaceValue = value.Replace("'", "''");
+
             Dictionary<string, string> mappedValues = new Dictionary<string, string>();
             mappedValues.Add("eq", "=");
             mappedValues.Add("neq", "<>");
@@ -429,17 +432,17 @@ namespace PHS.Business.Implementation
             switch (criteriaLogic)
             {
                 case "startswith":
-                    return string.Format("LIKE '{0}*'", value);
+                    return string.Format("LIKE '{0}*'", replaceValue);
                 case "endswith":
-                    return string.Format("LIKE '*{0}'", value);
+                    return string.Format("LIKE '*{0}'", replaceValue);
                 case "contains":
-                    return string.Format("LIKE '*{0}*'", value);
+                    return string.Format("LIKE '*{0}*'", replaceValue);
                 case "doesnotcontain":
-                    return string.Format("NOT LIKE '*{0}*'", value);
+                    return string.Format("NOT LIKE '*{0}*'", replaceValue);
                 case "in":
-                    return string.Format("IN ({0})", value);
+                    return string.Format("IN ({0})", replaceValue);
                 default:
-                    return string.Format("{0} '{1}'", mappedValues[criteriaLogic], value);
+                    return string.Format("{0} '{1}'", mappedValues[criteriaLogic], replaceValue);
             }
 
         }
