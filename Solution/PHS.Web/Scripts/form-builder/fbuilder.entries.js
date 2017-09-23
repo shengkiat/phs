@@ -21,10 +21,10 @@
 
         $('#sortButton').live('click', function () {
 
-            var templateId = document.getElementById('templateId').value
+            var formId = $("select[name=FormID] option:selected").val();
 
             var data = {
-                "templateId": templateId
+                "formId": formId
             };
 
             $.ajax({
@@ -46,10 +46,10 @@
         });
 
         $('#criteriaButton').live('click', function () {
-            var templateId = document.getElementById('templateId').value
+            var formId = $("select[name=FormID] option:selected").val();
 
             var data = {
-                "templateId": templateId
+                "formId": formId
                 };
 
             $.ajax({
@@ -75,10 +75,10 @@
 
             var criteriafieldindex = "CriteriaFields[" + criteriaindex + "].";
 
-            var templateId = document.getElementById('templateId').value
+            var formId = $("select[name=FormID] option:selected").val();
 
             var data = {
-                "templateId": templateId
+                "formId": formId
             };
 
             $.ajax({

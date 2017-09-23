@@ -70,7 +70,7 @@ namespace PHS.Business.Implementation
                     {
                         sortFieldViewModel.SortFields.Add(new SelectListItem
                         {
-                            Text = s.FieldLabel.Limit(100),
+                            Text = s.FieldLabel.StripHTML().Limit(100),
                             Value = s.FieldLabel
                         });
                     }
@@ -109,7 +109,7 @@ namespace PHS.Business.Implementation
                     {
                         criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                         {
-                            Text = s.FieldLabel.Limit(100),
+                            Text = s.FieldLabel.StripHTML().Limit(100),
                             Value = s.FieldLabel
                         });
                     }
