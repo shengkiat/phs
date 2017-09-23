@@ -26,17 +26,15 @@
             {
      
            
-                foreach (var summaryCategory in Model.GetDoctorSummaryCategories())
+                foreach (var summaryCategory in Model.GetSummaryCategories("PT_SUM"))
                 {
 
                     <div class="panel panel-default">
                         <div class="panel-heading"><b>@summaryCategory.SummaryCategoryName</b></div>
                         <div class="panel-body">
                             <ul class="vertical-list">
-                                <b>@summaryCategory.PTSummaries.Capacity</b>
-                                <b>@summaryCategory.EventSummaries.Count</b>
                            
-                                @foreach (var summary in summaryCategory.DoctorSummaries)
+                                @foreach (var summary in summaryCategory.Summaries)
                                 {
                                     <li style="margin-bottom: 1em;">
                                         <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />

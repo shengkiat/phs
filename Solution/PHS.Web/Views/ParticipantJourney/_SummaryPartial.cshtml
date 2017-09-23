@@ -24,13 +24,13 @@
         <br />
 
         <div class="panel-group">
-        @foreach (var summaryCategory in Model.GetEventSummaryCategories())
+        @foreach (var summaryCategory in Model.GetSummaryCategories("EVENT_SUM"))
         {
             <div class="panel panel-default">
                 <div class="panel-heading"><b>@summaryCategory.SummaryCategoryName</b></div>
                 <div class="panel-body">
                     <ul class="vertical-list">
-                        @foreach (var summary in summaryCategory.EventSummaries)
+                        @foreach (var summary in summaryCategory.Summaries)
                         {
                             <li style="margin-bottom: 1em;">
                                 <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />

@@ -27,13 +27,13 @@
         <div class="panel-group">
             @if (Model != null)
             {
-                foreach (var summaryCategory in Model.GetOTSummaryCategories())
+                foreach (var summaryCategory in Model.GetSummaryCategories("OTCON_SUM"))
                 {
                     <div class="panel panel-default">
                         <div class="panel-heading"><b>@summaryCategory.SummaryCategoryName</b></div>
                         <div class="panel-body">
                             <ul class="vertical-list">
-                                @foreach (var summary in summaryCategory.OTSummaries)
+                                @foreach (var summary in summaryCategory.Summaries)
                                 {
                                     <li style="margin-bottom: 1em;">
                                         <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
