@@ -14,6 +14,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
         public SummaryCategoryViewModel(String summaryCategory)
         {
             SummaryCategoryName = summaryCategory;
+            Summaries = new List<Summary>();
             EventSummaries = new List<Summary>();
             DoctorSummaries = new List<Summary>();
             PTSummaries = new List<Summary>();
@@ -21,6 +22,11 @@ namespace PHS.Business.ViewModel.SummaryCategory
             ExhibitionSummaries = new List<Summary>();
             SocialSupportSummaries = new List<Summary>(); 
             Cog2Summaries = new List<Summary>();
+        }
+
+        public void AddSummary(Summary summary)
+        {
+            Summaries.Add(summary);
         }
 
         public void AddEventSummary(Summary summary)
@@ -100,6 +106,8 @@ namespace PHS.Business.ViewModel.SummaryCategory
         public List<Summary> SocialSupportSummaries { get; }
 
         public List<Summary> Cog2Summaries { get; }
+
+        public List<Summary> Summaries { get; }
     }
 
 }

@@ -283,7 +283,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[MatrixColumn] [varchar](max) NULL,
 	[PreRegistrationFieldName] [varchar](max) NULL,
 	[RegistrationFieldName] [varchar](max) NULL,
-	[SummaryFieldName] [varchar](max) NULL,
+	[SummaryFieldName] [nvarchar](50) NULL,
 	[SummaryType] [nvarchar](50) NULL,
 	[ConditionTemplateFieldID] [int] NULL,
 	[ConditionCriteria] [varchar](50) NULL,

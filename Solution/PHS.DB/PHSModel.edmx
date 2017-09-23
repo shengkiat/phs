@@ -218,6 +218,17 @@
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
           <Property Name="StandardReferenceID" Type="int" />
         </EntityType>
+        <EntityType Name="SummaryMapping">
+          <Key>
+            <PropertyRef Name="SummaryType" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="SummaryFieldName" />
+          </Key>
+          <Property Name="SummaryMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SummaryType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SummaryFieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Template">
           <Key>
             <PropertyRef Name="TemplateID" />
@@ -593,6 +604,7 @@
           <EntitySet Name="ReferenceRange" EntityType="Self.ReferenceRange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StandardReference" EntityType="Self.StandardReference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Summary" EntityType="Self.Summary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SummaryMapping" EntityType="Self.SummaryMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
@@ -705,6 +717,7 @@
           <EntitySet Name="ReferenceRanges" EntityType="phsModel.ReferenceRange" />
           <EntitySet Name="StandardReferences" EntityType="phsModel.StandardReference" />
           <EntitySet Name="Summaries" EntityType="phsModel.Summary" />
+          <EntitySet Name="SummaryMappings" EntityType="phsModel.SummaryMapping" />
           <EntitySet Name="Templates" EntityType="phsModel.Template" />
           <EntitySet Name="TemplateFields" EntityType="phsModel.TemplateField" />
           <EntitySet Name="TemplateFieldValues" EntityType="phsModel.TemplateFieldValue" />
@@ -968,6 +981,17 @@
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_summary_phs_event" FromRole="Summary" ToRole="PHSEvent" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_summary_standard_reference" FromRole="Summary" ToRole="StandardReference" />
           <NavigationProperty Name="TemplateField" Relationship="phsModel.FK_summary_template_field" FromRole="Summary" ToRole="TemplateField" />
+        </EntityType>
+        <EntityType Name="SummaryMapping">
+          <Key>
+            <PropertyRef Name="SummaryType" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="SummaryFieldName" />
+          </Key>
+          <Property Name="SummaryMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SummaryType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryFieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Template">
           <Key>
@@ -1411,7 +1435,7 @@
           <EntitySetMapping Name="ReferenceRanges">
             <EntityTypeMapping TypeName="phsModel.ReferenceRange">
               <MappingFragment StoreEntitySet="ReferenceRange">
-			    <ScalarProperty Name="Highlight" ColumnName="Highlight" />
+			  <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
@@ -1445,6 +1469,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SummaryMappings">
+            <EntityTypeMapping TypeName="phsModel.SummaryMapping">
+              <MappingFragment StoreEntitySet="SummaryMapping">
+                <ScalarProperty Name="SummaryFieldName" ColumnName="SummaryFieldName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="SummaryType" ColumnName="SummaryType" />
+                <ScalarProperty Name="SummaryMappingID" ColumnName="SummaryMappingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Templates">
             <EntityTypeMapping TypeName="phsModel.Template">
               <MappingFragment StoreEntitySet="Template">
@@ -1465,7 +1499,7 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
-			    <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
+			  <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="ConditionOptions" ColumnName="ConditionOptions" />
                 <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />

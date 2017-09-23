@@ -142,6 +142,9 @@
     <Compile Include="Summary.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SummaryMapping.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Template.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

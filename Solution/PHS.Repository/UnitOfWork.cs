@@ -31,6 +31,7 @@ namespace PHS.Repository
             StandardReferences = new StandardReferenceRepository(_context);
             ReferenceRanges = new ReferenceRangeRepository(_context);
             Summaries = new SummaryRepository(_context);
+            SummaryMappings = new SummaryMappingRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -56,6 +57,8 @@ namespace PHS.Repository
         public IReferenceRangeRepository ReferenceRanges { get; private set; }
 
         public ISummaryRepository Summaries { get; private set; }
+
+        public ISummaryMappingRepository SummaryMappings { get; private set; }
 
         public int Complete()
         {

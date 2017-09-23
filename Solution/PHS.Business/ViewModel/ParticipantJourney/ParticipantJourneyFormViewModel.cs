@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Helpers;
+using PHS.Business.Implementation;
 using PHS.Business.ViewModel.SummaryCategory;
 using PHS.Common;
 using PHS.DB;
@@ -50,6 +51,37 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             //        result = modality.Name.Equals("Summary");
             //    }
             //}
+            return result;
+        }
+
+        public List<SummaryCategoryViewModel> GetSummaryCategories(string summaryType)
+        {
+            List<SummaryCategoryViewModel> result = new List<SummaryCategoryViewModel>();
+
+            using (var summaryMappingManager = new SummaryMappingManager())
+            {
+                List<string> categoryNames = summaryMappingManager.GetAllCategoryNamesBySummaryType(summaryType);
+                Dictionary<string, List<string>> summaryLabelMap = summaryMappingManager.GetSummaryLabelMapBySummaryType(summaryType);
+
+                foreach (var summaryCategoryName in categoryNames)
+                {
+                    SummaryCategoryViewModel sumCategoryViewModel = new SummaryCategoryViewModel(summaryCategoryName);
+
+                    foreach (var summary in Participant.Summaries)
+                    {
+                        if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
+                        {
+                            if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(summaryLabelMap, summaryCategoryName, summary.Label))
+                            {
+                                sumCategoryViewModel.AddSummary(summary);
+                            }
+                        }
+                    }
+
+                    result.Add(sumCategoryViewModel);
+                }
+            }
+
             return result;
         }
 

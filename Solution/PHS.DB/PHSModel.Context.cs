@@ -35,6 +35,7 @@ namespace PHS.DB
         public virtual DbSet<ReferenceRange> ReferenceRanges { get; set; }
         public virtual DbSet<StandardReference> StandardReferences { get; set; }
         public virtual DbSet<Summary> Summaries { get; set; }
+        public virtual DbSet<SummaryMapping> SummaryMappings { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }
