@@ -1,4 +1,4 @@
-﻿@model PHS.DB.ViewModels.Form.CriteriaFieldViewModel
+﻿@model PHS.Business.ViewModel.FormExport.CriteriaFieldViewModel
 
 @using PHS.Common
 @using PHS.Business.Extensions
@@ -45,9 +45,9 @@
             <div id="tdCriteriaFields" style="float:left;">
                 @foreach (var field in Model.GroupedEntries.First())
                 {
-                    if (field.FieldType == Constants.FieldType.CHECKBOX
-                        || field.FieldType == Constants.FieldType.RADIOBUTTON
-                        || field.FieldType == Constants.FieldType.DROPDOWNLIST)
+                    if (field.FieldType == Constants.TemplateFieldType.CHECKBOX
+                        || field.FieldType == Constants.TemplateFieldType.RADIOBUTTON
+                        || field.FieldType == Constants.TemplateFieldType.DROPDOWNLIST)
                     {
 
                         var optionFields = new List<SelectListItem>();
