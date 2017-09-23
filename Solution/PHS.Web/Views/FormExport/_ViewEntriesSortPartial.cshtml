@@ -9,7 +9,7 @@
      <div id="trSortRow0" class="trSortRow0">
 
         @{
-            @Html.DropDownListFor(m => m.FieldLabel, Model.SortFields, String.Empty);
+            @Html.DropDownListFor(m => m.TemplateFieldID, Model.SortFields, String.Empty);
 
             var sortOrders = new List<SelectListItem>()
                         {

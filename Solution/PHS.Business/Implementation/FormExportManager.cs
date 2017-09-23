@@ -66,12 +66,12 @@ namespace PHS.Business.Implementation
                     templateView.Entries = unitOfWork.FormRepository.GetTemplateFieldValuesByForm(templateView).ToList();
                     templateView.GroupedEntries = templateView.Entries.GroupBy(g => g.EntryId);
 
-                    foreach (var s in templateView.GroupedEntries.First())
+                    foreach (var s in templateView.Fields)
                     {
                         sortFieldViewModel.SortFields.Add(new SelectListItem
                         {
-                            Text = s.FieldLabel.StripHTML().Limit(100),
-                            Value = s.FieldLabel
+                            Text = s.Label.StripHTML().Limit(100),
+                            Value = "" + s.TemplateFieldID.Value
                         });
                     }
 
@@ -350,13 +350,20 @@ namespace PHS.Business.Implementation
 
             if (sortFields != null)
             {
-                foreach (var sortFieldViewModel in sortFields)
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    var sortF = sortFieldViewModel.FieldLabel;
-                    var sortO = sortFieldViewModel.SortOrder;
-                    if (!String.IsNullOrEmpty(sortF) && !String.IsNullOrEmpty(sortO))
+                    foreach (var sortFieldViewModel in sortFields)
                     {
-                        result += string.Format(", {0} {1}", sortF, sortO);
+                        var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(sortFieldViewModel.TemplateFieldID));
+                        if (templateField != null)
+                        {
+                            var sortF = templateField.Label;
+                            var sortO = sortFieldViewModel.SortOrder;
+                            if (!string.IsNullOrEmpty(sortF) && !string.IsNullOrEmpty(sortO))
+                            {
+                                result += string.Format(", {0} {1}", sortF, sortO);
+                            }
+                        }
                     }
                 }
             }

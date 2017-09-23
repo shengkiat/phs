@@ -9,7 +9,7 @@ namespace PHS.Business.ViewModel.FormExport
 {
     public class SortFieldViewModel
     {
-        public string FieldLabel { get; set; }
+        public string TemplateFieldID { get; set; }
         public string SortOrder { get; set; }
 
         public List<SelectListItem> SortFields { get; set; } // dropdown

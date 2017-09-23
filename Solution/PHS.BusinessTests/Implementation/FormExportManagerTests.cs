@@ -212,7 +212,7 @@ namespace PHS.Business.Implementation.Tests
 
             SortFieldViewModel sortFieldViewModel = new SortFieldViewModel()
             {
-                FieldLabel = "this is for testing",
+                TemplateFieldID = "1",
                 SortOrder = "DESC"
             };
 

@@ -30,7 +30,7 @@ namespace PHS.Web.Controllers.Tests
             List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
 
             SortFieldViewModel record = new SortFieldViewModel();
-            record.FieldLabel = "TEST COL";
+            record.TemplateFieldID = "TEST COL";
             record.SortOrder = "ASC";
             sortFields.Add(record);
 
@@ -48,12 +48,12 @@ namespace PHS.Web.Controllers.Tests
             List<SortFieldViewModel> sortFields = new List<SortFieldViewModel>();
 
             SortFieldViewModel recordOne = new SortFieldViewModel();
-            recordOne.FieldLabel = "TEST COL";
+            recordOne.TemplateFieldID = "TEST COL";
             recordOne.SortOrder = "ASC";
             sortFields.Add(recordOne);
 
             SortFieldViewModel recordTwo = new SortFieldViewModel();
-            recordTwo.FieldLabel = "TWO COL";
+            recordTwo.TemplateFieldID = "TWO COL";
             recordTwo.SortOrder = "DESC";
             sortFields.Add(recordTwo);
 
