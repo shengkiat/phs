@@ -28,6 +28,58 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
+        public void AddNewSortEntries_Versioning()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+
+            UpdateByAddingTemplateField(template, 2, Constants.TemplateFieldType.TEXTBOX, "this is for another testing", out templateViewModel);
+
+            SortFieldViewModel result = _target.AddNewSortEntries(1);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.SortFields.Count);
+            Assert.AreEqual("this is for testing", result.SortFields[0].Text);
+            Assert.AreEqual("1: this is for testing", result.SortFields[1].Text);
+            Assert.AreEqual("this is for another testing", result.SortFields[2].Text);
+        }
+
+        [TestMethod()]
+        public void AddNewCriteriaEntries_Versioning()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+
+            UpdateByAddingTemplateField(template, 2, Constants.TemplateFieldType.TEXTBOX, "this is for another testing", out templateViewModel);
+
+            CriteriaFieldViewModel result = _target.AddNewCriteriaEntries(1);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.FieldLabels.Count);
+            Assert.AreEqual("this is for testing", result.FieldLabels[0].Text);
+            Assert.AreEqual("1: this is for testing", result.FieldLabels[1].Text);
+            Assert.AreEqual("this is for another testing", result.FieldLabels[2].Text);
+        }
+
+        [TestMethod()]
         public void CreateFormEntriesDataTableTest_Address()
         {
             Template template;
