@@ -5,7 +5,7 @@
 @using PHS.DB.ViewModels.Form
 
 @{
-    ViewBag.Title = "View Entries";
+    ViewBag.Title = "Form Export";
     
 }
 @section headerScripts{
@@ -20,6 +20,13 @@
 }
 
 <script>
+
+    function formIdFunction(selectedobject) {
+        $('#sortTable > div').remove();
+
+    }
+
+
     //similar code in fbuilder.entries.js
     function myFunction(selectedobject) {
         var label = selectedobject.value;
@@ -52,7 +59,7 @@
 
                 <ul class="horizontal-list form-actions-list">
                     <li>
-                        @Html.DropDownList("FormID", new SelectList(Model.Forms, "FormID", "Title", string.Empty))
+                        @Html.DropDownList("FormID", new SelectList(Model.Forms, "FormID", "Title", string.Empty), new { @onchange = "formIdFunction(this)" })
                         <input type="submit" name="submitButton" class="green" value="Export to Excel" />
                     </li>
 
