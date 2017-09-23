@@ -30,6 +30,9 @@
                         @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.DataType)
+                    </th>
+                    <th>
                         Edit
                     </th>
                     <th>
@@ -43,6 +46,9 @@
                     <tr>
                         <td>
                             @Html.ActionLink(item.Title, "Details", new { id = item.StandardReferenceID })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataType)
                         </td>
                         <td>
                             @Html.ActionLink(

@@ -4,39 +4,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        var value = document.getElementById('SubmitFields[@Model.DomId].TextBox').value
-        displayRiskStatus(value, @Model.DomId);
-
+        var value = document.getElementById('SubmitFields[@Model.DomId].TextBoxNumber').value
+        displayStandardReferenceResult(value, @Model.DomId);
     });
-
-    function displayRiskStatus(value, fieldId) {
-        if (value.match(/^[+-]?\d+(\.\d+)?$/) != null) {
-            var standardReferenceID = document.getElementById("SubmitFields["+fieldId+"].StandardReferenceId").value
-            if (standardReferenceID != "")
-            {
-                var jsonObject = {
-                    "standardReferenceId": standardReferenceID,
-                    "value": value
-                };
-
-                $.ajax({
-                    url: "@Url.Action("GetReferenceRange", "FormAccess")",
-                    type: "POST",
-                    data: JSON.stringify(jsonObject),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    error: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Error;
-                    },
-                    success: function (response) {
-                        document.getElementById("SubmitFields["+fieldId+"].RiskStatus").innerHTML = response.Status;
-                        //document.getElementById("SubmitFields["+fieldId+"].RiskStatus").style.color = response.Color;
-                    }
-                });
-            }
-        }
-    }
 
 </script>
 
@@ -66,7 +36,7 @@
                        @readonlyAttribute
                        style="width: 95%;" />
 
-                <label id="SubmitFields[@Model.DomId].RiskStatus"></label>
+                <label id="SubmitFields[@Model.DomId].StandardReferenceResult"></label>
                 
                 <input id="SubmitFields[@Model.DomId].StandardReferenceId"
                         name="SubmitFields[@Model.DomId].StandardReferenceId"

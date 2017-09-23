@@ -80,14 +80,14 @@
                     //add only if the value is number
                     if (!isNaN(this.value) && this.value.length != 0) {
                         sum += parseFloat(this.value);
-                        
+
                     }
                 }).removeAttr("disabled");
-    
+
             }
 
-  
-            
+
+
         });
 
 
@@ -125,7 +125,7 @@
         <table id="tableFormA" class="table">
             <tr>
                 <td></td>
-                <td width="50%" >
+                <td width="50%">
                     <b>Eligibility</b>
                 </td>
                 <td>
@@ -137,7 +137,7 @@
             </tr>
 
             @{
-                var mode = (Constants.TemplateFieldMode) TempData.Peek("ViewParticipantJourneyType");
+                var mode = (Constants.TemplateFieldMode)TempData.Peek("ViewParticipantJourneyType");
                 var readonlyAttribute = mode.IsReadOnlyMode() ? "readonly" : "";
                 var disabledAttribute = mode.IsReadOnlyMode() ? "disabled" : "";
             }
@@ -145,44 +145,47 @@
 
             @for (int i = 0; i < Model.Count; i++)
             {
-                <tr>
-                    <td style="text-align:center">
-                        <b align="center">@Model.ElementAt(i).Name</b>
-                        <br />
-                        <img src="@Model.ElementAt(i).IconPath" height="40" width="40" />
-                    </td>
-                    <td style="white-space: pre; " > @Html.Raw(@Model.ElementAt(i).Eligiblity)</td>
-                    <td>
-                        @if (Model.ElementAt(i).IsMandatory == true)
+                if (Model.ElementAt(i).IsVisible == true)
+                {
+                    <tr>
+                        <td style="text-align:center">
+                            <b align="center">@Model.ElementAt(i).Name</b>
+                            <br />
+                            <img src="@Model.ElementAt(i).IconPath" height="40" width="40" />
+                        </td>
+                        <td style="white-space: pre; ">@Html.Raw(@Model.ElementAt(i).Eligiblity)</td>
+                        <td>
+                            @if (Model.ElementAt(i).IsMandatory == true)
                         {
-                            @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
+                                @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
                         }
 
                         else if (mode.IsReadOnlyMode())
                         {
-                            @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
+                                @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name, @disabled = "disabled" });
                         }
 
                         else
                         {
-                            @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name });
+                                @Html.CheckBoxFor(m => m.ElementAt(i).IsActive, new { @class = "cbk", modIsActive = Model.ElementAt(i).Name });
                         }
-                    </td>
-                    <td>
+                        </td>
+                        <td>
 
-                        @if (!Model.ElementAt(i).IsActive)
+                            @if (!Model.ElementAt(i).IsActive)
                         {
-                           @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = "disabled" })
-                        }
+                                @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number", @disabled = "disabled" })
+                            }
 
-                        else
-                        {
-                            @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number" })
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.ElementAt(i).Labels, new { @class = "labelNo", @type = "number" })
 
-                        }
-                        
-                    </td>
-                </tr>
+                            }
+
+                        </td>
+                    </tr>
+                }
 
             }
         </table>
@@ -196,5 +199,4 @@
         <b align="center"><span id="sum">0</span></b>
     </div>
     <input type="button" value="Print Labels" @disabledAttribute onclick="printLabels()" />
-}
-
+                }

@@ -415,6 +415,233 @@ namespace PHS.Common
         public const string Summary_Field_Name_DocConsult_Result69 = "DocConsultResult69";
         public const string Summary_Field_Name_DocConsult_Result70 = "DocConsultResult70";
 
+        public const string Summary_Field_Name_Reg_Field0 = "RegField0";
+        public const string Summary_Field_Name_Reg_Field1 = "RegField1";
+        public const string Summary_Field_Name_Reg_Field2 = "RegField2";
+        public const string Summary_Field_Name_Reg_Field3 = "RegField3";
+        public const string Summary_Field_Name_Reg_Field4 = "RegField4";
+        public const string Summary_Field_Name_Reg_Field5 = "RegField5";
+        public const string Summary_Field_Name_Reg_Field6 = "RegField6";
+        public const string Summary_Field_Name_Reg_Field7 = "RegField7";
+        public const string Summary_Field_Name_Reg_Field8 = "RegField8";
+        public const string Summary_Field_Name_Reg_Field9 = "RegField9";
+
+        public const string Summary_Field_Name_Phlebo_Field0 = "PhelbField0";
+        public const string Summary_Field_Name_Phlebo_Field1 = "PhelbField1";
+
+        //Hx Taking
+        public const string Summary_Field_Name_HxTaking_Field0 = "HxTakingField0";
+        public const string Summary_Field_Name_HxTaking_Field1 = "HxTakingField1";
+        public const string Summary_Field_Name_HxTaking_Field2 = "HxTakingField2";
+        public const string Summary_Field_Name_HxTaking_Field3 = "HxTakingField3";
+        public const string Summary_Field_Name_HxTaking_Field4 = "HxTakingField4";
+        public const string Summary_Field_Name_HxTaking_Field5 = "HxTakingField5";
+        public const string Summary_Field_Name_HxTaking_Field6 = "HxTakingField6";
+        public const string Summary_Field_Name_HxTaking_Field7 = "HxTakingField7";
+        public const string Summary_Field_Name_HxTaking_Field8 = "HxTakingField8";
+        public const string Summary_Field_Name_HxTaking_Field9 = "HxTakingField9";
+        public const string Summary_Field_Name_HxTaking_Field10 = "HxTakingField10";
+        public const string Summary_Field_Name_HxTaking_Field11 = "HxTakingField11";
+        public const string Summary_Field_Name_HxTaking_Field12 = "HxTakingField12";
+        public const string Summary_Field_Name_HxTaking_Field13 = "HxTakingField13";
+        public const string Summary_Field_Name_HxTaking_Field14 = "HxTakingField14";
+        public const string Summary_Field_Name_HxTaking_Field15 = "HxTakingField15";
+        public const string Summary_Field_Name_HxTaking_Field16 = "HxTakingField16";
+        public const string Summary_Field_Name_HxTaking_Field17 = "HxTakingField17";
+        public const string Summary_Field_Name_HxTaking_Field18 = "HxTakingField18";
+        public const string Summary_Field_Name_HxTaking_Field19 = "HxTakingField19";
+        public const string Summary_Field_Name_HxTaking_Field20 = "HxTakingField20";
+        public const string Summary_Field_Name_HxTaking_Field21 = "HxTakingField21";
+        public const string Summary_Field_Name_HxTaking_Field22 = "HxTakingField22";
+        public const string Summary_Field_Name_HxTaking_Field23 = "HxTakingField23";
+        public const string Summary_Field_Name_HxTaking_Field24 = "HxTakingField24";
+        public const string Summary_Field_Name_HxTaking_Field25 = "HxTakingField25";
+        public const string Summary_Field_Name_HxTaking_Field26 = "HxTakingField26";
+        public const string Summary_Field_Name_HxTaking_Field27 = "HxTakingField27";
+        public const string Summary_Field_Name_HxTaking_Field28 = "HxTakingField28";
+        public const string Summary_Field_Name_HxTaking_Field29 = "HxTakingField29";
+        public const string Summary_Field_Name_HxTaking_Field30 = "HxTakingField30";
+        public const string Summary_Field_Name_HxTaking_Field31 = "HxTakingField31";
+        public const string Summary_Field_Name_HxTaking_Field32 = "HxTakingField32";
+        public const string Summary_Field_Name_HxTaking_Field33 = "HxTakingField33";
+        public const string Summary_Field_Name_HxTaking_Field34 = "HxTakingField34";
+        public const string Summary_Field_Name_HxTaking_Field35 = "HxTakingField35";
+        public const string Summary_Field_Name_HxTaking_Field36 = "HxTakingField36";
+        public const string Summary_Field_Name_HxTaking_Field37 = "HxTakingField37";
+        public const string Summary_Field_Name_HxTaking_Field38 = "HxTakingField38";
+        public const string Summary_Field_Name_HxTaking_Field39 = "HxTakingField39";
+        public const string Summary_Field_Name_HxTaking_Field40 = "HxTakingField40";
+        public const string Summary_Field_Name_HxTaking_Field41 = "HxTakingField41";
+        public const string Summary_Field_Name_HxTaking_Field42 = "HxTakingField42";
+        public const string Summary_Field_Name_HxTaking_Field43 = "HxTakingField43";
+        public const string Summary_Field_Name_HxTaking_Field44 = "HxTakingField44";
+        public const string Summary_Field_Name_HxTaking_Field45 = "HxTakingField45";
+        public const string Summary_Field_Name_HxTaking_Field46 = "HxTakingField46";
+        public const string Summary_Field_Name_HxTaking_Field47 = "HxTakingField47";
+        public const string Summary_Field_Name_HxTaking_Field48 = "HxTakingField48";
+        public const string Summary_Field_Name_HxTaking_Field49 = "HxTakingField49";
+
+        //Geri Fields 
+        public const string Summary_Field_Name_Geri_Field0 = "GeriField0";
+        public const string Summary_Field_Name_Geri_Field1 = "GeriField1";
+        public const string Summary_Field_Name_Geri_Field2 = "GeriField2";
+        public const string Summary_Field_Name_Geri_Field3 = "GeriField3";
+        public const string Summary_Field_Name_Geri_Field4 = "GeriField4";
+        public const string Summary_Field_Name_Geri_Field5 = "GeriField5";
+        public const string Summary_Field_Name_Geri_Field6 = "GeriField6";
+        public const string Summary_Field_Name_Geri_Field7 = "GeriField7";
+        public const string Summary_Field_Name_Geri_Field8 = "GeriField8";
+        public const string Summary_Field_Name_Geri_Field9 = "GeriField9";
+        public const string Summary_Field_Name_Geri_Field10 = "GeriField10";
+        public const string Summary_Field_Name_Geri_Field11 = "GeriField11";
+        public const string Summary_Field_Name_Geri_Field12 = "GeriField12";
+        public const string Summary_Field_Name_Geri_Field13 = "GeriField13";
+        public const string Summary_Field_Name_Geri_Field14 = "GeriField14";
+        public const string Summary_Field_Name_Geri_Field15 = "GeriField15";
+        public const string Summary_Field_Name_Geri_Field16 = "GeriField16";
+        public const string Summary_Field_Name_Geri_Field17 = "GeriField17";
+        public const string Summary_Field_Name_Geri_Field18 = "GeriField18";
+        public const string Summary_Field_Name_Geri_Field19 = "GeriField19";
+        public const string Summary_Field_Name_Geri_Field20 = "GeriField20";
+        public const string Summary_Field_Name_Geri_Field21 = "GeriField21";
+        public const string Summary_Field_Name_Geri_Field22 = "GeriField22";
+        public const string Summary_Field_Name_Geri_Field23 = "GeriField23";
+        public const string Summary_Field_Name_Geri_Field24 = "GeriField24";
+        public const string Summary_Field_Name_Geri_Field25 = "GeriField25";
+        public const string Summary_Field_Name_Geri_Field26 = "GeriField26";
+        public const string Summary_Field_Name_Geri_Field27 = "GeriField27";
+        public const string Summary_Field_Name_Geri_Field28 = "GeriField28";
+        public const string Summary_Field_Name_Geri_Field29 = "GeriField29";
+        public const string Summary_Field_Name_Geri_Field30 = "GeriField30";
+        public const string Summary_Field_Name_Geri_Field31 = "GeriField31";
+        public const string Summary_Field_Name_Geri_Field32 = "GeriField32";
+        public const string Summary_Field_Name_Geri_Field33 = "GeriField33";
+        public const string Summary_Field_Name_Geri_Field34 = "GeriField34";
+        public const string Summary_Field_Name_Geri_Field35 = "GeriField35";
+        public const string Summary_Field_Name_Geri_Field36 = "GeriField36";
+        public const string Summary_Field_Name_Geri_Field37 = "GeriField37";
+        public const string Summary_Field_Name_Geri_Field38 = "GeriField38";
+        public const string Summary_Field_Name_Geri_Field39 = "GeriField39";
+        public const string Summary_Field_Name_Geri_Field40 = "GeriField40";
+        public const string Summary_Field_Name_Geri_Field41 = "GeriField41";
+        public const string Summary_Field_Name_Geri_Field42 = "GeriField42";
+        public const string Summary_Field_Name_Geri_Field43 = "GeriField43";
+        public const string Summary_Field_Name_Geri_Field44 = "GeriField44";
+        public const string Summary_Field_Name_Geri_Field45 = "GeriField45";
+        public const string Summary_Field_Name_Geri_Field46 = "GeriField46";
+        public const string Summary_Field_Name_Geri_Field47 = "GeriField47";
+        public const string Summary_Field_Name_Geri_Field48 = "GeriField48";
+        public const string Summary_Field_Name_Geri_Field49 = "GeriField49";
+        public const string Summary_Field_Name_Geri_Field50 = "GeriField50";
+        public const string Summary_Field_Name_Geri_Field51 = "GeriField51";
+        public const string Summary_Field_Name_Geri_Field52 = "GeriField52";
+        public const string Summary_Field_Name_Geri_Field53 = "GeriField53";
+        public const string Summary_Field_Name_Geri_Field54 = "GeriField54";
+        public const string Summary_Field_Name_Geri_Field55 = "GeriField55";
+        public const string Summary_Field_Name_Geri_Field56 = "GeriField56";
+        public const string Summary_Field_Name_Geri_Field57 = "GeriField57";
+        public const string Summary_Field_Name_Geri_Field58 = "GeriField58";
+        public const string Summary_Field_Name_Geri_Field59 = "GeriField59";
+        public const string Summary_Field_Name_Geri_Field60 = "GeriField60";
+        public const string Summary_Field_Name_Geri_Field61 = "GeriField61";
+        public const string Summary_Field_Name_Geri_Field62 = "GeriField62";
+        public const string Summary_Field_Name_Geri_Field63 = "GeriField63";
+        public const string Summary_Field_Name_Geri_Field64 = "GeriField64";
+        public const string Summary_Field_Name_Geri_Field65 = "GeriField65";
+        public const string Summary_Field_Name_Geri_Field66 = "GeriField66";
+        public const string Summary_Field_Name_Geri_Field67 = "GeriField67";
+        public const string Summary_Field_Name_Geri_Field68 = "GeriField68";
+        public const string Summary_Field_Name_Geri_Field69 = "GeriField69";
+        public const string Summary_Field_Name_Geri_Field70 = "GeriField70";
+        public const string Summary_Field_Name_Geri_Field71 = "GeriField71";
+        public const string Summary_Field_Name_Geri_Field72 = "GeriField72";
+        public const string Summary_Field_Name_Geri_Field73 = "GeriField73";
+        public const string Summary_Field_Name_Geri_Field74 = "GeriField74";
+        public const string Summary_Field_Name_Geri_Field75 = "GeriField75";
+        public const string Summary_Field_Name_Geri_Field76 = "GeriField76";
+        public const string Summary_Field_Name_Geri_Field77 = "GeriField77";
+        public const string Summary_Field_Name_Geri_Field78 = "GeriField78";
+        public const string Summary_Field_Name_Geri_Field79 = "GeriField79";
+        public const string Summary_Field_Name_Geri_Field80 = "GeriField80";
+        public const string Summary_Field_Name_Geri_Field81 = "GeriField81";
+        public const string Summary_Field_Name_Geri_Field82 = "GeriField82";
+        public const string Summary_Field_Name_Geri_Field83 = "GeriField83";
+        public const string Summary_Field_Name_Geri_Field84 = "GeriField84";
+        public const string Summary_Field_Name_Geri_Field85 = "GeriField85";
+        public const string Summary_Field_Name_Geri_Field86 = "GeriField86";
+        public const string Summary_Field_Name_Geri_Field87 = "GeriField87";
+        public const string Summary_Field_Name_Geri_Field88 = "GeriField88";
+        public const string Summary_Field_Name_Geri_Field89 = "GeriField89";
+        public const string Summary_Field_Name_Geri_Field90 = "GeriField90";
+        public const string Summary_Field_Name_Geri_Field91 = "GeriField91";
+        public const string Summary_Field_Name_Geri_Field92 = "GeriField92";
+        public const string Summary_Field_Name_Geri_Field93 = "GeriField93";
+        public const string Summary_Field_Name_Geri_Field94 = "GeriField94";
+        public const string Summary_Field_Name_Geri_Field95 = "GeriField95";
+        public const string Summary_Field_Name_Geri_Field96 = "GeriField96";
+        public const string Summary_Field_Name_Geri_Field97 = "GeriField97";
+        public const string Summary_Field_Name_Geri_Field98 = "GeriField98";
+        public const string Summary_Field_Name_Geri_Field99 = "GeriField99";
+        public const string Summary_Field_Name_Geri_Field100 = "GeriField100";
+        public const string Summary_Field_Name_Geri_Field101 = "GeriField101";
+        public const string Summary_Field_Name_Geri_Field102 = "GeriField102";
+        public const string Summary_Field_Name_Geri_Field103 = "GeriField103";
+        public const string Summary_Field_Name_Geri_Field104 = "GeriField104";
+        public const string Summary_Field_Name_Geri_Field105 = "GeriField105";
+        public const string Summary_Field_Name_Geri_Field106 = "GeriField106";
+        public const string Summary_Field_Name_Geri_Field107 = "GeriField107";
+        public const string Summary_Field_Name_Geri_Field108 = "GeriField108";
+        public const string Summary_Field_Name_Geri_Field109 = "GeriField109";
+        public const string Summary_Field_Name_Geri_Field110 = "GeriField110";
+        public const string Summary_Field_Name_Geri_Field111 = "GeriField111";
+        public const string Summary_Field_Name_Geri_Field112 = "GeriField112";
+        public const string Summary_Field_Name_Geri_Field113 = "GeriField113";
+        public const string Summary_Field_Name_Geri_Field114 = "GeriField114";
+        public const string Summary_Field_Name_Geri_Field115 = "GeriField115";
+        public const string Summary_Field_Name_Geri_Field116 = "GeriField116";
+        public const string Summary_Field_Name_Geri_Field117 = "GeriField117";
+        public const string Summary_Field_Name_Geri_Field118 = "GeriField118";
+        public const string Summary_Field_Name_Geri_Field119 = "GeriField119";
+        public const string Summary_Field_Name_Geri_Field120 = "GeriField120";
+        public const string Summary_Field_Name_Geri_Field121 = "GeriField121";
+        public const string Summary_Field_Name_Geri_Field122 = "GeriField122";
+        public const string Summary_Field_Name_Geri_Field123 = "GeriField123";
+        public const string Summary_Field_Name_Geri_Field124 = "GeriField124";
+        public const string Summary_Field_Name_Geri_Field125 = "GeriField125";
+        public const string Summary_Field_Name_Geri_Field126 = "GeriField126";
+        public const string Summary_Field_Name_Geri_Field127 = "GeriField127";
+        public const string Summary_Field_Name_Geri_Field128 = "GeriField128";
+        public const string Summary_Field_Name_Geri_Field129 = "GeriField129";
+        public const string Summary_Field_Name_Geri_Field130 = "GeriField130";
+        public const string Summary_Field_Name_Geri_Field131 = "GeriField131";
+        public const string Summary_Field_Name_Geri_Field132 = "GeriField132";
+        public const string Summary_Field_Name_Geri_Field133 = "GeriField133";
+        public const string Summary_Field_Name_Geri_Field134 = "GeriField134";
+        public const string Summary_Field_Name_Geri_Field135 = "GeriField135";
+        public const string Summary_Field_Name_Geri_Field136 = "GeriField136";
+        public const string Summary_Field_Name_Geri_Field137 = "GeriField137";
+        public const string Summary_Field_Name_Geri_Field138 = "GeriField138";
+        public const string Summary_Field_Name_Geri_Field139 = "GeriField139";
+        public const string Summary_Field_Name_Geri_Field140 = "GeriField140";
+        public const string Summary_Field_Name_Geri_Field141 = "GeriField141";
+        public const string Summary_Field_Name_Geri_Field142 = "GeriField142";
+        public const string Summary_Field_Name_Geri_Field143 = "GeriField143";
+        public const string Summary_Field_Name_Geri_Field144 = "GeriField144";
+        public const string Summary_Field_Name_Geri_Field145 = "GeriField145";
+        public const string Summary_Field_Name_Geri_Field146 = "GeriField146";
+        public const string Summary_Field_Name_Geri_Field147 = "GeriField147";
+        public const string Summary_Field_Name_Geri_Field148 = "GeriField148";
+        public const string Summary_Field_Name_Geri_Field149 = "GeriField149";
+
+        //Social Support
+        public const string Summary_Field_Name_SocialSupport_Field0 = "SocialSupportField0";
+        public const string Summary_Field_Name_SocialSupport_Field1 = "SocialSupportField1";
+        public const string Summary_Field_Name_SocialSupport_Field2 = "SocialSupportField2";
+        public const string Summary_Field_Name_SocialSupport_Field3 = "SocialSupportField3";
+
+
+
+
         //Event Summary Category
         public const string Summary_Category_Label_Name_CardiovascularHealth = "Cardiovascular Health";
         public const string Summary_Category_Label_Name_Obesity = "Obesity, Metabolic Syndrome & Diabetes";
@@ -453,6 +680,7 @@ namespace PHS.Common
         public const string Summary_Category_Label_Name_DoctorConsult_AMT = "AMT";
         public const string Summary_Category_Label_Name_DoctorConsult_PTMemo = "Physical Therapist Memo";
         public const string Summary_Category_Label_Name_DoctorConsult_OTMemo = "Occupational Therapist Memo";
+        public const string Summary_Category_Label_Name_DoctorConsult_Vision = "Vision"; 
 
         //Social Support Referral
         public const string Summary_Category_Label_Name_SocialSupport = "Social Support";
@@ -464,7 +692,7 @@ namespace PHS.Common
         public const string Summary_Category_Label_Name_Cog2nd_EBAS = "Cognitive 2nd Tier - EBAS";
 
         //PT Consult
-        public const string Summary_Category_Label_Name_PTConsult = "PT Consult";
+        public const string Summary_Category_Label_Name_PTConsult = "Reasons for referral to Dr's Consult from PT";
         public const string Summary_Category_Label_Name_PTCon_ParQ_Result = "PAR-Q Results";
         public const string Summary_Category_Label_Name_PTCon_PhysAct_Result = "Physical Activity Levels Results";
         public const string Summary_Category_Label_Name_PTCon_Frail_Result = "Frail Scale";
@@ -472,7 +700,8 @@ namespace PHS.Common
         public const string Summary_Category_Label_Name_PTCon_TUG_Result = "Time-up and go Results";
 
         //OT Consult
-        public const string Summary_Category_Label_Name_OTConsult = "OT Consult";
+        public const string Summary_Category_Label_Name_OTConsult = "Reasons for referral to Dr's Consult from OT";
+        public const string Summary_Category_Label_Name_OTConsult_Vision = "Vision - Snellen's Test Results";
         public const string Summary_Category_Label_Name_OTConsult_Questionnaire = "OT Questionnaire Results"; 
         public const string Summary_Category_Label_Name_OTConsult_SPPB_Result = "SPPB Scores";
         public const string Summary_Category_Label_Name_OTConsult_TUG_Result = "Time-up and go Results";
@@ -489,6 +718,9 @@ namespace PHS.Common
 
         //Social Support 
         public const string Summary_Category_Label_Name_SocialSupp_CHAS = "CHAS Card Status"; 
+
+
+       
 
 
 
