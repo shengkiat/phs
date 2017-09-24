@@ -68,9 +68,6 @@ IF OBJECT_ID('dbo.StandardReference', 'U') IS NOT NULL
 
 IF OBJECT_ID('dbo.AuditLog', 'U') IS NOT NULL 
   DROP TABLE [dbo].[AuditLog]; 
-
-IF OBJECT_ID('dbo.SummaryMapping', 'U') IS NOT NULL 
-  DROP TABLE [dbo].[SummaryMapping];
   
 CREATE TABLE [dbo].[AuditLog](
 	[AuditLogID] [int] IDENTITY(1,1) NOT NULL,
@@ -394,19 +391,6 @@ CREATE TABLE [dbo].[Summary](
 	[PHSEventID] ASC,
 	[ModalityID] ASC,
 	[TemplateFieldID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-CREATE TABLE [dbo].[SummaryMapping](
-	[SummaryMappingID] [int] IDENTITY(1,1) NOT NULL,
-	[SummaryType] [nvarchar](50) NOT NULL,
-	[CategoryName] [nvarchar](50) NOT NULL,
-	[SummaryFieldName] [nvarchar](50) NOT NULL
- CONSTRAINT [PK_summary_map] PRIMARY KEY CLUSTERED 
-(
-	[SummaryType] ASC,
-	[CategoryName] ASC,
-	[SummaryFieldName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
