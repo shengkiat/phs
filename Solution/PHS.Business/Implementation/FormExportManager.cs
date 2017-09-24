@@ -209,16 +209,16 @@ namespace PHS.Business.Implementation
                 }
 
                 FormExportResultViewModel result = new FormExportResultViewModel();
-                result.ValuesDataTable = CreateDataTable(form.Title, templateViews, model.SortFields, model.CriteriaFields);
+                result.ValuesDataTable = CreateDataTable(form, templateViews, model.SortFields, model.CriteriaFields);
                 result.Title = form.Title;
 
                 return result;
             }
         }
 
-        private DataTable CreateDataTable(string title, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
+        private DataTable CreateDataTable(Form form, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
-            var dt = new DataTable(title);
+            var dt = new DataTable(form.Title);
             IDictionary<int, int> fieldIdColumnMapping = new System.Collections.Generic.Dictionary<int, int>();
             int columnCount = 0;
 
