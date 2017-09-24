@@ -311,7 +311,11 @@ namespace PHS.Business.Implementation
                             {
                                 row[0] = participant.Nric;
                                 row[1] = participant.FullName;
-                                row[2] = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
+                                if (participant.DateOfBirth != null)
+                                {
+                                    row[2] = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
+                                }
+                                
                                 row[3] = participant.Gender;
                             }
                         }
