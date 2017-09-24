@@ -1,5 +1,5 @@
 ﻿var Forms = function () {
-
+    var optionSplit = ",";
     var dropPosition = 0;
     var activeItemId = 0;
     var activeControl = 'form';
@@ -472,7 +472,7 @@
             var str1 = "";
             $("input[name='mytext[]']").each(function () {
                 values.push($(this).val());
-                str1 = str1 + $(this).val() + ",";
+                str1 = str1 + $(this).val() + optionSplit;
             });
 
             str1 = str1.substring(0, str1.length - 1);
@@ -485,7 +485,7 @@
             var str1 = "";
             $("input[name='radiotext[]']").each(function () {
                 values.push($(this).val());
-                str1 = str1 + $(this).val() + ",";
+                str1 = str1 + $(this).val() + optionSplit;
             });
 
             str1 = str1.substring(0, str1.length - 1);
@@ -498,7 +498,7 @@
             var str1 = "";
             $("input[name='dropdownText[]']").each(function () {
                 values.push($(this).val());
-                str1 = str1 + $(this).val() + ",";
+                str1 = str1 + $(this).val() + optionSplit;
             });
 
             str1 = str1.substring(0, str1.length - 1);
