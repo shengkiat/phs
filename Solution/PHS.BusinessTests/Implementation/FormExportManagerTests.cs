@@ -245,6 +245,109 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void CreateFormEntriesDataTableTest_PhlebotomyForm()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            FormViewModel formViewModel = new FormViewModel()
+            {
+                InternalFormType = Constants.Internal_Form_Type_Phlebotomy
+            };
+
+            CreateTemplateAndField(formViewModel, Constants.TemplateFieldType.TEXTBOX, "Textbox", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "Not important");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            var entryId = templateViewModel.Entries.FirstOrDefault().EntryId;
+            Assert.AreNotEqual(Guid.Empty, entryId);
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(199),
+                IsActive = false
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = new DateTime(1988, 11, 22),
+                Gender = "Male",
+                FullName = "Tester 123"
+            };
+
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Complete();
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = 1,
+                ModalityID = 1,
+                FormID = 1,
+                TemplateID = 1,
+                EntryId = new Guid(entryId)
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            var result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(5, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("Name", result.Columns[1].ColumnName);
+            Assert.AreEqual("DOB", result.Columns[2].ColumnName);
+            Assert.AreEqual("Sex", result.Columns[3].ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("S8250369B", result.Rows[0]["Nric"]);
+            Assert.AreEqual("Tester 123", result.Rows[0]["Name"]);
+            Assert.AreEqual("22 Nov 1988", result.Rows[0]["DOB"]);
+            Assert.AreEqual("Male", result.Rows[0]["Sex"]);
+        }
+
+        [TestMethod()]
         public void CreateFormEntriesDataTableTest_Sorting()
         {
             Template template;

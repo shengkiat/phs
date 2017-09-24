@@ -30,6 +30,11 @@ namespace PHS.Repository.Repository
             return find(p => p.Nric.Equals(nric));
         }
 
+        public Participant FindParticipant(int participantId)
+        {
+            return find(p => p.ParticipantID == participantId);
+        }
+
         public void AddParticipantWithPHSEvent(Participant participant, PHSEvent phsEvent)
         {
             Add(participant);

@@ -12,7 +12,7 @@ namespace PHS.Repository.Interface
     {
         ParticipantJourneyModality GetParticipantJourneyModality(string nric, int phsEventId, int formId, int modalityId);
         void UpdateParticipantJourneyModality(ParticipantJourneyModality participantJourneyModality, int templateId, Guid entryId);
-
         IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByParticipantEvent(string nric, int phsEventId);
+        IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByFormIdAndEntryId(int formId, Guid entryId);
     }
 }

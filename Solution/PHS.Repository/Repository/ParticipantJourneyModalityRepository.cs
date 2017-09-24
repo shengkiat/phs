@@ -38,8 +38,11 @@ namespace PHS.Repository.Repository
         {
             return Find(p => p.PHSEventID == phsEventId && p.Participant.Nric.Equals(nric));
         }
-        
-       
+
+        public IEnumerable<ParticipantJourneyModality> GetParticipantJourneyModalityByFormIdAndEntryId(int formId, Guid entryId)
+        {
+            return Find(p => p.FormID == formId && p.EntryId.Equals(entryId));
+        }
 
     }
 }
