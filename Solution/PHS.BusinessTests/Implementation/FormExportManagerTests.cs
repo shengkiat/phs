@@ -290,6 +290,50 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void CreateFormEntriesDataTableTest_SortingWithSubmittedOn()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.TEXTBOX, "this is for testing", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ABC HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "ZXY HelloTest");
+            fillin("1", templateViewModel, "SubmitFields[1].TextBox", "HHH HelloTest");
+
+            SortFieldViewModel sortFieldViewModel = new SortFieldViewModel()
+            {
+                TemplateFieldID = "Submitted On",
+                SortOrder = "DESC"
+            };
+
+            var SortFieldViewModels = new List<SortFieldViewModel>();
+            SortFieldViewModels.Add(sortFieldViewModel);
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1,
+                SortFields = SortFieldViewModels
+            };
+
+            DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(2, result.Columns.Count);
+            DataColumn column = result.Columns[0];
+            Assert.AreEqual("this is for testing", column.ColumnName);
+
+            Assert.AreEqual(3, result.Rows.Count);
+            Assert.AreEqual("HHH HelloTest", result.Rows[0]["this is for testing"]);
+        }
+
+        [TestMethod()]
         public void CreateFormEntriesDataTableTest_Filtering()
         {
             Template template;

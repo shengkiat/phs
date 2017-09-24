@@ -209,14 +209,14 @@ namespace PHS.Business.Implementation
                 }
 
                 FormExportResultViewModel result = new FormExportResultViewModel();
-                result.ValuesDataTable = CreateFormEntriesDataTable(form.Title, templateViews, model.SortFields, model.CriteriaFields);
+                result.ValuesDataTable = CreateDataTable(form.Title, templateViews, model.SortFields, model.CriteriaFields);
                 result.Title = form.Title;
 
                 return result;
             }
         }
 
-        private DataTable CreateFormEntriesDataTable(string title, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
+        private DataTable CreateDataTable(string title, IList<TemplateViewModel> templateViews, List<SortFieldViewModel> sortFields, List<CriteriaFieldViewModel> criteriaFields)
         {
             var dt = new DataTable(title);
             IDictionary<int, int> fieldIdColumnMapping = new System.Collections.Generic.Dictionary<int, int>();
@@ -381,16 +381,25 @@ namespace PHS.Business.Implementation
                 {
                     foreach (var sortFieldViewModel in sortFields)
                     {
-
-                        var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(sortFieldViewModel.TemplateFieldID));
-                        if (templateField != null)
+                        string sortF = null;
+                        if (Constants.Export_SubmittedOn.Equals(sortFieldViewModel.TemplateFieldID))
                         {
-                            var sortF = templateField.Label.StripHTML();
-                            var sortO = sortFieldViewModel.SortOrder;
-                            if (!string.IsNullOrEmpty(sortF) && !string.IsNullOrEmpty(sortO))
+                            sortF = Constants.Export_SubmittedOn;
+                        }
+
+                        else
+                        {
+                            var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(sortFieldViewModel.TemplateFieldID));
+                            if (templateField != null)
                             {
-                                result += string.Format(", {0} {1}", sortF, sortO);
+                                sortF = templateField.Label.StripHTML();
                             }
+                        }
+
+                        var sortO = sortFieldViewModel.SortOrder;
+                        if (!string.IsNullOrEmpty(sortF) && !string.IsNullOrEmpty(sortO))
+                        {
+                            result += string.Format(", {0} {1}", sortF, sortO);
                         }
                     }
                 }
