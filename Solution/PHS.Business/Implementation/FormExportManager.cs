@@ -427,16 +427,27 @@ namespace PHS.Business.Implementation
                             && !String.IsNullOrEmpty(criteriaField.CriteriaLogic)
                             && !String.IsNullOrEmpty(criteriaField.CriteriaValue[criteriaField.TemplateFieldID]))
                         {
-                            var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(criteriaField.TemplateFieldID));
-                            if (templateField != null)
+                            string label = null;
+                            if (Constants.Export_SubmittedOn.Equals(criteriaField.TemplateFieldID))
                             {
-                                result += string.Format(" OR [{0}] {1}", templateField.Label.StripHTML(), getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.TemplateFieldID]));
-                                if (criteriaField.CriteriaSubFields != null)
+                                label = Constants.Export_SubmittedOn;
+                            }
+
+                            else
+                            {
+                                var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(criteriaField.TemplateFieldID));
+                                if (templateField != null)
                                 {
-                                    foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
-                                    {
-                                        result += string.Format(" {0} [{1}] {2}", criteriaSubField.OperatorLogic, templateField.Label.StripHTML(), getConvertedCriteriaValue(criteriaSubField.CriteriaLogic, criteriaSubField.CriteriaValue[criteriaField.TemplateFieldID]));
-                                    }
+                                    label = templateField.Label.StripHTML();
+                                }
+                            }
+
+                            result += string.Format(" OR [{0}] {1}", label, getConvertedCriteriaValue(criteriaField.CriteriaLogic, criteriaField.CriteriaValue[criteriaField.TemplateFieldID]));
+                            if (criteriaField.CriteriaSubFields != null)
+                            {
+                                foreach (var criteriaSubField in criteriaField.CriteriaSubFields)
+                                {
+                                    result += string.Format(" {0} [{1}] {2}", criteriaSubField.OperatorLogic, label, getConvertedCriteriaValue(criteriaSubField.CriteriaLogic, criteriaSubField.CriteriaValue[criteriaField.TemplateFieldID]));
                                 }
                             }
                         }
