@@ -24,6 +24,7 @@ namespace PHS.Common
 
         public const string Internal_Form_Type_Registration = "REG";
         public const string Internal_Form_Type_MegaSortingStation = "MEG";
+        public const string Internal_Form_Type_Phlebotomy = "PHLEBOTOMY";
         public const string Internal_Form_Type_EventSummary = "ESY";
         public const string Internal_Form_Type_DoctorySummary = "DSY";
         public const string Internal_Form_Type_Cog2Summary = "COG2";
