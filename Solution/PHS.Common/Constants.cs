@@ -14,6 +14,8 @@ namespace PHS.Common
 
         public const string Admin = "Admin";
 
+        public const string Export_SubmittedOn = "Submitted On";
+
         public static string FILESAVEPATHKEY = "filesavepath";
         public static string FILESAVENAMEKEY = "filesavename";
         public static string DEAULTFILEEXTENSIONS = ".jpg,.png,.gif,.pdf,.bmp,.zip";

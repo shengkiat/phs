@@ -19,6 +19,7 @@ namespace PHS.Business.Implementation
 {
     public class FormExportManager : BaseFormManager, IFormExportManager, IManagerFactoryBase<IFormExportManager>
     {
+
         public IFormExportManager Create()
         {
             return new FormExportManager();
@@ -91,8 +92,8 @@ namespace PHS.Business.Implementation
 
                 sortFieldViewModel.SortFields.Add(new SelectListItem
                 {
-                    Text = "Submitted On",
-                    Value = "Submitted On"
+                    Text = Constants.Export_SubmittedOn,
+                    Value = Constants.Export_SubmittedOn
                 });
             }
 
@@ -143,8 +144,8 @@ namespace PHS.Business.Implementation
 
                 criteriaFieldViewModel.FieldLabels.Add(new SelectListItem
                 {
-                    Text = "Submitted On",
-                    Value = "Submitted On"
+                    Text = Constants.Export_SubmittedOn,
+                    Value = Constants.Export_SubmittedOn
                 });
             }
 
@@ -277,7 +278,7 @@ namespace PHS.Business.Implementation
                 }
             }
 
-            dt.Columns.Add(new DataColumn("Submitted On"));
+            dt.Columns.Add(new DataColumn(Constants.Export_SubmittedOn));
 
             foreach (var template in templateViews)
             {
@@ -380,6 +381,7 @@ namespace PHS.Business.Implementation
                 {
                     foreach (var sortFieldViewModel in sortFields)
                     {
+
                         var templateField = unitOfWork.FormRepository.GetTemplateField(Int32.Parse(sortFieldViewModel.TemplateFieldID));
                         if (templateField != null)
                         {
