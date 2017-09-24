@@ -1,5 +1,6 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
+@using PHS.Common
 
 <script type="text/javascript">
 
@@ -52,13 +53,13 @@
                     var readonlyAttribute = Model.IsReadOnlyMode() ? "readonly" : "";
                     var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
 
-                    bool checkDefault = !Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
-                    bool checkFirst = !string.IsNullOrEmpty(Model.SelectedOption) || Model.Options.Split(",").Any(o => Html.IsTempFormValueSelected(Model, o));
+                    bool checkDefault = !Model.Options.Split(Constants.Form_Option_Split).Any(o => Html.IsTempFormValueSelected(Model, o));
+                    bool checkFirst = !string.IsNullOrEmpty(Model.SelectedOption) || Model.Options.Split(Constants.Form_Option_Split).Any(o => Html.IsTempFormValueSelected(Model, o));
                     int counter = 0;
                 }
 
-                @foreach (var option in Model.Options.Split(","))
-            {
+                @foreach (var option in Model.Options.Split(Constants.Form_Option_Split))
+                {
                     <li>
                         @if (Html.IsSubmittedValueSelected(Model, option))
                         {

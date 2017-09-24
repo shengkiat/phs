@@ -470,7 +470,7 @@ namespace PHS.Business.Extensions
 
             if (helper.ViewData[key] != null)
             {
-                var values = helper.ViewData[key].ToString().Split(",");
+                var values = helper.ViewData[key].ToString().Split(Form_Option_Split);
                 if (values.Any(v => string.Compare(v.Trim(), value.Trim(), true) == 0))
                 {
                     return true;
@@ -527,7 +527,7 @@ namespace PHS.Business.Extensions
                 return true;
             }
 
-            string[] options = selectedValue.Split(",");
+            string[] options = selectedValue.Split(Form_Option_Split);
             foreach (string option in options)
             {
                 if (value.Trim() == option.Trim())
@@ -575,7 +575,7 @@ namespace PHS.Business.Extensions
                 return false;
             }
 
-            string[] options = selectedValue.Split(",");
+            string[] options = selectedValue.Split(Form_Option_Split);
 
             if (value.Trim() == options[index].Trim())
             {

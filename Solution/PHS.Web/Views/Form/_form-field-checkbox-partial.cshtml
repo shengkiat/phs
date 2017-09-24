@@ -1,5 +1,6 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
+@using PHS.Common
 
 <script type="text/javascript">
 
@@ -45,7 +46,7 @@
                     var disabledAttribute = Model.IsReadOnlyMode() ? "disabled=\"disabled\"" : "";
                 }
 
-                @foreach (var option in Model.Options.Split(","))
+                @foreach (var option in Model.Options.Split(Constants.Form_Option_Split))
             {
                     <li>
                         @if (Html.IsSubmittedValueSelected(Model, option))

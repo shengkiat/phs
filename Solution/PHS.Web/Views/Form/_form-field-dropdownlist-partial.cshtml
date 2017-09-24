@@ -1,5 +1,6 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
+@using PHS.Common
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -44,7 +45,7 @@ $(document).ready(function () {
 
                 <option @selectedAttribute value="" />
 
-                @foreach (var option in Model.Options.Split(","))
+                @foreach (var option in Model.Options.Split(Constants.Form_Option_Split))
             {
                 if (Html.IsAnyTempFormValueSelected(Model))
                 {

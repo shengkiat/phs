@@ -458,7 +458,7 @@ namespace PHS.Business.Extensions
                         }
                         else
                         {
-                            builder.Append("," + value);
+                            builder.Append(Constants.Form_Option_Split + value);
                         }
                     }
 

@@ -58,7 +58,7 @@
                             {
                                 if (formField.TemplateFieldID.Equals(field.TemplateFieldID))
                                 {
-                                    foreach (var option in formField.Options.Split(","))
+                                    foreach (var option in formField.Options.Split(Constants.Form_Option_Split))
                                     {
                                         optionFields.Add(new SelectListItem { Text = @option, Value = @option });
                                     }

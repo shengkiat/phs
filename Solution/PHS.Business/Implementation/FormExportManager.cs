@@ -242,7 +242,7 @@ namespace PHS.Business.Implementation
 
                         if (field.FieldType == Constants.TemplateFieldType.MATRIX)
                         {
-                            string[] rows = field.MatrixRow.Split(",");
+                            string[] rows = field.MatrixRow.Split(Constants.Form_Option_Split);
                             foreach (string row in rows)
                             {
                                 AddColumn(dt, row, columnCount);
@@ -331,7 +331,7 @@ namespace PHS.Business.Implementation
                             {
                                 var matrixField = entry.Value;
 
-                                string[] submissions = matrixField.Split(",");
+                                string[] submissions = matrixField.Split(Constants.Form_Option_Split);
                                 foreach (string submitValue in submissions)
                                 {
                                     row[columnIndex] = submitValue;

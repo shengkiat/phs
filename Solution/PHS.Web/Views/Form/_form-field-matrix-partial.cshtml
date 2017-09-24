@@ -1,5 +1,6 @@
 ﻿@model PHS.DB.ViewModels.Form.TemplateFieldViewModel
 @using PHS.Business.Extensions
+@using PHS.Common
 
 @{
     int columnCounter = 0;
@@ -21,7 +22,7 @@
             <tr>
                 <th></th>
 
-                @foreach (var column in Model.MatrixColumn.Split(","))
+                @foreach (var column in Model.MatrixColumn.Split(Constants.Form_Option_Split))
                 {
                     columnCounter++;
                     columnChoices.Add(column);
@@ -29,7 +30,7 @@
                 }
             </tr>
 
-            @foreach (var row in Model.MatrixRow.Split(","))
+            @foreach (var row in Model.MatrixRow.Split(Constants.Form_Option_Split))
             {
                 <tr>
                     <td>
