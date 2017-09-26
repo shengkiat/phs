@@ -1,7 +1,9 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
+using PHS.Business.Extensions;
 using PHS.Business.Implementation;
+using PHS.Business.ViewModel.FormExport;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.Web.Controllers;
@@ -21,38 +23,26 @@ namespace PHS.Web.Controllers
 {
     public class FormImportController : BaseController
     {
-        // GET: FormImport
-        public ActionResult Index()
+
+        public ActionResult Import(int eventid)
         {
-            List<Template> templates = new List<Template>();
-
-            using (var manager = new FormManager())
+            if (!IsUserAuthenticated())
             {
-                templates = manager.FindAllTemplates();
-
+                return RedirectToLogin();
             }
 
-            return View(templates);
-        }
+            using (var formImportManager = new FormImportManager())
+            {
+                string message = string.Empty;
 
-        public string Between( string value, string a, string b)
-        {
-            int posA = value.IndexOf(a);
-            int posB = value.IndexOf(b);
-            if (posA == -1)
-            {
-                return "";
-            }
-            if (posB == -1)
-            {
-                return "";
-            }
-            int adjustedPosA = posA + a.Length;
-            if (adjustedPosA >= posB)
-            {
-                return "";
-            }
-            return value.Substring(adjustedPosA, posB - adjustedPosA);
+                var formImportViewModel = formImportManager.RetrieveAllForms(eventid, out message);
+                if (formImportViewModel == null)
+                {
+                    SetViewBagError(message);
+                }
+
+                return View(formImportViewModel);
+            };
         }
 
         [HttpPost]
@@ -61,7 +51,7 @@ namespace PHS.Web.Controllers
             Request.InputStream.Position = 0;
             var input = new StreamReader(Request.InputStream).ReadToEnd();
 
-            var idSearch = Between(input.Substring(10, input.Length - 10), "formid\"", "---");
+            var idSearch = Between(input.Substring(10, input.Length - 10), "formId\"", "---");
             Regex.Replace(idSearch, @"\s+", "");
             idSearch = idSearch.Replace(System.Environment.NewLine, string.Empty);
 
@@ -79,7 +69,7 @@ namespace PHS.Web.Controllers
 
                 byte[] data =  ReadData(file.InputStream);
 
-                using (var manager = new FormManager())
+                using (var manager = new FormImportManager())
                 {
                     string msg  = manager.InsertUploadDataToTemplate(data, formid);
 
@@ -95,6 +85,26 @@ namespace PHS.Web.Controllers
             }
 
             return new HttpStatusCodeResult(200, "Results have been successfully uploaded."); // Bad Request
+        }
+
+        private string Between(string value, string a, string b)
+        {
+            int posA = value.IndexOf(a);
+            int posB = value.IndexOf(b);
+            if (posA == -1)
+            {
+                return "";
+            }
+            if (posB == -1)
+            {
+                return "";
+            }
+            int adjustedPosA = posA + a.Length;
+            if (adjustedPosA >= posB)
+            {
+                return "";
+            }
+            return value.Substring(adjustedPosA, posB - adjustedPosA);
         }
 
         private byte[] ReadData(Stream stream)
@@ -125,9 +135,9 @@ namespace PHS.Web.Controllers
             var file = new FileInfo(outputDir + fileName);
 
             Template template = new Template();
-            using (var manager = new FormManager())
+            using (var manager = new FormImportManager())
             {
-                template = manager.FindTemplate(formid);
+                template = manager.FindLatestTemplate(formid);
             }
 
             var templateView = TemplateViewModel.CreateFromObject(template);
@@ -172,13 +182,10 @@ namespace PHS.Web.Controllers
                     }
                     else
                     {
-                        worksheet.Cells[1, x].Value = field.Label;
+                        worksheet.Cells[1, x].Value = field.Label.StripHTML();
                         worksheet.Column(x).AutoFit();
                         x++;
                     }
-
-  
-
                 }
 
                 // save our new workbook and we are done!

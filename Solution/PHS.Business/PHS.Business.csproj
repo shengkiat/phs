@@ -110,6 +110,7 @@
     <Compile Include="Implementation\BaseManager.cs" />
     <Compile Include="Implementation\BaseParticipantJourneyManager.cs" />
     <Compile Include="Implementation\FormExportManager.cs" />
+    <Compile Include="Implementation\FormImportManager.cs" />
     <Compile Include="Implementation\SummaryMappingManager.cs" />
     <Compile Include="Implementation\ReferenceRangeManager.cs" />
     <Compile Include="Implementation\StandardReferenceManager.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Implementation\FillIn\PublicFormFillIn.cs" />
     <Compile Include="Interface\IAddressManager.cs" />
     <Compile Include="Interface\IFormExportManager.cs" />
+    <Compile Include="Interface\IFormImportManager.cs" />
     <Compile Include="Interface\ISummaryMappingManager.cs" />
     <Compile Include="Interface\IModalityManager.cs" />
     <Compile Include="Interface\IEventManager.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="ViewModel\Event\ModalityFormViewModel.cs" />
     <Compile Include="ViewModel\FormExport\FormExportResultViewModel.cs" />
     <Compile Include="ViewModel\FormExport\FormExportViewModel.cs" />
+    <Compile Include="ViewModel\FormImport\FormImportViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyFormViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyModalityCircleViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />

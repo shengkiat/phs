@@ -203,6 +203,7 @@
             <div style="clear:both;margin-bottom:5px">
                 @Html.ActionLink("Add Modality", "Create", "Modality", new { eventid = Model.PHSEventID }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Form Export", "Export", "FormExport", new { eventid = Model.PHSEventID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Form Import", "Import", "FormImport", new { eventid = Model.PHSEventID }, new { @class = "btn btn-default" })
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">

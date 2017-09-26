@@ -1,8 +1,9 @@
-﻿@using PHS.DB
-@model IEnumerable<Form>
+﻿@model PHS.Business.ViewModel.FormImport.FormImportViewModel
+
+@using PHS.DB
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Form Import";
 }
 
 @section headerScripts{
@@ -25,23 +26,20 @@
 <h2>Import Data</h2>
 
 
-@Html.DropDownList("ddl", Model.Select(item => new SelectListItem
-{
-    Value = item.ID.ToString(),
-    Text = item.Title.ToString()
-
-}), "Select Form")
+@Html.DropDownList("FormID", new SelectList(Model.Forms, "FormID", "Title", string.Empty))
 
 <button type="button" id="btnTemplate">Download Form Template</button>
 <br />
 
 <div>
+    <!--
     <input type="file" id="FileUpload1" />
     <input type="button" id="btnUpload" value="Upload Files" />
+     -->
 </div>
 
 <br />
-<div id="dropZone">Drop your files here</div>
+    <div id="dropZone">Drop your files here</div>
 <br />
 
 Uploaded Files:
@@ -52,7 +50,7 @@ Uploaded Files:
     $(document).ready(function () {
         templateClickFunction();
         draganddrop();
-        uploadClick();
+        //uploadClick();
     });
 
     function uploadClick() {
@@ -96,11 +94,10 @@ Uploaded Files:
     function templateClickFunction() {
         $("#btnTemplate").click(function () {
 
-            var id = document.getElementById('ddl').value
-            alert(id);
+            var formId = $("select[name=FormID] option:selected").val();
 
             var jsonObject = {
-                "templateId": id
+                "formId": formId
             };
 
             $.ajax({
@@ -114,7 +111,7 @@ Uploaded Files:
 
                 },
                 success: function (response) {
-                    window.location = '/formimport/DownloadFormTemplate?fileGuid=' + response.FileGuid
+                    window.location = '/phs/formimport/DownloadFormTemplate?fileGuid=' + response.FileGuid
                   + '&filename=' + response.FileName;
                 }
             });
@@ -123,14 +120,16 @@ Uploaded Files:
     }
 
     function draganddrop() {
+
         $('#dropZone').filedrop({
+
             url: '@Url.Action("UploadFiles")',
             paramname: 'files',
             maxFiles: 1,
             dataType: "json",
             data: {
-                templateId: function () {
-                    return $("#ddl option:selected").val();
+                formId: function () {
+                    return $("select[name=FormID] option:selected").val();
                 },
             },
             error: function (err, file) {

@@ -552,7 +552,7 @@
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\FormExport\_ViewEntriesCriteriaPartial.cshtml" />
     <Content Include="Views\FormExport\_ViewEntriesCriteriaSubPartial.cshtml" />
-    <Content Include="Views\FormImport\Index.cshtml" />
+    <Content Include="Views\FormImport\Import.cshtml" />
     <Content Include="Views\PastParticipantJourney\Index.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />

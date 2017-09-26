@@ -19,5 +19,18 @@ namespace PHS.Business.Implementation
 
             return template;
         }
+
+        public Template FindLatestTemplate(int formId)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                Form form = unitOfWork.FormRepository.GetForm(formId);
+                if (form != null)
+                {
+                    return form.Templates.Where(t => t.IsActive == true).OrderByDescending(f => f.Version).First();
+                }
+                return null;
+            }
+        }
     }
 }
