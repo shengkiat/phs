@@ -58,7 +58,7 @@
                             checkedAttribute = "";
                         }
 
-                        @if (Html.GetTempFormValue(Model, "Checkbox").IsTheSameAs(option))
+                        @if (Html.GetTempFormValue(Model, "Checkbox").Contains(option))
                         {
                             checkedAttribute = "checked=\"checked\"";
                         }
@@ -88,7 +88,7 @@
                             checkedAttribute = "checked=\"checked\"";
                         }
                         <input name="SubmitFields[@Model.DomId].Checkbox" id="SubmitFields[@Model.DomId].CheckboxOthersOption" @disabledAttribute @checkedAttribute type="checkbox" name="checkbox-@Model.DomId" value="OthersOption" />
-                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute @checkedAttribute type="text" placeholder="@Model.OthersPlaceHolder" value="@Html.GetSubmittedTextValue(Model)" />
+                        <input name="SubmitFields[@Model.DomId].OthersOption" id="SubmitFields[@Model.DomId].OthersOption" @readonlyAttribute @checkedAttribute type="text" placeholder="@Model.OthersPlaceHolder" value="@Html.GetSubmittedTextValue(Model, "OthersOption")" />
                     </li>
                 }
                 else

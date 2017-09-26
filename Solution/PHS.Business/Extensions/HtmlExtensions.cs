@@ -1,4 +1,5 @@
 ﻿using PHS.Business.Implementation;
+using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
@@ -236,6 +237,120 @@ namespace PHS.Business.Extensions
 
         }
 
+        public static string GetSubmittedOtherOptionsTextValue(this HtmlHelper helper, TemplateFieldViewModel model, string fieldType = "", string returnIfNull = "")
+        {
+            string tempValue = GetTempFormValue(helper, model, fieldType, returnIfNull);
+
+            if (!string.IsNullOrEmpty(tempValue))
+            {
+                return tempValue;
+            }
+
+            if (string.IsNullOrEmpty(model.EntryId) || model.EntryId.Equals(Guid.Empty.ToString()))
+            {
+                if (!model.IsValueRequiredForRegistration)
+                {
+                    return "";
+                }
+
+                else
+                {
+                    return GetTempRegistrationFormValue(helper, model, fieldType);
+                }
+            }
+
+            else
+            {
+                using (var formManager = new FormManager())
+                {
+
+                    switch (model.FieldType)
+                    {
+                        case TemplateFieldType.ADDRESS:
+
+                            var addressValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+
+                            AddressViewModel address = addressValue.FromJson<AddressViewModel>();
+
+                            if (address != null)
+                            {
+                                if (fieldType == "Blk")
+                                {
+                                    return address.Blk;
+                                }
+                                else if (fieldType == "Unit")
+                                {
+                                    return address.Unit;
+                                }
+                                else if (fieldType == "StreetAddress")
+                                {
+                                    return address.StreetAddress;
+                                }
+                                else if (fieldType == "ZipCode")
+                                {
+                                    return address.ZipCode;
+                                }
+                            }
+                            break;
+
+                        case TemplateFieldType.BMI:
+
+                            var bmiValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+
+                            BMIViewModel bmi = bmiValue.FromJson<BMIViewModel>();
+
+                            if (fieldType == "Weight")
+                            {
+                                return bmi.Weight;
+                            }
+                            else if (fieldType == "Height")
+                            {
+                                return bmi.Height;
+                            }
+
+                            break;
+
+                        case TemplateFieldType.BIRTHDAYPICKER:
+                            var birthdayValue = formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+
+                            if (!string.IsNullOrEmpty(birthdayValue))
+                            {
+                                string[] values = birthdayValue.Split("/");
+
+                                if (fieldType == "Day")
+                                {
+                                    int dayValue = int.Parse(values[0]);
+                                    return (dayValue < 10) ? ("0" + dayValue) : values[0];
+                                }
+
+                                else if (fieldType == "Month")
+                                {
+                                    return values[1];
+                                }
+
+                                else if (fieldType == "Year")
+                                {
+                                    return values[2].Substring(0, 4);
+                                }
+                            }
+
+                            else
+                            {
+                                return "";
+                            }
+
+                            break;
+
+                        default:
+                            return formManager.FindSaveValue(model.EntryId, model.TemplateFieldID ?? default(int));
+                    }
+                }
+            }
+
+            return "";
+
+        }
+
         public static bool IsDisplayField(this HtmlHelper helper, TemplateFieldViewModel model)
         {
             bool result = true;
@@ -316,9 +431,45 @@ namespace PHS.Business.Extensions
 
             if (item != null)
             {
+
                 if (!string.IsNullOrEmpty(item.ToString()))
                 {
+                    /*
+                    if (model.FieldType.Equals(Constants.TemplateFieldType.CHECKBOX))
+                    {
+                        string value = item.ToString();
+                        string newValue = "";
+                        foreach (var option in model.Options.Split(Constants.Form_Option_Split))
+                        {
+                            if (value.Contains(option))
+                            {
+                                newValue += Constants.Form_Option_Split_Concate + option;
+                            }
+                        }
+
+
+                        if (value.Contains("OthersOption"))
+                        {
+                            //string othersOptionValue = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                            newValue += Constants.Form_Option_Split_Concate + "OthersOption";
+                        }
+
+
+                        if (newValue.Substring(0, 1).Equals(Constants.Form_Option_Split_Concate))
+                        {
+                            newValue = newValue.Remove(0, 1);
+                        }
+
+                        return newValue;
+                    }
+
+                    else
+                    {
+                        return item.ToString();
+                    }
+                    */
                     return item.ToString();
+
                 }
             }
 

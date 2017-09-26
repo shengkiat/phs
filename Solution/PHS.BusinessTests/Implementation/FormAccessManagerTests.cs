@@ -452,6 +452,47 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FillIn_SuccessWithCheckbox()
+        {
+            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection = new FormCollection();
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, Constants.TemplateFieldType.CHECKBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Add("Fields[" + 1 + "].Options", "Test1,1234|Test423|helloworld");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].CheckBox", "Test1,1234,helloworld");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            TemplateFieldValueViewModel templateFieldValue = templateViewModel.Entries.FirstOrDefault();
+            Assert.AreEqual("Test1,1234|helloworld", templateFieldValue.Value);
+        }
+
+        [TestMethod()]
         public void FillIn_ErrorWithRequiredField()
         {
             Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());

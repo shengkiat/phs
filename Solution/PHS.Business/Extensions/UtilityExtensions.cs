@@ -304,7 +304,7 @@ namespace PHS.Business.Extensions
                     {
                         if (!stripHtml)
                         {
-                            var values = value.Value.Split(',');
+                            var values = value.Value.Split(Constants.Form_Option_Split);
                             StringBuilder sb = new StringBuilder("<ul class=\"vertical-list selected-checkbox-list\"");
                             values.Each((val, index) =>
                             {
@@ -540,10 +540,31 @@ namespace PHS.Business.Extensions
                     break;
                 case Constants.TemplateFieldType.CHECKBOX:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
-                    if (!value.IsNullOrEmpty() && value.Contains("OthersOption"))
+                    if (!value.IsNullOrEmpty())
                     {
-                        string othersOptionValue = form.SubmittedFieldValue(field.DomId, "OthersOption");
-                        value = value.Replace("OthersOption", othersOptionValue);
+                        string newValue = "";
+                        foreach(var option in field.Options.Split(Constants.Form_Option_Split))
+                        {
+                            if (value.Contains(option))
+                            {
+                                newValue += Constants.Form_Option_Split_Concate + option;
+                            }
+                        }
+
+
+                        if (value.Contains("OthersOption"))
+                        {
+                            string othersOptionValue = form.SubmittedFieldValue(field.DomId, "OthersOption");
+                            newValue += Constants.Form_Option_Split_Concate + othersOptionValue;
+                        }
+
+
+                        if (newValue.Substring(0, 1).Equals(Constants.Form_Option_Split_Concate))
+                        {
+                            newValue = newValue.Remove(0, 1);
+                        }
+
+                        value = newValue;
                     }
                     break;
                 case Constants.TemplateFieldType.PHONE:

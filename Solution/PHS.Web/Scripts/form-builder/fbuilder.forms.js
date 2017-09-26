@@ -1,5 +1,5 @@
 ﻿var Forms = function () {
-    var optionSplit = ",";
+    var optionSplit = "\|";
     var dropPosition = 0;
     var activeItemId = 0;
     var activeControl = 'form';
@@ -301,7 +301,7 @@
 
                     var wrapper1 = $(".radio_fields_wrap"); //Fields wrapper
 
-                    var valueArray = currHiddenElem.val().split(',');
+                    var valueArray = currHiddenElem.val().split(optionSplit);
 
                     $.each(valueArray, function (key, value) {
                         $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsRadio" class="is-publisher" type="text" style="border:1px solid #bbb" name="radiotext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
@@ -319,7 +319,7 @@
 
                     var wrapper1 = $(".check_fields_wrap"); //Fields wrapper
 
-                    var valueArray = currHiddenElem.val().split(',');
+                    var valueArray = currHiddenElem.val().split(optionSplit);
 
                     $.each(valueArray, function (key, value) {
                         $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsCheckbox" class="is-publisher" type="text" style="border:1px solid #bbb" name="mytext[]"/><a href="#" class="remove_field_Checkbox">Remove</a></div>'); //add input box
@@ -336,7 +336,7 @@
 
                     var wrapper1 = $(".dropdown_fields_wrap"); //Fields wrapper
 
-                    var valueArray = currHiddenElem.val().split(',');
+                    var valueArray = currHiddenElem.val().split(optionSplit);
 
                     $.each(valueArray, function (key, value) {
                         $(wrapper1).append('<div><input value=' + value + '  data-field-property="optionsdropdown" class="is-publisher" type="text" style="border:1px solid #bbb" name="dropdownText[]"/><a href="#" class="remove_field_dropdown">Remove</a></div>'); //add input box
@@ -594,7 +594,7 @@
                 $U.bindWatermarks();
                 break;
             case "options":
-                var optionsArray = (value.length > 0) ? value.split(',') : "Option 1, Option 2".split(',');
+                var optionsArray = (value.length > 0) ? value.split(optionSplit) : "Option 1, Option 2".split(optionSplit);
 
                 if (_controlType == "dropdownlist") {
                     // bind options to select list   
@@ -729,7 +729,7 @@
                 // set value to column
                 var value = document.getElementById('matrixcolumninput').value
 
-                var columnArray = (value.length > 0) ? value.split(',') : "Option 1, Option 2".split(',');
+                var columnArray = (value.length > 0) ? value.split(optionSplit) : "Option 1, Option 2".split(optionSplit);
 
                 if (_controlType == "matrix") {
                     // bind options to rows  
@@ -746,7 +746,7 @@
                     person += "</tr>";
 
                     var rowValue = document.getElementById('matrixrowinput').value
-                    var rowArray = (rowValue.length > 0) ? rowValue.split(',') : "Option 1, Option 2".split(',');
+                    var rowArray = (rowValue.length > 0) ? rowValue.split(optionSplit) : "Option 1, Option 2".split(optionSplit);
                     var columnLength = columnArray.length;
 
                     $.each(rowArray, function (index, item) {
@@ -769,7 +769,7 @@
                 break;
             case "matrixcolumn":
                 // value is column
-                var columnArray = (value.length > 0) ? value.split(',') : "Option 1, Option 2".split(',');
+                var columnArray = (value.length > 0) ? value.split(optionSplit) : "Option 1, Option 2".split(optionSplit);
 
                 if (_controlType == "matrix") {
                     // bind options to rows  
@@ -786,7 +786,7 @@
                     person += "</tr>";
 
                     var rowValue = document.getElementById('matrixrowinput').value
-                    var rowArray = (rowValue.length > 0) ? rowValue.split(',') : "Option 1, Option 2".split(',');
+                    var rowArray = (rowValue.length > 0) ? rowValue.split(optionSplit) : "Option 1, Option 2".split(optionSplit);
                     var columnLength = columnArray.length;
 
                     $.each(rowArray, function (index, item) {

@@ -16,7 +16,8 @@ namespace PHS.Common
 
         public const string Export_SubmittedOn = "Submitted On";
 
-        public const string Form_Option_Split = ",";
+        public const string Form_Option_Split = "\\|";
+        public const string Form_Option_Split_Concate = "|";
 
         public static string FILESAVEPATHKEY = "filesavepath";
         public static string FILESAVENAMEKEY = "filesavename";
