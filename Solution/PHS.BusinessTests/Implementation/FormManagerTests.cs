@@ -228,6 +228,61 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void FindTemplateToEdit_CopyToNewTemplateWithConditionalFields()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
+
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(2, out fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 2 + "].Label", "Test");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionTemplateFieldID", "1");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionOptions", "Yes");
+
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(2, templateViewModel.Fields.Count);
+            Assert.AreEqual(template.TemplateID, templateViewModel.TemplateID);
+            Assert.AreEqual("==", templateViewModel.Fields[1].ConditionCriteria);
+            Assert.AreEqual("Yes", templateViewModel.Fields[1].ConditionOptions);
+            Assert.AreEqual(1, templateViewModel.Fields[1].ConditionTemplateFieldID);
+
+            templateViewModel.Entries = _target.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "HelloTest");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string result = _publicFormManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(result, "success");
+
+            TemplateViewModel postExecuteResult = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(postExecuteResult);
+            Assert.AreEqual(Constants.TemplateMode.EDIT, postExecuteResult.Mode);
+            Assert.AreNotEqual(template.TemplateID, postExecuteResult.TemplateID);
+
+            Assert.IsNotNull(postExecuteResult.Fields);
+            Assert.AreEqual(2, postExecuteResult.Fields.Count);
+            Assert.AreEqual("==", postExecuteResult.Fields[1].ConditionCriteria);
+            Assert.AreEqual("Yes", postExecuteResult.Fields[1].ConditionOptions);
+            Assert.AreEqual(3, postExecuteResult.Fields[1].ConditionTemplateFieldID);
+        }
+
+        [TestMethod()]
         public void FindTemplateToEdit_ReadOnlyTemplateWhenViewOldTemplate()
         {
             Template template;
@@ -547,21 +602,21 @@ namespace PHS.Business.Implementation.Tests
             fieldCollection = new FormCollection();
 
             //collection.Add("SubmitFields[1].TextBox", "SubmitFields[1].TextBox");
-            fieldCollection.Add("Fields[1].FieldType", "TEXTBOX");
-            fieldCollection.Add("Fields[1].MaxCharacters", "200");
-            fieldCollection.Add("Fields[1].IsRequired", "false");
-            fieldCollection.Add("Fields[1].AddOthersOption", "false");
-            fieldCollection.Add("Fields[1].MinimumAge", "18");
-            fieldCollection.Add("Fields[1].MaximumAge", "100");
-            fieldCollection.Add("Fields[1].Text", "");
-            fieldCollection.Add("Fields[1].Label", "Click to edit");
-            fieldCollection.Add("Fields[1].HoverText", "");
-            fieldCollection.Add("Fields[1].SubLabel", "");
-            fieldCollection.Add("Fields[1].HelpText", "");
-            fieldCollection.Add("Fields[1].Hint", "");
+            fieldCollection.Add("Fields[" + id + "].FieldType", "TEXTBOX");
+            fieldCollection.Add("Fields[" + id + "].MaxCharacters", "200");
+            fieldCollection.Add("Fields[" + id + "].IsRequired", "false");
+            fieldCollection.Add("Fields[" + id + "].AddOthersOption", "false");
+            fieldCollection.Add("Fields[" + id + "].MinimumAge", "18");
+            fieldCollection.Add("Fields[" + id + "].MaximumAge", "100");
+            fieldCollection.Add("Fields[" + id + "].Text", "");
+            fieldCollection.Add("Fields[" + id + "].Label", "Click to edit");
+            fieldCollection.Add("Fields[" + id + "].HoverText", "");
+            fieldCollection.Add("Fields[" + id + "].SubLabel", "");
+            fieldCollection.Add("Fields[" + id + "].HelpText", "");
+            fieldCollection.Add("Fields[" + id + "].Hint", "");
 
             fields = new System.Collections.Generic.Dictionary<string, string>();
-            fields.Add("1", "1");
+            fields.Add("" + id, "" + id);
 
             return fieldCollection;
         }

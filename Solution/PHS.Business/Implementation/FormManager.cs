@@ -182,7 +182,12 @@ namespace PHS.Business.Implementation
                     {
                         using (TransactionScope scope = new TransactionScope())
                         {
-                            template = unitOfWork.FormRepository.CopyTemplate(template);
+                            IDictionary<int, TemplateField> conditionFields = new System.Collections.Generic.Dictionary<int, TemplateField>();
+                            template = unitOfWork.FormRepository.CopyTemplate(template, out conditionFields);
+
+                            unitOfWork.Complete();
+
+                            template = unitOfWork.FormRepository.CopyConditionFields(template, conditionFields);
 
                             unitOfWork.Complete();
                             scope.Complete();

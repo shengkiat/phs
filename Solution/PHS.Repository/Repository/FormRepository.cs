@@ -206,7 +206,7 @@ namespace PHS.Repository.Repository
             return template;
         }
 
-        public Template CopyTemplate(Template template1)
+        public Template CopyTemplate(Template template1, out IDictionary<int, TemplateField> conditionFields)
         {
             var template = new Template
             {
@@ -223,7 +223,9 @@ namespace PHS.Repository.Repository
 
             dbContext.Set<Template>().Add(template);
 
-            foreach(var templateField1 in template1.TemplateFields)
+            conditionFields = new System.Collections.Generic.Dictionary<int, TemplateField>();
+
+            foreach (var templateField1 in template1.TemplateFields)
             {
                 var fField = new TemplateField
                 {
@@ -267,10 +269,31 @@ namespace PHS.Repository.Repository
                     StandardReferenceID = templateField1.StandardReferenceID
                 };
 
+                conditionFields.Add(templateField1.TemplateFieldID, fField);
+
                 template.TemplateFields.Add(fField);
             }
 
             return template;
+        }
+
+        public Template CopyConditionFields(Template template1, IDictionary<int, TemplateField> conditionFields)
+        {
+            dbContext.Entry(template1).State = EntityState.Modified;
+
+            foreach (var templateField1 in template1.TemplateFields)
+            {
+                if (templateField1.ConditionTemplateFieldID.HasValue)
+                {
+                    TemplateField currentField = conditionFields[templateField1.ConditionTemplateFieldID.Value];
+                    if (currentField != null)
+                    {
+                        templateField1.ConditionTemplateFieldID = currentField.TemplateFieldID;
+                    }
+                }
+            }
+
+            return template1;
         }
 
         public void UpdateTemplate(TemplateViewModel model, Template template1)

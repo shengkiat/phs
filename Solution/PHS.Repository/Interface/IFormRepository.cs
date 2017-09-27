@@ -18,7 +18,8 @@ namespace PHS.Repository.Interface
         Form CreateNewForm(FormViewModel formViewModel);
         void UpdateForm(FormViewModel formViewModel, Form form1);
         Template CreateNewTemplate(int formId);
-        Template CopyTemplate(Template template1);
+        Template CopyTemplate(Template template1, out IDictionary<int, TemplateField> conditionFields);
+        Template CopyConditionFields(Template template1, IDictionary<int, TemplateField> conditionFields);
         void UpdateTemplate(TemplateViewModel model, Template template1);
         void DeleteTemplateField(int id);
         IEnumerable<TemplateFieldValueViewModel> GetTemplateFieldValuesByForm(TemplateViewModel model);
