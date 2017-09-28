@@ -38,6 +38,17 @@
                                     <li style="margin-bottom: 1em;">
                                         <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
                                         <span class="LabelForsub-label">@summary.SummaryValue</span>
+                                        @if (summary.Result != null)
+                                        {
+                                            if (summary.Highlight)
+                                            {
+                                                <span class="LabelForsub-label" style="color:red;">@summary.Result</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="LabelForsub-label">@summary.Result</span>
+                                            }
+                                        }
                                     </li>
                                 }
                             </ul>

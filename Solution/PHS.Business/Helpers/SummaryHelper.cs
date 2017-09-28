@@ -426,5 +426,14 @@ namespace PHS.Business.Helpers
             return Result;
         }
 
+        public static bool IsJson(string input)
+        {
+            if (input == null)
+                return false;
+            input = input.Trim();
+            return input.StartsWith("{") && input.EndsWith("}")
+                   || input.StartsWith("[") && input.EndsWith("]");
+        }
+
     }
 }
