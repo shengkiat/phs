@@ -98,7 +98,9 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                                         BMIViewModel bmi = serializer.Deserialize<BMIViewModel>(summary.SummaryValue as string);
                                         if (bmi.BodyMassIndex != null)
                                         {
-                                            sumview.SummaryValue = bmi.BodyMassIndex;
+                                            //Weight: 50, Height: 180, BodyMassIndex: 15.43  (UNDERWEIGHT)
+                                            sumview.SummaryValue = "Weight: "+ bmi.Weight+ ", Height: "+ bmi.Height+ ", BodyMassIndex: "+ bmi.BodyMassIndex;
+                                            sumview.SummaryInnerValue = bmi.BodyMassIndex;
                                         }
                                     }
                                 }
@@ -109,7 +111,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                                 {
                                     string message = string.Empty;
                                     referenceRange = StandardReferenceManager.GetReferenceRange(summary.StandardReferenceID.GetValueOrDefault(),
-                                        sumview.SummaryValue, out message);
+                                        sumview.SummaryInnerValue, out message);
                                 }
 
                                 if (referenceRange != null)

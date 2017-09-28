@@ -18,6 +18,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
             SummaryItem = summary;
             SummaryLabel = summary.SummaryLabel;
             SummaryValue = summary.SummaryValue;
+            SummaryInnerValue = null;
             Result = "";
             Highlight = false;
         }
@@ -26,7 +27,9 @@ namespace PHS.Business.ViewModel.SummaryCategory
 
         public string SummaryLabel { get; }
 
-        public string SummaryValue { get; set;  }
+        public string SummaryValue { get; set; }
+
+        public string SummaryInnerValue { get; set; }
 
         public string Result { get; set; }
 
