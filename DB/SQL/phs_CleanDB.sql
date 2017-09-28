@@ -595,7 +595,7 @@ INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [Is
 GO
 INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (2, N'2016 - Event', CAST(N'2016-04-13 10:00:00.5270000' AS DateTime2), CAST(N'2016-04-14 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
-INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (3, N'PHS 2017 - Jurong', CAST(N'2017-07-12 10:00:00.5270000' AS DateTime2), CAST(N'2017-09-30 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
+INSERT [dbo].[PHSEvent] ([PHSEventID], [Title], [StartDT], [EndDT], [Venue], [IsActive], [CreatedBy], [CreatedDateTime], [UpdatedBy], [UpdatedDateTime]) VALUES (3, N'PHS 2017-Jurong', CAST(N'2017-07-12 10:00:00.5270000' AS DateTime2), CAST(N'2017-12-31 12:00:00.5270000' AS DateTime2), N'PHS', 1, N'T', CAST(N'2016-04-11 10:00:00.5270000' AS DateTime2), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[PHSEvent] OFF
 GO
