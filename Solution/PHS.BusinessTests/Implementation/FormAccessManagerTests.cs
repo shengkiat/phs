@@ -597,6 +597,98 @@ namespace PHS.BusinessTests.Implementation
         }
 
         [TestMethod()]
+        public void FillIn_NotSelectedConditionFieldWithSubComponentRequiredShouldBeSave()
+        {
+            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection = new FormCollection();
+            IDictionary<string, string> fields;
+
+            CeateFieldForm(1, Constants.TemplateFieldType.RADIOBUTTON.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 1 + "].Label", "Radio Button");
+            fieldCollection.Set("Fields[" + 1 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 1 + "].Options", "Yes,No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(2, Constants.TemplateFieldType.RADIOBUTTON.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 2 + "].Label", "Radio Button Yes");
+            fieldCollection.Set("Fields[" + 2 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionTemplateFieldID", "1");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 2 + "].ConditionOptions", "Yes");
+            fieldCollection.Add("Fields[" + 1 + "].Options", "Yes,No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(3, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 3 + "].Label", "Radio Button No");
+            fieldCollection.Set("Fields[" + 3 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionTemplateFieldID", "1");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 3 + "].ConditionOptions", "No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(4, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 4 + "].Label", "Radio Button Yes Yes");
+            fieldCollection.Set("Fields[" + 4 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 4 + "].ConditionTemplateFieldID", "2");
+            fieldCollection.Add("Fields[" + 4 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 4 + "].ConditionOptions", "Yes");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            CeateFieldForm(5, Constants.TemplateFieldType.TEXTBOX.ToString(), fieldCollection, out fields);
+            fieldCollection.Set("Fields[" + 5 + "].Label", "Radio Button Yes No");
+            fieldCollection.Set("Fields[" + 5 + "].IsRequired", "true");
+            fieldCollection.Add("Fields[" + 5 + "].ConditionTemplateFieldID", "2");
+            fieldCollection.Add("Fields[" + 5 + "].ConditionCriteria", "==");
+            fieldCollection.Add("Fields[" + 5 + "].ConditionOptions", "No");
+
+            _formManager.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(5, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].RadioButton", "Yes");
+            submissionCollection.Add("SubmitFields[2].RadioButton", "Yes");
+            submissionCollection.Add("SubmitFields[3].TextBox", null);
+            submissionCollection.Add("SubmitFields[4].TextBox", "Testing 123");
+            submissionCollection.Add("SubmitFields[5].TextBox", null);
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+            submissionFields.Add("2", "3");
+            submissionFields.Add("3", "3");
+            submissionFields.Add("4", "4");
+            submissionFields.Add("5", "5");
+
+            string result = _target.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual("success", result);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+
+            Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
+
+            Assert.AreEqual(5, templateViewModel.Entries.Count);
+
+            Assert.AreEqual("Yes", templateViewModel.Entries[0].Value);
+            Assert.AreEqual("Yes", templateViewModel.Entries[1].Value);
+            Assert.AreEqual(null, templateViewModel.Entries[2].Value);
+            Assert.AreEqual("Testing 123", templateViewModel.Entries[3].Value);
+            Assert.AreEqual(null, templateViewModel.Entries[4].Value);
+        }
+
+        [TestMethod()]
         public void FillIn_SuccessForPreRegistrationForm()
         {
             FormViewModel formViewModel = new FormViewModel()

@@ -5,8 +5,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        $('input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]').on("change", function () {
+        var fieldName = jq("SubmitFields[" + @Model.DomId + "].Checkbox");
+        $('input[type=checkbox][name=' + fieldName + ']').on("change", function () {
 
             var allVals = [];
             $('input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]:checked').each(function () {
@@ -30,6 +30,7 @@
 <div id="mainfield-Checkbox-@Model.DomId"
      data-reference="@Model.ConditionTemplateFieldID"
      data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     data-id="@Model.TemplateFieldID"
      @displayAttribute>
 
     <label style="width: 90%; word-wrap: break-word; text-align: left;"
