@@ -92,17 +92,35 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 
                                 if (SummaryHelper.IsJson(summary.SummaryValue))
                                 {
-                                    if (summary.Label.Equals("HxTakingField5"))
+
+                                    //if (summary.StandardReferenceID == 1) //Systolic Blood Pressure 
+                                    //{
+                                    //    sumview.SummaryValue = summary.SummaryValue;
+                                    //    sumview.SummaryInnerValue = summary.SummaryValue;
+                                    //}else if (summary.StandardReferenceID == 2) //Diastolic Blood Pressure 
+                                    //{
+                                    //        sumview.SummaryValue = summary.SummaryValue;
+                                    //        sumview.SummaryInnerValue = summary.SummaryValue;
+                                    //}else if (summary.StandardReferenceID == 3) //Sugar 
+                                    //{
+                                    //    sumview.SummaryValue = summary.SummaryValue;
+                                    //    sumview.SummaryInnerValue = summary.SummaryValue;
+                                    //}else 
+                                    
+                                    if (summary.StandardReferenceID == 4) //BMI
                                     {
                                         JavaScriptSerializer serializer = new JavaScriptSerializer();
                                         BMIViewModel bmi = serializer.Deserialize<BMIViewModel>(summary.SummaryValue as string);
                                         if (bmi.BodyMassIndex != null)
                                         {
                                             //Weight: 50, Height: 180, BodyMassIndex: 15.43  (UNDERWEIGHT)
-                                            sumview.SummaryValue = "Weight: "+ bmi.Weight+ ", Height: "+ bmi.Height+ ", BodyMassIndex: "+ bmi.BodyMassIndex;
+                                            sumview.SummaryValue = "Weight: " + bmi.Weight + ", Height: " + bmi.Height + ", BodyMassIndex: " + bmi.BodyMassIndex;
                                             sumview.SummaryInnerValue = bmi.BodyMassIndex;
                                         }
                                     }
+                                }else
+                                {
+                                    sumview.SummaryInnerValue = summary.SummaryValue;
                                 }
 
                                 ReferenceRange referenceRange = null;
