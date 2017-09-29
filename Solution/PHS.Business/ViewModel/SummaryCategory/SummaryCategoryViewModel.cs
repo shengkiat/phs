@@ -14,17 +14,17 @@ namespace PHS.Business.ViewModel.SummaryCategory
         public SummaryCategoryViewModel(String summaryCategory)
         {
             SummaryCategoryName = summaryCategory;
-            Summaries = new List<Summary>();
+            Summaries = new List<SummaryViewModel>();
         }
 
-        public void AddSummary(Summary summary)
+        public void AddSummary(SummaryViewModel summary)
         {
             Summaries.Add(summary);
         }
 
         public String SummaryCategoryName { get; }
 
-        public List<Summary> Summaries { get; }
+        public List<SummaryViewModel> Summaries { get; }
     }
 
 }

@@ -153,6 +153,7 @@
     <Compile Include="ViewModel\PastParticipantJourney\PastParticipantJourneySearchViewModel.cs" />
     <Compile Include="ViewModel\FormExport\SortFieldViewModel.cs" />
     <Compile Include="ViewModel\SummaryCategory\SummaryCategoryViewModel.cs" />
+    <Compile Include="ViewModel\SummaryCategory\SummaryViewModel.cs" />
     <Compile Include="ViewModel\UserSearchModel.cs" />
   </ItemGroup>
   <ItemGroup>
