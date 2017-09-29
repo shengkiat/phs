@@ -5,16 +5,13 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        $('input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]').on("change", function () {
+        var fieldName = jq("SubmitFields[" + @Model.DomId + "].RadioButton");
+        $('input[type=radio][name=' + fieldName + ']').on("change", function () {
 
             var radios = document.getElementsByName('SubmitFields[@Model.DomId].RadioButton');
-
             for (var i = 0, length = radios.length; i < length; i++) {
                 if (radios[i].checked) {
                     // do whatever you want with the checked radio
-                    //alert(radios[i].value);
-
                     var selectedValue = radios[i].value;
 
                     displayOrHide(this, selectedValue, @Model.TemplateFieldID);
@@ -26,9 +23,11 @@
 
 
         });
-        var value = $("input[type=radio][name=SubmitFields[@Model.DomId].RadioButton]:checked").val();
+        var value = $("input[type=radio][name=" + fieldName + "]").val();
         displayStandardReferenceResult(value, @Model.DomId);
     });
+
+    
 </script>
 
 @{
@@ -38,6 +37,7 @@
 <div id="mainfield-RadioButton-@Model.DomId"
      data-reference="@Model.ConditionTemplateFieldID"
      data-criteria="@Model.ConditionCriteria" data-options="@Model.ConditionOptions"
+     data-id="@Model.TemplateFieldID"
      @displayAttribute>
 
     <div style="width: 90%; word-wrap: break-word; text-align: left;"
