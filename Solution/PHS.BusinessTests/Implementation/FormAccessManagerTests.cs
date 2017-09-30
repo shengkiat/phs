@@ -575,7 +575,7 @@ namespace PHS.BusinessTests.Implementation
             FormCollection submissionCollection = new FormCollection();
             submissionCollection.Add("SubmitFields[1].RadioButton", "Yes");
             submissionCollection.Add("SubmitFields[2].TextBox", "Testing 123");
-            submissionCollection.Add("SubmitFields[3].TextBox", null);
+            submissionCollection.Add("SubmitFields[3].TextBox", "not saved 123");
 
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
@@ -589,11 +589,10 @@ namespace PHS.BusinessTests.Implementation
 
             Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
 
-            Assert.AreEqual(3, templateViewModel.Entries.Count);
+            Assert.AreEqual(2, templateViewModel.Entries.Count);
 
             Assert.AreEqual("Yes", templateViewModel.Entries[0].Value);
             Assert.AreEqual("Testing 123", templateViewModel.Entries[1].Value);
-            Assert.AreEqual(null, templateViewModel.Entries[2].Value);
         }
 
         [TestMethod()]
@@ -661,9 +660,9 @@ namespace PHS.BusinessTests.Implementation
             FormCollection submissionCollection = new FormCollection();
             submissionCollection.Add("SubmitFields[1].RadioButton", "Yes");
             submissionCollection.Add("SubmitFields[2].RadioButton", "Yes");
-            submissionCollection.Add("SubmitFields[3].TextBox", null);
+            submissionCollection.Add("SubmitFields[3].TextBox", "i not supposed to be saved 1");
             submissionCollection.Add("SubmitFields[4].TextBox", "Testing 123");
-            submissionCollection.Add("SubmitFields[5].TextBox", null);
+            submissionCollection.Add("SubmitFields[5].TextBox", "i not supposed to be saved 2");
 
             IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
             submissionFields.Add("1", "1");
@@ -679,13 +678,11 @@ namespace PHS.BusinessTests.Implementation
 
             Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
 
-            Assert.AreEqual(5, templateViewModel.Entries.Count);
+            Assert.AreEqual(3, templateViewModel.Entries.Count);
 
             Assert.AreEqual("Yes", templateViewModel.Entries[0].Value);
             Assert.AreEqual("Yes", templateViewModel.Entries[1].Value);
-            Assert.AreEqual(null, templateViewModel.Entries[2].Value);
-            Assert.AreEqual("Testing 123", templateViewModel.Entries[3].Value);
-            Assert.AreEqual(null, templateViewModel.Entries[4].Value);
+            Assert.AreEqual("Testing 123", templateViewModel.Entries[2].Value);
         }
 
         [TestMethod()]

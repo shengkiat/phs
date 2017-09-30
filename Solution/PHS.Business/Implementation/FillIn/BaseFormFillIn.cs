@@ -58,6 +58,11 @@ namespace PHS.Business.Implementation.FillIn
                                 field.Errors = "{0} is a required field".FormatWith(field.Label);
                                 errors.Add(field.Errors);
                             }
+
+                            else
+                            {
+                                submissionFields.Add(field.TemplateFieldID.Value, value);
+                            }
                         }
 
                         else
@@ -82,27 +87,60 @@ namespace PHS.Business.Implementation.FillIn
                     {
                         foreach (var field in templateView.Fields.OrderBy(f => f.TemplateFieldID))
                         {
-                            var value = field.SubmittedValue(formCollection);
-
-                            //if it's a file, save it to hard drive
-                            if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                            if (field.ConditionTemplateFieldID.HasValue)
                             {
-                                //var file = Request.Files[field.SubmittedFieldName()];
-                                //var fileValueObject = value.GetFileValueFromJsonObject();
+                                if (isConditionalFieldRequired(field, submissionFields))
+                                {
+                                    var value = field.SubmittedValue(formCollection);
 
-                                //if (fileValueObject != null)
-                                //{
-                                //    if (UtilityHelper.UseCloudStorage())
-                                //    {
-                                //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                //    }
-                                //    else
-                                //    {
-                                //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                //    }
-                                //}
+                                    //if it's a file, save it to hard drive
+                                    if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                                    {
+                                        //var file = Request.Files[field.SubmittedFieldName()];
+                                        //var fileValueObject = value.GetFileValueFromJsonObject();
+
+                                        //if (fileValueObject != null)
+                                        //{
+                                        //    if (UtilityHelper.UseCloudStorage())
+                                        //    {
+                                        //        this.SaveImageToCloud(file, fileValueObject.SaveName);
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                                        //    }
+                                        //}
+                                    }
+                                    HandleTemplateFieldValue(field, value, entryId);
+                                }
                             }
-                            HandleTemplateFieldValue(field, value, entryId);
+
+                            else
+                            {
+                                var value = field.SubmittedValue(formCollection);
+
+                                //if it's a file, save it to hard drive
+                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
+                                {
+                                    //var file = Request.Files[field.SubmittedFieldName()];
+                                    //var fileValueObject = value.GetFileValueFromJsonObject();
+
+                                    //if (fileValueObject != null)
+                                    //{
+                                    //    if (UtilityHelper.UseCloudStorage())
+                                    //    {
+                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
+                                    //    }
+                                    //}
+                                }
+                                HandleTemplateFieldValue(field, value, entryId);
+                            }
+
+                            
                         }
 
                         HandleAdditionalInsert(templateView, Template, formCollection, entryId);
