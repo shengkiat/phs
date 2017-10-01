@@ -28,10 +28,10 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchPastParticipantJourney([Bind(Include = "Nric")] PastParticipantJourneySearchViewModel psm)
+        public ActionResult SearchPastParticipantJourney(string Nric)
         {
 
-            if (psm == null)
+            if (string.IsNullOrEmpty(Nric))
             {
                 return View();
             }
@@ -41,7 +41,7 @@ namespace PHS.Web.Controllers
                 string message = string.Empty;
                 PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
 
-                IList<ParticipantJourneyViewModel> participantJourneyViewModels = participantJourneyManager.GetAllParticipantJourneyByNric(psm.Nric, out message);
+                IList<ParticipantJourneyViewModel> participantJourneyViewModels = participantJourneyManager.GetAllParticipantJourneyByNric(Nric, out message);
                 if (!string.IsNullOrEmpty(message))
                 {
                     SetViewBagError(message);
@@ -64,12 +64,18 @@ namespace PHS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewPastParticipantJourney([Bind(Include = "Nric,PHSEventId")] ParticipantJourneySearchViewModel psm)
+        public ActionResult ViewPastParticipantJourney(string Nric, int PHSEventId)
         {
-            if (psm == null)
+            if (string.IsNullOrEmpty(Nric) || PHSEventId == 0)
             {
                 return Redirect("Index");
             }
+
+            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel()
+            {
+                Nric = Nric,
+                PHSEventId = PHSEventId
+            };
 
             using (var participantJourneyManager = new PastParticipantJourneyManager())
             {
