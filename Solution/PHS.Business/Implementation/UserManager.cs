@@ -480,13 +480,15 @@ namespace PHS.Business.Implementation
                         foreach (var username in selectedusers)
                         {
                             var user = GetUserByUserName(username.ToString(), out message);
-                            SecureString newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
-                            user.Password = PasswordManager.SecureStringToString(newPassHash);
-                            user.UsingTempPW = true;
-                            if (!UpdateUser(loginUser, user, out message))
-                            {
-                                return false;
-                            }
+                            var userToUpdate = unitOfWork.Users.Get(user.PHSUserID);
+                            Util.CopyNonNullProperty(user, userToUpdate);
+                            if (userToUpdate.PasswordSalt == "")
+                                userToUpdate.PasswordSalt = PasswordManager.GenerateSalt();
+                            SecureString newPassHash = PasswordManager.CreateHash(tempPW, userToUpdate.PasswordSalt);
+                            userToUpdate.Password = PasswordManager.SecureStringToString(newPassHash);
+                            userToUpdate.UsingTempPW = true;
+                            userToUpdate.UpdatedDateTime = DateTime.Now;
+                            userToUpdate.UpdatedBy = loginUser.Username;
                         }
 
                         unitOfWork.Complete();
