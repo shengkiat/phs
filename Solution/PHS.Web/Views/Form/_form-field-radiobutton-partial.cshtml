@@ -23,7 +23,7 @@
 
 
         });
-        var value = $("input[type=radio][name=" + fieldName + "]").val();
+        var value = $("input[type=radio][name=" + fieldName + "]:checked").val();
         displayStandardReferenceResult(value, @Model.DomId);
     });
 
