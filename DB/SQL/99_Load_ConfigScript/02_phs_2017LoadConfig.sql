@@ -293,8 +293,12 @@ INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModSocial
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, @FormDocSum)
 INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModExhibit, @FormExhibition)
 
-
 --INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 
+
+INSERT INTO phs.dbo.[PHSUser] ([Username],[Password],[FullName],[IsActive],[EffectiveStartDate],[EffectiveEndDate],[Role],[PasswordSalt],[CreatedDateTime],[UsingTempPW],[DeleteStatus],ContactNumber)
+      (select UPPER(REPLACE(Username, ' ','')), '', Name, 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), Role, '',  getdate(), 0,0, Contact from users) 
+
+
 
 use phs
 ALTER TABLE [dbo].[TemplateField]  WITH CHECK ADD  CONSTRAINT [FK_template_field_template_field] FOREIGN KEY([ConditionTemplateFieldId])

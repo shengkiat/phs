@@ -758,6 +758,15 @@ GO
 INSERT [phs].[dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (4, N'BMI', N'Number')
 GO
 
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (5, N'DoctorAlertYes', N'String')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (6, N'ICIQAlert', N'Number')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (7, N'WeightLossFrailScale', N'Number')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (8, N'OTQuestionDizzi', N'String')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (9, N'OTQuestionUrin', N'String')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (10, N'FailedOT', N'String')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (11, N'SPPBFallRisk', N'String')
+INSERT [dbo].[StandardReference] ([StandardReferenceID], [Title], [DataType]) VALUES (12, N'TUGFallRisk', N'String')
+
 SET IDENTITY_INSERT [phs].[dbo].[StandardReference] OFF
 GO
 
@@ -819,6 +828,14 @@ GO
 INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (14, N'Normal', 18.5, 24.9, N'IDEAL', 0, 4)
 INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (15, N'Overweight', 25, 29.9, N'OVERWEIGHT', 1, 4)
 INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (16, N'Obese', 30, 9999, N'OBESE', 1, 4)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (17, N'Yes', NULL, NULL, N'Yes', N'Doctor''s Attention Required!', 1, 5)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (18, N'Score High', 1, 999, NULL, N'ICIQ Score Alert', 1, 6)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (19, N'YesDizzi', NULL, NULL, N'Yes', N'Frequent dizzyness when standing from seated or supine position', 1, 8)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (20, N'YesUrin', NULL, NULL, N'Yes', N'Urinary incontinence or nocturia', 1, 9)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (21, N'FailedOT', NULL, NULL, N'Referred to Doctor''s Consult', N'Failed OT Questionnaire', 1, 10)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (22, N'HighFallRisk', NULL, NULL, N'High Falls Risk (score ≤ 6)', N'High Falls Risk', 1, 11)
+INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (23, N'TUGFallRisk', NULL, NULL, N'High Falls Risk (> 15sec)', N'High Falls Risk ', 1, 12)
+
 
 SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] OFF
 GO
