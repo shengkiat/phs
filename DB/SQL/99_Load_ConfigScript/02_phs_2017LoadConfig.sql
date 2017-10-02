@@ -318,9 +318,9 @@ update TemplateField  set IsRequired = 0 where ConditionTemplateFieldID is not n
 
 insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select  SummaryType, CategoryName, SummaryFieldName from phsDataLoading.dbo.SummaryMapping order by SummaryMappingID asc
 
-update TemplateField set ConditionTemplateFieldID = null
-update TemplateField set ConditionCriteria = null
-update TemplateField set ConditionOptions = null 
+--update TemplateField set ConditionTemplateFieldID = null
+--update TemplateField set ConditionCriteria = null
+--update TemplateField set ConditionOptions = null 
 
 select * from TemplateField where FieldType = 'IMAGE' and ImageBase64 = ''
 
