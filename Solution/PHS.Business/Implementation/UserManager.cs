@@ -480,6 +480,7 @@ namespace PHS.Business.Implementation
                         foreach (var username in selectedusers)
                         {
                             var user = GetUserByUserName(username.ToString(), out message);
+                            user.PasswordSalt = PasswordManager.GenerateSalt(); 
                             SecureString newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
                             user.Password = PasswordManager.SecureStringToString(newPassHash);
                             user.UsingTempPW = true;
