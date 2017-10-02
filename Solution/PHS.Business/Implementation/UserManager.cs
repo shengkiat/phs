@@ -470,26 +470,38 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            using (var unitOfWork = CreateUnitOfWork())
+            try
             {
-                using (TransactionScope scope = new TransactionScope())
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    foreach (var username in selectedusers)
+                    using (TransactionScope scope = new TransactionScope())
                     {
-                        var user = GetUserByUserName(username.ToString(), out message);
-                        SecureString newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
-                        user.Password = PasswordManager.SecureStringToString(newPassHash);
-                        user.UsingTempPW = true;
-                        user.UpdatedDateTime = DateTime.Now;
-                        user.UpdatedBy = loginUser.Username;
+
+                        foreach (var username in selectedusers)
+                        {
+                            var user = GetUserByUserName(username.ToString(), out message);
+                            SecureString newPassHash = PasswordManager.CreateHash(tempPW, user.PasswordSalt);
+                            user.Password = PasswordManager.SecureStringToString(newPassHash);
+                            user.UsingTempPW = true;
+                            if (!UpdateUser(loginUser, user, out message))
+                            {
+                                return false;
+                            }
+                        }
+
+                        unitOfWork.Complete();
+                        scope.Complete();
                     }
-
-                    unitOfWork.Complete();
-                    scope.Complete();
                 }
-            }
 
-            return true;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                ExceptionLog(ex);
+                message = "Operation failed during reset Password.";
+                return false;
+            }
 
         }
 
