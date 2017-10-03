@@ -57,6 +57,8 @@ namespace PHS.DB
             public DateTime? UpdatedDateTime { get; set; }
 
             public int? UpdatedBy { get; set; }
+
+            public string MCRNo { get; set; }
         }
     }
 }

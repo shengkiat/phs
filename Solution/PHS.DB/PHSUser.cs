@@ -30,5 +30,6 @@ namespace PHS.DB
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public bool UsingTempPW { get; set; }
         public bool DeleteStatus { get; set; }
+        public string MCRNo { get; set; }
     }
 }

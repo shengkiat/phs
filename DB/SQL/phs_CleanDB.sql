@@ -105,6 +105,7 @@ CREATE TABLE [dbo].[PHSUser](
 	[UpdatedDateTime] [datetime2](7) NULL,
 	[UsingTempPW] [bit] NOT NULL,
 	[DeleteStatus] [bit] NOT NULL,
+	[MCRNo] [nvarchar](50) NULL,
  CONSTRAINT [PK_PHSUser] PRIMARY KEY CLUSTERED 
 (
 	[PHSUserID] ASC

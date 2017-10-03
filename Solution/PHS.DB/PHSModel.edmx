@@ -149,6 +149,7 @@
           <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
           <Property Name="UsingTempPW" Type="bit" Nullable="false" />
           <Property Name="DeleteStatus" Type="bit" Nullable="false" />
+          <Property Name="MCRNo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PreRegistration">
           <Key>
@@ -283,7 +284,7 @@
           <Property Name="MatrixColumn" Type="varchar(max)" />
           <Property Name="PreRegistrationFieldName" Type="varchar(max)" />
           <Property Name="RegistrationFieldName" Type="varchar(max)" />
-          <Property Name="SummaryFieldName" Type="varchar(max)" />
+          <Property Name="SummaryFieldName" Type="nvarchar" MaxLength="50" />
           <Property Name="SummaryType" Type="nvarchar" MaxLength="50" />
           <Property Name="ConditionTemplateFieldID" Type="int" />
           <Property Name="ConditionCriteria" Type="varchar" MaxLength="50" />
@@ -1051,7 +1052,7 @@
           <Property Name="MatrixColumn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PreRegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RegistrationFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SummaryFieldName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryFieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SummaryType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ConditionTemplateFieldID" Type="Int32" />
           <Property Name="ConditionCriteria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1294,6 +1295,7 @@
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
           <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
+          <Property Name="MCRNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AuditLog">
           <Key>
@@ -1592,6 +1594,7 @@
 		  <EntitySetMapping Name="PHSUsers">
             <EntityTypeMapping TypeName="phsModel.PHSUser">
               <MappingFragment StoreEntitySet="PHSUser">
+                <ScalarProperty Name="MCRNo" ColumnName="MCRNo" />
                 <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />
                 <ScalarProperty Name="UsingTempPW" ColumnName="UsingTempPW" />
                 <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
