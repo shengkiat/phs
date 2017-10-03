@@ -385,6 +385,7 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
                 doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
                 //doc.ReplaceText("<<UNIT>>", result.un);
+                doc.ReplaceText("<<POSTAL>>", UtilityHelper.GetString(result.PostalCode)); 
                 doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
 
                 var ms = new MemoryStream();
