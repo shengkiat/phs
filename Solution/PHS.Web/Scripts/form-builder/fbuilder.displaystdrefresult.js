@@ -16,10 +16,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 error: function (response) {
-                    document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").innerHTML = response.Error;
+                    document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").innerText = response.Error;
                 },
                 success: function (response) {
-                    document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").innerHTML = response.Status;
+                    document.getElementById("SubmitFields["+ fieldId +"].StandardReferenceResult").innerText = response.Status;
                     if (response.Highlight) {
                         document.getElementById("SubmitFields["+fieldId+"].StandardReferenceResult").style.color = "red";
                     }
