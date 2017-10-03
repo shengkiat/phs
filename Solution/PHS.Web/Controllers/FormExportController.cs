@@ -94,6 +94,8 @@ namespace PHS.Web.Controllers
                 Response.ClearContent();
                 Response.AddHeader("content-disposition", "attachment; filename={0}.xls".FormatWith(formExportResult.Title.ToSlug()));
                 Response.ContentType = "application/vnd.ms-excel";
+                Response.ContentEncoding = System.Text.Encoding.Unicode;
+                Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
                 StringWriter sw = new StringWriter();
                 HtmlTextWriter htw = new HtmlTextWriter(sw);
                 gridView.RenderControl(htw);

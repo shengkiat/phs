@@ -328,6 +328,15 @@ namespace PHS.Web.Controllers
             PHSUser loginUser = GetLoginUser();
             doc.ReplaceText("<<NAME>>", loginUser.FullName);
 
+            if(loginUser.MCRNo != null)
+            {
+                doc.ReplaceText("<<MCRNo>>", loginUser.MCRNo); 
+            }
+            else
+            {
+                doc.ReplaceText("<<MCRNo>>", "");
+            }
+
             var ms = new MemoryStream();
             doc.SaveAs(ms);
             ms.Position = 0;
@@ -385,6 +394,7 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
                 doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
                 //doc.ReplaceText("<<UNIT>>", result.un);
+                doc.ReplaceText("<<POSTAL>>", UtilityHelper.GetString(result.PostalCode)); 
                 doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
 
                 var ms = new MemoryStream();
