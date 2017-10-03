@@ -328,6 +328,15 @@ namespace PHS.Web.Controllers
             PHSUser loginUser = GetLoginUser();
             doc.ReplaceText("<<NAME>>", loginUser.FullName);
 
+            if(loginUser.MCRNo != null)
+            {
+                doc.ReplaceText("<<MCRNo>>", loginUser.MCRNo); 
+            }
+            else
+            {
+                doc.ReplaceText("<<MCRNo>>", "");
+            }
+
             var ms = new MemoryStream();
             doc.SaveAs(ms);
             ms.Position = 0;
