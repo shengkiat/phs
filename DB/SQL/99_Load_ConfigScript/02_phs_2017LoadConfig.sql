@@ -326,7 +326,9 @@ insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select
 --update TemplateField set ConditionCriteria = null
 --update TemplateField set ConditionOptions = null 
 
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 233) where TemplateFieldID = 185
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 239) where TemplateFieldID = 194
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 509
+
+
 select * from TemplateField where FieldType = 'IMAGE' and ImageBase64 = ''
-
-
-
