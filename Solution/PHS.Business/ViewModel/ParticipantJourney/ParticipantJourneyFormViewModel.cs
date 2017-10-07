@@ -40,7 +40,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                 }
             }
 
-            return result;
+            return result.OrderBy(f=>f.Title).ToList();
         }
 
         public bool isSummarySelected()
