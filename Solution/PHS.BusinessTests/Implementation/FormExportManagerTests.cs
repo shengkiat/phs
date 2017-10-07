@@ -113,13 +113,15 @@ namespace PHS.Business.Implementation.Tests
             var result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(5, result.Columns.Count);
-            Assert.AreEqual("Blk", result.Columns[0].ColumnName);
-            Assert.AreEqual("Unit", result.Columns[1].ColumnName);
-            Assert.AreEqual("Street Address", result.Columns[2].ColumnName);
-            Assert.AreEqual("ZipCode", result.Columns[3].ColumnName);
+            Assert.AreEqual(6, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("Blk", result.Columns[1].ColumnName);
+            Assert.AreEqual("Unit", result.Columns[2].ColumnName);
+            Assert.AreEqual("Street Address", result.Columns[3].ColumnName);
+            Assert.AreEqual("ZipCode", result.Columns[4].ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("", result.Rows[0]["Nric"]);
             Assert.AreEqual("777", result.Rows[0]["Blk"]);
             Assert.AreEqual("04-55", result.Rows[0]["Unit"]);
             Assert.AreEqual("NUS ISS", result.Rows[0]["Street Address"]);
@@ -159,12 +161,14 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("enter your birthday", column.ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
             DataRow row = result.Rows[0];
+            Assert.AreEqual("", row["Nric"]);
             Assert.AreEqual("18 Jul 2017", row["enter your birthday"]);
         }
 
@@ -200,12 +204,14 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(4, result.Columns.Count);
-            Assert.AreEqual("Weight", result.Columns[0].ColumnName);
-            Assert.AreEqual("Height", result.Columns[1].ColumnName);
-            Assert.AreEqual("BMI", result.Columns[2].ColumnName);
+            Assert.AreEqual(5, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("Weight", result.Columns[1].ColumnName);
+            Assert.AreEqual("Height", result.Columns[2].ColumnName);
+            Assert.AreEqual("BMI", result.Columns[3].ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("", result.Rows[0]["Nric"]);
             Assert.AreEqual("83", result.Rows[0]["Weight"]);
             Assert.AreEqual("170", result.Rows[0]["Height"]);
             Assert.AreEqual("28.72", result.Rows[0]["BMI"]);
@@ -235,8 +241,8 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("hellothis is for testing mah", column.ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
@@ -348,6 +354,102 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
+        public void CreateFormEntriesDataTableTest_SimpleFormWithParticipantJourney()
+        {
+            Template template;
+            TemplateViewModel templateViewModel;
+            FormViewModel formViewModel = new FormViewModel();
+
+            CreateTemplateAndField(formViewModel, Constants.TemplateFieldType.TEXTBOX, "Textbox 12345", out template, out templateViewModel);
+
+            templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(0, templateViewModel.Entries.Count);
+
+            FormCollection submissionCollection = new FormCollection();
+            submissionCollection.Add("SubmitFields[1].TextBox", "Very important");
+
+            IDictionary<string, string> submissionFields = new System.Collections.Generic.Dictionary<string, string>();
+            submissionFields.Add("1", "1");
+
+            string fillinResult = _formAccessManager.FillIn(submissionFields, templateViewModel, submissionCollection);
+            Assert.AreEqual(fillinResult, "success");
+
+            templateViewModel.Entries = _formManager.HasSubmissions(templateViewModel).ToList();
+            Assert.AreEqual(1, templateViewModel.Entries.Count);
+
+            var entryId = templateViewModel.Entries.FirstOrDefault().EntryId;
+            Assert.AreNotEqual(Guid.Empty, entryId);
+
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test 15",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-200),
+                EndDT = DateTime.Now.AddDays(199),
+                IsActive = false
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality"
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = new DateTime(1988, 11, 22),
+                Gender = "Male",
+                FullName = "Tester 123"
+            };
+
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+
+            _unitOfWork.Participants.Add(participant);
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Complete();
+
+            ParticipantJourneyModality journeyModality = new ParticipantJourneyModality()
+            {
+                ParticipantID = 1,
+                PHSEventID = 1,
+                ModalityID = 1,
+                FormID = 1,
+                TemplateID = 1,
+                EntryId = new Guid(entryId)
+            };
+
+            _unitOfWork.ParticipantJourneyModalities.Add(journeyModality);
+
+            _unitOfWork.Complete();
+
+            FormExportViewModel model = new FormExportViewModel()
+            {
+                FormID = 1
+            };
+
+            var result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(3, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("Textbox 12345", result.Columns[1].ColumnName);
+
+            Assert.AreEqual(1, result.Rows.Count);
+            Assert.AreEqual("S8250369B", result.Rows[0]["Nric"]);
+            Assert.AreEqual("Very important", result.Rows[0]["Textbox 12345"]);
+        }
+
+        [TestMethod()]
         public void CreateFormEntriesDataTableTest_Sorting()
         {
             Template template;
@@ -383,8 +485,8 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("this is for testing", column.ColumnName);
 
             Assert.AreEqual(3, result.Rows.Count);
@@ -428,8 +530,8 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("this is for testing", column.ColumnName);
 
             Assert.AreEqual(3, result.Rows.Count);
@@ -476,12 +578,15 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("this is for testing", column.ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
             DataRow row = result.Rows[0];
+            Assert.AreEqual("", row["Nric"]);
             Assert.AreEqual("ABC HelloTest", row["this is for testing"]);
         }
 
@@ -525,8 +630,8 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("this is for testing", column.ColumnName);
 
             Assert.AreEqual(3, result.Rows.Count);
@@ -572,12 +677,15 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Columns.Count);
-            DataColumn column = result.Columns[0];
+            Assert.AreEqual(3, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+
+            DataColumn column = result.Columns[1];
             Assert.AreEqual("this is for testing", column.ColumnName);
 
             Assert.AreEqual(1, result.Rows.Count);
             DataRow row = result.Rows[0];
+            Assert.AreEqual("", row["Nric"]);
             Assert.AreEqual("ABC's HelloTest", row["this is for testing"]);
         }
 
@@ -619,13 +727,17 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(4, result.Columns.Count);
-            Assert.AreEqual("this is for testing", result.Columns[0].ColumnName);
-            Assert.AreEqual("1: this is for testing", result.Columns[1].ColumnName);
-            Assert.AreEqual("this is for another testing", result.Columns[2].ColumnName);
+            Assert.AreEqual(5, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("this is for testing", result.Columns[1].ColumnName);
+            Assert.AreEqual("1: this is for testing", result.Columns[2].ColumnName);
+            Assert.AreEqual("this is for another testing", result.Columns[3].ColumnName);
 
             Assert.AreEqual(2, result.Rows.Count);
+            Assert.AreEqual("", result.Rows[0]["Nric"]);
             Assert.AreEqual("ABC HelloTest", result.Rows[0]["this is for testing"]);
+
+            Assert.AreEqual("", result.Rows[1]["Nric"]);
             Assert.AreEqual("i am second", result.Rows[1]["1: this is for testing"]);
             Assert.AreEqual("i am second HelloTest", result.Rows[1]["this is for another testing"]);
         }
@@ -683,19 +795,23 @@ namespace PHS.Business.Implementation.Tests
             DataTable result = _target.CreateFormEntriesDataTable(model).ValuesDataTable;
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(8, result.Columns.Count);
-            Assert.AreEqual("Weight", result.Columns[0].ColumnName);
-            Assert.AreEqual("Height", result.Columns[1].ColumnName);
-            Assert.AreEqual("BMI", result.Columns[2].ColumnName);
-            Assert.AreEqual("3: Weight", result.Columns[3].ColumnName);
-            Assert.AreEqual("3: Height", result.Columns[4].ColumnName);
-            Assert.AreEqual("3: BMI", result.Columns[5].ColumnName);
-            Assert.AreEqual("this is for another testing", result.Columns[6].ColumnName);
+            Assert.AreEqual(9, result.Columns.Count);
+            Assert.AreEqual("Nric", result.Columns[0].ColumnName);
+            Assert.AreEqual("Weight", result.Columns[1].ColumnName);
+            Assert.AreEqual("Height", result.Columns[2].ColumnName);
+            Assert.AreEqual("BMI", result.Columns[3].ColumnName);
+            Assert.AreEqual("3: Weight", result.Columns[4].ColumnName);
+            Assert.AreEqual("3: Height", result.Columns[5].ColumnName);
+            Assert.AreEqual("3: BMI", result.Columns[6].ColumnName);
+            Assert.AreEqual("this is for another testing", result.Columns[7].ColumnName);
 
             Assert.AreEqual(2, result.Rows.Count);
+            Assert.AreEqual("", result.Rows[0]["Nric"]);
             Assert.AreEqual("83", result.Rows[0]["Weight"]);
             Assert.AreEqual("170", result.Rows[0]["Height"]);
             Assert.AreEqual("28.72", result.Rows[0]["BMI"]);
+
+            Assert.AreEqual("", result.Rows[1]["Nric"]);
             Assert.AreEqual("120", result.Rows[1]["3: Weight"]);
             Assert.AreEqual("190", result.Rows[1]["3: Height"]);
             Assert.AreEqual("33.24", result.Rows[1]["3: BMI"]);

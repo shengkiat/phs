@@ -223,9 +223,10 @@ namespace PHS.Business.Implementation
 
             int columnCount = 0;
 
+            AddColumn(dt, "Nric", columnCount);
+
             if (Constants.Internal_Form_Type_Phlebotomy.Equals(form.InternalFormType))
-            {
-                AddColumn(dt, "Nric", columnCount);
+            {    
                 AddColumn(dt, "Name", columnCount);
                 AddColumn(dt, "DOB", columnCount);
                 AddColumn(dt, "Sex", columnCount);
@@ -233,7 +234,6 @@ namespace PHS.Business.Implementation
 
             else
             {
-                
                 foreach (var template in templateViews)
                 {
                     foreach (var field in template.Fields.OrderBy(f => f.TemplateFieldID))
@@ -299,25 +299,33 @@ namespace PHS.Business.Implementation
                 {
                     DataRow row = dt.NewRow();
 
+                    Participant participant = null;
+
+                    row[0] = "";
+
+                    var entryId = group.FirstOrDefault().EntryId;
+                    IEnumerable<ParticipantJourneyModality> ptJourneyModalityItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByFormIdAndEntryId(form.FormID, new Guid(entryId));
+                    if (ptJourneyModalityItems != null && ptJourneyModalityItems.Count() > 0)
+                    {
+                        var participantId = ptJourneyModalityItems.FirstOrDefault().ParticipantID;
+                        participant = unitOfWork.Participants.FindParticipant(participantId);
+                        if (participant != null)
+                        {
+                            row[0] = participant.Nric;
+                        }
+                    }
+
                     if (Constants.Internal_Form_Type_Phlebotomy.Equals(form.InternalFormType))
                     {
-                        var entryId = group.FirstOrDefault().EntryId;
-                        IEnumerable<ParticipantJourneyModality> ptJourneyModalityItems = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModalityByFormIdAndEntryId(form.FormID, new Guid(entryId));
-                        if (ptJourneyModalityItems != null && ptJourneyModalityItems.Count() > 0)
+                        if (participant != null)
                         {
-                            var participantId = ptJourneyModalityItems.FirstOrDefault().ParticipantID;
-                            Participant participant = unitOfWork.Participants.FindParticipant(participantId);
-                            if (participant != null)
+                            row[1] = participant.FullName;
+                            if (participant.DateOfBirth != null)
                             {
-                                row[0] = participant.Nric;
-                                row[1] = participant.FullName;
-                                if (participant.DateOfBirth != null)
-                                {
-                                    row[2] = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
-                                }
-                                
-                                row[3] = participant.Gender;
+                                row[2] = participant.DateOfBirth.Value.ToString("dd MMM yyyy");
                             }
+
+                            row[3] = participant.Gender;
                         }
                     }
 
@@ -325,7 +333,7 @@ namespace PHS.Business.Implementation
                     {
                         foreach (var entry in group.OrderBy(f => f.TemplateFieldID))
                         {
-                            int columnIndex = fieldIdColumnMapping[entry.TemplateFieldID];
+                            int columnIndex = fieldIdColumnMapping[entry.TemplateFieldID] + 1;
 
                             if (entry.FieldType == Constants.TemplateFieldType.MATRIX)
                             {
