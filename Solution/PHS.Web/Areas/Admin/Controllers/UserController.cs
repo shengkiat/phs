@@ -204,7 +204,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
-                return RedirectToAction("Index");
+                return View();
             }
 
             string message = string.Empty;
@@ -225,7 +225,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             SetTempDataMessage("Users are set Active!");
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpPost]
@@ -239,7 +239,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
-                return RedirectToAction("Index");
+                return View();
             }
             string message = string.Empty;
             using (var userManager = new UserManager())
@@ -257,7 +257,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             SetTempDataMessage("Users are set Inactive!");
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpPost]
@@ -271,7 +271,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
-                return RedirectToAction("Index");
+                return View();
             }
 
             string message = string.Empty;
@@ -287,7 +287,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             SetTempDataMessage("Password has been reset to " + tempPW);
-            return RedirectToAction("Index");
+            return View();
         }
     }
 }
