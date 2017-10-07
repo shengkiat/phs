@@ -389,13 +389,13 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
                 doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
                 doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
-                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race));
-                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber));
-                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
-                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
+                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race).Limit(5));
+                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber).Limit(8));
+                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber).Limit(8));
+                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.GetAddressWithoutPrefix()).Limit(48));
                 //doc.ReplaceText("<<UNIT>>", result.un);
                 doc.ReplaceText("<<POSTAL>>", UtilityHelper.GetString(result.PostalCode)); 
-                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
+                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language).Limit(8));
 
                 var ms = new MemoryStream();
                 doc.SaveAs(ms);
