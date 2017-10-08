@@ -21,9 +21,17 @@ namespace PHS.Business.Implementation
 {
     public class FormManager : BaseFormManager, IFormManager, IManagerFactoryBase<IFormManager>
     {
-        public IFormManager Create()
+        public FormManager() : base(null)
         {
-            return new FormManager();
+        }
+
+        public FormManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public IFormManager Create(PHSUser loginUser)
+        {
+            return new FormManager(loginUser);
         }
 
         [System.Obsolete("To be deprecated since use by formImport")]

@@ -18,9 +18,13 @@ namespace PHS.Business.Implementation
 {
     public class FormAccessManager : BaseFormManager, IFormAccessManager, IManagerFactoryBase<IFormAccessManager>
     {
-        public IFormAccessManager Create()
+        public FormAccessManager(PHSUser loginUser) : base(loginUser)
         {
-            return new FormAccessManager();
+        }
+
+        public IFormAccessManager Create(PHSUser loginUser)
+        {
+            return new FormAccessManager(loginUser);
         }
 
         public Template FindPublicTemplate(string slug)

@@ -36,7 +36,7 @@ namespace PHS.Web.Controllers
                 return View();
             }
 
-            using (var participantJourneyManager = new PastParticipantJourneyManager())
+            using (var participantJourneyManager = new PastParticipantJourneyManager(GetLoginUser()))
             {
                 string message = string.Empty;
                 PastParticipantJourneySearchViewModel result = new PastParticipantJourneySearchViewModel();
@@ -77,7 +77,7 @@ namespace PHS.Web.Controllers
                 PHSEventId = PHSEventId
             };
 
-            using (var participantJourneyManager = new PastParticipantJourneyManager())
+            using (var participantJourneyManager = new PastParticipantJourneyManager(GetLoginUser()))
             {
                 string message = string.Empty;
 

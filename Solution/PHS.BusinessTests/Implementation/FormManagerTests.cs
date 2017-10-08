@@ -656,7 +656,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockPublicFormManager(IUnitOfWork unitOfWork)
+            public MockPublicFormManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }

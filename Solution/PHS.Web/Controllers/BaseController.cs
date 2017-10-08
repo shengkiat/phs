@@ -242,7 +242,7 @@ namespace PHS.Web.Controllers
             }
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (userManager.UpdateUser(GetLoginUser(), user, out message))
                 {
@@ -272,7 +272,7 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (!userManager.ChangePassword(GetLoginUser(), oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
                 {

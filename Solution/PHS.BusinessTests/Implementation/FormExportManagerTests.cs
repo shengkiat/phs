@@ -930,7 +930,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockFormExportManager(IUnitOfWork unitOfWork)
+            public MockFormExportManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }
@@ -960,7 +960,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockFormAccessManager(IUnitOfWork unitOfWork)
+            public MockFormAccessManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }

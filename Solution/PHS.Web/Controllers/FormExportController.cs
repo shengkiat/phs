@@ -66,7 +66,7 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            using (var formExportManager = new FormExportManager())
+            using (var formExportManager = new FormExportManager(GetLoginUser()))
             {
                 string message = string.Empty;
 
@@ -83,7 +83,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult Export(FormExportViewModel model, FormCollection collection)
         {
-            using (var formExportManager = new FormExportManager())
+            using (var formExportManager = new FormExportManager(GetLoginUser()))
             {
                 var formExportResult = formExportManager.CreateFormEntriesDataTable(model);
 
@@ -108,7 +108,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewSortEntries(string formId)
         {
-            using (var formExportManager = new FormExportManager())
+            using (var formExportManager = new FormExportManager(GetLoginUser()))
             {
                 return PartialView("_ViewEntriesSortPartial", formExportManager.AddNewSortEntries(Int32.Parse(formId)));
             }
@@ -116,7 +116,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewCriteriaEntries(string formId)
         {
-            using (var formExportManager = new FormExportManager())
+            using (var formExportManager = new FormExportManager(GetLoginUser()))
             {
                 return PartialView("_ViewEntriesCriteriaPartial", formExportManager.AddNewCriteriaEntries(Int32.Parse(formId)));
             }
@@ -124,7 +124,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddNewCriteriaSubEntries(string formId)
         {
-            using (var formExportManager = new FormExportManager())
+            using (var formExportManager = new FormExportManager(GetLoginUser()))
             {
                 return PartialView("_ViewEntriesCriteriaSubPartial", formExportManager.AddNewCriteriaSubEntries(Int32.Parse(formId)));
             }

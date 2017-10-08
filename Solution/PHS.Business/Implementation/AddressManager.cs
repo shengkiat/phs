@@ -12,9 +12,17 @@ namespace PHS.Business.Implementation
 {
     public class AddressManager : BaseManager, IAddressManager, IManagerFactoryBase<IAddressManager>
     {
-        public IAddressManager Create()
+        public AddressManager() : base(null)
         {
-            return new AddressManager();
+        }
+
+        public AddressManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public IAddressManager Create(PHSUser loginUser)
+        {
+            return new AddressManager(loginUser);
         }
 
         public MasterAddress FindAddress(string postalCode)

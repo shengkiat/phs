@@ -15,9 +15,17 @@ namespace PHS.Business.Implementation
 {
     public class StandardReferenceManager : BaseManager, IStandardReferenceManager, IManagerFactoryBase<IStandardReferenceManager>
     {
-        public IStandardReferenceManager Create()
+        public StandardReferenceManager() : base(null)
         {
-            return new StandardReferenceManager();
+        }
+
+        public StandardReferenceManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public IStandardReferenceManager Create(PHSUser loginUser)
+        {
+            return new StandardReferenceManager(loginUser);
         }
 
         public IList<StandardReference> GetAllStandardReferences(out string message)

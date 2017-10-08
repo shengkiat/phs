@@ -131,7 +131,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var referenceRangeManager = new ReferenceRangeManager())
+            using (var referenceRangeManager = new ReferenceRangeManager(GetLoginUser()))
             {
                 var newReferenceRange = referenceRangeManager.AddReferenceRange(referenceRange, out message);
                 if (newReferenceRange == null)
@@ -200,7 +200,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var referenceRangeManager = new ReferenceRangeManager())
+            using (var referenceRangeManager = new ReferenceRangeManager(GetLoginUser()))
             {
                 var referenceRange = referenceRangeManager.GetReferenceRangeByID(referenceRangeID, out message);
                 if (referenceRange == null)
@@ -222,7 +222,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var referenceRangeManager = new ReferenceRangeManager())
+            using (var referenceRangeManager = new ReferenceRangeManager(GetLoginUser()))
             {
                 if (referenceRangeManager.UpdateReferenceRange(referenceRange, out message))
                 {
@@ -266,7 +266,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var referenceRangeManager = new ReferenceRangeManager())
+            using (var referenceRangeManager = new ReferenceRangeManager(GetLoginUser()))
             {
                 if (referenceRangeManager.DeleteReferenceRange(referenceRangeID, out message))
                 {

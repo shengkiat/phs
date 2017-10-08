@@ -21,9 +21,17 @@ namespace PHS.Business.Implementation
 {
     public class SummaryMappingManager : BaseManager, ISummaryMappingManager, IManagerFactoryBase<ISummaryMappingManager>
     {
-        public ISummaryMappingManager Create()
+        public SummaryMappingManager() : base(null)
         {
-            return new SummaryMappingManager();
+        }
+
+        public SummaryMappingManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public ISummaryMappingManager Create(PHSUser loginUser)
+        {
+            return new SummaryMappingManager(loginUser);
         }
 
         public List<string> GetAllCategoryNamesBySummaryType(string summaryType)
