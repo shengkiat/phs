@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PHS.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace PHS.Business.Interface
 {
     public interface IManagerFactoryBase<TEntity> where TEntity : class
     {
-        TEntity Create();
+        TEntity Create(PHSUser loginUser);
     }
 }

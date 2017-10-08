@@ -18,10 +18,10 @@ namespace PHS.DB
         public string Title { get; set; }
         public Nullable<double> MinimumValue { get; set; }
         public Nullable<double> MaximumValue { get; set; }
-        public string Result { get; set; }
-        public int StandardReferenceID { get; set; }
-        public bool Highlight { get; set; }
         public string StringValue { get; set; }
+        public string Result { get; set; }
+        public bool Highlight { get; set; }
+        public int StandardReferenceID { get; set; }
     
         public virtual StandardReference StandardReference { get; set; }
     }

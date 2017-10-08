@@ -31,7 +31,7 @@ namespace PHS.Web.Controllers
                 return RedirectToLogin();
             }
 
-            using (var formImportManager = new FormImportManager())
+            using (var formImportManager = new FormImportManager(GetLoginUser()))
             {
                 string message = string.Empty;
 
@@ -69,7 +69,7 @@ namespace PHS.Web.Controllers
 
                 byte[] data =  ReadData(file.InputStream);
 
-                using (var manager = new FormImportManager())
+                using (var manager = new FormImportManager(GetLoginUser()))
                 {
                     string msg  = manager.InsertUploadDataToTemplate(data, formid);
 
@@ -135,7 +135,7 @@ namespace PHS.Web.Controllers
             var file = new FileInfo(outputDir + fileName);
 
             Template template = new Template();
-            using (var manager = new FormImportManager())
+            using (var manager = new FormImportManager(GetLoginUser()))
             {
                 template = manager.FindLatestTemplate(formid);
             }

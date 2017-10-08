@@ -24,7 +24,7 @@ namespace PHS.Web.Controllers
         //[SSl]
         public ActionResult PublicFillIn(string slug, bool embed = false)
         {
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
                 var template = formManager.FindPublicTemplate(slug);
 
@@ -44,7 +44,7 @@ namespace PHS.Web.Controllers
         public ActionResult PreRegistration()
         {
 
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
                 TemplateViewModel model = null;
 
@@ -66,7 +66,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult FillIn(int id, bool embed = false)
         {
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
                 TemplateViewModel model = null;
 
@@ -113,7 +113,7 @@ namespace PHS.Web.Controllers
         {
             InsertValuesIntoTempData(SubmitFields, formCollection);
 
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
 
                 var template = formManager.FindTemplate(model.TemplateID.Value);
@@ -157,7 +157,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult SubmitConfirmation(int id, bool? embed)
         {
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
                 var template = formManager.FindTemplate(id);
                 if (template != null)
@@ -219,7 +219,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult ViewSaveForm(int id, string entryId, bool embed = false)
         {
-            using (var formManager = new FormAccessManager())
+            using (var formManager = new FormAccessManager(GetLoginUser()))
             {
                 TemplateViewModel model = null;
 
@@ -389,13 +389,13 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
                 doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
                 doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
-                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race));
-                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber));
-                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber));
-                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.Address).Limit(48));
+                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race).Limit(5));
+                doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber).Limit(8));
+                doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber).Limit(8));
+                doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.GetAddressWithoutPrefix()).Limit(48));
                 //doc.ReplaceText("<<UNIT>>", result.un);
                 doc.ReplaceText("<<POSTAL>>", UtilityHelper.GetString(result.PostalCode)); 
-                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language));
+                doc.ReplaceText("<<LANG>>", UtilityHelper.GetString(result.Language).Limit(8));
 
                 var ms = new MemoryStream();
                 doc.SaveAs(ms);

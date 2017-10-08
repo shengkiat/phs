@@ -905,7 +905,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockUserManager(IUnitOfWork unitOfWork)
+            public MockUserManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }

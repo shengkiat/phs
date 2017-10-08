@@ -1,4 +1,5 @@
 ﻿using PHS.DB;
+using PHS.DB.ViewModels.Form;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,9 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string MobileNumber { get; }
         public string Gender { get; }
 
-        
+        public string GetAddressWithoutPrefix() {
+            AddressViewModel address = AddressViewModel.Initialize(Address);
+            return address.Blk + ", " + address.StreetAddress + ", " + address.Unit;
+        }
     }
 }

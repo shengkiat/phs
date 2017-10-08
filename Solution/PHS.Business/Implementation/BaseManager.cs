@@ -10,6 +10,7 @@ using log4net;
 using PHS.Repository;
 using PHS.Repository.Interface.Core;
 using PHS.Repository.Context;
+using PHS.DB;
 
 namespace PHS.Business.Implementation
 {
@@ -24,6 +25,13 @@ namespace PHS.Business.Implementation
         bool disposed = false;
         // Instantiate a SafeHandle instance.
         SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+
+        private PHSUser user;
+
+        public BaseManager(PHSUser loginUser)
+        {
+            user = loginUser;
+        }
 
         protected virtual IUnitOfWork CreateUnitOfWork()
         {

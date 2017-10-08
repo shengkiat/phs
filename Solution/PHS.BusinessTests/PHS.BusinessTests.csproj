@@ -85,6 +85,7 @@
     <Compile Include="Implementation\UserManagerTests.cs" />
     <Compile Include="MockUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyFormViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PHS.Business\PHS.Business.csproj">

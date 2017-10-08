@@ -9,6 +9,10 @@ namespace PHS.Business.Implementation
 {
     public class BaseFormManager : BaseManager
     {
+        public BaseFormManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
         public Template FindTemplate(int templateID)
         {
             Template template = null;

@@ -15,9 +15,13 @@ namespace PHS.Business.Implementation
 {
     public class FormImportManager : BaseFormManager, IFormImportManager, IManagerFactoryBase<IFormImportManager>
     {
-        public IFormImportManager Create()
+        public FormImportManager(PHSUser loginUser) : base(loginUser)
         {
-            return new FormImportManager();
+        }
+
+        public IFormImportManager Create(PHSUser loginUser)
+        {
+            return new FormImportManager(loginUser);
         }
 
         public FormImportViewModel RetrieveAllForms(int eventId, out string message)

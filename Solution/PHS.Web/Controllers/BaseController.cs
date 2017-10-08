@@ -105,13 +105,13 @@ namespace PHS.Web.Controllers
             switch (GetLoginUserRole())
             {
                 case Common.Constants.User_Role_Doctor_Code:
-                    return Redirect("~/doctor");
+                    return Redirect("~/ParticipantJourney/Index");
                     
                 case Common.Constants.User_Role_CommitteeMember_Code:
-                    return Redirect("~/admin/user");
+                    return Redirect("~/Admin/User");
                    
                 case Common.Constants.User_Role_Volunteer_Code:
-                    return Redirect("~/participantJourney");
+                    return Redirect("~/ParticipantJourney/Index");
                    
                 default:
                     return RedirectToLogin();
@@ -242,7 +242,7 @@ namespace PHS.Web.Controllers
             }
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (userManager.UpdateUser(GetLoginUser(), user, out message))
                 {
@@ -272,7 +272,7 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (!userManager.ChangePassword(GetLoginUser(), oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
                 {

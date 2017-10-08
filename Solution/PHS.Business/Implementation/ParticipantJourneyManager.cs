@@ -21,9 +21,17 @@ namespace PHS.Business.Implementation
 {
     public class ParticipantJourneyManager : BaseParticipantJourneyManager, IParticipantJourneyManager, IManagerFactoryBase<IParticipantJourneyManager>
     {
-        public IParticipantJourneyManager Create()
+        public ParticipantJourneyManager() : base(null)
         {
-            return new ParticipantJourneyManager();
+        }
+
+        public ParticipantJourneyManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public IParticipantJourneyManager Create(PHSUser loginUser)
+        {
+            return new ParticipantJourneyManager(loginUser);
         }
 
         public ParticipantJourneySearchViewModel RetrieveActiveScreeningEvent()

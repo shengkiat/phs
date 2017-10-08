@@ -17,9 +17,13 @@ namespace PHS.Business.Implementation
 {
     public class PastParticipantJourneyManager : BaseParticipantJourneyManager, IPastParticipantJourneyManager, IManagerFactoryBase<IPastParticipantJourneyManager>
     {
-        public IPastParticipantJourneyManager Create()
+        public PastParticipantJourneyManager(PHSUser loginUser) : base(loginUser)
         {
-            return new PastParticipantJourneyManager();
+        }
+
+        public IPastParticipantJourneyManager Create(PHSUser loginUser)
+        {
+            return new PastParticipantJourneyManager(loginUser);
         }
 
         public IList<ParticipantJourneyViewModel> GetAllParticipantJourneyByNric(string nric, out string message)
