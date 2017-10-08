@@ -31,6 +31,7 @@ namespace PHS.BusinessTests.Implementation
             Assert.IsNull(preExecuteResult);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.Slug = slug;
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
@@ -48,6 +49,7 @@ namespace PHS.BusinessTests.Implementation
             string slug = "test";
             
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.Slug = slug;
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
@@ -91,6 +93,7 @@ namespace PHS.BusinessTests.Implementation
             string slug = "test";
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.Slug = slug;
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
@@ -142,6 +145,7 @@ namespace PHS.BusinessTests.Implementation
             Assert.IsNull(preExecuteResult);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.IsPublic = false;
             formViewModel.Slug = slug;
 
@@ -159,6 +163,7 @@ namespace PHS.BusinessTests.Implementation
             Assert.IsNull(preExecuteResult);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "PRE-REGISTRATION";
             formViewModel.Slug = "TEST";
@@ -174,6 +179,7 @@ namespace PHS.BusinessTests.Implementation
         public void FindPreRegistrationForm_ShouldGetLatestVersion()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "PRE-REGISTRATION";
             formViewModel.Slug = "TEST";
@@ -215,6 +221,7 @@ namespace PHS.BusinessTests.Implementation
         public void FindPreRegistrationForm_ShouldGetActiveVersionAfterDelete()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "PRE-REGISTRATION";
             formViewModel.Slug = "TEST";
@@ -266,7 +273,9 @@ namespace PHS.BusinessTests.Implementation
 
             Template template;
             TemplateViewModel templateViewModel;
-            CreateDefaultTemplateAndField(new FormViewModel(), out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
 
             Template postExecuteResult = _target.FindLatestTemplate(1);
             Assert.IsNotNull(postExecuteResult);
@@ -278,7 +287,9 @@ namespace PHS.BusinessTests.Implementation
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateDefaultTemplateAndField(new FormViewModel(), out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
 
             Template preExecuteResult = _target.FindLatestTemplate(1);
             Assert.IsNotNull(preExecuteResult);
@@ -314,7 +325,9 @@ namespace PHS.BusinessTests.Implementation
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateDefaultTemplateAndField(new FormViewModel(), out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
 
             Template preExecuteResult = _target.FindLatestTemplate(1);
             Assert.IsNotNull(preExecuteResult);
@@ -356,7 +369,9 @@ namespace PHS.BusinessTests.Implementation
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateDefaultTemplateAndField(new FormViewModel(), out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateDefaultTemplateAndField(formViewModel, out template, out templateViewModel);
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
@@ -386,7 +401,9 @@ namespace PHS.BusinessTests.Implementation
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateTemplateAndField(formViewModel, Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
@@ -421,7 +438,9 @@ namespace PHS.BusinessTests.Implementation
         {
             Template template;
             TemplateViewModel templateViewModel;
-            CreateTemplateAndField(new FormViewModel(), Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            CreateTemplateAndField(formViewModel, Constants.TemplateFieldType.BIRTHDAYPICKER, out template, out templateViewModel);
 
             templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
             Assert.IsNotNull(templateViewModel.Fields);
@@ -454,7 +473,9 @@ namespace PHS.BusinessTests.Implementation
         [TestMethod()]
         public void FillIn_SuccessWithCheckbox()
         {
-            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -495,7 +516,9 @@ namespace PHS.BusinessTests.Implementation
         [TestMethod()]
         public void FillIn_ErrorWithRequiredField()
         {
-            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -532,7 +555,9 @@ namespace PHS.BusinessTests.Implementation
         [TestMethod()]
         public void FillIn_NotSelectedConditionFieldWithRequiredShouldBeSave()
         {
-            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);
@@ -598,7 +623,9 @@ namespace PHS.BusinessTests.Implementation
         [TestMethod()]
         public void FillIn_NotSelectedConditionFieldWithSubComponentRequiredShouldBeSave()
         {
-            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);

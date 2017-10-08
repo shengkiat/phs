@@ -25,6 +25,7 @@ namespace PHS.Business.Implementation.Tests
         public void CreateNewFormAndTemplate_CreateSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -42,6 +43,7 @@ namespace PHS.Business.Implementation.Tests
             formViewModel.Slug = "slug1";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -61,6 +63,7 @@ namespace PHS.Business.Implementation.Tests
         public void EditForm_EditSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -89,6 +92,7 @@ namespace PHS.Business.Implementation.Tests
         public void EditForm_UnableToEditBecauseSlugExists()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
             formViewModel.Slug = "slug1";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
@@ -99,6 +103,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(templateOne.Form.FormID);
 
             formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name 2";
             formViewModel.Slug = "slug2";
             formViewModel.IsPublic = true;
             formViewModel.PublicFormType = "TEST";
@@ -123,6 +128,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(preExecuteResult.Count(), 0);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -140,6 +146,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(preExecuteResult.Count(), 0);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -153,6 +160,7 @@ namespace PHS.Business.Implementation.Tests
         public void FindTemplate_ShouldHaveRecordAfterCreate()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -165,6 +173,7 @@ namespace PHS.Business.Implementation.Tests
         public void UpdateTemplate_ShouldHaveFieldRecordsAfterSave()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -188,6 +197,7 @@ namespace PHS.Business.Implementation.Tests
         public void FindTemplateToEdit_ShouldHaveRecordAfterCreate()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -231,6 +241,7 @@ namespace PHS.Business.Implementation.Tests
         public void FindTemplateToEdit_CopyToNewTemplateWithConditionalFields()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -319,6 +330,7 @@ namespace PHS.Business.Implementation.Tests
         public void DeleteTemplate_UnableToDeleteBecauseOfOnlyVersion()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -403,6 +415,7 @@ namespace PHS.Business.Implementation.Tests
         public void DeleteFormAndTemplate_DeleteSuccess()
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -499,6 +512,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(preExecuteResult.Count(), 0);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -530,6 +544,7 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(preExecuteResult.Count(), 0);
 
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
@@ -585,6 +600,7 @@ namespace PHS.Business.Implementation.Tests
         private void CreateDefaultTemplateAndField(out Template template, out TemplateViewModel templateViewModel)
         {
             FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
 
             template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);

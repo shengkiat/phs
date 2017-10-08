@@ -876,6 +876,8 @@ namespace PHS.Business.Implementation.Tests
         private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, string label, out Template template, out TemplateViewModel templateViewModel)
         {
 
+            formViewModel.Title = "Required Form Name";
+
             template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
