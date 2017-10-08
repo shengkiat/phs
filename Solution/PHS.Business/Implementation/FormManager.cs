@@ -223,6 +223,10 @@ namespace PHS.Business.Implementation
 
                 using (TransactionScope scope = new TransactionScope())
                 {
+
+                    model.UpdatedDateTime = DateTime.Now;
+                    model.UpdatedBy = GetLoginUserName();
+
                     // first update the form metadata
                     unitOfWork.FormRepository.UpdateTemplate(model, template);
 
@@ -284,7 +288,11 @@ namespace PHS.Business.Implementation
                                     SummaryType = collection.FormFieldValue(domId, "SummaryType"),
                                     ConditionCriteria = collection.FormFieldValue(domId, "ConditionCriteria"),
                                     ConditionOptions = collection.FormFieldValue(domId, "ConditionOptions"),
-                                };
+                                    CreatedBy = GetLoginUserName(),
+                                    CreatedDateTime = DateTime.Now,
+                                    UpdatedDateTime = DateTime.Now,
+                                    UpdatedBy = GetLoginUserName()
+                            };
 
                                 var conditionTemplateFieldID = collection.FormFieldValue(domId, "ConditionTemplateFieldID");
 
@@ -431,8 +439,10 @@ namespace PHS.Business.Implementation
 
                 using (TransactionScope scope = new TransactionScope())
                 {
+                    formViewModel.CreatedDateTime = DateTime.Now;
+                    formViewModel.CreatedBy = GetLoginUserName();
                     var form = unitOfWork.FormRepository.CreateNewForm(formViewModel);
-                    template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
+                    template = unitOfWork.FormRepository.CreateNewTemplate(form);
 
                     unitOfWork.Complete();
                     scope.Complete();
@@ -470,6 +480,9 @@ namespace PHS.Business.Implementation
 
                     using (TransactionScope scope = new TransactionScope())
                     {
+                        formViewModel.UpdatedDateTime = DateTime.Now;
+                        formViewModel.UpdatedBy = GetLoginUserName();
+
                         unitOfWork.FormRepository.UpdateForm(formViewModel, form);
 
                         unitOfWork.Complete();

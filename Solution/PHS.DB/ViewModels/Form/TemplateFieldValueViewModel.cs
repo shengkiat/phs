@@ -18,6 +18,10 @@ namespace PHS.DB.ViewModels.Form
         public Constants.TemplateFieldType FieldType { get; set; }
         public string FieldLabel { get; set; }
         public int FieldOrder { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
 
         public TemplateFieldValueViewModel()
         {
@@ -37,8 +41,8 @@ namespace PHS.DB.ViewModels.Form
 
         public static TemplateFieldValueViewModel CreateFromObject(TemplateFieldValue model)
         {
-           // model.FormFieldReference.Load();
-            return new TemplateFieldValueViewModel
+            // model.FormFieldReference.Load();
+            var templateFieldValueView = new TemplateFieldValueViewModel
             {
                 TemplateFieldValueID = model.TemplateFieldValueID,
                 TemplateFieldID = model.TemplateFieldID,
@@ -47,8 +51,23 @@ namespace PHS.DB.ViewModels.Form
                 DateAdded = model.DateAdded,                
                 FieldType = (Constants.TemplateFieldType)Enum.Parse(typeof(Constants.TemplateFieldType), model.TemplateField.FieldType),
                 FieldLabel = model.TemplateField.Label,
-                FieldOrder = model.TemplateField.Order.Value
+                FieldOrder = model.TemplateField.Order.Value,
+
+                CreatedBy = model.CreatedBy,
+                UpdatedBy = model.UpdatedBy
             };
+
+            if (model.CreatedDateTime.HasValue)
+            {
+                templateFieldValueView.CreatedDateTime = model.CreatedDateTime.Value;
+            }
+
+            if (model.UpdatedDateTime.HasValue)
+            {
+                templateFieldValueView.UpdatedDateTime = model.UpdatedDateTime.Value;
+            }
+
+            return templateFieldValueView;
         }
     }
 }

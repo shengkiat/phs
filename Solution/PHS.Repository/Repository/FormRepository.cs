@@ -96,7 +96,9 @@ namespace PHS.Repository.Repository
                     ConditionCriteria = fieldView.ConditionCriteria,
                     ConditionOptions = fieldView.ConditionOptions,
                     ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID,
-                    StandardReferenceID = fieldView.StandardReferenceID
+                    StandardReferenceID = fieldView.StandardReferenceID,
+                    CreatedBy = fieldView.CreatedBy,
+                    CreatedDateTime = fieldView.CreatedDateTime
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -144,6 +146,8 @@ namespace PHS.Repository.Repository
                     fField.ConditionOptions = fieldView.ConditionOptions;
                     fField.ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID;
                     fField.StandardReferenceID = fieldView.StandardReferenceID;
+                    fField.UpdatedBy = fieldView.UpdatedBy;
+                    fField.UpdatedDateTime = fieldView.UpdatedDateTime;
                 }
 
               //  this.SaveChanges();
@@ -161,7 +165,9 @@ namespace PHS.Repository.Repository
                 PublicFormType = formViewModel.PublicFormType,
                 InternalFormType = formViewModel.InternalFormType,
                 DateAdded = DateTime.UtcNow,
-                IsActive = true
+                IsActive = true,
+                CreatedBy = formViewModel.CreatedBy,
+                CreatedDateTime = formViewModel.CreatedDateTime
             };
 
             //Add(template);
@@ -184,18 +190,22 @@ namespace PHS.Repository.Repository
             form1.InternalFormType = formViewModel.InternalFormType;
             form1.IsPublic = formViewModel.IsPublic;
             form1.Slug = formViewModel.Slug;
-            form1.PublicFormType = form1.PublicFormType;
+            form1.PublicFormType = formViewModel.PublicFormType;
+            form1.UpdatedBy = formViewModel.UpdatedBy;
+            form1.UpdatedDateTime = formViewModel.UpdatedDateTime;
         }
-        public Template CreateNewTemplate(int formId)
+        public Template CreateNewTemplate(Form form)
         {
             var template = new Template
             {
-                FormID = formId,
+                FormID = form.FormID,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
                 IsActive = true,
-                Version = 1
+                Version = 1,
+                CreatedBy = form.CreatedBy,
+                CreatedDateTime = form.CreatedDateTime
             };
 
             //Add(template);
@@ -316,6 +326,8 @@ namespace PHS.Repository.Repository
             template1.Theme = model.Theme;
             template1.IsQuestion = model.IsQuestion;
             template1.NotificationEmail = model.NotificationEmail;
+            template1.UpdatedBy = model.UpdatedBy;
+            template1.UpdatedDateTime = model.UpdatedDateTime;
            // this.SaveChanges();
         }
 
