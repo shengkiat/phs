@@ -96,7 +96,9 @@ namespace PHS.Repository.Repository
                     ConditionCriteria = fieldView.ConditionCriteria,
                     ConditionOptions = fieldView.ConditionOptions,
                     ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID,
-                    StandardReferenceID = fieldView.StandardReferenceID
+                    StandardReferenceID = fieldView.StandardReferenceID,
+                    CreatedBy = fieldView.CreatedBy,
+                    CreatedDateTime = fieldView.CreatedDateTime
                 };
 
                 template1.TemplateFields.Add(fField);
@@ -144,6 +146,8 @@ namespace PHS.Repository.Repository
                     fField.ConditionOptions = fieldView.ConditionOptions;
                     fField.ConditionTemplateFieldID = fieldView.ConditionTemplateFieldID;
                     fField.StandardReferenceID = fieldView.StandardReferenceID;
+                    fField.UpdatedBy = fieldView.UpdatedBy;
+                    fField.UpdatedDateTime = fieldView.UpdatedDateTime;
                 }
 
               //  this.SaveChanges();
@@ -322,6 +326,8 @@ namespace PHS.Repository.Repository
             template1.Theme = model.Theme;
             template1.IsQuestion = model.IsQuestion;
             template1.NotificationEmail = model.NotificationEmail;
+            template1.UpdatedBy = model.UpdatedBy;
+            template1.UpdatedDateTime = model.UpdatedDateTime;
            // this.SaveChanges();
         }
 

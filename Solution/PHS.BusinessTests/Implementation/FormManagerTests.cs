@@ -190,6 +190,8 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.IsNull(templateViewModel.UpdatedBy);
+            Assert.IsNull(templateViewModel.UpdatedDateTime);
             Assert.IsNotNull(templateViewModel.Fields);
             Assert.AreEqual(0, templateViewModel.Fields.Count);
 
@@ -200,8 +202,49 @@ namespace PHS.Business.Implementation.Tests
             _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
 
             templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+            Assert.AreEqual("", templateViewModel.UpdatedBy);
+            Assert.IsNotNull(templateViewModel.UpdatedDateTime);
+
             Assert.IsNotNull(templateViewModel.Fields);
             Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual("", templateViewModel.Fields[0].CreatedBy);
+            Assert.IsNotNull(templateViewModel.Fields[0].CreatedDateTime);
+        }
+
+        [TestMethod()]
+        public void UpdateTemplate_UpdateAuditFieldsShouldHaveUpdated()
+        {
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+
+            Template template = _target.CreateNewFormAndTemplate(formViewModel);
+            Assert.IsNotNull(template);
+
+            TemplateViewModel templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+
+            FormCollection fieldCollection;
+            IDictionary<string, string> fields;
+            CeateFieldForm(1, out fieldCollection, out fields);
+
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.IsNull(templateViewModel.Fields[0].UpdatedBy);
+            Assert.IsNull(templateViewModel.Fields[0].UpdatedDateTime);
+
+            fieldCollection.Add("Fields[" + 1 + "].Id", "1");
+
+            //one more time
+            _target.UpdateTemplate(templateViewModel, fieldCollection, fields);
+
+            templateViewModel = _target.FindTemplateToEdit(template.TemplateID);
+
+            Assert.IsNotNull(templateViewModel.Fields);
+            Assert.AreEqual(1, templateViewModel.Fields.Count);
+            Assert.AreEqual("", templateViewModel.Fields[0].CreatedBy);
+            Assert.IsNotNull(templateViewModel.Fields[0].CreatedDateTime);
         }
 
         [TestMethod()]
