@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="ViewModels\event.cs" />
     <Compile Include="ViewModels\eventIndexdata.cs" />
+    <Compile Include="ViewModels\Form.cs" />
     <Compile Include="ViewModels\Form\AddressViewModel.cs" />
     <Compile Include="ViewModels\Form\BMIViewModel.cs" />
     <Compile Include="ViewModels\Form\FormCollectionViewModel.cs" />
