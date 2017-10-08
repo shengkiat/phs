@@ -7,6 +7,7 @@ using PHS.DB;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ExpressiveAnnotations.Attributes;
+using PHS.DB.Attributes;
 
 namespace PHS.DB.ViewModels.Form
 {
@@ -35,6 +36,20 @@ namespace PHS.DB.ViewModels.Form
 
         [DisplayName("Internal Form Type")]
         public string InternalFormType { get; set; }
+
+        [Display(Name = "Created Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [SkipTrackingAttribute]
+        public DateTime CreatedDateTime { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        [Display(Name = "Updated Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
+        [SkipTrackingAttribute]
+        public DateTime? UpdatedDateTime { get; set; }
+
+        public string UpdatedBy { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime DateAdded { get; set; }
@@ -78,8 +93,20 @@ namespace PHS.DB.ViewModels.Form
                 IsPublic = form1.IsPublic,
                 PublicFormType = form1.PublicFormType,
                 InternalFormType = form1.InternalFormType,
-                DateAdded = form1.DateAdded.Value
+                DateAdded = form1.DateAdded.Value,
+                CreatedBy = form1.CreatedBy,
+                UpdatedBy = form1.UpdatedBy,
             };
+
+            if (form1.CreatedDateTime.HasValue)
+            {
+                formView.CreatedDateTime = form1.CreatedDateTime.Value;
+            }
+
+            if (form1.UpdatedDateTime.HasValue)
+            {
+                formView.UpdatedDateTime = form1.UpdatedDateTime.Value;
+            }
 
             return formView;
         }

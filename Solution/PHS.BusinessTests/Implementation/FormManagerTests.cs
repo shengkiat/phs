@@ -30,8 +30,13 @@ namespace PHS.Business.Implementation.Tests
             Template template = _target.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
             Assert.IsNotNull(template.TemplateID);
+            Assert.IsNotNull("", template.CreatedBy);
+            Assert.IsNotNull(template.CreatedDateTime);
+
             Assert.IsNotNull(template.Form);
             Assert.IsNotNull(template.Form.FormID);
+            Assert.AreEqual("", template.Form.CreatedBy);
+            Assert.IsNotNull(template.Form.CreatedDateTime);
         }
 
         [TestMethod()]
@@ -69,11 +74,17 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(template);
             Assert.IsNotNull(template.Form);
             Assert.IsNotNull(template.Form.FormID);
+            Assert.IsNull(template.Form.UpdatedBy);
+            Assert.IsNull(template.Form.UpdatedDateTime);
 
             formViewModel.FormID = template.Form.FormID;
 
             string result = _target.EditForm(formViewModel);
             Assert.AreEqual("success", result);
+
+            var form = _target.FindFormToEdit(template.Form.FormID);
+            Assert.AreEqual("", form.UpdatedBy);
+            Assert.IsNotNull(form.UpdatedDateTime);
         }
 
         [TestMethod()]

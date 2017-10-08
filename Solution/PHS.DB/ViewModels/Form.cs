@@ -47,14 +47,14 @@ namespace PHS.DB
             [SkipTrackingAttribute]
             public DateTime CreatedDateTime { get; set; }
 
-            public int? CreatedBy { get; set; }
+            public string CreatedBy { get; set; }
 
             [Display(Name = "Updated Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
             [SkipTrackingAttribute]
             public DateTime? UpdatedDateTime { get; set; }
 
-            public int? UpdatedBy { get; set; }
+            public string UpdatedBy { get; set; }
         }
         
     }

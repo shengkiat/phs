@@ -431,8 +431,10 @@ namespace PHS.Business.Implementation
 
                 using (TransactionScope scope = new TransactionScope())
                 {
+                    formViewModel.CreatedDateTime = DateTime.Now;
+                    formViewModel.CreatedBy = GetLoginUserName();
                     var form = unitOfWork.FormRepository.CreateNewForm(formViewModel);
-                    template = unitOfWork.FormRepository.CreateNewTemplate(form.FormID);
+                    template = unitOfWork.FormRepository.CreateNewTemplate(form);
 
                     unitOfWork.Complete();
                     scope.Complete();
@@ -470,6 +472,9 @@ namespace PHS.Business.Implementation
 
                     using (TransactionScope scope = new TransactionScope())
                     {
+                        formViewModel.UpdatedDateTime = DateTime.Now;
+                        formViewModel.UpdatedBy = GetLoginUserName();
+
                         unitOfWork.FormRepository.UpdateForm(formViewModel, form);
 
                         unitOfWork.Complete();

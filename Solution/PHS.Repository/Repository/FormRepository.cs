@@ -161,7 +161,9 @@ namespace PHS.Repository.Repository
                 PublicFormType = formViewModel.PublicFormType,
                 InternalFormType = formViewModel.InternalFormType,
                 DateAdded = DateTime.UtcNow,
-                IsActive = true
+                IsActive = true,
+                CreatedBy = formViewModel.CreatedBy,
+                CreatedDateTime = formViewModel.CreatedDateTime
             };
 
             //Add(template);
@@ -184,18 +186,22 @@ namespace PHS.Repository.Repository
             form1.InternalFormType = formViewModel.InternalFormType;
             form1.IsPublic = formViewModel.IsPublic;
             form1.Slug = formViewModel.Slug;
-            form1.PublicFormType = form1.PublicFormType;
+            form1.PublicFormType = formViewModel.PublicFormType;
+            form1.UpdatedBy = formViewModel.UpdatedBy;
+            form1.UpdatedDateTime = formViewModel.UpdatedDateTime;
         }
-        public Template CreateNewTemplate(int formId)
+        public Template CreateNewTemplate(Form form)
         {
             var template = new Template
             {
-                FormID = formId,
+                FormID = form.FormID,
                 Status = Constants.TemplateStatus.DRAFT.ToString(),
                 DateAdded = DateTime.UtcNow,
                 ConfirmationMessage = "Thank you for signing up",
                 IsActive = true,
-                Version = 1
+                Version = 1,
+                CreatedBy = form.CreatedBy,
+                CreatedDateTime = form.CreatedDateTime
             };
 
             //Add(template);
