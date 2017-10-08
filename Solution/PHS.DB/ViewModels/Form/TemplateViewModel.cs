@@ -33,6 +33,10 @@ namespace PHS.DB.ViewModels.Form
         public string Slug { get; set; }
         public bool IsQuestion { get; set; }
         public int Version { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
         public Constants.TemplateMode Mode
         {
             get
@@ -133,8 +137,21 @@ namespace PHS.DB.ViewModels.Form
                 IsPublic = template1.Form.IsPublic,
                 InternalFormType = template1.Form.InternalFormType,
                 Slug = template1.Form.Slug,
-                PublicFormType = template1.Form.PublicFormType
+                PublicFormType = template1.Form.PublicFormType,
+
+                CreatedBy = template1.CreatedBy,
+                UpdatedBy = template1.UpdatedBy
             };
+
+            if (template1.CreatedDateTime.HasValue)
+            {
+                templateView.CreatedDateTime = template1.CreatedDateTime.Value;
+            }
+
+            if (template1.UpdatedDateTime.HasValue)
+            {
+                templateView.UpdatedDateTime = template1.UpdatedDateTime.Value;
+            }
 
             return templateView;
         }

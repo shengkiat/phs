@@ -18,6 +18,10 @@ namespace PHS.DB.ViewModels.Form
         public Constants.TemplateFieldType FieldType { get; set; }
         public string FieldLabel { get; set; }
         public int FieldOrder { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
 
         public TemplateFieldValueViewModel()
         {
