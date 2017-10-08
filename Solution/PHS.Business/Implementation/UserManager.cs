@@ -16,9 +16,13 @@ namespace PHS.Business.Implementation
 {
     public class UserManager : BaseManager, IUserManager, IManagerFactoryBase<IUserManager>
     {
-        public IUserManager Create()
+        public UserManager(PHSUser loginUser) : base(loginUser)
         {
-            return new UserManager();
+        }
+
+        public IUserManager Create(PHSUser loginUser)
+        {
+            return new UserManager(loginUser);
         }
 
         public bool ChangePassword(PHSUser user, string oldPass, string newPass, string newPassConfirm, out string message)

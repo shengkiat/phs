@@ -1242,7 +1242,9 @@ namespace PHS.Business.Implementation.Tests
 
         private TemplateViewModel CreateFormAndTemplateWithSampleField()
         {
-            Template template = _formManager.CreateNewFormAndTemplate(new FormViewModel());
+            FormViewModel formViewModel = new FormViewModel();
+            formViewModel.Title = "Required Form Name";
+            Template template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
             TemplateViewModel templateViewModel = _formManager.FindTemplateToEdit(template.TemplateID);

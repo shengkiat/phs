@@ -876,6 +876,8 @@ namespace PHS.Business.Implementation.Tests
         private void CreateTemplateAndField(FormViewModel formViewModel, Constants.TemplateFieldType fieldType, string label, out Template template, out TemplateViewModel templateViewModel)
         {
 
+            formViewModel.Title = "Required Form Name";
+
             template = _formManager.CreateNewFormAndTemplate(formViewModel);
             Assert.IsNotNull(template);
 
@@ -928,7 +930,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockFormExportManager(IUnitOfWork unitOfWork)
+            public MockFormExportManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }
@@ -958,7 +960,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockFormAccessManager(IUnitOfWork unitOfWork)
+            public MockFormAccessManager(IUnitOfWork unitOfWork) : base(null)
             {
                 _unitOfWork = unitOfWork;
             }

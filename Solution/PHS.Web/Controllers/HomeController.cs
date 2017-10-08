@@ -35,7 +35,7 @@ namespace PHS.Web.Controllers
         public ActionResult Login([Bind(Include = "Username,Password")] PHSUser user)
         {
             ActionResult result = View();
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 string message = string.Empty;
                 var authenticatedUser = userManager.IsAuthenticated(user.Username, user.Password, out message);

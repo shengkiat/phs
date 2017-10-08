@@ -19,10 +19,13 @@ namespace PHS.Business.Implementation
 {
     public class FormExportManager : BaseFormManager, IFormExportManager, IManagerFactoryBase<IFormExportManager>
     {
-
-        public IFormExportManager Create()
+        public FormExportManager(PHSUser loginUser) : base(loginUser)
         {
-            return new FormExportManager();
+        }
+
+        public IFormExportManager Create(PHSUser loginUser)
+        {
+            return new FormExportManager(loginUser);
         }
 
         public FormExportViewModel RetrieveAllForms(int eventId, out string message)

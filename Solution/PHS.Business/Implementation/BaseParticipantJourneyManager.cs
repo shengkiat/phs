@@ -10,6 +10,10 @@ namespace PHS.Business.Implementation
 {
     public class BaseParticipantJourneyManager : BaseManager
     {
+        public BaseParticipantJourneyManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
         public List<ParticipantJourneyModalityCircleViewModel> GetParticipantMegaSortingStation(ParticipantJourneySearchViewModel psm)
         {
             using (var unitOfWork = CreateUnitOfWork())

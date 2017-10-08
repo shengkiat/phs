@@ -39,6 +39,10 @@
           <Property Name="InternalFormType" Type="nvarchar" MaxLength="50" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" />
+          <Property Name="UpdatedBy" Type="nvarchar(max)" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="MasterAddress">
           <Key>
@@ -247,6 +251,10 @@
           <Property Name="EventID" Type="int" />
           <Property Name="IsQuestion" Type="bit" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" />
+          <Property Name="UpdatedBy" Type="nvarchar(max)" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="TemplateField">
           <Key>
@@ -290,6 +298,10 @@
           <Property Name="ConditionCriteria" Type="varchar" MaxLength="50" />
           <Property Name="ConditionOptions" Type="nvarchar" MaxLength="50" />
           <Property Name="StandardReferenceID" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" />
+          <Property Name="UpdatedBy" Type="nvarchar(max)" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -300,6 +312,10 @@
           <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Value" Type="nvarchar(max)" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" />
+          <Property Name="UpdatedBy" Type="nvarchar(max)" />
+          <Property Name="UpdatedDateTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="TemplateTemplateField">
           <Key>
@@ -710,12 +726,14 @@
     <edmx:ConceptualModels>
       <Schema Namespace="phsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
           <EntitySet Name="Forms" EntityType="phsModel.Form" />
           <EntitySet Name="MasterAddresses" EntityType="phsModel.MasterAddress" />
           <EntitySet Name="Modalities" EntityType="phsModel.Modality" />
           <EntitySet Name="Participants" EntityType="phsModel.Participant" />
           <EntitySet Name="ParticipantJourneyModalities" EntityType="phsModel.ParticipantJourneyModality" />
           <EntitySet Name="PHSEvents" EntityType="phsModel.PHSEvent" />
+          <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
           <EntitySet Name="PreRegistrations" EntityType="phsModel.PreRegistration" />
           <EntitySet Name="ReferenceRanges" EntityType="phsModel.ReferenceRange" />
           <EntitySet Name="StandardReferences" EntityType="phsModel.StandardReference" />
@@ -800,9 +818,21 @@
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
           </AssociationSet>
-		  <EntitySet Name="PHSUsers" EntityType="phsModel.PHSUser" />
-          <EntitySet Name="AuditLogs" EntityType="phsModel.AuditLog" />
         </EntityContainer>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PHSUserID" Type="Int32" Nullable="false" />
+          <Property Name="AuditDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AuditState" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecordID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="OriginalValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Form">
           <Key>
             <PropertyRef Name="FormID" />
@@ -815,6 +845,10 @@
           <Property Name="InternalFormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_form" FromRole="Form" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="Templates" Relationship="phsModel.FK_Form_Template" FromRole="Form" ToRole="Template" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.ModalityForm" FromRole="Form" ToRole="Modality" />
@@ -908,6 +942,28 @@
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="PHSEvent" ToRole="Modality" />
           <NavigationProperty Name="Participants" Relationship="phsModel.ParticipantPHSEvent" FromRole="PHSEvent" ToRole="Participant" />
         </EntityType>
+        <EntityType Name="PHSUser">
+          <Key>
+            <PropertyRef Name="PHSUserID" />
+          </Key>
+          <Property Name="PHSUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EffectiveStartDate" Type="DateTime" Precision="7" />
+          <Property Name="EffectiveEndDate" Type="DateTime" Precision="7" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
+          <Property Name="MCRNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="PreRegistration">
           <Key>
             <PropertyRef Name="PreRegistrationID" />
@@ -927,7 +983,6 @@
           <Property Name="PreferedTime" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-		  <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="OPTION1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION3" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -938,6 +993,7 @@
           <Property Name="OPTION8" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION9" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OPTION10" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="ReferenceRange">
           <Key>
@@ -947,11 +1003,11 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MinimumValue" Type="Double" />
           <Property Name="MaximumValue" Type="Double" />
+          <Property Name="StringValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Highlight" Type="Boolean" Nullable="false" />
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="ReferenceRange" ToRole="StandardReference" />
-		  <Property Name="Highlight" Type="Boolean" Nullable="false" />
-          <Property Name="StringValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StandardReference">
           <Key>
@@ -959,10 +1015,10 @@
           </Key>
           <Property Name="StandardReferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DataType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReferenceRanges" Relationship="phsModel.FK_reference_range_standard_reference" FromRole="StandardReference" ToRole="ReferenceRange" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_standard_reference" FromRole="StandardReference" ToRole="Summary" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.FK_template_field_standard_reference" FromRole="StandardReference" ToRole="TemplateField" />
-          <Property Name="DataType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Summary">
           <Key>
@@ -1013,6 +1069,10 @@
           <Property Name="EventID" Type="Int32" />
           <Property Name="IsQuestion" Type="Boolean" Nullable="false" />
           <Property Name="Version" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Form" Relationship="phsModel.FK_Form_Template" FromRole="Template" ToRole="Form" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_template" FromRole="Template" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="TemplateFields" Relationship="phsModel.TemplateTemplateField" FromRole="Template" ToRole="TemplateField" />
@@ -1034,6 +1094,7 @@
           <Property Name="SelectedOption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddOthersOption" Type="Boolean" />
           <Property Name="OthersOption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OthersPlaceHolder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Columns" Type="Int32" />
           <Property Name="Rows" Type="Int32" />
           <Property Name="Options" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
@@ -1058,13 +1119,16 @@
           <Property Name="ConditionCriteria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ConditionOptions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StandardReferenceID" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="StandardReference" Relationship="phsModel.FK_template_field_standard_reference" FromRole="TemplateField" ToRole="StandardReference" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_template_field" FromRole="TemplateField" ToRole="Summary" />
           <NavigationProperty Name="TemplateField1" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField" ToRole="TemplateField1" />
           <NavigationProperty Name="TemplateField2" Relationship="phsModel.FK_template_field_template_field" FromRole="TemplateField1" ToRole="TemplateField" />
           <NavigationProperty Name="TemplateFieldValues" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateField" ToRole="TemplateFieldValue" />
           <NavigationProperty Name="Templates" Relationship="phsModel.TemplateTemplateField" FromRole="TemplateField" ToRole="Template" />
-		  <Property Name="OthersPlaceHolder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TemplateFieldValue">
           <Key>
@@ -1075,6 +1139,10 @@
           <Property Name="EntryId" Type="Guid" Nullable="false" />
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="7" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="TemplateField" Relationship="phsModel.FK_template_field_values_template_fields" FromRole="TemplateFieldValue" ToRole="TemplateField" />
         </EntityType>
         <Association Name="FK_participant_journey_modality_form">
@@ -1275,51 +1343,34 @@
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
         </Association>
-		<EntityType Name="PHSUser">
-          <Key>
-            <PropertyRef Name="PHSUserID" />
-          </Key>
-          <Property Name="PHSUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="EffectiveStartDate" Type="DateTime" Precision="7" />
-          <Property Name="EffectiveEndDate" Type="DateTime" Precision="7" />
-          <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedDateTime" Type="DateTime" Precision="7" />
-          <Property Name="UsingTempPW" Type="Boolean" Nullable="false" />
-          <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
-          <Property Name="MCRNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="AuditLog">
-          <Key>
-            <PropertyRef Name="AuditLogID" />
-          </Key>
-          <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PHSUserID" Type="Int32" Nullable="false" />
-          <Property Name="AuditDateTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="AuditState" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="RecordID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="OriginalValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NewValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="phsModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="phsModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OriginalValue" ColumnName="OriginalValue" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
+                <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
+                <ScalarProperty Name="PHSUserID" ColumnName="PHSUserID" />
+                <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Forms">
             <EntityTypeMapping TypeName="phsModel.Form">
               <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="InternalFormType" ColumnName="InternalFormType" />
@@ -1406,9 +1457,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PHSUsers">
+            <EntityTypeMapping TypeName="phsModel.PHSUser">
+              <MappingFragment StoreEntitySet="PHSUser">
+                <ScalarProperty Name="MCRNo" ColumnName="MCRNo" />
+                <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />
+                <ScalarProperty Name="UsingTempPW" ColumnName="UsingTempPW" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
+                <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PHSUserID" ColumnName="PHSUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PreRegistrations">
             <EntityTypeMapping TypeName="phsModel.PreRegistration">
               <MappingFragment StoreEntitySet="PreRegistration">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="OPTION10" ColumnName="OPTION10" />
                 <ScalarProperty Name="OPTION9" ColumnName="OPTION9" />
                 <ScalarProperty Name="OPTION8" ColumnName="OPTION8" />
@@ -1419,7 +1494,6 @@
                 <ScalarProperty Name="OPTION3" ColumnName="OPTION3" />
                 <ScalarProperty Name="OPTION2" ColumnName="OPTION2" />
                 <ScalarProperty Name="OPTION1" ColumnName="OPTION1" />
-				<ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PreferedTime" ColumnName="PreferedTime" />
@@ -1441,10 +1515,10 @@
           <EntitySetMapping Name="ReferenceRanges">
             <EntityTypeMapping TypeName="phsModel.ReferenceRange">
               <MappingFragment StoreEntitySet="ReferenceRange">
-			    <ScalarProperty Name="StringValue" ColumnName="StringValue" />
-                <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
+                <ScalarProperty Name="Highlight" ColumnName="Highlight" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="StringValue" ColumnName="StringValue" />
                 <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
                 <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1490,6 +1564,10 @@
           <EntitySetMapping Name="Templates">
             <EntityTypeMapping TypeName="phsModel.Template">
               <MappingFragment StoreEntitySet="Template">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="IsQuestion" ColumnName="IsQuestion" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
@@ -1507,7 +1585,10 @@
           <EntitySetMapping Name="TemplateFields">
             <EntityTypeMapping TypeName="phsModel.TemplateField">
               <MappingFragment StoreEntitySet="TemplateField">
-			  <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="StandardReferenceID" ColumnName="StandardReferenceID" />
                 <ScalarProperty Name="ConditionOptions" ColumnName="ConditionOptions" />
                 <ScalarProperty Name="ConditionCriteria" ColumnName="ConditionCriteria" />
@@ -1532,6 +1613,7 @@
                 <ScalarProperty Name="Options" ColumnName="Options" />
                 <ScalarProperty Name="Rows" ColumnName="Rows" />
                 <ScalarProperty Name="Columns" ColumnName="Columns" />
+                <ScalarProperty Name="OthersPlaceHolder" ColumnName="OthersPlaceHolder" />
                 <ScalarProperty Name="OthersOption" ColumnName="OthersOption" />
                 <ScalarProperty Name="AddOthersOption" ColumnName="AddOthersOption" />
                 <ScalarProperty Name="SelectedOption" ColumnName="SelectedOption" />
@@ -1551,6 +1633,10 @@
           <EntitySetMapping Name="TemplateFieldValues">
             <EntityTypeMapping TypeName="phsModel.TemplateFieldValue">
               <MappingFragment StoreEntitySet="TemplateFieldValue">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="EntryId" ColumnName="EntryId" />
@@ -1591,44 +1677,6 @@
               <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
             </EndProperty>
           </AssociationSetMapping>
-		  <EntitySetMapping Name="PHSUsers">
-            <EntityTypeMapping TypeName="phsModel.PHSUser">
-              <MappingFragment StoreEntitySet="PHSUser">
-                <ScalarProperty Name="MCRNo" ColumnName="MCRNo" />
-                <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />
-                <ScalarProperty Name="UsingTempPW" ColumnName="UsingTempPW" />
-                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
-                <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="PHSUserID" ColumnName="PHSUserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AuditLogs">
-            <EntityTypeMapping TypeName="phsModel.AuditLog">
-              <MappingFragment StoreEntitySet="AuditLog">
-                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
-                <ScalarProperty Name="OriginalValue" ColumnName="OriginalValue" />
-                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
-                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
-                <ScalarProperty Name="TableName" ColumnName="TableName" />
-                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
-                <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
-                <ScalarProperty Name="PHSUserID" ColumnName="PHSUserID" />
-                <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

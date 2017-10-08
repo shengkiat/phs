@@ -25,7 +25,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 var users = userManager.GetAllUsers(out message);
                 GetErrorAneMessage();
@@ -61,7 +61,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 PHSUser user = userManager.GetUserByID(userID, out message);
                 if (user == null)
@@ -102,7 +102,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 string tempPassword = PasswordManager.Generate();
                 user.Password = tempPassword;
@@ -131,7 +131,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 var user = userManager.GetUserByID(userID, out message);
                 if (user == null)
@@ -157,7 +157,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (userManager.UpdateUser(GetLoginUser(), user, out message))
                 {
@@ -180,7 +180,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 if (userManager.DeleteUser(userID, out message))
                 {
@@ -208,7 +208,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
 
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
 
                 foreach (var username in selectedusers)
@@ -242,7 +242,7 @@ namespace PHS.Web.Areas.Admin.Controllers
                 return View();
             }
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
 
                 foreach (var username in selectedusers)
@@ -277,7 +277,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             string tempPW = PasswordManager.Generate();
 
-            using (var userManager = new UserManager())
+            using (var userManager = new UserManager(GetLoginUser()))
             {
                 bool isResetPassword = userManager.ResetPassword(GetLoginUser(), selectedusers, tempPW, out message);
                 if (!isResetPassword)

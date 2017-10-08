@@ -15,9 +15,13 @@ namespace PHS.Business.Implementation
 {
     public class ReferenceRangeManager : BaseManager, IReferenceRangeManager, IManagerFactoryBase<IReferenceRangeManager>
     {
-        public IReferenceRangeManager Create()
+        public ReferenceRangeManager(PHSUser loginUser) : base(loginUser)
         {
-            return new ReferenceRangeManager();
+        }
+
+        public IReferenceRangeManager Create(PHSUser loginUser)
+        {
+            return new ReferenceRangeManager(loginUser);
         }
 
        

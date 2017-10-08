@@ -30,6 +30,10 @@ namespace PHS.DB
         public string InternalFormType { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public bool IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantJourneyModality> ParticipantJourneyModalities { get; set; }

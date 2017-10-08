@@ -55,7 +55,7 @@ namespace PHS.Web.Controllers
 
                 try
                 {
-                    using (var modalityManager = new ModalityManager())
+                    using (var modalityManager = new ModalityManager(GetLoginUser()))
                     {
                         modalityManager.NewModality(viewModel, out message);
                     }
@@ -82,7 +82,7 @@ namespace PHS.Web.Controllers
         public ActionResult Edit(int modalityid, int eventid)
         {
             string message = string.Empty;
-            using (var mManager = new ModalityManager())
+            using (var mManager = new ModalityManager(GetLoginUser()))
             {
                 Modality modality = mManager.GetModalityByID(modalityid, out message);
                 if (modality == null)
@@ -112,7 +112,7 @@ namespace PHS.Web.Controllers
 
                 try
                 {
-                    using (var modalityManager = new ModalityManager())
+                    using (var modalityManager = new ModalityManager(GetLoginUser()))
                     {
                         modalityManager.UpdateModality(viewModel, out errormsg);
                     }

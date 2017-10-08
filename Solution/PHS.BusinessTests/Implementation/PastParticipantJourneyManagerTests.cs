@@ -158,7 +158,7 @@ namespace PHS.Business.Implementation.Tests
         {
             private IUnitOfWork _unitOfWork;
 
-            public MockPastParticipantJourneyManager(IUnitOfWork _unitOfWork)
+            public MockPastParticipantJourneyManager(IUnitOfWork _unitOfWork) : base(null)
             {
                 this._unitOfWork = _unitOfWork;
             }

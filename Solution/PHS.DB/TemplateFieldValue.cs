@@ -19,6 +19,10 @@ namespace PHS.DB
         public System.Guid EntryId { get; set; }
         public string Value { get; set; }
         public System.DateTime DateAdded { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     
         public virtual TemplateField TemplateField { get; set; }
     }

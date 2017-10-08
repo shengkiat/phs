@@ -17,9 +17,13 @@ namespace PHS.Business.Implementation
 {
     public class ModalityManager : BaseManager, IModalityManager, IManagerFactoryBase<IModalityManager>
     {
-        public IModalityManager Create()
+        public ModalityManager(PHSUser loginUser) : base(loginUser)
         {
-            return new ModalityManager();
+        }
+
+        public IModalityManager Create(PHSUser loginUser)
+        {
+            return new ModalityManager(loginUser);
         }
 
         public IEnumerable<Modality> GetAllModalities(int EventID)

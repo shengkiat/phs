@@ -348,7 +348,7 @@ namespace PHS.Web.Controllers
                 model.ModalityID = modalityid;
                 model.EventID = eventid;
 
-                using (var modalityManager = new ModalityManager())
+                using (var modalityManager = new ModalityManager(GetLoginUser()))
                 {
                     string message = string.Empty;
                     Modality modality = modalityManager.GetModalityByID(modalityid, out message);

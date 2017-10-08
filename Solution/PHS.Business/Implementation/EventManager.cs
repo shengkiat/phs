@@ -16,9 +16,17 @@ namespace PHS.Business.Implementation
 {
     public class EventManager : BaseManager, IEventManager, IManagerFactoryBase<IEventManager>
     {
-        public IEventManager Create()
+        public EventManager() : base(null)
         {
-            return new EventManager();
+        }
+
+        public EventManager(PHSUser loginUser) : base(loginUser)
+        {
+        }
+
+        public IEventManager Create(PHSUser loginUser)
+        {
+            return new EventManager(loginUser);
         }
 
         public IEnumerable<PHSEvent> GetAllEvents()
