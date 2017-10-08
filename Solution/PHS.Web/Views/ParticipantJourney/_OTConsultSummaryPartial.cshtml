@@ -10,6 +10,12 @@
     ViewBag.Title = "_OTConsultSummaryPartial";
 }
 
+<script>
+    function updateHeight() {
+        var obj = parent.document.getElementById("form-builder-frame-42");
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+</script>
 
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
 
@@ -20,7 +26,7 @@
 
 @using (Html.BeginForm())
 {
-    <div>
+    <div class="container">
         <br />
 
         <div class="panel panel-default">
@@ -30,7 +36,13 @@
                 {
                     var summaryCategory = Model.GetSummaryCategories("OTCON_SUM").ElementAt(indx);
                         <div class="panel-heading">
-                            <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b></a>
+                            @if(summaryCategory.Summaries != null
+                                && summaryCategory.Summaries.Count >0
+                            ){
+                                <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()"><b>@summaryCategory.SummaryCategoryName</b></a>
+                            }else{
+                                <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                            }
                         </div>
 
                         if(summaryCategory.Summaries != null
@@ -60,10 +72,6 @@
 							    </ul>
 						  
 						    </div>
-                        }else{
-                            <div class="panel-body collapse" id="target_@indx">
-                                N.A.
-                            </div>
                         }
 
                     <br />

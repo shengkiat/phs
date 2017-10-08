@@ -11,178 +11,79 @@
     ViewBag.Title = "Summary";
 }
 
-<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
-<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<script>
+    function updateHeight() {
+        var obj = parent.document.getElementById("form-builder-frame-38");
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+</script>
 
-<script src="@Url.Content("~/Scripts/jquery-1.7.1.min")" type="text/javascript"> </script>
-<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+<script src="@Url.Content("~/Scripts/jquery-3.1.1.min.js")" type="text/javascript"> </script>
+<script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"> </script>
 
 
 @using (Html.BeginForm())
 {
-    <div>
+    <div class="container">
         <br />
 
-        <div class="panel-group">
-        @foreach (var summaryCategory in Model.GetSummaryCategories("EVENT_SUM"))
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>@summaryCategory.SummaryCategoryName</b></div>
-                <div class="panel-body">
-                    <ul class="vertical-list">
-                        @foreach (var summary in summaryCategory.Summaries)
+        <div class="panel panel-default">
+            @if (Model != null)
+            {
+                for (int indx = 0; indx < Model.GetSummaryCategories("EVENT_SUM").Count; indx++)
+                {
+                    var summaryCategory = Model.GetSummaryCategories("EVENT_SUM").ElementAt(indx);
+                    <div class="panel-heading">
+                        @if (summaryCategory.Summaries != null
+                                && summaryCategory.Summaries.Count > 0
+                            )
                         {
-                            <li style="margin-bottom: 1em;">
-                                <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
-                                <span class="LabelForsub-label">@summary.SummaryValue</span>
-                                @if (summary.Result != null && summary.Result.Length > 0)
-                                {
-                                    if (summary.Highlight)
-                                    {
-                                        <span class="LabelForsub-label" style="color:red;">(@summary.Result)</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="LabelForsub-label">(@summary.Result)</span>
-                                    }
-                                }
-                            </li>
+                            <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()"><b>@summaryCategory.SummaryCategoryName</b></a>
                         }
-                    </ul>
-                </div>
-            </div>
-        }
+                        else
+                        {
+                            <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                        }
+                    </div>
 
-<!-- 
-            <div class="panel panel-default">
-                <div class="panel-heading">Cardiovascular Health</div>
-                <div class="panel-body">
-                    <ul class="vertical-list">
-                        <li style="margin-bottom: 1em;">
-                            Average Reading (average of all available readings) <br />
-                            <span class="LabelForsub-label">140/90 mmHg</span>
-                        </li>
+                    if (summaryCategory.Summaries != null
+                        && summaryCategory.Summaries.Count > 0
+                    )
+                    {
+                        <div class="panel-body collapse" id="target_@indx">
 
-                        <li style="margin-bottom: 1em;">
-                            Is the participant currently smoking? <br />
-                            <span class="LabelForsub-label">Yes</span>
-                        </li>
+                            <ul class="vertical-list">
+                                @foreach (var summary in summaryCategory.Summaries)
+                                {
+                                    <li style="margin-bottom: 1em;">
+                                        <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
+                                        <span class="LabelForsub-label">@summary.SummaryValue</span>
+                                        @if (summary.Result != null && summary.Result.Length > 0)
+                                        {
+                                            if (summary.Highlight)
+                                            {
+                                                <span class="LabelForsub-label" style="color:red;">(@summary.Result)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="LabelForsub-label">(@summary.Result)</span>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            </ul>
 
-                        <li style="margin-bottom: 1em;">
-                            What are the participant's past medical conditions? (Please select all that applies) <br />
-                            <span class="LabelForsub-label">Hypertension 高血压</span>
-                        </li>
+                        </div>
+                    }
 
-                        <li style="margin-bottom: 1em;">
-                            Is there positive family history (AMONG FIRST DEGREE RELATIVES) for the following medical conditions? <br />
-                            <span class="LabelForsub-label">Diabetes Mellitus 糖尿病</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Obesity, Metabolic Syndrome & Diabetes</div>
-                <div class="panel-body">
-                    <ul class="vertical-list">
-                        <li style="margin-bottom: 1em;">
-                            BMI <br />
-                            <span class="LabelForsub-label">22</span>
-                        </li>
+                    <br />
+                }
 
-                        <li style="margin-bottom: 1em;">
-                            What are the participant's past medical conditions? (Please select all that applies) <br />
-                            <span class="LabelForsub-label">Hyperlipidemia 高血脂／高胆固醇</span>
-                        </li>
-
-                        <li style="margin-bottom: 1em;">
-                            Is there positive family history (AMONG FIRST DEGREE RELATIVES) for the following medical conditions? <br />
-                            <span class="LabelForsub-label">Diabetes Mellitus 糖尿病</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Panel Header</div>
-                <div class="panel-body">Panel Content</div>
-            </div>
-    -->
+            }
         </div>
 
-  <!--      <ul class="vertical-list">
-            
-            <li>
-                <input value="60" type="text"  class="title" readonly /><br />
-                <span class="sub-label">Weight (kg)</span>
-            </li>
-
-            <li>
-                <input value="180"  class="title" readonly /><br />
-                <span class="sub-label">Height (cm)</span>
-            </li>
-
-            <li>
-                <br />
-                <label>BMI: 18.5</label>
-            </li>
-
-            <li>
-                <br />
-                <label style="color: green">Low Risk</label>
-            </li>
-
-            <li>
-                <hr />
-                <label>1st Systolic Reading</label>
-
-                <input type="text" value="" 
-                        readonly
-                        style="width: 95%;" />
-            </li>
-
-            <li>
-                <br />
-                <label>2nd Systolic Reading</label>
-
-                <input type="text" value=""
-                       readonly
-                       style="width: 95%;" />
-            </li>
-
-            <li>
-                <br />
-                <label>3rd Systolic Reading</label>
-
-                <input type="text" value=""
-                       readonly
-                       style="width: 95%;" />
-            </li>
-
-            <li>
-                <br />
-                <label>Average Systolic Reading (of all readings)</label>
-
-                <input type="text" value=""
-                       readonly
-                       style="width: 95%;" />
-            </li>
-
-            <li>
-                <hr />
-                <label>Doctor’s Consult Status:</label>
-
-                <label>Completed</label>
-            </li>
-
-            <li>
-                <hr />
-                <label>Exhibition Ambassadors</label>
-                <br />
-                <label>Recommended for:</label>
-            </li>
-
-            
-
-        </ul> -->
     </div>
 }
 
