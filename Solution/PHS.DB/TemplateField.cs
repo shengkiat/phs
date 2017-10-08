@@ -36,6 +36,7 @@ namespace PHS.DB
         public string SelectedOption { get; set; }
         public Nullable<bool> AddOthersOption { get; set; }
         public string OthersOption { get; set; }
+        public string OthersPlaceHolder { get; set; }
         public Nullable<int> Columns { get; set; }
         public Nullable<int> Rows { get; set; }
         public string Options { get; set; }
@@ -60,7 +61,10 @@ namespace PHS.DB
         public string ConditionCriteria { get; set; }
         public string ConditionOptions { get; set; }
         public Nullable<int> StandardReferenceID { get; set; }
-        public string OthersPlaceHolder { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     
         public virtual StandardReference StandardReference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

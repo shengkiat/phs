@@ -234,6 +234,10 @@ CREATE TABLE [dbo].[Template](
 	[EventID] [int] NULL,
 	[IsQuestion] [bit] NOT NULL DEFAULT 0,
 	[Version] [int] NOT NULL,
+	[CreatedBy] [nvarchar](max) NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [nvarchar](max) NULL,
+	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template] PRIMARY KEY CLUSTERED 
 (
 	[TemplateID] ASC
@@ -247,6 +251,10 @@ CREATE TABLE [dbo].[TemplateFieldValue](
 	[EntryId] [uniqueidentifier] NOT NULL,
 	[Value] [nvarchar](max) NULL,
 	[DateAdded] [datetime] NOT NULL,
+	[CreatedBy] [nvarchar](max) NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [nvarchar](max) NULL,
+	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template_field_values] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldValueID] ASC
@@ -293,6 +301,10 @@ CREATE TABLE [dbo].[TemplateField](
 	[ConditionCriteria] [varchar](50) NULL,
 	[ConditionOptions] [nvarchar](50) NULL,
 	[StandardReferenceID] [int] NULL,
+	[CreatedBy] [nvarchar](max) NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [nvarchar](max) NULL,
+	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
 (
 	[TemplateFieldID] ASC
@@ -319,6 +331,10 @@ CREATE TABLE [dbo].[Form](
 	[InternalFormType] [nvarchar](50) NULL,
 	[DateAdded] [datetime] NULL,
 	[IsActive] [bit] NOT NULL,
+	[CreatedBy] [nvarchar](max) NULL,
+	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[UpdatedBy] [nvarchar](max) NULL,
+	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 
 (
 	[FormID] ASC

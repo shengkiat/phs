@@ -32,6 +32,10 @@ namespace PHS.DB
         public Nullable<int> EventID { get; set; }
         public bool IsQuestion { get; set; }
         public int Version { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     
         public virtual Form Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
