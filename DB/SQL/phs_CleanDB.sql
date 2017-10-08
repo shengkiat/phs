@@ -235,7 +235,7 @@ CREATE TABLE [dbo].[Template](
 	[IsQuestion] [bit] NOT NULL DEFAULT 0,
 	[Version] [int] NOT NULL,
 	[CreatedBy] [nvarchar](max) NULL,
-	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NULL,
 	[UpdatedBy] [nvarchar](max) NULL,
 	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template] PRIMARY KEY CLUSTERED 
@@ -252,7 +252,7 @@ CREATE TABLE [dbo].[TemplateFieldValue](
 	[Value] [nvarchar](max) NULL,
 	[DateAdded] [datetime] NOT NULL,
 	[CreatedBy] [nvarchar](max) NULL,
-	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NULL,
 	[UpdatedBy] [nvarchar](max) NULL,
 	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template_field_values] PRIMARY KEY CLUSTERED 
@@ -302,7 +302,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[ConditionOptions] [nvarchar](50) NULL,
 	[StandardReferenceID] [int] NULL,
 	[CreatedBy] [nvarchar](max) NULL,
-	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NULL,
 	[UpdatedBy] [nvarchar](max) NULL,
 	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_template_fields] PRIMARY KEY CLUSTERED 
@@ -332,7 +332,7 @@ CREATE TABLE [dbo].[Form](
 	[DateAdded] [datetime] NULL,
 	[IsActive] [bit] NOT NULL,
 	[CreatedBy] [nvarchar](max) NULL,
-	[CreatedDateTime] [datetime2](7) NOT NULL,
+	[CreatedDateTime] [datetime2](7) NULL,
 	[UpdatedBy] [nvarchar](max) NULL,
 	[UpdatedDateTime] [datetime2](7) NULL
  CONSTRAINT [PK_form] PRIMARY KEY CLUSTERED 

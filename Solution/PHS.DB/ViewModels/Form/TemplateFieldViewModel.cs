@@ -60,6 +60,10 @@ namespace PHS.DB.ViewModels.Form
         public string ConditionOptions { get; set; }
 
         public int? StandardReferenceID { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
+        public string UpdatedBy { get; set; }
 
         #endregion
 
@@ -80,7 +84,7 @@ namespace PHS.DB.ViewModels.Form
             if (field != null)
             {
                 
-                return new TemplateFieldViewModel
+                var templateFieldView = new TemplateFieldViewModel
                 {
                     DomId = field.DomId.Value,
                     TemplateFieldID = field.TemplateFieldID,
@@ -120,8 +124,23 @@ namespace PHS.DB.ViewModels.Form
                     ConditionCriteria = field.ConditionCriteria,
                     ConditionOptions = field.ConditionOptions,
                     ConditionTemplateFieldID = field.ConditionTemplateFieldID,
-                    StandardReferenceID = field.StandardReferenceID
+                    StandardReferenceID = field.StandardReferenceID,
+
+                    CreatedBy = field.CreatedBy,
+                    UpdatedBy = field.UpdatedBy
                 };
+
+                if (field.CreatedDateTime.HasValue)
+                {
+                    templateFieldView.CreatedDateTime = field.CreatedDateTime.Value;
+                }
+
+                if (field.UpdatedDateTime.HasValue)
+                {
+                    templateFieldView.UpdatedDateTime = field.UpdatedDateTime.Value;
+                }
+
+                return templateFieldView;
             }
 
             return TemplateFieldViewModel.Initialize();

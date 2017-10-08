@@ -38,6 +38,11 @@ namespace PHS.Business.Implementation
             return new UnitOfWork(new PHSContext());
         }
 
+        protected string GetLoginUserName()
+        {
+            return user != null ? user.Username : "";
+        }
+
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {
