@@ -10,6 +10,13 @@
     ViewBag.Title = "_DoctorSummaryPartial";
 }
 
+<script>
+    function updateHeight() {
+        var obj = parent.document.getElementById("form-builder-frame-39");
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+</script>
+
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
 
 <script src="@Url.Content("~/Scripts/jquery-3.1.1.min.js")" type="text/javascript"> </script>
@@ -28,7 +35,16 @@
                 {
                     var summaryCategory = Model.GetSummaryCategories("DOCT_SUM").ElementAt(indx);
                     <div class="panel-heading">
-                        <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b></a>
+                        @if (summaryCategory.Summaries != null
+                                && summaryCategory.Summaries.Count > 0
+                            )
+                        {
+                            <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()"><b>@summaryCategory.SummaryCategoryName</b></a>
+                        }
+                        else
+                        {
+                            <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                        }
                     </div>
 
                     if (summaryCategory.Summaries != null
@@ -58,12 +74,6 @@
                                 }
                             </ul>
 
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="panel-body collapse" id="target_@indx">
-                            N.A.
                         </div>
                     }
 

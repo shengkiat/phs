@@ -61,7 +61,7 @@ select @ModQuest = IDENT_CURRENT('phs.dbo.Modality')
 
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
-VALUES (N'Exhibition', 9, N'../../../Content/images/PHS2017/10_Exhibit.png', 1, 1, 0, 0, N'Pending', NULL, 0)
+VALUES (N'Exhibition', 9, N'../../../Content/images/PHS2017/10_Exhibit.png', 1, 1, 1, 0, N'Pending', NULL, 0)
 declare @ModExhibit as int
 select @ModExhibit = IDENT_CURRENT('phs.dbo.Modality')
 
@@ -119,7 +119,8 @@ update DataCollection set [Type ] = 'HEADER' where [Type ] = 'Big Label'
 update DataCollection set [Type ] = 'HEADERSUB' where [Type ] = 'Small Label'
 update DataCollection set [Type ] = 'IMAGE' where [Type ] = 'Image'
 update DataCollection set [Type ] = 'TEXTAREA' where [Type ] = 'Text Area'
-
+update DataCollection set [Type ] = 'TEXTBOXNUMBER' where [Type ] = 'Number'
+update DataCollection set [Type ] = 'ADDRESS' where [Type ] = 'Address'
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADER'
 update DataCollection set Mandatory = 0 where [Type ] = 'HEADERSUB'
 
@@ -326,9 +327,13 @@ insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select
 --update TemplateField set ConditionCriteria = null
 --update TemplateField set ConditionOptions = null 
 
-update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 233) where TemplateFieldID = 185
-update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 239) where TemplateFieldID = 194
-update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 509
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 233) where TemplateFieldID = 234
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 239) where TemplateFieldID = 243
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 558
 
-
+delete from PHSUser where PHSUserID in (239,278,320)
 select * from TemplateField where FieldType = 'IMAGE' and ImageBase64 = ''
+
+
+
+
