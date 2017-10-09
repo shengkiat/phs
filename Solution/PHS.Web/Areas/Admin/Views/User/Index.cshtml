@@ -17,11 +17,11 @@
     }
 </style>
 <h2>User Management</h2>
-@if (TempData["Message"] != null)
+@if (TempData["ResetPasswordMessage"] != null)
 {
     <div class="alert alert-success alert-dismissable fade in" id="successMessage">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        @TempData["Message"]
+        @TempData["ResetPasswordMessage"]
     </div>
 }
 <div>
@@ -219,9 +219,24 @@
     $('#Resetpassword').click(function () {
         var answer = confirm("Are you sure you want to reset password?")
         if (answer) {
-            var viewUrl = '@Url.Action("ResetPassword", "User")';
-            $.post(viewUrl, { selectedusers: getCheckedUsers() });
-            location.reload();
+            @*var viewUrl = '@Url.Action("ResetPassword", "User")';
+            $.post(viewUrl,
+                {
+                    selectedusers: getCheckedUsers()
+                });
+            location.reload();*@
+            selectedusers = getCheckedUsers();
+            $.ajax({
+                url: "@Url.Action("ResetPassword", "User")",
+                type: "POST",
+                data: {selectedusers:selectedusers},
+                error: function (response) {
+                    location.reload();
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
         }
         return true;
     });

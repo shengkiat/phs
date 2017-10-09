@@ -7,6 +7,7 @@ using PHS.Web.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -270,8 +271,9 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             if (selectedusers == null || selectedusers.Length == 0)
             {
-                SetTempDataMessage("No Selection made!");
-                return View();
+                TempData["ResetPasswordMessage"] = "No Selection made!";
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Error = "No Selection made!" });
             }
 
             string message = string.Empty;
@@ -283,11 +285,14 @@ namespace PHS.Web.Areas.Admin.Controllers
                 if (!isResetPassword)
                 {
                     SetViewBagError(message);
+                    TempData["ResetPasswordMessage"] = message;
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
                 }
             }
 
-            SetTempDataMessage("Password has been reset to " + tempPW);
-            return View();
+            TempData["ResetPasswordMessage"] = "Password has been reset to " + tempPW;
+            return Json(new { Success = "Success" });
         }
     }
 }
