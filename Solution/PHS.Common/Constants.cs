@@ -738,6 +738,17 @@ namespace PHS.Common
         public const string Summary_Field_Name_Geri_Field147 = "GeriField147";
         public const string Summary_Field_Name_Geri_Field148 = "GeriField148";
         public const string Summary_Field_Name_Geri_Field149 = "GeriField149";
+        public const string Summary_Field_Name_Geri_Field150 = "GeriField150";
+        public const string Summary_Field_Name_Geri_Field151 = "GeriField151";
+        public const string Summary_Field_Name_Geri_Field152 = "GeriField152";
+        public const string Summary_Field_Name_Geri_Field153 = "GeriField153";
+        public const string Summary_Field_Name_Geri_Field154 = "GeriField154";
+        public const string Summary_Field_Name_Geri_Field155 = "GeriField155";
+        public const string Summary_Field_Name_Geri_Field156 = "GeriField156";
+        public const string Summary_Field_Name_Geri_Field157 = "GeriField157";
+        public const string Summary_Field_Name_Geri_Field158 = "GeriField158";
+        public const string Summary_Field_Name_Geri_Field159 = "GeriField159";
+        public const string Summary_Field_Name_Geri_Field160 = "GeriField160";
 
         //Social Support
         public const string Summary_Field_Name_SocialSupport_Field0 = "SocialSupportField0";
