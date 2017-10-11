@@ -4,9 +4,11 @@ using OfficeOpenXml.Table;
 using PHS.Business.Extensions;
 using PHS.Business.Implementation;
 using PHS.Business.ViewModel.FormExport;
+using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
 using PHS.Web.Controllers;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,6 +23,7 @@ using System.Web.UI;
 
 namespace PHS.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class FormImportController : BaseController
     {
 

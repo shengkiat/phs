@@ -4,6 +4,7 @@ using PHS.Business.ViewModel;
 using PHS.Common;
 using PHS.DB;
 using PHS.Web.Controllers;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class UserController : BaseController
     {
         // GET: Admin/User

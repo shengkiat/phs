@@ -10,9 +10,11 @@ using PHS.Business.Implementation;
 using PHS.Common;
 using System.IO;
 using PHS.DB.ViewModels;
+using PHS.Web.Filter;
 
 namespace PHS.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class ModalityController : BaseController
     {
         // GET: Modality

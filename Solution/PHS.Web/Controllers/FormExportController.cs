@@ -9,6 +9,7 @@ using PHS.DB.ViewModels.Form;
 using PHS.FormBuilder.ViewModel;
 using PHS.Repository.Context;
 using PHS.Repository.Repository;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ using System.Web.UI.WebControls;
 
 namespace PHS.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class FormExportController : BaseController
     {
 

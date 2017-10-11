@@ -11,9 +11,11 @@ using PHS.Repository.Context;
 using PHS.Web.Controllers;
 using PHS.Business.Implementation;
 using PHS.Common;
+using PHS.Web.Filter;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class StandardReferenceController : BaseController
     {
         private PHSContext db = new PHSContext();

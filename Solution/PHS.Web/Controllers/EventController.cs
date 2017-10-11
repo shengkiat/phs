@@ -2,6 +2,7 @@
 using PHS.Common;
 using PHS.DB;
 using PHS.DB.ViewModels.Form;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class EventController : BaseController
     {
 
