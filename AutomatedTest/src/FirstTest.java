@@ -23,12 +23,14 @@ public class FirstTest {
 	WebDriver driver; 
 	long sleepTime = 2000;
 	long sleepShort = 1000; 
+	String formBuilderLocation = "form-builder-frame-8";
+	String phsURLPath = "https://medworks.nus.edu.sg/phs";
 	
 	@Before
 	public void prepareTest() {
 		System.setProperty("webdriver.gecko.driver", "D:\\Apps\\GeckoDriver\\geckodriver.exe");
 		driver = new FirefoxDriver();
-		driver.navigate().to("http://localhost:49972/phs/");
+		driver.navigate().to(phsURLPath);
 		String strPageTitle = driver.getTitle();
 		System.out.println(strPageTitle);
 	}
@@ -37,17 +39,23 @@ public class FirstTest {
 
 	@Test
 	public void test() throws InterruptedException {
+
 		
-		testLogin(); 
-
+		while (true) {
+			testLogin();
 			CharSequence nric = generateNRIC();
-			testCreateUser(nric); 
+			testCreateUser(nric);
+			testMegaSortingStation();
+			driver.navigate().to(phsURLPath);
+			// testLogout();
+		}
+		// testGoToHistoryTaking(nric);
+		// testRegistrationForm(nric);	
+			//testConsentForm(nric); 
 			
-			testRegistrationForm(nric);
 			
-			//testMegaSortingStation(); 
-
-
+			 
+			
 	}
 	
 	
@@ -101,42 +109,117 @@ public class FirstTest {
 		return nricString; 
 	}
 	
+	public void testGoToHistoryTaking(CharSequence nric) throws InterruptedException {
+		WebElement liveEventLink = driver.findElement(By.ById.id("19"));
+		liveEventLink.click();
+		Thread.sleep(sleepTime);
+		
+		
+		
+		WebElement othersTab = driver.findElement(By.ByLinkText.linkText("8 - Others"));
+		othersTab.click();
+		Thread.sleep(sleepTime);
+		Thread.sleep(sleepTime);
+		
+		driver.switchTo().frame(driver.findElement(By.ById.id("form-builder-frame-8")));
+		Thread.sleep(sleepShort);
+		
+		
+		WebElement nameField = driver.findElement(By.ByName.name("SubmitFields[1].TextArea")); 
+		nameField.sendKeys("Others field text, Name NRIC " + nric);
+		Thread.sleep(sleepShort);
+		
+		WebElement submitButton = driver.findElement(By.className("save-button blue"));
+		submitButton.click();
+
+	}
+	
+
+	public void testConsentForm(CharSequence nric) throws InterruptedException {
+		WebElement liveEventLink = driver.findElement(By.ByLinkText.linkText("1 - PHS 2017 Screening Consent Form"));
+		liveEventLink.click();
+		Thread.sleep(sleepTime);
+		
+		driver.switchTo().frame(driver.findElement(By.ById.id(formBuilderLocation)));
+		Thread.sleep(sleepShort);
+		
+		
+
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("scroll(0, 10000)");
+		
+		Thread.sleep(sleepTime);
+		
+
+		List<WebElement> listOfRadio10 = driver.findElements(By.ByName.name("SubmitFields[10].RadioButton"));	
+		System.out.println(listOfRadio10.size());
+		for (int i = 0; i < listOfRadio10.size(); i++) {	
+			System.out.println(listOfRadio10.get(i).getAttribute("value"));
+			if(listOfRadio10.get(i).getAttribute("value").contains("I Consent")) {
+				listOfRadio10.get(i).click();
+			}
+		}
+		
+		List<WebElement> listOfRadio11 = driver.findElements(By.ByName.name("SubmitFields[11].RadioButton"));	
+		System.out.println(listOfRadio11.size());
+		for (int i = 0; i < listOfRadio11.size(); i++) {	
+			System.out.println(listOfRadio11.get(i).getAttribute("value"));
+			if(listOfRadio11.get(i).getAttribute("value").contains("Yes")) {
+				listOfRadio11.get(i).click();
+			}
+		}
+		
+		List<WebElement> listOfRadio12 = driver.findElements(By.ByName.name("SubmitFields[12].RadioButton"));	
+		System.out.println(listOfRadio12.size());
+		for (int i = 0; i < listOfRadio12.size(); i++) {	
+			System.out.println(listOfRadio12.get(i).getAttribute("value"));
+			if(listOfRadio12.get(i).getAttribute("value").contains("Yes")) {
+				listOfRadio12.get(i).click();
+			}
+		}
+
+
+	}
+	
 	public void testRegistrationForm(CharSequence nric) throws InterruptedException {
 		WebElement liveEventLink = driver.findElement(By.ByLinkText.linkText("0 - Registration Form"));
 		liveEventLink.click();
 		Thread.sleep(sleepTime);
 		
-		JavascriptExecutor jse = (JavascriptExecutor)driver;
-		jse.executeScript("scroll(0, 250)");
-		
-		driver.switchTo().frame(driver.findElement(By.ById.id("form-builder-frame-38")));
+		//JavascriptExecutor jse = (JavascriptExecutor)driver;
+
+
+		driver.switchTo().frame(driver.findElement(By.ById.id(formBuilderLocation)));
 		Thread.sleep(sleepShort);
 		
 		WebElement nameField = driver.findElement(By.ByName.name("SubmitFields[2].TextBox")); 
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", nameField);
 		nameField.sendKeys("Name NRIC " + nric);
 		Thread.sleep(sleepShort);
-		jse.executeScript("scroll(0, 250)");
 
-		List<WebElement> listOfGender = driver.findElements(By.ByName.name("SubmitFields[3].RadioButton"));		
+
+		List<WebElement> listOfGender = driver.findElements(By.ByName.name("SubmitFields[3].RadioButton"));	
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listOfGender);
 		for(WebElement element: listOfGender) {
 			if(element.getAttribute("value").contains("Male 男性")) {
 				element.click();
 			}
 		}
 		Thread.sleep(sleepShort);	
-		jse.executeScript("scroll(0, 250)");
+
 	
-		List<WebElement> listOfSalutation = driver.findElements(By.ByName.name("SubmitFields[4].RadioButton"));		
+		List<WebElement> listOfSalutation = driver.findElements(By.ByName.name("SubmitFields[4].RadioButton"));	
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listOfSalutation);
 		for(WebElement element: listOfSalutation) {
 			if(element.getAttribute("value").contains("Ms")) {
 				element.click();
 			}
 		}
 		Thread.sleep(sleepShort);
-		jse.executeScript("scroll(0, 250)");
-		// List<WebElement> listofDOBDay = 
+
 		
 		List<WebElement> listOfCitizenship = driver.findElements(By.ByName.name("SubmitFields[7].RadioButton"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listOfCitizenship);
 		for(WebElement element: listOfCitizenship) {
 			System.out.println(element.getAttribute("value"));
 			if(element.getAttribute("value").contains("Singapore Citizen")) {
@@ -144,10 +227,10 @@ public class FirstTest {
 			}
 		}
 		Thread.sleep(sleepShort);
-		jse.executeScript("scroll(0, 250)");
-		
 	
-		List<WebElement> listOfRace = driver.findElements(By.ByName.name("SubmitFields[8].RadioButton"));		
+	
+		List<WebElement> listOfRace = driver.findElements(By.ByName.name("SubmitFields[8].RadioButton"));	
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listOfRace);
 		for(WebElement element: listOfRace) {
 			System.out.print(element.getAttribute("value"));
 			if(element.getAttribute("value").contains("Chinese")) {
@@ -155,6 +238,7 @@ public class FirstTest {
 			}
 		}
 		Thread.sleep(sleepShort);
+		
 		
 		
 		List<WebElement> listOfMarital = driver.findElements(By.ByName.name("SubmitFields[10].RadioButton"));		
@@ -180,6 +264,8 @@ public class FirstTest {
 		WebElement postalSearch = driver.findElement(By.ById.id("btnAddressSubmit"));
 		postalSearch.click();
 		Thread.sleep(sleepShort);
+
+
 		
 		WebElement unit = driver.findElement(By.ByName.name("SubmitFields[15].Unit")); 
 		unit.sendKeys(nric);
@@ -276,10 +362,24 @@ public class FirstTest {
 		liveEventLink.click();
 		Thread.sleep(sleepTime);
 		
-		WebElement checkBoxTest = driver.findElement(By.ByXPath.xpath("xpath=(//input[@id='IsActive'])[5]")); 
-		checkBoxTest.click();
-		Thread.sleep(sleepTime);
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		
+		driver.switchTo().frame(driver.findElement(By.ById.id("form-builder-frame-8")));
+		Thread.sleep(sleepShort);
 
+		List<WebElement> listOfEligibility = driver.findElements(By.ById.id("IsActive"));		
+		System.out.println("Size: " + listOfEligibility.size());
+		for (int i = 0; i < listOfEligibility.size(); i++) {	
+			System.out.println(listOfEligibility.get(i).getAttribute("value"));
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listOfEligibility.get(i));
+			
+			if(listOfEligibility.get(i).isEnabled() == true) {
+			listOfEligibility.get(i).click();
+			}
+		}
+		Thread.sleep(sleepShort);
+		
 		
 		
 	}
@@ -316,7 +416,7 @@ public class FirstTest {
 	}
 	
 	public void testLogout() throws InterruptedException {
-		WebElement profileButton = driver.findElement(By.ByXPath.xpath("//button[@text='Super Admina']"));
+		WebElement profileButton = driver.findElement(By.ByXPath.xpath("//button[@text='Super Admin']"));
 		profileButton.click();
 		profileButton.wait(sleepTime);
 		
