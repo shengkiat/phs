@@ -234,6 +234,12 @@ namespace PHS.Business.Implementation
                                             ModalityID = modality.ModalityID
                                         };
 
+                                        if (!Constants.IsFormForSubmit(form.FormID))
+                                        {
+                                            participantJourneyModality.TemplateID = unitOfWork.FormRepository.GetForm(form.FormID).Templates.FirstOrDefault().TemplateID;
+                                            participantJourneyModality.EntryId = new Guid("10000000-9999-9999-9999-000000000001");
+                                        }
+
                                         participant.ParticipantJourneyModalities.Add(participantJourneyModality);
                                     }
                                 }
@@ -419,7 +425,15 @@ namespace PHS.Business.Implementation
                             newPJM.Participant = participant;
                             newPJM.PHSEvent = phsEvent;
                             newPJM.Modality = unitOfWork.Modalities.Get(newModalities.ModalityID);
-                            newPJM.Form = form; 
+                            newPJM.Form = form;
+
+                            if (!Constants.IsFormForSubmit(form.FormID))
+                            {
+                                newPJM.TemplateID = unitOfWork.FormRepository.GetForm(form.FormID).Templates.FirstOrDefault().TemplateID;
+                                newPJM.EntryId = new Guid("10000000-9999-9999-9999-000000000001");
+                            }
+
+
                             unitOfWork.ParticipantJourneyModalities.Add(newPJM);
                         }                        
 
