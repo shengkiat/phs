@@ -93,24 +93,6 @@ namespace PHS.Business.Implementation.FillIn
                                 {
                                     var value = field.SubmittedValue(formCollection);
 
-                                    //if it's a file, save it to hard drive
-                                    if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                    {
-                                        //var file = Request.Files[field.SubmittedFieldName()];
-                                        //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                        //if (fileValueObject != null)
-                                        //{
-                                        //    if (UtilityHelper.UseCloudStorage())
-                                        //    {
-                                        //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                        //    }
-                                        //}
-                                    }
                                     HandleTemplateFieldValue(field, value, entryId);
                                 }
                             }
@@ -119,24 +101,6 @@ namespace PHS.Business.Implementation.FillIn
                             {
                                 var value = field.SubmittedValue(formCollection);
 
-                                //if it's a file, save it to hard drive
-                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                {
-                                    //var file = Request.Files[field.SubmittedFieldName()];
-                                    //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                    //if (fileValueObject != null)
-                                    //{
-                                    //    if (UtilityHelper.UseCloudStorage())
-                                    //    {
-                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                    //    }
-                                    //}
-                                }
                                 HandleTemplateFieldValue(field, value, entryId);
                             }
 
