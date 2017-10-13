@@ -60,7 +60,7 @@ namespace PHS.Business.Implementation
 
             using (var unitOfWork = CreateUnitOfWork())
             {
-                using (var fillIn = new PublicFormFillIn(unitOfWork))
+                using (var fillIn = new PublicFormFillIn(unitOfWork, GetLoginUserName()))
                 {
                     return fillIn.FillIn(SubmitFields, template, formCollection);
                 }

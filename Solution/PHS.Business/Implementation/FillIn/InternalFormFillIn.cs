@@ -21,7 +21,7 @@ namespace PHS.Business.Implementation.FillIn
         private int formId;
         private int modalityId;
 
-        public InternalFormFillIn(IUnitOfWork unitOfWork, ParticipantJourneySearchViewModel psm, int formId, int modalityId) : base(unitOfWork)
+        public InternalFormFillIn(IUnitOfWork unitOfWork, ParticipantJourneySearchViewModel psm, int formId, int modalityId, string userName) : base(unitOfWork, userName)
         {
             this.psm = psm;
             this.formId = formId;
@@ -35,6 +35,8 @@ namespace PHS.Business.Implementation.FillIn
             {
                 if (participantJourneyModality.EntryId == Guid.Empty)
                 {
+                    field.CreatedDateTime = DateTime.Now;
+                    field.CreatedBy = GetLoginUserName();
                     UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
                 }
 
@@ -44,11 +46,15 @@ namespace PHS.Business.Implementation.FillIn
                     TemplateFieldValue fieldValue = UnitOfWork.FormRepository.GetTemplateFieldValue(field, existingEntryId);
                     if (fieldValue != null)
                     {
+                        field.UpdatedDateTime = DateTime.Now;
+                        field.UpdatedBy = GetLoginUserName();
                         UnitOfWork.FormRepository.UpdateTemplateFieldValue(fieldValue, field, value);
                     }
                     
                     else
                     {
+                        field.CreatedDateTime = DateTime.Now;
+                        field.CreatedBy = GetLoginUserName();
                         UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, existingEntryId);
                     }
                 }

@@ -14,7 +14,11 @@
 <script>
     function updateHeight() {
         var obj = parent.document.getElementById("form-builder-frame-38");
-        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        if (obj) {
+            setTimeout(function () {
+                parent.resizeIframe(obj);
+            }, 200);
+        }
     }
 </script>
 

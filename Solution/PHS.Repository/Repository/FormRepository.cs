@@ -397,7 +397,9 @@ namespace PHS.Repository.Repository
                     TemplateFieldID = field.TemplateFieldID.Value,
                     Value = value,
                     EntryId = entryId,
-                    DateAdded = DateTime.UtcNow
+                    DateAdded = DateTime.UtcNow,
+                    CreatedBy = field.CreatedBy,
+                    CreatedDateTime = field.CreatedDateTime
                 };
 
                 dbContext.Set<TemplateFieldValue>().Add(fieldVal);
@@ -416,6 +418,8 @@ namespace PHS.Repository.Repository
             {
                 dbContext.Entry(fieldValue).State = EntityState.Modified;
                 fieldValue.Value = value;
+                fieldValue.UpdatedBy = field.UpdatedBy;
+                fieldValue.UpdatedDateTime = field.UpdatedDateTime;
             }
         }
 

@@ -22,9 +22,12 @@ namespace PHS.Business.Implementation.FillIn
         // Instantiate a SafeHandle instance.
         SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
-        public BaseFormFillIn(IUnitOfWork unitOfWork)
+        private string UserName;
+
+        public BaseFormFillIn(IUnitOfWork unitOfWork, string userName)
         {
             UnitOfWork = unitOfWork;
+            UserName = userName;
         }
 
         public string FillIn(IDictionary<string, string> SubmitFields, Template Template, FormCollection formCollection)
@@ -93,24 +96,6 @@ namespace PHS.Business.Implementation.FillIn
                                 {
                                     var value = field.SubmittedValue(formCollection);
 
-                                    //if it's a file, save it to hard drive
-                                    if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                    {
-                                        //var file = Request.Files[field.SubmittedFieldName()];
-                                        //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                        //if (fileValueObject != null)
-                                        //{
-                                        //    if (UtilityHelper.UseCloudStorage())
-                                        //    {
-                                        //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                        //    }
-                                        //}
-                                    }
                                     HandleTemplateFieldValue(field, value, entryId);
                                 }
                             }
@@ -119,24 +104,6 @@ namespace PHS.Business.Implementation.FillIn
                             {
                                 var value = field.SubmittedValue(formCollection);
 
-                                //if it's a file, save it to hard drive
-                                if (field.FieldType == Constants.TemplateFieldType.FILEPICKER && !string.IsNullOrEmpty(value))
-                                {
-                                    //var file = Request.Files[field.SubmittedFieldName()];
-                                    //var fileValueObject = value.GetFileValueFromJsonObject();
-
-                                    //if (fileValueObject != null)
-                                    //{
-                                    //    if (UtilityHelper.UseCloudStorage())
-                                    //    {
-                                    //        this.SaveImageToCloud(file, fileValueObject.SaveName);
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        file.SaveAs(Path.Combine(HostingEnvironment.MapPath(fileValueObject.SavePath), fileValueObject.SaveName));
-                                    //    }
-                                    //}
-                                }
                                 HandleTemplateFieldValue(field, value, entryId);
                             }
 
@@ -227,6 +194,8 @@ namespace PHS.Business.Implementation.FillIn
 
         protected virtual void HandleTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId)
         {
+            field.CreatedDateTime = DateTime.Now;
+            field.CreatedBy = GetLoginUserName();
             UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
         }
 
@@ -251,6 +220,10 @@ namespace PHS.Business.Implementation.FillIn
             disposed = true;
         }
 
+        protected string GetLoginUserName()
+        {
+            return UserName;
+        }
         public void Dispose()
         {
             Dispose(true);

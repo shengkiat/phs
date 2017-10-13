@@ -834,10 +834,8 @@ namespace PHS.Common
         public const string Summary_Category_Label_Name_Exhibition_SocialSupp = "Social Support";
 
         //Social Support 
-        public const string Summary_Category_Label_Name_SocialSupp_CHAS = "CHAS Card Status"; 
+        public const string Summary_Category_Label_Name_SocialSupp_CHAS = "CHAS Card Status";
 
-
-       
 
 
 
@@ -949,6 +947,11 @@ namespace PHS.Common
         public static string ThereIsNoValueFound(string value)
         {
             return "There is no " + value + " found.";
+        }
+
+        public static bool IsFormForSubmit(int formId)
+        {
+            return formId != 8 && formId != 37;
         }
     }
 }

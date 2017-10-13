@@ -393,6 +393,9 @@ namespace PHS.BusinessTests.Implementation
 
             Assert.AreEqual(1, templateViewModel.Entries.Count);
 
+            Assert.AreEqual("", templateViewModel.Entries[0].CreatedBy);
+            Assert.IsNotNull(templateViewModel.Entries[0].CreatedDateTime);
+
             Assert.AreEqual(0, _unitOfWork.PreRegistrations.GetAll().Count());
         }
 
