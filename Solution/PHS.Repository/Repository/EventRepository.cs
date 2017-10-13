@@ -21,7 +21,7 @@ namespace PHS.Repository.Repository
 
         public PHSEvent GetEventWithModalityForm(int id)
         {
-            return dbContext.Set<PHSEvent>().Where(u => u.PHSEventID == id && u.IsActive == true).Include(x => x.Participants).Include(x => x.Modalities.Select(y => y.Forms)).FirstOrDefault();
+            return dbContext.Set<PHSEvent>().Where(u => u.PHSEventID == id && u.IsActive == true).Include(x => x.Participants).Include(x => x.Modalities.Select(y => y.Forms.Select(z => z.Templates))).FirstOrDefault();
         }
 
         public IEnumerable<PHSEvent> GetAllActiveEvents()
