@@ -22,9 +22,12 @@ namespace PHS.Business.Implementation.FillIn
         // Instantiate a SafeHandle instance.
         SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
-        public BaseFormFillIn(IUnitOfWork unitOfWork)
+        private string UserName;
+
+        public BaseFormFillIn(IUnitOfWork unitOfWork, string userName)
         {
             UnitOfWork = unitOfWork;
+            UserName = userName;
         }
 
         public string FillIn(IDictionary<string, string> SubmitFields, Template Template, FormCollection formCollection)
@@ -191,6 +194,8 @@ namespace PHS.Business.Implementation.FillIn
 
         protected virtual void HandleTemplateFieldValue(TemplateFieldViewModel field, string value, Guid entryId)
         {
+            field.CreatedDateTime = DateTime.Now;
+            field.CreatedBy = GetLoginUserName();
             UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
         }
 
@@ -215,6 +220,10 @@ namespace PHS.Business.Implementation.FillIn
             disposed = true;
         }
 
+        protected string GetLoginUserName()
+        {
+            return UserName;
+        }
         public void Dispose()
         {
             Dispose(true);

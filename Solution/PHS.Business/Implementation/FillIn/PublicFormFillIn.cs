@@ -15,7 +15,7 @@ namespace PHS.Business.Implementation.FillIn
 {
     class PublicFormFillIn : BaseFormFillIn
     {
-        public PublicFormFillIn(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public PublicFormFillIn(IUnitOfWork unitOfWork, string userName) : base(unitOfWork, userName)
         {
         }
 
