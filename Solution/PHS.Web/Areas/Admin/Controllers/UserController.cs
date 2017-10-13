@@ -207,7 +207,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
-                return View();
+                return Json(new { Error = "No Selection made!" });
             }
 
             string message = string.Empty;
@@ -222,13 +222,14 @@ namespace PHS.Web.Areas.Admin.Controllers
                     user.EffectiveEndDate = endDate;
                     if (!userManager.UpdateUser(GetLoginUser(), user, out message))
                     {
-                        SetViewBagError(message);
+                        SetTempDataMessage(message);
+                        return Json(new { Error = message });
                     }
                 }
             }
 
             SetTempDataMessage("Users are set Active!");
-            return View();
+            return Json(new { Success = "Success" });
         }
 
         [HttpPost]
@@ -242,7 +243,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             if (selectedusers == null || selectedusers.Length == 0)
             {
                 SetTempDataMessage("No Selection made!");
-                return View();
+                return Json(new { Error = "No Selection made!" });
             }
             string message = string.Empty;
             using (var userManager = new UserManager(GetLoginUser()))
@@ -254,13 +255,14 @@ namespace PHS.Web.Areas.Admin.Controllers
                     user.IsActive = false;
                     if (!userManager.UpdateUser(GetLoginUser(), user, out message))
                     {
-                        SetViewBagError(message);
+                        SetTempDataMessage(message);
+                        return Json(new { Error = message });
                     }
                 }
             }
 
             SetTempDataMessage("Users are set Inactive!");
-            return View();
+            return Json(new { Success = "Success" });
         }
 
         [HttpPost]
@@ -273,7 +275,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             if (selectedusers == null || selectedusers.Length == 0)
             {
-                TempData["ResetPasswordMessage"] = "No Selection made!";
+                SetTempDataMessage("No Selection made!");
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(new { Error = "No Selection made!" });
             }
@@ -286,14 +288,13 @@ namespace PHS.Web.Areas.Admin.Controllers
                 bool isResetPassword = userManager.ResetPassword(GetLoginUser(), selectedusers, tempPW, out message);
                 if (!isResetPassword)
                 {
-                    SetViewBagError(message);
-                    TempData["ResetPasswordMessage"] = message;
+                    SetTempDataMessage(message);
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new { Error = message });
                 }
             }
 
-            TempData["ResetPasswordMessage"] = "Password has been reset to " + tempPW;
+            SetTempDataMessage("Password has been reset to " + tempPW);
             return Json(new { Success = "Success" });
         }
     }

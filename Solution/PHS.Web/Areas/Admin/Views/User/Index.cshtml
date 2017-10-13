@@ -17,11 +17,12 @@
     }
 </style>
 <h2>User Management</h2>
-@if (TempData["ResetPasswordMessage"] != null)
+
+@if (TempData["Message"] != null)
 {
     <div class="alert alert-success alert-dismissable fade in" id="successMessage">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        @TempData["ResetPasswordMessage"]
+        @TempData["Message"]
     </div>
 }
 <div>
@@ -154,6 +155,9 @@
         </div>
     </div>
 </div>
+<div id="SpinnerContainer" style="width:100%;height:100%;">
+    <img src="~/Content/images/spinner.gif" id="ajaxSpinnerImage" title="working..." style="display:none;position:fixed;left:50%;top:35%;z-index:1000;height:31px;width:31px;" />
+</div>
 <script>
     function toggle(source) {
         checkboxes = document.getElementsByName('selectedUsers');
@@ -192,10 +196,27 @@
             resizable: false,
             buttons: {
                 "OK": function () {
-                    var viewUrl = '@Url.Action("Activate", "User")';
+                    @*var viewUrl = '@Url.Action("Activate", "User")';
                     $.post(viewUrl, { selectedusers: getCheckedUsers(), startDate: $('.datepickerstart').val(), endDate: $('.datepickerend').val() });
                     $(this).dialog("close");
-                    location.reload();
+                    location.reload();*@
+                    selectedusers = getCheckedUsers();
+                    $(this).dialog("close");
+                    $('#successMessage').hide();
+                    $('#ajaxSpinnerImage').show();
+                    $.ajax({
+                        url: "@Url.Action("Activate", "User")",
+                        type: "POST",
+                        data: { selectedusers: selectedusers, startDate: $('.datepickerstart').val(), endDate: $('.datepickerend').val() },
+                        error: function (response) {
+                            $('#ajaxSpinnerImage').hide();
+                            location.reload();
+                        },
+                        success: function (response) {
+                            $('#ajaxSpinnerImage').hide();
+                            location.reload();
+                        }
+                    });
                     return true;
                 },
                 "Cancel": function () { $(this).dialog("close"); return false; }
@@ -209,9 +230,25 @@
     $('#Inactivate').click(function () {
         var answer = confirm("Are you sure you want to inactivate user?")
         if (answer) {
-            var viewUrl = '@Url.Action("Inactivate", "User")';
+            @*var viewUrl = '@Url.Action("Inactivate", "User")';
             $.post(viewUrl, { selectedusers: getCheckedUsers() });
-            location.reload();
+            location.reload();*@
+            selectedusers = getCheckedUsers();
+            $('#successMessage').hide();
+            $('#ajaxSpinnerImage').show();
+            $.ajax({
+                url: "@Url.Action("Inactivate", "User")",
+                type: "POST",
+                data: {selectedusers:selectedusers},
+                error: function (response) {
+                    $('#ajaxSpinnerImage').hide();
+                    location.reload();
+                },
+                success: function (response) {
+                    $('#ajaxSpinnerImage').hide();
+                    location.reload();
+                }
+            });
         }
         return true;
     });
@@ -226,14 +263,18 @@
                 });
             location.reload();*@
             selectedusers = getCheckedUsers();
+            $('#successMessage').hide();
+            $('#ajaxSpinnerImage').show();
             $.ajax({
                 url: "@Url.Action("ResetPassword", "User")",
                 type: "POST",
                 data: {selectedusers:selectedusers},
                 error: function (response) {
+                    $('#ajaxSpinnerImage').hide();
                     location.reload();
                 },
                 success: function (response) {
+                    $('#ajaxSpinnerImage').hide();
                     location.reload();
                 }
             });
