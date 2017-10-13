@@ -13,7 +13,16 @@
 <script>
     function updateHeight() {
         var obj = parent.document.getElementById("form-builder-frame-43");
-        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        if (obj) {
+            setTimeout(function () {
+                parent.resizeIframe(obj);
+            }, 100);
+        }
+        //var obj = parent.document.getElementById("form-builder-frame-43");
+        //if (obj) {
+            //obj.style.height = "";
+            //obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        //}
     }
 </script>
 
@@ -24,7 +33,7 @@
 
 @using (Html.BeginForm())
 {
-    <div class="container">
+    <div>
         <br />
 
         <div class="panel panel-default">
