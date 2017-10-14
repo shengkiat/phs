@@ -64,7 +64,7 @@ namespace PHS.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateForm([Bind(Include = "Title,Slug,IsPublic,PublicFormType,InternalFormType")] FormViewModel formViewModel)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 try
                 {
@@ -207,7 +207,7 @@ namespace PHS.Web.Controllers
 
             try
             {
-                using (var manager = new FormManager())
+                using (var manager = new FormManager(GetLoginUser()))
                 {
                     manager.UpdateTemplate(model, collection, Fields);
 
@@ -230,7 +230,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult DeleteTemplate(int formId, int templateId)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 string result = formManager.DeleteTemplate(templateId);
 
@@ -370,7 +370,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult AddModalityForm(int formID, int modalityID, int eventID)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 formManager.AddModalityForm(formID, modalityID, eventID);
                 return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });
@@ -379,7 +379,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult RemoveModalityForm(int formID, int modalityID, int eventID)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 formManager.RemoveModalityForm(formID, modalityID, eventID);
                 return RedirectToAction("EditModalityForm", new { eventid = eventID, modalityid = modalityID });

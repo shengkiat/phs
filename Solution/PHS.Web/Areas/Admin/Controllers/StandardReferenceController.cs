@@ -81,7 +81,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             string message = string.Empty;
 
-            using (var standardReferenceManager = new StandardReferenceManager())
+            using (var standardReferenceManager = new StandardReferenceManager(GetLoginUser()))
             {
                 var newStandardReference = standardReferenceManager.AddStandardReference(standardReference, out message);
                 if (newStandardReference == null)
@@ -181,7 +181,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             string message = string.Empty;
 
-            using (var standardReferenceManager = new StandardReferenceManager())
+            using (var standardReferenceManager = new StandardReferenceManager(GetLoginUser()))
             {
                 if (standardReferenceManager.UpdateStandardReference(standardReference, out message))
                 {

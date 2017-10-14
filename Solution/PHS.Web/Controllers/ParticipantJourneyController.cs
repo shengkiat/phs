@@ -286,7 +286,7 @@ namespace PHS.Web.Controllers
         {
             InsertValuesIntoTempData(formCollection);
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 var template = participantJourneyManager.FindTemplate(model.TemplateID.Value);
 
@@ -366,7 +366,7 @@ namespace PHS.Web.Controllers
                 }
             }
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 participantJourneyManager.UpdateParticipantJourneyModalityFromMSS(modalityList);
             }
