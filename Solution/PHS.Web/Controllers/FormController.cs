@@ -111,7 +111,7 @@ namespace PHS.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditForm([Bind(Include = "Title,Slug,IsPublic,PublicFormType,InternalFormType")] FormViewModel formViewModel)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 try
                 {
@@ -140,7 +140,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult DeleteForm(int formId)
         {
-            using (var formManager = new FormManager())
+            using (var formManager = new FormManager(GetLoginUser()))
             {
                 string result = formManager.DeleteFormAndTemplate(formId);
 
