@@ -397,7 +397,7 @@ namespace PHS.Repository.Repository
                     TemplateFieldID = field.TemplateFieldID.Value,
                     Value = value,
                     EntryId = entryId,
-                    DateAdded = DateTime.UtcNow,
+                    DateAdded = DateTime.Now,
                     CreatedBy = field.CreatedBy,
                     CreatedDateTime = field.CreatedDateTime
                 };
