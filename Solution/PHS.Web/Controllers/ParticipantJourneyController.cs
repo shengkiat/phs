@@ -90,7 +90,7 @@ namespace PHS.Web.Controllers
                 return RedirectToAction("Index", psm);
             }
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
 
                 string result = participantJourneyManager.RegisterParticipant(psm);

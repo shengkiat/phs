@@ -97,7 +97,7 @@ namespace PHS.Web.Controllers
         {
             if (fieldid.HasValue)
             {
-                using (var formManager = new FormManager())
+                using (var formManager = new FormManager(GetLoginUser()))
                 {
                     formManager.DeleteTemplateField(fieldid.Value);
                     return Json(new { success = true, message = "Field was deleted." });
