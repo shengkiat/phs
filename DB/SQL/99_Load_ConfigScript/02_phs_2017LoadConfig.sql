@@ -75,7 +75,10 @@ VALUES (N'Telehealth', 10, N'../../../Content/images/PHS2017/11_Tele.png', 0, 0,
 declare @ModTele as int
 select @ModTele = IDENT_CURRENT('phs.dbo.Modality')
 
-
+INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
+VALUES (N'Post Event', 11, N'../../../Content/images/PHS2017/12_Tele.png', 0, 0, 0, 0, N'Pending', NULL, 0)
+declare @ModPostEvent as int
+select @ModPostEvent = IDENT_CURRENT('phs.dbo.Modality')
 
 INSERT [dbo].[Modality] ([Name], [Position], [IconPath], [IsActive], [IsVisible], [IsMandatory], [HasParent], [Status], [Eligiblity], [Labels]) 
 VALUES (N'Public Forms', 99, N'../../../Content/images/PHS2017/.png', 1, 1, 1, 0, N'Public', NULL, 0)
@@ -95,6 +98,7 @@ INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @Mod
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModTele)
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModSocialSupport)
 INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModPublic)
+INSERT [dbo].[EventModality] ([PHSEventID], [ModalityID]) VALUES (@eventID, @ModPostEvent)
 
 use [phsDataLoading]
 -- data cleansing
@@ -228,7 +232,7 @@ end
 close modalityList
 deallocate modalityList 
 
-update phs.dbo.Form set InternalFormType = 'REG' where Title = '0 - Registration Form' 
+update phs.dbo.Form set InternalFormType = 'REG' where Title = '1 - Registration Form' 
 update phs.dbo.Form set PublicFormType = 'PRE-REGISTRATION', IsPublic = 1, Slug = 'phs2017' where DateAdded > (GETDATE() - 1) and title = 'Pre-Registration Form'
 update phs.dbo.Form set InternalFormType = 'PHLEBOTOMY' where Title = 'Phlebotomy Form'
 
@@ -320,6 +324,9 @@ update TemplateField set text = REPLACE(text, char(10),'<br/>') where text LIKE 
 update TemplateField  set ConditionTemplateFieldID = null where ConditionCriteria is null
 update TemplateField  set IsRequired = 0 where ConditionTemplateFieldID is not null 
 
+update TemplateField set SummaryType = 'FILL' where SummaryFieldName != '' or SummaryFieldName is null 
+
+update TemplateField set StandardReferenceID = 4 where FieldType = 'BMI'
 
 insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select  SummaryType, CategoryName, SummaryFieldName from phsDataLoading.dbo.SummaryMapping order by SummaryMappingID asc
 
@@ -329,10 +336,17 @@ insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select
 
 update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 233) where TemplateFieldID = 234
 update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 239) where TemplateFieldID = 243
-update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 558
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 588
 
-delete from PHSUser where PHSUserID in (239,278,320)
+
 select * from TemplateField where FieldType = 'IMAGE' and ImageBase64 = ''
+
+select Username, count(username) as cn from PHSUser group by Username order by cn desc
+
+--select * from PHSUser where Username in ('A0133297B')
+--delete from PHSUser where PHSUserID in (752)
+
+
 
 
 

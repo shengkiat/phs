@@ -1,19 +1,20 @@
-delete Summary
-delete ParticipantJourneyModality
-delete ModalityForm
-delete TemplateFieldValue
-delete TemplateTemplateField
-delete TemplateField
-delete Template
-delete Form
-delete EventModality
-delete Modality
-delete AuditLog
-delete Participant
-delete PreRegistration
-delete ReferenceRange
-delete StandardReference
-delete ReferenceRange
-delete ParticipantPHSEvent
-delete PHSEvent
-delete PHSUser
+drop table Summary
+drop table ParticipantJourneyModality
+drop table ModalityForm
+drop table TemplateFieldValue
+drop table TemplateTemplateField
+drop table TemplateField
+drop table Template
+drop table Form
+drop table EventModality
+drop table Modality
+drop table AuditLog
+drop table Participant
+drop table PreRegistration
+drop table ReferenceRange
+drop table StandardReference
+drop table ReferenceRange
+drop table ParticipantPHSEvent
+drop table PHSEvent
+drop table PHSUser
+drop table SummaryMapping
