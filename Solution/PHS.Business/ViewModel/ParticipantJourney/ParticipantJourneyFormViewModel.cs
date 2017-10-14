@@ -78,6 +78,11 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 SummaryCategoryViewModel sumCategoryViewModel = new SummaryCategoryViewModel(summaryCategoryName);
 
+                if(summaryCategoryName.Contains("Gastrointestinal Health"))
+                {
+                    sumCategoryViewModel.Highlight = true;
+                }
+
                 foreach (var summary in Participant.Summaries)
                 {
                     if (summary != null && summary.PHSEventID.Equals(Event.PHSEventID))
@@ -85,6 +90,17 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(summaryLabelMap, summaryCategoryName, summary.Label))
                         {
                             SummaryViewModel sumview = new SummaryViewModel(summary);
+
+                            if(sumCategoryViewModel.Highlight != true)
+                            {
+
+                               // summary.TemplateFieldID;
+                                if (SummaryHelper.IsHighlightCategoryRequired(summaryCategoryName, summary.TemplateField.SummaryFieldName, summary.SummaryValue))
+                                {
+                                    sumCategoryViewModel.Highlight = true;
+                                }
+                            }
+
 
                             if (summary.StandardReferenceID != null && summary.StandardReferenceID > 0
                                 && summary.SummaryValue != null)
