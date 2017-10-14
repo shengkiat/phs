@@ -389,7 +389,7 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
                 doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
                 doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
-                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race).Limit(5));
+                doc.ReplaceText("<<RACE>>", UtilityHelper.GetString(result.Race).Limit(8));
                 doc.ReplaceText("<<HOME>>", UtilityHelper.GetString(result.HomeNumber).Limit(8));
                 doc.ReplaceText("<<HP>>", UtilityHelper.GetString(result.MobileNumber).Limit(8));
                 doc.ReplaceText("<<ADD>>", UtilityHelper.GetString(result.GetAddressWithoutPrefix()).Limit(48));
