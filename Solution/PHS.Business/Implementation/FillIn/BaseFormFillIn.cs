@@ -136,31 +136,45 @@ namespace PHS.Business.Implementation.FillIn
             if (submissionFields.ContainsKey(field.ConditionTemplateFieldID.Value))
             {
                 string enteredValue = submissionFields[field.ConditionTemplateFieldID.Value];
-                if (field.ConditionCriteria.Equals("=="))
+                if (!string.IsNullOrEmpty(enteredValue))
                 {
-                    if (field.ConditionOptions.Contains(enteredValue))
+                    if (field.ConditionCriteria.Equals("=="))
                     {
-                        result = true;
+                        if (field.ConditionOptions.Contains(enteredValue))
+                        {
+                            result = true;
+                        }
+
+                        else if (enteredValue.Contains(field.ConditionOptions))
+                        {
+                            result = true;
+                        }
+
+                        else
+                        {
+                            result = false;
+                        }
                     }
 
-                    else
+                    else if (field.ConditionCriteria.Equals("!="))
                     {
-                        result = false;
+                        if (field.ConditionOptions.Contains(enteredValue))
+                        {
+                            result = false;
+                        }
+
+                        else if (enteredValue.Contains(field.ConditionOptions))
+                        {
+                            result = false;
+                        }
+
+                        else
+                        {
+                            result = true;
+                        }
                     }
                 }
-
-                else if (field.ConditionCriteria.Equals("!="))
-                {
-                    if (field.ConditionOptions.Contains(enteredValue))
-                    {
-                        result = false;
-                    }
-
-                    else
-                    {
-                        result = true;
-                    }
-                }
+                
             }
 
             return result;
