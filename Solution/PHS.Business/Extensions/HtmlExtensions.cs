@@ -379,31 +379,43 @@ namespace PHS.Business.Extensions
                             conditionTemplateFieldViewModel.EntryId = model.EntryId;
 
                             string conditionTemplateFieldValue = GetSubmittedTextValue(helper, conditionTemplateFieldViewModel);
-
-                            if (model.ConditionCriteria.Equals("=="))
+                            if (!string.IsNullOrEmpty(conditionTemplateFieldValue))
                             {
-
-                                if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                                if (model.ConditionCriteria.Equals("=="))
                                 {
-                                    result = true;
+
+                                    if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                                    {
+                                        result = true;
+                                    }
+
+                                    else if (conditionTemplateFieldValue.Contains(model.ConditionOptions))
+                                    {
+                                        result = true;
+                                    }
+
+                                    else
+                                    {
+                                        result = false;
+                                    }
                                 }
 
-                                else
+                                else if (model.ConditionCriteria.Equals("!="))
                                 {
-                                    result = false;
-                                }
-                            }
+                                    if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
+                                    {
+                                        result = false;
+                                    }
 
-                            else if (model.ConditionCriteria.Equals("!="))
-                            {
-                                if (model.ConditionOptions.Contains(conditionTemplateFieldValue))
-                                {
-                                    result = false;
-                                }
+                                    else if (conditionTemplateFieldValue.Contains(model.ConditionOptions))
+                                    {
+                                        result = false;
+                                    }
 
-                                else
-                                {
-                                    result = true;
+                                    else
+                                    {
+                                        result = true;
+                                    }
                                 }
                             }
                         }
