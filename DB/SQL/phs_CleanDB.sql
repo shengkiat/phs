@@ -842,9 +842,9 @@ GO
 GO
 INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (13, N'Underweight', 0, 18.4, N'UNDERWEIGHT', 1, 4)
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (14, N'Normal', 18.5, 24.9, N'IDEAL', 0, 4)
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (15, N'Overweight', 25, 29.9, N'OVERWEIGHT', 1, 4)
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (16, N'Obese', 30, 9999, N'OBESE', 1, 4)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (14, N'Ideal', 18.5, 22.9, N'IDEAL', 0, 4)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (15, N'Overweight', 23, 27.5, N'OVERWEIGHT', 1, 4)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (16, N'Obese', 27.6, 9999, N'OBESE', 1, 4)
 INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (17, N'Yes', NULL, NULL, N'Yes', N'Doctor''s Attention Required!', 1, 5)
 INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (18, N'Score High', 1, 999, NULL, N'ICIQ Score Alert', 1, 6)
 INSERT [dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [StringValue], [Result], [Highlight], [StandardReferenceID]) VALUES (19, N'YesDizzi', NULL, NULL, N'Yes', N'Frequent dizzyness when standing from seated or supine position', 1, 8)
