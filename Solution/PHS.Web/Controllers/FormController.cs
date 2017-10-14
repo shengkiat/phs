@@ -109,7 +109,7 @@ namespace PHS.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditForm([Bind(Include = "Title,Slug,IsPublic,PublicFormType,InternalFormType")] FormViewModel formViewModel)
+        public ActionResult EditForm([Bind(Include = "FormID,Title,Slug,IsPublic,PublicFormType,InternalFormType")] FormViewModel formViewModel)
         {
             using (var formManager = new FormManager(GetLoginUser()))
             {
