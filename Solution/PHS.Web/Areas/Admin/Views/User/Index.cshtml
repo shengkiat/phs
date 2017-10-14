@@ -85,57 +85,61 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model) {
-                <tr>
-                    <td class="vcenter">
-                        <input type = "checkbox" id="checkboxid" name="selectedUsers" value="@item.Username" />
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.Username, "UserDetails", new { userID = item.PHSUserID })
-                    </td>
-                    <td>
-                        @if(item.IsActive == true) {
-                            <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
-                        }
-                        else
-                        {
-                            <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Role)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ContactNumber)
-                    </td>
-                    <td>
-                        @Html.ActionLink(
-                            " ",
-                            "EditUser",
-                            "User",
-                            new { userID = item.PHSUserID },
-                            new
+            @foreach (var item in Model)
+            {
+                if (item.PHSUserID != 1) {
+                    <tr>
+                        <td class="vcenter">
+                            <input type = "checkbox" id="checkboxid" name="selectedUsers" value="@item.Username" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Username, "UserDetails", new { userID = item.PHSUserID })
+                        </td>
+                        <td>
+                            @if (item.IsActive == true)
                             {
-                                @class = "glyphicon glyphicon-edit"
-                            })
-                    </td>
-                    <td>
-                        @Html.ActionLink(
-                            " ",
-                            "DeleteUser",
-                            "User",
-                            new { userID = item.PHSUserID },
-                            new
+                                <span class="glyphicon glyphicon-ok-sign" style="color:green"></span>
+                            }
+                            else
                             {
-                                @onclick = "return confirm('Are you sure you want to delete this User');",
-                                @class = "glyphicon glyphicon-trash"
-                            })
-                    </td>
-                </tr>
+                                <span class="glyphicon glyphicon-minus-sign" style="color:grey"></span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                 " ",
+                                 "EditUser",
+                                 "User",
+                                 new { userID = item.PHSUserID },
+                                 new
+                                 {
+                                     @class = "glyphicon glyphicon-edit"
+                                 })
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                                 " ",
+                                 "DeleteUser",
+                                 "User",
+                                 new { userID = item.PHSUserID },
+                                 new
+                                 {
+                                     @onclick = "return confirm('Are you sure you want to delete this User');",
+                                     @class = "glyphicon glyphicon-trash"
+                                 })
+                        </td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
     </div>
