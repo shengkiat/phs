@@ -39,7 +39,7 @@ namespace PHS.Business.Implementation
                             modality.IsActive = true;
                         }
                     }
-                    if (modality.Status != "Public")
+                    if (modality.IsVisible && modality.Status != "Public")
                     {
                         pjmCircles.Add(copyToPJMCVM(pjvm, modality, matchedPjms));
                     }
