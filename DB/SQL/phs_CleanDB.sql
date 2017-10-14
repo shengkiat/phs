@@ -790,43 +790,43 @@ GO
 --- Reference range Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[ReferenceRange] ON
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (1, N'Systolic BP Low Range', 70, 89, N'LOW', 1, 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (1, N'Normal', 0, 119, N'Normal', 1, 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (2, N'Systolic BP Normal Range', 90, 119, N'IDEAL', 0, 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (2, N'Pre-HTN', 120, 139, N'Pre-HTN', 0, 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (3, N'Systolic BP Prehypertension Range', 120, 139, N'PRE-HIGH', 1, 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (3, N'Stage 1 HTN', 140, 159, N'Stage 1 HTN', 1, 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (4, N'Systolic BP Stage1 Hypertension Range', 140, 159, N'STAGE1 HIGH', 1, 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (4, N'Stage 2 HTN', 160, 179, N'Stage 2 HTN', 1, 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (5, N'Systolic BP Stage2 Hypertension Range', 160, 190, N'STAGE2 HIGH', 1, 1)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (5, N'Hypertensive Crisis', 180, 999, N'Hypertensive Crisis', 1, 1)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (6, N'Diastolic BP Low Range', 40, 59, N'LOW', 1, 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (6, N'Normal', 0, 79, N'Normal', 1, 2)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (7, N'Diastolic BP Normal Range', 60, 79, N'IDEAL', 1, 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (7, N'Pre-HTN', 80, 89, N'Pre-HTN', 1, 2)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (8, N'Diastolic BP Prehypertension Range', 80, 89, N'PRE-HIGH', 1, 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (8, N'Stage 1 HTN', 90, 99, N'Stage 1 HTN', 1, 2)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (9, N'Diastolic BP Stage1 Hypertension Range', 90, 99, N'STAGE1 HIGH', 1, 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (9, N'Stage 2 HTN', 100, 119, N'Stage 2 HTN', 1, 2)
 GO
 
 GO
-INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (10, N'Diastolic BP Stage2 Hypertension Range', 100, 150, N'STAGE2 HIGH', 1, 2)
+INSERT [phs].[dbo].[ReferenceRange] ([ReferenceRangeID], [Title], [MinimumValue], [MaximumValue], [Result], [Highlight], [StandardReferenceID]) VALUES (10, N'Hypertensive Crisis', 120, 999, N'Hypertensive Crisis', 1, 2)
 GO
 
 
