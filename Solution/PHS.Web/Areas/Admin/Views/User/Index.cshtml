@@ -87,7 +87,7 @@
             <tbody>
             @foreach (var item in Model)
             {
-                if (item.PHSUserID != 1) {
+                if (!item.Username.Contains("Admin")) {
                     <tr>
                         <td class="vcenter">
                             <input type = "checkbox" id="checkboxid" name="selectedUsers" value="@item.Username" />
