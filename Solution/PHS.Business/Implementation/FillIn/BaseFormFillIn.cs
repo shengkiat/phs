@@ -110,7 +110,7 @@ namespace PHS.Business.Implementation.FillIn
                             
                         }
 
-                        HandleAdditionalInsert(templateView, Template, formCollection, entryId);
+                        HandleAdditionalInsert(templateView, Template, formCollection, entryId, submissionFields);
 
                         UnitOfWork.Complete();
                         scope.Complete();
@@ -130,7 +130,7 @@ namespace PHS.Business.Implementation.FillIn
             return result;
         }
 
-        private bool isConditionalFieldRequired(TemplateFieldViewModel field, IDictionary<int, string> submissionFields)
+        protected bool isConditionalFieldRequired(TemplateFieldViewModel field, IDictionary<int, string> submissionFields)
         {
             bool result = false;
             if (submissionFields.ContainsKey(field.ConditionTemplateFieldID.Value))
@@ -213,7 +213,7 @@ namespace PHS.Business.Implementation.FillIn
             UnitOfWork.FormRepository.InsertTemplateFieldValue(field, value, entryId);
         }
 
-        protected abstract void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId);
+        protected abstract void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId, IDictionary<int, string> submissionFields);
 
         protected IUnitOfWork UnitOfWork { get; private set; }
 
