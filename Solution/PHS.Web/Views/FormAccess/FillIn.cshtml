@@ -112,7 +112,7 @@
                 }
             </ul>
 
-            if (Model.Fields != null && Model.Fields.Any())
+            if (Model.Fields != null && Model.Fields.Any() && Constants.IsFormForSubmit(Model.FormID))
             {
                 <ul id="submit-button-list" class="vertical-list entry-form-list">
                     <li>

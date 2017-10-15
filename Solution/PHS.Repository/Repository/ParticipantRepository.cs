@@ -49,7 +49,7 @@ namespace PHS.Repository.Repository
 
         private Participant find(Expression<Func<Participant, bool>> predicate)
         {
-            return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).Include(p => p.Summaries).FirstOrDefault();
+            return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).Include(p => p.Summaries.Select(s => s.TemplateField)).FirstOrDefault();
         }
     }
 }

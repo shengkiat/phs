@@ -12,7 +12,7 @@
 
 <script>
     function updateHeight() {
-        var obj = parent.document.getElementById("form-builder-frame-43");
+        var obj = parent.document.getElementById("form-builder-frame-52");
         if (obj) {
             setTimeout(function () {
                 parent.resizeIframe(obj);
@@ -47,11 +47,25 @@
                                 && summaryCategory.Summaries.Count > 0
                             )
                         {
-                            <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()"><b>@summaryCategory.SummaryCategoryName</b></a>
+                            if (summaryCategory.Highlight == true)
+                            {
+                                <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()" style="color:red;"><b>@summaryCategory.SummaryCategoryName</b></a>
+                            }
+                            else
+                            {
+                                <a data-toggle="collapse" href="#target_@indx" onclick="updateHeight()"><b>@summaryCategory.SummaryCategoryName</b></a>
+                            }
                         }
                         else
                         {
-                            <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                            if (summaryCategory.Highlight == true)
+                            {
+                                <a data-toggle="collapse" href="#target_@indx" style="color:red;"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                            }
+                            else
+                            {
+                                <a data-toggle="collapse" href="#target_@indx"><b>@summaryCategory.SummaryCategoryName</b> - No Summary Values in this Section</a>
+                            }
                         }
                     </div>
 

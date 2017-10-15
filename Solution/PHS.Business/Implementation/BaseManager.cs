@@ -35,7 +35,7 @@ namespace PHS.Business.Implementation
 
         protected virtual IUnitOfWork CreateUnitOfWork()
         {
-            return new UnitOfWork(new PHSContext());
+            return new UnitOfWork(new PHSContext(user));
         }
 
         protected string GetLoginUserName()

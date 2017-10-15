@@ -236,7 +236,7 @@ namespace PHS.Business.Implementation
 
                                         if (!Constants.IsFormForSubmit(form.FormID))
                                         {
-                                            participantJourneyModality.TemplateID = unitOfWork.FormRepository.GetForm(form.FormID).Templates.FirstOrDefault().TemplateID;
+                                            participantJourneyModality.TemplateID = form.Templates.FirstOrDefault().TemplateID;
                                             participantJourneyModality.EntryId = new Guid("10000000-9999-9999-9999-000000000001");
                                         }
 

@@ -15,6 +15,7 @@ namespace PHS.Business.ViewModel.SummaryCategory
         {
             SummaryCategoryName = summaryCategory;
             Summaries = new List<SummaryViewModel>();
+            Highlight = false;
         }
 
         public void AddSummary(SummaryViewModel summary)
@@ -25,6 +26,8 @@ namespace PHS.Business.ViewModel.SummaryCategory
         public String SummaryCategoryName { get; }
 
         public List<SummaryViewModel> Summaries { get; }
+
+        public bool Highlight { get; set; }
     }
 
 }

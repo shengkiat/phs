@@ -59,7 +59,7 @@ namespace PHS.Web.Controllers
         {
             string message = string.Empty;
 
-            using (var eventManager = new EventManager())
+            using (var eventManager = new EventManager(GetLoginUser()))
             {
                 //Person loginUser = GetLoginUser();
                 //if(loginUser != null)
@@ -108,7 +108,7 @@ namespace PHS.Web.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "PHSEventID,Title,Venue,StartDT,EndDT")] PHSEvent eventModel)
         {
-            using (var eventManager = new EventManager())
+            using (var eventManager = new EventManager(GetLoginUser()))
             {
                 eventManager.UpdateEvent(eventModel);
             }
@@ -124,7 +124,7 @@ namespace PHS.Web.Controllers
             }
 
             string message = string.Empty;
-            using (var getEvent = new EventManager())
+            using (var getEvent = new EventManager(GetLoginUser()))
             {
                 bool isDeleted = getEvent.DeleteEvent(id, out message);
 
