@@ -474,18 +474,20 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            try
+            //try
             {
-                using (var unitOfWork = CreateUnitOfWork())
+                //using (var unitOfWork = CreateUnitOfWork())
                 {
-                    using (TransactionScope scope = new TransactionScope())
+                    //using (TransactionScope scope = new TransactionScope())
                     {
 
                         foreach (var username in selectedusers)
                         {
-                            var user = GetUserByUserName(username.ToString(), out message);
-                            var userToUpdate = unitOfWork.Users.Get(user.PHSUserID);
-                            Util.CopyNonNullProperty(user, userToUpdate);
+                            var userToUpdate = GetUserByUserName(username.ToString(), out message);
+                            if (userToUpdate == null)
+                            {
+                                return false;
+                            }
                             if (userToUpdate.PasswordSalt == "")
                                 userToUpdate.PasswordSalt = PasswordManager.GenerateSalt();
                             SecureString newPassHash = PasswordManager.CreateHash(tempPW, userToUpdate.PasswordSalt);
@@ -493,21 +495,37 @@ namespace PHS.Business.Implementation
                             userToUpdate.UsingTempPW = true;
                             userToUpdate.UpdatedDateTime = DateTime.Now;
                             userToUpdate.UpdatedBy = loginUser.Username;
+                            if (!UpdateUser(loginUser, userToUpdate, out message))
+                            {
+                                return false;
+                            }
+
+
+                            //var user = GetUserByUserName(username.ToString(), out message);
+                            //var userToUpdate = unitOfWork.Users.Get(user.PHSUserID);
+                            //Util.CopyNonNullProperty(user, userToUpdate);
+                            //if (userToUpdate.PasswordSalt == "")
+                            //    userToUpdate.PasswordSalt = PasswordManager.GenerateSalt();
+                            //SecureString newPassHash = PasswordManager.CreateHash(tempPW, userToUpdate.PasswordSalt);
+                            //userToUpdate.Password = PasswordManager.SecureStringToString(newPassHash);
+                            //userToUpdate.UsingTempPW = true;
+                            //userToUpdate.UpdatedDateTime = DateTime.Now;
+                            //userToUpdate.UpdatedBy = loginUser.Username;
                         }
 
-                        unitOfWork.Complete();
-                        scope.Complete();
+                        //unitOfWork.Complete();
+                        //scope.Complete();
                     }
                 }
 
                 return true;
             }
-            catch(Exception ex)
-            {
-                ExceptionLog(ex);
-                message = "Operation failed during reset Password.";
-                return false;
-            }
+            //catch(Exception ex)
+            //{
+            //    ExceptionLog(ex);
+            //    message = "Operation failed during reset Password.";
+            //    return false;
+            //}
 
         }
 
