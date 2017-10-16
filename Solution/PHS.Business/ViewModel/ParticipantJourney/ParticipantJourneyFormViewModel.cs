@@ -89,6 +89,11 @@ namespace PHS.Business.ViewModel.ParticipantJourney
                     {
                         if (SummaryHelper.IsFieldNameAndCategoryFoundInSummaryMap(summaryLabelMap, summaryCategoryName, summary.Label))
                         {
+                            if(summary.SummaryValue == null || summary.SummaryValue.Count() <= 0)
+                            {
+                                continue;
+                            }
+
                             SummaryViewModel sumview = new SummaryViewModel(summary);
 
                             if(sumCategoryViewModel.Highlight != true)
