@@ -300,8 +300,8 @@ INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID])  VALUES (@ModExhibi
 
 --INSERT INTO phs.[dbo].[ModalityForm] ([ModalityID],[FormID]) VALUES (@ModDoc, 9) 
 
-INSERT INTO phs.dbo.[PHSUser] ([Username],[Password],[FullName],[IsActive],[EffectiveStartDate],[EffectiveEndDate],[Role],[PasswordSalt],[CreatedDateTime],[UsingTempPW],[DeleteStatus],ContactNumber)
-      (select UPPER(REPLACE(Username, ' ','')), '', Name, 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), Role, '',  getdate(), 0,0, Contact from users) 
+INSERT INTO phs.dbo.[PHSUser] ([Username],[Password],[FullName],[IsActive],[EffectiveStartDate],[EffectiveEndDate],[Role],[PasswordSalt],[CreatedDateTime],[UsingTempPW],[DeleteStatus],ContactNumber, MCRNo)
+      (select UPPER(REPLACE(Username, ' ','')), '', Name, 1, CAST(N'2016-04-13 00:00:00.0000000' AS DateTime2), CAST(N'2099-04-13 00:00:00.0000000' AS DateTime2), Role, '',  getdate(), 0,0, Contact, MCR from users) 
 
 
 
@@ -336,7 +336,7 @@ insert into SummaryMapping ( SummaryType, CategoryName, SummaryFieldName) select
 
 update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 233) where TemplateFieldID = 234
 update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 239) where TemplateFieldID = 243
-update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 588
+update TemplateField set ImageBase64 = (select ImageBase64 from phsBackup20170929.dbo.TemplateField where TemplateFieldID = 534) where TemplateFieldID = 589
 
 
 select * from TemplateField where FieldType = 'IMAGE' and ImageBase64 = ''
