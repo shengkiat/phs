@@ -345,6 +345,7 @@ select Username, count(username) as cn from PHSUser group by Username order by c
 
 --select * from PHSUser where Username in ('A0133297B')
 --delete from PHSUser where PHSUserID in (752)
+--delete from PHSUser where username like '%volunteer%'
 
 
 
