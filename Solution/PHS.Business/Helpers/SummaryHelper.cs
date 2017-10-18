@@ -624,6 +624,31 @@ namespace PHS.Business.Helpers
                         return true;
                     }
                 }
+
+                if (fieldName.ToUpper().Equals("HxTakingField97".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField91".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField156".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
             }
 
             return Result;
