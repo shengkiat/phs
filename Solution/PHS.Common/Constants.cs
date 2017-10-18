@@ -955,6 +955,8 @@ namespace PHS.Common
 
             switch (formId)
             {
+                case 12:
+                    break;
                 case 38:                    
                     break;
                 case 17:
