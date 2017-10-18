@@ -223,10 +223,42 @@ namespace PHS.Business.Extensions
                         return true;
                     }
 
+                    try
+                    {
+                        int dayValue = Int32.Parse(day);
+                        int monthValue = Int32.Parse(month);
+                        int yearValue = Int32.Parse(year);
+
+                        if (dayValue <= 0 || dayValue >= 32)
+                        {
+                            return false;
+                        }
+
+                        if (monthValue <= 0 || monthValue >= 13)
+                        {
+                            return false;
+                        }
+
+                        if (yearValue <= 1917 || yearValue >= 2999)
+                        {
+                            return false;
+                        }
+
+
+                        return true;
+                    }
+
+                    catch(FormatException)
+                    {
+                        return false;
+                    }
+
+                    /*
                     var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
                     var format = new string[] { "M-dd-yyyy" };
                     DateTime date;
                     return DateTime.TryParseExact(dateValue, "M-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out date);
+                    */
                 case Constants.TemplateFieldType.FILEPICKER:
                     HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];
                     var maxSize = field.MaxFileSize * 1024;
@@ -524,6 +556,10 @@ namespace PHS.Business.Extensions
                     }
                     else
                     {
+
+                        DateTime date = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
+                        value = date.ToString("dd/M/yyyy hh:mm:ss tt");
+                        /*
                         var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
                         //var format = new string[] { "M-dd-yyyy" };
                         DateTime date;
@@ -534,7 +570,7 @@ namespace PHS.Business.Extensions
                         else
                         {
                             value = "";
-                        }
+                        }*/
 
                     }
                     break;
