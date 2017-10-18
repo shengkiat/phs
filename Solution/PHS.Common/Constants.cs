@@ -951,7 +951,37 @@ namespace PHS.Common
 
         public static bool IsFormForSubmit(int formId)
         {
-            return formId != 38 && formId != 17;
+            bool isFormForSubmit = false; 
+
+            switch (formId)
+            {
+                case 38:                    
+                    break;
+                case 17:
+                    break;
+                case 9:
+                    break;
+                case 47:
+                    break;
+                case 48: 
+                    break;
+                case 49: 
+                    break;
+                case 50:
+                        break;
+                case 51:
+                        break;
+                case 52:
+                        break;
+                case 53:
+                        break;
+                default:
+                    isFormForSubmit = true;
+                    break; 
+
+            }
+
+            return isFormForSubmit;
         }
     }
 }
