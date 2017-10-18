@@ -27,14 +27,14 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             Eligiblity = modality.Eligiblity;
             Labels = modality.Labels;
 
-            modalityForms = new List<int>();
+            modalityForms = new HashSet<int>();
 
             foreach (var form in modality.Forms)
             {
                 modalityForms.Add(form.FormID);
             }
 
-            modalityCompletedForms = new List<int>();
+            modalityCompletedForms = new HashSet<int>();
             foreach(var pjm in ParticipantJourneyModalitites)
             {
                 if (Constants.Internal_Form_Type_MegaSortingStation.Equals(pjm.Form.InternalFormType))
@@ -66,8 +66,8 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string Eligiblity { get; }
         public Nullable<int> Labels { get; }
 
-        public List<int> modalityForms { get; }
-        public List<int> modalityCompletedForms { get; }
+        public HashSet<int> modalityForms { get; }
+        public HashSet<int> modalityCompletedForms { get; }
 
         public string GetStatus()
         {
