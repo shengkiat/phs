@@ -323,6 +323,8 @@ namespace PHS.Web.Controllers
                         }
                     }
 
+                    RemoveValuesFromTempData(formCollection);
+
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     //TempData["success"] = templateView.ConfirmationMessage;
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
@@ -341,6 +343,14 @@ namespace PHS.Web.Controllers
             foreach (var key in formCollection.AllKeys)
             {
                 ViewData[key.ToLower()] = formCollection[key];
+            }
+        }
+
+        private void RemoveValuesFromTempData(FormCollection formCollection)
+        {
+            foreach (var key in formCollection.AllKeys)
+            {
+                ViewData.Remove(key.ToLower());
             }
         }
 
