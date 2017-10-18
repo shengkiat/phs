@@ -615,6 +615,8 @@ namespace PHS.Business.Helpers
             }
 
             /////////////////  Social Support /////////////////
+
+    
             if (summaryCategory.ToUpper().Equals("Social Support".ToUpper()))
             {
                 if (fieldName.ToUpper().Equals("SocialSupportField1".ToUpper())) //If you feel that the participant requires further social support, please check this box.
@@ -624,6 +626,31 @@ namespace PHS.Business.Helpers
                         return true;
                     }
                 }
+
+                if (fieldName.ToUpper().Equals("HxTakingField97".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField91".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField156".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
             }
 
             return Result;
