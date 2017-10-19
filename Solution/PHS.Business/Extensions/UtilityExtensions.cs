@@ -225,23 +225,31 @@ namespace PHS.Business.Extensions
 
                     try
                     {
-                        int dayValue = Int32.Parse(day);
-                        int monthValue = Int32.Parse(month);
-                        int yearValue = Int32.Parse(year);
-
-                        if (dayValue <= 0 || dayValue >= 32)
+                        if (!string.IsNullOrEmpty(day))
                         {
-                            return false;
+                            int dayValue = Int32.Parse(day);
+                            if (dayValue <= 0 || dayValue >= 32)
+                            {
+                                return false;
+                            }
                         }
 
-                        if (monthValue <= 0 || monthValue >= 13)
+                        if (!string.IsNullOrEmpty(month))
                         {
-                            return false;
+                            int monthValue = Int32.Parse(month);
+                            if (monthValue <= 0 || monthValue >= 13)
+                            {
+                                return false;
+                            }
                         }
 
-                        if (yearValue <= 1917 || yearValue >= 2999)
+                        if (!string.IsNullOrEmpty(year))
                         {
-                            return false;
+                            int yearValue = Int32.Parse(year);
+                            if (yearValue <= 1916 || yearValue >= 2999)
+                            {
+                                return false;
+                            }
                         }
 
 
