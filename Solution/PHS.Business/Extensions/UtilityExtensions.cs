@@ -355,59 +355,7 @@ namespace PHS.Business.Extensions
 
                     return "";
 
-                    //if (!stripHtml)
-                    //{
-                    //    if (!string.IsNullOrEmpty(value.Value))
-                    //    {
-                    //        var fileValueObject = value.Value.FromJson<FileValueObject>();
-
-                    //        if (!string.IsNullOrEmpty(fileValueObject.FileName))
-                    //        {
-                    //            var imagePreviewClass = "";
-                    //            var imagePreviewAttribute = "";
-                    //            var downloadPath = "/PublicForm/file/download/{0}".FormatWith(value.Id);
-                    //            if (fileValueObject.IsImage())
-                    //            {
-                    //                imagePreviewClass = "img-tip";
-                    //                if (fileValueObject.IsSavedInCloud)
-                    //                {
-                    //                    imagePreviewAttribute = "data-image-path='http://{0}.s3.amazonaws.com/{1}'".FormatWith(WebConfig.Get("awsbucket"), fileValueObject.SaveName);
-                    //                }
-                    //                else
-                    //                {
-                    //                    imagePreviewAttribute = "data-image-path='{0}'".FormatWith(fileValueObject.ImageViewPath());
-                    //                }
-                    //            }
-
-
-                    //            StringBuilder sb = new StringBuilder();
-                    //            sb.Append("<ul class='horizontal-list'><li class='file-icon-item'>");
-                    //            sb.AppendFormat("<a href='{0}' class='{1}' {2}>", downloadPath, imagePreviewClass, imagePreviewAttribute);
-                    //            sb.AppendFormat("<img src='/content/images/spacer.gif' class='image-bg fm-file-icon fm-file-{0}-icon' alt='file icon' />", fileValueObject.Extension.Replace(".", ""));
-                    //            sb.AppendFormat("</a>");
-                    //            sb.Append("</li><li class='file-name-item'>");
-                    //            sb.AppendFormat("<a href='{0}'>{1}</a>", downloadPath, fileValueObject.FileName.LimitWithElipses(30));
-                    //            sb.Append("</li></ul>");
-                    //            return sb.ToString();
-                    //        }
-                    //    }
-
-                    //    return "";
-                    //}
-                    //else
-                    //{
-
-                    //    if (!string.IsNullOrEmpty(value.Value))
-                    //    {
-                    //        var fileValueObject = value.Value.FromJson<FileValueObject>();
-                    //        return fileValueObject.FileName;
-                    //    }
-                    //    else
-                    //    {
-                    //        return "";
-                    //    }
-
-                    //}
+                    
 
 
             }
