@@ -59,6 +59,10 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public string Gender { get; }
 
         public string GetAddressWithoutPrefix() {
+            if (string.IsNullOrEmpty(Address))
+            {
+                return "";
+            }
             AddressViewModel address = AddressViewModel.Initialize(Address);
             return address.Blk + ", " + address.StreetAddress + ", " + address.Unit;
         }
