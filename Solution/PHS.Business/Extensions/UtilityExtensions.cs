@@ -658,6 +658,9 @@ namespace PHS.Business.Extensions
                 case Constants.TemplateFieldType.SIGNATURE:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
                     break;
+                case Constants.TemplateFieldType.DOCTORMEMO:
+                    value = form.SubmittedFieldValue(field.DomId, "TextArea");
+                    break;
                 case Constants.TemplateFieldType.FILEPICKER:
                     //HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];
                     //value = "";
