@@ -528,7 +528,7 @@ namespace PHS.Business.Extensions
                                     break;
 
                                 case TemplateFieldType.BIRTHDAYPICKER:
-                                    var birthdayValue = participant.DateOfBirth.Value.ToString();
+                                    var birthdayValue = participant.DateOfBirth.Value.ToString("dd/M/yyyy");
 
                                     if (!string.IsNullOrEmpty(birthdayValue))
                                     {
