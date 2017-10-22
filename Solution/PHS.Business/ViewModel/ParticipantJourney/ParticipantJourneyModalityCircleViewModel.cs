@@ -1,4 +1,5 @@
-﻿using PHS.Common;
+﻿using PHS.Business.Extensions;
+using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
@@ -93,8 +94,17 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             bool result = true;
             if (!string.IsNullOrEmpty(Role))
             {
-                result = Role.Contains(UserRole);
+                result = false;
+                foreach (var role in Role.Split(Constants.Form_Option_Split_Concate))
+                {
+                    if (role.Equals(UserRole))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
             }
+
             return result;
         }
 
