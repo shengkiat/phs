@@ -14,6 +14,8 @@ namespace PHS.Common
 
         public const string Admin = "Admin";
 
+        public const string User_Role_In_String = User_Role_Doctor_Code + Form_Option_Split_Concate + User_Role_Volunteer_Code + Form_Option_Split_Concate + User_Role_CommitteeMember_Code;
+
         public const string Export_SubmittedOn = "Submitted On";
 
         public const string Form_Option_Split = "\\|";
@@ -948,6 +950,11 @@ namespace PHS.Common
         {
             return "There is no " + value + " found.";
         }
+
+        public static string GetAllUserRoles()
+        {
+            return User_Role_In_String;
+    }
 
         public static bool IsFormForSubmit(int formId)
         {

@@ -10,7 +10,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 {
     public class ParticipantJourneyModalityCircleViewModel
     {
-        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality, IList<ParticipantJourneyModality> ParticipantJourneyModalitites)
+        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality, IList<ParticipantJourneyModality> ParticipantJourneyModalitites, string userRole)
         {
             EventId = participantJourneyViewModel.EventId;
             Nric = participantJourneyViewModel.Nric;
@@ -26,6 +26,9 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             HasParent = modality.HasParent;
             Eligiblity = modality.Eligiblity;
             Labels = modality.Labels;
+            Role = modality.Role;
+
+            UserRole = userRole;
 
             modalityForms = new List<int>();
 
@@ -65,6 +68,9 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public Nullable<bool> HasParent { get; }
         public string Eligiblity { get; }
         public Nullable<int> Labels { get; }
+        public string Role { get; }
+
+        private string UserRole { get; }
 
         public List<int> modalityForms { get; }
         public List<int> modalityCompletedForms { get; }
@@ -80,6 +86,16 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 return "Pending";
             }
+        }
+
+        public bool isModalityAllowToClick()
+        {
+            bool result = true;
+            if (!string.IsNullOrEmpty(Role))
+            {
+                result = Role.Contains(UserRole);
+            }
+            return result;
         }
 
         public bool isAllFormsCompleted()

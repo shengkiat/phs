@@ -146,6 +146,7 @@
     <Compile Include="ViewModel\FormExport\FormExportResultViewModel.cs" />
     <Compile Include="ViewModel\FormExport\FormExportViewModel.cs" />
     <Compile Include="ViewModel\FormImport\FormImportViewModel.cs" />
+    <Compile Include="ViewModel\Event\ModalityRole.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyFormViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneyModalityCircleViewModel.cs" />
     <Compile Include="ViewModel\ParticipantJourney\ParticipantJourneySearchViewModel.cs" />

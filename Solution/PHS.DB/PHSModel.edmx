@@ -68,6 +68,7 @@
           <Property Name="Status" Type="nvarchar(max)" />
           <Property Name="Eligiblity" Type="nvarchar(max)" />
           <Property Name="Labels" Type="int" />
+          <Property Name="Role" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ModalityForm">
           <Key>
@@ -877,6 +878,7 @@
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Eligiblity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Labels" Type="Int32" />
+          <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_modality" FromRole="Modality" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_modality" FromRole="Modality" ToRole="Summary" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.EventModality" FromRole="Modality" ToRole="PHSEvent" />
@@ -1395,6 +1397,7 @@
           <EntitySetMapping Name="Modalities">
             <EntityTypeMapping TypeName="phsModel.Modality">
               <MappingFragment StoreEntitySet="Modality">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Labels" ColumnName="Labels" />
                 <ScalarProperty Name="Eligiblity" ColumnName="Eligiblity" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

@@ -73,6 +73,32 @@
         transition: .5s;
     }
 
+    .round-button-inactive {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        background: grey;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: not-allowed;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        /* ...and now for the proper property */
+        transition: .5s;
+    }
+
+    .round-button-inactive:hover {
+        background: #0f2a54;
+    }
+
 
 </style>
 
@@ -145,9 +171,9 @@
         {
 
 
-          string imagePath = element.IconPath;
+            string imagePath = element.IconPath;
     
-                imagePath = imagePath.Replace("../../../", "/phs/");
+            imagePath = imagePath.Replace("../../../", "/phs/");
 
 
 
@@ -159,8 +185,18 @@
                     @element.Name
                 </button>
 
-                    
+
             }
+
+            else if (!element.isModalityAllowToClick())
+            {
+                <button name="buttons" value="@element.Name" class="round-button round-button-inactive" id="@element.ModalityID" disabled>
+                    <img src=@imagePath height="35" width="35" />
+                    <br />
+                    @element.Name
+                </button>
+            }
+
 
             else if (element.isAllFormsCompleted())
             {
@@ -170,7 +206,7 @@
                     @element.Name
                 </button>
 
-                    
+
             }
 
             else
@@ -180,7 +216,7 @@
                     <br />
                     @element.Name
                 </button>
-            }
+    }
 
             <input id="[status]-@element.ModalityID" type="hidden" value="@element.GetStatus()" />
         }

@@ -112,7 +112,7 @@ namespace PHS.Web.Controllers
                 return Redirect("Index");
             }
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 string message = string.Empty;
                 MessageType messageType = MessageType.ERROR;
@@ -204,7 +204,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult InternalFillIn(int id, bool embed = false)
         {
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
 

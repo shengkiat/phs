@@ -11,6 +11,7 @@ using PHS.Common;
 using System.IO;
 using PHS.DB.ViewModels;
 using PHS.Web.Filter;
+using PHS.Business.Extensions;
 
 namespace PHS.Web.Controllers
 {
@@ -168,6 +169,15 @@ namespace PHS.Web.Controllers
             modality.Status = "Pending";
             modality.EventID = eventid;
 
+            var modalityRoleList = new List<ModalityRole>();
+
+            foreach (var role in Constants.User_Role_In_String.Split(Constants.Form_Option_Split))
+            {
+                modalityRoleList.Add(new ModalityRole { Name = role, Checked = true });
+            }
+
+            modality.ModalityRole = modalityRoleList;
+
             return modality;
         }
 
@@ -175,7 +185,22 @@ namespace PHS.Web.Controllers
         {
             ModalityEventViewModel view = new ModalityEventViewModel();
             Util.CopyNonNullProperty(modality, view);
-     
+
+            var modalityRoleList = new List<ModalityRole>();
+
+            foreach(var role in Constants.User_Role_In_String.Split(Constants.Form_Option_Split))
+            {
+                bool tochecked = false;
+                if (!string.IsNullOrEmpty(modality.Role) && modality.Role.Contains(role))
+                {
+                    tochecked = true;
+                }
+
+                modalityRoleList.Add(new ModalityRole { Name = role, Checked = tochecked });
+            }
+
+            view.ModalityRole = modalityRoleList;
+
             List<ModalityForm> modalityFormList = new List<ModalityForm>(); 
 
             if(modality.Forms != null) { 

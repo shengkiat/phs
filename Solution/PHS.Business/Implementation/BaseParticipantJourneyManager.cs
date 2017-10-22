@@ -50,7 +50,7 @@ namespace PHS.Business.Implementation
 
         private ParticipantJourneyModalityCircleViewModel copyToPJMCVM(ParticipantJourneyViewModel pjvm, Modality modality, IList<ParticipantJourneyModality> matchedPjms)
         {
-            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality, matchedPjms);
+            ParticipantJourneyModalityCircleViewModel pjmcvm = new ParticipantJourneyModalityCircleViewModel(pjvm, modality, matchedPjms, GetLoginUserRole());
 
             return pjmcvm;
         }

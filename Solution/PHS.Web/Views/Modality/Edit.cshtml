@@ -1,4 +1,6 @@
 ﻿@model PHS.Business.ViewModel.Event.ModalityEventViewModel
+@using PHS.Business.Extensions
+@using PHS.Common
 
 @{
     ViewBag.Title = "UpdateModality";
@@ -56,6 +58,28 @@
                 @Html.TextBoxFor(m => m.ImageUpload, new { type = "file" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ModalityRole, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @for (var i = 0; i < Model.ModalityRole.Count; i++)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(it => it.ModalityRole[i].Name)
+                                @Html.DisplayFor(it => it.ModalityRole[i].Name)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(it => it.ModalityRole[i].Checked, new { Style = "vertical-            align:3px}" })
+                            </td>
+                        </tr>
+                    </table>
+
+                }  
+            </div>
+            
+        </div>
+
         <h4>Forms</h4>
 
         @if (Model != null && Model.modalityFormList != null)
