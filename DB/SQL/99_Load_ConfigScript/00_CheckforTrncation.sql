@@ -26,12 +26,12 @@ update DataCollection set [Label Text] = '13. Does the participant drink alcohol
 
 Please use the following guideline to judge as to whether participant is drinking excessive alcohol. ''Men should drink no more than 2 standard drinks a day, and women, no more than 1. 
 
-A standard alcoholic drink is defined as can (330 ml) regular beer, Half glass (175 ml) wine or 1 nip (35 ml) spirit.''' where id = 78 
+A standard alcoholic drink is defined as can (330 ml) regular beer, Half glass (175 ml) wine or 1 nip (35 ml) spirit.''' where id = 79 
 
 update DataCollection set [Label Text] = 'REFER TO SOCIAL SUPPORT STATION if participant is in need & willing to seek financial aid. Please indicate on 1) Referrals Tab 2) Page 2 of Form A.
 
 Note the following criteria for your assessment: 
-Per-capita monthly income for CHAS: Orange Card: $1101- $1800; Blue Card: $1100 and below' where id = 99
+Per-capita monthly income for CHAS: Orange Card: $1101- $1800; Blue Card: $1100 and below' where id = 100
 
 update DataCollection set [Label Text] = 'The 8 items of this schedule require raters to make a judgement as to whether the proposition under “Assessment” is satisfied or not. Each question must be asked exactly as shown but follow-up or subsidiary questions may be used to clarify the initial answer.
 Select 1 = Fits the assessment criteria; Select 0 = Does not fit the criteria; participant is well.' where id = 182

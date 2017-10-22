@@ -17,7 +17,7 @@
 
 
         });
-        var value = $("input[type=checkbox][name=SubmitFields[@Model.DomId].Checkbox]:checked").val();
+        var value = $('input[type=checkbox][name=' + fieldName + ']:checked').val();
         displayStandardReferenceResult(value, @Model.DomId);
     });
 

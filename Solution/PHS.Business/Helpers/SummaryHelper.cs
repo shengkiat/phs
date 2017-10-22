@@ -449,7 +449,7 @@ namespace PHS.Business.Helpers
             {
                 if (fieldName.ToUpper().Equals("HxTakingField79".ToUpper())) //Average Reading Systolic (average of closest 2 readings)
                 {
-                    if (isLargeThanOrEqualExpectIntValue(fieldValue, 140)) //If above 140
+                    if (isLargeThanOrEqualExpectIntValue(fieldValue, 120)) //If above 120
                     {
                         return true;
                     }
@@ -457,7 +457,7 @@ namespace PHS.Business.Helpers
 
                 if (fieldName.ToUpper().Equals("HxTakingField80".ToUpper())) //Average Reading Diastolic (average of closest 2 readings)
                 {
-                    if (isLargeThanOrEqualExpectIntValue(fieldValue, 90)) //If above 90
+                    if (isLargeThanOrEqualExpectIntValue(fieldValue, 80)) //If above 80
                     {
                         return true;
                     }
@@ -549,7 +549,7 @@ namespace PHS.Business.Helpers
 
                 if (fieldName.ToUpper().Equals("GeriField30".ToUpper())) //Total Score: //1. Cognitive Screening - EBAS-DEP
                 {
-                    if (isLessThanExpectIntValue(fieldValue, 3)) //If less than 3
+                    if (isLargeThanOrEqualExpectIntValue(fieldValue, 3)) //If >/= 3
                     {
                         return true;
                     }
@@ -568,7 +568,7 @@ namespace PHS.Business.Helpers
                         {
                             DateTime now = DateTime.Today;
                             int age = now.Year - dob.Year;
-                            if (age >= 60)
+                            if (age >= 55)//If >/=55
                             {
                                 return true;
                             }
@@ -615,6 +615,8 @@ namespace PHS.Business.Helpers
             }
 
             /////////////////  Social Support /////////////////
+
+    
             if (summaryCategory.ToUpper().Equals("Social Support".ToUpper()))
             {
                 if (fieldName.ToUpper().Equals("SocialSupportField1".ToUpper())) //If you feel that the participant requires further social support, please check this box.
@@ -624,6 +626,39 @@ namespace PHS.Business.Helpers
                         return true;
                     }
                 }
+
+                if (fieldName.ToUpper().Equals("HxTakingField97".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField34".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField91".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
+                if (fieldName.ToUpper().Equals("GeriField156".ToUpper())) //If checked, label text to appear for referral.
+                {
+                    if (isEqualsYes(fieldValue)) //If checked
+                    {
+                        return true;
+                    }
+                }
+
             }
 
             return Result;

@@ -67,7 +67,7 @@ namespace PHS.Business.Implementation.FillIn
             
         }
 
-        protected override void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId)
+        protected override void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId, IDictionary<int, string> submissionFields)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
 
@@ -130,6 +130,14 @@ namespace PHS.Business.Implementation.FillIn
 
             foreach (var field in templateView.Fields)
             {
+                if (field.ConditionTemplateFieldID.HasValue)
+                {
+                    if (!isConditionalFieldRequired(field, submissionFields))
+                    {
+                        continue;
+                    }
+                }
+
                 if (field.SummaryFieldName != null && field.SummaryFieldName.Length >0
                         && field.SummaryType != null && field.SummaryType.Length > 0)
                 {

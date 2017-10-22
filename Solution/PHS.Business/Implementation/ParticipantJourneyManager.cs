@@ -453,18 +453,15 @@ namespace PHS.Business.Implementation
                         foreach (Form form in modality.Forms)
                         {
                             ParticipantJourneyModality toRemovePJM = unitOfWork.ParticipantJourneyModalities.GetParticipantJourneyModality(participant.Nric, phsEvent.PHSEventID, form.FormID, modality.ModalityID);
-                            //toRemovePJM.Modality = null;
-                            //toRemovePJM.Form = null;
-                            //toRemovePJM.PHSEvent = null;
-                            //toRemovePJM.Participant = null;
 
-                            //using (TransactionScope scope = new TransactionScope())
-                            //{
-                            //    unitOfWork.Complete();
-                            //    scope.Complete();
-                            //}
-
-                            unitOfWork.ParticipantJourneyModalities.Remove(toRemovePJM);
+                            if(toRemovePJM.TemplateID != null && toRemovePJM.EntryId != new Guid("10000000-9999-9999-9999-000000000001"))
+                            {
+                                return "Failed";
+                            } else
+                            {
+                                unitOfWork.ParticipantJourneyModalities.Remove(toRemovePJM);
+                            }
+                            
 
                             using (TransactionScope scope = new TransactionScope())
                             {

@@ -6,15 +6,23 @@ use phsDM_Participant
 select * into #temp1 FROM cte WHERE rn = 1
 
 insert into [phs].dbo.Participant (nric, FullName, HomeNumber, MobileNumber, DateOfBirth, Language, Gender, Address, PostalCode, Race, Citizenship, Salutation) 
-select nric, name, [home number], [handphone number], CONVERT(date, [date of birth], 103), CONCAT(english, mandarin, malay, tamil, others), gender, address, [postal code], race, citizenship,
+select nric, name, [home number], [handphone number], CONVERT(date, [date of birth], 103), CONCAT(english, mandarin, malay, tamil, others), gender,
+'Blk: , Street: ' + address + ', Unit: ', [postal code], race, citizenship,
 'A' from #temp1
 
 INSERT INTO phs.[dbo].[PHSEvent]([Title],[StartDT],[EndDT],[Venue],[IsActive],[CreatedBy],[CreatedDateTime])
      VALUES ('PHS 2014 - Data Migration', '01-01-2014', '01-01-2014', 'Data Migration', 1, 'T', getdate()) 
-INSERT INTO phs.[dbo].[PHSEvent]([Title],[StartDT],[EndDT],[Venue],[IsActive],[CreatedBy],[CreatedDateTime])
-     VALUES ('PHS 2015 - Data Migration', '01-01-2015', '01-01-2015', 'Data Migration', 1, 'T', getdate()) 
-INSERT INTO phs.[dbo].[PHSEvent]([Title],[StartDT],[EndDT],[Venue],[IsActive],[CreatedBy],[CreatedDateTime])
-     VALUES ('PHS 2016 - Data Migration', '01-01-2016', '01-01-2016', 'Data Migration', 1, 'T', getdate()) 
+--INSERT INTO phs.[dbo].[PHSEvent]([Title],[StartDT],[EndDT],[Venue],[IsActive],[CreatedBy],[CreatedDateTime])
+--     VALUES ('PHS 2015 - Data Migration', '01-01-2015', '01-01-2015', 'Data Migration', 1, 'T', getdate()) 
+--INSERT INTO phs.[dbo].[PHSEvent]([Title],[StartDT],[EndDT],[Venue],[IsActive],[CreatedBy],[CreatedDateTime])
+--     VALUES ('PHS 2016 - Data Migration', '01-01-2016', '01-01-2016', 'Data Migration', 1, 'T', getdate()) 
+
+update phs.dbo.PHSEvent set [Title] = 'PHS 2015 - Data Migration',[StartDT] = '01-01-2015', [EndDT] = '01-01-2015', [Venue] = 'Data Migration', [IsActive] = 1, [CreatedBy] = 'T', [CreatedDateTime] = getdate() where title like '%2015%'
+
+update phs.dbo.PHSEvent set [Title] = 'PHS 2016 - Data Migration',[StartDT] = '01-01-2016', [EndDT] = '01-01-2016', [Venue] = 'Data Migration', [IsActive] = 1, [CreatedBy] = 'T', [CreatedDateTime] = getdate() where title like '%2016%'
+
+delete from phs.dbo.EventModality where PHSEventID = (select PHSEventID from phs.dbo.phsEvent where title = 'PHS 2015 - Data Migration')
+delete from phs.dbo.EventModality where PHSEventID = (select PHSEventID from phs.dbo.phsEvent where title = 'PHS 2016 - Data Migration')
 
 	 
 declare @yearEventID2014 as int 

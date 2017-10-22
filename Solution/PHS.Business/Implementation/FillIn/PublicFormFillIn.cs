@@ -19,7 +19,7 @@ namespace PHS.Business.Implementation.FillIn
         {
         }
 
-        protected override void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId)
+        protected override void HandleAdditionalInsert(TemplateViewModel templateView, Template template, FormCollection formCollection, Guid entryId, IDictionary<int, string> submissionFields)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
 
