@@ -199,7 +199,7 @@ namespace PHS.Business.Implementation.FillIn
                 string dateValue = values[key].ToString();
                 if (!string.IsNullOrEmpty(dateValue))
                 {
-                    result = Convert.ToDateTime(dateValue);
+                    result = DateTime.ParseExact(dateValue, @"dd/M/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
 

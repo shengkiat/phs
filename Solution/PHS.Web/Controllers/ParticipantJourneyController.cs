@@ -112,7 +112,7 @@ namespace PHS.Web.Controllers
                 return Redirect("Index");
             }
 
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 string message = string.Empty;
                 MessageType messageType = MessageType.ERROR;
@@ -204,7 +204,7 @@ namespace PHS.Web.Controllers
 
         public ActionResult InternalFillIn(int id, bool embed = false)
         {
-            using (var participantJourneyManager = new ParticipantJourneyManager())
+            using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
                 ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
 
@@ -323,6 +323,8 @@ namespace PHS.Web.Controllers
                         }
                     }
 
+                    RemoveValuesFromTempData(formCollection);
+
                     TempData["ParticipantJourneyModalityCircleViewModel"] = participantJourneyModalityCircles;
                     //TempData["success"] = templateView.ConfirmationMessage;
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
@@ -344,9 +346,17 @@ namespace PHS.Web.Controllers
             }
         }
 
-        public PartialViewResult ActivateCirclesFromMSSS(string activateList)
+        private void RemoveValuesFromTempData(FormCollection formCollection)
         {
-           
+            foreach (var key in formCollection.AllKeys)
+            {
+                ViewData.Remove(key.ToLower());
+            }
+        }
+
+        public ActionResult ActivateCirclesFromMSSS(string activateList)
+        {
+
 
             ICollection<ParticipantJourneyModalityCircleViewModel> modalityList = (List<ParticipantJourneyModalityCircleViewModel>)TempData.Peek("ParticipantJourneyModalityCircleViewModel");
 
@@ -368,10 +378,22 @@ namespace PHS.Web.Controllers
 
             using (var participantJourneyManager = new ParticipantJourneyManager(GetLoginUser()))
             {
-                participantJourneyManager.UpdateParticipantJourneyModalityFromMSS(modalityList);
-            }
+                String updateResults = "Failed"; 
+                updateResults = participantJourneyManager.UpdateParticipantJourneyModalityFromMSS(modalityList);
+                              
 
-            return PartialView("_ViewParticipantJourneyCirclePartial", modalityList);
+                ParticipantJourneySearchViewModel psm = (ParticipantJourneySearchViewModel)TempData.Peek("ParticipantJourneySearchViewModel");
+                List<ParticipantJourneyModalityCircleViewModel> pjmcyvmItems = participantJourneyManager.GetParticipantMegaSortingStation(psm);
+
+                if (updateResults.Equals("Failed"))
+                {
+                    return View("_MegaSortingStationPartial.cshtml", pjmcyvmItems);
+                }
+                else
+                {
+                    return PartialView("_ViewParticipantJourneyCirclePartial", modalityList);
+                }                
+            }
         }
     }
 }

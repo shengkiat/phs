@@ -14,6 +14,8 @@ namespace PHS.Common
 
         public const string Admin = "Admin";
 
+        public const string User_Role_In_String = User_Role_Doctor_Code + Form_Option_Split_Concate + User_Role_Volunteer_Code + Form_Option_Split_Concate + User_Role_CommitteeMember_Code;
+
         public const string Export_SubmittedOn = "Submitted On";
 
         public const string Form_Option_Split = "\\|";
@@ -949,9 +951,46 @@ namespace PHS.Common
             return "There is no " + value + " found.";
         }
 
+        public static string GetAllUserRoles()
+        {
+            return User_Role_In_String;
+    }
+
         public static bool IsFormForSubmit(int formId)
         {
-            return formId != 38 && formId != 17;
+            bool isFormForSubmit = false; 
+
+            switch (formId)
+            {
+                case 12:
+                    break;
+                case 38:                    
+                    break;
+                case 17:
+                    break;
+                case 9:
+                    break;
+                case 47:
+                    break;
+                case 48: 
+                    break;
+                case 49: 
+                    break;
+                case 50:
+                        break;
+                case 51:
+                        break;
+                case 52:
+                        break;
+                case 53:
+                        break;
+                default:
+                    isFormForSubmit = true;
+                    break; 
+
+            }
+
+            return isFormForSubmit;
         }
     }
 }

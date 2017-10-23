@@ -223,10 +223,50 @@ namespace PHS.Business.Extensions
                         return true;
                     }
 
-                    var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
-                    var format = new string[] { "M-dd-yyyy" };
-                    DateTime date;
-                    return DateTime.TryParseExact(dateValue, "M-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out date);
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(day))
+                        {
+                            int dayValue = Int32.Parse(day);
+                            if (dayValue <= 0 || dayValue >= 32)
+                            {
+                                return false;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(month))
+                        {
+                            int monthValue = Int32.Parse(month);
+                            if (monthValue <= 0 || monthValue >= 13)
+                            {
+                                return false;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(year))
+                        {
+                            int yearValue = Int32.Parse(year);
+                            if (yearValue <= 1916 || yearValue >= 2999)
+                            {
+                                return false;
+                            }
+                        }
+
+
+                        return true;
+                    }
+
+                    catch (FormatException)
+                    {
+                        return false;
+                    }
+
+                /*
+                var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
+                var format = new string[] { "M-dd-yyyy" };
+                DateTime date;
+                return DateTime.TryParseExact(dateValue, "M-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out date);
+                */
                 case Constants.TemplateFieldType.FILEPICKER:
                     HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];
                     var maxSize = field.MaxFileSize * 1024;
@@ -323,59 +363,7 @@ namespace PHS.Business.Extensions
 
                     return "";
 
-                    //if (!stripHtml)
-                    //{
-                    //    if (!string.IsNullOrEmpty(value.Value))
-                    //    {
-                    //        var fileValueObject = value.Value.FromJson<FileValueObject>();
-
-                    //        if (!string.IsNullOrEmpty(fileValueObject.FileName))
-                    //        {
-                    //            var imagePreviewClass = "";
-                    //            var imagePreviewAttribute = "";
-                    //            var downloadPath = "/PublicForm/file/download/{0}".FormatWith(value.Id);
-                    //            if (fileValueObject.IsImage())
-                    //            {
-                    //                imagePreviewClass = "img-tip";
-                    //                if (fileValueObject.IsSavedInCloud)
-                    //                {
-                    //                    imagePreviewAttribute = "data-image-path='http://{0}.s3.amazonaws.com/{1}'".FormatWith(WebConfig.Get("awsbucket"), fileValueObject.SaveName);
-                    //                }
-                    //                else
-                    //                {
-                    //                    imagePreviewAttribute = "data-image-path='{0}'".FormatWith(fileValueObject.ImageViewPath());
-                    //                }
-                    //            }
-
-
-                    //            StringBuilder sb = new StringBuilder();
-                    //            sb.Append("<ul class='horizontal-list'><li class='file-icon-item'>");
-                    //            sb.AppendFormat("<a href='{0}' class='{1}' {2}>", downloadPath, imagePreviewClass, imagePreviewAttribute);
-                    //            sb.AppendFormat("<img src='/content/images/spacer.gif' class='image-bg fm-file-icon fm-file-{0}-icon' alt='file icon' />", fileValueObject.Extension.Replace(".", ""));
-                    //            sb.AppendFormat("</a>");
-                    //            sb.Append("</li><li class='file-name-item'>");
-                    //            sb.AppendFormat("<a href='{0}'>{1}</a>", downloadPath, fileValueObject.FileName.LimitWithElipses(30));
-                    //            sb.Append("</li></ul>");
-                    //            return sb.ToString();
-                    //        }
-                    //    }
-
-                    //    return "";
-                    //}
-                    //else
-                    //{
-
-                    //    if (!string.IsNullOrEmpty(value.Value))
-                    //    {
-                    //        var fileValueObject = value.Value.FromJson<FileValueObject>();
-                    //        return fileValueObject.FileName;
-                    //    }
-                    //    else
-                    //    {
-                    //        return "";
-                    //    }
-
-                    //}
+                    
 
 
             }
@@ -524,6 +512,9 @@ namespace PHS.Business.Extensions
                     }
                     else
                     {
+                        DateTime date = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
+                        value = date.ToString("dd/M/yyyy hh:mm:ss tt");
+                        /*
                         var dateValue = "{0}-{1}-{2}".FormatWith(month, day, year);
                         //var format = new string[] { "M-dd-yyyy" };
                         DateTime date;
@@ -534,7 +525,7 @@ namespace PHS.Business.Extensions
                         else
                         {
                             value = "";
-                        }
+                        }*/
 
                     }
                     break;
@@ -613,6 +604,9 @@ namespace PHS.Business.Extensions
                     break;
                 case Constants.TemplateFieldType.SIGNATURE:
                     value = form.SubmittedFieldValue(field.DomId, fType.ToTitleCase());
+                    break;
+                case Constants.TemplateFieldType.DOCTORMEMO:
+                    value = form.SubmittedFieldValue(field.DomId, "TextArea");
                     break;
                 case Constants.TemplateFieldType.FILEPICKER:
                     //HttpPostedFile file = HttpContext.Current.Request.Files[SubmittedFieldName(field.DomId, fType.ToTitleCase())];

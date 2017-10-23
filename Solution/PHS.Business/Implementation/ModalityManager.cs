@@ -77,6 +77,23 @@ namespace PHS.Business.Implementation
                 int count = phsEvent.Modalities.Count;
                 modality.Position= count;
 
+                string roleToUpdate = string.Empty;
+
+                foreach (var modalityRole in modalityEventView.ModalityRole)
+                {
+                    if (modalityRole.Checked)
+                    {
+                        roleToUpdate += Constants.Form_Option_Split_Concate + modalityRole.Name;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(roleToUpdate))
+                {
+                    roleToUpdate = roleToUpdate.Remove(0, 1);
+                }
+
+                modality.Role = roleToUpdate;
+
                 phsEvent.Modalities.Add(modality);
 
                 using (TransactionScope scope = new TransactionScope())
@@ -101,6 +118,23 @@ namespace PHS.Business.Implementation
                 if (modalityEventView.IconPath != null && modalityEventView.IconPath.Length > 0) {
                     modalityToUpdate.IconPath = modalityEventView.IconPath;
                 }
+
+                string roleToUpdate = string.Empty;
+
+                foreach(var modalityRole in modalityEventView.ModalityRole)
+                {
+                    if(modalityRole.Checked)
+                    {
+                        roleToUpdate += Constants.Form_Option_Split_Concate + modalityRole.Name;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(roleToUpdate))
+                {
+                    roleToUpdate = roleToUpdate.Remove(0, 1);
+                }
+
+                modalityToUpdate.Role = roleToUpdate;
 
                 using (TransactionScope scope = new TransactionScope())
                 {

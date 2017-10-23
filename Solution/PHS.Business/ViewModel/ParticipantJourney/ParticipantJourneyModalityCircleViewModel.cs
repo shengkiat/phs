@@ -1,4 +1,5 @@
-﻿using PHS.Common;
+﻿using PHS.Business.Extensions;
+using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PHS.Business.ViewModel.ParticipantJourney
 {
     public class ParticipantJourneyModalityCircleViewModel
     {
-        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality, IList<ParticipantJourneyModality> ParticipantJourneyModalitites)
+        public ParticipantJourneyModalityCircleViewModel(ParticipantJourneyViewModel participantJourneyViewModel, Modality modality, IList<ParticipantJourneyModality> ParticipantJourneyModalitites, string userRole)
         {
             EventId = participantJourneyViewModel.EventId;
             Nric = participantJourneyViewModel.Nric;
@@ -26,15 +27,18 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             HasParent = modality.HasParent;
             Eligiblity = modality.Eligiblity;
             Labels = modality.Labels;
+            Role = modality.Role;
 
-            modalityForms = new List<int>();
+            UserRole = userRole;
+
+            modalityForms = new HashSet<int>();
 
             foreach (var form in modality.Forms)
             {
                 modalityForms.Add(form.FormID);
             }
 
-            modalityCompletedForms = new List<int>();
+            modalityCompletedForms = new HashSet<int>();
             foreach(var pjm in ParticipantJourneyModalitites)
             {
                 if (Constants.Internal_Form_Type_MegaSortingStation.Equals(pjm.Form.InternalFormType))
@@ -65,9 +69,12 @@ namespace PHS.Business.ViewModel.ParticipantJourney
         public Nullable<bool> HasParent { get; }
         public string Eligiblity { get; }
         public Nullable<int> Labels { get; }
+        public string Role { get; }
 
-        public List<int> modalityForms { get; }
-        public List<int> modalityCompletedForms { get; }
+        private string UserRole { get; }
+
+        public HashSet<int> modalityForms { get; }
+        public HashSet<int> modalityCompletedForms { get; }
 
         public string GetStatus()
         {
@@ -80,6 +87,25 @@ namespace PHS.Business.ViewModel.ParticipantJourney
             {
                 return "Pending";
             }
+        }
+
+        public bool isModalityAllowToClick()
+        {
+            bool result = true;
+            if (!string.IsNullOrEmpty(Role))
+            {
+                result = false;
+                foreach (var role in Role.Split(Constants.Form_Option_Split_Concate))
+                {
+                    if (role.Equals(UserRole))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public bool isAllFormsCompleted()

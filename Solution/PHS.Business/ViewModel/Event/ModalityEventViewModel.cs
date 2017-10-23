@@ -20,6 +20,7 @@ namespace PHS.Business.ViewModel.Event
         public bool IsMandatory { get; set; }
         public bool HasParent { get; set; }
         public string Status { get; set; }
+        public List<ModalityRole> ModalityRole { get; set; }
         public int EventID { get; set; }
         public int ModalityID { get; set; }
         [DataType(DataType.Upload)]

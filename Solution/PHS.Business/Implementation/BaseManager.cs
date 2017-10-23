@@ -43,6 +43,11 @@ namespace PHS.Business.Implementation
             return user != null ? user.Username : "";
         }
 
+        protected string GetLoginUserRole ()
+        {
+            return user != null ? user.Role : "";
+        }
+
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {

@@ -385,7 +385,7 @@ namespace PHS.Web.Controllers
                 doc.ReplaceText("<<EVENT>>", result.Event.Title + " " + result.Event.Venue);
                 doc.ReplaceText("<<CURRENT_DATE>>", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                doc.ReplaceText("<<NAME>>", UtilityHelper.GetString(result.FullName).Limit(100));
+                doc.ReplaceText("<<NAME>>", UtilityHelper.GetString(result.FullName).Limit(35));
                 doc.ReplaceText("<<NRIC>>", UtilityHelper.GetString(result.Nric));
                 doc.ReplaceText("<<GENDER>>", UtilityHelper.GetString(result.Gender));
                 doc.ReplaceText("<<DOB>>", UtilityHelper.GetString(result.DateOfBirth));
