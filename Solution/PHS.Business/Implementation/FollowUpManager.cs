@@ -23,7 +23,7 @@ namespace PHS.Business.Implementation
         {
             return new FollowUpManager(loginUser);
         }
-        public IList<FollowUpMgmtViewModel> RetrieveScreeningEventParticipants(int? phsEventId)
+        public IList<FollowUpMgmtViewModel> GetParticipantsByFollowUpConfiguration(int? followupconfigurationid)
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
@@ -32,25 +32,25 @@ namespace PHS.Business.Implementation
 
                 var result = new List<FollowUpMgmtViewModel>();
 
-                var followupgroups = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(1).FollowUpGroups;
+                var followupgroups = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value).FollowUpGroups;
                 if (followupgroups.Count > 0)
                 {
                     foreach (var item in followupgroups)
                     {
                         var fugroup = new FollowUpMgmtViewModel();
                         fugroup.FollowUpGroup = item;
-                        fugroup.Participants = unitOfWork.Participants.findparticipants().ToList();
+                        fugroup.Participants = unitOfWork.Participants.findparticipants(item.Filter).ToList();
                         result.Add(fugroup);
                     }
                 }
-                if (phsEventId.HasValue)
-                {
+                //if (phsEventId.HasValue)
+                //{
                     //result.PHSEventId = phsEventId.Value;
                     //result.Participants = unitOfWork.Participants.FindParticipants(u => u.ParticipantJourneyModalities.Any(e => e.PHSEventID == phsEventId.Value && e.ModalityID == 1 && e.FormID == 8)).ToList();
                     //result.Participants = unitOfWork.Participants.findparticipants().ToList();
                     //return dbContext.Set<FollowUpConfiguration>().Where(u => u.FollowUpConfigurationID == id).Include(b => b.FollowUpGroups).FirstOrDefault();
 
-                }
+                //}
 
                 return result;
             }

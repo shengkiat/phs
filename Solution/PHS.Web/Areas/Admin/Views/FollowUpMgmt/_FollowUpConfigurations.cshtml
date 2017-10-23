@@ -33,7 +33,7 @@
 <script>
     $("#preview").click(function () {
             $.ajax({
-                url: "@Url.Action("GetParticipants", "FollowUpMgmt")",
+                url: "@Url.Action("GetParticipantsByFollowUpConfiguration", "FollowUpMgmt")",
                 type: "Get",
                 dataType: "html",
                 success: function (result) {

@@ -31,11 +31,11 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult GetParticipants()
+        public ActionResult GetParticipantsByFollowUpConfiguration(int? followupconfigurationid)
         {
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.RetrieveScreeningEventParticipants(3);
+                var result = followUpManager.GetParticipantsByFollowUpConfiguration(1);
                 return PartialView("_ParticipantsTable", result);
             }
         }
