@@ -51,5 +51,16 @@ namespace PHS.Repository.Repository
         {
             return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).Include(p => p.Summaries.Select(s => s.TemplateField)).FirstOrDefault();
         }
+
+        public IEnumerable<Participant> findparticipants()
+        {
+            //event:(3),modality:registration(1),new registration form(2), template:, templatefiled:gender(80),templatevalue : male
+            return dbContext.Set<Participant>().Include(p => p.ParticipantJourneyModalities
+                                               .Select(pj => pj.Form.Templates
+                                               .Select(tmp => tmp.TemplateFields
+                                               .Select(tf => tf.TemplateFieldValues))))
+                                               .Where(p => p.ParticipantJourneyModalities.Any(pj => pj.PHSEventID == 3 && pj.ModalityID == 1 && pj.FormID == 1 
+                                               && pj.Form.Templates.Any(tmp => tmp.TemplateFields.Any(tf => tf.TemplateFieldID == 80 && tf.TemplateFieldValues.Any(tv => tv.Value == "Male")))));
+        }
     }
 }

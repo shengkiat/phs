@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PHS.DB.FollowUpConfiguration>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Follow-up Configuration</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Html.DropDownList("FollowupCfgID", new SelectList(Model,"FollowUpConfigurationID", "Title"), "Select Follow-up Configuration")
+        @Html.ActionLink("Create New", "CreateFollowUpConfiguration", "FollowUpConfiguration", null, new { @class = "btn btn-primary" })
+        <button class="btn btn-primary" type="button">Edit</button>
+        <button class="btn btn-primary" type="button">Delete</button>
+    </div>
+</div>
+
+<div id="followupGroupDetails">
+</div>
+
+<script>
+    $("#FollowupCfgID").change(function (event) {
+        var fuCfgId = $(this).val();
+        if (fuCfgId != 0) {
+            $.ajax({
+                url: "@Url.Action("GetFollowUpConfigurationByID", "FollowUpConfiguration")",
+                data: { id: fuCfgId },
+                type: "Get",
+                dataType: "html",
+                success: function (result) {
+                    $("#followupGroupDetails").html(result);
+                }
+            });
+        }
+        else {
+            $("#followupGroupDetails").html("");
+        }
+    });
+</script>

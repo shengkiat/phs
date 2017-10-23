@@ -32,6 +32,7 @@ namespace PHS.Repository
             ReferenceRanges = new ReferenceRangeRepository(_context);
             Summaries = new SummaryRepository(_context);
             SummaryMappings = new SummaryMappingRepository(_context);
+            FollowUpConfigurations = new FollowUpConfigurationRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -59,6 +60,8 @@ namespace PHS.Repository
         public ISummaryRepository Summaries { get; private set; }
 
         public ISummaryMappingRepository SummaryMappings { get; private set; }
+
+        public IFollowUpConfigurationRepository FollowUpConfigurations { get; private set; }
 
         public int Complete()
         {
@@ -91,5 +94,6 @@ namespace PHS.Repository
                 _context.IsAuditEnabled = value;
             }
         }
+        
     }
 }

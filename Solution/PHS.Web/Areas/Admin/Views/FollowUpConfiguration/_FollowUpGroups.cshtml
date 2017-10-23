@@ -1,0 +1,14 @@
+﻿@model PHS.DB.FollowUpConfiguration
+
+<h2> Follow-up Groups for @Model.Title</h2>
+
+@if (Model != null && Model.FollowUpGroups != null && Model.FollowUpGroups.Count() > 0)
+{
+    foreach (var item in Model.FollowUpGroups)
+    {
+        <div>
+            <h3>@item.Title</h3>
+        </div>
+    }
+}
+

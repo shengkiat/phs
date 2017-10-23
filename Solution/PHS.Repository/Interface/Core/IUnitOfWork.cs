@@ -34,6 +34,7 @@ namespace PHS.Repository.Interface.Core
 
         ISummaryMappingRepository SummaryMappings { get; }
 
+        IFollowUpConfigurationRepository FollowUpConfigurations { get; }
         int Complete();
 
  

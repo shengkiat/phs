@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PHS.Business.ViewModel.FollowUp.FollowUpMgmtViewModel> 
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var fumodel in Model)
+    {
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <caption> @fumodel.FollowUpGroup.Title </caption>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Nric)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Salutation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Language)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].MobileNumber)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in fumodel.Participants)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nric)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Salutation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Language)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                         "View",
+                         "ViewDetails",
+                         "FollowUpMgmt",
+                         new { participantID = item.ParticipantID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+}
+

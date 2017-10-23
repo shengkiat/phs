@@ -1,0 +1,49 @@
+﻿@model PHS.DB.PHSEvent
+
+<div class="form-group">
+    <br/>
+    @Html.DropDownList("ModalityID", new SelectList(Model.Modalities, "ModalityID", "Name"))
+    @Html.DropDownList("FormID", new SelectList(Model.Modalities.First().Forms, "FormID", "Title"))
+    @Html.DropDownList("TemplateID", new SelectList(Model.Modalities.First().Forms.First().Templates, "TemplateID", "TemplateID"))
+    @Html.DropDownList("TemplateFieldID", new SelectList(Model.Modalities.First().Forms.First().Templates.First().TemplateFields, "TemplateFieldID", "Label"))
+    @Html.DropDownList("TemplateFieldID1", new SelectList(Model.Modalities.First().Forms.First().Templates.First().TemplateFields, "TemplateFieldID", "FieldType"))
+    @Html.DropDownList("TemplateFieldID2", new SelectList(Model.Modalities.First().Forms.First().Templates.First().TemplateFields, "TemplateFieldID", "Text"))
+
+
+    <select id="comparisionID">
+        <option value="1">==</option>
+        <option value="2">!=</option>
+        <option value="3">></option>
+        <option value="4">>=</option>
+        <option value="5"><</option>
+        <option value="6"><=</option>
+    </select>
+    <select id="logicaloperationID">
+        <option value="1">None</option>
+        <option value="2">AND</option>
+        <option value="3">OR</option>
+    </select>
+
+</div>
+
+<div id="followupGroup">
+</div>
+
+<script>
+    $("#ModalityID").change(function (event) {
+        var modalityid = $(this).val();
+        $('#FormID').empty();
+        var forms = '@Model.Modalities.ElementAt(1).Forms';
+        //$.each(forms,function(){
+        //    alert(5);
+        //});
+        //for( f in forms)
+        //{
+        //    alert(f.Title);
+        //    $('#FormID').append($("<option></option>").val(f.FormID).html(f.Title));
+        //}
+        for (var f = forms.First() ; f.hasCurrent; f.moveNext()) {
+            alert(f.Title);
+        }
+    });
+</script>

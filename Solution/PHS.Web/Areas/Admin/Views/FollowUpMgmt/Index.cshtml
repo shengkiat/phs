@@ -1,0 +1,105 @@
+﻿@model IEnumerable<PHS.DB.PHSEvent>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Follow Up Management</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Html.DropDownList("EventID", new SelectList(Model, "PHSEventID", "Title"), "Select Event")
+
+
+        @*@using (Html.BeginForm("Index", "FollowUpMgmt", FormMethod.Get))
+        {
+            <label>Event</label>
+            @Html.DropDownList("phsEventId",
+         new SelectList(Model.PHSEvents, "PHSEventID", "Title"))
+            <button type="submit" class="btn btn-basic" value="Apply">Apply</button>
+            <h4>No Follow up configuration Deployed!!</h4>
+        }*@
+    </div>
+</div>
+
+<div id="followupConfigurations">
+</div>
+
+@*@if (Model != null && Model.Participants != null && Model.Participants.Count() > 0)
+{
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Nric)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Salutation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].Language)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Participants[0].MobileNumber)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Participants)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nric)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Salutation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Language)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                             "View",
+                             "ViewDetails",
+                             "FollowUpMgmt",
+                             new { participantID = item.ParticipantID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}*@
+<script>
+    $("#EventID").change(function (event) {
+        var eventid = $(this).val();
+        if (eventid != 0) {
+            $.ajax({
+                url: "@Url.Action("GetFollowUpConfigurationByEventID", "FollowUpMgmt")",
+                data: { phsEventId: eventid },
+                type: "Get",
+                dataType: "html",
+                success: function (result) {
+                    $("#followupConfigurations").html(result);
+                }
+            });
+        }
+        else {
+            $("#followupConfigurations").html("No Follow up configuration found!!");
+        }
+    });
+</script>

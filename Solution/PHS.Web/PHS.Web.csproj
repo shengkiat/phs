@@ -225,6 +225,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\FollowUpConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FollowUpMgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\StandardReferenceController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -440,6 +442,13 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Views\FollowUpMgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpConfiguration\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpConfiguration\_FollowUpGroups.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpConfiguration\CreateFollowUpConfiguration.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpConfiguration\_CreateFollowUpGroup.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpMgmt\_FollowUpConfigurations.cshtml" />
+    <Content Include="Areas\Admin\Views\FollowUpMgmt\_ParticipantsTable.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />

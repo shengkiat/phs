@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PHS.DB.FollowUpConfiguration>
+
+<div class="panel panel-default">
+    <div class="panel-body" style="width: 100%;">
+        <div style="float:left; width: 80%">
+            <h3>List of existing configuration</h3>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <input type="checkbox" name="@item.Title" value="@item.Title">  @item.Title
+                    <br />
+                }
+            }
+        </div>
+        <div style="float:right;">
+            <button class="btn btn-primary" type="button" id="preview">Preview</button>
+            <br/>
+            <br/>
+            <button class="btn btn-primary" type="button">Deploy</button>
+            <br/>
+            <br/>
+            <button class="btn btn-primary" type="button">Delete</button>
+            <br/>
+            <br/>
+        </div>
+    </div>
+</div>
+
+<div id="participanttable">
+</div>
+
+<script>
+    $("#preview").click(function () {
+            $.ajax({
+                url: "@Url.Action("GetParticipants", "FollowUpMgmt")",
+                type: "Get",
+                dataType: "html",
+                success: function (result) {
+                    $("#participanttable").html(result);
+                }
+            });
+    });
+</script>
