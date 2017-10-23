@@ -52,7 +52,7 @@ namespace PHS.Repository.Repository
             return dbContext.Set<Participant>().Where(predicate).Include(p => p.PHSEvents.Select(e => e.Modalities.Select(y => y.Forms))).Include(p => p.Summaries.Select(s => s.TemplateField)).FirstOrDefault();
         }
 
-        public IEnumerable<Participant> findparticipants(string searchstring)
+        public IEnumerable<Participant> SearchParticipants(string searchstring)
         {
             //event:(3),modality:registration(1),new registration form(2), template:, templatefiled:gender(80),templatevalue : male
             //searchstring = "3#1#1#1#80#==#Male";

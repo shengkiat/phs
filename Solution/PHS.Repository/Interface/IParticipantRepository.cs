@@ -9,7 +9,7 @@ namespace PHS.Repository.Interface
     public interface IParticipantRepository : IRepository<Participant>
     {
         IEnumerable<Participant> FindParticipants(Expression<Func<Participant, bool>> predicate);
-        IEnumerable<Participant> findparticipants(string searchstring);
+        IEnumerable<Participant> SearchParticipants(string searchstring);
         Participant FindParticipant(string nric);
         Participant FindParticipant(string nric, int phsEventId);
         Participant FindParticipant(int participantId);

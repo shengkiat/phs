@@ -8,7 +8,7 @@
             {
                 foreach (var item in Model)
                 {
-                    <input type="checkbox" name="@item.Title" value="@item.Title">  @item.Title
+                    <input type="checkbox" name="checkbox" value="@item.FollowUpConfigurationID">  @item.Title
                     <br />
                 }
             }
@@ -31,14 +31,28 @@
 </div>
 
 <script>
+    $('input[type="checkbox"]').on('change', function () {
+        $(this).siblings('input[type="checkbox"]').prop('checked', false);
+    });
     $("#preview").click(function () {
+        var configurationid;
+        $.each($("input[name='checkbox']:checked"), function () {
+            configurationid = $(this).val();
+        });
+        if (configurationid != undefined) {
             $.ajax({
                 url: "@Url.Action("GetParticipantsByFollowUpConfiguration", "FollowUpMgmt")",
+                data: { followupconfigurationid: configurationid },
                 type: "Get",
                 dataType: "html",
                 success: function (result) {
                     $("#participanttable").html(result);
                 }
             });
+        }
+        else
+        {
+            alert("Select a configuration to preview!")
+        }
     });
 </script>
