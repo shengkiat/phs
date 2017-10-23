@@ -112,7 +112,10 @@ namespace PHS.Web.Controllers
                    
                 case Common.Constants.User_Role_Volunteer_Code:
                     return Redirect("~/ParticipantJourney/Index");
-                   
+
+                case Common.Constants.User_Role_FollowUpVolunteer_Code:
+                    return Redirect("~/FollowUp/Index");
+
                 default:
                     return RedirectToLogin();
                     

@@ -59,6 +59,9 @@ namespace PHS.Web.Controllers
                         case Constants.User_Role_Volunteer_Code:
                             result = Redirect("~/ParticipantJourney/Index");
                             break;
+                        case Constants.User_Role_FollowUpVolunteer_Code:
+                            result = Redirect("~/FollowUp/Index");
+                            break;
                     }
                 }
                 SetViewBagError(message);
