@@ -93,6 +93,12 @@
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Attributes\SkipTrackingAttribute.cs" />
+    <Compile Include="FollowUpConfiguration.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FollowUpGroup.cs">
+      <DependentUpon>PHSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Form.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>

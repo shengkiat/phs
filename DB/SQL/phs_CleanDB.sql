@@ -3,6 +3,12 @@ USE [phs]
 IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Person];
 
+IF OBJECT_ID('dbo.FollowUpGroup', 'U') IS NOT NULL 
+  DROP TABLE [dbo].FollowUpGroup;
+
+IF OBJECT_ID('dbo.FollowUpConfiguration', 'U') IS NOT NULL 
+  DROP TABLE [dbo].FollowUpConfiguration;
+
 IF OBJECT_ID('dbo.Summary', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Summary]; 
 
@@ -428,6 +434,27 @@ CREATE TABLE [dbo].[SummaryMapping](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].FollowUpConfiguration(
+	[FollowUpConfigurationID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NOT NULL,
+	[PHSEventID] [int] NULL,
+ CONSTRAINT [PK_followup_configuration] PRIMARY KEY CLUSTERED 
+(
+	[FollowUpConfigurationID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].FollowUpGroup(
+	[FollowUpGroupID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NOT NULL,
+	[Filter] [nvarchar](max) NOT NULL,
+	[FollowUpConfigurationID] [int] NOT NULL,
+ CONSTRAINT [PK_followup_group] PRIMARY KEY CLUSTERED 
+(
+	[FollowUpGroupID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 ALTER TABLE [dbo].[EventModality]  WITH CHECK ADD  CONSTRAINT [FK_EventModality_event] FOREIGN KEY([PHSEventID])
 REFERENCES [dbo].[PHSEvent] ([PHSEventID])
 GO
@@ -546,7 +573,16 @@ REFERENCES [dbo].[StandardReference] ([StandardReferenceID])
 GO
 ALTER TABLE [dbo].[Summary] CHECK CONSTRAINT [FK summary_standard_reference]
 GO
-
+ALTER TABLE [dbo].[FollowUpConfiguration]  WITH CHECK ADD  CONSTRAINT [FK followup_configuration_event] FOREIGN KEY([PHSEventID])
+REFERENCES [dbo].[PHSEvent] ([PHSEventID])
+GO
+ALTER TABLE [dbo].[FollowUpConfiguration] CHECK CONSTRAINT [FK followup_configuration_event]
+GO
+ALTER TABLE [dbo].[FollowUpGroup]  WITH CHECK ADD  CONSTRAINT [FK followup_group_configuration] FOREIGN KEY([FollowUpConfigurationID])
+REFERENCES [dbo].[FollowUpConfiguration] ([FollowUpConfigurationID])
+GO
+ALTER TABLE [dbo].[FollowUpGroup] CHECK CONSTRAINT [FK followup_group_configuration]
+GO
 --------------------------Data--------------------- 
 
 
@@ -1296,3 +1332,33 @@ INSERT [phs].[dbo].[Summary] ([Label], [ParticipantID], [PHSEventID], [ModalityI
 GO
 **/
 
+--- Follow-up configuration Sample  --
+SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] ON
+GO
+INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [PHSEventID]) VALUES (1, N'Configuration 1', 3)
+GO
+
+GO
+INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [PHSEventID]) VALUES (2, N'Configuration 2', 3)
+GO
+SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] OFF
+GO
+
+--- Follow-up configuration Sample  --
+
+SET IDENTITY_INSERT [phs].[dbo].[FollowUpGroup] ON
+GO
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (1, N'Group A', N'HxTaking#', 1)
+GO
+
+GO
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (2, N'Group B', N'HxTaking#', 1)
+GO
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (3, N'Group TestA', N'HxTaking#', 2)
+GO
+
+GO
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (4, N'Group TestB', N'HxTaking#', 2)
+GO
+SET IDENTITY_INSERT [phs].[dbo].[FollowUpGroup] OFF
+GO

@@ -21,6 +21,7 @@ namespace PHS.DB
             this.Summaries = new HashSet<Summary>();
             this.Modalities = new HashSet<Modality>();
             this.Participants = new HashSet<Participant>();
+            this.FollowUpConfigurations = new HashSet<FollowUpConfiguration>();
         }
     
         public int PHSEventID { get; set; }
@@ -42,5 +43,7 @@ namespace PHS.DB
         public virtual ICollection<Modality> Modalities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Participant> Participants { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FollowUpConfiguration> FollowUpConfigurations { get; set; }
     }
 }

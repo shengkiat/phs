@@ -27,6 +27,23 @@
           <Property Name="PHSEventID" Type="int" Nullable="false" />
           <Property Name="ModalityID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FollowUpConfiguration">
+          <Key>
+            <PropertyRef Name="FollowUpConfigurationID" />
+          </Key>
+          <Property Name="FollowUpConfigurationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PHSEventID" Type="int" />
+        </EntityType>
+        <EntityType Name="FollowUpGroup">
+          <Key>
+            <PropertyRef Name="FollowUpGroupID" />
+          </Key>
+          <Property Name="FollowUpGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Filter" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FollowUpConfigurationID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Form">
           <Key>
             <PropertyRef Name="FormID" />
@@ -326,6 +343,30 @@
           <Property Name="TemplateID" Type="int" Nullable="false" />
           <Property Name="TemplateFieldID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK followup_configuration_event">
+          <End Role="PHSEvent" Type="Self.PHSEvent" Multiplicity="0..1" />
+          <End Role="FollowUpConfiguration" Type="Self.FollowUpConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHSEvent">
+              <PropertyRef Name="PHSEventID" />
+            </Principal>
+            <Dependent Role="FollowUpConfiguration">
+              <PropertyRef Name="PHSEventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK followup_group_configuration">
+          <End Role="FollowUpConfiguration" Type="Self.FollowUpConfiguration" Multiplicity="1" />
+          <End Role="FollowUpGroup" Type="Self.FollowUpGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowUpConfiguration">
+              <PropertyRef Name="FollowUpConfigurationID" />
+            </Principal>
+            <Dependent Role="FollowUpGroup">
+              <PropertyRef Name="FollowUpConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK participant_journey_modality_form">
           <End Role="Form" Type="Self.Form" Multiplicity="1" />
           <End Role="ParticipantJourneyModality" Type="Self.ParticipantJourneyModality" Multiplicity="*" />
@@ -611,6 +652,8 @@
         <EntityContainer Name="phsModelStoreContainer">
           <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventModality" EntityType="Self.EventModality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FollowUpConfiguration" EntityType="Self.FollowUpConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FollowUpGroup" EntityType="Self.FollowUpGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterAddress" EntityType="Self.MasterAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modality" EntityType="Self.Modality" Schema="dbo" store:Type="Tables" />
@@ -629,6 +672,14 @@
           <EntitySet Name="TemplateField" EntityType="Self.TemplateField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateFieldValue" EntityType="Self.TemplateFieldValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TemplateTemplateField" EntityType="Self.TemplateTemplateField" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK followup_configuration_event" Association="Self.FK followup_configuration_event">
+            <End Role="PHSEvent" EntitySet="PHSEvent" />
+            <End Role="FollowUpConfiguration" EntitySet="FollowUpConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK followup_group_configuration" Association="Self.FK followup_group_configuration">
+            <End Role="FollowUpConfiguration" EntitySet="FollowUpConfiguration" />
+            <End Role="FollowUpGroup" EntitySet="FollowUpGroup" />
+          </AssociationSet>
           <AssociationSet Name="FK participant_journey_modality_form" Association="Self.FK participant_journey_modality_form">
             <End Role="Form" EntitySet="Form" />
             <End Role="ParticipantJourneyModality" EntitySet="ParticipantJourneyModality" />
@@ -819,6 +870,16 @@
             <End Role="TemplateField" EntitySet="TemplateFields" />
             <End Role="Template" EntitySet="Templates" />
           </AssociationSet>
+          <EntitySet Name="FollowUpConfigurations" EntityType="phsModel.FollowUpConfiguration" />
+          <EntitySet Name="FollowUpGroups" EntityType="phsModel.FollowUpGroup" />
+          <AssociationSet Name="FK_followup_configuration_event" Association="phsModel.FK_followup_configuration_event">
+            <End Role="PHSEvent" EntitySet="PHSEvents" />
+            <End Role="FollowUpConfiguration" EntitySet="FollowUpConfigurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_followup_group_configuration" Association="phsModel.FK_followup_group_configuration">
+            <End Role="FollowUpConfiguration" EntitySet="FollowUpConfigurations" />
+            <End Role="FollowUpGroup" EntitySet="FollowUpGroups" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AuditLog">
           <Key>
@@ -943,6 +1004,7 @@
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_phs_event" FromRole="PHSEvent" ToRole="Summary" />
           <NavigationProperty Name="Modalities" Relationship="phsModel.EventModality" FromRole="PHSEvent" ToRole="Modality" />
           <NavigationProperty Name="Participants" Relationship="phsModel.ParticipantPHSEvent" FromRole="PHSEvent" ToRole="Participant" />
+          <NavigationProperty Name="FollowUpConfigurations" Relationship="phsModel.FK_followup_configuration_event" FromRole="PHSEvent" ToRole="FollowUpConfiguration" />
         </EntityType>
         <EntityType Name="PHSUser">
           <Key>
@@ -1345,6 +1407,50 @@
           <End Type="phsModel.TemplateField" Role="TemplateField" Multiplicity="*" />
           <End Type="phsModel.Template" Role="Template" Multiplicity="*" />
         </Association>
+        <EntityType Name="FollowUpConfiguration">
+          <Key>
+            <PropertyRef Name="FollowUpConfigurationID" />
+          </Key>
+          <Property Name="FollowUpConfigurationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PHSEventID" Type="Int32" />
+          <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_followup_configuration_event" FromRole="FollowUpConfiguration" ToRole="PHSEvent" />
+          <NavigationProperty Name="FollowUpGroups" Relationship="phsModel.FK_followup_group_configuration" FromRole="FollowUpConfiguration" ToRole="FollowUpGroup" />
+        </EntityType>
+        <EntityType Name="FollowUpGroup">
+          <Key>
+            <PropertyRef Name="FollowUpGroupID" />
+          </Key>
+          <Property Name="FollowUpGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Filter" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FollowUpConfigurationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FollowUpConfiguration" Relationship="phsModel.FK_followup_group_configuration" FromRole="FollowUpGroup" ToRole="FollowUpConfiguration" />
+        </EntityType>
+        <Association Name="FK_followup_configuration_event">
+          <End Type="phsModel.PHSEvent" Role="PHSEvent" Multiplicity="0..1" />
+          <End Type="phsModel.FollowUpConfiguration" Role="FollowUpConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHSEvent">
+              <PropertyRef Name="PHSEventID" />
+            </Principal>
+            <Dependent Role="FollowUpConfiguration">
+              <PropertyRef Name="PHSEventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_followup_group_configuration">
+          <End Type="phsModel.FollowUpConfiguration" Role="FollowUpConfiguration" Multiplicity="1" />
+          <End Type="phsModel.FollowUpGroup" Role="FollowUpGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowUpConfiguration">
+              <PropertyRef Name="FollowUpConfigurationID" />
+            </Principal>
+            <Dependent Role="FollowUpGroup">
+              <PropertyRef Name="FollowUpConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1680,6 +1786,25 @@
               <ScalarProperty Name="TemplateFieldID" ColumnName="TemplateFieldID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="FollowUpConfigurations">
+            <EntityTypeMapping TypeName="phsModel.FollowUpConfiguration">
+              <MappingFragment StoreEntitySet="FollowUpConfiguration">
+                <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FollowUpConfigurationID" ColumnName="FollowUpConfigurationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FollowUpGroups">
+            <EntityTypeMapping TypeName="phsModel.FollowUpGroup">
+              <MappingFragment StoreEntitySet="FollowUpGroup">
+                <ScalarProperty Name="FollowUpConfigurationID" ColumnName="FollowUpConfigurationID" />
+                <ScalarProperty Name="Filter" ColumnName="Filter" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FollowUpGroupID" ColumnName="FollowUpGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

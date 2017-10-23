@@ -41,5 +41,7 @@ namespace PHS.DB
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<TemplateField> TemplateFields { get; set; }
         public virtual DbSet<TemplateFieldValue> TemplateFieldValues { get; set; }
+        public virtual DbSet<FollowUpConfiguration> FollowUpConfigurations { get; set; }
+        public virtual DbSet<FollowUpGroup> FollowUpGroups { get; set; }
     }
 }

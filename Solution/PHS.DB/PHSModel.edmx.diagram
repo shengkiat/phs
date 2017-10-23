@@ -40,6 +40,10 @@
         <AssociationConnector Association="phsModel.ModalityForm" />
         <AssociationConnector Association="phsModel.ParticipantPHSEvent" />
         <AssociationConnector Association="phsModel.TemplateTemplateField" />
+        <EntityTypeShape EntityType="phsModel.FollowUpConfiguration" Width="1.5" PointX="3" PointY="38.625" />
+        <EntityTypeShape EntityType="phsModel.FollowUpGroup" Width="1.5" PointX="5.25" PointY="38.625" />
+        <AssociationConnector Association="phsModel.FK_followup_configuration_event" />
+        <AssociationConnector Association="phsModel.FK_followup_group_configuration" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
