@@ -6,7 +6,7 @@ use phsDM_ParticipantLIVE
 select * into #temp1 FROM cte WHERE rn = 1
 
 insert into [phs].dbo.Participant (nric, FullName, HomeNumber, MobileNumber, DateOfBirth, Language, Gender, Address, PostalCode, Race, Citizenship, Salutation) 
-select nric, name, [home number], [handphone number], CONVERT(date, [date of birth], 103), CONCAT(english, mandarin, malay, tamil, others), gender,
+select nric, name, [home number], [handphone number], CONVERT(datetime, [date of birth], 103), CONCAT(english, mandarin, malay, tamil, others), gender,
 'Blk: , Street: ' + address + ', Unit: ', [postal code], race, citizenship,
 'A' from #temp1
 
