@@ -227,6 +227,7 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\FollowUpController.cs" />
     <Compile Include="Controllers\FormExportController.cs" />
     <Compile Include="Controllers\FormImportController.cs" />
     <Compile Include="Controllers\FormController.cs" />
@@ -617,6 +618,7 @@
     <Content Include="Views\ParticipantJourney\_OTConsultSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_ExhibitionSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_SocialSuportSummaryPartial.cshtml" />
+    <Content Include="Views\FollowUp\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

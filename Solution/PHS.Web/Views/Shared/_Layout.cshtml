@@ -319,8 +319,6 @@
                         <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
                         <li id = "menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
                         <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
-                        <li id=  "menu-li">@Html.ActionLink("Follow-up Management", "Index", "FollowUpMgmt", new { ControllerName = "FollowUpMgmt", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id=  "menu-li">@Html.ActionLink("Follow-up Configuration", "Index", "FollowUpConfiguration", new { ControllerName = "FollowUpConfiguration", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
                     }
                     @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
                     {
@@ -330,15 +328,14 @@
                         }
                         <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "Committee Member, Volunteer, Doctor" }, new { @style = "color:white;" })</li>
                     }
-                    @*if (@User.IsInRole("Follow-up Volunteer"))
-                    {
-                        <li id=  "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
-                    }*@
-
                     @if (@User.IsInRole("Committee Member"))
                     {
-                        <li id="menu-li">@Html.ActionLink("Follow-up Management", "Index", "FollowUpMgmt", new { ControllerName = "FollowUpMgmt", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id="menu-li">@Html.ActionLink("Follow-up Configuration", "Index", "FollowUpConfiguration", new { ControllerName = "FollowUpConfiguration", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Follow-up Management", "Index", "FollowUpMgmt", new { ControllerName = "FollowUpMgmt", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Follow-up Configuration", "Index", "FollowUpConfiguration", new { ControllerName = "FollowUpConfiguration", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                    }
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Volunteer"))
+                    {
+                        <li id = "menu-li">@Html.ActionLink("Follow-up", "Index", "FollowUp", new { ControllerName = "FollowUp", Area = "", Roles = "Committee Member, Follow-up Volunteer" }, new { @style = "color:white;" })</li>
                     }
                 </ul>
             </div>
