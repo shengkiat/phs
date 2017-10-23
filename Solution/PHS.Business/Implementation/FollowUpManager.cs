@@ -27,30 +27,25 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
-                //FollowUpMgmtViewModel result = new FollowUpMgmtViewModel();
-                //result.PHSEvents = unitOfWork.Events.GetAllActiveEvents().ToList();
-
                 var result = new List<FollowUpMgmtViewModel>();
-
+                var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == 3));
                 var followupgroups = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value).FollowUpGroups;
                 if (followupgroups.Count > 0)
                 {
                     foreach (var item in followupgroups)
                     {
+                        var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter);
                         var fugroup = new FollowUpMgmtViewModel();
                         fugroup.FollowUpGroup = item;
-                        fugroup.Participants = unitOfWork.Participants.findparticipants(item.Filter).ToList();
+                        fugroup.Participants = finalgroupparticipants.Intersect(participantsbygroup).ToList();
+                        finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
                         result.Add(fugroup);
                     }
+                    var endfugroup = new FollowUpMgmtViewModel();
+                    endfugroup.FollowUpGroup = new FollowUpGroup();
+                    endfugroup.Participants = finalgroupparticipants.ToList();
+                    result.Add(endfugroup);
                 }
-                //if (phsEventId.HasValue)
-                //{
-                    //result.PHSEventId = phsEventId.Value;
-                    //result.Participants = unitOfWork.Participants.FindParticipants(u => u.ParticipantJourneyModalities.Any(e => e.PHSEventID == phsEventId.Value && e.ModalityID == 1 && e.FormID == 8)).ToList();
-                    //result.Participants = unitOfWork.Participants.findparticipants().ToList();
-                    //return dbContext.Set<FollowUpConfiguration>().Where(u => u.FollowUpConfigurationID == id).Include(b => b.FollowUpGroups).FirstOrDefault();
-
-                //}
 
                 return result;
             }
