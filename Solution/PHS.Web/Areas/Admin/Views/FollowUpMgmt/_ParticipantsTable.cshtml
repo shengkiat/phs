@@ -111,11 +111,13 @@ else
         $.ajax({
             url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
             data: { followupconfigurationid: configurationid },
-        type: "Post",
-        dataType: "html",
-        success: function (result) {
-            alert(result);
-        }
+            type: "POST",
+            error: function (response) {
+                alert("Error encountered while printing!!");
+            },
+            success: function (response) {
+                alert(response.Success);
+            }
     });
 });
 </script>

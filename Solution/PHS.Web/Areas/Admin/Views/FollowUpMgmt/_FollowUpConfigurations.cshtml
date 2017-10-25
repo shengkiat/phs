@@ -68,11 +68,13 @@ else
             $.ajax({
                 url: "@Url.Action("DeployFollowUpConfiguration", "FollowUpMgmt")",
                 data: { followupconfigurationid: configurationid },
-            type: "Post",
-            dataType: "html",
-            success: function (result) {
-                $("#participanttable").html(result);
-            }
+                type: "POST",
+                error: function (response) {
+                    alert("Deployment unsuccessful. Possible reason : already deployed!!");
+                },
+                success: function (response) {
+                    alert(response.Success);
+                }
         });
     }
     else

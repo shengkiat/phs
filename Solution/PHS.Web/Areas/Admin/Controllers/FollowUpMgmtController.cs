@@ -1,16 +1,18 @@
 ﻿using PHS.Business.Implementation;
 using PHS.Business.ViewModel.FollowUp;
 using PHS.Common;
+using PHS.Web.Controllers;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
-    public class FollowUpMgmtController : Controller
+    public class FollowUpMgmtController : BaseController
     {
         // GET: Admin/FollowUpMgmt
         public ActionResult Index()
@@ -46,8 +48,13 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.DeployFollowUpConfiguration(followupconfigurationid, out message);
-                return View();
+                var success = followUpManager.DeployFollowUpConfiguration(followupconfigurationid, out message);
+                if (!success)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
+                }
+                return Json(new { Success = "Deployment Successful." });
             }
         }
 
@@ -57,8 +64,13 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
-                return View();
+                var success = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
+                if (!success)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
+                }
+                return Json(new { Success = "Printing Successful." });
             }
         }
 
