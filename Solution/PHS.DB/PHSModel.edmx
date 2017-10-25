@@ -33,6 +33,7 @@
           </Key>
           <Property Name="FollowUpConfigurationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Deploy" Type="bit" Nullable="false" />
           <Property Name="PHSEventID" Type="int" />
         </EntityType>
         <EntityType Name="FollowUpGroup">
@@ -112,6 +113,22 @@
           <Property Name="PostalCode" Type="nvarchar(max)" />
           <Property Name="Race" Type="nvarchar(max)" />
           <Property Name="Citizenship" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ParticipantCallerMapping">
+          <Key>
+            <PropertyRef Name="ParticipantCallerMappingID" />
+          </Key>
+          <Property Name="ParticipantCallerMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="FollowUpGroupID" Type="int" Nullable="false" />
+          <Property Name="FollowUpVolunteer" Type="nvarchar(max)" />
+          <Property Name="FollowUpVolunteerCallStatus" Type="nvarchar(max)" />
+          <Property Name="FollowUpVolunteerCallDateTime" Type="datetime2" Precision="7" />
+          <Property Name="FollowUpVolunteerCallRemark" Type="nvarchar(max)" />
+          <Property Name="CommitteeMember" Type="nvarchar(max)" />
+          <Property Name="CommitteeMemberCallStatus" Type="nvarchar(max)" />
+          <Property Name="CommitteeMemberCallDateTime" Type="datetime2" Precision="7" />
+          <Property Name="CommitteeMemberCallRemark" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ParticipantJourneyModality">
           <Key>
@@ -453,6 +470,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK participantcallermapping_followupgroup">
+          <End Role="FollowUpGroup" Type="Self.FollowUpGroup" Multiplicity="1" />
+          <End Role="ParticipantCallerMapping" Type="Self.ParticipantCallerMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowUpGroup">
+              <PropertyRef Name="FollowUpGroupID" />
+            </Principal>
+            <Dependent Role="ParticipantCallerMapping">
+              <PropertyRef Name="FollowUpGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK participantcallermapping_participant">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="ParticipantCallerMapping" Type="Self.ParticipantCallerMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipantCallerMapping">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK reference_range_standard_reference">
           <End Role="StandardReference" Type="Self.StandardReference" Multiplicity="1" />
           <End Role="ReferenceRange" Type="Self.ReferenceRange" Multiplicity="*" />
@@ -659,6 +700,7 @@
           <EntitySet Name="Modality" EntityType="Self.Modality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModalityForm" EntityType="Self.ModalityForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantCallerMapping" EntityType="Self.ParticipantCallerMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ParticipantJourneyModality" EntityType="Self.ParticipantJourneyModality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ParticipantPHSEvent" EntityType="Self.ParticipantPHSEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHSEvent" EntityType="Self.PHSEvent" Schema="dbo" store:Type="Tables" />
@@ -707,6 +749,14 @@
           <AssociationSet Name="FK participant_phs_event_phs_event" Association="Self.FK participant_phs_event_phs_event">
             <End Role="PHSEvent" EntitySet="PHSEvent" />
             <End Role="ParticipantPHSEvent" EntitySet="ParticipantPHSEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK participantcallermapping_followupgroup" Association="Self.FK participantcallermapping_followupgroup">
+            <End Role="FollowUpGroup" EntitySet="FollowUpGroup" />
+            <End Role="ParticipantCallerMapping" EntitySet="ParticipantCallerMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK participantcallermapping_participant" Association="Self.FK participantcallermapping_participant">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="ParticipantCallerMapping" EntitySet="ParticipantCallerMapping" />
           </AssociationSet>
           <AssociationSet Name="FK reference_range_standard_reference" Association="Self.FK reference_range_standard_reference">
             <End Role="StandardReference" EntitySet="StandardReference" />
@@ -880,6 +930,15 @@
             <End Role="FollowUpConfiguration" EntitySet="FollowUpConfigurations" />
             <End Role="FollowUpGroup" EntitySet="FollowUpGroups" />
           </AssociationSet>
+          <EntitySet Name="ParticipantCallerMappings" EntityType="phsModel.ParticipantCallerMapping" />
+          <AssociationSet Name="FK_participantcallermapping_followupgroup" Association="phsModel.FK_participantcallermapping_followupgroup">
+            <End Role="FollowUpGroup" EntitySet="FollowUpGroups" />
+            <End Role="ParticipantCallerMapping" EntitySet="ParticipantCallerMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participantcallermapping_participant" Association="phsModel.FK_participantcallermapping_participant">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="ParticipantCallerMapping" EntitySet="ParticipantCallerMappings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AuditLog">
           <Key>
@@ -965,6 +1024,7 @@
           <NavigationProperty Name="ParticipantJourneyModalities" Relationship="phsModel.FK_participant_journey_modality_participant" FromRole="Participant" ToRole="ParticipantJourneyModality" />
           <NavigationProperty Name="Summaries" Relationship="phsModel.FK_summary_participant" FromRole="Participant" ToRole="Summary" />
           <NavigationProperty Name="PHSEvents" Relationship="phsModel.ParticipantPHSEvent" FromRole="Participant" ToRole="PHSEvent" />
+          <NavigationProperty Name="ParticipantCallerMappings" Relationship="phsModel.FK_participantcallermapping_participant" FromRole="Participant" ToRole="ParticipantCallerMapping" />
         </EntityType>
         <EntityType Name="ParticipantJourneyModality">
           <Key>
@@ -1416,6 +1476,7 @@
           <Property Name="PHSEventID" Type="Int32" />
           <NavigationProperty Name="PHSEvent" Relationship="phsModel.FK_followup_configuration_event" FromRole="FollowUpConfiguration" ToRole="PHSEvent" />
           <NavigationProperty Name="FollowUpGroups" Relationship="phsModel.FK_followup_group_configuration" FromRole="FollowUpConfiguration" ToRole="FollowUpGroup" />
+          <Property Name="Deploy" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="FollowUpGroup">
           <Key>
@@ -1426,6 +1487,7 @@
           <Property Name="Filter" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FollowUpConfigurationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FollowUpConfiguration" Relationship="phsModel.FK_followup_group_configuration" FromRole="FollowUpGroup" ToRole="FollowUpConfiguration" />
+          <NavigationProperty Name="ParticipantCallerMappings" Relationship="phsModel.FK_participantcallermapping_followupgroup" FromRole="FollowUpGroup" ToRole="ParticipantCallerMapping" />
         </EntityType>
         <Association Name="FK_followup_configuration_event">
           <End Type="phsModel.PHSEvent" Role="PHSEvent" Multiplicity="0..1" />
@@ -1448,6 +1510,48 @@
             </Principal>
             <Dependent Role="FollowUpGroup">
               <PropertyRef Name="FollowUpConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ParticipantCallerMapping">
+          <Key>
+            <PropertyRef Name="ParticipantCallerMappingID" />
+          </Key>
+          <Property Name="ParticipantCallerMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <Property Name="FollowUpGroupID" Type="Int32" Nullable="false" />
+          <Property Name="FollowUpVolunteer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FollowUpVolunteerCallStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FollowUpVolunteerCallDateTime" Type="DateTime" Precision="7" />
+          <Property Name="FollowUpVolunteerCallRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommitteeMember" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommitteeMemberCallStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommitteeMemberCallDateTime" Type="DateTime" Precision="7" />
+          <Property Name="CommitteeMemberCallRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FollowUpGroup" Relationship="phsModel.FK_participantcallermapping_followupgroup" FromRole="ParticipantCallerMapping" ToRole="FollowUpGroup" />
+          <NavigationProperty Name="Participant" Relationship="phsModel.FK_participantcallermapping_participant" FromRole="ParticipantCallerMapping" ToRole="Participant" />
+        </EntityType>
+        <Association Name="FK_participantcallermapping_followupgroup">
+          <End Type="phsModel.FollowUpGroup" Role="FollowUpGroup" Multiplicity="1" />
+          <End Type="phsModel.ParticipantCallerMapping" Role="ParticipantCallerMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowUpGroup">
+              <PropertyRef Name="FollowUpGroupID" />
+            </Principal>
+            <Dependent Role="ParticipantCallerMapping">
+              <PropertyRef Name="FollowUpGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participantcallermapping_participant">
+          <End Type="phsModel.Participant" Role="Participant" Multiplicity="1" />
+          <End Type="phsModel.ParticipantCallerMapping" Role="ParticipantCallerMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipantCallerMapping">
+              <PropertyRef Name="ParticipantID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1789,6 +1893,7 @@
           <EntitySetMapping Name="FollowUpConfigurations">
             <EntityTypeMapping TypeName="phsModel.FollowUpConfiguration">
               <MappingFragment StoreEntitySet="FollowUpConfiguration">
+                <ScalarProperty Name="Deploy" ColumnName="Deploy" />
                 <ScalarProperty Name="PHSEventID" ColumnName="PHSEventID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FollowUpConfigurationID" ColumnName="FollowUpConfigurationID" />
@@ -1802,6 +1907,23 @@
                 <ScalarProperty Name="Filter" ColumnName="Filter" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FollowUpGroupID" ColumnName="FollowUpGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParticipantCallerMappings">
+            <EntityTypeMapping TypeName="phsModel.ParticipantCallerMapping">
+              <MappingFragment StoreEntitySet="ParticipantCallerMapping">
+                <ScalarProperty Name="CommitteeMemberCallRemark" ColumnName="CommitteeMemberCallRemark" />
+                <ScalarProperty Name="CommitteeMemberCallDateTime" ColumnName="CommitteeMemberCallDateTime" />
+                <ScalarProperty Name="CommitteeMemberCallStatus" ColumnName="CommitteeMemberCallStatus" />
+                <ScalarProperty Name="CommitteeMember" ColumnName="CommitteeMember" />
+                <ScalarProperty Name="FollowUpVolunteerCallRemark" ColumnName="FollowUpVolunteerCallRemark" />
+                <ScalarProperty Name="FollowUpVolunteerCallDateTime" ColumnName="FollowUpVolunteerCallDateTime" />
+                <ScalarProperty Name="FollowUpVolunteerCallStatus" ColumnName="FollowUpVolunteerCallStatus" />
+                <ScalarProperty Name="FollowUpVolunteer" ColumnName="FollowUpVolunteer" />
+                <ScalarProperty Name="FollowUpGroupID" ColumnName="FollowUpGroupID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="ParticipantCallerMappingID" ColumnName="ParticipantCallerMappingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

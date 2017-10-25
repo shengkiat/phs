@@ -55,11 +55,15 @@
     <Compile Include="Context\EntityTrackingConfiguration.cs" />
     <Compile Include="Context\PHSContext.cs" />
     <Compile Include="Interface\IFollowUpConfigurationRepository.cs" />
+    <Compile Include="Interface\IFollowUpGroupRepository.cs" />
+    <Compile Include="Interface\IParticipantCallerMappingRepository.cs" />
     <Compile Include="Interface\IParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IPreRegistrationRepository.cs" />
     <Compile Include="Interface\ISummaryMappingRepository.cs" />
     <Compile Include="Interface\ISummaryRepository.cs" />
     <Compile Include="Repository\FollowUpConfigurationRepository.cs" />
+    <Compile Include="Repository\FollowUpGroupRepository.cs" />
+    <Compile Include="Repository\ParticipantCallerMappingRepository.cs" />
     <Compile Include="Repository\ParticipantJourneyModalityRepository.cs" />
     <Compile Include="Interface\IReferenceRangeRepository.cs" />
     <Compile Include="Interface\IStandardReferenceRepository.cs" />

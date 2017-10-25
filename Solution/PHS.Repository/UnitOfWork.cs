@@ -33,6 +33,8 @@ namespace PHS.Repository
             Summaries = new SummaryRepository(_context);
             SummaryMappings = new SummaryMappingRepository(_context);
             FollowUpConfigurations = new FollowUpConfigurationRepository(_context);
+            FollowUpGroups = new FollowUpGroupRepository(_context);
+            ParticipantCallerMappings = new ParticipantCallerMappingRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -62,6 +64,10 @@ namespace PHS.Repository
         public ISummaryMappingRepository SummaryMappings { get; private set; }
 
         public IFollowUpConfigurationRepository FollowUpConfigurations { get; private set; }
+
+        public IFollowUpGroupRepository FollowUpGroups { get; private set; }
+
+        public IParticipantCallerMappingRepository ParticipantCallerMappings { get; private set; }
 
         public int Complete()
         {

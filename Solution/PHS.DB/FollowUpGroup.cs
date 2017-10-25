@@ -14,11 +14,19 @@ namespace PHS.DB
     
     public partial class FollowUpGroup
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FollowUpGroup()
+        {
+            this.ParticipantCallerMappings = new HashSet<ParticipantCallerMapping>();
+        }
+    
         public int FollowUpGroupID { get; set; }
         public string Title { get; set; }
         public string Filter { get; set; }
         public int FollowUpConfigurationID { get; set; }
     
         public virtual FollowUpConfiguration FollowUpConfiguration { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ParticipantCallerMapping> ParticipantCallerMappings { get; set; }
     }
 }

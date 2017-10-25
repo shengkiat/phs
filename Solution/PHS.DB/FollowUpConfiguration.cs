@@ -23,6 +23,7 @@ namespace PHS.DB
         public int FollowUpConfigurationID { get; set; }
         public string Title { get; set; }
         public Nullable<int> PHSEventID { get; set; }
+        public bool Deploy { get; set; }
     
         public virtual PHSEvent PHSEvent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

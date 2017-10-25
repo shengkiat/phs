@@ -1,5 +1,9 @@
 ﻿--------------------------Table Structure-----------------  
 USE [phs]
+
+IF OBJECT_ID('dbo.ParticipantCallerMapping', 'U') IS NOT NULL 
+  DROP TABLE [dbo].[ParticipantCallerMapping];
+
 IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
   DROP TABLE [dbo].[Person];
 
@@ -437,6 +441,7 @@ CREATE TABLE [dbo].[SummaryMapping](
 CREATE TABLE [dbo].FollowUpConfiguration(
 	[FollowUpConfigurationID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](max) NOT NULL,
+	[Deploy] [bit] NOT NULL,
 	[PHSEventID] [int] NULL,
  CONSTRAINT [PK_followup_configuration] PRIMARY KEY CLUSTERED 
 (
@@ -452,6 +457,24 @@ CREATE TABLE [dbo].FollowUpGroup(
  CONSTRAINT [PK_followup_group] PRIMARY KEY CLUSTERED 
 (
 	[FollowUpGroupID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].ParticipantCallerMapping(
+	[ParticipantCallerMappingID] [int] IDENTITY(1,1) NOT NULL,
+	[ParticipantID] [int] NOT NULL,
+	[FollowUpGroupID] [int] NOT NULL,
+	[FollowUpVolunteer] [nvarchar](max) NULL,
+	[FollowUpVolunteerCallStatus] [nvarchar](max) NULL,
+	[FollowUpVolunteerCallDateTime] [datetime2](7) NULL,
+	[FollowUpVolunteerCallRemark] [nvarchar](max) NULL,
+	[CommitteeMember] [nvarchar](max) NULL,
+	[CommitteeMemberCallStatus] [nvarchar](max) NULL,
+	[CommitteeMemberCallDateTime] [datetime2](7) NULL,
+	[CommitteeMemberCallRemark] [nvarchar](max) NULL,
+ CONSTRAINT [PK_participant_caller_mapping] PRIMARY KEY CLUSTERED 
+(
+	[ParticipantCallerMappingID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -582,6 +605,16 @@ ALTER TABLE [dbo].[FollowUpGroup]  WITH CHECK ADD  CONSTRAINT [FK followup_group
 REFERENCES [dbo].[FollowUpConfiguration] ([FollowUpConfigurationID])
 GO
 ALTER TABLE [dbo].[FollowUpGroup] CHECK CONSTRAINT [FK followup_group_configuration]
+GO
+ALTER TABLE [dbo].[ParticipantCallerMapping]  WITH CHECK ADD  CONSTRAINT [FK participantcallermapping_participant] FOREIGN KEY([ParticipantID])
+REFERENCES [dbo].[Participant] ([ParticipantID])
+GO
+ALTER TABLE [dbo].[ParticipantCallerMapping] CHECK CONSTRAINT [FK participantcallermapping_participant]
+GO
+ALTER TABLE [dbo].[ParticipantCallerMapping]  WITH CHECK ADD  CONSTRAINT [FK participantcallermapping_followupgroup] FOREIGN KEY([FollowUpGroupID])
+REFERENCES [dbo].[FollowUpGroup] ([FollowUpGroupID])
+GO
+ALTER TABLE [dbo].[ParticipantCallerMapping] CHECK CONSTRAINT [FK participantcallermapping_followupgroup]
 GO
 --------------------------Data--------------------- 
 
@@ -1335,11 +1368,11 @@ GO
 --- Follow-up configuration Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] ON
 GO
-INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [PHSEventID]) VALUES (1, N'Configuration 1', 3)
+INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (1, N'Configuration 1', 0, 3)
 GO
 
 GO
-INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [PHSEventID]) VALUES (2, N'Configuration 2', 3)
+INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (2, N'Configuration 2', 0, 3)
 GO
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] OFF
 GO
