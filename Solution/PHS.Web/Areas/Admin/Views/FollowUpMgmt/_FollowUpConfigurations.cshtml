@@ -16,10 +16,10 @@
             <button class="btn btn-primary" type="button" id="preview">Preview</button>
             <br/>
             <br/>
-            <button class="btn btn-primary" type="button">Deploy</button>
+            <button class="btn btn-primary" type="button" id="deploy">Deploy</button>
             <br/>
             <br/>
-            <button class="btn btn-primary" type="button">Delete</button>
+            <button class="btn btn-primary" type="button" id="delete">Delete</button>
             <br/>
             <br/>
         </div>
@@ -58,5 +58,26 @@ else
         {
             alert("Select a configuration to preview!")
         }
+    });
+    $("#deploy").click(function () {
+        var configurationid;
+        $.each($("input[name='checkbox']:checked"), function () {
+            configurationid = $(this).val();
+        });
+        if (configurationid != undefined) {
+            $.ajax({
+                url: "@Url.Action("DeployFollowUpConfiguration", "FollowUpMgmt")",
+                data: { followupconfigurationid: configurationid },
+            type: "Post",
+            dataType: "html",
+            success: function (result) {
+                $("#participanttable").html(result);
+            }
+        });
+    }
+    else
+    {
+            alert("Select a configuration to deploy!")
+    }
     });
 </script>
