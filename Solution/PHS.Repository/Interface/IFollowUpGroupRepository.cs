@@ -5,6 +5,7 @@ namespace PHS.Repository.Interface
 {
     public interface IFollowUpGroupRepository : IRepository<FollowUpGroup>
     {
+        FollowUpGroup GetFollowUpGroup(int id);
     }
 }
 

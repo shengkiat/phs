@@ -16,7 +16,7 @@ namespace PHS.Repository.Repository
 
         public FollowUpConfiguration GetFollowUpConfiguration(int id)
         {
-            return dbContext.Set<FollowUpConfiguration>().Where(u => u.FollowUpConfigurationID == id).Include(b =>b.FollowUpGroups.Select(fg => fg.ParticipantCallerMappings)).FirstOrDefault();
+            return dbContext.Set<FollowUpConfiguration>().Where(u => u.FollowUpConfigurationID == id).Include(b =>b.FollowUpGroups.Select(fg => fg.ParticipantCallerMappings.Select(pcm => pcm.Participant))).FirstOrDefault();
         }
 
         public IEnumerable<FollowUpConfiguration> GetAllFollowUpConfigurations()

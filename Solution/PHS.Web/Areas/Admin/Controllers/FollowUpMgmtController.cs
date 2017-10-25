@@ -35,7 +35,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         {
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.GetParticipantsByFollowUpConfiguration(followupconfigurationid);
+                var result = followUpManager.GetParticipantsByFollowUpConfiguration(followupconfigurationid.Value);
                 return PartialView("_ParticipantsTable", result);
             }
         }

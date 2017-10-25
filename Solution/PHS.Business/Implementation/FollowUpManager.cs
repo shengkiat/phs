@@ -24,22 +24,22 @@ namespace PHS.Business.Implementation
         {
             return new FollowUpManager(loginUser);
         }
-        public IList<FollowUpGroup> GetParticipantsByFollowUpConfiguration(int? followupconfigurationid)
+        public IList<FollowUpGroup> GetParticipantsByFollowUpConfiguration(int followupconfigurationid)
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
                 var result = new List<FollowUpGroup>();
-                var followupconfig = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value);
+                var followupconfig = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
                 if (followupconfig != null)
                 {
-                    //if (followupconfig.Deploy)
-                    //{
-                    //    result = followupconfig.FollowUpGroups.ToList();
-                    //}
-                    //else
+                    if (followupconfig.Deploy)
+                    {
+                        result = followupconfig.FollowUpGroups.ToList();
+                    }
+                    else
                     {
 
-                        var eventid = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value).PHSEventID;
+                        var eventid = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid).PHSEventID;
                         var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == eventid));
                         var followupgroups = followupconfig.FollowUpGroups;
                         if (followupgroups.Count > 0)
@@ -85,7 +85,7 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = CreateUnitOfWork())
             {
                 var followupconfiguration = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
-                if(followupconfiguration == null)
+                if (followupconfiguration == null)
                 {
                     message = "Follow-up configuration does not exist!";
                     return false;
@@ -99,6 +99,35 @@ namespace PHS.Business.Implementation
                 {
                     var modelToUpdate = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
                     modelToUpdate.Deploy = true;
+
+
+                    var eventid = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid).PHSEventID;
+                    var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == eventid));
+                    var followupgroups = followupconfiguration.FollowUpGroups;
+                    if (followupgroups.Count > 0)
+                    {
+                        foreach (var item in followupgroups)
+                        {
+                            var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter);
+                            participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
+                            finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
+                            var participantcallermapping = new ParticipantCallerMapping();
+                            foreach (var participant in participantsbygroup)
+                            {
+                                participantcallermapping.FollowUpGroupID = item.FollowUpGroupID;
+                                participantcallermapping.Participant = participant;
+                                unitOfWork.ParticipantCallerMappings.Add(participantcallermapping);
+                            }
+                        }
+                        //var endfugroup = new FollowUpGroup();
+                        //foreach (var participant in finalgroupparticipants.ToList())
+                        //{
+                        //    var endparticipantcallermapping = new ParticipantCallerMapping();
+                        //    endparticipantcallermapping.Participant = participant;
+
+                        //}
+                    }
+                           
 
                     using (TransactionScope scope = new TransactionScope())
                     {
@@ -116,7 +145,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             using (var unitOfWork = CreateUnitOfWork())
             {
-                var followupgroup = unitOfWork.FollowUpGroups.Find(u => u.FollowUpGroupID == followgroupid).FirstOrDefault();
+                var followupgroup = unitOfWork.FollowUpGroups.GetFollowUpGroup(followgroupid);
                 if (followupgroup == null)
                 {
                     message = "Follow-up group does not exist!";
@@ -133,7 +162,7 @@ namespace PHS.Business.Implementation
 
                 if (followupgroup.ParticipantCallerMappings.Count > 0)
                 {
-                    foreach( var participantcallermapping in followupgroup.ParticipantCallerMappings)
+                    foreach (var participantcallermapping in followupgroup.ParticipantCallerMappings)
                     {
                         var printmodel = new FollowUpMgmtViewModel();
                         printmodel.Participant = participantcallermapping.Participant;
