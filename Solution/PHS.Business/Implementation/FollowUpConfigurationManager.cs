@@ -131,7 +131,7 @@ namespace PHS.Business.Implementation
                         return false;
                     }
 
-                    if (fuConfiguration.PHSEvent != null)
+                    if (fuConfiguration.Deploy == true)
                     {
                         message = "Can't delete deployed Follow-up configuration!";
                         return false;
@@ -139,22 +139,16 @@ namespace PHS.Business.Implementation
 
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        //List<FollowUpGroup> fuGroupsToDelete = new List<FollowUpGroup>();
+                        List<FollowUpGroup> fuGroupsToDelete = new List<FollowUpGroup>();
+                        fuGroupsToDelete = unitOfWork.FollowUpConfigurations.Get(id).FollowUpGroups.ToList();
 
-                        //foreach (var fuGroup in fuConfiguration.FollowUpGroups)
-                        //{
-                        //    Modality modalityToDelete = unitOfWork.Modalities.Get(modality.ModalityID);
-                        //    modalitiesToDelete.Add(modalityToDelete);
-                        //}
+                        foreach (FollowUpGroup fu in fuGroupsToDelete)
+                        {
+                            fuConfiguration.FollowUpGroups.Remove(fu);
+                        }
 
-                        ////remove EventModality
-                        //foreach (Modality m in modalitiesToDelete)
-                        //{
-                        //    phsEvent.Modalities.Remove(m);
-                        //}
-
-                        ////remove Modality
-                        //unitOfWork.Modalities.RemoveRange(modalitiesToDelete);
+                        //remove followup groups
+                        unitOfWork.FollowUpGroups.RemoveRange(fuGroupsToDelete);
 
                         //remove event
                         unitOfWork.FollowUpConfigurations.Remove(fuConfiguration);
