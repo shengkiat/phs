@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Interface;
 using PHS.Business.ViewModel.FollowUp;
+using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,54 @@ namespace PHS.Business.Implementation
         {
             return new FollowUpManager(loginUser);
         }
+
+        public IList<FollowUpGroup> GetParticipantsByLoginUser(int eventid, PHSUser loginuser, out string message)
+        {
+            message = string.Empty;
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var result = new List<FollowUpGroup>();
+                var followupconfig = unitOfWork.FollowUpConfigurations.GetDeployedFollowUpConfiguration(eventid);
+                if (followupconfig == null)
+                {
+                    message = "No follow-up configuration is deployed!!";
+                    return result;
+                }
+                if (loginuser.Role == Constants.User_Role_CommitteeMember_Code)
+                {
+                    return followupconfig.FollowUpGroups.ToList();
+                }
+                else if (loginuser.Role == Constants.User_Role_FollowUpVolunteer_Code)
+                {
+
+                    var followupgroups = followupconfig.FollowUpGroups;
+
+                    if (followupgroups.Count > 0)
+                    {
+                        foreach (var item in followupgroups)
+                        {
+                            var resultfollowupgroup = new FollowUpGroup();
+                            var resultparticipantcallmaplist = new List<ParticipantCallerMapping>();
+                            foreach (var map in item.ParticipantCallerMappings)
+                            {
+                                if (map.FollowUpVolunteer == loginuser.FullName)
+                                {
+                                    resultparticipantcallmaplist.Add(map);
+                                }
+                            }
+                            resultfollowupgroup.ParticipantCallerMappings = resultparticipantcallmaplist;
+                            result.Add(resultfollowupgroup);
+                        }
+                    }
+                    else
+                    {
+                        message = "No follow-up group present!!";
+                    }
+                }
+                return result;
+            }
+        }
+
         public IList<FollowUpGroup> GetParticipantsByFollowUpConfiguration(int followupconfigurationid)
         {
             using (var unitOfWork = CreateUnitOfWork())

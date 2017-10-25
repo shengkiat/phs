@@ -27,5 +27,10 @@ namespace PHS.Repository.Repository
         {
             return dbContext.Set<FollowUpConfiguration>().Where(fu => fu.PHSEventID == eventid).ToList();
         }
+
+        public FollowUpConfiguration GetDeployedFollowUpConfiguration(int eventid)
+        {
+            return dbContext.Set<FollowUpConfiguration>().Where(u => u.PHSEventID == eventid && u.Deploy).Include(b => b.FollowUpGroups.Select(fg => fg.ParticipantCallerMappings.Select(pcm => pcm.Participant))).FirstOrDefault();
+        }
     }
 }

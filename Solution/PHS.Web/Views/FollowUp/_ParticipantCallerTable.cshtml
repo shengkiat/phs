@@ -1,0 +1,119 @@
+﻿@model IEnumerable<PHS.DB.FollowUpGroup>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var fugroup in Model)
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <caption> @fugroup.Title </caption>
+                @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
+                {
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("NRIC")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Salutation")
+                            </th>
+                            <th>
+                                @Html.DisplayName("FullName")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Language")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Contact")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Follow-up Volunteer")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Call Status")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Date")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Remark")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Committee Member")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Call Status")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Date")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Remark")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in fugroup.ParticipantCallerMappings)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Participant.Nric)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Participant.Salutation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Participant.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Participant.Language)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    @Html.ActionLink(
+                            "View",
+                            "ViewDetails",
+                            "FollowUpMgmt",
+                            new { participantID = item.ParticipantID })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+        </div>
+    }
+}
+else
+{
+    <div>No Followup groups found!!</div>
+}
+<script>
+    $("#print").click(function () {
+        var configurationid = $(this).val();
+        $.ajax({
+            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+            data: { followupconfigurationid: configurationid },
+            type: "POST",
+            error: function (response) {
+                alert("Error encountered while printing!!");
+            },
+            success: function (response) {
+                alert(response.Success);
+            }
+    });
+});
+</script>
+

@@ -1,9 +1,38 @@
-﻿
+﻿@model IEnumerable<PHS.DB.PHSEvent>
+
 @{
-    ViewBag.Title = "Follow-Up";
+    ViewBag.Title = "Follow-up";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Follow-up</h2>
-<h3>Follow-up Configuration is not deployed yet!!</h3>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Html.DropDownList("EventID", new SelectList(Model, "PHSEventID", "Title"), "Select Event")
+    </div>
+</div>
+
+<div id="participantcallertable">
+</div>
+
+<script>
+    $("#EventID").change(function (event) {
+        var eventid = $(this).val();
+        if (eventid != 0) {
+            $.ajax({
+                url: "@Url.Action("GetParticipantsByLoginUser", "FollowUp")",
+                data: { eventid: eventid },
+                type: "Get",
+                dataType: "html",
+                success: function (result) {
+                    $("#participantcallertable").html(result);
+                }
+            });
+        }
+        else {
+            $("#participantcallertable").html("");
+        }
+    });
+</script>
 

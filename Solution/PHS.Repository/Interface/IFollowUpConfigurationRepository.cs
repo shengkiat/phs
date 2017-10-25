@@ -9,6 +9,7 @@ namespace PHS.Repository.Interface
         FollowUpConfiguration GetFollowUpConfiguration(int id);
         IEnumerable<FollowUpConfiguration> GetAllFollowUpConfigurations();
         IEnumerable<FollowUpConfiguration> GetAllFollowUpConfigurationsByEventID(int eventid);
+        FollowUpConfiguration GetDeployedFollowUpConfiguration(int eventid);
 
     }
 
