@@ -1,17 +1,16 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpConfiguration>
 
 <div class="panel panel-default">
+@if (Model != null && Model.Count() > 0)
+{
     <div class="panel-body" style="width: 100%;">
         <div style="float:left; width: 80%">
             <h3>List of existing configuration</h3>
-            @if (Model != null && Model.Count() > 0)
-            {
-                foreach (var item in Model)
+                @foreach (var item in Model)
                 {
                     <input type="checkbox" name="checkbox" value="@item.FollowUpConfigurationID">  @item.Title
                     <br />
                 }
-            }
         </div>
         <div style="float:right;">
             <button class="btn btn-primary" type="button" id="preview">Preview</button>
@@ -25,6 +24,11 @@
             <br/>
         </div>
     </div>
+}
+else
+{
+    <h4>No Follow up configuration found!!</h4>
+}
 </div>
 
 <div id="participanttable">

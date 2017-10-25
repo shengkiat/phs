@@ -25,8 +25,7 @@ namespace PHS.Repository.Repository
         }
         public IEnumerable<FollowUpConfiguration> GetAllFollowUpConfigurationsByEventID(int eventid)
         {
-            var result =  dbContext.Set<FollowUpConfiguration>().Include(fu => fu.PHSEvent).Where(fu => fu.PHSEventID == eventid);
-            return result;
+            return dbContext.Set<FollowUpConfiguration>().Where(fu => fu.PHSEventID == eventid).ToList();
         }
     }
 }

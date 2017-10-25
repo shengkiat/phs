@@ -25,8 +25,8 @@ namespace PHS.Web.Areas.Admin.Controllers
         {
             using (var followUpManager = new FollowUpConfigurationManager())
             {
-                //var result = followUpManager.GetAllFUConfigurationByEventID(phsEventId);
-                var result = followUpManager.GetAllFUConfiguration();
+                var result = followUpManager.GetAllFUConfigurationByEventID(phsEventId);
+                //var result = followUpManager.GetAllFUConfiguration();
                 return PartialView("_FollowUpConfigurations", result);
             }
         }
@@ -35,7 +35,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         {
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.GetParticipantsByFollowUpConfiguration(1);
+                var result = followUpManager.GetParticipantsByFollowUpConfiguration(followupconfigurationid);
                 return PartialView("_ParticipantsTable", result);
             }
         }

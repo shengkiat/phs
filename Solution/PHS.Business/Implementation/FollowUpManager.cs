@@ -28,7 +28,8 @@ namespace PHS.Business.Implementation
             using (var unitOfWork = CreateUnitOfWork())
             {
                 var result = new List<FollowUpMgmtViewModel>();
-                var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == 3));
+                var eventid = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value).PHSEventID;
+                var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == eventid));
                 var followupgroups = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid.Value).FollowUpGroups;
                 if (followupgroups.Count > 0)
                 {
