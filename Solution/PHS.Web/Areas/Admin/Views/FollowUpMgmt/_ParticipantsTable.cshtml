@@ -7,7 +7,7 @@
     {
             <div style="float:right;">
                 <button class="btn btn-primary" type="button" id="attach" value="@fugroup.FollowUpGroupID">Attach File</button>
-                <button class="btn btn-primary" type="button" id="print">Print</button>
+                <button class="btn btn-primary" type="button" id="print" value="@fugroup.FollowUpGroupID">Print</button>
                 <button class="btn btn-primary" type="button"id="exportcaller">Export Caller</button>
             </div>
     <div class="table-responsive">
@@ -107,6 +107,15 @@ else
 }
 <script>
     $("#print").click(function () {
-        alert($(this).val())
+        var configurationid = $(this).val();
+        $.ajax({
+            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+            data: { followupconfigurationid: configurationid },
+        type: "Post",
+        dataType: "html",
+        success: function (result) {
+            alert(result);
+        }
     });
+});
 </script>

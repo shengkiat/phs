@@ -51,5 +51,16 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult PrintHealthReportByFollowUpGroup(int followupconfigurationid)
+        {
+            string message = string.Empty;
+            using (var followUpManager = new FollowUpManager())
+            {
+                var result = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
+                return View();
+            }
+        }
+
     }
 }

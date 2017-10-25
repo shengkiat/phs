@@ -122,6 +122,8 @@ namespace PHS.Business.Implementation
                     message = "Follow-up group does not exist!";
                     return false;
                 }
+                var followupconfig = unitOfWork.FollowUpConfigurations.Find(u => u.FollowUpConfigurationID == followupgroup.FollowUpConfigurationID).FirstOrDefault();
+
                 if (!followupgroup.FollowUpConfiguration.Deploy)
                 {
                     message = "Follow-up configuration is not deployed!";
