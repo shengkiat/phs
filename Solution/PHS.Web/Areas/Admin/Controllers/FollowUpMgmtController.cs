@@ -67,13 +67,14 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
+                /*
                 var followupParticipantList = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
                 if (!message.Equals("success"))
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new { Error = message });
                 }
-
+                */
                 string templatePath = Server.MapPath("~/App_Data/Label.docx");
 
                 // Load template into memory
@@ -101,7 +102,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-
+                        zip.Save(memoryStream);
                         memoryStream.Flush(); //Always catches me out
                         memoryStream.Position = 0; //Not sure if this is required
 
@@ -109,7 +110,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                         return new JsonResult()
                         {
-                            Data = new { FileGuid = guid, zipName }
+                            Data = new { FileGuid = guid, FileName = zipName }
                         };
                     }
                 }
