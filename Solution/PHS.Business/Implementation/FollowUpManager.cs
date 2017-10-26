@@ -189,7 +189,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public bool PrintHealthReportByFollowUpGroup(int followgroupid, out string message)
+        public List<FollowUpMgmtViewModel> PrintHealthReportByFollowUpGroup(int followgroupid, out string message)
         {
             message = string.Empty;
             using (var unitOfWork = CreateUnitOfWork())
@@ -198,15 +198,14 @@ namespace PHS.Business.Implementation
                 if (followupgroup == null)
                 {
                     message = "Follow-up group does not exist!";
-                    return false;
                 }
                 var followupconfig = unitOfWork.FollowUpConfigurations.Find(u => u.FollowUpConfigurationID == followupgroup.FollowUpConfigurationID).FirstOrDefault();
 
                 if (!followupgroup.FollowUpConfiguration.Deploy)
                 {
                     message = "Follow-up configuration is not deployed!";
-                    return false;
                 }
+
                 var printmodellist = new List<FollowUpMgmtViewModel>();
 
                 if (followupgroup.ParticipantCallerMappings.Count > 0)
@@ -226,7 +225,8 @@ namespace PHS.Business.Implementation
                     }
                 }
 
-                return true;
+                message = "success";
+                return printmodellist;
             }
         }
     }

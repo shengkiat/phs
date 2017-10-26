@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "GenerateZipFileTest";
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnGenerate").click(function () {
+
+            var jsonObject = {
+                "followupconfigurationid": 1
+            };
+
+            $.ajax({
+                url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.Error);
+                },
+                success: function (response) {
+
+                    window.location = '@Url.Action("DownloadZip", "FollowUpMgmt")?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            });
+
+        });
+    });
+
+</script>
+
+<h2>GenerateZipFileTest</h2>
+
+<button type="button" id="btnGenerate">Download Zip</button>

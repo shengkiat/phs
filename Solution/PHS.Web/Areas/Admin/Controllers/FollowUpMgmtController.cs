@@ -1,10 +1,13 @@
-﻿using PHS.Business.Implementation;
+﻿using Ionic.Zip;
+using Novacode;
+using PHS.Business.Implementation;
 using PHS.Business.ViewModel.FollowUp;
 using PHS.Common;
 using PHS.Web.Controllers;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -64,14 +67,74 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
-                var success = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
-                if (!success)
+                var followupParticipantList = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
+                if (!message.Equals("success"))
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new { Error = message });
                 }
-                return Json(new { Success = "Printing Successful." });
+
+                string templatePath = Server.MapPath("~/App_Data/Label.docx");
+
+                // Load template into memory
+                var doc = DocX.Load(templatePath);
+
+                String guid = Guid.NewGuid().ToString();
+
+                using (ZipFile zip = new ZipFile())
+                {
+                    zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+                    zip.AddDirectoryByName("Files");
+
+                    var ms = new MemoryStream();
+                    doc.SaveAs(ms);
+                    ms.Position = 0;
+                    byte[] fileBytes = ms.ToArray();
+
+                    string path = "test.docx";
+
+                    System.IO.File.WriteAllBytes(path, fileBytes); // Requires System.IO
+
+                    zip.AddFile(path, "Files");
+
+                    string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+
+                        memoryStream.Flush(); //Always catches me out
+                        memoryStream.Position = 0; //Not sure if this is required
+
+                        TempData[guid] = memoryStream.ToArray();
+
+                        return new JsonResult()
+                        {
+                            Data = new { FileGuid = guid, zipName }
+                        };
+                    }
+                }
             }
+        }
+
+        [HttpGet]
+        public ActionResult DownloadZip(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/zip", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
+            }
+        }
+
+        public ActionResult GenerateZipFileTest()
+        {
+            return View();
         }
 
     }
