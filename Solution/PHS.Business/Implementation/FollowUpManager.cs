@@ -217,8 +217,12 @@ namespace PHS.Business.Implementation
                         printmodel.Participant = participantcallermapping.Participant;
 
                         //TODO: get values from followup modality forms
-                        printmodel.BMIvalueStdRefPair = Tuple.Create("22", "normal");
-                        printmodel.BPValueStdRefPair = Tuple.Create("120/80", "normal");
+                        printmodel.Weight = "55";
+                        printmodel.Height = "159";
+                        printmodel.BMIValue = "22";
+                        printmodel.BMIStandardReferenceResult ="normal";
+                        printmodel.BPValue = "120/80";
+                        printmodel.BPStandardReferenceResult = "normal";
                         printmodel.BloodTestResult = "Satisfactory";
                         printmodel.OverAllResult = "satisfactory";
 

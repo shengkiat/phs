@@ -10,9 +10,12 @@ namespace PHS.Business.ViewModel.FollowUp
     public class FollowUpMgmtViewModel
     {
         public Participant Participant { get; set; }
-        public Tuple<string, string> BMIvalueStdRefPair { get; set; }
-        public Tuple<string, string> BPValueStdRefPair { get; set; }
-
+        public string Height;
+        public string Weight;
+        public string BMIValue;
+        public string BMIStandardReferenceResult;
+        public string BPValue;
+        public string BPStandardReferenceResult;
         public string BloodTestResult;
         public string OverAllResult;
     }
