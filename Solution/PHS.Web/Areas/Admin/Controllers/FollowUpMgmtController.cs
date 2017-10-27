@@ -67,36 +67,51 @@ namespace PHS.Web.Areas.Admin.Controllers
             string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
-                /*
+
                 var followupParticipantList = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
                 if (!message.Equals("success"))
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new { Error = message });
                 }
-                */
-                string templatePath = Server.MapPath("~/App_Data/Label.docx");
 
-                // Load template into memory
-                var doc = DocX.Load(templatePath);
+                
 
                 String guid = Guid.NewGuid().ToString();
 
                 using (ZipFile zip = new ZipFile())
                 {
                     zip.AlternateEncodingUsage = ZipOption.AsNecessary;
-                    zip.AddDirectoryByName("Files");
+                    //zip.AddDirectoryByName("Files");
 
-                    var ms = new MemoryStream();
-                    doc.SaveAs(ms);
-                    ms.Position = 0;
-                    byte[] fileBytes = ms.ToArray();
+                    foreach(var followupParticipant in followupParticipantList)
+                    {
+                        string templatePath = Server.MapPath("~/App_Data/Normal_English.docx");
 
-                    string path = "test.docx";
+                        // Load template into memory
+                        var doc = DocX.Load(templatePath);
 
-                    System.IO.File.WriteAllBytes(path, fileBytes); // Requires System.IO
+                        doc.ReplaceText("<<Name>>", followupParticipant.Participant.Nric);
+                        doc.ReplaceText("<<Address>>", followupParticipant.Participant.Address);
+                        doc.ReplaceText("<<NRIC>>", followupParticipant.Participant.Nric);
+                        //doc.ReplaceText("<<Height>>", followupParticipant.);
+                        //doc.ReplaceText("<<Weight>>", result.Event.Title + " " + result.Event.Venue);
+                        //doc.ReplaceText("<<BMI>>", result.Event.Title + " " + result.Event.Venue);
+                        //doc.ReplaceText("<<Average Reading>>", result.Event.Title + " " + result.Event.Venue);
 
-                    zip.AddFile(path, "Files");
+                        var ms = new MemoryStream();
+                        doc.SaveAs(ms);
+                        ms.Position = 0;
+                        byte[] fileBytes = ms.ToArray();
+
+                        string path = followupParticipant.Participant.Nric + ".docx";
+
+                        System.IO.File.WriteAllBytes(path, fileBytes); // Requires System.IO
+
+                        //zip.AddFile(path, "Files");
+
+                        zip.AddFile(path);
+                    }
 
                     string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
 
