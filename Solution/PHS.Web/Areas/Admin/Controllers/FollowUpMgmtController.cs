@@ -82,35 +82,23 @@ namespace PHS.Web.Areas.Admin.Controllers
                 using (ZipFile zip = new ZipFile())
                 {
                     zip.AlternateEncodingUsage = ZipOption.AsNecessary;
-                    //zip.AddDirectoryByName("Files");
-
+                   
                     foreach(var followupParticipant in followupParticipantList)
                     {
+                        zip.AddDirectoryByName(followupParticipant.Participant.Nric);
+
                         string templatePath = Server.MapPath("~/App_Data/Normal_English.docx");
 
                         // Load template into memory
-                        var doc = DocX.Load(templatePath);
+                        byte[] fileBytes = generateHealthReport(templatePath, followupParticipant);
 
-                        doc.ReplaceText("<<Name>>", followupParticipant.Participant.Nric);
-                        doc.ReplaceText("<<Address>>", followupParticipant.Participant.Address);
-                        doc.ReplaceText("<<NRIC>>", followupParticipant.Participant.Nric);
-                        //doc.ReplaceText("<<Height>>", followupParticipant.);
-                        //doc.ReplaceText("<<Weight>>", result.Event.Title + " " + result.Event.Venue);
-                        //doc.ReplaceText("<<BMI>>", result.Event.Title + " " + result.Event.Venue);
-                        //doc.ReplaceText("<<Average Reading>>", result.Event.Title + " " + result.Event.Venue);
-
-                        var ms = new MemoryStream();
-                        doc.SaveAs(ms);
-                        ms.Position = 0;
-                        byte[] fileBytes = ms.ToArray();
-
-                        string path = followupParticipant.Participant.Nric + ".docx";
+                        string path = followupParticipant.Participant + "_English.docx";
 
                         System.IO.File.WriteAllBytes(path, fileBytes); // Requires System.IO
 
-                        //zip.AddFile(path, "Files");
+                        zip.AddFile(path, followupParticipant.Participant.Nric);
 
-                        zip.AddFile(path);
+                        //zip.AddFile(path);
                     }
 
                     string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
@@ -130,6 +118,24 @@ namespace PHS.Web.Areas.Admin.Controllers
                     }
                 }
             }
+        }
+
+        private byte[] generateHealthReport(string templatePath, FollowUpMgmtViewModel followupParticipant)
+        {
+            var doc = DocX.Load(templatePath);
+
+            doc.ReplaceText("<<Name>>", followupParticipant.Participant.Nric);
+            doc.ReplaceText("<<Address>>", followupParticipant.Participant.Address);
+            doc.ReplaceText("<<NRIC>>", followupParticipant.Participant.Nric);
+            //doc.ReplaceText("<<Height>>", followupParticipant.);
+            //doc.ReplaceText("<<Weight>>", result.Event.Title + " " + result.Event.Venue);
+            //doc.ReplaceText("<<BMI>>", result.Event.Title + " " + result.Event.Venue);
+            //doc.ReplaceText("<<Average Reading>>", result.Event.Title + " " + result.Event.Venue);
+
+            var ms = new MemoryStream();
+            doc.SaveAs(ms);
+            ms.Position = 0;
+            return ms.ToArray();
         }
 
         [HttpGet]
