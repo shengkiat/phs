@@ -1,5 +1,6 @@
 ﻿using Ionic.Zip;
 using Novacode;
+using OfficeOpenXml;
 using PHS.Business.Implementation;
 using PHS.Business.ViewModel.FollowUp;
 using PHS.Common;
@@ -242,6 +243,26 @@ namespace PHS.Web.Areas.Admin.Controllers
             
 
             return printmodellist;
+        }
+
+        [HttpPost]
+        public ActionResult ImportCaller(int followgroupid, HttpPostedFileBase file)
+        {
+            string message = string.Empty;
+            //Get Callers from excel
+            using (var followUpManager = new FollowUpManager())
+            {
+                List<string> volunteers = new List<string>();
+                List<string> commmembers = new List<string>();
+
+                var followupParticipantList = followUpManager.ImportCaller(followgroupid, volunteers, commmembers, out message);
+                if (!message.Equals("success"))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
+                }
+            }
+            return Json(new { Success = "Import Caller Successful." });
         }
 
     }

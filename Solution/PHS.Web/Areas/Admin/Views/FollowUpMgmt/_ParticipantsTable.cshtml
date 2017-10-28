@@ -67,7 +67,7 @@
                 }
 
                 <button class="btn btn-primary" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
-                <input id="file-input" type="file" name="name" style="display: none;" accept=".xls"/>
+                <input id="file-input" type="file" name="name" style="display: none;" @*accept=".xls"*@/>
             </div>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -141,43 +141,43 @@ else
     <div>No Followup groups found!!</div>
 }
 <script>
-    $("#print").click(function () {
-        var configurationid = $(this).val();
-        $.ajax({
-            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
-            data: { followupconfigurationid: configurationid },
-            type: "POST",
-            error: function (response) {
-                alert("Error encountered while printing!!");
-            },
-            success: function (response) {
-                alert(response.Success);
-            }
-        });
-    });
-
     $("#importcaller").click(function () {
-        var configurationid = $(this).val();
+
         $('#file-input').trigger('click');
+        var id = $(this).attr("value");
+        //var file = "files=" + $("#file-input")[0].files[0];
+        //var fd = new FormData();
+        //fd.append("file", document.getElementById('file-input').files[0]);
+        @*$.ajax({
+            url: "@Url.Action("ImportCaller", "FollowUpMgmt")",
+            data: { followgroupid: id },
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+            alert("Import success.");
+        },
+        error: function () {
+            alert("ERROR in import");
+        }
+    });*@
     });
     $("#file-input").change(function () {
-        var test = $('#file-input')[0].files[0].name;
-        alert(test);
+        //var followgroupid = $(this).attr("value");
+        //var test = $('#file-input')[0].files[0].name;
+        var id = $(this).attr("value");
+        //var file = "files=" + $("#file-input")[0].files[0];
+        //var fd = new FormData();
+        //fd.append("file", document.getElementById('file-input').files[0]);
         $.ajax({
-            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
-            data: { followupconfigurationid: configurationid },
+            url: "@Url.Action("ImportCaller", "FollowUpMgmt")",
+            data: { followgroupid: id },
             type: "POST",
-            beforeSend: function () {
-                $("#output").html("Uploading, please wait....");
-            },
-            success: function () {
-                $("#output").html("Upload success.");
-            },
-            complete: function () {
-                $("#output").html("upload complete.");
+            dataType: "json",
+            success: function (response) {
+                alert("Import success.");
             },
             error: function () {
-                alert("ERROR in upload");
+                alert("ERROR in import");
             }
         });
     });
