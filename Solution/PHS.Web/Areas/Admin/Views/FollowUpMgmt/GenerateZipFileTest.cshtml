@@ -1,4 +1,7 @@
 ﻿
+@using PHS.Business.Extensions
+@using PHS.Common
+
 @{
     ViewBag.Title = "GenerateZipFileTest";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,8 +12,13 @@
     $(document).ready(function () {
         $("#btnGenerate").click(function () {
 
+            var healthReportType = document.getElementById('healthReportType').value;
+
+            alert(healthReportType);
+
             var jsonObject = {
-                "followupconfigurationid": 1
+                "followgroupid": 1,
+                "healthReportType": healthReportType
             };
 
             $.ajax({
@@ -36,5 +44,23 @@
 </script>
 
 <h2>GenerateZipFileTest</h2>
+
+@{
+
+    var internallistItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Normal", Value = Constants.Followup_Print_HealthReport_Normal},
+                            new SelectListItem {Text = "Abnormal", Value = Constants.Followup_Print_HealthReport_Abnormal},
+                            new SelectListItem {Text = "Abnormal Non Eligible", Value = Constants.Followup_Print_HealthReport_AbnormalNonEligible}
+                        };
+
+    @Html.DropDownList("healthReportType", internallistItems1, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", "healthReportType"},
+                                            { "class","is-publisher"}
+
+                                         })
+}
 
 <button type="button" id="btnGenerate">Download Zip</button>

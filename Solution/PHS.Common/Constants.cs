@@ -868,6 +868,9 @@ namespace PHS.Common
         public const string Summary_Type_SocialSup = "SOCIALSUP";
         public const string Summary_Type_TeleHealth = "TELESUM";
 
+        public const string Followup_Print_HealthReport_Normal = "NORMAL";
+        public const string Followup_Print_HealthReport_Abnormal = "ABNORMAL";
+        public const string Followup_Print_HealthReport_AbnormalNonEligible = "ABNORMAL_NONELIGIBLE";
 
         public enum MessageType
         {
