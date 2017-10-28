@@ -1,39 +1,38 @@
-﻿
+﻿@model IEnumerable<PHS.DB.PHSEvent>
+
 @{
-    ViewBag.Title = "GenerateZipFileTest";
+    ViewBag.Title = "Follow-up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script type="text/javascript">
+<h2>Follow-up</h2>
 
-    $(document).ready(function () {
-        $("#btnGenerate").click(function () {
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Html.DropDownList("EventID", new SelectList(Model, "PHSEventID", "Title"), "Select Event")
+    </div>
+</div>
 
-            var jsonObject = {
-                "followupconfigurationid": 1
-            };
+<div id="participantcallertable">
+</div>
 
+<script>
+    $("#EventID").change(function (event) {
+        var eventid = $(this).val();
+        if (eventid != 0) {
             $.ajax({
-                url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
-                type: "POST",
-                data: JSON.stringify(jsonObject),
-                cache: false,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                error: function (response) {
-                    alert(response.Error);
-                },
-                success: function (response) {
-
-                    window.location = '@Url.Action("DownloadZip", "FollowUpMgmt")?fileGuid=' + response.FileGuid
-                                      + '&filename=' + response.FileName;
+                url: "@Url.Action("GetParticipantsByLoginUser", "FollowUp")",
+                data: { eventid: eventid },
+                type: "Get",
+                dataType: "html",
+                success: function (result) {
+                    $("#participantcallertable").html(result);
                 }
             });
-
-        });
+        }
+        else {
+            $("#participantcallertable").html("");
+        }
     });
-
 </script>
 
-<h2>GenerateZipFileTest</h2>
-
-<button type="button" id="btnGenerate">Download Zip</button>
