@@ -150,6 +150,19 @@ namespace PHS.Business.Implementation
             }
         }
 
+        public Template GetTemplateById(int temlateId)
+        {
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var template = unitOfWork.FormRepository.GetTemplate(temlateId);
+                if (template == null)
+                {
+                    throw new Exception("Invalid id");
+                }
+                return template;
+            }
+        }
+
         public FormViewModel FindFormToEdit(int formID)
         {
             using (var unitOfWork = CreateUnitOfWork())

@@ -70,7 +70,7 @@ namespace PHS.Repository.Repository
                                                .Select(tmp => tmp.TemplateFields
                                                .Select(tf => tf.TemplateFieldValues))))
                                                .Where(p => p.ParticipantJourneyModalities.Any(pj => pj.PHSEventID == eventid && pj.ModalityID == modalityid && pj.FormID == formid 
-                                               && pj.Form.Templates.Any(tmp => tmp.TemplateFields.Any(tf => tf.TemplateFieldID == templatefieldid && tf.TemplateFieldValues.Any(tv => tv.Value == templatefieldvalue)))));
+                                               && pj.Form.Templates.Any(tmp => tmp.TemplateID == templateid && tmp.TemplateFields.Any(tf => tf.TemplateFieldID == templatefieldid && tf.TemplateFieldValues.Any(tv => tv.Value == templatefieldvalue)))));
         }
     }
 }

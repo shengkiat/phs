@@ -95,6 +95,43 @@ namespace PHS.Business.Implementation
                 return true;
             }
         }
+
+        public FollowUpGroup AddFollowUpGroup(FollowUpGroup followupgroup, out string message)
+        {
+            message = string.Empty;
+            if (followupgroup == null)
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return null;
+            }
+            if (string.IsNullOrEmpty(followupgroup.Title) || string.IsNullOrEmpty(followupgroup.Title.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                return null;
+            }
+
+            try
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    unitOfWork.FollowUpGroups.Add(followupgroup);
+
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        unitOfWork.Complete();
+                        scope.Complete();
+                    }
+                    message = string.Empty;
+                    return followupgroup;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringAddingValue("Follow Up Group");
+                return null;
+            }
+        }
         public bool UpdateFollowUpConfiguration(FollowUpConfiguration model)
         {
             if (model == null)
@@ -106,7 +143,7 @@ namespace PHS.Business.Implementation
             {
                 var modelToUpdate = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(model.FollowUpConfigurationID);
                 modelToUpdate.Title = model.Title;
-               
+
                 using (TransactionScope scope = new TransactionScope())
                 {
                     unitOfWork.Complete();
@@ -117,7 +154,7 @@ namespace PHS.Business.Implementation
             }
         }
         public bool DeleteFollowUpConfiguration(int id, out string message)
-        { 
+        {
             message = string.Empty;
             try
             {
@@ -166,6 +203,22 @@ namespace PHS.Business.Implementation
                 message = "Operation failed during deleting Follow-up configuration";
                 return false;
             }
+        }
+
+        public IList<Modality> GetTeleHealthModalitiesByEventID(int phseventid, out string message)
+        {
+            message = string.Empty;
+            IList<Modality> modalities = new List<Modality>();
+            using (var eventmanager = new EventManager())
+            {
+                var phsevent = eventmanager.GetEventByID(phseventid, out message);
+                foreach (var item in phsevent.Modalities)
+                {
+                    //if (item.Name == "Post Event" || item.Name == "Telehealth")
+                        modalities.Add(item);
+                }
+            }
+            return modalities;
         }
 
         private void validateFollowUpConfiguration(FollowUpConfiguration model, out string message)

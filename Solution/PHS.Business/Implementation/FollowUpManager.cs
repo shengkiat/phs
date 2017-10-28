@@ -96,9 +96,13 @@ namespace PHS.Business.Implementation
                             foreach (var item in followupgroups)
                             {
                                 var participantCallerMappingList = new List<ParticipantCallerMapping>();
-                                var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter);
+                                //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
+                                //var participantsbygroup = unitOfWork.Participants.SearchParticipants(/*item.Filter*/"3#319#35#36#470#>#22");
+                                var participantsbygroup = SearchParticipants(item.Filter);
                                 participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
+
                                 finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
+
                                 var participantcallermapping = new ParticipantCallerMapping();
                                 foreach (var participant in participantsbygroup)
                                 {
@@ -128,6 +132,26 @@ namespace PHS.Business.Implementation
             }
         }
 
+        private IList<Participant> SearchParticipants(string searchstring)
+        {
+            //searchstring = "3#1#1#1#80#==#Male#AND#3#319#35#36#470#>#22#AND#3#319#35#36#470#>#22";
+            IList<Participant> resultParticipants = new List<Participant>();
+            var splitstring = searchstring.Split(new[] { "AND" }, StringSplitOptions.None);
+
+            foreach (var s in splitstring)
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    var result = unitOfWork.Participants.SearchParticipants(s);
+                    if (resultParticipants.Count == 0)
+                        resultParticipants = result.ToList();
+                    else
+                        resultParticipants = resultParticipants.Intersect(result).ToList();
+                }
+            }
+            return resultParticipants;
+
+        }
         public bool DeployFollowUpConfiguration(int followupconfigurationid, out string message)
         {
             message = string.Empty;
@@ -157,7 +181,8 @@ namespace PHS.Business.Implementation
                     {
                         foreach (var item in followupgroups)
                         {
-                            var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter);
+                            //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
+                            var participantsbygroup = SearchParticipants(item.Filter);
                             participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
                             finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
                             var participantcallermapping = new ParticipantCallerMapping();

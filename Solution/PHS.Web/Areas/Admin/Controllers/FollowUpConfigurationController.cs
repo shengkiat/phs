@@ -1,4 +1,5 @@
-﻿using PHS.Business.Implementation;
+﻿using Newtonsoft.Json;
+using PHS.Business.Implementation;
 using PHS.Common;
 using PHS.DB;
 using PHS.Web.Controllers;
@@ -61,31 +62,70 @@ namespace PHS.Web.Areas.Admin.Controllers
 
             using (var followUpConfigurationManager = new FollowUpConfigurationManager(GetLoginUser()))
             {
-                var newFollowupconfiguration = followUpConfigurationManager.NewFollowUpConfiguration(followupconfiguration, out message);
-                if (!newFollowupconfiguration)
+                var success = followUpConfigurationManager.NewFollowUpConfiguration(followupconfiguration, out message);
+                if (!success)
                 {
                     SetViewBagError(message);
                     return View();
                 }
 
                 SetTempDataMessage(followupconfiguration.Title + " has been created successfully. Add Followup groups.");
-                return View();
+                return View(followupconfiguration);
             }
         }
 
         [HttpGet]
-        public ActionResult GetEventByID()
+        public ActionResult CreateFollowUpGroup(int followUpConfigurationID)
         {
             string message = string.Empty;
-            using (var eventmanager = new EventManager(GetLoginUser()))
+            using (var followUpConfigurationManager = new FollowUpConfigurationManager())
             {
-                var result = eventmanager.GetEventByID(3, out message);
+                FollowUpConfiguration followupconfiguration = followUpConfigurationManager.GetFUConfigurationByID(followUpConfigurationID, out message);
+                if (followupconfiguration == null)
+                {
+                    SetViewBagError("Invalid Follow-Up Configuratio ID. Create Follow-Up Configuration first.");
+                    return View();
+                }
+                FollowUpGroup followupgroup = new FollowUpGroup();
+                followupgroup.FollowUpConfigurationID = followUpConfigurationID;
+
+                return View(followupgroup);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateFollowUpGroup([Bind(Exclude = "FollowUpGroupID")] FollowUpGroup followupgroup)
+        {
+            string message = string.Empty;
+
+            using (var followUpConfigurationManager = new FollowUpConfigurationManager(GetLoginUser()))
+            {
+                followupgroup.Filter = "TESTFilter";
+                var newFollowupgroup = followUpConfigurationManager.AddFollowUpGroup(followupgroup, out message);
+                if (newFollowupgroup == null)
+                {
+                    SetViewBagError(message);
+                    return View(followupgroup);
+                }
+
+                SetTempDataMessage(Constants.ValueSuccessfuly("Follow-up group " + newFollowupgroup.Title + " has been added"));
+                return View(newFollowupgroup);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetTeleHealthModalitiesByEventID(int phseventid)
+        {
+            string message = string.Empty;
+            using (var followupconfigurationmanager = new FollowUpConfigurationManager())
+            {
+                var result = followupconfigurationmanager.GetTeleHealthModalitiesByEventID(phseventid, out message);
                 return PartialView("_CreateFollowUpGroup", result);
             }
         }
 
         [HttpGet]
-        public ActionResult CreateFollowUpGroup()
+        public ActionResult CreateFollowUpGroupTemp()
         {
             string message = string.Empty;
             using (var eventManager = new EventManager(GetLoginUser()))
@@ -109,6 +149,61 @@ namespace PHS.Web.Areas.Admin.Controllers
                 SetViewBagError(message);
 
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetForms(int modalityid)
+        {
+            string message = string.Empty;
+            using (var modalityManager = new ModalityManager(GetLoginUser()))
+            {
+                var results = modalityManager.GetModalityByID(modalityid, out message).Forms.ToList();
+                var list = JsonConvert.SerializeObject(results,
+                            Formatting.None,
+                            new JsonSerializerSettings()
+                            {
+                                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                            });
+
+                return Content(list, "application/json");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetTemplates(int formid)
+        {
+            string message = string.Empty;
+            using (var formManager = new FormManager(GetLoginUser()))
+            {
+                var results = formManager.FindAllTemplatesByFormId(formid).ToList();
+                var list = JsonConvert.SerializeObject(results,
+                            Formatting.None,
+                            new JsonSerializerSettings()
+                            {
+                                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                            });
+
+                return Content(list, "application/json");
+            }
+        }
+
+        
+        [HttpPost]
+        public ActionResult GetTemplateFields(int templateid)
+        {
+            string message = string.Empty;
+            using (var formManager = new FormManager(GetLoginUser()))
+            {
+                var result = formManager.GetTemplateById(templateid).TemplateFields.ToList();
+                var list = JsonConvert.SerializeObject(result,
+                            Formatting.None,
+                            new JsonSerializerSettings()
+                            {
+                                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                            });
+
+                return Content(list, "application/json");
             }
         }
     }
