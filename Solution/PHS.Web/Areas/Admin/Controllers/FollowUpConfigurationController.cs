@@ -94,5 +94,22 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id = 0)
+        {
+            string message = string.Empty;
+
+            using (var followUpConfigurationManager = new FollowUpConfigurationManager())
+            {
+                if (followUpConfigurationManager.DeleteFollowUpConfiguration(id, out message))
+                {
+                    return View();
+                }
+                SetViewBagError(message);
+
+                return View();
+            }
+        }
     }
 }

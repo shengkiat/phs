@@ -35,6 +35,10 @@ namespace PHS.Repository.Interface.Core
         ISummaryMappingRepository SummaryMappings { get; }
 
         IFollowUpConfigurationRepository FollowUpConfigurations { get; }
+
+        IFollowUpGroupRepository FollowUpGroups { get; }
+
+        IParticipantCallerMappingRepository ParticipantCallerMappings { get; }
         int Complete();
 
  

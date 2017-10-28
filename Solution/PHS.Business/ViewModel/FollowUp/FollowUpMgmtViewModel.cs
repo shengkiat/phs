@@ -9,9 +9,14 @@ namespace PHS.Business.ViewModel.FollowUp
 {
     public class FollowUpMgmtViewModel
     {
-        //public int PHSEventId { get; set; }
-        //public IList<PHSEvent> PHSEvents { get; set; }
-        public FollowUpGroup FollowUpGroup { get; set; }
-        public IList<Participant> Participants { get; set; }
+        public Participant Participant { get; set; }
+        public string Height;
+        public string Weight;
+        public string BMIValue;
+        public string BMIStandardReferenceResult;
+        public string BPValue;
+        public string BPStandardReferenceResult;
+        public string BloodTestResult;
+        public string OverAllResult;
     }
 }

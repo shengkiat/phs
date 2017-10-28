@@ -1,70 +1,99 @@
-﻿@model IEnumerable<PHS.Business.ViewModel.FollowUp.FollowUpMgmtViewModel> 
+﻿@model IEnumerable<PHS.DB.FollowUpGroup> 
 
 
 @if (Model != null && Model.Count() > 0)
 {
-    foreach (var fumodel in Model)
+    foreach (var fugroup in Model)
     {
-        <div style="float:right;">
-            <button class="btn btn-primary" type="button">Attach File</button>
-            <button class="btn btn-primary" type="button">Print</button>
-            <button class="btn btn-primary" type="button">Export Caller</button>
-        </div>
+            <div style="float:right;">
+                <button class="btn btn-primary" type="button" id="attach" value="@fugroup.FollowUpGroupID">Attach File</button>
+                <button class="btn btn-primary" type="button" id="print" value="@fugroup.FollowUpGroupID">Print</button>
+                <button class="btn btn-primary" type="button"id="exportcaller">Export Caller</button>
+            </div>
     <div class="table-responsive">
         <table class="table table-striped">
-            <caption> @fumodel.FollowUpGroup.Title </caption>
+            <caption> @fugroup.Title </caption>
+            @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
+            {
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Nric)
+                        @Html.DisplayName("NRIC")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Salutation)
+                        @Html.DisplayName("Salutation")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].FullName)
+                        @Html.DisplayName("FullName")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Language)
+                        @Html.DisplayName("Language")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].MobileNumber)
+                        @Html.DisplayName("Contact")
                     </th>
-                    <th></th>
+                    <th>
+                        @Html.DisplayName("Follow-up Volunteer")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Committee Member")
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in fumodel.Participants)
+                @foreach (var item in fugroup.ParticipantCallerMappings)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Nric)
+                            @Html.DisplayFor(modelItem => item.Participant.Nric)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Salutation)
+                            @Html.DisplayFor(modelItem => item.Participant.Salutation)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
+                            @Html.DisplayFor(modelItem => item.Participant.FullName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Language)
+                            @Html.DisplayFor(modelItem => item.Participant.Language)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.MobileNumber)
+                            @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
                         </td>
+                        <td></td>
+                        <td></td>
                         <td>
                             @Html.ActionLink(
-                         "View",
-                         "ViewDetails",
-                         "FollowUpMgmt",
-                         new { participantID = item.ParticipantID })
-                        </td>
-                    </tr>
+                              "View",
+                              "ViewDetails",
+                              "FollowUpMgmt",
+                              new { participantID = item.ParticipantID })
+                                </td>
+                            </tr>
                 }
             </tbody>
+            }
         </table>
     </div>
     }
 }
-
+else
+{
+    <div>No Followup groups found!!</div>
+}
+<script>
+    $("#print").click(function () {
+        var configurationid = $(this).val();
+        $.ajax({
+            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+            data: { followupconfigurationid: configurationid },
+            type: "POST",
+            error: function (response) {
+                alert("Error encountered while printing!!");
+            },
+            success: function (response) {
+                alert(response.Success);
+            }
+    });
+});
+</script>

@@ -26,64 +26,6 @@
 <div id="followupConfigurations">
 </div>
 
-@*@if (Model != null && Model.Participants != null && Model.Participants.Count() > 0)
-{
-
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Nric)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Salutation)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].FullName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].Language)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Participants[0].MobileNumber)
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Participants)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nric)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Salutation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Language)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MobileNumber)
-                        </td>
-                        <td>
-                            @Html.ActionLink(
-                             "View",
-                             "ViewDetails",
-                             "FollowUpMgmt",
-                             new { participantID = item.ParticipantID })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}*@
 <script>
     $("#EventID").change(function (event) {
         var eventid = $(this).val();
@@ -94,12 +36,12 @@
                 type: "Get",
                 dataType: "html",
                 success: function (result) {
-                    $("#followupConfigurations").html(result);
+                        $("#followupConfigurations").html(result);
                 }
             });
         }
         else {
-            $("#followupConfigurations").html("No Follow up configuration found!!");
+            $("#followupConfigurations").html("");
         }
     });
 </script>
