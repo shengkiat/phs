@@ -39,6 +39,7 @@ namespace PHS.Common
         public const string Internal_Form_Type_SocialSupSummary = "SOCIALSUP";
         public const string Internal_Form_Type_Exhibition = "EXHIBITION";
         public const string Internal_Form_Type_AllSummary = "SUM";
+        public const string Internal_Form_Type_TeleHealthSummary = "TELESUM";
 
         public const string Public_Form_Type_PreRegistration = "PRE-REGISTRATION";
         public const string Public_Form_Type_OutReach = "OUTREACH";
@@ -760,6 +761,19 @@ namespace PHS.Common
         public const string Summary_Field_Name_SocialSupport_Field3 = "SocialSupportField3";
 
 
+        //Lab Results
+        public const string Summary_Field_Name_Lab_Field0 = "LabField0"; // choles
+        public const string Summary_Field_Name_Lab_Field1 = "LabField1"; // trigly
+        public const string Summary_Field_Name_Lab_Field2 = "LabField2"; // hdlc
+        public const string Summary_Field_Name_Lab_Field3 = "LabField3"; // ldlc
+        public const string Summary_Field_Name_Lab_Field4 = "LabField4"; // cho hdl
+        public const string Summary_Field_Name_Lab_Field5 = "LabField5"; // glucose
+        public const string Summary_Field_Name_Lab_Field6 = "LabField6"; 
+        public const string Summary_Field_Name_Lab_Field7 = "LabField7";
+        public const string Summary_Field_Name_Lab_Field8 = "LabField8";
+        public const string Summary_Field_Name_Lab_Field9 = "LabField9";
+        public const string Summary_Field_Name_Lab_Field10 = "LabField10";
+
 
 
         //Event Summary Category
@@ -851,7 +865,8 @@ namespace PHS.Common
         public const string Summary_Type_PTSummary = "PTSUM";
         public const string Summary_Type_OTSummary = "OTSUM";
         public const string Summary_Type_Exhibition = "EXHIBITION";
-        public const string Summary_Type_SocialSup = "SOCIALSUP"; 
+        public const string Summary_Type_SocialSup = "SOCIALSUP";
+        public const string Summary_Type_TeleHealth = "TELESUM";
 
 
         public enum MessageType

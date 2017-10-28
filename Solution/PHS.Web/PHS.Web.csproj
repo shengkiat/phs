@@ -619,6 +619,7 @@
     <Content Include="Views\ParticipantJourney\_ExhibitionSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_SocialSuportSummaryPartial.cshtml" />
     <Content Include="Views\FollowUp\Index.cshtml" />
+    <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

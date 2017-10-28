@@ -276,6 +276,12 @@ namespace PHS.Web.Controllers
                         return PartialView("~/Views/ParticipantJourney/_SocialSuportSummaryPartial.cshtml", pjfvm);
                     }
 
+                    if (Internal_Form_Type_TeleHealthSummary.Equals(result.InternalFormType))
+                    {
+                        ParticipantJourneyFormViewModel pjfvm = participantJourneyManager.RetrieveParticipantJourneyForm(psm, out message);
+                        return PartialView("~/Views/ParticipantJourney/_TeleHealthSummaryPartial.cshtml", pjfvm);
+                    }
+
                     return View("_FillInPartial", result);
                 }
             }

@@ -1,0 +1,67 @@
+﻿@model PHS.Business.ViewModel.ParticipantJourney.ParticipantJourneyFormViewModel
+
+@using PHS.Business.Extensions
+@using PHS.DB
+@using System.Collections.Generic;
+@using GridMvc.Html
+@using System.Text.RegularExpressions
+
+@{
+    ViewBag.Title = "_TeleHealthSummaryPartial";
+}
+
+
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.min")" type="text/javascript"> </script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
+
+
+@using (Html.BeginForm())
+{
+    <div>
+        <br />
+
+        <div class="panel-group">
+            @if (Model != null)
+            {
+                foreach (var summaryCategory in Model.GetSummaryCategories("TeleHealth_SUM"))
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><b>@summaryCategory.SummaryCategoryName</b></div>
+                        <div class="panel-body">
+                            <ul class="vertical-list">
+                                @foreach (var summary in summaryCategory.Summaries)
+                                {
+                                    <li style="margin-bottom: 1em;">
+                                        <b> @Regex.Replace(@summary.SummaryLabel, @"<[^>]+>|&nbsp;", "")</b><br />
+                                        <span class="LabelForsub-label">@summary.SummaryValue</span>
+                                        @if (summary.Result != null && summary.Result.Length > 0)
+                                        {
+                                            if (summary.Highlight)
+                                            {
+                                                <span class="LabelForsub-label" style="color:red;">(@summary.Result)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="LabelForsub-label">(@summary.Result)</span>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <br />
+                }
+
+            }
+
+        </div>
+
+    </div>
+}
+
+
