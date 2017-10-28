@@ -3,6 +3,7 @@ using Novacode;
 using PHS.Business.Implementation;
 using PHS.Business.ViewModel.FollowUp;
 using PHS.Common;
+using PHS.DB;
 using PHS.Web.Controllers;
 using PHS.Web.Filter;
 using System;
@@ -95,19 +96,22 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                         zip.AddFile(englishResultPath, followupParticipant.Participant.Nric);
 
-                        if (followupParticipant.Participant.Language.Contains("Mandarin"))
+                        if (!string.IsNullOrEmpty(followupParticipant.Participant.Language))
                         {
+                            if (followupParticipant.Participant.Language.Contains("Mandarin"))
+                            {
 
-                        }
+                            }
 
-                        else if (followupParticipant.Participant.Language.Contains("Tamil"))
-                        {
+                            else if (followupParticipant.Participant.Language.Contains("Tamil"))
+                            {
 
-                        }
+                            }
 
-                        else if (followupParticipant.Participant.Language.Contains("Malay"))
-                        {
+                            else if (followupParticipant.Participant.Language.Contains("Malay"))
+                            {
 
+                            }
                         }
 
                     }
@@ -171,6 +175,42 @@ namespace PHS.Web.Areas.Admin.Controllers
         public ActionResult GenerateZipFileTest()
         {
             return View();
+        }
+
+        private List<FollowUpMgmtViewModel> Testing()
+        {
+            var printmodellist = new List<FollowUpMgmtViewModel>();
+            Random random = new Random();
+            string[] names = { "Mandarin", "Tamil", "Malay" };
+
+            for (int i = 0; i< 1000; i++)
+            {
+                int randomNumber = random.Next(0, 1000);
+
+                var printmodel = new FollowUpMgmtViewModel();
+
+                Participant participant = new Participant();
+                participant.Nric = randomNumber.ToString();
+
+                int index = random.Next(names.Count());
+                participant.Language = names[index];
+
+                printmodel.Participant = participant;
+
+                printmodel.Weight = "55";
+                printmodel.Height = "159";
+                printmodel.BMIValue = "22";
+                printmodel.BMIStandardReferenceResult = "normal";
+                printmodel.BPValue = "120/80";
+                printmodel.BPStandardReferenceResult = "normal";
+                printmodel.BloodTestResult = "Satisfactory";
+                printmodel.OverAllResult = "satisfactory";
+
+                printmodellist.Add(printmodel);
+            }
+            
+
+            return printmodellist;
         }
 
     }
