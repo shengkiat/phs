@@ -625,6 +625,7 @@
     <Content Include="Views\ParticipantJourney\_OTConsultSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_ExhibitionSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_SocialSuportSummaryPartial.cshtml" />
+    <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
     <Content Include="Views\FollowUp\Index.cshtml" />
 	<Content Include="Areas\Admin\Views\FollowUpMgmt\GenerateZipFileTest.cshtml" />
     <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
