@@ -63,9 +63,38 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult PrintHealthReportByFollowUpGroup(int followupconfigurationid)
+        public ActionResult PrintHealthReportByFollowUpGroup(int followupconfigurationid, string healthReportType)
         {
             string message = string.Empty;
+
+            if (string.IsNullOrEmpty(healthReportType))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Error = "None" });
+            }
+
+            string englishTemplatePath = null;
+            if (Constants.Followup_Print_HealthReport_Normal.Equals(healthReportType))
+            {
+                englishTemplatePath = Server.MapPath("~/App_Data/Normal_English.docx");
+            }
+
+            else if (Constants.Followup_Print_HealthReport_Abnormal.Equals(healthReportType))
+            {
+                englishTemplatePath = Server.MapPath("~/App_Data/Abnormal_English.docx");
+            }
+
+            else if (Constants.Followup_Print_HealthReport_AbnormalNonEligible.Equals(healthReportType))
+            {
+                englishTemplatePath = Server.MapPath("~/App_Data/Abnormal Non-eligible_English.docx");
+            }
+
+            if (string.IsNullOrEmpty(healthReportType))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Error = "Invalid health report type" });
+            }
+
             using (var followUpManager = new FollowUpManager())
             {
 
@@ -87,8 +116,6 @@ namespace PHS.Web.Areas.Admin.Controllers
                     foreach(var followupParticipant in followupParticipantList)
                     {
                         zip.AddDirectoryByName(followupParticipant.Participant.Nric);
-
-                        string englishTemplatePath = Server.MapPath("~/App_Data/Normal_English.docx");
 
                         byte[] fileBytes = generateHealthReport(englishTemplatePath, followupParticipant);
 
