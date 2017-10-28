@@ -205,17 +205,22 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public IList<Modality> GetTeleHealthModalitiesByEventID(int phseventid, out string message)
+        public IList<Modality> GetTeleHealthModalitiesByID(int configid, out string message)
         {
             message = string.Empty;
             IList<Modality> modalities = new List<Modality>();
-            using (var eventmanager = new EventManager())
+            using (var followupconfigmanager = new FollowUpConfigurationManager())
             {
-                var phsevent = eventmanager.GetEventByID(phseventid, out message);
-                foreach (var item in phsevent.Modalities)
+                var phseventid = followupconfigmanager.GetFUConfigurationByID(configid, out message).PHSEventID;
+
+                using (var eventmanager = new EventManager())
                 {
-                    //if (item.Name == "Post Event" || item.Name == "Telehealth")
+                    var phsevent = eventmanager.GetEventByID(phseventid.Value, out message);
+                    foreach (var item in phsevent.Modalities)
+                    {
+                        //if (item.Name == "Post Event" || item.Name == "Telehealth")
                         modalities.Add(item);
+                    }
                 }
             }
             return modalities;

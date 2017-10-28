@@ -8,7 +8,8 @@
             <div style="float:right;">
                 <button class="btn btn-primary" type="button" id="attach" value="@fugroup.FollowUpGroupID">Attach File</button>
                 <button class="btn btn-primary" type="button" id="print" value="@fugroup.FollowUpGroupID">Print</button>
-                <button class="btn btn-primary" type="button"id="exportcaller">Export Caller</button>
+                <button class="btn btn-primary" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
+                <input id="file-input" type="file" name="name" style="display: none;" accept=".xls"/>
             </div>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -94,6 +95,32 @@ else
             success: function (response) {
                 alert(response.Success);
             }
+        });
     });
-});
+
+    $("#importcaller").click(function () {
+        var configurationid = $(this).val();
+        $('#file-input').trigger('click');
+    });
+    $("#file-input").change(function () {
+        var test = $('#file-input')[0].files[0].name;
+        alert(test);
+        $.ajax({
+            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+            data: { followupconfigurationid: configurationid },
+            type: "POST",
+            beforeSend: function () {
+                $("#output").html("Uploading, please wait....");
+            },
+            success: function () {
+                $("#output").html("Upload success.");
+            },
+            complete: function () {
+                $("#output").html("upload complete.");
+            },
+            error: function () {
+                alert("ERROR in upload");
+            }
+        });
+    });
 </script>

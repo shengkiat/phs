@@ -53,23 +53,10 @@
 
 @if (TempData["Message"] != null)
 {
-    <div>
-        <button id="addButton" class="btn btn-primary" type="button">Add Follow-up Group</button>
-    </div>
+    <p>
+        @Html.ActionLink("Add Follow-up Group", "CreateFollowUpGroup", "FollowUpConfiguration", new { @followUpConfigurationID = Model.FollowUpConfigurationID }, new { @class = "btn btn-primary" })
+    </p>
 }
 
 <div id="createfollowupgroups">
 </div>
-
-<script>
-    $("#addButton").click(function () {
-        $.ajax({
-            url: "@Url.Action("GetEventByID", "FollowUpConfiguration")",
-            type: "Get",
-            dataType: "html",
-            success: function (result) {
-                $("#createfollowupgroups").html(result);
-            }
-        });
-    });
-</script>

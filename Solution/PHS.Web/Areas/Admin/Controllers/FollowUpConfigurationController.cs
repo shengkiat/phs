@@ -114,12 +114,12 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTeleHealthModalitiesByEventID(int phseventid)
+        public ActionResult GetTeleHealthModalitiesByID(int configid)
         {
             string message = string.Empty;
             using (var followupconfigurationmanager = new FollowUpConfigurationManager())
             {
-                var result = followupconfigurationmanager.GetTeleHealthModalitiesByEventID(phseventid, out message);
+                var result = followupconfigurationmanager.GetTeleHealthModalitiesByID(configid, out message);
                 return PartialView("_CreateFollowUpGroup", result);
             }
         }

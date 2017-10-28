@@ -1,0 +1,69 @@
+﻿@model PHS.DB.FollowUpGroup
+
+@{
+    ViewBag.Title = "CreateFollowUpGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Follow-Up Group</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissable fade in" id="successMessage">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        @TempData["Message"]
+    </div>
+}
+
+@using (Html.BeginForm("CreateFollowUpGroup"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div style="color: red">@ViewBag.error</div>
+        @Html.HiddenFor(model => model.FollowUpConfigurationID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="BtnCreate" value="Save" class="button-common"
+                       formaction="CreateFollowUpGroup" formmethod="post" />
+                <input type="submit" name="BtnCancel" value="Back" class="button-common cancel"
+                       formaction="Index" formmethod="get" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div>
+        <button id="addButton" class="btn btn-primary" type="button">Add Search Criteria</button>
+    </div>
+}
+
+<div id="createfollowupgroups">
+</div>
+
+<script>
+    $("#addButton").click(function () {
+        var configid = $(FollowUpConfigurationID).val();
+        $.ajax({
+            url: "@Url.Action("GetTeleHealthModalitiesByID", "FollowUpConfiguration")",
+            data: { configid: configid },
+            type: "Get",
+            dataType: "html",
+            success: function (result) {
+                $("#createfollowupgroups").html(result);
+            }
+        });
+    });
+</script>
