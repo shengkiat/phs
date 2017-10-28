@@ -185,9 +185,9 @@ namespace PHS.Web.Areas.Admin.Controllers
             Random random = new Random();
             string[] names = { "Mandarin", "Tamil", "Malay" };
 
-            for (int i = 0; i< 5; i++)
+            for (int i = 0; i< 1000; i++)
             {
-                int randomNumber = random.Next(0, 1000);
+                int randomNumber = random.Next(0, 9000000);
 
                 var printmodel = new FollowUpMgmtViewModel();
 
@@ -201,9 +201,9 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                 printmodel.Participant = participant;
 
-                printmodel.Weight = "55";
-                printmodel.Height = "159";
-                printmodel.BMIValue = "22";
+                printmodel.Weight = "" + random.Next(0, 60);
+                printmodel.Height = "" + random.Next(150, 180);
+                printmodel.BMIValue = "" + random.Next(20, 25);
                 printmodel.BMIStandardReferenceResult = "normal";
                 printmodel.BPValue = "120/80";
                 printmodel.BPStandardReferenceResult = "normal";
