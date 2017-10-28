@@ -75,8 +75,6 @@ namespace PHS.Web.Areas.Admin.Controllers
                     return Json(new { Error = message });
                 }
 
-                
-
                 String guid = Guid.NewGuid().ToString();
 
                 using (ZipFile zip = new ZipFile())
@@ -127,10 +125,13 @@ namespace PHS.Web.Areas.Admin.Controllers
             doc.ReplaceText("<<Name>>", followupParticipant.Participant.Nric);
             doc.ReplaceText("<<Address>>", followupParticipant.Participant.Address);
             doc.ReplaceText("<<NRIC>>", followupParticipant.Participant.Nric);
-            //doc.ReplaceText("<<Height>>", followupParticipant.);
-            //doc.ReplaceText("<<Weight>>", result.Event.Title + " " + result.Event.Venue);
-            //doc.ReplaceText("<<BMI>>", result.Event.Title + " " + result.Event.Venue);
-            //doc.ReplaceText("<<Average Reading>>", result.Event.Title + " " + result.Event.Venue);
+            doc.ReplaceText("<<Height>>", followupParticipant.Height);
+            doc.ReplaceText("<<Weight>>", followupParticipant.Weight);
+            doc.ReplaceText("<<BMI>>", followupParticipant.BMIValue);
+            doc.ReplaceText("<<BMIRange>>", followupParticipant.BMIStandardReferenceResult);
+            doc.ReplaceText("<<BloodTestResult>>", followupParticipant.BloodTestResult);
+            doc.ReplaceText("<<Average Reading>>", followupParticipant.BPValue);
+            doc.ReplaceText("<<OverallResult>>", followupParticipant.OverAllResult);
 
             var ms = new MemoryStream();
             doc.SaveAs(ms);
