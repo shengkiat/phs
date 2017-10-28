@@ -63,7 +63,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult PrintHealthReportByFollowUpGroup(int followupconfigurationid, string healthReportType)
+        public ActionResult PrintHealthReportByFollowUpGroup(int followgroupid, string healthReportType)
         {
             string message = string.Empty;
 
@@ -98,7 +98,7 @@ namespace PHS.Web.Areas.Admin.Controllers
             using (var followUpManager = new FollowUpManager())
             {
 
-                var followupParticipantList = followUpManager.PrintHealthReportByFollowUpGroup(followupconfigurationid, out message);
+                var followupParticipantList = followUpManager.PrintHealthReportByFollowUpGroup(followgroupid, out message);
                 if (!message.Equals("success"))
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
