@@ -92,7 +92,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                         byte[] fileBytes = generateHealthReport(englishTemplatePath, followupParticipant);
 
-                        string englishResultPath = followupParticipant.Participant + "_English.docx";
+                        string englishResultPath = "English.docx";
 
                         System.IO.File.WriteAllBytes(englishResultPath, fileBytes); // Requires System.IO
 
@@ -141,7 +141,7 @@ namespace PHS.Web.Areas.Admin.Controllers
         {
             var doc = DocX.Load(templatePath);
 
-            doc.ReplaceText("<<Name>>", followupParticipant.Participant.Nric);
+            doc.ReplaceText("<<Name>>", followupParticipant.Participant.FullName);
             doc.ReplaceText("<<Address>>", followupParticipant.Participant.Address);
             doc.ReplaceText("<<NRIC>>", followupParticipant.Participant.Nric);
             doc.ReplaceText("<<Height>>", followupParticipant.Height);
@@ -192,8 +192,9 @@ namespace PHS.Web.Areas.Admin.Controllers
                 var printmodel = new FollowUpMgmtViewModel();
 
                 Participant participant = new Participant();
-                participant.Address = "Testing Address";
                 participant.Nric = randomNumber.ToString();
+                participant.FullName = "My name is tester-" + randomNumber;
+                participant.Address = "Testing Address";
 
                 int index = random.Next(names.Count());
                 participant.Language = names[index];
