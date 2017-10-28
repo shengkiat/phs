@@ -1,5 +1,43 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpGroup> 
 
+@using PHS.Business.Extensions
+@using PHS.Common
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".btn-print").click(function () {
+
+            var followgroupid = $(this).attr("value");
+
+            var healthReportType = document.getElementById(followgroupid + '_healthReportType').value;
+
+            var jsonObject = {
+                "followgroupid": followgroupid,
+                "healthReportType": healthReportType
+            };
+
+            $.ajax({
+                url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.Error);
+                },
+                success: function (response) {
+
+                    window.location = '@Url.Action("DownloadZip", "FollowUpMgmt")?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            });
+
+        });
+    });
+
+</script>
 
 @if (Model != null && Model.Count() > 0)
 {
@@ -7,7 +45,27 @@
     {
             <div style="float:right;">
                 <button class="btn btn-primary" type="button" id="attach" value="@fugroup.FollowUpGroupID">Attach File</button>
-                <button class="btn btn-primary" type="button" id="print" value="@fugroup.FollowUpGroupID">Print</button>
+                <button class="btn btn-primary btn-print" type="button" id="btnPrint" value="@fugroup.FollowUpGroupID">Print</button>
+
+                @{
+
+                    var internallistItems1 = new List<SelectListItem>()
+                        {
+                            new SelectListItem {Text = "Normal", Value = Constants.Followup_Print_HealthReport_Normal},
+                            new SelectListItem {Text = "Abnormal", Value = Constants.Followup_Print_HealthReport_Abnormal},
+                            new SelectListItem {Text = "Abnormal Non Eligible", Value = Constants.Followup_Print_HealthReport_AbnormalNonEligible}
+                        };
+
+                    @Html.DropDownList(fugroup.FollowUpGroupID+"_healthReportType", internallistItems1, string.Empty,
+                                        new Dictionary<string, object>
+                                        {
+                                            { "data-field-property", fugroup.FollowUpGroupID+"healthReportType"},
+                                            { "class","is-publisher"},
+                                            { "id", fugroup.FollowUpGroupID+"_healthReportType"}
+
+                                         })
+                }
+
                 <button class="btn btn-primary" type="button"id="exportcaller">Export Caller</button>
             </div>
     <div class="table-responsive">
