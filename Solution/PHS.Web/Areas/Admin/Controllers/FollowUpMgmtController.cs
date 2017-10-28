@@ -85,18 +85,31 @@ namespace PHS.Web.Areas.Admin.Controllers
                     {
                         zip.AddDirectoryByName(followupParticipant.Participant.Nric);
 
-                        string templatePath = Server.MapPath("~/App_Data/Normal_English.docx");
+                        string englishTemplatePath = Server.MapPath("~/App_Data/Normal_English.docx");
 
-                        // Load template into memory
-                        byte[] fileBytes = generateHealthReport(templatePath, followupParticipant);
+                        byte[] fileBytes = generateHealthReport(englishTemplatePath, followupParticipant);
 
-                        string path = followupParticipant.Participant + "_English.docx";
+                        string englishResultPath = followupParticipant.Participant + "_English.docx";
 
-                        System.IO.File.WriteAllBytes(path, fileBytes); // Requires System.IO
+                        System.IO.File.WriteAllBytes(englishResultPath, fileBytes); // Requires System.IO
 
-                        zip.AddFile(path, followupParticipant.Participant.Nric);
+                        zip.AddFile(englishResultPath, followupParticipant.Participant.Nric);
 
-                        //zip.AddFile(path);
+                        if (followupParticipant.Participant.Language.Contains("Mandarin"))
+                        {
+
+                        }
+
+                        else if (followupParticipant.Participant.Language.Contains("Tamil"))
+                        {
+
+                        }
+
+                        else if (followupParticipant.Participant.Language.Contains("Malay"))
+                        {
+
+                        }
+
                     }
 
                     string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
