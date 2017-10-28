@@ -76,6 +76,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                     return Json(new { Error = message });
                 }
 
+                //followupParticipantList = Testing();
+
                 String guid = Guid.NewGuid().ToString();
 
                 using (ZipFile zip = new ZipFile())
@@ -183,13 +185,14 @@ namespace PHS.Web.Areas.Admin.Controllers
             Random random = new Random();
             string[] names = { "Mandarin", "Tamil", "Malay" };
 
-            for (int i = 0; i< 1000; i++)
+            for (int i = 0; i< 5; i++)
             {
                 int randomNumber = random.Next(0, 1000);
 
                 var printmodel = new FollowUpMgmtViewModel();
 
                 Participant participant = new Participant();
+                participant.Address = "Testing Address";
                 participant.Nric = randomNumber.ToString();
 
                 int index = random.Next(names.Count());
