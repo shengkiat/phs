@@ -75,11 +75,35 @@ else
                 success: function (response) {
                     alert(response.Success);
                 }
+            });
+        }
+        else
+        {
+                alert("Select a configuration to deploy!")
+        }
+    });
+    $("#delete").click(function () {
+        var configurationid;
+        $.each($("input[name='checkbox']:checked"), function () {
+            configurationid = $(this).val();
         });
-    }
-    else
-    {
-            alert("Select a configuration to deploy!")
-    }
+        if (configurationid != undefined) {
+            $.ajax({
+                url: "@Url.Action("DeleteFollowUpConfiguration", "FollowUpMgmt")",
+                data: { followupconfigurationid: configurationid },
+                type: "POST",
+                dataType: "html",
+                error: function (response) {
+                    alert("Delete unsuccessful.");
+                },
+                success: function (response) {
+                    alert("success");
+                }
+            });
+        }
+        else
+        {
+                alert("Select a configuration to preview!")
+        }
     });
 </script>

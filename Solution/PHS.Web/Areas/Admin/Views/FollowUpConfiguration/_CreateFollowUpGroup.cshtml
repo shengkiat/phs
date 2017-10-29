@@ -34,7 +34,6 @@
     $("#save").click(function () {
         var filter = $(ModalityID).val().concat("#", $(FormID).val(), "#", $(TemplateID).val(), "#", $(TemplateFieldID).val(), "#", $(comparisionID).val(), "#", $(logicaloperationID).val());
         alert(filter);
-        alert($(this).parent().
         @*$.ajax({
             url: "@Url.Action("GetTeleHealthModalitiesByID", "FollowUpConfiguration")",
             data: { configid: configid },

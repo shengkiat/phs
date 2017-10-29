@@ -62,6 +62,23 @@ namespace PHS.Web.Areas.Admin.Controllers
                 return Json(new { Success = "Deployment Successful." });
             }
         }
+        
+        [HttpPost]
+        public ActionResult DeleteFollowUpConfiguration(int followupconfigurationid)
+        {
+            string message = string.Empty;
+            using (var followUpManager = new FollowUpConfigurationManager())
+            {
+                var success = followUpManager.DeleteFollowUpConfiguration(followupconfigurationid, out message);
+                if (!success)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Error = message });
+                }
+                //return Json(new { Success = "Deployment Successful." });
+                return View();
+            }
+        }
 
         [HttpPost]
         public ActionResult PrintHealthReportByFollowUpGroup(int followgroupid, string healthReportType)
