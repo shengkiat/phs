@@ -1368,7 +1368,7 @@ GO
 --- Follow-up configuration Sample  --
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] ON
 GO
-INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (1, N'Configuration 1', 0, 3)
+INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (1, N'PHS 2017-Jurong Followup Configuration', 0, 3)
 GO
 
 GO
@@ -1381,17 +1381,70 @@ GO
 
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpGroup] ON
 GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (1, N'Group A', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (1, N'C1 - N	Print - Y TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (2, N'C2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (3, N'C2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (4, N'C3 - N/_	Print - N		TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (5, N'C1 - N		Print - Y       TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (6, N'C2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (7, N'C4 - E/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (8, N'C3 - N/_	Print - N		TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (9, N'C5 - NE/P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (10, N'C6 - NE/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (11, N'C6 - NE/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (12, N'C7 - NE/_P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (13, N'C8 - E/P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (14, N'C9 - E/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (15, N'C9 - E/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (16, N'C7 - NE/_P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (17, N'C10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (18, N'C11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (19, N'C11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (20, N'C12 - NE/_M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (21, N'C10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (22, N'C11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (23, N'C13 - E/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (24, N'C10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (25, N'C14 - NE/PM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (26, N'C15 - NE/TPM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (27, N'C15 - NE/TPM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (28, N'C16 - NE/_PM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (29, N'C17 - E/PM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (30, N'C18 - E/TPM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (31, N'C18 - E/TPM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (32, N'C16 - NE/_PM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (33, N'M1 - N	Print - Y	TeleHealth - 	N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (34, N'M2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (35, N'M2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (36, N'M3 - N/_	Print - N		TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (37, N'M1 - N	Print - Y		TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (38, N'M2 - NE/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (39, N'M4 - E/T	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (40, N'M3 - N/_	Print - N		TeleHealth - N', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (41, N'M5 - NE/P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (42, N'M6 - NE/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (43, N'M6 - NE/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (44, N'M7 - NE/_P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (45, N'M8 - E/P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (46, N'M9 - E/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (47, N'M9 - E/TP	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (48, N'M7 - NE/_P	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (49, N'M10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (50, N'M11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (51, N'M11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (52, N'M12 - NE/_M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (53, N'M10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (54, N'M11 - NE/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (55, N'M13 - E/TM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (56, N'M10 - NE/M	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (57, N'M14 - NE/PM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (58, N'M15 - NE/TPM	Print - Y		TeleHealth - Y', N'3#1#1#1#80#==#Male', 1)
+GO
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (59, N'Group TestA', N'3#1#1#1#80#==#Male', 2)
 GO
 
 GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (2, N'Group B', N'3#1#1#1#80#==#Male', 1)
-GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (3, N'Group TestA', N'3#1#1#1#80#==#Male', 2)
-GO
-
-GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (4, N'Group TestB', N'3#1#1#1#80#==#Male', 2)
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (60, N'Group TestB', N'3#1#1#1#80#==#Male', 2)
 GO
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpGroup] OFF
 GO
