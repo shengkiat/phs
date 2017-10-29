@@ -99,11 +99,14 @@ namespace PHS.Business.Implementation
                                     var participantCallerMappingList = new List<ParticipantCallerMapping>();
 
                                     //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
+                                    /*BMI : "3#19#35#36#470#==#25.0"*/ /*"BP : 3#19#35#36#466#==#100"*/
                                     var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter/*"3#19#35#36#470#==#25.0"*/);
                                     //var participantsbygroup = SearchParticipants(item.Filter);
-                                    participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
+                                    var count = participantsbygroup.Count();
+                                    //participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
 
                                     finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup).ToList();
+                                    
 
                                     var participantcallermapping = new ParticipantCallerMapping();
                                     foreach (var participant in participantsbygroup)
@@ -189,8 +192,9 @@ namespace PHS.Business.Implementation
                         foreach (var item in followupgroups)
                         {
                             //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
-                            var participantsbygroup = SearchParticipants(item.Filter);
-                            participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
+                            //var participantsbygroup = SearchParticipants(item.Filter);
+                            var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter/*"3#19#35#36#470#==#25.0"*/);
+                            //participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
                             finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
                             var participantcallermapping = new ParticipantCallerMapping();
                             foreach (var participant in participantsbygroup)
