@@ -125,6 +125,10 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                 //followupParticipantList = Testing();
 
+                string directoryName = Path.GetRandomFileName();
+                string directoryFolder = Path.Combine(Path.GetTempPath(), directoryName);
+                Directory.CreateDirectory(directoryFolder);
+
                 String guid = Guid.NewGuid().ToString();
 
                 using (ZipFile zip = new ZipFile())
@@ -137,7 +141,7 @@ namespace PHS.Web.Areas.Admin.Controllers
 
                         byte[] fileBytes = generateHealthReport(englishTemplatePath, followupParticipant);
 
-                        string englishResultPath = "English.docx";
+                        string englishResultPath = directoryFolder + "\\" +  followupParticipant.Participant.Nric + "English.docx";
 
                         System.IO.File.WriteAllBytes(englishResultPath, fileBytes); // Requires System.IO
 
@@ -172,6 +176,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                         memoryStream.Position = 0; //Not sure if this is required
 
                         TempData[guid] = memoryStream.ToArray();
+
+                        Directory.Delete(directoryFolder, true);
 
                         return new JsonResult()
                         {
