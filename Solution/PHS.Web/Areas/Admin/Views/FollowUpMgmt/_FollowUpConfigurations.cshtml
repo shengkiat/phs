@@ -3,6 +3,13 @@
 <div class="panel panel-default">
 @if (Model != null && Model.Count() > 0)
 {
+    foreach (var item in Model)
+    {
+        if (item.Deploy)
+        {
+            <h4 style="color:blue">@item.Title is deployed!!</h4>
+        }
+    }
     <div class="panel-body" style="width: 100%;">
         <div style="float:left; width: 80%">
             <h3>List of existing configuration</h3>
