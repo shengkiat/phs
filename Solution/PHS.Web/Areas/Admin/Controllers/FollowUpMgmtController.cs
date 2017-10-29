@@ -38,11 +38,12 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult GetParticipantsByFollowUpConfiguration(int? followupconfigurationid)
+        public ActionResult GetParticipantsByFollowUpConfiguration(int followupconfigurationid)
         {
+            string message = string.Empty;
             using (var followUpManager = new FollowUpManager())
             {
-                var result = followUpManager.GetParticipantsByFollowUpConfiguration(followupconfigurationid.Value);
+                var result = followUpManager.GetParticipantsByFollowUpConfiguration(followupconfigurationid, out message);
                 return PartialView("_ParticipantsTable", result);
             }
         }

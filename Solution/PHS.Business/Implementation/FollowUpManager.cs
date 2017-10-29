@@ -74,66 +74,74 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public IList<FollowUpGroup> GetParticipantsByFollowUpConfiguration(int followupconfigurationid)
+        public IList<FollowUpGroup> GetParticipantsByFollowUpConfiguration(int followupconfigurationid, out string message)
         {
+            message = string.Empty;
             var result = new List<FollowUpGroup>();
             var followupconfig = GetFollowUpConfiguration(followupconfigurationid);
-            if (followupconfig != null)
+            if (followupconfig == null)
             {
-                if (followupconfig.Deploy)
+                message = "Follow-up configuration does not exist!";
+                return result;
+            }
+
+            if (followupconfig.Deploy)
+            {
+                result = followupconfig.FollowUpGroups.ToList();
+                return result;
+            }
+          
+            var followupgroups = followupconfig.FollowUpGroups;
+            if(followupgroups.Count <= 0)
+            {
+                message = "No follow-up groups found.";
+                return result;
+            }
+
+            var eventid = followupconfig.PHSEventID;
+            var finalgroupparticipants = GetAllParticipants(eventid.Value);
+            foreach (var item in followupgroups)
+            {
+                using (var unitOfWork = CreateUnitOfWork())
                 {
-                    result = followupconfig.FollowUpGroups.ToList();
-                }
-                else
-                {
-                    var eventid = followupconfig.PHSEventID;
+                    var participantCallerMappingList = new List<ParticipantCallerMapping>();
+                    //testing
+                    //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
+
+                    /*BMI : "3#19#35#36#470#==#25.0"*/ /*"BP : 3#19#35#36#466#==#100"*/
+                    var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter).ToList();
+                    //var participantsbygroup = SearchParticipants(item.Filter);
+
+                    //avoid overlapping participants
+                    var intersectresult = finalgroupparticipants.Where(a => participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
+                    participantsbygroup = intersectresult;
+                    var exceptresult = finalgroupparticipants.Where(a => !participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
+                    finalgroupparticipants = exceptresult;
+
+                    var participantcallermapping = new ParticipantCallerMapping();
+                    foreach (var participant in participantsbygroup)
                     {
-                        var finalgroupparticipants = GetAllParticipants(eventid.Value);
-                        var followupgroups = followupconfig.FollowUpGroups;
-                        if (followupgroups.Count > 0)
-                        {
-                            foreach (var item in followupgroups)
-                            {
-                                using (var unitOfWork = CreateUnitOfWork())
-                                {
-                                    var participantCallerMappingList = new List<ParticipantCallerMapping>();
+                        participantcallermapping.Participant = participant;
+                        participantCallerMappingList.Add(participantcallermapping);
 
-                                    //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
-                                    /*BMI : "3#19#35#36#470#==#25.0"*/ /*"BP : 3#19#35#36#466#==#100"*/
-                                    var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter/*"3#19#35#36#470#==#25.0"*/);
-                                    //var participantsbygroup = SearchParticipants(item.Filter);
-                                    var count = participantsbygroup.Count();
-                                    //participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
-
-                                    finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup).ToList();
-                                    
-
-                                    var participantcallermapping = new ParticipantCallerMapping();
-                                    foreach (var participant in participantsbygroup)
-                                    {
-                                        participantcallermapping.Participant = participant;
-                                        participantCallerMappingList.Add(participantcallermapping);
-
-                                    }
-                                    item.ParticipantCallerMappings = participantCallerMappingList;
-                                    result.Add(item);
-                                }
-                            }
-                            var endfugroup = new FollowUpGroup();
-                            var endparticipantCallerMappingList = new List<ParticipantCallerMapping>();
-                            foreach (var participant in finalgroupparticipants.ToList())
-                            {
-                                var endparticipantcallermapping = new ParticipantCallerMapping();
-                                endparticipantcallermapping.Participant = participant;
-                                endparticipantCallerMappingList.Add(endparticipantcallermapping);
-
-                            }
-                            endfugroup.ParticipantCallerMappings = endparticipantCallerMappingList;
-                            result.Add(endfugroup);
-                        }
                     }
+                    item.ParticipantCallerMappings = participantCallerMappingList;
+                    result.Add(item);
                 }
             }
+            var endfugroup = new FollowUpGroup();
+            var endparticipantCallerMappingList = new List<ParticipantCallerMapping>();
+            foreach (var participant in finalgroupparticipants.ToList())
+            {
+                var endparticipantcallermapping = new ParticipantCallerMapping();
+                endparticipantcallermapping.Participant = participant;
+                endparticipantCallerMappingList.Add(endparticipantcallermapping);
+
+            }
+            endfugroup.Title = "No Group Participants";
+            endfugroup.ParticipantCallerMappings = endparticipantCallerMappingList;
+            result.Add(endfugroup);
+                
             return result;
         }
 
@@ -165,64 +173,77 @@ namespace PHS.Business.Implementation
         public bool DeployFollowUpConfiguration(int followupconfigurationid, out string message)
         {
             message = string.Empty;
+            var result = new List<FollowUpGroup>();
+            var followupconfiguration = GetFollowUpConfiguration(followupconfigurationid);
+            if (followupconfiguration == null)
+            {
+                message = "No follow-up configuration found.";
+                return false;
+            }
+
+            if (followupconfiguration.Deploy)
+            {
+                message = "Follow-up configuration is already deployed!";
+                return false;
+            }
+
+            var followupgroups = followupconfiguration.FollowUpGroups;
+            if (followupgroups.Count() <= 0)
+            {
+                message = "No follow-up groups found.";
+                return false;
+            }
+
             using (var unitOfWork = CreateUnitOfWork())
             {
-                var followupconfiguration = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
-                if (followupconfiguration == null)
-                {
-                    message = "Follow-up configuration does not exist!";
-                    return false;
-                }
-                if (followupconfiguration.Deploy)
-                {
-                    message = "Follow-up configuration is already deployed!";
-                    return false;
-                }
-                else
-                {
-                    var modelToUpdate = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
-                    modelToUpdate.Deploy = true;
 
+                var modelToUpdate = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid);
+                modelToUpdate.Deploy = true;
+                //modelToUpdate.DateTime = DateTime.Now;
 
-                    var eventid = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(followupconfigurationid).PHSEventID;
-                    var finalgroupparticipants = unitOfWork.Participants.FindParticipants(p => p.PHSEvents.Any(e => e.PHSEventID == eventid));
-                    var followupgroups = followupconfiguration.FollowUpGroups;
-                    if (followupgroups.Count > 0)
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
+                }
+            }
+            var finalgroupparticipants = GetAllParticipants(followupconfiguration.PHSEventID.Value);
+            foreach (var item in followupgroups)
+            {
+                using (var unitOfWork = CreateUnitOfWork())
+                {
+                    //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
+                    //var participantsbygroup = SearchParticipants(item.Filter);
+                    var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter/*"3#19#35#36#470#==#25.0"*/).ToList();
+
+                    //avoid overlapping participants
+                    var intersectresult = finalgroupparticipants.Where(a => participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
+                    participantsbygroup = intersectresult;
+                    var exceptresult = finalgroupparticipants.Where(a => !participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
+                    finalgroupparticipants = exceptresult;
+
+                    var participantcallermapping = new ParticipantCallerMapping();
+                    foreach (var participant in participantsbygroup)
                     {
-                        foreach (var item in followupgroups)
-                        {
-                            //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
-                            //var participantsbygroup = SearchParticipants(item.Filter);
-                            var participantsbygroup = unitOfWork.Participants.SearchParticipants(item.Filter/*"3#19#35#36#470#==#25.0"*/);
-                            //participantsbygroup = finalgroupparticipants.Intersect(participantsbygroup).ToList();
-                            finalgroupparticipants = finalgroupparticipants.Except(participantsbygroup);
-                            var participantcallermapping = new ParticipantCallerMapping();
-                            foreach (var participant in participantsbygroup)
-                            {
-                                participantcallermapping.FollowUpGroupID = item.FollowUpGroupID;
-                                participantcallermapping.Participant = participant;
-                                unitOfWork.ParticipantCallerMappings.Add(participantcallermapping);
-                            }
-                        }
-                        //var endfugroup = new FollowUpGroup();
-                        //foreach (var participant in finalgroupparticipants.ToList())
-                        //{
-                        //    var endparticipantcallermapping = new ParticipantCallerMapping();
-                        //    endparticipantcallermapping.Participant = participant;
-
-                        //}
+                        participantcallermapping.FollowUpGroupID = item.FollowUpGroupID;
+                        participantcallermapping.Participant = participant;
+                        unitOfWork.ParticipantCallerMappings.Add(participantcallermapping);
                     }
-
-
                     using (TransactionScope scope = new TransactionScope())
                     {
                         unitOfWork.Complete();
                         scope.Complete();
                     }
-
-                    return true;
                 }
             }
+            //var endfugroup = new FollowUpGroup();
+            //foreach (var participant in finalgroupparticipants.ToList())
+            //{
+            //    var endparticipantcallermapping = new ParticipantCallerMapping();
+            //    endparticipantcallermapping.Participant = participant;
+
+            //}
+            return true;
         }
 
         public List<FollowUpMgmtViewModel> PrintHealthReportByFollowUpGroup(int followgroupid, out string message)
