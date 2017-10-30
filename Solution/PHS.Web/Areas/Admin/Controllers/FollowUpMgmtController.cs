@@ -226,16 +226,6 @@ namespace PHS.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult GenerateZipFileTest()
-        {
-            return View();
-        }
-
-        public ActionResult UploadFileTest()
-        {
-            return View();
-        }
-
         private List<FollowUpMgmtViewModel> Testing()
         {
             var printmodellist = new List<FollowUpMgmtViewModel>();

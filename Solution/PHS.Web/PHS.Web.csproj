@@ -628,7 +628,6 @@
     <Content Include="Views\ParticipantJourney\_SocialSuportSummaryPartial.cshtml" />
     <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
     <Content Include="Views\FollowUp\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\FollowUpMgmt\GenerateZipFileTest.cshtml" />
     <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
     <Content Include="Views\FollowUp\_ParticipantCallerTable.cshtml" />
   </ItemGroup>
