@@ -44,7 +44,9 @@
     foreach (var fugroup in Model)
     {
             <div style="float:right;">
+                <!--
                 <button class="btn btn-primary" type="button" id="attach" value="@fugroup.FollowUpGroupID">Attach File</button>
+                    -->
                 <button class="btn btn-primary btn-print" type="button" id="btnPrint" value="@fugroup.FollowUpGroupID">Print</button>
 
                 @{
@@ -66,8 +68,8 @@
                                          })
                 }
 
-                <button class="btn btn-primary" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
-                <input id="file-input" type="file" name="name" style="display: none;" @*accept=".xls"*@/>
+                <button class="btn btn-primary btn-importcaller" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
+                <input id="file-input-@fugroup.FollowUpGroupID" type="file" name="files" @*accept=".xls"*@/>
             </div>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -140,45 +142,46 @@ else
 {
     <div>No Followup groups found!!</div>
 }
-<script>
-    $("#importcaller").click(function () {
 
-        $('#file-input').trigger('click');
-        var id = $(this).attr("value");
-        //var file = "files=" + $("#file-input")[0].files[0];
-        //var fd = new FormData();
-        //fd.append("file", document.getElementById('file-input').files[0]);
-        @*$.ajax({
-            url: "@Url.Action("ImportCaller", "FollowUpMgmt")",
-            data: { followgroupid: id },
-        type: "POST",
-        dataType: "json",
-        success: function (response) {
-            alert("Import success.");
-        },
-        error: function () {
-            alert("ERROR in import");
-        }
-    });*@
-    });
-    $("#file-input").change(function () {
-        //var followgroupid = $(this).attr("value");
-        //var test = $('#file-input')[0].files[0].name;
-        var id = $(this).attr("value");
-        //var file = "files=" + $("#file-input")[0].files[0];
-        //var fd = new FormData();
-        //fd.append("file", document.getElementById('file-input').files[0]);
-        $.ajax({
-            url: "@Url.Action("ImportCaller", "FollowUpMgmt")",
-            data: { followgroupid: id },
-            type: "POST",
-            dataType: "json",
-            success: function (response) {
-                alert("Import success.");
-            },
-            error: function () {
-                alert("ERROR in import");
+<script>
+    $(".btn-importcaller").click(function () {
+        // Checking whether FormData is available in browser
+        if (window.FormData !== undefined) {
+
+            var followgroupid = $(this).attr("value");
+
+            var fileUpload = $("#file-input-" + followgroupid).get(0);
+
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
             }
-        });
+
+            // Adding one more key to FormData object
+            fileData.append('followgroupid', '1');
+
+            $.ajax({
+                url: '@Url.Action("ImportCaller")',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+
+        } else {
+            alert("FormData is not supported.");
+        }
+
     });
 </script>

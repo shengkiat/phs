@@ -231,6 +231,11 @@ namespace PHS.Web.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult UploadFileTest()
+        {
+            return View();
+        }
+
         private List<FollowUpMgmtViewModel> Testing()
         {
             var printmodellist = new List<FollowUpMgmtViewModel>();
@@ -270,23 +275,67 @@ namespace PHS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportCaller(int followgroupid, HttpPostedFileBase file)
+        public ActionResult ImportCaller(int followgroupid)
         {
             string message = string.Empty;
-            //Get Callers from excel
-            using (var followUpManager = new FollowUpManager())
-            {
-                List<string> volunteers = new List<string>();
-                List<string> commmembers = new List<string>();
 
-                var followupParticipantList = followUpManager.ImportCaller(followgroupid, volunteers, commmembers, out message);
-                if (!message.Equals("success"))
+            if (Request.Files.Count > 0)
+            {
+                try
                 {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Error = message });
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+                        byte[] data = ReadData(file.InputStream);
+                        using (var followUpManager = new FollowUpManager())
+                        {
+                            List<string> volunteers = new List<string>();
+                            List<string> commmembers = new List<string>();
+                            /*
+                            var followupParticipantList = followUpManager.ImportCaller(followgroupid, volunteers, commmembers, out message);
+
+                            */
+                        }
+
+                        //System.IO.File.Delete(filePath);
+
+                        if (!message.Equals("success"))
+                        {
+                            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                            return Json(new { Error = message });
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
                 }
             }
+
             return Json(new { Success = "Import Caller Successful." });
+        }
+
+        private byte[] ReadData(Stream stream)
+        {
+            byte[] buffer = new byte[16 * 1024];
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+
+                return ms.ToArray();
+            }
         }
 
     }
