@@ -1,5 +1,4 @@
 ﻿using PHS.DB;
-using PHS.DB;
 using System.Linq;
 using PHS.Repository.Interface;
 using PHS.Repository.Repository.Core;

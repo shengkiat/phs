@@ -17,14 +17,22 @@ namespace PHS.DB
         public int ParticipantCallerMappingID { get; set; }
         public int ParticipantID { get; set; }
         public int FollowUpGroupID { get; set; }
-        public string FollowUpVolunteer { get; set; }
-        public string FollowUpVolunteerCallStatus { get; set; }
-        public Nullable<System.DateTime> FollowUpVolunteerCallDateTime { get; set; }
-        public string FollowUpVolunteerCallRemark { get; set; }
-        public string CommitteeMember { get; set; }
-        public string CommitteeMemberCallStatus { get; set; }
-        public Nullable<System.DateTime> CommitteeMemberCallDateTime { get; set; }
-        public string CommitteeMemberCallRemark { get; set; }
+        public string PhaseIFollowUpVolunteer { get; set; }
+        public string PhaseIFollowUpVolunteerCallStatus { get; set; }
+        public Nullable<System.DateTime> PhaseIFollowUpVolunteerCallDateTime { get; set; }
+        public string PhaseIFollowUpVolunteerCallRemark { get; set; }
+        public string PhaseICommitteeMember { get; set; }
+        public string PhaseICommitteeMemberCallStatus { get; set; }
+        public Nullable<System.DateTime> PhaseICommitteeMemberCallDateTime { get; set; }
+        public string PhaseICommitteeMemberCallRemark { get; set; }
+        public string PhaseIIFollowUpVolunteer { get; set; }
+        public string PhaseIIFollowUpVolunteerCallStatus { get; set; }
+        public Nullable<System.DateTime> PhaseIIFollowUpVolunteerCallDateTime { get; set; }
+        public string PhaseIIFollowUpVolunteerCallRemark { get; set; }
+        public string PhaseIICommitteeMember { get; set; }
+        public string PhaseIICommitteeMemberCallStatus { get; set; }
+        public Nullable<System.DateTime> PhaseIICommitteeMemberCallDateTime { get; set; }
+        public string PhaseIICommitteeMemberCallRemark { get; set; }
     
         public virtual FollowUpGroup FollowUpGroup { get; set; }
         public virtual Participant Participant { get; set; }

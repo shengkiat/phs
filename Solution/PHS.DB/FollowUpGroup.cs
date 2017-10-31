@@ -23,6 +23,11 @@ namespace PHS.DB
         public int FollowUpGroupID { get; set; }
         public string Title { get; set; }
         public string Filter { get; set; }
+        public string HealthReportType { get; set; }
+        public Nullable<bool> PrintHealthReport { get; set; }
+        public Nullable<bool> FreeConsultationEligible { get; set; }
+        public Nullable<bool> TeleHealthEligible { get; set; }
+        public string BuddyFormType { get; set; }
         public int FollowUpConfigurationID { get; set; }
     
         public virtual FollowUpConfiguration FollowUpConfiguration { get; set; }

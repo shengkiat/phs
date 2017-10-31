@@ -56,7 +56,7 @@ namespace PHS.Business.Implementation
                             var resultparticipantcallmaplist = new List<ParticipantCallerMapping>();
                             foreach (var map in item.ParticipantCallerMappings)
                             {
-                                if (map.FollowUpVolunteer == loginuser.FullName)
+                                if (map.PhaseIFollowUpVolunteer == loginuser.FullName)
                                 {
                                     resultparticipantcallmaplist.Add(map);
                                 }
@@ -99,7 +99,7 @@ namespace PHS.Business.Implementation
             }
 
             var eventid = followupconfig.PHSEventID;
-            var finalgroupparticipants = GetAllParticipants(eventid.Value);
+            var finalgroupparticipants = GetAllParticipants(eventid);
             foreach (var item in followupgroups)
             {
                 using (var unitOfWork = CreateUnitOfWork())
@@ -207,7 +207,7 @@ namespace PHS.Business.Implementation
                     scope.Complete();
                 }
             }
-            var finalgroupparticipants = GetAllParticipants(followupconfiguration.PHSEventID.Value);
+            var finalgroupparticipants = GetAllParticipants(followupconfiguration.PHSEventID);
             foreach (var item in followupgroups)
             {
                 using (var unitOfWork = CreateUnitOfWork())
@@ -337,7 +337,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.FollowUpVolunteer = volunteers[count];
+                            toupdate.PhaseIFollowUpVolunteer = volunteers[count];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -365,7 +365,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.FollowUpVolunteer = volunteers[iCaller];
+                            toupdate.PhaseIFollowUpVolunteer = volunteers[iCaller];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -396,7 +396,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.CommitteeMember = commmembers[count];
+                            toupdate.PhaseICommitteeMember = commmembers[count];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -424,7 +424,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.CommitteeMember = volunteers[icommmember];
+                            toupdate.PhaseICommitteeMember = volunteers[icommmember];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();

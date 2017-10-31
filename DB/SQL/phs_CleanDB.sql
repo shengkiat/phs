@@ -442,7 +442,8 @@ CREATE TABLE [dbo].FollowUpConfiguration(
 	[FollowUpConfigurationID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](max) NOT NULL,
 	[Deploy] [bit] NOT NULL,
-	[PHSEventID] [int] NULL,
+	[DeployDateTime] [datetime2](7) NULL,
+	[PHSEventID] [int] NOT NULL,
  CONSTRAINT [PK_followup_configuration] PRIMARY KEY CLUSTERED 
 (
 	[FollowUpConfigurationID] ASC
@@ -453,6 +454,11 @@ CREATE TABLE [dbo].FollowUpGroup(
 	[FollowUpGroupID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](max) NOT NULL,
 	[Filter] [nvarchar](max) NOT NULL,
+	[HealthReportType] [nvarchar](max) NULL,
+	[PrintHealthReport] [bit] NULL,
+	[FreeConsultationEligible] [bit] NULL,
+	[TeleHealthEligible] [bit] NULL,
+	[BuddyFormType] [nvarchar](max) NULL,
 	[FollowUpConfigurationID] [int] NOT NULL,
  CONSTRAINT [PK_followup_group] PRIMARY KEY CLUSTERED 
 (
@@ -464,14 +470,22 @@ CREATE TABLE [dbo].ParticipantCallerMapping(
 	[ParticipantCallerMappingID] [int] IDENTITY(1,1) NOT NULL,
 	[ParticipantID] [int] NOT NULL,
 	[FollowUpGroupID] [int] NOT NULL,
-	[FollowUpVolunteer] [nvarchar](max) NULL,
-	[FollowUpVolunteerCallStatus] [nvarchar](max) NULL,
-	[FollowUpVolunteerCallDateTime] [datetime2](7) NULL,
-	[FollowUpVolunteerCallRemark] [nvarchar](max) NULL,
-	[CommitteeMember] [nvarchar](max) NULL,
-	[CommitteeMemberCallStatus] [nvarchar](max) NULL,
-	[CommitteeMemberCallDateTime] [datetime2](7) NULL,
-	[CommitteeMemberCallRemark] [nvarchar](max) NULL,
+	[PhaseIFollowUpVolunteer] [nvarchar](max) NULL,
+	[PhaseIFollowUpVolunteerCallStatus] [nvarchar](max) NULL,
+	[PhaseIFollowUpVolunteerCallDateTime] [datetime2](7) NULL,
+	[PhaseIFollowUpVolunteerCallRemark] [nvarchar](max) NULL,
+	[PhaseICommitteeMember] [nvarchar](max) NULL,
+	[PhaseICommitteeMemberCallStatus] [nvarchar](max) NULL,
+	[PhaseICommitteeMemberCallDateTime] [datetime2](7) NULL,
+	[PhaseICommitteeMemberCallRemark] [nvarchar](max) NULL,
+	[PhaseIIFollowUpVolunteer] [nvarchar](max) NULL,
+	[PhaseIIFollowUpVolunteerCallStatus] [nvarchar](max) NULL,
+	[PhaseIIFollowUpVolunteerCallDateTime] [datetime2](7) NULL,
+	[PhaseIIFollowUpVolunteerCallRemark] [nvarchar](max) NULL,
+	[PhaseIICommitteeMember] [nvarchar](max) NULL,
+	[PhaseIICommitteeMemberCallStatus] [nvarchar](max) NULL,
+	[PhaseIICommitteeMemberCallDateTime] [datetime2](7) NULL,
+	[PhaseIICommitteeMemberCallRemark] [nvarchar](max) NULL,
  CONSTRAINT [PK_participant_caller_mapping] PRIMARY KEY CLUSTERED 
 (
 	[ParticipantCallerMappingID] ASC

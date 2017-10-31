@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="6a4bf8f67b9e42648284404d67914c7b" Name="Diagram1" ZoomLevel="87">
         <EntityTypeShape EntityType="phsModel.AuditLog" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="phsModel.Form" Width="1.5" PointX="0.75" PointY="23.75" />
         <EntityTypeShape EntityType="phsModel.MasterAddress" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -40,11 +40,11 @@
         <AssociationConnector Association="phsModel.ModalityForm" />
         <AssociationConnector Association="phsModel.ParticipantPHSEvent" />
         <AssociationConnector Association="phsModel.TemplateTemplateField" />
-        <EntityTypeShape EntityType="phsModel.FollowUpConfiguration" Width="1.5" PointX="3" PointY="38.625" />
-        <EntityTypeShape EntityType="phsModel.FollowUpGroup" Width="1.5" PointX="5.25" PointY="38.625" />
+        <EntityTypeShape EntityType="phsModel.FollowUpConfiguration" Width="1.5" PointX="3" PointY="39.375" />
         <AssociationConnector Association="phsModel.FK_followup_configuration_event" />
+        <EntityTypeShape EntityType="phsModel.FollowUpGroup" Width="1.5" PointX="5.25" PointY="39" />
+        <EntityTypeShape EntityType="phsModel.ParticipantCallerMapping" Width="1.5" PointX="7.5" PointY="35.25" />
         <AssociationConnector Association="phsModel.FK_followup_group_configuration" />
-        <EntityTypeShape EntityType="phsModel.ParticipantCallerMapping" Width="1.5" PointX="7.5" PointY="35.375" />
         <AssociationConnector Association="phsModel.FK_participantcallermapping_followupgroup" />
         <AssociationConnector Association="phsModel.FK_participantcallermapping_participant" />
       </Diagram>

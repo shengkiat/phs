@@ -215,7 +215,7 @@ namespace PHS.Business.Implementation
 
                 using (var eventmanager = new EventManager())
                 {
-                    var phsevent = eventmanager.GetEventByID(phseventid.Value, out message);
+                    var phsevent = eventmanager.GetEventByID(phseventid, out message);
                     foreach (var item in phsevent.Modalities)
                     {
                         //if (item.Name == "Post Event" || item.Name == "Telehealth")
