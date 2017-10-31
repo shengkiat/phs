@@ -285,12 +285,8 @@ namespace PHS.Web.Areas.Admin.Controllers
                         byte[] data = ReadData(file.InputStream);
                         using (var followUpManager = new FollowUpManager())
                         {
-                            List<string> volunteers = new List<string>();
-                            List<string> commmembers = new List<string>();
-                            /*
-                            var followupParticipantList = followUpManager.ImportCaller(followgroupid, volunteers, commmembers, out message);
-
-                            */
+                            
+                            var followupParticipantList = followUpManager.ImportCaller(data, followgroupid, out message);
                         }
 
                         //System.IO.File.Delete(filePath);

@@ -1,10 +1,12 @@
-﻿using PHS.Business.Common;
+﻿using OfficeOpenXml;
+using PHS.Business.Common;
 using PHS.Business.Interface;
 using PHS.Business.ViewModel.FollowUp;
 using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -291,7 +293,7 @@ namespace PHS.Business.Implementation
             }
         }
 
-        public List<ParticipantCallerMapping> ImportCaller(int followgroupid, List<string> volunteers, List<string> commmembers, out string message)
+        public List<ParticipantCallerMapping> ImportCaller(byte[] data, int followgroupid, out string message)
         {
             message = string.Empty;
             var followupgroup = GetFollowUpGroupByID(followgroupid);
@@ -304,21 +306,55 @@ namespace PHS.Business.Implementation
             {
                 message = "Follow-up configuration is not deployed!";
             }
-            var volunteerscount = volunteers.Count;
-            var commmembercount = commmembers.Count;
+
+
+            List<string> phaseOnevolunteers = new List<string>();
+            List<string> phaseOneCommMembers = new List<string>();
+
+            using (MemoryStream ms = new MemoryStream(data))
+            using (ExcelPackage package = new ExcelPackage(ms))
+            {
+                if (package.Workbook.Worksheets.Count == 0)
+                {
+                    message = "Invalid File.";
+                }
+
+                else
+                {
+                    foreach (ExcelWorksheet worksheet in package.Workbook.Worksheets)
+                    {
+                        if (!worksheet.Cells[1, 1].Value.Equals("Phase-1 Follow-up Volunteer")
+                            || !worksheet.Cells[1, 2].Value.Equals("Phase-1 Committee Member")
+                            || !worksheet.Cells[1, 3].Value.Equals("Phase-2 Follow-up Volunteer")
+                            || !worksheet.Cells[1, 4].Value.Equals("Phase-2 Committee Member"))
+                        {
+                            message = "Invalid File.";
+                        }
+
+                        else
+                        {
+                            phaseOnevolunteers = GetColumnList(worksheet, 1);
+                            phaseOneCommMembers = GetColumnList(worksheet, 2);
+                        }
+                    }
+                }
+            }
+
+            var volunteerscount = phaseOnevolunteers.Count;
+            var commmembercount = phaseOneCommMembers.Count;
 
             if (volunteerscount == 0 || commmembercount == 0)
             {
                 message = "No Volunteers/Comm Members found.";
             }
 
-            foreach (var volunteer in volunteers)
+            foreach (var volunteer in phaseOnevolunteers)
             {
                 if (!ValidCaller(volunteer))
                     message = "Volunteer " + volunteer + "not a valid user";
             }
 
-            foreach (var commmember in commmembers)
+            foreach (var commmember in phaseOneCommMembers)
             {
                 if (!ValidCaller(commmember))
                     message = "Commitee Member " + commmember + "not a valid user";
@@ -337,7 +373,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseIFollowUpVolunteer = volunteers[count];
+                            toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[count];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -365,7 +401,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseIFollowUpVolunteer = volunteers[iCaller];
+                            toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[iCaller];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -396,7 +432,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseICommitteeMember = commmembers[count];
+                            toupdate.PhaseICommitteeMember = phaseOneCommMembers[count];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -424,7 +460,7 @@ namespace PHS.Business.Implementation
                         {
                             var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                             Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseICommitteeMember = volunteers[icommmember];
+                            toupdate.PhaseICommitteeMember = phaseOnevolunteers[icommmember];
                             using (TransactionScope scope = new TransactionScope())
                             {
                                 unitOfWork.Complete();
@@ -446,6 +482,23 @@ namespace PHS.Business.Implementation
             message = "success";
             return followupgroup.ParticipantCallerMappings.ToList();
         }
+
+        private List<string> GetColumnList(ExcelWorksheet worksheet, int x)
+        {
+            List<string> values = new List<string>();
+            for (int row = worksheet.Dimension.Start.Row + 1; row <= worksheet.Dimension.End.Row; row++)
+            {
+                if (worksheet.Cells[row, x].Value == null)
+                {
+                    continue;
+                }
+
+                values.Add(worksheet.Cells[row, x].Value.ToString());
+            }
+
+            return values;
+        }
+
 
         private FollowUpGroup GetFollowUpGroupByID(int followgroupid)
         {
