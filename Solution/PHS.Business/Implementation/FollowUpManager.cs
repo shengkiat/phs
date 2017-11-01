@@ -307,34 +307,36 @@ namespace PHS.Business.Implementation
                 message = "Follow-up configuration is not deployed!";
             }
 
-
             List<string> phaseOnevolunteers = new List<string>();
             List<string> phaseOneCommMembers = new List<string>();
 
-            using (MemoryStream ms = new MemoryStream(data))
-            using (ExcelPackage package = new ExcelPackage(ms))
+            if (string.IsNullOrEmpty(message))
             {
-                if (package.Workbook.Worksheets.Count == 0)
+                using (MemoryStream ms = new MemoryStream(data))
+                using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    message = "Invalid File.";
-                }
-
-                else
-                {
-                    foreach (ExcelWorksheet worksheet in package.Workbook.Worksheets)
+                    if (package.Workbook.Worksheets.Count == 0)
                     {
-                        if (!worksheet.Cells[1, 1].Value.Equals("Phase-1 Follow-up Volunteer")
-                            || !worksheet.Cells[1, 2].Value.Equals("Phase-1 Committee Member")
-                            || !worksheet.Cells[1, 3].Value.Equals("Phase-2 Follow-up Volunteer")
-                            || !worksheet.Cells[1, 4].Value.Equals("Phase-2 Committee Member"))
-                        {
-                            message = "Invalid File.";
-                        }
+                        message = "Invalid File.";
+                    }
 
-                        else
+                    else
+                    {
+                        foreach (ExcelWorksheet worksheet in package.Workbook.Worksheets)
                         {
-                            phaseOnevolunteers = GetColumnList(worksheet, 1);
-                            phaseOneCommMembers = GetColumnList(worksheet, 2);
+                            if (!worksheet.Cells[1, 1].Value.Equals("Phase-1 Follow-up Volunteer")
+                                || !worksheet.Cells[1, 2].Value.Equals("Phase-1 Committee Member")
+                                || !worksheet.Cells[1, 3].Value.Equals("Phase-2 Follow-up Volunteer")
+                                || !worksheet.Cells[1, 4].Value.Equals("Phase-2 Committee Member"))
+                            {
+                                message = "Invalid File.";
+                            }
+
+                            else
+                            {
+                                phaseOnevolunteers = GetColumnList(worksheet, 1);
+                                phaseOneCommMembers = GetColumnList(worksheet, 2);
+                            }
                         }
                     }
                 }
@@ -360,126 +362,131 @@ namespace PHS.Business.Implementation
                     message = "Commitee Member " + commmember + "not a valid user";
             }
 
-            var numberofparticipant = followupgroup.ParticipantCallerMappings.Count;
+            if (string.IsNullOrEmpty(message))
+            {
 
-            if (numberofparticipant <= volunteerscount)
-            {
-                for (var count = 0; count < numberofparticipant; count++)
+                var numberofparticipant = followupgroup.ParticipantCallerMappings.Count;
+
+                if (numberofparticipant <= volunteerscount)
                 {
-                    var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count);
-                    try
+                    for (var count = 0; count < numberofparticipant; count++)
                     {
-                        using (var unitOfWork = CreateUnitOfWork())
+                        var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count);
+                        try
                         {
-                            var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                            Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[count];
-                            using (TransactionScope scope = new TransactionScope())
+                            using (var unitOfWork = CreateUnitOfWork())
                             {
-                                unitOfWork.Complete();
-                                scope.Complete();
+                                var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
+                                Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                                toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[count];
+                                using (TransactionScope scope = new TransactionScope())
+                                {
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+                                }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLog(ex);
-                        message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
-                    }
-                }
-            }
-            else
-            {
-                var ratio = numberofparticipant / volunteerscount;
-                int iCaller = 0;
-                for (var count = 1; count <= numberofparticipant; count++)
-                {
-                    var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count-1);
-                    try
-                    {
-                        using (var unitOfWork = CreateUnitOfWork())
+                        catch (Exception ex)
                         {
-                            var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                            Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[iCaller];
-                            using (TransactionScope scope = new TransactionScope())
-                            {
-                                unitOfWork.Complete();
-                                scope.Complete();
-                            }
+                            ExceptionLog(ex);
+                            message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
                         }
                     }
-                    catch (Exception ex)
+                }
+                else
+                {
+                    var ratio = numberofparticipant / volunteerscount;
+                    int iCaller = 0;
+                    for (var count = 1; count <= numberofparticipant; count++)
                     {
-                        ExceptionLog(ex);
-                        message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
-                    }
-                    if (count % ratio == 0 && iCaller+1 < volunteerscount)
-                    {
-                        ++iCaller;
+                        var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count - 1);
+                        try
+                        {
+                            using (var unitOfWork = CreateUnitOfWork())
+                            {
+                                var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
+                                Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                                toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[iCaller];
+                                using (TransactionScope scope = new TransactionScope())
+                                {
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLog(ex);
+                            message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
+                        }
+                        if (count % ratio == 0 && iCaller + 1 < volunteerscount)
+                        {
+                            ++iCaller;
+                        }
                     }
                 }
+
+                if (numberofparticipant <= commmembercount)
+                {
+                    for (var count = 0; count < numberofparticipant; count++)
+                    {
+                        var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count);
+                        try
+                        {
+                            using (var unitOfWork = CreateUnitOfWork())
+                            {
+                                var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
+                                Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                                toupdate.PhaseICommitteeMember = phaseOneCommMembers[count];
+                                using (TransactionScope scope = new TransactionScope())
+                                {
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLog(ex);
+                            message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
+                        }
+                    }
+                }
+                else
+                {
+                    var ratio = numberofparticipant / commmembercount;
+                    int icommmember = 0;
+                    for (var count = 1; count <= numberofparticipant; count++)
+                    {
+                        var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count - 1);
+                        try
+                        {
+                            using (var unitOfWork = CreateUnitOfWork())
+                            {
+                                var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
+                                Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                                toupdate.PhaseICommitteeMember = phaseOnevolunteers[icommmember];
+                                using (TransactionScope scope = new TransactionScope())
+                                {
+                                    unitOfWork.Complete();
+                                    scope.Complete();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLog(ex);
+                            message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
+                        }
+                        if (count % ratio == 0 && icommmember + 1 < commmembercount)
+                        {
+                            ++icommmember;
+                        }
+                    }
+                }
+                message = "success";
             }
 
-            if (numberofparticipant <= commmembercount)
-            {
-                for (var count = 0; count < numberofparticipant; count++)
-                {
-                    var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count);
-                    try
-                    {
-                        using (var unitOfWork = CreateUnitOfWork())
-                        {
-                            var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                            Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseICommitteeMember = phaseOneCommMembers[count];
-                            using (TransactionScope scope = new TransactionScope())
-                            {
-                                unitOfWork.Complete();
-                                scope.Complete();
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLog(ex);
-                        message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
-                    }
-                }
-            }
-            else
-            {
-                var ratio = numberofparticipant / commmembercount;
-                int icommmember = 0;
-                for (var count = 1; count <= numberofparticipant; count++)
-                {
-                    var participantcallermapping = followupgroup.ParticipantCallerMappings.ElementAt(count - 1);
-                    try
-                    {
-                        using (var unitOfWork = CreateUnitOfWork())
-                        {
-                            var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                            Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                            toupdate.PhaseICommitteeMember = phaseOnevolunteers[icommmember];
-                            using (TransactionScope scope = new TransactionScope())
-                            {
-                                unitOfWork.Complete();
-                                scope.Complete();
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLog(ex);
-                        message = Constants.OperationFailedDuringUpdatingValue("ParticipantCallerMappings");
-                    }
-                    if (count % ratio == 0 && icommmember + 1 < commmembercount)
-                    {
-                        ++icommmember;
-                    }
-                }
-            }
-            message = "success";
             return followupgroup.ParticipantCallerMappings.ToList();
         }
 
