@@ -300,11 +300,13 @@ namespace PHS.Business.Implementation
             if (followupgroup == null)
             {
                 message = "Follow-up group does not exist!";
+                return null;
             }
 
             if (!followupgroup.FollowUpConfiguration.Deploy)
             {
                 message = "Follow-up configuration is not deployed!";
+                return null;
             }
 
             List<string> phaseOnevolunteers = new List<string>();
@@ -348,23 +350,34 @@ namespace PHS.Business.Implementation
             if (volunteerscount == 0 || commmembercount == 0)
             {
                 message = "No Volunteers/Comm Members found.";
+                return null;
             }
 
             foreach (var volunteer in phaseOnevolunteers)
             {
                 if (!ValidCaller(volunteer))
+                {
                     message = "Volunteer " + volunteer + "not a valid user";
+                }
+                    
             }
 
             foreach (var commmember in phaseOneCommMembers)
             {
                 if (!ValidCaller(commmember))
+                {
                     message = "Commitee Member " + commmember + "not a valid user";
+                }
+                    
             }
 
-            if (string.IsNullOrEmpty(message))
+            if (!string.IsNullOrEmpty(message))
             {
+                return null;
+            }
 
+            else
+            {
                 var numberofparticipant = followupgroup.ParticipantCallerMappings.Count;
 
                 if (numberofparticipant <= volunteerscount)

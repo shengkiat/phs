@@ -6,6 +6,7 @@ using PHS.Repository.Context;
 using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,17 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void ImportCallerTest()
+        public void ImportCallerTest_FollowupGroupNotExist()
         {
-            //Assert.Fail();
+            string message = string.Empty;
+
+            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            var file = Path.Combine(projectFolder, @"Files\no data file.xlsx");
+
+            byte[] bytes = System.IO.File.ReadAllBytes(file);
+            _target.ImportCaller(bytes, 1, out message);
+
+            Assert.AreEqual("Follow-up group does not exist!", message);
         }
 
         [TestInitialize]
