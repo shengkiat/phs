@@ -1,10 +1,12 @@
-﻿using PHS.Business.Common;
+﻿using Newtonsoft.Json.Linq;
+using PHS.Business.Common;
 using PHS.Business.Implementation;
 using PHS.Common;
 using PHS.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -34,7 +36,21 @@ namespace PHS.Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Login([Bind(Include = "Username,Password")] PHSUser user)
         {
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LdfzDYUAAAAANWFgU5Io0b8dUaNKH3vlp6NEJX3";
+            var client = new WebClient();
+            var captchResult = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obj = JObject.Parse(captchResult);
+            var status = (bool)obj.SelectToken("success");
+
             ActionResult result = View();
+
+            if (!status)
+            {
+                SetViewBagError("Google reCaptcha validation failed");
+                return result;
+            }
+
             using (var userManager = new UserManager(GetLoginUser()))
             {
                 string message = string.Empty;
