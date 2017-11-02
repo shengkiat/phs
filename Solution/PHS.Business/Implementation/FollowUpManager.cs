@@ -118,9 +118,9 @@ namespace PHS.Business.Implementation
                     var exceptresult = finalgroupparticipants.Where(a => !participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
                     finalgroupparticipants = exceptresult;
 
-                    var participantcallermapping = new ParticipantCallerMapping();
                     foreach (var participant in participantsbygroup)
                     {
+                        var participantcallermapping = new ParticipantCallerMapping();
                         participantcallermapping.Participant = participant;
                         participantCallerMappingList.Add(participantcallermapping);
 
@@ -222,9 +222,9 @@ namespace PHS.Business.Implementation
                     var exceptresult = finalgroupparticipants.Where(a => !participantsbygroup.Select(b => b.ParticipantID).Contains(a.ParticipantID)).ToList();
                     finalgroupparticipants = exceptresult;
 
-                    var participantcallermapping = new ParticipantCallerMapping();
                     foreach (var participant in participantsbygroup)
                     {
+                        var participantcallermapping = new ParticipantCallerMapping();
                         participantcallermapping.FollowUpGroupID = item.FollowUpGroupID;
                         participantcallermapping.Participant = participant;
                         unitOfWork.ParticipantCallerMappings.Add(participantcallermapping);
