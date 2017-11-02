@@ -94,10 +94,16 @@
                         @Html.DisplayName("Contact")
                     </th>
                     <th>
-                        @Html.DisplayName("Follow-up Volunteer")
+                        @Html.DisplayName("PhaseI Follow-up Volunteer")
                     </th>
                     <th>
-                        @Html.DisplayName("Committee Member")
+                        @Html.DisplayName("PhaseII Follow-up Volunteer")
+                    </th>
+                    <th>
+                        @Html.DisplayName("PhaseI Committee Member")
+                    </th>
+                    <th>
+                        @Html.DisplayName("PhaseII Committee Member")
                     </th>
                     <th></th>
                 </tr>
@@ -121,16 +127,27 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhaseICommitteeMember)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhaseIICommitteeMember)
+                        </td>
                         <td>
                             @Html.ActionLink(
-                              "View",
-                              "ViewDetails",
-                              "FollowUpMgmt",
-                              new { participantID = item.ParticipantID })
-                                </td>
-                            </tr>
+                               "View",
+                               "ViewParticipantJourney",
+                               "ParticipantJourney",
+                               new { Area = "" , Nric = item.Participant.Nric, PHSEventId = 3 },
+                               htmlAttributes: new { target = "_blank" })
+                        </td>
+                    </tr>
                 }
             </tbody>
             }
