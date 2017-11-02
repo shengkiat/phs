@@ -76,6 +76,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Implementation\FollowUpManagerTests.cs" />
     <Compile Include="Implementation\FormExportManagerTests.cs" />
     <Compile Include="Implementation\FormManagerTests.cs" />
     <Compile Include="Implementation\ParticipantJourneyManagerTests.cs" />
@@ -107,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="Files\no data file.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
