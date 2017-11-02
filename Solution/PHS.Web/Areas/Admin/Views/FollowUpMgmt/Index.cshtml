@@ -10,16 +10,6 @@
 <div class="panel panel-default">
     <div class="panel-body">
         @Html.DropDownList("EventID", new SelectList(Model, "PHSEventID", "Title"), "Select Event")
-
-
-        @*@using (Html.BeginForm("Index", "FollowUpMgmt", FormMethod.Get))
-        {
-            <label>Event</label>
-            @Html.DropDownList("phsEventId",
-         new SelectList(Model.PHSEvents, "PHSEventID", "Title"))
-            <button type="submit" class="btn btn-basic" value="Apply">Apply</button>
-            <h4>No Follow up configuration Deployed!!</h4>
-        }*@
     </div>
 </div>
 

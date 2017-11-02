@@ -1,119 +1,210 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpGroup>
 
+@{
+    var phaseIvolunteercallstatuslist = new List<SelectListItem>() {
+        new SelectListItem {Text = "Did not pick up on 1st call", Value = "Did not pick up on 1st call"},
+        new SelectListItem {Text = "Did not pick up on 2nd call", Value = "Did not pick up on 2nd call"},
+        new SelectListItem {Text = "Did not pick up on 3rd call", Value = "Did not pick up on 3rd call"},
+        new SelectListItem {Text = "Invalid/wrong number", Value = "Invalid/wrong number"},
+        new SelectListItem {Text = "Received envelope, not all items present", Value = "Received envelope, not all items present"},
+        new SelectListItem {Text = "Hasn't checked mailbox for envelope", Value = "Hasn't checked mailbox for envelopel"},
+        new SelectListItem {Text = "Checked mailbox but didn't receive envelope", Value = "Checked mailbox but didn't receive envelope"},
+        new SelectListItem {Text = "Telehealth completed", Value = "Telehealth completed"},
+        new SelectListItem {Text = "Telehealth Phase I completed, ready for Phase II.", Value = "Telehealth Phase I completed, ready for Phase II."},
+        new SelectListItem {Text = "Telehealth completed, ready for Phase II. *To resend documents to correct GP clinic", Value = "Telehealth completed, ready for Phase II. *To resend documents to correct GP clinic"},
+        };
 
-@if (Model != null && Model.Count() > 0)
-{
-    foreach (var fugroup in Model)
+    var phaseIIvolunteercallstatuslist = new List<SelectListItem>() {
+        new SelectListItem {Text = "Did not pick up on 1st call (Phase II)", Value = "Did not pick up on 1st call (Phase II)"},
+        new SelectListItem {Text = "Did not pick up on 2nd call (Phase II)", Value = "Did not pick up on 2nd call (Phase II)"},
+        new SelectListItem {Text = "Did not pick up on 3rd call (Phase II)", Value = "Did not pick up on 3rd call (Phase II)"},
+        new SelectListItem {Text = "Telehealth Phase II completed", Value = "Telehealth Phase II complete"},
+        new SelectListItem {Text = "Telehealth Phase II completed, home address changed", Value = "Telehealth Phase II completed, home address changed"},
+        };
+
+    var phaseIcommmembercallstatuslist = new List<SelectListItem>() {
+        new SelectListItem {Text = "Noted!Please call this participant again soon.", Value = "Noted!Please call this participant again soon." },
+        new SelectListItem {Text = "Noted!We will troubleshoot and mail to the correct address.", Value = "Noted!We will troubleshoot and mail to the correct address." },
+        new SelectListItem {Text = "Noted!Thank you so much!", Value = "Noted!Thank you so much!" },
+        new SelectListItem {Text = "Noted!We will troubleshoot and mail to the correct GP clinic.", Value = "Noted!We will troubleshoot and mail to the correct GP clinic." }
+    };
+
+
+    var phaseIIcommmembercallstatuslist = new List<SelectListItem>() {
+        new SelectListItem {Text = "Noted!Please call a 2nd time on a separate occasion.", Value = "Noted!Please call a 2nd time on a separate occasion." },
+        new SelectListItem {Text = "Noted!Please call a 3rd time on a separate occasion.", Value = "Noted!Please call a 3rd time on a separate occasion." },
+        new SelectListItem {Text = "Noted!We will troubleshoot.", Value = "Noted!We will troubleshoot." },
+        new SelectListItem {Text = "Noted!Thank you so much!", Value = "Noted!Thank you so much!" },
+        new SelectListItem {Text = "Noted!We will take down his new address.Thank you so much!", Value = "Noted!We will take down his new address.Thank you so much!" }
+    };
+}
+    @if (Model != null && Model.Count() > 0)
     {
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <caption> @fugroup.Title </caption>
-                @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
-                {
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayName("NRIC")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Salutation")
-                            </th>
-                            <th>
-                                @Html.DisplayName("FullName")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Language")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Contact")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Follow-up Volunteer")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Call Status")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Date")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Remark")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Committee Member")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Call Status")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Date")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Remark")
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in fugroup.ParticipantCallerMappings)
-                        {
+        <div style="overflow-x:auto;">
+        @foreach (var fugroup in Model)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <caption> @fugroup.Title </caption>
+                    @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
+                    {
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Participant.Nric)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Participant.Salutation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Participant.FullName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Participant.Language)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    @Html.ActionLink(
-                            "View",
-                            "ViewDetails",
-                            "FollowUpMgmt",
-                            new { participantID = item.ParticipantID })
-                                </td>
+                                <th>
+                                    @Html.DisplayName("NRIC")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Salutation")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("FullName")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Language")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("PhaseI Follow-up Volunteer")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Call Status")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Remark")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Committee Member")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("PhaseII Follow-up Volunteer")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Call Status")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Remark")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("PhaseI Committee Member")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Call Status")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Remark")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("PhaseII Committee Member")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Call Status")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Remark")
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                }
-            </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in fugroup.ParticipantCallerMappings)
+                        {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Participant.Nric)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Participant.Salutation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Participant.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Participant.Language)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("callstatusid", phaseIvolunteercallstatuslist, "--Select--")
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("callstatusid", phaseIIvolunteercallstatuslist, "--Select--")
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhaseICommitteeMember)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("callstatusid", phaseIcommmembercallstatuslist, "--Select--")
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhaseIICommitteeMember)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("callstatusid", phaseIIcommmembercallstatuslist, "--Select--")
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        @Html.ActionLink(
+                                           "View",
+                                           "ViewParticipantJourney",
+                                           "ParticipantJourney",
+                                           new { Area = "", Nric = item.Participant.Nric, PHSEventId = 3 },
+                                           htmlAttributes: new { target = "_blank" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+            </div>
+        }
         </div>
     }
-}
-else
-{
-    <div>No Followup groups found!!</div>
-}
-<script>
-    $("#print").click(function () {
-        var configurationid = $(this).val();
-        $.ajax({
-            url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
-            data: { followupconfigurationid: configurationid },
-            type: "POST",
-            error: function (response) {
-                alert("Error encountered while printing!!");
-            },
-            success: function (response) {
-                alert(response.Success);
-            }
-    });
-});
-</script>
+    else
+    {
+        <div>No Followup groups found!!</div>
+    }
+    <script>
+        $("#print").click(function () {
+            var configurationid = $(this).val();
+            $.ajax({
+                url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
+                data: { followupconfigurationid: configurationid },
+                type: "POST",
+                error: function (response) {
+                    alert("Error encountered while printing!!");
+                },
+                success: function (response) {
+                    alert(response.Success);
+                }
+            });
+        });
+    </script>
 
