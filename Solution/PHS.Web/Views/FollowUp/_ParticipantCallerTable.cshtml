@@ -4,6 +4,9 @@
     li {
         list-style-type:none
     }
+    .callStatus {
+        width:100px;   
+    }
 </style>
 
 @{
@@ -71,18 +74,20 @@
                                 <th>
                                     @Html.DisplayName("Contact")
                                 </th>
-                                <th style="width:400px">
+                                <th style="width:300px">
                                     @Html.DisplayName("Phase I")
                                 </th>
-                                <th style="width:400px">
+                                <th style="width:300px">
                                     @Html.DisplayName("Phase II")
                                 </th>
-                                <th></th>
+                                <th style="width:120px"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in fugroup.ParticipantCallerMappings)
                             {
+                                
+
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Participant.Nric)
@@ -107,7 +112,7 @@
                                         
                                         <li>
                                             @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("callstatusid", phaseIvolunteercallstatuslist, "--Select--")
+                                            @Html.DropDownList("callstatusphaseOnevolunteer", phaseIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
@@ -130,7 +135,7 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("callstatusid", phaseIcommmembercallstatuslist, "--Select--")
+                                            @Html.DropDownList("callstatusphaseOnevolunteer", phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
@@ -153,7 +158,7 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("callstatusid", phaseIIvolunteercallstatuslist, "--Select--")
+                                            @Html.DropDownList("callstatusphasetwovolunteer", phaseIIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
@@ -175,7 +180,7 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("callstatusid", phaseIIcommmembercallstatuslist, "--Select--")
+                                            @Html.DropDownList("c", phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
@@ -190,6 +195,9 @@
                                     </td>
                                     
                                     <td>
+
+                                        <button class="btn btn-primary btn-save" type="button" id="saveparticipantcaller" value="@item.ParticipantCallerMappingID">Save</button>
+
                                         @Html.ActionLink(
                                            "View",
                                            "ViewParticipantJourney",
