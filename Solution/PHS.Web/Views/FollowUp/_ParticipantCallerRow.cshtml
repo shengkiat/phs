@@ -71,90 +71,90 @@
     </td>
     <td>
         <li>
-            @Html.DisplayName("Follow-up Volunteer:")
+            <b>@Html.DisplayName("Follow-up Volunteer:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIFollowUpVolunteer)
         </li>
 
         <li>
-            @Html.DisplayName("Call Status:")
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus" })
+            <b>@Html.DisplayName("Call Status:")</b>
+            @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 200px;" })
         </li>
 
         <li>
-            @Html.DisplayName("Date:")
-            @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
-        </li>
+            <b>@Html.DisplayName("Date:")</b>
+                @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+</li>
 
         <li>
-            @Html.DisplayName("Remark:")
-            @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark" } })
+            <b>@Html.DisplayName("Remarks:")</b>
+            @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 200px;" } })
         </li>
 
         <br />
 
         <li>
-            @Html.DisplayName("Committee Member:")
+            <b>@Html.DisplayName("Committee Member:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseICommitteeMember)
         </li>
 
         <li>
-            @Html.DisplayName("Call Status:")
-            @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus" })
+            <b>@Html.DisplayName("Call Status:")</b>
+            @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 200px;" })
         </li>
 
         <li>
-            @Html.DisplayName("Date:")
+            <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
         <li>
-            @Html.DisplayName("Remark:")
-            @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark" } })
+            <b>@Html.DisplayName("Remarks:")</b>
+            @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 200px;" } })
         </li>
 
     </td>
 
     <td>
         <li>
-            @Html.DisplayName("Follow-up Volunteer:")
+            <b>@Html.DisplayName("Follow-up Volunteer:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIIFollowUpVolunteer)
         </li>
 
         <li>
-            @Html.DisplayName("Call Status:")
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus" })
+            <b>@Html.DisplayName("Call Status:")</b>
+            @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 200px;" })
         </li>
 
         <li>
-            @Html.DisplayName("Date:")
+            <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
         <li>
-            @Html.DisplayName("Remark:")
-            @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark" } })
+            <b>@Html.DisplayName("Remarks:")</b>
+            @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 200px;" } })
         </li>
 
         <br />
 
         <li>
-            @Html.DisplayName("Committee Member:")
+            <b>@Html.DisplayName("Committee Member:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIICommitteeMember)
         </li>
 
         <li>
-            @Html.DisplayName("Call Status:")
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus" })
+            <b>@Html.DisplayName("Call Status:")</b>
+            @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 200px;" })
         </li>
 
         <li>
-            @Html.DisplayName("Date:")
+            <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
         <li>
-            @Html.DisplayName("Remark:")
-            @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark" } })
+            <b>@Html.DisplayName("Remarks:")</b>
+            @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 200px;" } })
         </li>
     </td>
 

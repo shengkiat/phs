@@ -57,32 +57,32 @@
         {
             <div class="table-responsive">
                 <table class="table table-striped">
-                    <caption> @fugroup.Title </caption>
+                    <caption><b>Group: @fugroup.Title  </b></caption>
                     @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
                     {
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayName("NRIC")
+                                    <b>@Html.DisplayName("NRIC")</b>
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Salutation")
-                                </th>
+                                    <b>@Html.DisplayName("Salutation")</b>
+</th>
                                 <th>
-                                    @Html.DisplayName("FullName")
-                                </th>
+                                    <b>@Html.DisplayName("FullName")</b>
+</th>
                                 <th>
-                                    @Html.DisplayName("Language")
-                                </th>
+                                    <b>@Html.DisplayName("Language")</b>
+</th>
                                 <th>
-                                    @Html.DisplayName("Contact")
-                                </th>
-                                <th style="width:300px">
-                                    @Html.DisplayName("Phase I")
-                                </th>
-                                <th style="width:300px">
-                                    @Html.DisplayName("Phase II")
-                                </th>
+                                    <b>@Html.DisplayName("Contact")</b>
+</th>
+                                <th style="width:300px; text-align:center">
+                                    <b>@Html.DisplayName("Phase I")</b>
+</th>
+                                <th style="width:300px; text-align:center">
+                                    <b>@Html.DisplayName("Phase II")</b>
+</th>
                                 <th style="width:120px"></th>
                             </tr>
                         </thead>
