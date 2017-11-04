@@ -52,11 +52,12 @@ namespace PHS.Business.Implementation
                 message = "Please confirm new password";
                 return false;
             }
-            if (!PasswordManager.IsPasswordComplex(newPass))
+            if (oldPass == newPass)
             {
-                message = "Password must be a combination of at least 1 digit, 1 upper case letter, 1 lower case letter, 1 symbol and length of at least 8";
+                message = "New Password can't be old Password";
                 return false;
             }
+
             var existingUser = IsAuthenticated(user.Username, oldPass, out message);
             if (existingUser == null)
             {
