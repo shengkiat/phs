@@ -15,7 +15,7 @@ namespace PHS.Repository.Repository
         }
         public FollowUpGroup GetFollowUpGroup(int id)
         {
-            return dbContext.Set<FollowUpGroup>().Where(u => u.FollowUpGroupID == id).Include(f =>f.ParticipantCallerMappings.Select(pcm => pcm.Participant)).FirstOrDefault();
+            return dbContext.Set<FollowUpGroup>().Where(u => u.FollowUpGroupID == id).Include(f => f.FollowUpConfiguration).Include(f =>f.ParticipantCallerMappings.Select(pcm => pcm.Participant)).FirstOrDefault();
         }
     }
 }
