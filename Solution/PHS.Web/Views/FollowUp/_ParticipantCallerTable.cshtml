@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpGroup>
 
+<style>
+    li {
+        list-style-type:none
+    }
+</style>
+
 @{
     var phaseIvolunteercallstatuslist = new List<SelectListItem>() {
         new SelectListItem {Text = "Did not pick up on 1st call", Value = "Did not pick up on 1st call"},
@@ -65,60 +71,18 @@
                                 <th>
                                     @Html.DisplayName("Contact")
                                 </th>
-                                <th>
-                                    @Html.DisplayName("PhaseI Follow-up Volunteer")
+                                <th style="width:400px">
+                                    @Html.DisplayName("Phase I")
                                 </th>
-                                <th>
-                                    @Html.DisplayName("Call Status")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Date")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Remark")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("PhaseII Follow-up Volunteer")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Call Status")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Date")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Remark")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("PhaseI Committee Member")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Call Status")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Date")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Remark")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("PhaseII Committee Member")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Call Status")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Date")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Remark")
+                                <th style="width:400px">
+                                    @Html.DisplayName("Phase II")
                                 </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in fugroup.ParticipantCallerMappings)
-                        {
+                            {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Participant.Nric)
@@ -136,53 +100,95 @@
                                         @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
+                                        <li>
+                                            @Html.DisplayName("Follow-up Volunteer")
+                                            @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
+                                        </li>
+                                        
+                                        <li>
+                                            @Html.DisplayName("Call Status")
+                                            @Html.DropDownList("callstatusid", phaseIvolunteercallstatuslist, "--Select--")
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Date")
+                                            <input type="text" class="datepicker" name="phaseIVolunteerCallTimestamp" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Remark")
+                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                        </li>
+
+                                        <br/>
+
+
+                                        <li>
+                                            @Html.DisplayName("Committee Member")
+                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Call Status")
+                                            @Html.DropDownList("callstatusid", phaseIcommmembercallstatuslist, "--Select--")
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Date")
+                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Remark")
+                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                        </li>
+
                                     </td>
+                                    
                                     <td>
-                                        @Html.DropDownList("callstatusid", phaseIvolunteercallstatuslist, "--Select--")
+                                        <li>
+                                            @Html.DisplayName("Follow-up Volunteer")
+                                            @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Call Status")
+                                            @Html.DropDownList("callstatusid", phaseIIvolunteercallstatuslist, "--Select--")
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Date")
+                                            <input type="text" class="datepicker" name="phaseIIVolunteerCallTimestamp" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Remark")
+                                            <input type="text" name="phaseIIVolunteerCallRemark" />
+                                        </li>
+
+                                        <br />
+
+                                        <li>
+                                            @Html.DisplayName("Committee Member")
+                                            <input type="text" name="phaseIIVolunteerCallRemark" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Call Status")
+                                            @Html.DropDownList("callstatusid", phaseIIcommmembercallstatuslist, "--Select--")
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Date")
+                                            <input type="text" class="datepicker" name="phaseIICommmemberCallTimestamp" />
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Remark")
+                                            <input type="text" name="phaseIICommmemberCallRemark" />
+                                        </li>
                                     </td>
-                                    <td>
-                                        <input type="text" class="datepicker" name="phaseIVolunteerCallTimestamp" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="phaseIVolunteerCallRemark" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
-                                    </td>
-                                    <td>
-                                        @Html.DropDownList("callstatusid", phaseIIvolunteercallstatuslist, "--Select--")
-                                    </td>
-                                    <td>
-                                        <input type="text" class="datepicker" name="phaseIIVolunteerCallTimestamp" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="phaseIIVolunteerCallRemark" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhaseICommitteeMember)
-                                    </td>
-                                    <td>
-                                        @Html.DropDownList("callstatusid", phaseIcommmembercallstatuslist, "--Select--")
-                                    </td>
-                                    <td>
-                                        <input type="text" class="datepicker" name="phaseICommmemberCallTimestamp" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="phaseICommmemberCallRemark" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhaseIICommitteeMember)
-                                    </td>
-                                    <td>
-                                        @Html.DropDownList("callstatusid", phaseIIcommmembercallstatuslist, "--Select--")
-                                    </td>
-                                    <td>
-                                        <input type="text" class="datepicker" name="phaseIICommmemberCallTimestamp" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="phaseIICommmemberCallRemark" />
-                                    </td>
+                                    
                                     <td>
                                         @Html.ActionLink(
                                            "View",
