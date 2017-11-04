@@ -208,7 +208,9 @@ else
                 processData: false, // Not to process data
                 data: fileData,
                 success: function (result) {
-                    alert("Import caller success");
+                    if (confirm('Import caller success. Please click ok to reload the page')) {
+                        window.location.reload();
+                    }
                 },
                 error: function (err) {
                     alert(err.statusText);
