@@ -1450,7 +1450,7 @@ INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [Follo
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (53, N'T16 - NE/_PM', N'3#1#1#1#80#==#Male', 1)
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (54, N'T17 - E/PM', N'3#1#1#1#80#==#Male', 1)
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (55, N'T18 - E/TPM', N'3#1#1#1#80#==#Male', 1)
-
+INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (56, N'Others', N'3#1#1#1#80#==#Male', 1)
 GO
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (57, N'Group TestA', N'3#1#1#1#80#==#Male', 2)
 GO
