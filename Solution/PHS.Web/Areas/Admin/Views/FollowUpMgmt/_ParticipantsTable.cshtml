@@ -3,6 +3,22 @@
 @using PHS.Business.Extensions
 @using PHS.Common
 
+<style>
+    .Column {
+      float: left;
+    }
+    label.Column {
+        width: 80px;
+    }
+    input[type="submit"] {
+        width: 50px;
+    }
+    input[type="file"] {
+        width: calc(100% - (80px + 50px));
+    }
+</style>
+
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -68,8 +84,11 @@
                                          })
                 }
 
-                <button class="btn btn-primary btn-importcaller" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
-                <input id="file-input-@fugroup.FollowUpGroupID" type="file" name="files" @*accept=".xls"*@/>
+                <br/>
+
+                <input class="Column" id="file-input-@fugroup.FollowUpGroupID" type="file" name="files" @*accept=".xls"*@ />
+                <button class="Column btn btn-primary btn-importcaller" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
+                
             </div>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -189,7 +208,7 @@ else
                 processData: false, // Not to process data
                 data: fileData,
                 success: function (result) {
-                    alert("Import caller caller");
+                    alert("Import caller success");
                 },
                 error: function (err) {
                     alert(err.statusText);
