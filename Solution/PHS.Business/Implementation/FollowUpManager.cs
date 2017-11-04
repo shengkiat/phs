@@ -203,16 +203,8 @@ namespace PHS.Business.Implementation
                 modelToUpdate.Deploy = true;
                 //modelToUpdate.DateTime = DateTime.Now;
 
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    unitOfWork.Complete();
-                    scope.Complete();
-                }
-            }
-            var finalgroupparticipants = GetAllParticipants(followupconfiguration.PHSEventID);
-            foreach (var item in followupgroups)
-            {
-                using (var unitOfWork = CreateUnitOfWork())
+                var finalgroupparticipants = GetAllParticipants(followupconfiguration.PHSEventID);
+                foreach (var item in followupgroups)
                 {
                     //var participantsbygroup = unitOfWork.Participants.FindParticipants(p => p.Language == "Mandarin" && p.PHSEvents.Any(e => e.PHSEventID == eventid));
                     //var participantsbygroup = SearchParticipants(item.Filter);
@@ -228,16 +220,18 @@ namespace PHS.Business.Implementation
                     {
                         var participantcallermapping = new ParticipantCallerMapping();
                         participantcallermapping.FollowUpGroupID = item.FollowUpGroupID;
-                        participantcallermapping.Participant = participant;
+                        participantcallermapping.ParticipantID = participant.ParticipantID;
                         unitOfWork.ParticipantCallerMappings.Add(participantcallermapping);
                     }
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        unitOfWork.Complete();
-                        scope.Complete();
-                    }
+                }
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    unitOfWork.Complete();
+                    scope.Complete();
                 }
             }
+            
             //var endfugroup = new FollowUpGroup();
             //foreach (var participant in finalgroupparticipants.ToList())
             //{
