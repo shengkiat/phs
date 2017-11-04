@@ -303,8 +303,10 @@ namespace PHS.Business.Implementation
                 return null;
             }
 
-            List<string> phaseOnevolunteers = new List<string>();
+            List<string> phaseOneVolunteers = new List<string>();
             List<string> phaseOneCommMembers = new List<string>();
+            List<string> phaseTwoVolunteers = new List<string>();
+            List<string> phaseTwoCommMembers = new List<string>();
 
             if (string.IsNullOrEmpty(message))
             {
@@ -330,16 +332,18 @@ namespace PHS.Business.Implementation
 
                             else
                             {
-                                phaseOnevolunteers = GetColumnList(worksheet, 1);
+                                phaseOneVolunteers = GetColumnList(worksheet, 1);
                                 phaseOneCommMembers = GetColumnList(worksheet, 2);
+                                phaseTwoVolunteers = GetColumnList(worksheet, 3);
+                                phaseTwoCommMembers = GetColumnList(worksheet, 4);
                             }
                         }
                     }
                 }
             }
 
-            var volunteerscount = phaseOnevolunteers.Count;
-            var commmembercount = phaseOneCommMembers.Count;
+            var volunteerscount = phaseOneVolunteers.Count + phaseTwoVolunteers.Count;
+            var commmembercount = phaseOneCommMembers.Count + phaseTwoCommMembers.Count;
 
             if (volunteerscount == 0 || commmembercount == 0)
             {
@@ -347,22 +351,36 @@ namespace PHS.Business.Implementation
                 return null;
             }
 
-            foreach (var volunteer in phaseOnevolunteers)
+            foreach (var volunteer in phaseOneVolunteers)
             {
                 if (!ValidCaller(volunteer))
                 {
-                    message = "Volunteer " + volunteer + "not a valid user";
+                    message = "Volunteer I, " + volunteer + "not a valid user";
                 }
-                    
+            }
+
+            foreach (var volunteer in phaseTwoVolunteers)
+            {
+                if (!ValidCaller(volunteer))
+                {
+                    message = "Volunteer II, " + volunteer + "not a valid user";
+                }
             }
 
             foreach (var commmember in phaseOneCommMembers)
             {
                 if (!ValidCaller(commmember))
                 {
-                    message = "Commitee Member " + commmember + "not a valid user";
+                    message = "Commitee Member I, " + commmember + "not a valid user";
                 }
-                    
+            }
+
+            foreach (var commmember in phaseTwoCommMembers)
+            {
+                if (!ValidCaller(commmember))
+                {
+                    message = "Commitee Member II, " + commmember + "not a valid user";
+                }
             }
 
             if (!string.IsNullOrEmpty(message))
@@ -385,7 +403,8 @@ namespace PHS.Business.Implementation
                             {
                                 var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                                 Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                                toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[count];
+                                toupdate.PhaseIFollowUpVolunteer = phaseOneVolunteers[count];
+                                toupdate.PhaseIIFollowUpVolunteer = phaseTwoVolunteers[count];
                                 using (TransactionScope scope = new TransactionScope())
                                 {
                                     unitOfWork.Complete();
@@ -413,7 +432,8 @@ namespace PHS.Business.Implementation
                             {
                                 var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                                 Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                                toupdate.PhaseIFollowUpVolunteer = phaseOnevolunteers[iCaller];
+                                toupdate.PhaseIFollowUpVolunteer = phaseOneVolunteers[iCaller];
+                                toupdate.PhaseIIFollowUpVolunteer = phaseTwoVolunteers[iCaller];
                                 using (TransactionScope scope = new TransactionScope())
                                 {
                                     unitOfWork.Complete();
@@ -445,6 +465,7 @@ namespace PHS.Business.Implementation
                                 var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                                 Util.CopyNonNullProperty(participantcallermapping, toupdate);
                                 toupdate.PhaseICommitteeMember = phaseOneCommMembers[count];
+                                toupdate.PhaseIICommitteeMember = phaseTwoCommMembers[count];
                                 using (TransactionScope scope = new TransactionScope())
                                 {
                                     unitOfWork.Complete();
@@ -472,7 +493,8 @@ namespace PHS.Business.Implementation
                             {
                                 var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                                 Util.CopyNonNullProperty(participantcallermapping, toupdate);
-                                toupdate.PhaseICommitteeMember = phaseOnevolunteers[icommmember];
+                                toupdate.PhaseICommitteeMember = phaseOneVolunteers[icommmember];
+                                toupdate.PhaseIICommitteeMember = phaseTwoVolunteers[icommmember];
                                 using (TransactionScope scope = new TransactionScope())
                                 {
                                     unitOfWork.Complete();
