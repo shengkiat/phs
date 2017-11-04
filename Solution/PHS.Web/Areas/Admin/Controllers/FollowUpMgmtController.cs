@@ -17,6 +17,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class FollowUpMgmtController : BaseController
     {
         // GET: Admin/FollowUpMgmt

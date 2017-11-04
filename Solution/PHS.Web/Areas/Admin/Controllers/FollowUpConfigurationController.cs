@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
-    //[CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
     public class FollowUpConfigurationController : BaseController
     {
         // GET: Admin/FollowUpConfiguration
