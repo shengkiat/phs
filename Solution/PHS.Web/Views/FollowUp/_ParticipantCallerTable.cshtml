@@ -7,6 +7,9 @@
     .callStatus {
         width:100px;   
     }
+    .callDateTime {
+        width:150px;   
+    }
 </style>
 
 @{
@@ -112,21 +115,20 @@
                                         
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownList("callstatusphaseOnevolunteer", phaseIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            <input type="text" class="datepicker" name="phaseIVolunteerCallTimestamp" />
+                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark)
                                         </li>
 
                                         <br/>
-
 
                                         <li>
                                             @Html.DisplayName("Committee Member:")
@@ -135,17 +137,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownList("callstatusphaseOneCommMember", phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            <input type="text" name="phaseIVolunteerCallRemark" />
+                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallStatus)
                                         </li>
 
                                     </td>
@@ -158,17 +160,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownList("callstatusphasetwovolunteer", phaseIIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            <input type="text" class="datepicker" name="phaseIIVolunteerCallTimestamp" />
+                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            <input type="text" name="phaseIIVolunteerCallRemark" />
+                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark)
                                         </li>
 
                                         <br />
@@ -180,17 +182,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownList("callstatusphaseTwoCommMember", phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            <input type="text" class="datepicker" name="phaseIICommmemberCallTimestamp" />
+                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            <input type="text" name="phaseIICommmemberCallRemark" />
+                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallStatus)
                                         </li>
                                     </td>
                                     
@@ -224,7 +226,7 @@
 
                 var participantCallerMappingId = $(this).attr("value");
 
-                //var healthReportType = document.getElementById(followgroupid + '_healthReportType').value;
+                var healthReportType = document.getElementById(participantCallerMappingId + '_healthReportType').value;
 
                 var jsonObject = {
                     "participantCallerMappingId": participantCallerMappingId
