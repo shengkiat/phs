@@ -1,5 +1,6 @@
 ﻿using PHS.Business.Implementation;
 using PHS.Common;
+using PHS.DB;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,29 @@ namespace PHS.Web.Controllers
                 var result = followUpManager.GetParticipantsByLoginUser(eventid.Value, GetLoginUser(), out message);
                 return PartialView("_ParticipantCallerTable", result);
             }
+        }
+
+        [HttpPost]
+        public ActionResult SaveParticipantCallerMapping([Bind(Exclude = "ParticipantID,FollowUpGroupID,PhaseIFollowUpVolunteer,PhaseIIFollowUpVolunteer,PhaseICommitteeMember,PhaseIICommitteeMember")]ParticipantCallerMapping participantCallerMapping)
+        {
+            string message = string.Empty;
+
+            using (var followUpManager = new FollowUpManager())
+            {
+                bool isSaved = followUpManager.SaveParticipantCallerMapping(participantCallerMapping, out message);
+
+                if (!isSaved)
+                {
+                    return Json(new { success = false, error = message, isautosave = false });
+                }
+
+                else
+                {
+                    return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
+                }
+            }
+
+            
         }
     }
 }
