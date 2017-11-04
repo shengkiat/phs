@@ -109,6 +109,7 @@
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="Files\no data file.xlsx" />
+    <None Include="Files\sample.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
