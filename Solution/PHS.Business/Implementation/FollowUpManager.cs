@@ -618,11 +618,6 @@ namespace PHS.Business.Implementation
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
                         //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIIFollowUpVolunteer = phaseTwoVolunteers[iCaller];
-                        using (TransactionScope scope = new TransactionScope())
-                        {
-                            unitOfWork.Complete();
-                            scope.Complete();
-                        }
                     }
                     catch (Exception ex)
                     {
