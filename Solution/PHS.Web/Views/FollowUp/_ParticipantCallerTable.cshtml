@@ -89,8 +89,6 @@
                         <tbody>
                             @foreach (var item in fugroup.ParticipantCallerMappings)
                             {
-                                
-
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Participant.Nric)
@@ -115,17 +113,17 @@
                                         
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
+                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark)
+                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark" } })
                                         </li>
 
                                         <br/>
@@ -137,17 +135,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
+                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallStatus)
+                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark" } })
                                         </li>
 
                                     </td>
@@ -160,17 +158,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
+                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark)
+                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark" } })
                                         </li>
 
                                         <br />
@@ -182,17 +180,17 @@
 
                                         <li>
                                             @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DropDownListFor(modelItem => item.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus" })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @class = "callDateTime", Type = "date" } })
+                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
                                         </li>
 
                                         <li>
                                             @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallStatus)
+                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark" } })
                                         </li>
                                     </td>
                                     
@@ -226,10 +224,36 @@
 
                 var participantCallerMappingId = $(this).attr("value");
 
-                var healthReportType = document.getElementById(participantCallerMappingId + '_healthReportType').value;
+                var phaseIFollowUpVolunteerCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallRemark').value;
+                var phaseIFollowUpVolunteerCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallDateTime').value;
+                var phaseIFollowUpVolunteerCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallStatus').value;
+
+                var phaseIIFollowUpVolunteerCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallRemark').value;
+                var phaseIIFollowUpVolunteerCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallDateTime').value;
+                var phaseIIFollowUpVolunteerCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallStatus').value;
+
+                var phaseICommitteeMemberCallRemark = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallRemark').value;
+                var phaseICommitteeMemberCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallDateTime').value;
+                var phaseICommitteeMemberCallStatus = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallStatus').value;
+
+                var phaseIICommitteeMemberCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallRemark').value;
+                var phaseIICommitteeMemberCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallDateTime').value;
+                var phaseIICommitteeMemberCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallStatus').value;
 
                 var jsonObject = {
-                    "participantCallerMappingId": participantCallerMappingId
+                    "participantCallerMappingId": participantCallerMappingId,
+                    "phaseIFollowUpVolunteerCallRemark": phaseIFollowUpVolunteerCallRemark,
+                    "phaseIFollowUpVolunteerCallDateTime": phaseIFollowUpVolunteerCallDateTime,
+                    "phaseIFollowUpVolunteerCallStatus": phaseIFollowUpVolunteerCallStatus,
+                    "phaseIIFollowUpVolunteerCallRemark": phaseIIFollowUpVolunteerCallRemark,
+                    "phaseIIFollowUpVolunteerCallDateTime": phaseIIFollowUpVolunteerCallDateTime,
+                    "phaseIIFollowUpVolunteerCallStatus": phaseIIFollowUpVolunteerCallStatus,
+                    "phaseICommitteeMemberCallRemark": phaseICommitteeMemberCallRemark,
+                    "phaseICommitteeMemberCallDateTime": phaseICommitteeMemberCallDateTime,
+                    "phaseICommitteeMemberCallStatus": phaseICommitteeMemberCallStatus,
+                    "phaseIICommitteeMemberCallRemark": phaseIICommitteeMemberCallRemark,
+                    "phaseIICommitteeMemberCallDateTime": phaseIICommitteeMemberCallDateTime,
+                    "phaseIICommitteeMemberCallStatus": phaseIICommitteeMemberCallStatus
                 };
 
                 $.ajax({
