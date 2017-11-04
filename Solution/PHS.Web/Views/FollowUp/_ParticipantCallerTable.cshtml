@@ -106,22 +106,22 @@
                                     </td>
                                     <td>
                                         <li>
-                                            @Html.DisplayName("Follow-up Volunteer")
+                                            @Html.DisplayName("Follow-up Volunteer:")
                                             @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
                                         </li>
                                         
                                         <li>
-                                            @Html.DisplayName("Call Status")
+                                            @Html.DisplayName("Call Status:")
                                             @Html.DropDownList("callstatusphaseOnevolunteer", phaseIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Date")
+                                            @Html.DisplayName("Date:")
                                             <input type="text" class="datepicker" name="phaseIVolunteerCallTimestamp" />
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Remark")
+                                            @Html.DisplayName("Remark:")
                                             <input type="text" name="phaseIVolunteerCallRemark" />
                                         </li>
 
@@ -129,22 +129,22 @@
 
 
                                         <li>
-                                            @Html.DisplayName("Committee Member")
+                                            @Html.DisplayName("Committee Member:")
+                                            @Html.DisplayFor(modelItem => item.PhaseICommitteeMember)
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Call Status:")
+                                            @Html.DropDownList("callstatusphaseOneCommMember", phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                        </li>
+
+                                        <li>
+                                            @Html.DisplayName("Date:")
                                             <input type="text" name="phaseIVolunteerCallRemark" />
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("callstatusphaseOnevolunteer", phaseIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Date")
-                                            <input type="text" name="phaseIVolunteerCallRemark" />
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Remark")
+                                            @Html.DisplayName("Remark:")
                                             <input type="text" name="phaseIVolunteerCallRemark" />
                                         </li>
 
@@ -152,44 +152,44 @@
                                     
                                     <td>
                                         <li>
-                                            @Html.DisplayName("Follow-up Volunteer")
+                                            @Html.DisplayName("Follow-up Volunteer:")
                                             @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Call Status")
+                                            @Html.DisplayName("Call Status:")
                                             @Html.DropDownList("callstatusphasetwovolunteer", phaseIIvolunteercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Date")
+                                            @Html.DisplayName("Date:")
                                             <input type="text" class="datepicker" name="phaseIIVolunteerCallTimestamp" />
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Remark")
+                                            @Html.DisplayName("Remark:")
                                             <input type="text" name="phaseIIVolunteerCallRemark" />
                                         </li>
 
                                         <br />
 
                                         <li>
-                                            @Html.DisplayName("Committee Member")
-                                            <input type="text" name="phaseIIVolunteerCallRemark" />
+                                            @Html.DisplayName("Committee Member:")
+                                            @Html.DisplayFor(modelItem => item.PhaseIICommitteeMember)
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Call Status")
-                                            @Html.DropDownList("c", phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
+                                            @Html.DisplayName("Call Status:")
+                                            @Html.DropDownList("callstatusphaseTwoCommMember", phaseIIcommmembercallstatuslist, "--Select--", new { @class = "callStatus" })
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Date")
+                                            @Html.DisplayName("Date:")
                                             <input type="text" class="datepicker" name="phaseIICommmemberCallTimestamp" />
                                         </li>
 
                                         <li>
-                                            @Html.DisplayName("Remark")
+                                            @Html.DisplayName("Remark:")
                                             <input type="text" name="phaseIICommmemberCallRemark" />
                                         </li>
                                     </td>
@@ -219,18 +219,32 @@
         <div>No Followup groups found!!</div>
     }
     <script>
-        $("#print").click(function () {
-            var configurationid = $(this).val();
-            $.ajax({
-                url: "@Url.Action("PrintHealthReportByFollowUpGroup", "FollowUpMgmt")",
-                data: { followupconfigurationid: configurationid },
-                type: "POST",
-                error: function (response) {
-                    alert("Error encountered while printing!!");
-                },
-                success: function (response) {
-                    alert(response.Success);
-                }
+        $(document).ready(function () {
+            $(".btn-save").click(function () {
+
+                var participantCallerMappingId = $(this).attr("value");
+
+                //var healthReportType = document.getElementById(followgroupid + '_healthReportType').value;
+
+                var jsonObject = {
+                    "participantCallerMappingId": participantCallerMappingId
+                };
+
+                $.ajax({
+                    url: "@Url.Action("SaveParticipantCallerMapping", "FollowUp")",
+                    type: "POST",
+                    data: JSON.stringify(jsonObject),
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    error: function (response) {
+                        alert(response.Error);
+                    },
+                    success: function (response) {
+                        alert("Save successfully");
+                    }
+                });
+
             });
         });
     </script>
