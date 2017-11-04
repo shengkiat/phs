@@ -482,7 +482,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIICommitteeMember = phaseTwoCommMembers[count];
                     }
                     catch (Exception ex)
@@ -512,7 +512,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIICommitteeMember = phaseTwoCommMembers[icommmember];
                     }
 
@@ -545,7 +545,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseICommitteeMember = phaseOneCommMembers[count];
                         
                     }
@@ -566,13 +566,8 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseICommitteeMember = phaseOneCommMembers[icommmember];
-                        using (TransactionScope scope = new TransactionScope())
-                        {
-                            unitOfWork.Complete();
-                            scope.Complete();
-                        }
                         
                     }
                     catch (Exception ex)
@@ -600,7 +595,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIIFollowUpVolunteer = phaseTwoVolunteers[count];
                         
                     }
@@ -621,7 +616,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIIFollowUpVolunteer = phaseTwoVolunteers[iCaller];
                         using (TransactionScope scope = new TransactionScope())
                         {
@@ -654,7 +649,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIFollowUpVolunteer = phaseOneVolunteers[count];
                         
                     }
@@ -675,7 +670,7 @@ namespace PHS.Business.Implementation
                     try
                     {
                         var toupdate = unitOfWork.ParticipantCallerMappings.Get(participantcallermapping.ParticipantCallerMappingID);
-                        Util.CopyNonNullProperty(participantcallermapping, toupdate);
+                        //Util.CopyNonNullProperty(participantcallermapping, toupdate);
                         toupdate.PhaseIFollowUpVolunteer = phaseOneVolunteers[iCaller];
                             
                     }
