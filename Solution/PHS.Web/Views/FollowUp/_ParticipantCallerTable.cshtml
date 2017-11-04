@@ -19,7 +19,7 @@
         new SelectListItem {Text = "Did not pick up on 3rd call", Value = "Did not pick up on 3rd call"},
         new SelectListItem {Text = "Invalid/wrong number", Value = "Invalid/wrong number"},
         new SelectListItem {Text = "Received envelope, not all items present", Value = "Received envelope, not all items present"},
-        new SelectListItem {Text = "Hasn't checked mailbox for envelope", Value = "Hasn't checked mailbox for envelopel"},
+        new SelectListItem {Text = "Hasn't checked mailbox for envelope", Value = "Hasn't checked mailbox for envelope"},
         new SelectListItem {Text = "Checked mailbox but didn't receive envelope", Value = "Checked mailbox but didn't receive envelope"},
         new SelectListItem {Text = "Telehealth completed", Value = "Telehealth completed"},
         new SelectListItem {Text = "Telehealth Phase I completed, ready for Phase II.", Value = "Telehealth Phase I completed, ready for Phase II."},
@@ -89,123 +89,7 @@
                         <tbody>
                             @foreach (var item in fugroup.ParticipantCallerMappings)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Participant.Nric)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Participant.Salutation)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Participant.FullName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Participant.Language)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Participant.MobileNumber)
-                                    </td>
-                                    <td>
-                                        <li>
-                                            @Html.DisplayName("Follow-up Volunteer:")
-                                            @Html.DisplayFor(modelItem => item.PhaseIFollowUpVolunteer)
-                                        </li>
-                                        
-                                        <li>
-                                            @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus" })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark" } })
-                                        </li>
-
-                                        <br/>
-
-                                        <li>
-                                            @Html.DisplayName("Committee Member:")
-                                            @Html.DisplayFor(modelItem => item.PhaseICommitteeMember)
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus" })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark" } })
-                                        </li>
-
-                                    </td>
-                                    
-                                    <td>
-                                        <li>
-                                            @Html.DisplayName("Follow-up Volunteer:")
-                                            @Html.DisplayFor(modelItem => item.PhaseIIFollowUpVolunteer)
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus" })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark" } })
-                                        </li>
-
-                                        <br />
-
-                                        <li>
-                                            @Html.DisplayName("Committee Member:")
-                                            @Html.DisplayFor(modelItem => item.PhaseIICommitteeMember)
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Call Status:")
-                                            @Html.DropDownListFor(modelItem => item.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus" })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Date:")
-                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
-                                        </li>
-
-                                        <li>
-                                            @Html.DisplayName("Remark:")
-                                            @Html.EditorFor(modelItem => item.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = @item.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark" } })
-                                        </li>
-                                    </td>
-                                    
-                                    <td>
-
-                                        <button class="btn btn-primary btn-save" type="button" id="saveparticipantcaller" value="@item.ParticipantCallerMappingID">Save</button>
-
-                                        @Html.ActionLink(
-                                           "View",
-                                           "ViewParticipantJourney",
-                                           "ParticipantJourney",
-                                           new { Area = "", Nric = item.Participant.Nric, PHSEventId = 3 },
-                                           htmlAttributes: new { target = "_blank" })
-                                    </td>
-                                </tr>
+                                Html.RenderPartial("_ParticipantCallerRow", item);
                             }
                         </tbody>
                     }
@@ -218,60 +102,5 @@
     {
         <div>No Followup groups found!!</div>
     }
-    <script>
-        $(document).ready(function () {
-            $(".btn-save").click(function () {
-
-                var participantCallerMappingId = $(this).attr("value");
-
-                var phaseIFollowUpVolunteerCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallRemark').value;
-                var phaseIFollowUpVolunteerCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallDateTime').value;
-                var phaseIFollowUpVolunteerCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIFollowUpVolunteerCallStatus').value;
-
-                var phaseIIFollowUpVolunteerCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallRemark').value;
-                var phaseIIFollowUpVolunteerCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallDateTime').value;
-                var phaseIIFollowUpVolunteerCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIIFollowUpVolunteerCallStatus').value;
-
-                var phaseICommitteeMemberCallRemark = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallRemark').value;
-                var phaseICommitteeMemberCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallDateTime').value;
-                var phaseICommitteeMemberCallStatus = document.getElementById(participantCallerMappingId + '_PhaseICommitteeMemberCallStatus').value;
-
-                var phaseIICommitteeMemberCallRemark = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallRemark').value;
-                var phaseIICommitteeMemberCallDateTime = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallDateTime').value;
-                var phaseIICommitteeMemberCallStatus = document.getElementById(participantCallerMappingId + '_PhaseIICommitteeMemberCallStatus').value;
-
-                var jsonObject = {
-                    "participantCallerMappingId": participantCallerMappingId,
-                    "phaseIFollowUpVolunteerCallRemark": phaseIFollowUpVolunteerCallRemark,
-                    "phaseIFollowUpVolunteerCallDateTime": phaseIFollowUpVolunteerCallDateTime,
-                    "phaseIFollowUpVolunteerCallStatus": phaseIFollowUpVolunteerCallStatus,
-                    "phaseIIFollowUpVolunteerCallRemark": phaseIIFollowUpVolunteerCallRemark,
-                    "phaseIIFollowUpVolunteerCallDateTime": phaseIIFollowUpVolunteerCallDateTime,
-                    "phaseIIFollowUpVolunteerCallStatus": phaseIIFollowUpVolunteerCallStatus,
-                    "phaseICommitteeMemberCallRemark": phaseICommitteeMemberCallRemark,
-                    "phaseICommitteeMemberCallDateTime": phaseICommitteeMemberCallDateTime,
-                    "phaseICommitteeMemberCallStatus": phaseICommitteeMemberCallStatus,
-                    "phaseIICommitteeMemberCallRemark": phaseIICommitteeMemberCallRemark,
-                    "phaseIICommitteeMemberCallDateTime": phaseIICommitteeMemberCallDateTime,
-                    "phaseIICommitteeMemberCallStatus": phaseIICommitteeMemberCallStatus
-                };
-
-                $.ajax({
-                    url: "@Url.Action("SaveParticipantCallerMapping", "FollowUp")",
-                    type: "POST",
-                    data: JSON.stringify(jsonObject),
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    error: function (response) {
-                        alert(response.Error);
-                    },
-                    success: function (response) {
-                        alert("Save successfully");
-                    }
-                });
-
-            });
-        });
-    </script>
+    
 

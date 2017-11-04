@@ -630,6 +630,7 @@
     <Content Include="Views\FollowUp\Index.cshtml" />
     <Content Include="Views\ParticipantJourney\_TeleHealthSummaryPartial.cshtml" />
     <Content Include="Views\FollowUp\_ParticipantCallerTable.cshtml" />
+    <Content Include="Views\FollowUp\_ParticipantCallerRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
