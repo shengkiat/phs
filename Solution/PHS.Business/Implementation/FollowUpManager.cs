@@ -313,12 +313,12 @@ namespace PHS.Business.Implementation
                     toupdate.PhaseIIFollowUpVolunteerCallDateTime = participantCallerMapping.PhaseIIFollowUpVolunteerCallDateTime;
                     toupdate.PhaseIIFollowUpVolunteerCallStatus = participantCallerMapping.PhaseIIFollowUpVolunteerCallStatus;
 
-                    toupdate.PhaseICommitteeMember = participantCallerMapping.PhaseICommitteeMember;
+                    //toupdate.PhaseICommitteeMember = participantCallerMapping.PhaseICommitteeMember;
                     toupdate.PhaseICommitteeMemberCallRemark = participantCallerMapping.PhaseICommitteeMemberCallRemark;
                     toupdate.PhaseICommitteeMemberCallDateTime = participantCallerMapping.PhaseICommitteeMemberCallDateTime;
                     toupdate.PhaseICommitteeMemberCallStatus = participantCallerMapping.PhaseICommitteeMemberCallStatus;
 
-                    toupdate.PhaseIICommitteeMember = participantCallerMapping.PhaseIICommitteeMember;
+                    //toupdate.PhaseIICommitteeMember = participantCallerMapping.PhaseIICommitteeMember;
                     toupdate.PhaseIICommitteeMemberCallRemark = participantCallerMapping.PhaseIICommitteeMemberCallRemark;
                     toupdate.PhaseIICommitteeMemberCallDateTime = participantCallerMapping.PhaseIICommitteeMemberCallDateTime;
                     toupdate.PhaseIICommitteeMemberCallStatus = participantCallerMapping.PhaseIICommitteeMemberCallStatus;
