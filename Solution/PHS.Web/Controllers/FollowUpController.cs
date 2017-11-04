@@ -1,4 +1,6 @@
 ﻿using PHS.Business.Implementation;
+using PHS.Common;
+using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code + Constants.User_Role_FollowUpVolunteer_Code)]
     public class FollowUpController : BaseController
     {
         // GET: FollowUp
