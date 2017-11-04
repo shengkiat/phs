@@ -163,6 +163,7 @@
     <Compile Include="TemplateFieldValue.cs">
       <DependentUpon>PHSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ParticipantCallerMapping.cs" />
     <Compile Include="ViewModels\event.cs" />
     <Compile Include="ViewModels\eventIndexdata.cs" />
     <Compile Include="ViewModels\Form.cs" />
