@@ -1397,9 +1397,9 @@ GO
 INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (1, N'PHS 2017-Jurong Followup Configuration', 0, 3)
 GO
 
-GO
-INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (2, N'Configuration 2', 0, 3)
-GO
+--GO
+--INSERT [phs].[dbo].[FollowUpConfiguration] ([FollowUpConfigurationID], [Title], [Deploy], [PHSEventID]) VALUES (2, N'Configuration 2', 0, 3)
+--GO
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpConfiguration] OFF
 GO
 
@@ -1464,11 +1464,11 @@ INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [Follo
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (55, N'T18 - E/TPM', N'3#1#1#1#80#==#Male', 1)
 INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (56, N'Others', N'3#1#1#1#80#==#Male', 1)
 GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (57, N'Group TestA', N'3#1#1#1#80#==#Male', 2)
-GO
+--INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (57, N'Group TestA', N'3#1#1#1#80#==#Male', 2)
+--GO
 
-GO
-INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (58, N'Group TestB', N'3#1#1#1#80#==#Male', 2)
-GO
+--GO
+--INSERT [phs].[dbo].[FollowUpGroup] ([FollowUpGroupID], [Title], [Filter], [FollowUpConfigurationID]) VALUES (58, N'Group TestB', N'3#1#1#1#80#==#Male', 2)
+--GO
 SET IDENTITY_INSERT [phs].[dbo].[FollowUpGroup] OFF
 GO
