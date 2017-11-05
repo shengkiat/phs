@@ -59,7 +59,8 @@ namespace PHS.Business.Implementation
                             var resultparticipantcallmaplist = new List<ParticipantCallerMapping>();
                             foreach (var map in item.ParticipantCallerMappings)
                             {
-                                if (map.PhaseIFollowUpVolunteer == loginuser.FullName)
+                                if (map.PhaseIFollowUpVolunteer == loginuser.FullName
+                                    || map.PhaseIIFollowUpVolunteer == loginuser.FullName)
                                 {
                                     resultparticipantcallmaplist.Add(map);
                                 }
