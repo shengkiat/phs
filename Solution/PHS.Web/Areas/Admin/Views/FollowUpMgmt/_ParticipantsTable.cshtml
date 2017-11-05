@@ -87,7 +87,7 @@
                 <br/>
 
                 <input class="Column" id="file-input-@fugroup.FollowUpGroupID" type="file" name="files" @*accept=".xls"*@ />
-                <button class="Column btn btn-primary btn-importcaller" type="button" id="importcaller" value="@fugroup.FollowUpGroupID">Import Caller</button>
+                <button class="Column btn btn-primary btn-importcaller" type="button" id="importcaller_@fugroup.FollowUpGroupID" value="@fugroup.FollowUpGroupID">Import Caller</button>
                 
             </div>
     <div class="table-responsive">
@@ -181,7 +181,7 @@ else
 }
 
 <script>
-    $(".btn-importcaller").click(function () {
+    $(".btn-importcaller").unbind().click(function () {
         // Checking whether FormData is available in browser
         if (window.FormData !== undefined) {
 
@@ -200,7 +200,7 @@ else
             }
 
             // Adding one more key to FormData object
-            fileData.append('followgroupid', '1');
+            fileData.append('followgroupid', followgroupid);
 
             $.ajax({
                 url: '@Url.Action("ImportCaller")',
