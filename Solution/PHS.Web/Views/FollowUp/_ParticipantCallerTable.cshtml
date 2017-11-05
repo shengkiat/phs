@@ -1,55 +1,5 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpGroup>
 
-<style>
-    li {
-        list-style-type:none
-    }
-    .callStatus {
-        width:100px;   
-    }
-    .callDateTime {
-        width:150px;   
-    }
-</style>
-
-@{
-    var phaseIvolunteercallstatuslist = new List<SelectListItem>() {
-        new SelectListItem {Text = "Did not pick up on 1st call", Value = "Did not pick up on 1st call"},
-        new SelectListItem {Text = "Did not pick up on 2nd call", Value = "Did not pick up on 2nd call"},
-        new SelectListItem {Text = "Did not pick up on 3rd call", Value = "Did not pick up on 3rd call"},
-        new SelectListItem {Text = "Invalid/wrong number", Value = "Invalid/wrong number"},
-        new SelectListItem {Text = "Received envelope, not all items present", Value = "Received envelope, not all items present"},
-        new SelectListItem {Text = "Hasn't checked mailbox for envelope", Value = "Hasn't checked mailbox for envelope"},
-        new SelectListItem {Text = "Checked mailbox but didn't receive envelope", Value = "Checked mailbox but didn't receive envelope"},
-        new SelectListItem {Text = "Telehealth completed", Value = "Telehealth completed"},
-        new SelectListItem {Text = "Telehealth Phase I completed, ready for Phase II.", Value = "Telehealth Phase I completed, ready for Phase II."},
-        new SelectListItem {Text = "Telehealth completed, ready for Phase II. *To resend documents to correct GP clinic", Value = "Telehealth completed, ready for Phase II. *To resend documents to correct GP clinic"},
-        };
-
-    var phaseIIvolunteercallstatuslist = new List<SelectListItem>() {
-        new SelectListItem {Text = "Did not pick up on 1st call (Phase II)", Value = "Did not pick up on 1st call (Phase II)"},
-        new SelectListItem {Text = "Did not pick up on 2nd call (Phase II)", Value = "Did not pick up on 2nd call (Phase II)"},
-        new SelectListItem {Text = "Did not pick up on 3rd call (Phase II)", Value = "Did not pick up on 3rd call (Phase II)"},
-        new SelectListItem {Text = "Telehealth Phase II completed", Value = "Telehealth Phase II complete"},
-        new SelectListItem {Text = "Telehealth Phase II completed, home address changed", Value = "Telehealth Phase II completed, home address changed"},
-        };
-
-    var phaseIcommmembercallstatuslist = new List<SelectListItem>() {
-        new SelectListItem {Text = "Noted!Please call this participant again soon.", Value = "Noted!Please call this participant again soon." },
-        new SelectListItem {Text = "Noted!We will troubleshoot and mail to the correct address.", Value = "Noted!We will troubleshoot and mail to the correct address." },
-        new SelectListItem {Text = "Noted!Thank you so much!", Value = "Noted!Thank you so much!" },
-        new SelectListItem {Text = "Noted!We will troubleshoot and mail to the correct GP clinic.", Value = "Noted!We will troubleshoot and mail to the correct GP clinic." }
-    };
-
-
-    var phaseIIcommmembercallstatuslist = new List<SelectListItem>() {
-        new SelectListItem {Text = "Noted!Please call a 2nd time on a separate occasion.", Value = "Noted!Please call a 2nd time on a separate occasion." },
-        new SelectListItem {Text = "Noted!Please call a 3rd time on a separate occasion.", Value = "Noted!Please call a 3rd time on a separate occasion." },
-        new SelectListItem {Text = "Noted!We will troubleshoot.", Value = "Noted!We will troubleshoot." },
-        new SelectListItem {Text = "Noted!Thank you so much!", Value = "Noted!Thank you so much!" },
-        new SelectListItem {Text = "Noted!We will take down his new address.Thank you so much!", Value = "Noted!We will take down his new address.Thank you so much!" }
-    };
-}
     @if (Model != null && Model.Count() > 0)
     {
         <div style="overflow-x:auto;">
@@ -68,22 +18,22 @@
                                 </th>
                                 <th>
                                     <b>@Html.DisplayName("Salutation")</b>
-</th>
+                                </th>
                                 <th>
                                     <b>@Html.DisplayName("FullName")</b>
-</th>
+                                </th>
                                 <th>
                                     <b>@Html.DisplayName("Language")</b>
-</th>
+                                </th>
                                 <th>
                                     <b>@Html.DisplayName("Contact")</b>
-</th>
+                                </th>
                                 <th style="width:300px; text-align:center">
                                     <b>@Html.DisplayName("Phase I")</b>
-</th>
+                                </th>
                                 <th style="width:300px; text-align:center">
                                     <b>@Html.DisplayName("Phase II")</b>
-</th>
+                                </th>
                                 <th style="width:120px"></th>
                             </tr>
                         </thead>
