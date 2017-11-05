@@ -371,6 +371,7 @@ namespace PHS.Business.Implementation
             dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Call Status"));
             dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Call Date"));
             dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Remarks"));
+
             dt.Columns.Add(new DataColumn("Phase I Committee Member"));
             dt.Columns.Add(new DataColumn("Phase I Committee Member Call Status"));
             dt.Columns.Add(new DataColumn("Phase I Committee Member Call Date"));
@@ -380,6 +381,7 @@ namespace PHS.Business.Implementation
             dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Call Status"));
             dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Call Date"));
             dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Remarks"));
+
             dt.Columns.Add(new DataColumn("Phase II Committee Member"));
             dt.Columns.Add(new DataColumn("Phase II Committee Member Call Status"));
             dt.Columns.Add(new DataColumn("Phase II Committee Member Call Date"));
@@ -394,7 +396,25 @@ namespace PHS.Business.Implementation
                 row[3] = item.Participant.Language;
                 row[4] = item.Participant.MobileNumber;
 
+                row[5] = item.PhaseIFollowUpVolunteer;
+                row[6] = item.PhaseIFollowUpVolunteerCallStatus;
+                row[7] = item.PhaseIFollowUpVolunteerCallDateTime;
+                row[8] = item.PhaseIFollowUpVolunteerCallRemark;
 
+                row[9] = item.PhaseICommitteeMember;
+                row[10] = item.PhaseICommitteeMemberCallStatus;
+                row[11] = item.PhaseICommitteeMemberCallDateTime;
+                row[12] = item.PhaseICommitteeMemberCallRemark;
+
+                row[13] = item.PhaseIIFollowUpVolunteer;
+                row[14] = item.PhaseIIFollowUpVolunteerCallStatus;
+                row[15] = item.PhaseIIFollowUpVolunteerCallDateTime;
+                row[16] = item.PhaseIIFollowUpVolunteerCallRemark;
+
+                row[17] = item.PhaseIICommitteeMember;
+                row[18] = item.PhaseIICommitteeMemberCallStatus;
+                row[19] = item.PhaseIICommitteeMemberCallDateTime;
+                row[20] = item.PhaseIICommitteeMemberCallRemark;
 
                 dt.Rows.Add(row);
             }
