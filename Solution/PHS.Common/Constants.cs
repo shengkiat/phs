@@ -1003,6 +1003,8 @@ namespace PHS.Common
                         break;
                 case 53:
                         break;
+                case 40:
+                    break;
                 default:
                     isFormForSubmit = true;
                     break; 
