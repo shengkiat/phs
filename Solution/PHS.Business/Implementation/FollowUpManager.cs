@@ -7,6 +7,7 @@ using PHS.DB;
 using PHS.Repository.Interface.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -334,6 +335,43 @@ namespace PHS.Business.Implementation
             }
 
             return result;
+        }
+
+        public ParticipantCallerMappingExportViewModel CreateParticipantCallerMappingDataTable(int followgroupid, out string message)
+        {
+            message = string.Empty;
+            using (var unitOfWork = CreateUnitOfWork())
+            {
+                var followupgroup = GetFollowUpGroupByID(followgroupid);
+                if (followupgroup == null)
+                {
+                    message = "Follow-up group does not exist!";
+                    return null;
+                }
+
+                ParticipantCallerMappingExportViewModel result = new ParticipantCallerMappingExportViewModel();
+                result.ValuesDataTable = CreateDataTable(followupgroup);
+                result.Title = followupgroup.Title;
+
+                return result;
+            }
+        }
+
+        private DataTable CreateDataTable(FollowUpGroup followUpGroup)
+        {
+            var dt = new DataTable(followUpGroup.Title);
+
+            dt.Columns.Add(new DataColumn("Test"));
+
+            DataRow row = dt.NewRow();
+
+            row[0] = "Helloworld";
+
+            dt.Rows.Add(row);
+
+            DataView dv = new DataView(dt);
+
+            return dv.ToTable();
         }
 
 

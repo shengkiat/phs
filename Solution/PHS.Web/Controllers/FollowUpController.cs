@@ -1,12 +1,17 @@
-﻿using PHS.Business.Implementation;
+﻿using PHS.Business.Extensions;
+using PHS.Business.Implementation;
 using PHS.Common;
 using PHS.DB;
 using PHS.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace PHS.Web.Controllers
 {
@@ -51,8 +56,50 @@ namespace PHS.Web.Controllers
                     return Json(new { success = true, message = "Your changes were saved.", isautosave = false });
                 }
             }
+        }
 
-            
+        public ActionResult ExportParticipantCallerMapping(int followgroupid)
+        {
+            string message = string.Empty;
+            using (var followUpManager = new FollowUpManager(GetLoginUser()))
+            {
+                var participantCallerMappingExportViewModel = followUpManager.CreateParticipantCallerMappingDataTable(followgroupid, out message);
+
+                var gridView = new GridView();
+                gridView.DataSource = participantCallerMappingExportViewModel.ValuesDataTable;
+                gridView.DataBind();
+
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new HtmlTextWriter(sw);
+                gridView.RenderControl(htw);
+
+                byte[] fileBytes = Encoding.ASCII.GetBytes(sw.ToString());
+
+                String guid = Guid.NewGuid().ToString();
+
+                TempData[guid] = fileBytes;
+
+                return new JsonResult()
+                {
+                    Data = new { FileGuid = guid, FileName = "{0}.xls".FormatWith(participantCallerMappingExportViewModel.Title) }
+                };
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DownloadExport(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
+            }
         }
     }
 }

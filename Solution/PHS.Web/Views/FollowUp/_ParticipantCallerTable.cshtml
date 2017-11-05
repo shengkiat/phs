@@ -1,57 +1,97 @@
 ﻿@model IEnumerable<PHS.DB.FollowUpGroup>
 
-    @if (Model != null && Model.Count() > 0)
+<script>
+    $(document).ready(function () {
+        $(".btn-export").unbind().click(function () {
+
+            var followgroupid = $(this).attr("value");
+
+            var jsonObject = {
+                "followgroupid": followgroupid
+            };
+
+            $.ajax({
+                url: "@Url.Action("ExportParticipantCallerMapping", "FollowUp")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.Error);
+                },
+                success: function (response) {
+                    window.location = '@Url.Action("DownloadExport", "FollowUp")?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            });
+
+        });
+    });
+</script>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div style="overflow-x:auto;">
+    @foreach (var fugroup in Model)
     {
-        <div style="overflow-x:auto;">
-        @foreach (var fugroup in Model)
-        {
-            <div class="table-responsive">
-                <table class="table table-striped">
+        <div class="table-responsive">
+            <table class="table table-striped">
                     
-                    @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
-                    {
-                        <caption><b>Group: </b>@fugroup.Title<b>Participants: </b>@fugroup.ParticipantCallerMappings.Count</caption>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <b>@Html.DisplayName("NRIC")</b>
-                                </th>
-                                <th>
-                                    <b>@Html.DisplayName("Salutation")</b>
-                                </th>
-                                <th>
-                                    <b>@Html.DisplayName("FullName")</b>
-                                </th>
-                                <th>
-                                    <b>@Html.DisplayName("Language")</b>
-                                </th>
-                                <th>
-                                    <b>@Html.DisplayName("Contact")</b>
-                                </th>
-                                <th style="width:300px; text-align:center">
-                                    <b>@Html.DisplayName("Phase I")</b>
-                                </th>
-                                <th style="width:300px; text-align:center">
-                                    <b>@Html.DisplayName("Phase II")</b>
-                                </th>
-                                <th style="width:120px"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in fugroup.ParticipantCallerMappings)
-                            {
-                                Html.RenderPartial("_ParticipantCallerRow", item);
-                            }
-                        </tbody>
-                    }
-                </table>
-            </div>
-        }
+                @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
+                {
+                    <caption>
+                        <b>Group: </b>
+                        @fugroup.Title
+                        <b>Participants: </b>
+                        @fugroup.ParticipantCallerMappings.Count
+                        @if (@User.IsInRole("Committee Member"))
+                        {
+                            <button class="btn btn-primary btn-export" type="button" id="exportparticipantcaller" value="@fugroup.FollowUpGroupID">Export</button>
+                        }
+                    </caption>
+                        
+                    <thead>
+                        <tr>
+                            <th>
+                                <b>@Html.DisplayName("NRIC")</b>
+                            </th>
+                            <th>
+                                <b>@Html.DisplayName("Salutation")</b>
+                            </th>
+                            <th>
+                                <b>@Html.DisplayName("FullName")</b>
+                            </th>
+                            <th>
+                                <b>@Html.DisplayName("Language")</b>
+                            </th>
+                            <th>
+                                <b>@Html.DisplayName("Contact")</b>
+                            </th>
+                            <th style="width:300px; text-align:center">
+                                <b>@Html.DisplayName("Phase I")</b>
+                            </th>
+                            <th style="width:300px; text-align:center">
+                                <b>@Html.DisplayName("Phase II")</b>
+                            </th>
+                            <th style="width:120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in fugroup.ParticipantCallerMappings)
+                        {
+                            Html.RenderPartial("_ParticipantCallerRow", item);
+                        }
+                    </tbody>
+                }
+            </table>
         </div>
     }
-    else
-    {
-        <div>No Followup groups found!!</div>
-    }
+    </div>
+}
+else
+{
+    <div>No Followup groups found!!</div>
+}
     
 
