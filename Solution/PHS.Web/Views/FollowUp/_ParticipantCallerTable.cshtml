@@ -57,9 +57,10 @@
         {
             <div class="table-responsive">
                 <table class="table table-striped">
-                    <caption><b>Group: @fugroup.Title  </b></caption>
+                    
                     @if (fugroup.ParticipantCallerMappings != null && fugroup.ParticipantCallerMappings.Count > 0)
                     {
+                        <caption><b>Group: </b>@fugroup.Title<b>Participants: </b>@fugroup.ParticipantCallerMappings.Count</caption>
                         <thead>
                             <tr>
                                 <th>
