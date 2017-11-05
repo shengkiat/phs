@@ -173,7 +173,7 @@
 
 <script>
     $(document).ready(function () {
-        $(".btn-save").click(function () {
+        $(".btn-save").unbind().click(function () {
 
             var participantCallerMappingId = $(this).attr("value");
 
