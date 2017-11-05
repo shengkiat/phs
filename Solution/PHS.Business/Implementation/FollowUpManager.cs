@@ -361,13 +361,44 @@ namespace PHS.Business.Implementation
         {
             var dt = new DataTable(followUpGroup.Title);
 
-            dt.Columns.Add(new DataColumn("Test"));
+            dt.Columns.Add(new DataColumn("NRIC"));
+            dt.Columns.Add(new DataColumn("Salutation"));
+            dt.Columns.Add(new DataColumn("FullName"));
+            dt.Columns.Add(new DataColumn("Language"));
+            dt.Columns.Add(new DataColumn("Contact"));
 
-            DataRow row = dt.NewRow();
+            dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer"));
+            dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Call Status"));
+            dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Call Date"));
+            dt.Columns.Add(new DataColumn("Phase I Follow-up Volunteer Remarks"));
+            dt.Columns.Add(new DataColumn("Phase I Committee Member"));
+            dt.Columns.Add(new DataColumn("Phase I Committee Member Call Status"));
+            dt.Columns.Add(new DataColumn("Phase I Committee Member Call Date"));
+            dt.Columns.Add(new DataColumn("Phase I Committee Member Remarks"));
 
-            row[0] = "Helloworld";
+            dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer"));
+            dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Call Status"));
+            dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Call Date"));
+            dt.Columns.Add(new DataColumn("Phase II Follow-up Volunteer Remarks"));
+            dt.Columns.Add(new DataColumn("Phase II Committee Member"));
+            dt.Columns.Add(new DataColumn("Phase II Committee Member Call Status"));
+            dt.Columns.Add(new DataColumn("Phase II Committee Member Call Date"));
+            dt.Columns.Add(new DataColumn("Phase II Committee Member Remarks"));
 
-            dt.Rows.Add(row);
+            foreach (var item in followUpGroup.ParticipantCallerMappings)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = item.Participant.Nric;
+                row[1] = item.Participant.Salutation;
+                row[2] = item.Participant.FullName;
+                row[3] = item.Participant.Language;
+                row[4] = item.Participant.MobileNumber;
+
+
+
+                dt.Rows.Add(row);
+            }
+
 
             DataView dv = new DataView(dt);
 
