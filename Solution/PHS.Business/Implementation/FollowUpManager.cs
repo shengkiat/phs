@@ -820,7 +820,7 @@ namespace PHS.Business.Implementation
         {
             using (var unitOfWork = CreateUnitOfWork())
             {
-                var user = unitOfWork.Users.Find(u => u.FullName == caller);
+                var user = unitOfWork.Users.Find(u => u.FullName == caller && (u.Role == "Committee Member" || u.Role == "Follow-up Volunteer"));
                 if (user != null)
                     return true;
             }
