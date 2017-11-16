@@ -70,15 +70,23 @@ function checkKey() {
 
 </script>
 
+@{ 
+    var htmlStyle = "color:black;";
+    if (!string.IsNullOrEmpty(Model.PhaseIFollowUpVolunteerCallStatus)
+        && Model.PhaseIFollowUpVolunteerCallStatus.Equals("Phase I done, no phase II"))
+    {
+        htmlStyle = "color:red;";
+    }
+}
 
 <tr>
     <td>
-        <li>
+        <li style=@htmlStyle>
             <b>@Html.DisplayFor(modelItem => modelItem.Participant.Nric)</b>
             
         </li >
 
-        <li>
+        <li style=@htmlStyle>
             <b>Name: </b>
             @Html.DisplayFor(modelItem => modelItem.Participant.FullName)
         </li>
