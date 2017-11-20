@@ -310,7 +310,7 @@ CREATE TABLE [dbo].[TemplateField](
 	[SummaryType] [nvarchar](50) NULL,
 	[ConditionTemplateFieldID] [int] NULL,
 	[ConditionCriteria] [varchar](50) NULL,
-	[ConditionOptions] [nvarchar](50) NULL,
+	[ConditionOptions] [nvarchar](200) NULL,
 	[StandardReferenceID] [int] NULL,
 	[CreatedBy] [nvarchar](max) NULL,
 	[CreatedDateTime] [datetime2](7) NULL,

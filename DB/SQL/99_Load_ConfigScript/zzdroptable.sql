@@ -9,7 +9,6 @@ drop table Form
 drop table EventModality
 drop table Modality
 drop table AuditLog
-drop table Participant
 drop table PreRegistration
 drop table ReferenceRange
 drop table StandardReference
@@ -18,3 +17,7 @@ drop table ParticipantPHSEvent
 drop table PHSEvent
 drop table PHSUser
 drop table SummaryMapping
+drop table FollowUpConfiguration
+drop table FollowUpGroup
+drop table ParticipantCallerMapping
+drop table Participant
