@@ -56,37 +56,128 @@
     };
 }
 
-<script type="text/javascript">
 
-function checkKey() {
-    var plaintext = document.getElementById("liColourRow");
-    if (plaintext.value == 'test') {
-        plaintext.style.backgroundColor = "#FF0000";
-    }
-    else {
-        plaintext.style.backgroundColor = "#66CD00";
-    }
-}
-
-</script>
-
-@{ 
-    var htmlStyle = "color:black;";
+@{ // htmlStyleP1Vol
+    var htmlStyleP1Vol = "background-color:white;";
     if (!string.IsNullOrEmpty(Model.PhaseIFollowUpVolunteerCallStatus)
-        && Model.PhaseIFollowUpVolunteerCallStatus.Equals("Phase I done, no phase II"))
+        &&( Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 1st call") ||
+        Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 2nd call") ||
+        Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 3rd call") ||
+        Model.PhaseIFollowUpVolunteerCallStatus.Equals("Hasn't checked mailbox")
+        ))
     {
-        htmlStyle = "color:red;";
+        htmlStyleP1Vol = "background-color:#fff2cc;"; // yellow
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseIFollowUpVolunteerCallStatus)
+    && (Model.PhaseIFollowUpVolunteerCallStatus.Equals("Invalid/wrong number") ||
+    Model.PhaseIFollowUpVolunteerCallStatus.Equals("Not all items present") ||
+    Model.PhaseIFollowUpVolunteerCallStatus.Equals("Checked mailbox but didn't receive") ||
+    Model.PhaseIFollowUpVolunteerCallStatus.Equals("Wrong GP, Phase II next")
+    ))
+    {
+        htmlStyleP1Vol = "background-color:#ea9999;"; // red
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseIFollowUpVolunteerCallStatus)
+    && (Model.PhaseIFollowUpVolunteerCallStatus.Equals("Phase I done, no phase II") ||
+    Model.PhaseIFollowUpVolunteerCallStatus.Equals("Phase II next")
+    ))
+    {
+        htmlStyleP1Vol = "background-color:#b0ffb1;"; // green
     }
 }
+
+
+
+
+@{ // htmlStyleP1Comm
+    var htmlStyleP1Comm = "background-color:white;";
+    if (!string.IsNullOrEmpty(Model.PhaseICommitteeMemberCallStatus)
+        && (Model.PhaseICommitteeMemberCallStatus.Equals("Please call a 2nd time.") ||
+        Model.PhaseICommitteeMemberCallStatus.Equals("Please call a 3rd time.") ||
+        Model.PhaseICommitteeMemberCallStatus.Equals("Please call again soon.")
+        ))
+    {
+        htmlStyleP1Comm = "background-color:#fff2cc;"; // yellow
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseICommitteeMemberCallStatus)
+    && (Model.PhaseICommitteeMemberCallStatus.Equals("Will troubleshoot.")
+    ))
+    {
+        htmlStyleP1Comm = "background-color:#ea9999;"; // red
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseICommitteeMemberCallStatus)
+    && (Model.PhaseICommitteeMemberCallStatus.Equals("Noted!") ||
+    Model.PhaseICommitteeMemberCallStatus.Equals("Troubleshooted.")
+    ))
+    {
+        htmlStyleP1Comm = "background-color:#b0ffb1;"; // green
+    }
+}
+
+@{ // htmlStyleP2Vol
+    var htmlStyleP2Vol = "background-color:white;";
+    if (!string.IsNullOrEmpty(Model.PhaseIIFollowUpVolunteerCallStatus)
+        && (Model.PhaseIIFollowUpVolunteerCallStatus.Equals("Did not pick up on 1st call") ||
+        Model.PhaseIIFollowUpVolunteerCallStatus.Equals("Did not pick up on 2nd call") ||
+        Model.PhaseIIFollowUpVolunteerCallStatus.Equals("Did not pick up on 3rd call")
+        ))
+    {
+        htmlStyleP2Vol = "background-color:#fff2cc;"; // yellow
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseIIFollowUpVolunteerCallStatus)
+    && (Model.PhaseIIFollowUpVolunteerCallStatus.Equals("Phase II done") ||
+    Model.PhaseIIFollowUpVolunteerCallStatus.Equals("Address changed, Phase II done")
+    ))
+    {
+        htmlStyleP2Vol = "background-color:#b0ffb1;"; // green
+    }
+}
+
+
+
+@{ // htmlStyleP2Comm
+    var htmlStyleP2Comm = "background-color:white;";
+    if (!string.IsNullOrEmpty(Model.PhaseIICommitteeMemberCallStatus)
+        && (Model.PhaseIICommitteeMemberCallStatus.Equals("Please call a 2nd time.") ||
+        Model.PhaseIICommitteeMemberCallStatus.Equals("Please call a 3rd time.") 
+        ))
+    {
+        htmlStyleP2Comm = "background-color:#fff2cc;"; // yellow
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseIICommitteeMemberCallStatus)
+    && (Model.PhaseIICommitteeMemberCallStatus.Equals("Will troubleshoot.")
+    ))
+    {
+        htmlStyleP2Comm = "background-color:#ea9999;"; // red
+    }
+
+    if (!string.IsNullOrEmpty(Model.PhaseIICommitteeMemberCallStatus)
+    && (Model.PhaseIICommitteeMemberCallStatus.Equals("Noted!") ||
+    Model.PhaseIICommitteeMemberCallStatus.Equals("Noted change in address!") ||
+    Model.PhaseIICommitteeMemberCallStatus.Equals("Troubleshooted.")
+    ))
+    {
+        htmlStyleP2Comm = "background-color:#b0ffb1;"; // green
+    }
+}
+
+
+
 
 <tr>
     <td>
-        <li style=@htmlStyle>
+        <li>
             <b>@Html.DisplayFor(modelItem => modelItem.Participant.Nric)</b>
             
         </li >
 
-        <li style=@htmlStyle>
+        <li >
             <b>Name: </b>
             @Html.DisplayFor(modelItem => modelItem.Participant.FullName)
         </li>
@@ -107,23 +198,23 @@ function checkKey() {
     </td>
     <td>    
 
-        <li>
+        <li  style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Follow-up Volunteer:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIFollowUpVolunteer)
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Call Status:")</b>
             @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
             
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Remarks:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
         </li>
@@ -133,22 +224,22 @@ function checkKey() {
 
         <br />
 
-        <li>
+        <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Committee Member:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseICommitteeMember)
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Call Status:")</b>
             @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
-        <li>
+        <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Remarks:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 300px;" } })
         </li>
@@ -156,44 +247,44 @@ function checkKey() {
     </td>
 
     <td>
-        <li>
+        <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Follow-up Volunteer:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIIFollowUpVolunteer)
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Call Status:")</b>
             @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Remarks:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
         </li>
 
         <br />
 
-        <li>
+        <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Committee Member:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIICommitteeMember)
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Call Status:")</b>
             @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Date:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
         </li>
 
-        <li>
+        <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Remarks:")</b>
             @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 300px;" } })
         </li>
