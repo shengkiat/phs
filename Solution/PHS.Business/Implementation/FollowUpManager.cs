@@ -61,10 +61,13 @@ namespace PHS.Business.Implementation
                             foreach (var map in item.ParticipantCallerMappings)
                             {
                                 if (map.PhaseIFollowUpVolunteer == loginuser.FullName
-                                    || map.PhaseIIFollowUpVolunteer == loginuser.FullName)
+                                    || map.PhaseIIFollowUpVolunteer == loginuser.FullName 
+                                    || map.PhaseICommitteeMember == loginuser.FullName
+                                    || map.PhaseIICommitteeMember == loginuser.FullName)
                                 {
                                     resultparticipantcallmaplist.Add(map);
-                                }
+                                }                               
+
                             }
                             resultfollowupgroup.ParticipantCallerMappings = resultparticipantcallmaplist;
                             result.Add(resultfollowupgroup);

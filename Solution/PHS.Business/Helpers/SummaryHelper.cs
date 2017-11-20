@@ -576,6 +576,7 @@ namespace PHS.Business.Helpers
                     }
                     catch (FormatException e)
                     {
+                        e.ToString();
                     }
                 }
 
@@ -699,6 +700,7 @@ namespace PHS.Business.Helpers
                 }
                 catch (FormatException e)
                 {
+                    e.ToString();
                     fieldInt = 0;
                 }
                 
@@ -724,6 +726,7 @@ namespace PHS.Business.Helpers
                 }
                 catch (FormatException e)
                 {
+                    e.ToString();
                     fieldInt = 0;
                 }
 
@@ -793,6 +796,7 @@ namespace PHS.Business.Helpers
                         }
                         catch (FormatException e)
                         {
+                            e.ToString();
                             ftValue = 0;
                         }
                     }
