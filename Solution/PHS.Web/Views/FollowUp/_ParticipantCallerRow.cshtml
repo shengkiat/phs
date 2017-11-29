@@ -60,7 +60,7 @@
 @{ // htmlStyleP1Vol
     var htmlStyleP1Vol = "background-color:white;";
     if (!string.IsNullOrEmpty(Model.PhaseIFollowUpVolunteerCallStatus)
-        &&( Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 1st call") ||
+        && (Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 1st call") ||
         Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 2nd call") ||
         Model.PhaseIFollowUpVolunteerCallStatus.Equals("Did not pick up on 3rd call") ||
         Model.PhaseIFollowUpVolunteerCallStatus.Equals("Hasn't checked mailbox")
@@ -144,7 +144,7 @@
     var htmlStyleP2Comm = "background-color:white;";
     if (!string.IsNullOrEmpty(Model.PhaseIICommitteeMemberCallStatus)
         && (Model.PhaseIICommitteeMemberCallStatus.Equals("Please call a 2nd time.") ||
-        Model.PhaseIICommitteeMemberCallStatus.Equals("Please call a 3rd time.") 
+        Model.PhaseIICommitteeMemberCallStatus.Equals("Please call a 3rd time.")
         ))
     {
         htmlStyleP2Comm = "background-color:#fff2cc;"; // yellow
@@ -169,15 +169,14 @@
 
 
 
-
 <tr>
     <td>
         <li>
             <b>@Html.DisplayFor(modelItem => modelItem.Participant.Nric)</b>
-            
-        </li >
 
-        <li >
+        </li>
+
+        <li>
             <b>Name: </b>
             @Html.DisplayFor(modelItem => modelItem.Participant.FullName)
         </li>
@@ -196,27 +195,78 @@
             @Html.DisplayFor(modelItem => modelItem.Participant.HomeNumber)
         </li>
     </td>
-    <td>    
+    <td>
 
-        <li  style=@htmlStyleP1Vol>
+        <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Follow-up Volunteer:")</b>
             @Html.DisplayFor(modelItem => modelItem.PhaseIFollowUpVolunteer)
         </li>
 
         <li style=@htmlStyleP1Vol>
+
             <b>@Html.DisplayName("Call Status:")</b>
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
-            
+
+
+            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+            {
+                if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
+                {
+                    @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;", disabled = "disabled" })
+                }
+            }
+            else
+            {
+               
+                @Html.DropDownListFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallStatus, phaseIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
+            }
+
         </li>
 
         <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Date:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+{
+            if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+            }
+            else
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date", disabled = "disabled" } })
+
+            }
+}
+else
+{
+    @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+
+}
         </li>
 
         <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Remarks:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+{
+    if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+    }
+    else
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 300px;", disabled = "disabled" } })
+
+    }
+}
+else
+{
+    @Html.EditorFor(modelItem => modelItem.PhaseIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+
+}
         </li>
 
 
@@ -231,17 +281,68 @@
 
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Call Status:")</b>
-            @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+{
+    if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
+    {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+    }
+    else
+    {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;", disabled = "disabled" })
+
+    }
+}
+else
+{
+    @Html.DropDownListFor(modelItem => modelItem.PhaseICommitteeMemberCallStatus, phaseIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+
+}
         </li>
 
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Date:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+            
+            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+            {
+                if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+                }
+                else
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date", disabled = "disabled" } })
+
+                }
+            }
+            else
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+
+            }
         </li>
 
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Remarks:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 300px;" } })
+    
+            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+            {
+                if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 300px;" } })
+                }
+                else
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 300px;", disabled = "disabled" } })
+
+                }
+            }
+            else
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseICommitteeMemberCallRemark", style = "width: 300px;" } })
+
+            }
         </li>
 
     </td>
@@ -254,17 +355,65 @@
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Call Status:")</b>
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+{
+            if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
+            {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
+            }
+            else
+            {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;", disabled = "disabled" })
+
+    }
+}
+else
+{
+    @Html.DropDownListFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallStatus, phaseIIvolunteercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallStatus", @class = "callStatus", style = "width: 300px;" })
+
+}
         </li>
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Date:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+{
+    if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+    }
+    else
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date", disabled = "disabled" } })
+
+    }
+}
+else
+{
+    @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallDateTime", @class = "callDateTime", Type = "date" } })
+
+}
         </li>
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Remarks:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+{
+    if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+    }
+    else
+    {
+                @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 300px;", disabled = "disabled" } })
+
+    }
+}
+else
+{
+    @Html.EditorFor(modelItem => modelItem.PhaseIIFollowUpVolunteerCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIIFollowUpVolunteerCallRemark", style = "width: 300px;" } })
+
+}
         </li>
 
         <br />
@@ -276,17 +425,65 @@
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Call Status:")</b>
-            @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+{
+    if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
+    {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+    }
+    else
+    {
+                @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;", disabled = "disabled" })
+
+    }
+}
+else
+{
+    @Html.DropDownListFor(modelItem => modelItem.PhaseIICommitteeMemberCallStatus, phaseIIcommmembercallstatuslist, "--Select--", new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallStatus", @class = "callStatus", style = "width: 300px;" })
+
+}
         </li>
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Date:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+            {
+                if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+                }
+                else
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date", disabled = "disabled" } })
+
+                }
+            }
+            else
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallDateTime, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallDateTime", @class = "callDateTime", Type = "date" } })
+
+            }
         </li>
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Remarks:")</b>
-            @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 300px;" } })
+            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+            {
+                if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 300px;" } })
+                }
+                else
+                {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 300px;", disabled = "disabled" } })
+
+                }
+            }
+            else
+            {
+                @Html.EditorFor(modelItem => modelItem.PhaseIICommitteeMemberCallRemark, new { htmlAttributes = new { @id = Model.ParticipantCallerMappingID + "_PhaseIICommitteeMemberCallRemark", style = "width: 300px;" } })
+
+            }
         </li>
     </td>
 
@@ -352,7 +549,9 @@
                     alert(response.Error);
                 },
                 success: function (response) {
-                    alert("Save successfully");
+                    if (confirm('Successfully Saved. Please click ok to reload the page')) {
+                        window.location.reload();
+                    }
                 }
             });
 
