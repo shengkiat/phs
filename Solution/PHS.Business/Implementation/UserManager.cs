@@ -128,6 +128,8 @@ namespace PHS.Business.Implementation
                             case Constants.User_Role_CommitteeMember_Code:
 
                             case Constants.User_Role_FollowUpVolunteer_Code:
+
+                            case Constants.User_Role_FollowUpCommitteeMember_Code:
                                 authenticatedUser = user;
                                 message = string.Empty;
                                 break;

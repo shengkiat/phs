@@ -23,7 +23,7 @@ using System.Web.UI.WebControls;
 
 namespace PHS.Web.Controllers
 {
-    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code + Constants.User_Role_FollowUpCommitteeMember_Code)]
     public class FormExportController : BaseController
     {
 

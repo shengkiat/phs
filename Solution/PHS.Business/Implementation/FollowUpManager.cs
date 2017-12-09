@@ -43,11 +43,12 @@ namespace PHS.Business.Implementation
                     message = "No follow-up configuration is deployed!!";
                     return result;
                 }
-                if (loginuser.Role == Constants.User_Role_CommitteeMember_Code)
+                if (loginuser.Role == Constants.User_Role_FollowUpCommitteeMember_Code)
                 {
                     return followupconfig.FollowUpGroups.ToList();
                 }
-                else if (loginuser.Role == Constants.User_Role_FollowUpVolunteer_Code)
+                else if (loginuser.Role == Constants.User_Role_FollowUpVolunteer_Code ||
+                         loginuser.Role == Constants.User_Role_CommitteeMember_Code)
                 {
 
                     var followupgroups = followupconfig.FollowUpGroups;

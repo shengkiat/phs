@@ -312,30 +312,30 @@
 
             <div id="colorstrip" style="position: absolute; top: 135px; height: 10px; background-color: #337ab7;">                      
                 <ul id="menu-ul">
-                    @if (@User.IsInRole("Committee Member"))
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Committee Member"))
                     {
-                        <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id = "menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("User Management", "Index", "User", new { ControllerName = "User", Area = "Admin", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Event Management", "Index", "Event", new { ControllerName = "Event", Area = "", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Form Management", "Index", "Form", new { ControllerName = "Form", Area = "", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Standard Reference", "Index", "StandardReference", new { ControllerName = "StandardReference", Area = "Admin", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Follow-up Committee Member, Doctor" }, new { @style = "color:white;" })</li>
                     }
-                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor"))
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Volunteer") || @User.IsInRole("Doctor") || @User.IsInRole("Follow-up Committee Member"))
                     {
                         if (@User.IsInRole("Doctor"))
                         {
-                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Past Event", "Index", "PastParticipantJourney", new { ControllerName = "PastParticipantJourney", Area = "", Roles = "Committee Member, Doctor, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
                         }
-                        <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "Committee Member, Volunteer, Doctor" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Event", "Index", "ParticipantJourney", new { ControllerName = "ParticipantJourney", Area = "", Roles = "Committee Member, Volunteer, Doctor, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
                     }
-                    @if (@User.IsInRole("Committee Member"))
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Committee Member"))
                     {
-                        <li id = "menu-li">@Html.ActionLink("Follow-up Management", "Index", "FollowUpMgmt", new { ControllerName = "FollowUpMgmt", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
-                        <li id = "menu-li">@Html.ActionLink("Follow-up Configuration", "Index", "FollowUpConfiguration", new { ControllerName = "FollowUpConfiguration", Area = "Admin", Roles = "Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Follow-up Management", "Index", "FollowUpMgmt", new { ControllerName = "FollowUpMgmt", Area = "Admin", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Follow-up Configuration", "Index", "FollowUpConfiguration", new { ControllerName = "FollowUpConfiguration", Area = "Admin", Roles = "Committee Member, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
                     }
-                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Volunteer"))
+                    @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Volunteer") || @User.IsInRole("Follow-up Committee Member"))
                     {
-                        <li id = "menu-li">@Html.ActionLink("Follow-up", "Index", "FollowUp", new { ControllerName = "FollowUp", Area = "", Roles = "Committee Member, Follow-up Volunteer" }, new { @style = "color:white;" })</li>
+                        <li id = "menu-li">@Html.ActionLink("Follow-up", "Index", "FollowUp", new { ControllerName = "FollowUp", Area = "", Roles = "Committee Member, Follow-up Volunteer, Follow-up Committee Member" }, new { @style = "color:white;" })</li>
                     }
                 </ul>
             </div>

@@ -207,7 +207,7 @@
             <b>@Html.DisplayName("Call Status:")</b>
 
 
-            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+            @if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIFollowUpVolunteer != null)
             {
                 if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
                 {
@@ -228,7 +228,7 @@
 
         <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Date:")</b>
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIFollowUpVolunteer != null)
 {
             if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
             {
@@ -250,7 +250,7 @@ else
         <li style=@htmlStyleP1Vol>
             <b>@Html.DisplayName("Remarks:")</b>
 
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIFollowUpVolunteer != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIFollowUpVolunteer != null)
 {
     if (@Context.User.Identity.Name.Equals(@Model.PhaseIFollowUpVolunteer.ToString()))
     {
@@ -282,7 +282,7 @@ else
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Call Status:")</b>
 
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseICommitteeMember != null)
 {
     if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
     {
@@ -304,7 +304,7 @@ else
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Date:")</b>
             
-            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+            @if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseICommitteeMember != null)
             {
                 if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
                 {
@@ -326,7 +326,7 @@ else
         <li style=@htmlStyleP1Comm>
             <b>@Html.DisplayName("Remarks:")</b>
     
-            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseICommitteeMember != null)
+            @if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseICommitteeMember != null)
             {
                 if (@Context.User.Identity.Name.Equals(@Model.PhaseICommitteeMember.ToString()))
                 {
@@ -355,7 +355,7 @@ else
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Call Status:")</b>
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIIFollowUpVolunteer != null)
 {
             if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
             {
@@ -376,7 +376,7 @@ else
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Date:")</b>
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIIFollowUpVolunteer != null)
 {
     if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
     {
@@ -397,7 +397,7 @@ else
 
         <li style=@htmlStyleP2Vol>
             <b>@Html.DisplayName("Remarks:")</b>
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIIFollowUpVolunteer != null)
+@if (@Context.User.IsInRole("CFollow-up Volunteer") && @Model.PhaseIIFollowUpVolunteer != null)
 {
     if (@Context.User.Identity.Name.Equals(@Model.PhaseIIFollowUpVolunteer.ToString()))
     {
@@ -425,7 +425,7 @@ else
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Call Status:")</b>
-@if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+@if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIICommitteeMember != null)
 {
     if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
     {
@@ -446,7 +446,7 @@ else
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Date:")</b>
-            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+            @if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIICommitteeMember != null)
             {
                 if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
                 {
@@ -467,7 +467,7 @@ else
 
         <li style=@htmlStyleP2Comm>
             <b>@Html.DisplayName("Remarks:")</b>
-            @if (!@Context.User.IsInRole("Committee Member") && @Model.PhaseIICommitteeMember != null)
+            @if (@Context.User.IsInRole("Follow-up Volunteer") && @Model.PhaseIICommitteeMember != null)
             {
                 if (@Context.User.Identity.Name.Equals(@Model.PhaseIICommitteeMember.ToString()))
                 {

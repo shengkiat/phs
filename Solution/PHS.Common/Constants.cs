@@ -12,10 +12,11 @@ namespace PHS.Common
         public const string User_Role_Volunteer_Code = "Volunteer";
         public const string User_Role_FollowUpVolunteer_Code = "Follow-up Volunteer";
         public const string User_Role_CommitteeMember_Code = "Committee Member";
+        public const string User_Role_FollowUpCommitteeMember_Code = "Follow-up Committee Member";
 
         public const string Admin = "Admin";
 
-        public const string User_Role_In_String = User_Role_Doctor_Code + Form_Option_Split_Concate + User_Role_Volunteer_Code + Form_Option_Split_Concate + User_Role_CommitteeMember_Code + Form_Option_Split_Concate + User_Role_FollowUpVolunteer_Code;
+        public const string User_Role_In_String = User_Role_Doctor_Code + Form_Option_Split_Concate + User_Role_Volunteer_Code + Form_Option_Split_Concate + User_Role_CommitteeMember_Code + Form_Option_Split_Concate + User_Role_FollowUpVolunteer_Code + Form_Option_Split_Concate + User_Role_FollowUpCommitteeMember_Code;
 
         public const string Export_SubmittedOn = "Submitted On";
 

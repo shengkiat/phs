@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace PHS.Web.Areas.Admin.Controllers
 {
-    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code)]
+    [CustomAuthorize(Roles = Constants.User_Role_CommitteeMember_Code + Constants.User_Role_FollowUpCommitteeMember_Code)]
     public class UserController : BaseController
     {
         // GET: Admin/User

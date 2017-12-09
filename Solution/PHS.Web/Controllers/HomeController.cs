@@ -60,6 +60,7 @@ namespace PHS.Web.Controllers
                             result = Redirect("~/ParticipantJourney/Index");
                             break;
                         case Constants.User_Role_FollowUpVolunteer_Code:
+                        case Constants.User_Role_FollowUpCommitteeMember_Code:
                             result = Redirect("~/FollowUp/Index");
                             break;
                     }

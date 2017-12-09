@@ -45,7 +45,7 @@
                         @fugroup.Title
                         <b>Participants: </b>
                         @fugroup.ParticipantCallerMappings.Count
-                        @if (@User.IsInRole("Committee Member"))
+                        @if (@User.IsInRole("Committee Member") || @User.IsInRole("Follow-up Committee Member"))
                         {
                             <button class="btn btn-primary btn-export" type="button" id="exportparticipantcaller" value="@fugroup.FollowUpGroupID">Export</button>
                         }

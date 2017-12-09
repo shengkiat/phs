@@ -72,6 +72,9 @@
                 <div class="radio-inline">
                     @Html.RadioButtonFor(model => model.Role, "Follow-up Volunteer") Follow-up Volunteer
                 </div>
+                <div class="radio-inline">
+                    @Html.RadioButtonFor(model => model.Role, "Follow-up Committee Member") Follow-up Committee Member
+                </div>
                 @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
             </div>
         </div>
