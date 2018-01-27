@@ -31,7 +31,7 @@ namespace PHS.Business.Implementation
 
         public IEnumerable<PHSEvent> GetAllEvents()
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 return unitOfWork.Events.GetAll();
             }
