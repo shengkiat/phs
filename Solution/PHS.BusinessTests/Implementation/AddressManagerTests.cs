@@ -46,6 +46,31 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("NUS", result.BuildingName);
         }
 
+        [TestMethod()]
+        public void FindAddressTest_UnableToFind()
+        {
+            MasterAddress masterAddressOne = new MasterAddress()
+            {
+                PostalCode = "112244",
+                BuildingName = "NUS"
+            };
+
+            MasterAddress masterAddressTwo = new MasterAddress()
+            {
+                PostalCode = "123456",
+                BuildingName = "CLEMENTI"
+            };
+
+            _unitOfWork.MasterAddress.Add(masterAddressOne);
+            _unitOfWork.MasterAddress.Add(masterAddressTwo);
+
+            _unitOfWork.Complete();
+
+            var result = _target.FindAddress("147852");
+
+            Assert.IsNull(result);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
