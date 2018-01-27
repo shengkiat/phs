@@ -734,21 +734,6 @@ namespace PHS.Business.Implementation.Tests
         }
 
         [TestMethod()]
-        [IgnoreAttribute]
-        public void RetrieveParticipantJourneyForm_InvalidNric()
-        {
-            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
-            psm.Nric = "S82";
-            psm.PHSEventId = 1;
-
-            string message = string.Empty;
-
-            _target.RetrieveParticipantJourneyForm(psm, out message);
-
-            Assert.AreEqual("Invalid Nric", message);
-        }
-
-        [TestMethod()]
         public void RetrieveParticipantJourneyForm_ShouldHaveRecord()
         {
             ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
@@ -783,23 +768,6 @@ namespace PHS.Business.Implementation.Tests
 
             Assert.AreEqual(string.Empty, message);
             Assert.IsNotNull(result);
-        }
-
-        [TestMethod()]
-        [IgnoreAttribute]
-        public void RetrieveParticipantJourneyModality_InvalidNric()
-        {
-            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
-            psm.Nric = "S82";
-            psm.PHSEventId = 1;
-
-            int formId = 1;
-
-            string message = string.Empty;
-
-            _target.RetrieveParticipantJourneyModality(psm, formId, 1, out message);
-
-            Assert.AreEqual("Invalid Nric", message);
         }
 
         [TestMethod()]

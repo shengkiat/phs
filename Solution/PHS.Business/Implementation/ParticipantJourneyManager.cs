@@ -273,12 +273,6 @@ namespace PHS.Business.Implementation
                 message = "Please enter valid NRIC and select Live Event";
             }
 
-            //todo: comment out for data migration. to put it back before going live
-            //else if (!NricChecker.IsNRICValid(psm.Nric))
-            //{
-            //    message = "Invalid Nric";
-            //}
-
             else
             {
                 using (var unitOfWork = CreateUnitOfWork())

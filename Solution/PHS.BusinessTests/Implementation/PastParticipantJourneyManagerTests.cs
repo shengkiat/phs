@@ -22,16 +22,6 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        [IgnoreAttribute]
-        public void GetAllParticipantJourneyByNric_InvalidNric()
-        {
-            string message = string.Empty;
-            _target.GetAllParticipantJourneyByNric("S82", out message);
-
-            Assert.AreEqual("Invalid Nric", message);
-        }
-
-        [TestMethod()]
         public void GetAllParticipantJourneyByNric_OnlyPastScreeningEvents()
         {
             PHSEvent phsEventOne = new PHSEvent()
@@ -76,21 +66,6 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("Test 15", result.FirstOrDefault().Event.Title);
-        }
-
-        [TestMethod()]
-        [IgnoreAttribute]
-        public void RetrievePastParticipantJourney_InvalidNric()
-        {
-            ParticipantJourneySearchViewModel psm = new ParticipantJourneySearchViewModel();
-            psm.Nric = "S82";
-            psm.PHSEventId = 1;
-
-            string message = string.Empty;
-
-            _target.RetrievePastParticipantJourney(psm, out message);
-
-            Assert.AreEqual("Invalid Nric", message);
         }
 
         [TestMethod()]
