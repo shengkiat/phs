@@ -27,7 +27,7 @@ namespace PHS.Business.Implementation
 
         public MasterAddress FindAddress(string postalCode)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var address = unitOfWork.MasterAddress.Find(u => u.PostalCode.Equals(postalCode)).FirstOrDefault();
 
