@@ -21,7 +21,7 @@ namespace PHS.Business.Implementation.Tests
         private PHSContext _context;
 
         [TestMethod()]
-        public void GetAllEventsTest()
+        public void GetAllEventsTest_ShouldHaveRecords()
         {
             PHSEvent phsEvent = new PHSEvent()
             {
@@ -39,6 +39,111 @@ namespace PHS.Business.Implementation.Tests
             var result = _target.GetAllEvents();
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
+        }
+
+        [TestMethod()]
+        public void GetEventByIDTest_ShouldHaveRecord()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test", result.Title);
+            Assert.AreEqual(string.Empty, message);
+        }
+
+        [TestMethod()]
+        public void GetEventByIDTest_NoRecord()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.GetEventByID(3, out message);
+            Assert.IsNull(result);
+            Assert.AreEqual("Event Not Found", message);
+        }
+
+        [TestMethod()]
+        public void NewEventTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(1),
+                EndDT = DateTime.Now.AddDays(10),
+                IsActive = false
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality",
+                IsMandatory = true,
+                IsActive = false
+            };
+
+            phsEvent.Modalities.Add(modality);
+
+            string message = string.Empty;
+
+            var saveResult = _target.NewEvent(phsEvent, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            var result = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test", result.Title);
+            Assert.IsTrue(result.IsActive);
+
+            Assert.IsNotNull(result.Modalities);
+            Assert.AreEqual(1, result.Modalities.Count);
+            Assert.IsTrue(result.Modalities.First().IsActive);
+            Assert.AreEqual("Test Modality", result.Modalities.First().Name);
+        }
+
+        [TestMethod()]
+        public void NewEventTest_FailedValidationDueToStartTimeLessThanToday()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(10),
+                IsActive = false
+            };
+
+            string message = string.Empty;
+
+            var saveResult = _target.NewEvent(phsEvent, out message);
+            Assert.IsFalse(saveResult);
+            Assert.AreEqual("Input Date must larger than today", message);
+
         }
 
         [TestInitialize]

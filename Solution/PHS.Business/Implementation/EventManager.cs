@@ -43,7 +43,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var phsEvent = unitOfWork.Events.GetEvent(ID);
 
@@ -76,7 +76,7 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
 
                 foreach (var newModality in eventModel.Modalities)
