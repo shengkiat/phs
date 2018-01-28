@@ -139,7 +139,7 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var modelToUpdate = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(model.FollowUpConfigurationID);
                 modelToUpdate.Title = model.Title;
@@ -158,7 +158,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var fuConfiguration = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(id);
 

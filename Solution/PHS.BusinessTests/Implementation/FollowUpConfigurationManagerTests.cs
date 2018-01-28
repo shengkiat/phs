@@ -180,6 +180,118 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual("Test Configuration", result.Title);
         }
 
+        [TestMethod()]
+        public void AddFollowUpGroupTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            FollowUpGroup followUpGroup = new FollowUpGroup()
+            {
+                Title = "Test Group",
+                FollowUpConfigurationID = 1
+            };
+
+            string message = string.Empty;
+
+            var result = _target.AddFollowUpGroup(followUpGroup, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Group", result.Title);
+        }
+
+        [TestMethod()]
+        public void UpdateFollowUpConfigurationTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            followUpConfiguration = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNotNull(followUpConfiguration);
+            followUpConfiguration.Title = "Another Test Configuration";
+            var saveResult = _target.UpdateFollowUpConfiguration(followUpConfiguration);
+            Assert.IsTrue(saveResult);
+ 
+            var result = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Another Test Configuration", result.Title);
+        }
+
+        [TestMethod()]
+        public void DeleteFollowUpConfigurationTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            followUpConfiguration = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNotNull(followUpConfiguration);
+            var saveResult = _target.DeleteFollowUpConfiguration(1, out message);
+            Assert.IsTrue(saveResult);
+
+            var result = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNull(result);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
