@@ -271,7 +271,7 @@ namespace PHS.Business.Implementation
             }
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var phsEvent = unitOfWork.Events.Find(e => e.Title.Equals(eventTitle, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                     if (phsEvent != null)
