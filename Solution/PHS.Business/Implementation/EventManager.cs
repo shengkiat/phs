@@ -105,7 +105,7 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var eventToUpdate =  unitOfWork.Events.GetEvent(eventModel.PHSEventID);
 
@@ -137,6 +137,7 @@ namespace PHS.Business.Implementation
             }
         }
 
+        /*
         public bool DeActiveEvent(PHSEvent eventModel)
         {
             if (eventModel == null)
@@ -160,6 +161,7 @@ namespace PHS.Business.Implementation
                 return true;
             }
         }
+        */
 
         public bool DeleteEvent(int eventid, out string message)
         {
