@@ -168,7 +168,7 @@ namespace PHS.Business.Implementation
             message = string.Empty;
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var phsEvent = unitOfWork.Events.GetEvent(eventid);
 

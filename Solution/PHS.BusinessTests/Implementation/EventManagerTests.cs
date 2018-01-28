@@ -178,6 +178,73 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(string.Empty, message);
         }
 
+        [TestMethod()]
+        public void DeleteEventTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var record = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(record);
+
+            var saveResult = _target.DeleteEvent(record.PHSEventID, out message);
+            Assert.IsTrue(saveResult);
+
+            var result = _target.GetEventByID(record.PHSEventID, out message);
+            Assert.IsNull(result);
+            Assert.AreEqual("Event Not Found", message);
+        }
+
+        [TestMethod()]
+        public void DeleteEventTest_UnableToDeleteWithParticipantsRegistered()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Participant participant = new Participant()
+            {
+                Nric = "S8250369B",
+                DateOfBirth = DateTime.Now
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            participant.PHSEvents.Add(phsEvent);
+            _unitOfWork.Participants.Add(participant);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var record = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(record);
+
+            var saveResult = _target.DeleteEvent(record.PHSEventID, out message);
+            Assert.IsFalse(saveResult);
+            Assert.AreEqual("Can't delete event with partients!", message);
+
+            var result = _target.GetEventByID(record.PHSEventID, out message);
+            Assert.IsNotNull(result);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
