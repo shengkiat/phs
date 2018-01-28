@@ -146,6 +146,38 @@ namespace PHS.Business.Implementation.Tests
 
         }
 
+        [TestMethod()]
+        public void UpdateEventTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var record = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(record);
+
+            record.Title = "Test 1234";
+
+            var saveResult = _target.UpdateEvent(record);
+            Assert.IsTrue(saveResult);
+
+            var result = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test 1234", result.Title);
+            Assert.AreEqual(string.Empty, message);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
