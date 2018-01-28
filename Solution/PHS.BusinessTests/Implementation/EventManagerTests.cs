@@ -245,6 +245,45 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod()]
+        public void DeleteEventModalityTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality",
+                IsMandatory = true,
+                IsActive = false
+            };
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var record = _target.GetEventByID(1, out message);
+            Assert.IsNotNull(record);
+            Assert.AreEqual(1, record.Modalities.Count);
+
+            var saveResult = _target.DeleteEventModality(1, record.PHSEventID, out message);
+            Assert.IsTrue(saveResult);
+
+            var result = _target.GetEventByID(record.PHSEventID, out message);
+            Assert.IsNotNull(record);
+            Assert.AreEqual(0, record.Modalities.Count);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
