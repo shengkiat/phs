@@ -280,8 +280,8 @@ namespace PHS.Business.Implementation.Tests
             Assert.IsTrue(saveResult);
 
             var result = _target.GetEventByID(record.PHSEventID, out message);
-            Assert.IsNotNull(record);
-            Assert.AreEqual(0, record.Modalities.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Modalities.Count);
         }
 
         [TestInitialize]
