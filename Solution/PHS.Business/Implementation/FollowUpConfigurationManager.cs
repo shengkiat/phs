@@ -39,7 +39,7 @@ namespace PHS.Business.Implementation
 
         public IEnumerable<FollowUpConfiguration> GetAllFUConfigurationByEventID(int eventid)
         {
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 return unitOfWork.FollowUpConfigurations.GetAllFollowUpConfigurationsByEventID(eventid);
             }
@@ -50,7 +50,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     var followupConfiguration = unitOfWork.FollowUpConfigurations.GetFollowUpConfiguration(id);
 
@@ -82,7 +82,7 @@ namespace PHS.Business.Implementation
                 return false;
             }
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 unitOfWork.FollowUpConfigurations.Add(model);
 

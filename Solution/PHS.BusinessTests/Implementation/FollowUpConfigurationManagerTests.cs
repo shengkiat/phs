@@ -50,6 +50,136 @@ namespace PHS.Business.Implementation.Tests
             Assert.AreEqual(1, result.Count());
         }
 
+        [TestMethod()]
+        public void GetAllFUConfigurationByEventIDTest_ShouldHaveRecords()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            var result = _target.GetAllFUConfigurationByEventID(1);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count());
+        }
+
+        [TestMethod()]
+        public void GetFUConfigurationByIDTest_ShouldHaveRecord()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Configuration", result.Title);
+            Assert.AreEqual(string.Empty, message);
+        }
+
+        [TestMethod()]
+        public void GetFUConfigurationByIDTest_NoRecord()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            phsEvent.FollowUpConfigurations.Add(followUpConfiguration);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.GetFUConfigurationByID(3, out message);
+            Assert.IsNull(result);
+            Assert.AreEqual("Follow-up Configuration Not Found", message);
+        }
+
+        [TestMethod()]
+        public void NewFollowUpConfigurationTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+
+            FollowUpConfiguration followUpConfiguration = new FollowUpConfiguration()
+            {
+                Title = "Test Configuration",
+                PHSEventID = 1,
+                Deploy = false
+            };
+
+            string message = string.Empty;
+
+            var saveResult = _target.NewFollowUpConfiguration(followUpConfiguration, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            var result = _target.GetFUConfigurationByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Configuration", result.Title);
+        }
+
         [TestInitialize]
         public void SetupTest()
         {
