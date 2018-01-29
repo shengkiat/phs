@@ -1,6 +1,7 @@
 ﻿using Effort;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PHS.Business.Implementation;
+using PHS.Business.ViewModel.Event;
 using PHS.BusinessTests;
 using PHS.DB;
 using PHS.Repository.Context;
@@ -83,6 +84,93 @@ namespace PHS.Business.Implementation.Tests
             var result = _target.GetModalityByID(3, out message);
             Assert.IsNull(result);
             Assert.AreEqual("Modality Not Found", message);
+        }
+
+        [TestMethod()]
+        public void NewModalityTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            ModalityEventViewModel modalityEventViewModel = new ModalityEventViewModel()
+            {
+                Name = "Test Modality",
+                IsMandatory = true,
+                IsActive = false,
+                EventID = 1,
+                ModalityRole = new List<ModalityRole>()
+            };
+
+            var saveResult = _target.NewModality(modalityEventViewModel, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            var result = _target.GetModalityByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Modality", result.Name);
+            Assert.AreEqual(string.Empty, message);
+        }
+
+        [TestMethod()]
+        public void UpdateModalityTest_Success()
+        {
+            PHSEvent phsEvent = new PHSEvent()
+            {
+                Title = "Test",
+                Venue = "Test",
+                StartDT = DateTime.Now.AddDays(-1),
+                EndDT = DateTime.Now.AddDays(1),
+                IsActive = true
+            };
+
+            Modality modality = new Modality()
+            {
+                Name = "Test Modality",
+                IsMandatory = true,
+                IsActive = false
+            };
+
+            phsEvent.Modalities.Add(modality);
+
+            _unitOfWork.Events.Add(phsEvent);
+
+            _unitOfWork.Complete();
+
+            string message = string.Empty;
+
+            var result = _target.GetModalityByID(1, out message);
+            Assert.IsNotNull(result);
+
+            ModalityEventViewModel modalityEventViewModel = new ModalityEventViewModel()
+            {
+                Name = "Test Modality 1234",
+                IsMandatory = true,
+                IsActive = false,
+                EventID = 1,
+                ModalityID = 1,
+                ModalityRole = new List<ModalityRole>()
+            };
+
+            var saveResult = _target.UpdateModality(modalityEventViewModel, out message);
+            Assert.IsTrue(saveResult);
+            Assert.AreEqual(string.Empty, message);
+
+            result = _target.GetModalityByID(1, out message);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Modality 1234", result.Name);
+            Assert.AreEqual(string.Empty, message);
         }
 
         [TestInitialize]

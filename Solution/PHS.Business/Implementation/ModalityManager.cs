@@ -71,7 +71,7 @@ namespace PHS.Business.Implementation
             modality.IsVisible = true;
             modality.IsMandatory = false;
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 PHSEvent phsEvent = unitOfWork.Events.GetEvent(modalityEventView.EventID);
                 int count = phsEvent.Modalities.Count;
@@ -111,7 +111,7 @@ namespace PHS.Business.Implementation
         {
             message = string.Empty;
 
-            using (var unitOfWork = new UnitOfWork(new PHSContext()))
+            using (var unitOfWork = CreateUnitOfWork())
             {
                 var modalityToUpdate = unitOfWork.Modalities.Get(modalityEventView.ModalityID);
                 modalityToUpdate.Name = modalityEventView.Name;
