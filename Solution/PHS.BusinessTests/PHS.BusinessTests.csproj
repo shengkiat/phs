@@ -83,6 +83,7 @@
     <Compile Include="Implementation\FormExportManagerTests.cs" />
     <Compile Include="Implementation\FormImportManagerTests.cs" />
     <Compile Include="Implementation\FormManagerTests.cs" />
+    <Compile Include="Implementation\ModalityManagerTests.cs" />
     <Compile Include="Implementation\ParticipantJourneyManagerTests.cs" />
     <Compile Include="Implementation\PastParticipantJourneyManagerTests.cs" />
     <Compile Include="Implementation\FormAccessManagerTests.cs" />

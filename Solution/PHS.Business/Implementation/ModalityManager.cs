@@ -37,7 +37,7 @@ namespace PHS.Business.Implementation
 
             try
             {
-                using (var unitOfWork = new UnitOfWork(new PHSContext()))
+                using (var unitOfWork = CreateUnitOfWork())
                 {
                     //var modality = unitOfWork.Modalities.Get(ID);
                     var modality = unitOfWork.Modalities.GetModalityByID(ID);
